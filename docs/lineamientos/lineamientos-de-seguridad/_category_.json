@@ -1,0 +1,10 @@
+{
+    "label": "Lineamientos de Seguridad",
+    "position": 5,
+    "link": {
+        "type": "generated-index",
+        "title": "Lineamientos de Seguridad",
+        "slug": "/lineamientos/lineamientos-de-seguridad",
+        "description": "Prácticas recomendadas para la seguridad en el desarrollo y manejo de datos."
+    }
+}

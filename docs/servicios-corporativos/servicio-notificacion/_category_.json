@@ -1,0 +1,10 @@
+{
+    "label": "Servicio de Notificación",
+    "position": 4,
+    "link": {
+        "type": "generated-index",
+        "title": "Servicio de Notificación",
+        "slug": "/servicios-corporativos/servicio-notificacion",
+        "description": "Documentación del servicio de notificación corporativo."
+    }
+}

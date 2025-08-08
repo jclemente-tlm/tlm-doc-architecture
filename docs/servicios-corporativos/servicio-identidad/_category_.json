@@ -1,0 +1,10 @@
+{
+    "label": "Servicio de Identidad",
+    "position": 2,
+    "link": {
+        "type": "generated-index",
+        "title": "Servicio de Identidad",
+        "slug": "/servicios-corporativos/servicio-identidad",
+        "description": "Documentación del servicio de identidad corporativo."
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "label": "Estrategia de Ramas",
+    "position": 4,
+    "link": {
+        "type": "generated-index",
+        "title": "Estrategia de Ramas",
+        "slug": "/lineamientos/estrategia-de-ramas",
+        "description": "Modelos y convenciones para la gestión de ramas en Git."
+    }
+}

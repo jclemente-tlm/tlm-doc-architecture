@@ -1,0 +1,10 @@
+{
+    "label": "ADRs",
+    "position": 2,
+    "link": {
+        "type": "generated-index",
+        "title": "Decisiones de Arquitectura (ADR)",
+        "slug": "/adrs",
+        "description": "Registro de decisiones arquitectónicas relevantes para Talma."
+    }
+}

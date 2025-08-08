@@ -3,46 +3,41 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
-type FeatureItem = {
-  title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: ReactNode;
-};
-
-const FeatureList: FeatureItem[] = [
+// Cards adaptadas a la documentación del proyecto
+const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
-  },
-  {
-    title: 'Focus on What Matters',
+    title: 'Lineamientos y Estándares',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Accede a las guías de <b>nombres, código y documentación</b> para mantener la calidad y consistencia en todos los servicios.<br />
+        <a href="/docs/lineamientos/intro">Ver lineamientos</a>
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Registros de Decisiones Arquitectónicas (ADRs)',
+    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    description: (
+      <>
+        Consulta las decisiones clave de arquitectura tomadas para el ecosistema Talma.<br />
+        <a href="/docs/adrs/README">Ver ADRs</a>
+      </>
+    ),
+  },
+  {
+    title: 'Principios y Arquitectura',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Explora los <b>principios de arquitectura</b> y mejores prácticas para el desarrollo de servicios escalables y seguros.<br />
+        <a href="/docs/lineamientos/principios-de-arquitectura/01-clean-architecture">Ver arquitectura</a>
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, Svg, description}: {title: string; Svg: React.ComponentType<React.ComponentProps<'svg'>>; description: ReactNode;}) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">

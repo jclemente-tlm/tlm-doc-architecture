@@ -1,0 +1,10 @@
+{
+    "label": "Convenciones de Nombres",
+    "position": 1,
+    "link": {
+        "type": "generated-index",
+        "title": "Convenciones de Nombres",
+        "slug": "/lineamientos/convenciones-de-nombres",
+        "description": "Guías y convenciones para nombrar repositorios, ramas, archivos y objetos de base de datos."
+    }
+}

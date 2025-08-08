@@ -1,0 +1,10 @@
+{
+    "label": "Servicios Corporativos",
+    "position": 3,
+    "link": {
+        "type": "generated-index",
+        "title": "Servicios Corporativos",
+        "slug": "/servicios-corporativos",
+        "description": "Documentación de los servicios corporativos de Talma."
+    }
+}

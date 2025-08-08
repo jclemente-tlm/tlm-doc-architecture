@@ -1,0 +1,10 @@
+{
+    "label": "Servicio de Mensajería SITA",
+    "position": 3,
+    "link": {
+        "type": "generated-index",
+        "title": "Servicio de Mensajería SITA",
+        "slug": "/servicios-corporativos/servicio-mensajeria-sita",
+        "description": "Documentación del servicio de mensajería SITA."
+    }
+}

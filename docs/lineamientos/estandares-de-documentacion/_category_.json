@@ -1,0 +1,10 @@
+{
+    "label": "Estándares de Documentación",
+    "position": 3,
+    "link": {
+        "type": "generated-index",
+        "title": "Estándares de Documentación",
+        "slug": "/lineamientos/estandares-de-documentacion",
+        "description": "Lineamientos para documentar proyectos, APIs y diagramas."
+    }
+}

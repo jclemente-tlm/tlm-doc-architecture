@@ -1,0 +1,10 @@
+{
+    "label": "Lineamientos",
+    "position": 1,
+    "link": {
+        "type": "generated-index",
+        "title": "Lineamientos",
+        "slug": "/lineamientos",
+        "description": "Guías y estándares para el desarrollo y documentación en Talma."
+    }
+}

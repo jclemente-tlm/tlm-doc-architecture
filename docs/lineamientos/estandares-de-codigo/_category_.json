@@ -1,0 +1,10 @@
+{
+    "label": "Estándares de Código",
+    "position": 2,
+    "link": {
+        "type": "generated-index",
+        "title": "Estándares de Código",
+        "slug": "/lineamientos/estandares-de-codigo",
+        "description": "Recomendaciones y buenas prácticas para distintos lenguajes de programación."
+    }
+}
