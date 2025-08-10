@@ -25,7 +25,6 @@ const config: Config = {
   organizationName: 'jclemente-tlm', // Nombre de la empresa
   projectName: 'tlm-doc-architecture', // El nombre de tu repositorio
   deploymentBranch: 'docs', // La rama donde se despliega la documentación
-  repoUrl: 'git@work.github.com:jclemente-tlm/tlm-doc-architecture.git',
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
