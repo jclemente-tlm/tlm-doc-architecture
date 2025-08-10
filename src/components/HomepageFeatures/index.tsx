@@ -11,7 +11,7 @@ const FeatureList = [
     description: (
       <>
         Accede a las guías de <b>nombres, código y documentación</b> para mantener la calidad y consistencia en todos los servicios.<br />
-        <a href="/docs/lineamientos">Ver lineamientos</a>
+        <a href="/tlm-doc-architecture/docs/lineamientos">Ver lineamientos</a>
       </>
     ),
   },
@@ -21,7 +21,7 @@ const FeatureList = [
     description: (
       <>
         Consulta las decisiones clave de arquitectura tomadas para el ecosistema Talma.<br />
-        <a href="/docs/adrs">Ver ADRs</a>
+        <a href="/tlm-doc-architecture/docs/adrs">Ver ADRs</a>
       </>
     ),
   },
@@ -31,7 +31,7 @@ const FeatureList = [
     description: (
       <>
         Explora los <b>principios de arquitectura</b> y mejores prácticas para el desarrollo de servicios escalables y seguros.<br />
-        <a href="/docs/lineamientos/principios-de-arquitectura/01-clean-architecture">Ver arquitectura</a>
+        <a href="/tlm-doc-architecture/docs/lineamientos/principios-de-arquitectura/01-clean-architecture">Ver arquitectura</a>
       </>
     ),
   },
