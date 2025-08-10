@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktlm_doc_architecture=self.webpackChunktlm_doc_architecture||[]).push([[326],{18107:t=>{t.exports=JSON.parse('{"metadata":{"permalink":"/tlm-doc-architecture/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
