@@ -22,8 +22,9 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'Talma', // Nombre de la empresa
+  organizationName: 'jclemente-tlm', // Nombre de la empresa
   projectName: 'tlm-doc-architecture', // El nombre de tu repositorio
+  deploymentBranch: 'docs', // La rama donde se despliega la documentación
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
