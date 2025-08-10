@@ -666,7 +666,3 @@ public class TenantConfigurationService : ITenantConfigurationService
     }
 }
 ```
-
----
-
-> Todos los conceptos transversales están alineados a los ADRs, modelos C4/Structurizr DSL y cumplen con los requisitos de seguridad, observabilidad, resiliencia y multi-tenancy definidos para el API Gateway.

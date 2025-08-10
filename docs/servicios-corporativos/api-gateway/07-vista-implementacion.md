@@ -507,5 +507,3 @@ groups:
 ```
 
 ---
-
-> La implementación del API Gateway sigue los principios de Clean Architecture, IaC, seguridad y observabilidad, alineada a los ADRs y modelos C4/Structurizr DSL del sistema.

@@ -91,5 +91,3 @@
 - [PCI DSS Standards](https://www.pcisecuritystandards.org/)
 
 ---
-
-> Todas las restricciones están alineadas a los ADRs, modelos C4/Structurizr DSL y cumplen con los requisitos de seguridad, resiliencia, observabilidad y despliegue definidos para el API Gateway.

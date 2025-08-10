@@ -42,7 +42,3 @@
 - Todos los componentes se despliegan en `AWS ECS Fargate` usando `Terraform`.
 - Observabilidad y monitoreo centralizados con `Grafana`, `Prometheus`, `Loki` y `Jaeger`.
 - Configuración y secretos gestionados externamente, con recarga dinámica y validación de salud.
-
----
-
-> Esta vista de bloques está alineada con los modelos C4 y Structurizr DSL, asegurando trazabilidad, observabilidad y despliegue profesional en AWS ECS/Terraform.

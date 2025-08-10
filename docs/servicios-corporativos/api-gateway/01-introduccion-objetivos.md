@@ -22,5 +22,3 @@ El `API Gateway` es el punto de entrada unificado y seguro para todos los servic
 | `Throughput`       | Alto rendimiento       | `> 5,000 RPS`      |
 | `Seguridad`        | Zero trust, cumplimiento OWASP | Autenticación obligatoria, headers de seguridad |
 | `Observabilidad`   | Trazabilidad y monitoreo en tiempo real | Dashboards y alertas en `Grafana` |
-
-> El `API Gateway` centraliza la gestión de autenticación, autorización, control de tráfico, resiliencia y observabilidad, facilitando la integración, operación segura y monitoreo avanzado de los microservicios corporativos. Todo el diseño está alineado a los modelos C4/Structurizr DSL y la documentación Arc42.

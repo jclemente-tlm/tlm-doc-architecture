@@ -450,7 +450,3 @@ public class ChaosEngineeringTests
     }
 }
 ```
-
----
-
-> Todos los requisitos de calidad están alineados a los ADRs, modelos C4/Structurizr DSL y cumplen con los objetivos de rendimiento, seguridad, disponibilidad y escalabilidad definidos para el API Gateway.

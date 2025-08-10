@@ -166,5 +166,3 @@ sequenceDiagram
 - **Degradación bajo carga**: Priorización de clientes premium, cola para estándar, 503 si no hay capacidad.
 
 ---
-
-> Todos los flujos y escenarios están alineados a los patrones de arquitectura, ADRs y modelos de componentes definidos para el API Gateway. El monitoreo y la observabilidad se implementan con `Grafana`, `Prometheus`, `Loki` y `Jaeger` siguiendo las mejores prácticas de la industria.

@@ -525,7 +525,3 @@ esac
 echo "Rollback completed. Verifying system health..."
 ./scripts/post-rollback-verification.sh
 ```
-
----
-
-> Todos los riesgos y la deuda técnica están identificados, priorizados y alineados a los ADRs, modelos C4/Structurizr DSL y objetivos de resiliencia, seguridad y mantenibilidad definidos para el API Gateway.
