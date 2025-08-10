@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-servicios-corporativos/servicio-mensajeria-sita/requisitos-calidad" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">10. Requisitos de calidad | Talma</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://jclemente-tlm.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://jclemente-tlm.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://jclemente-tlm.github.io/docs/servicios-corporativos/servicio-mensajeria-sita/requisitos-calidad"><meta data-rh="true" property="og:locale" content="es"><meta data-rh="true" name="docusaurus_locale" content="es"><meta data-rh="true" name="docsearch:language" content="es"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="10. Requisitos de calidad | Talma"><meta data-rh="true" name="description" content="10.1 Rendimiento"><meta data-rh="true" property="og:description" content="10.1 Rendimiento"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://jclemente-tlm.github.io/docs/servicios-corporativos/servicio-mensajeria-sita/requisitos-calidad"><link data-rh="true" rel="alternate" href="https://jclemente-tlm.github.io/docs/servicios-corporativos/servicio-mensajeria-sita/requisitos-calidad" hreflang="es"><link data-rh="true" rel="alternate" href="https://jclemente-tlm.github.io/docs/servicios-corporativos/servicio-mensajeria-sita/requisitos-calidad" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Servicios Corporativos","item":"https://jclemente-tlm.github.io/docs/servicios-corporativos"},{"@type":"ListItem","position":2,"name":"Servicio de Mensajería SITA","item":"https://jclemente-tlm.github.io/docs/servicios-corporativos/servicio-mensajeria-sita"},{"@type":"ListItem","position":3,"name":"10. Requisitos de calidad","item":"https://jclemente-tlm.github.io/docs/servicios-corporativos/servicio-mensajeria-sita/requisitos-calidad"}]}</script><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="Talma RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="Talma Atom Feed"><link rel="stylesheet" href="/assets/css/styles.b81aad75.css">
+<script src="/assets/js/runtime~main.42c40199.js" defer="defer"></script>
+<script src="/assets/js/main.6506ae19.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t="light";var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",e||t),document.documentElement.setAttribute("data-theme-choice",e||t)}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/logo-talma.png"><div role="region" aria-label="Saltar al contenido principal"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Saltar al contenido principal</a></div><nav aria-label="Principal" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Alternar barra lateral" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-talma.png" alt="Talma Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-talma.png" alt="Talma Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/docs/intro">Documentación</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/facebook/docusaurus" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Cambiar entre modo oscuro y claro (actualmente system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Volver al principio" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Barra lateral de Documentos" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/intro">Introducción</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/docs/lineamientos">Lineamientos</a><button aria-label="Ampliar la categoría &#x27;Lineamientos&#x27; de la barra lateral" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/docs/adrs">ADRs</a><button aria-label="Ampliar la categoría &#x27;ADRs&#x27; de la barra lateral" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/docs/servicios-corporativos">Servicios Corporativos</a><button aria-label="Colapsar categoría &#x27;Servicios Corporativos&#x27; de la barra lateral" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/servicios-corporativos/api-gateway">API Gateway</a><button aria-label="Ampliar la categoría &#x27;API Gateway&#x27; de la barra lateral" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/servicios-corporativos/servicio-identidad">Servicio de Identidad</a><button aria-label="Ampliar la categoría &#x27;Servicio de Identidad&#x27; de la barra lateral" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita">Servicio de Mensajería SITA</a><button aria-label="Colapsar categoría &#x27;Servicio de Mensajería SITA&#x27; de la barra lateral" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/introduccion-objetivos">1. Introducción y objetivos</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/restricciones-arquitectura">2. Restricciones de la arquitectura</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/contexto-alcance">3. Contexto y alcance del sistema</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/estrategia-solucion">4. Estrategia de solución</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/vista-bloques-construccion">5. Vista de bloques de construcción</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/vista-tiempo-ejecucion">6. Vista de tiempo de ejecución</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/vista-implementacion">7. Vista de implementación</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/conceptos-transversales">8. Conceptos transversales</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/decisiones-arquitectura">9. Decisiones de arquitectura</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/requisitos-calidad">10. Requisitos de calidad</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/riesgos-deuda-tecnica">11. Riesgos y deuda técnica</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/servicios-corporativos/servicio-mensajeria-sita/glosario">12. Glosario</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/servicios-corporativos/servicio-notificacion">Servicio de Notificación</a><button aria-label="Ampliar la categoría &#x27;Servicio de Notificación&#x27; de la barra lateral" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/docs/servicios-corporativos/servicio-track-trace">Servicio Track &amp; Trace</a><button aria-label="Ampliar la categoría &#x27;Servicio Track &amp; Trace&#x27; de la barra lateral" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/aplicaciones">Aplicaciones</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/capa-integracion">Capa de Integración</a></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Rastro de navegación"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Página de Inicio" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/docs/servicios-corporativos"><span>Servicios Corporativos</span></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/docs/servicios-corporativos/servicio-mensajeria-sita"><span>Servicio de Mensajería SITA</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">10. Requisitos de calidad</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">En esta página</button></div><div class="theme-doc-markdown markdown"><header><h1>10. Requisitos de calidad</h1></header>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="101-rendimiento">10.1 Rendimiento<a href="#101-rendimiento" class="hash-link" aria-label="Enlace directo al 10.1 Rendimiento" title="Enlace directo al 10.1 Rendimiento">​</a></h2>
+<table><thead><tr><th>Métrica</th><th>Objetivo</th><th>Medición</th></tr></thead><tbody><tr><td><strong>Latencia procesamiento</strong></td><td>&lt; 1s p95</td><td>Prometheus</td></tr><tr><td><strong>Throughput</strong></td><td>500 mensajes/min</td><td>Load testing</td></tr><tr><td><strong>Disponibilidad</strong></td><td>99.9%</td><td>Health checks</td></tr><tr><td><strong>File generation</strong></td><td>&lt; 5s</td><td>Monitoreo</td></tr></tbody></table>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="102-seguridad">10.2 Seguridad<a href="#102-seguridad" class="hash-link" aria-label="Enlace directo al 10.2 Seguridad" title="Enlace directo al 10.2 Seguridad">​</a></h2>
+<table><thead><tr><th>Aspecto</th><th>Requisito</th><th>Implementación</th></tr></thead><tbody><tr><td><strong>Certificados</strong></td><td>X.509 SITA</td><td>PKI</td></tr><tr><td><strong>Cifrado</strong></td><td>TLS 1.3</td><td>SFTP</td></tr><tr><td><strong>Integridad</strong></td><td>Checksums</td><td>MD5/SHA256</td></tr><tr><td><strong>Audit</strong></td><td>Todos los mensajes</td><td>Logs</td></tr></tbody></table>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="103-escalabilidad">10.3 Escalabilidad<a href="#103-escalabilidad" class="hash-link" aria-label="Enlace directo al 10.3 Escalabilidad" title="Enlace directo al 10.3 Escalabilidad">​</a></h2>
+<table><thead><tr><th>Aspecto</th><th>Objetivo</th><th>Estrategia</th></tr></thead><tbody><tr><td><strong>Horizontal</strong></td><td>Auto-scaling</td><td>ECS</td></tr><tr><td><strong>Cola</strong></td><td>PostgreSQL → SNS+SQS</td><td>Evolutivo</td></tr><tr><td><strong>Files</strong></td><td>EFS compartido</td><td>Sistema archivos</td></tr><tr><td><strong>Partners</strong></td><td>100+ configurados</td><td>Base datos</td></tr></tbody></table>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="101-árbol-de-calidad">10.1 Árbol de calidad<a href="#101-árbol-de-calidad" class="hash-link" aria-label="Enlace directo al 10.1 Árbol de calidad" title="Enlace directo al 10.1 Árbol de calidad">​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">Calidad del Servicio SITA Messaging</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Confiabilidad (Peso: 9/10)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Disponibilidad: 99.9% uptime</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Tolerancia a fallos: Recovery &lt; 30s</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   └── Integridad de mensajes: 100% delivery guarantee</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Rendimiento (Peso: 8/10)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Latencia: &lt; 500ms end-to-end</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Capacidad de procesamiento: 10,000 msg/min</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   └── Tiempo de conexión: &lt; 2s</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Seguridad (Peso: 9/10)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Autenticación: X.509 certificates</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Cifrado: TLS 1.3 in transit</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   └── Auditoría: 100% message tracking</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Usabilidad (Peso: 6/10)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Simplicidad API: RESTful design</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Documentación: Complete API docs</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   └── Monitoreo: Real-time dashboards</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">└── Mantenibilidad (Peso: 7/10)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    ├── Modularidad: Clean Architecture</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    ├── Testabilidad: 80% code coverage</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    └── Extensibilidad: Plugin architecture</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="102-escenarios-de-calidad">10.2 Escenarios de calidad<a href="#102-escenarios-de-calidad" class="hash-link" aria-label="Enlace directo al 10.2 Escenarios de calidad" title="Enlace directo al 10.2 Escenarios de calidad">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="sc-001-alta-disponibilidad-durante-picos-de-tráfico">SC-001: Alta disponibilidad durante picos de tráfico<a href="#sc-001-alta-disponibilidad-durante-picos-de-tráfico" class="hash-link" aria-label="Enlace directo al SC-001: Alta disponibilidad durante picos de tráfico" title="Enlace directo al SC-001: Alta disponibilidad durante picos de tráfico">​</a></h3>
+<p><strong>Estímulo</strong>: 500% incremento súbito en volumen de mensajes durante eventos aeronáuticos críticos</p>
+<p><strong>Fuente</strong>: Múltiples aerolíneas enviando mensajes simultáneamente</p>
+<p><strong>Artefacto</strong>: Sistema completo de mensajería SITA</p>
+<p><strong>Entorno</strong>: Operación normal durante peak hours</p>
+<p><strong>Respuesta</strong>:</p>
+<ul>
+<li>Sistema mantiene latencia &lt; 500ms</li>
+<li>No hay pérdida de mensajes</li>
+<li>Auto-scaling de recursos activo</li>
+<li>Circuit breakers previenen fallos en cascada</li>
+</ul>
+<p><strong>Medida de respuesta</strong>:</p>
+<ul>
+<li>99.9% de mensajes procesados en &lt; 500ms</li>
+<li>0% pérdida de mensajes</li>
+<li>Tiempo de recuperación &lt; 30 segundos</li>
+<li>Alertas automáticas activadas</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="sc-002-recuperación-ante-fallo-de-conectividad-sita">SC-002: Recuperación ante fallo de conectividad SITA<a href="#sc-002-recuperación-ante-fallo-de-conectividad-sita" class="hash-link" aria-label="Enlace directo al SC-002: Recuperación ante fallo de conectividad SITA" title="Enlace directo al SC-002: Recuperación ante fallo de conectividad SITA">​</a></h3>
+<p><strong>Estímulo</strong>: Pérdida de conexión primaria con red SITA</p>
+<p><strong>Fuente</strong>: Fallo de infraestructura de red externa</p>
+<p><strong>Artefacto</strong>: Connection pool y failover mechanisms</p>
+<p><strong>Entorno</strong>: Operación normal con alta carga</p>
+<p><strong>Respuesta</strong>:</p>
+<ul>
+<li>Switchover automático a conexión secundaria</li>
+<li>Buffering de mensajes durante transición</li>
+<li>Notificación a equipos de operaciones</li>
+<li>Re-envío automático de mensajes pending</li>
+</ul>
+<p><strong>Medida de respuesta</strong>:</p>
+<ul>
+<li>Failover time &lt; 15 segundos</li>
+<li>0% pérdida de mensajes durante switchover</li>
+<li>100% recovery de mensajes buffered</li>
+<li>RTO (Recovery Time Objective) &lt; 1 minuto</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="sc-003-detección-y-mitigación-de-ataques-de-seguridad">SC-003: Detección y mitigación de ataques de seguridad<a href="#sc-003-detección-y-mitigación-de-ataques-de-seguridad" class="hash-link" aria-label="Enlace directo al SC-003: Detección y mitigación de ataques de seguridad" title="Enlace directo al SC-003: Detección y mitigación de ataques de seguridad">​</a></h3>
+<p><strong>Estímulo</strong>: Intento de acceso no autorizado o mensaje malformed</p>
+<p><strong>Fuente</strong>: Actor malicioso externo</p>
+<p><strong>Artefacto</strong>: Security layer y validation pipeline</p>
+<p><strong>Entorno</strong>: Operación 24/7 con múltiples tenants</p>
+<p><strong>Respuesta</strong>:</p>
+<ul>
+<li>Bloqueo inmediato de fuente maliciosa</li>
+<li>Validación exhaustiva de certificados</li>
+<li>Logging detallado para auditoría</li>
+<li>Alertas de seguridad automáticas</li>
+</ul>
+<p><strong>Medida de respuesta</strong>:</p>
+<ul>
+<li>Detection time &lt; 1 segundo</li>
+<li>100% de intentos maliciosos bloqueados</li>
+<li>0% impacto en operaciones legítimas</li>
+<li>Incident response &lt; 5 minutos</li>
+</ul>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="sc-004-escalabilidad-para-nuevos-tenants">SC-004: Escalabilidad para nuevos tenants<a href="#sc-004-escalabilidad-para-nuevos-tenants" class="hash-link" aria-label="Enlace directo al SC-004: Escalabilidad para nuevos tenants" title="Enlace directo al SC-004: Escalabilidad para nuevos tenants">​</a></h3>
+<p><strong>Estímulo</strong>: Onboarding de 10 nuevos tenants simultáneamente</p>
+<p><strong>Fuente</strong>: Business development team</p>
+<p><strong>Artefacto</strong>: Multi-tenant infrastructure</p>
+<p><strong>Entorno</strong>: Sistema en producción con carga existente</p>
+<p><strong>Respuesta</strong>:</p>
+<ul>
+<li>Provisioning automático de recursos</li>
+<li>Asignación de SITA addresses únicos</li>
+<li>Configuración de certificates y permisos</li>
+<li>Testing automatizado de conectividad</li>
+</ul>
+<p><strong>Medida de respuesta</strong>:</p>
+<ul>
+<li>Provisioning time &lt; 30 minutos por tenant</li>
+<li>0% impacto en tenants existentes</li>
+<li>100% validación de configuración</li>
+<li>Go-live time &lt; 2 horas</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="103-métricas-de-calidad">10.3 Métricas de calidad<a href="#103-métricas-de-calidad" class="hash-link" aria-label="Enlace directo al 10.3 Métricas de calidad" title="Enlace directo al 10.3 Métricas de calidad">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1031-confiabilidad">10.3.1 Confiabilidad<a href="#1031-confiabilidad" class="hash-link" aria-label="Enlace directo al 10.3.1 Confiabilidad" title="Enlace directo al 10.3.1 Confiabilidad">​</a></h3>
+<table><thead><tr><th>Métrica</th><th>Objetivo</th><th>Medición</th><th>Frecuencia</th></tr></thead><tbody><tr><td>MTBF (Mean Time Between Failures)</td><td>&gt; 720 horas</td><td>Monitoring continuo</td><td>Real-time</td></tr><tr><td>MTTR (Mean Time To Recovery)</td><td>&lt; 30 segundos</td><td>Incident tracking</td><td>Por incidente</td></tr><tr><td>Message Delivery Success Rate</td><td>99.99%</td><td>Message tracking</td><td>Continuo</td></tr><tr><td>Data Integrity</td><td>100%</td><td>Checksums/validation</td><td>Por mensaje</td></tr></tbody></table>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1032-performance">10.3.2 Performance<a href="#1032-performance" class="hash-link" aria-label="Enlace directo al 10.3.2 Performance" title="Enlace directo al 10.3.2 Performance">​</a></h3>
+<table><thead><tr><th>Métrica</th><th>Objetivo</th><th>Medición</th><th>Frecuencia</th></tr></thead><tbody><tr><td>End-to-end Latency</td><td>&lt; 500ms (P95)</td><td>APM tools</td><td>Real-time</td></tr><tr><td>Message Capacidad de procesamiento</td><td>10,000 msg/min</td><td>Counter metrics</td><td>Continuo</td></tr><tr><td>Connection Establishment</td><td>&lt; 2 segundos</td><td>Network monitoring</td><td>Por conexión</td></tr><tr><td>CPU Utilization</td><td>&lt; 70% average</td><td>Infrastructure metrics</td><td>Continuo</td></tr><tr><td>Memory Usage</td><td>&lt; 80% allocated</td><td>Memory profiling</td><td>Continuo</td></tr></tbody></table>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1033-seguridad">10.3.3 Seguridad<a href="#1033-seguridad" class="hash-link" aria-label="Enlace directo al 10.3.3 Seguridad" title="Enlace directo al 10.3.3 Seguridad">​</a></h3>
+<table><thead><tr><th>Métrica</th><th>Objetivo</th><th>Medición</th><th>Frecuencia</th></tr></thead><tbody><tr><td>Certificate Validation Success</td><td>100%</td><td>Security logs</td><td>Por mensaje</td></tr><tr><td>Failed Authentication Attempts</td><td>&lt; 1%</td><td>Auth service logs</td><td>Continuo</td></tr><tr><td>Security Incident Response Time</td><td>&lt; 5 minutos</td><td>SIEM integration</td><td>Por incidente</td></tr><tr><td>Audit Log Completeness</td><td>100%</td><td>Log validation</td><td>Diario</td></tr></tbody></table>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="104-plan-de-pruebas-de-calidad">10.4 Plan de pruebas de calidad<a href="#104-plan-de-pruebas-de-calidad" class="hash-link" aria-label="Enlace directo al 10.4 Plan de pruebas de calidad" title="Enlace directo al 10.4 Plan de pruebas de calidad">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1041-pruebas-de-carga-load-testing">10.4.1 Pruebas de carga (Load Testing)<a href="#1041-pruebas-de-carga-load-testing" class="hash-link" aria-label="Enlace directo al 10.4.1 Pruebas de carga (Load Testing)" title="Enlace directo al 10.4.1 Pruebas de carga (Load Testing)">​</a></h3>
+<p><strong>Herramientas</strong>: JMeter, k6, NBomber</p>
+<p><strong>Escenarios</strong>:</p>
+<ul>
+<li>Carga normal: 1,000 msg/min durante 1 hora</li>
+<li>Carga pico: 10,000 msg/min durante 15 minutos</li>
+<li>Carga sostenida: 5,000 msg/min durante 24 horas</li>
+</ul>
+<p><strong>Criterios de aceptación</strong>:</p>
+<ul>
+<li>Latencia P95 &lt; 500ms</li>
+<li>Error rate &lt; 0.1%</li>
+<li>Memory leak detection: 0 leaks</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1042-pruebas-de-resistencia-stress-testing">10.4.2 Pruebas de resistencia (Stress Testing)<a href="#1042-pruebas-de-resistencia-stress-testing" class="hash-link" aria-label="Enlace directo al 10.4.2 Pruebas de resistencia (Stress Testing)" title="Enlace directo al 10.4.2 Pruebas de resistencia (Stress Testing)">​</a></h3>
+<p><strong>Escenarios</strong>:</p>
+<ul>
+<li>Sobrecarga extrema: 50,000 msg/min</li>
+<li>Conexiones concurrentes: 1,000 connections</li>
+<li>Memory pressure: 95% memory utilization</li>
+</ul>
+<p><strong>Criterios de evaluación</strong>:</p>
+<ul>
+<li>Graceful degradation sin crashes</li>
+<li>Circuit breaker activation correcta</li>
+<li>Recovery automático post-stress</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1043-pruebas-de-seguridad-security-testing">10.4.3 Pruebas de seguridad (Security Testing)<a href="#1043-pruebas-de-seguridad-security-testing" class="hash-link" aria-label="Enlace directo al 10.4.3 Pruebas de seguridad (Security Testing)" title="Enlace directo al 10.4.3 Pruebas de seguridad (Security Testing)">​</a></h3>
+<p><strong>Herramientas</strong>: OWASP ZAP, Nessus, custom scripts</p>
+<p><strong>Vectores de ataque</strong>:</p>
+<ul>
+<li>Certificate spoofing attempts</li>
+<li>Message injection attacks</li>
+<li>Protocol fuzzing</li>
+<li>Network-level attacks</li>
+</ul>
+<p><strong>Verificaciones</strong>:</p>
+<ul>
+<li>100% detection de attacks</li>
+<li>0% false positives en production</li>
+<li>Audit trail completeness</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1044-pruebas-de-recuperación-disaster-recovery">10.4.4 Pruebas de recuperación (Disaster Recovery)<a href="#1044-pruebas-de-recuperación-disaster-recovery" class="hash-link" aria-label="Enlace directo al 10.4.4 Pruebas de recuperación (Disaster Recovery)" title="Enlace directo al 10.4.4 Pruebas de recuperación (Disaster Recovery)">​</a></h3>
+<p><strong>Escenarios de fallo</strong>:</p>
+<ul>
+<li>Primary SITA connection failure</li>
+<li>Database corruption</li>
+<li>Complete datacenter outage</li>
+<li>Certificate expiration</li>
+</ul>
+<p><strong>Objetivos de recovery</strong>:</p>
+<ul>
+<li>RTO (Recovery Time): &lt; 1 minuto</li>
+<li>RPO (Recovery Point): &lt; 10 segundos</li>
+<li>Data consistency: 100%</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="105-monitoreo-de-calidad-en-producción">10.5 Monitoreo de calidad en producción<a href="#105-monitoreo-de-calidad-en-producción" class="hash-link" aria-label="Enlace directo al 10.5 Monitoreo de calidad en producción" title="Enlace directo al 10.5 Monitoreo de calidad en producción">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1051-dashboards-de-calidad">10.5.1 Dashboards de calidad<a href="#1051-dashboards-de-calidad" class="hash-link" aria-label="Enlace directo al 10.5.1 Dashboards de calidad" title="Enlace directo al 10.5.1 Dashboards de calidad">​</a></h3>
+<p><strong>Dashboard Principal</strong>:</p>
+<ul>
+<li>Message flow rates y latencias</li>
+<li>Connection health status</li>
+<li>Error rates y types</li>
+<li>Security incident indicators</li>
+</ul>
+<p><strong>Dashboard de Performance</strong>:</p>
+<ul>
+<li>CPU, Memory, Network utilization</li>
+<li>Database performance metrics</li>
+<li>Cache hit rates</li>
+<li>Queue depths</li>
+</ul>
+<p><strong>Dashboard de Seguridad</strong>:</p>
+<ul>
+<li>Authentication success/failure rates</li>
+<li>Certificate status y expiration</li>
+<li>Suspicious activity alerts</li>
+<li>Compliance audit status</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1052-alertas-automático">10.5.2 Alertas automático<a href="#1052-alertas-automático" class="hash-link" aria-label="Enlace directo al 10.5.2 Alertas automático" title="Enlace directo al 10.5.2 Alertas automático">​</a></h3>
+<p><strong>Alertas críticas</strong> (PagerDuty notification):</p>
+<ul>
+<li>SITA connection failures</li>
+<li>Message delivery failures &gt; 1%</li>
+<li>Security incidents</li>
+<li>Performance degradation &gt; 20%</li>
+</ul>
+<p><strong>Alertas de warning</strong> (Slack notification):</p>
+<ul>
+<li>Latency approaching thresholds</li>
+<li>Certificate expiration warnings</li>
+<li>Resource utilization &gt; 80%</li>
+<li>Unusual traffic patterns</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1053-reportes-de-calidad">10.5.3 Reportes de calidad<a href="#1053-reportes-de-calidad" class="hash-link" aria-label="Enlace directo al 10.5.3 Reportes de calidad" title="Enlace directo al 10.5.3 Reportes de calidad">​</a></h3>
+<p><strong>Reporte diario</strong>:</p>
+<ul>
+<li>SLA compliance summary</li>
+<li>Performance metrics trends</li>
+<li>Security incident summary</li>
+<li>Operational health score</li>
+</ul>
+<p><strong>Reporte semanal</strong>:</p>
+<ul>
+<li>Quality trend analysis</li>
+<li>Capacity planning insights</li>
+<li>Performance optimization opportunities</li>
+<li>Security posture assessment</li>
+</ul>
+<p><strong>Reporte mensual</strong>:</p>
+<ul>
+<li>SLA performance vs objectives</li>
+<li>Quality improvement initiatives</li>
+<li>Risk assessment update</li>
+<li>Stakeholder communication summary</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="referencias">Referencias<a href="#referencias" class="hash-link" aria-label="Enlace directo al Referencias" title="Enlace directo al Referencias">​</a></h2>
+<ul>
+<li><a href="https://docs.arc42.org/section-10/" target="_blank" rel="noopener noreferrer">Arc42 Requisitos de Calidad</a></li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/jclemente-tlm/tlm-doc-architecture/edit/main/docs/servicios-corporativos/servicio-mensajeria-sita/10-requisitos-calidad.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Editar esta página</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Página del documento"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/servicios-corporativos/servicio-mensajeria-sita/decisiones-arquitectura"><div class="pagination-nav__sublabel">Anterior</div><div class="pagination-nav__label">9. Decisiones de arquitectura</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/servicios-corporativos/servicio-mensajeria-sita/riesgos-deuda-tecnica"><div class="pagination-nav__sublabel">Siguiente</div><div class="pagination-nav__label">11. Riesgos y deuda técnica</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#101-rendimiento" class="table-of-contents__link toc-highlight">10.1 Rendimiento</a></li><li><a href="#102-seguridad" class="table-of-contents__link toc-highlight">10.2 Seguridad</a></li><li><a href="#103-escalabilidad" class="table-of-contents__link toc-highlight">10.3 Escalabilidad</a></li><li><a href="#101-árbol-de-calidad" class="table-of-contents__link toc-highlight">10.1 Árbol de calidad</a></li><li><a href="#102-escenarios-de-calidad" class="table-of-contents__link toc-highlight">10.2 Escenarios de calidad</a><ul><li><a href="#sc-001-alta-disponibilidad-durante-picos-de-tráfico" class="table-of-contents__link toc-highlight">SC-001: Alta disponibilidad durante picos de tráfico</a></li><li><a href="#sc-002-recuperación-ante-fallo-de-conectividad-sita" class="table-of-contents__link toc-highlight">SC-002: Recuperación ante fallo de conectividad SITA</a></li><li><a href="#sc-003-detección-y-mitigación-de-ataques-de-seguridad" class="table-of-contents__link toc-highlight">SC-003: Detección y mitigación de ataques de seguridad</a></li><li><a href="#sc-004-escalabilidad-para-nuevos-tenants" class="table-of-contents__link toc-highlight">SC-004: Escalabilidad para nuevos tenants</a></li></ul></li><li><a href="#103-métricas-de-calidad" class="table-of-contents__link toc-highlight">10.3 Métricas de calidad</a><ul><li><a href="#1031-confiabilidad" class="table-of-contents__link toc-highlight">10.3.1 Confiabilidad</a></li><li><a href="#1032-performance" class="table-of-contents__link toc-highlight">10.3.2 Performance</a></li><li><a href="#1033-seguridad" class="table-of-contents__link toc-highlight">10.3.3 Seguridad</a></li></ul></li><li><a href="#104-plan-de-pruebas-de-calidad" class="table-of-contents__link toc-highlight">10.4 Plan de pruebas de calidad</a><ul><li><a href="#1041-pruebas-de-carga-load-testing" class="table-of-contents__link toc-highlight">10.4.1 Pruebas de carga (Load Testing)</a></li><li><a href="#1042-pruebas-de-resistencia-stress-testing" class="table-of-contents__link toc-highlight">10.4.2 Pruebas de resistencia (Stress Testing)</a></li><li><a href="#1043-pruebas-de-seguridad-security-testing" class="table-of-contents__link toc-highlight">10.4.3 Pruebas de seguridad (Security Testing)</a></li><li><a href="#1044-pruebas-de-recuperación-disaster-recovery" class="table-of-contents__link toc-highlight">10.4.4 Pruebas de recuperación (Disaster Recovery)</a></li></ul></li><li><a href="#105-monitoreo-de-calidad-en-producción" class="table-of-contents__link toc-highlight">10.5 Monitoreo de calidad en producción</a><ul><li><a href="#1051-dashboards-de-calidad" class="table-of-contents__link toc-highlight">10.5.1 Dashboards de calidad</a></li><li><a href="#1052-alertas-automático" class="table-of-contents__link toc-highlight">10.5.2 Alertas automático</a></li><li><a href="#1053-reportes-de-calidad" class="table-of-contents__link toc-highlight">10.5.3 Reportes de calidad</a></li></ul></li><li><a href="#referencias" class="table-of-contents__link toc-highlight">Referencias</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/intro">Documentación</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Comunidad</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://pe.linkedin.com/company/talma-servicios-aeroportuarios" target="_blank" rel="noopener noreferrer" class="footer__link-item">LinkedIn<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://www.youtube.com/channel/UC-LkTBWGU2aSh-00bv83OlA" target="_blank" rel="noopener noreferrer" class="footer__link-item">YouTube<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://www.facebook.com/talmaperu/?ref=br_rs" target="_blank" rel="noopener noreferrer" class="footer__link-item">Facebook<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Más</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/jclemente-tlm/tlm-doc-architecture" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 Talma. Documentación construida con Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
