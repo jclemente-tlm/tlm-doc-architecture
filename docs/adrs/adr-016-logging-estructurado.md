@@ -1,5 +1,4 @@
 ---
-id: adr-016-logging-estructurado
 title: "Logging Estructurado"
 sidebar_position: 16
 ---

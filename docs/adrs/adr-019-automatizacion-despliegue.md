@@ -1,5 +1,4 @@
 ---
-id: adr-019-automatizacion-de-despliegue
 title: "Automatización de Despliegue"
 sidebar_position: 19
 ---

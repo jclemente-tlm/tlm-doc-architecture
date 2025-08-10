@@ -1,5 +1,4 @@
 ---
-id: adr-009-cicd-pipelines
 title: "Pipelines CI/CD"
 sidebar_position: 9
 ---

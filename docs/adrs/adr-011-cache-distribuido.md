@@ -1,5 +1,4 @@
 ---
-id: adr-011-cache-distribuido
 title: "Cache Distribuido"
 sidebar_position: 11
 ---

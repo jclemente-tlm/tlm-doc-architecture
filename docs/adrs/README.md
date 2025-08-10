@@ -24,25 +24,25 @@ Cada ADR sigue la estructura:
 
 | ADR | Título | Estado | Fecha | Descripción |
 |-----|--------|--------|-------|-------------|
-| [ADR-001](./adr-001-multi-tenancy-paises) | Multi-tenancy por país | Aceptada | - | - |
-| [ADR-002](./adr-002-apis-rest-estandar) | APIs REST estándar | Aceptada | - | - |
-| [ADR-003](./adr-003-gestion-secretos) | Gestión de secretos | Aceptada | - | - |
-| [ADR-004](./adr-004-autenticacion-sso) | Autenticación SSO | Aceptada | - | - |
-| [ADR-005](./adr-005-gestion-configuraciones) | Gestión de configuraciones | Aceptada | - | - |
-| [ADR-006](./adr-006-infraestructura-iac) | Infraestructura como código | Aceptada | - | - |
-| [ADR-007](./adr-007-contenedores-aws) | Contenedores en AWS | Aceptada | - | - |
-| [ADR-008](./adr-008-gateway-apis) | Gateway de APIs | Aceptada | - | - |
-| [ADR-009](./adr-009-cicd-pipelines) | CI/CD Pipelines | Aceptada | - | - |
-| [ADR-010](./adr-010-base-datos-standard) | Base de datos estándar | Aceptada | - | - |
-| [ADR-011](./adr-011-cache-distribuido) | Cache distribuido | Aceptada | - | - |
-| [ADR-012](./adr-012-mensajeria-asincrona) | Mensajería asíncrona | Aceptada | - | - |
-| [ADR-013](./adr-013-event-sourcing) | Event sourcing | Aceptada | - | - |
-| [ADR-014](./adr-014-almacenamiento-objetos) | Almacenamiento de objetos | Aceptada | - | - |
-| [ADR-015](./adr-015-manejo-errores-cola) | Manejo de errores en colas | Aceptada | - | - |
-| [ADR-016](./adr-016-logging-estructurado) | Logging estructurado | Aceptada | - | - |
-| [ADR-017](./adr-017-versionado-apis) | Versionado de APIs | Aceptada | - | - |
-| [ADR-018](./adr-018-arquitectura-microservicios) | Arquitectura de microservicios | Aceptada | - | - |
-| [ADR-019](./adr-019-automatizacion-despliegue) | Automatización de despliegue | Aceptada | - | - |
+| [ADR-001](/docs/adrs/adr-001-multi-tenancy-paises) | Multi-tenancy por país | Aceptada | - | - |
+| [ADR-002](/docs/adrs/adr-002-estandar-apis-rest) | APIs REST estándar | Aceptada | - | - |
+| [ADR-003](/docs/adrs/adr-003-gestion-secretos) | Gestión de secretos | Aceptada | - | - |
+| [ADR-004](/docs/adrs/adr-004-autenticacion-sso) | Autenticación SSO | Aceptada | - | - |
+| [ADR-005](/docs/adrs/adr-005-gestion-configuraciones) | Gestión de configuraciones | Aceptada | - | - |
+| [ADR-006](/docs/adrs/adr-006-infraestructura-iac) | Infraestructura como código | Aceptada | - | - |
+| [ADR-007](/docs/adrs/adr-007-contenedores-aws) | Contenedores en AWS | Aceptada | - | - |
+| [ADR-008](/docs/adrs/adr-008-api-gateway) | Gateway de APIs | Aceptada | - | - |
+| [ADR-009](/docs/adrs/adr-009-cicd-pipelines) | CI/CD Pipelines | Aceptada | - | - |
+| [ADR-010](/docs/adrs/adr-010-standar-base-datos) | Base de datos estándar | Aceptada | - | - |
+| [ADR-011](/docs/adrs/adr-011-cache-distribuido) | Cache distribuido | Aceptada | - | - |
+| [ADR-012](/docs/adrs/adr-012-mensajeria-asincrona) | Mensajería asíncrona | Aceptada | - | - |
+| [ADR-013](/docs/adrs/adr-013-event-sourcing) | Event sourcing | Aceptada | - | - |
+| [ADR-014](/docs/adrs/adr-014-almacenamiento-objetos) | Almacenamiento de objetos | Aceptada | - | - |
+| [ADR-015](/docs/adrs/adr-015-manejo-errores-cola) | Manejo de errores en colas | Aceptada | - | - |
+| [ADR-016](/docs/adrs/adr-016-logging-estructurado) | Logging estructurado | Aceptada | - | - |
+| [ADR-017](/docs/adrs/adr-017-versionado-apis) | Versionado de APIs | Aceptada | - | - |
+| [ADR-018](/docs/adrs/adr-018-arquitectura-microservicios) | Arquitectura de microservicios | Aceptada | - | - |
+| [ADR-019](/docs/adrs/adr-019-automatizacion-despliegue) | Automatización de despliegue | Aceptada | - | - |
 
 ### ADRs ESPECÍFICOS DE SERVICIO
 

@@ -7,27 +7,27 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: 'Lineamientos y Estándares',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    img: require('@site/static/img/checklist.png').default,
     description: (
       <>
         Accede a las guías de <b>nombres, código y documentación</b> para mantener la calidad y consistencia en todos los servicios.<br />
-        <a href="/docs/lineamientos/intro">Ver lineamientos</a>
+        <a href="/docs/lineamientos">Ver lineamientos</a>
       </>
     ),
   },
   {
     title: 'Registros de Decisiones Arquitectónicas (ADRs)',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    img: require('@site/static/img/documentation.png').default,
     description: (
       <>
         Consulta las decisiones clave de arquitectura tomadas para el ecosistema Talma.<br />
-        <a href="/docs/adrs/README">Ver ADRs</a>
+        <a href="/docs/adrs">Ver ADRs</a>
       </>
     ),
   },
   {
     title: 'Principios y Arquitectura',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    img: require('@site/static/img/coding.png').default,
     description: (
       <>
         Explora los <b>principios de arquitectura</b> y mejores prácticas para el desarrollo de servicios escalables y seguros.<br />
@@ -37,11 +37,15 @@ const FeatureList = [
   },
 ];
 
-function Feature({title, Svg, description}: {title: string; Svg: React.ComponentType<React.ComponentProps<'svg'>>; description: ReactNode;}) {
+function Feature({title, img, Svg, description}: {title: string; img?: string; Svg?: React.ComponentType<React.ComponentProps<'svg'>>; description: ReactNode;}) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        {Svg ? (
+          <Svg className={styles.featureSvg} role="img" />
+        ) : img ? (
+          <img src={img} className={styles.featureSvg} alt={title} />
+        ) : null}
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>

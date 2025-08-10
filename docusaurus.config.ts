@@ -24,6 +24,7 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Talma', // Nombre de la empresa
   projectName: 'tlm-doc-architecture', // El nombre de tu repositorio
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -132,7 +133,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Talma. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Talma. Documentación construida con Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
@@ -163,7 +164,7 @@ const config: Config = {
       ],
     },
     mermaid: {
-      theme: {light: 'neutral', dark: 'forest'},
+      theme: {light: 'neutral', dark: 'dark'},
       options: {
         securityLevel: 'strict',
       },

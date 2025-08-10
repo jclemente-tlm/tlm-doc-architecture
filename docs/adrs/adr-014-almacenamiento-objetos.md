@@ -1,5 +1,4 @@
 ---
-id: adr-014-almacenamiento-de-objetos
 title: "Almacenamiento de Objetos"
 sidebar_position: 14
 ---

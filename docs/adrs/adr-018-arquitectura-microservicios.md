@@ -1,5 +1,4 @@
 ---
-id: adr-018-arquitectura-microservicios
 title: "Arquitectura de Microservicios"
 sidebar_position: 18
 ---

@@ -1,5 +1,4 @@
 ---
-id: adr-007-contenedores-aws
 title: "Contenedores en AWS"
 sidebar_position: 7
 ---

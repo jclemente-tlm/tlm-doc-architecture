@@ -1,5 +1,4 @@
 ---
-id: adr-012-mensajeria-asincrona
 title: "Mensajería Asíncrona"
 sidebar_position: 12
 ---

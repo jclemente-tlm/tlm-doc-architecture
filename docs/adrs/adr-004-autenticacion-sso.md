@@ -1,5 +1,4 @@
 ---
-id: adr-004-autenticacion-sso
 title: "Autenticación mediante SSO"
 sidebar_position: 4
 ---

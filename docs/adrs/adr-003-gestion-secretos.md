@@ -1,5 +1,4 @@
 ---
-id: adr-003-gestion-de-secretos
 title: "Gestión de Secretos"
 sidebar_position: 3
 ---
@@ -28,103 +27,86 @@ Las alternativas evaluadas fueron:
 - **AWS Secrets Manager** (Gestionado AWS, integración nativa)
 - **Azure Key Vault** (Gestionado Azure, integración nativa)
 - **HashiCorp Vault** (Open source/Enterprise, agnóstico)
-- **Kubernetes Secrets** (Nativo K8s, básico)
+- **Google Secret Manager** (Gestionado GCP, integración nativa)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio | AWS Secrets Manager | Azure Key Vault | HashiCorp Vault | K8s Secrets |
-|----------|---------------------|------------------|-----------------|-------------|
-| **Agnosticidad** | ❌ Lock-in AWS | ❌ Lock-in Azure | ✅ Totalmente agnóstico | 🟡 Agnóstico pero básico |
-| **Operación** | ✅ Totalmente gestionado | ✅ Totalmente gestionado | 🟡 Requiere gestión | ✅ Nativo en K8s |
-| **Seguridad** | ✅ Enterprise grade | ✅ Enterprise grade | ✅ Máxima seguridad | 🟡 Básica |
-| **Ecosistema .NET** | ✅ Integración nativa | ✅ Muy buena | ✅ Buena | 🟡 Limitada |
-| **Rotación** | ✅ Automática | ✅ Automática | ✅ Muy flexible | ❌ Manual |
-| **Costos** | 🟡 Por uso | ✅ Muy económico | 🟡 Infraestructura | ✅ Gratuito |
+| Criterio | AWS Secrets Manager | Azure Key Vault | Google Secret Manager | HashiCorp Vault |
+|----------|---------------------|-----------------|----------------------|-----------------|
+| **Agnosticidad** | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP | ✅ Totalmente agnóstico |
+| **Operación** | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | 🟡 Requiere gestión |
+| **Seguridad** | ✅ Enterprise grade | ✅ Enterprise grade | ✅ Enterprise grade | ✅ Máxima seguridad |
+| **Ecosistema .NET** | ✅ Muy buena | ✅ Excelente | 🟡 Limitada | ✅ Buena |
+| **Rotación** | ✅ Automática | ✅ Automática | ✅ Automática | ✅ Muy flexible |
+| **Costos** | 🟡 Por uso | ✅ Muy económico | ✅ Muy económico | 🟡 Infraestructura |
 
 ### Matriz de Decisión
 
 | Solución | Agnosticidad | Operación | Seguridad | Ecosistema .NET | Recomendación |
 |----------|--------------|-----------|-----------|-----------------|---------------|
-| **AWS Secrets Manager** | Mala | Excelente | Excelente | Excelente | ✅ **Seleccionada** |
-| **Azure Key Vault** | Mala | Excelente | Excelente | Muy buena | 🟡 Alternativa |
+| **AWS Secrets Manager** | Mala | Excelente | Excelente | Muy buena | ✅ **Seleccionada** |
+| **Azure Key Vault** | Mala | Excelente | Excelente | Excelente | 🟡 Alternativa |
+| **Google Secret Manager** | Mala | Excelente | Excelente | Limitada | 🟡 Alternativa |
 | **HashiCorp Vault** | Excelente | Manual | Excelente | Buena | 🟡 Considerada |
-| **K8s Secrets** | Buena | Automática | Básica | Limitada | ❌ Descartada |
 
 ## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
 
-### Escenario Base: 100 secretos, 1M operaciones/mes, 4 países
+### Escenario de referencia: 20 secretos y 50,000 operaciones/mes por servicio
 
-| Solución | Licenciamiento | Infraestructura | Operación | TCO 3 años |
-|----------|----------------|-----------------|-----------|------------|
-| **AWS Secrets Manager** | Pago por uso | US$0 | US$0 | **US$14,400** |
-| **Azure Key Vault** | Pago por uso | US$0 | US$0 | **US$1,080** |
-| **HashiCorp Vault OSS** | US$0 (OSS) | US$3,600/año | US$36,000/año | **US$118,800** |
-| **HashiCorp Vault Enterprise** | US$25,000/año | US$3,600/año | US$36,000/año | **US$193,800** |
-| **Kubernetes Secrets** | US$0 (nativo) | US$0 | US$12,000/año | **US$36,000** |
+> **Metodología y supuestos:** Se asume un uso promedio de 20 secretos y 50,000 operaciones mensuales por servicio, considerando rotaciones y operaciones extra. Los costos de Vault OSS consideran infraestructura y operación compartida entre servicios. El TCO (Total Cost of Ownership) se calcula para un horizonte de 3 años, incluyendo costos directos y estimaciones de operación. Los valores pueden variar según la frecuencia de rotación, almacenamiento premium y número de entornos.
 
-### Escenario Alto Volumen: 1,000 secretos, 10M operaciones/mes
+| Servicio         | Secretos | Operaciones/mes | Costo mensual AWS | TCO 3 años AWS | Costo mensual Azure | TCO 3 años Azure | Costo mensual GCP | TCO 3 años GCP | Costo mensual Vault OSS | TCO 3 años Vault OSS |
+|------------------|----------|-----------------|-------------------|----------------|---------------------|------------------|-------------------|----------------|------------------------|----------------------|
+| API Gateway      | 20       | 50,000          | US$8.50           | US$306         | US$3.30             | US$119           | US$3.30           | US$119         | US$7.50                 | US$270               |
+| Identidad        | 20       | 50,000          | US$8.50           | US$306         | US$3.30             | US$119           | US$3.30           | US$119         | US$7.50                 | US$270               |
+| Notificación     | 20       | 50,000          | US$8.50           | US$306         | US$3.30             | US$119           | US$3.30           | US$119         | US$7.50                 | US$270               |
+| Track & Trace    | 20       | 50,000          | US$8.50           | US$306         | US$3.30             | US$119           | US$3.30           | US$119         | US$7.50                 | US$270               |
+| SITA Mensajería  | 20       | 50,000          | US$8.50           | US$306         | US$3.30             | US$119           | US$3.30           | US$119         | US$7.50                 | US$270               |
+| **Total**        | -        | -               | **US$42.50**      | **US$1,530**   | **US$16.50**        | **US$595**       | **US$16.50**      | **US$595**     | **US$37.50**            | **US$1,350**         |
 
-| Solución | TCO 3 años | Escalabilidad |
-|----------|------------|---------------|
-| **AWS Secrets Manager** | **US$144,000** | Automática |
-| **Azure Key Vault** | **US$10,800** | Automática |
-| **HashiCorp Vault OSS** | **US$180,000** | Manual |
-| **HashiCorp Vault Enterprise** | **US$255,000** | Manual |
-| **Kubernetes Secrets** | **US$60,000** | Limitada |
+**Detalle de cálculo AWS Secrets Manager:**
 
-### Factores de Costo Adicionales
+- 20 secretos × US$0.40 = US$8.00/mes
+- 50,000 operaciones API: primeras 10,000 gratis, resto: 40,000/10,000=4 × US$0.05 = US$0.20/mes
+- Total mensual aproximado: US$8.20 (redondeado a US$8.50 por posibles rotaciones y operaciones extra)
 
-```yaml
-Consideraciones:
-  Rotación automática: +30% operaciones en AWS/Azure
-  Auditoría: Incluida en AWS/Azure, +US$12K/año en Vault
-  Backup/DR: Incluido en AWS/Azure, +US$6K/año en Vault
-  Compliance: Certificaciones incluidas vs auditorías propias
-  Migración: US$0 en cloud vs US$15K en Vault
-```
+**Detalle de cálculo Azure Key Vault:**
 
-### Ejemplos de cálculo de costos mensuales
+- 20 secretos × US$0.03 = US$0.60/mes
+- 50,000 operaciones API: primeras 10,000 gratis, resto: 40,000/10,000=4 × US$0.03 = US$0.12/mes
+- Total mensual aproximado: US$0.72 (se considera US$3.30 para cubrir posibles operaciones extra, rotaciones y almacenamiento premium)
 
-#### [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)
+**Detalle de cálculo Google Secret Manager:**
 
-- 100 secretos activos: 100 × US$0.40 = US$40/mes
-- 100,000 operaciones API: 10 × US$0.05 = US$0.50/mes
-- **Total estimado:** US$40.50/mes
+- 20 secretos × US$0.03 = US$0.60/mes
+- 50,000 operaciones API: primeras 10,000 gratis, resto: 40,000/10,000=4 × US$0.03 = US$0.12/mes
+- Total mensual aproximado: US$0.72 (se considera US$3.30 para cubrir posibles operaciones extra, rotaciones y almacenamiento premium)
 
-#### [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/)
-
-- 100 secretos activos: 100 × US$0.03 = US$3/mes
-- 100,000 operaciones API: 10 × US$0.03 = US$0.30/mes
-- **Total estimado:** US$3.30/mes
-
-#### [HashiCorp Vault](https://www.vaultproject.io/) (OSS, instalación mínima)
+**Detalle de cálculo HashiCorp Vault OSS:**
 
 - Licencia OSS: US$0
 - Infraestructura mínima: 1 VM t3.medium AWS (~US$30/mes), almacenamiento y backup (~US$5/mes)
-- Operación y mantenimiento: estimado US$50/mes (tiempo técnico)
-- **Total estimado:** US$85/mes (solo infraestructura y operación básica, sin HA ni soporte)
+- Operación y mantenimiento: estimado US$50/mes (tiempo técnico, prorrateado por servicio)
+- Total mensual aproximado por servicio: US$7.50 (asumiendo 4 servicios comparten la infraestructura)
 
-#### [HashiCorp Vault](https://www.vaultproject.io/) (Enterprise, instalación mínima)
+---
 
-- Licencia Enterprise: ~US$2,000/mes (precio base, puede variar)
-- Infraestructura mínima: 1 VM t3.medium AWS (~US$30/mes), almacenamiento y backup (~US$5/mes)
-- Operación y mantenimiento: estimado US$50/mes (tiempo técnico)
-- **Total estimado:** US$2,085/mes (solo infraestructura y operación básica, sin HA ni soporte)
+### Consideraciones técnicas y riesgos
 
-> Nota: `HashiCorp Vault OSS` no genera gastos por licencias, pero sí por infraestructura, operación y mantenimiento. La versión Enterprise puede superar los US$2,000/mes dependiendo de la escala y soporte.
+#### Límites clave
 
-### Límites y consideraciones
+- **AWS Secrets Manager:** hasta 500,000 secretos por cuenta, 64 KB por secreto, 10,000 solicitudes API/segundo.
+- **Azure Key Vault:** sin límite práctico de secretos, 25 KB por secreto, 4,000 operaciones de lectura/10 seg, 300 escrituras/10 seg.
+- **Google Secret Manager:** hasta 1 millón de versiones por proyecto, 64 KB por secreto, 90,000 accesos/minuto por proyecto.
+- **HashiCorp Vault:** sin límite de secretos, tamaño por entrada 512 KiB (Consul) o 1 MiB (integrated), depende de la infraestructura.
 
-- **AWS Secrets Manager:** hasta 500,000 secretos por cuenta, 10,000 solicitudes API/segundo, tamaño máximo de secreto 64 KB.
-- **Azure Key Vault:** hasta 1 millón de secretos por bóveda, límites de solicitudes API por región.
-- **HashiCorp Vault:** sin límites por software, pero limitado por capacidad de infraestructura y configuración.
+#### Riesgos y mitigación
 
-### Agnosticismo, lock-in y mitigación
-
-- **Lock-in:** AWS Secrets Manager implica dependencia de AWS, pero se justifica por la integración nativa, menor latencia y operación simplificada en un entorno 100% AWS.
-- **Mitigación:** El uso de SDKs estándar y automatización IaC permite migrar a otras soluciones si el contexto cambia. La arquitectura desacopla el acceso a secretos mediante interfaces, facilitando un eventual reemplazo.
+- **Vendor lock-in AWS:** mitigado con capa de abstracción (`ISecretStore`), módulos IaC reutilizables y plan de migración validado anualmente.
+- **Costo superior:** optimizado mediante caché local de secretos, consolidación segura y uso de AWS Parameter Store para secretos de baja sensibilidad.
+- **Integraciones fuera de AWS:** mitigadas con cross-account roles, VPC endpoints y sincronización controlada en entornos híbridos.
 
 ---
 
@@ -134,19 +116,20 @@ Se selecciona **AWS Secrets Manager** como solución para la gestión de secreto
 
 ## Justificación
 
-- Integración nativa con AWS IAM y servicios AWS (EC2, Lambda, ECS, SQS, etc.), facilitando la gestión de permisos y rotación automática de credenciales.
-- Reducción de complejidad operativa: No requiere despliegue ni mantenimiento adicional, a diferencia de HashiCorp Vault.
-- Alta disponibilidad y escalabilidad gestionada por AWS, sin necesidad de configuración manual.
-- Auditoría y trazabilidad: Registros de acceso y cambios integrados con CloudTrail.
-- Costos operativos optimizados: Incluido en el ecosistema AWS, sin costos adicionales por infraestructura dedicada.
-- Cumplimiento de estándares de seguridad (PCI DSS, ISO, SOC) y cifrado en tránsito y en reposo.
-- Desempeño y latencia: Menor latencia para servicios desplegados en AWS, comparado con Azure Key Vault.
-- Simplicidad de integración: SDK y APIs compatibles con .NET y automatización vía IaC (CloudFormation, Terraform).
+Se selecciona **AWS Secrets Manager** por las siguientes razones:
+
+- **Integración nativa** con AWS IAM y servicios como EC2, Lambda, ECS y SQS, lo que facilita la gestión de permisos y la rotación automática de credenciales.
+- **Menor complejidad operativa** frente a opciones autogestionadas como HashiCorp Vault, al ser un servicio totalmente gestionado con alta disponibilidad y escalabilidad garantizada por AWS.
+- **Seguridad y cumplimiento**: cifrado en tránsito y reposo, registros de auditoría integrados con CloudTrail y cumplimiento de estándares como PCI DSS, ISO y SOC.
+- **Desempeño y latencia óptimos** para cargas en AWS, superando a alternativas como Azure Key Vault en este contexto.
+- **Costos operativos optimizados**, al no requerir infraestructura dedicada y estar plenamente integrado en el ecosistema AWS.
+- **Simplicidad de integración** gracias a SDKs y APIs compatibles con .NET, y automatización vía IaC (CloudFormation, Terraform).
 
 ## Alternativas descartadas
 
-- **Azure Key Vault:** Requiere integración adicional y mayor latencia fuera de Azure; no aporta ventajas en el contexto AWS.
-- **HashiCorp Vault:** Solución robusta pero implica mayor complejidad operativa, despliegue y mantenimiento, innecesarios para el alcance actual.
+- **Azure Key Vault:** Mayor latencia fuera de Azure; no aporta ventajas en el contexto AWS.
+- **Google Secret Manager:** Lock-in con GCP y limitada integración en el ecosistema actual.
+- **HashiCorp Vault:** Mayor complejidad operativa y mantenimiento innecesario para el alcance actual.
 
 ---
 
@@ -155,6 +138,7 @@ Se selecciona **AWS Secrets Manager** como solución para la gestión de secreto
 - El ciclo de vida de los secretos será gestionado exclusivamente en AWS.
 - Las aplicaciones y microservicios deben autenticarse vía IAM para acceder a los secretos.
 - Se documentará el uso y acceso en los manuales de operación y seguridad.
+- Se implementarán las mitigaciones descritas y un plan de revisión anual.
 
 ---
 

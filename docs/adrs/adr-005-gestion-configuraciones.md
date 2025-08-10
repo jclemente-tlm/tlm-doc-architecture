@@ -1,5 +1,4 @@
 ---
-id: adr-005-gestion-de-configuraciones
 title: "Gestión de Configuraciones"
 sidebar_position: 5
 ---

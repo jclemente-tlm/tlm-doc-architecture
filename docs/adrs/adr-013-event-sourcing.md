@@ -1,5 +1,4 @@
 ---
-id: adr-013-event-sourcing
 title: "Event Sourcing"
 sidebar_position: 13
 ---
