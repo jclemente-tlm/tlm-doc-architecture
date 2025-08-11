@@ -1,41 +1,41 @@
-# 10. Requisitos de calidad
+# 10. Requisitos De Calidad
 
 ## 10.1 Rendimiento
 
-| Métrica | Objetivo | Medición |
-|---------|----------|----------|
-| `Latencia` | `< 100ms p95` | `Prometheus` |
-| `Throughput` | `10k requests/seg` | Load testing |
-| `Disponibilidad` | `99.9%` | Health checks |
-| `CPU` | `< 70% promedio` | Monitoreo |
+| Métrica        | Objetivo         | Medición      |
+|---------------|------------------|--------------|
+| Latencia      | `< 100ms p95`    | `Prometheus` |
+| Throughput    | `10k requests/seg`| Load testing |
+| Disponibilidad| `99.9%`          | Health checks|
+| CPU           | `< 70% promedio` | Monitoreo    |
 
 ## 10.2 Seguridad
 
-| Aspecto | Requisito | Implementación |
-|---------|-----------|----------------|
-| `Autenticación` | JWT obligatorio | Middleware |
-| `Rate limiting` | Por usuario/IP | Redis |
-| `TLS` | 1.3 mínimo | Certificados |
-| `Headers` | Security headers | Middleware |
+| Aspecto         | Requisito         | Implementación |
+|-----------------|-------------------|----------------|
+| Autenticación   | JWT obligatorio   | Middleware     |
+| Rate limiting   | Por usuario/IP    | `Redis`        |
+| TLS             | 1.3 mínimo        | Certificados   |
+| Headers         | Security headers  | Middleware     |
 
 ## 10.3 Escalabilidad
 
-| Aspecto | Objetivo | Estrategia |
-|---------|----------|------------|
-| `Horizontal` | Auto-scaling | ECS Fargate + Terraform |
-| `Carga` | Load balancing | ALB |
-| `Cache` | Redis distribuido | Clustering |
-| `Configuración` | Hot reload | Dinámico |
+| Aspecto         | Objetivo          | Estrategia                 |
+|-----------------|-------------------|----------------------------|
+| Horizontal      | Auto-scaling      | ECS Fargate + Terraform    |
+| Carga           | Load balancing    | ALB                        |
+| Cache           | Redis distribuido | Clustering                 |
+| Configuración   | Hot reload        | Dinámico                   |
 
-## 10.4 Atributos de calidad
+## 10.4 Atributos De Calidad
 
-| Atributo | Métrica | Objetivo | Crítico |
-|----------|---------|----------|---------|
-| `Latencia` | Tiempo de respuesta p95 | `< 100ms` | `< 200ms` |
-| `Rendimiento` | Solicitudes/segundo | `> 5,000 RPS` | `> 2,000 RPS` |
-| `Latencia de routing` | Tiempo interno de proxy | `< 5ms` | `< 10ms` |
-| `Utilización de CPU` | Uso promedio de CPU | `< 70%` | `< 85%` |
-| `Uso de memoria` | Uso promedio de memoria | `< 2GB` | `< 4GB` |
+| Atributo              | Métrica                  | Objetivo     | Crítico     |
+|-----------------------|--------------------------|--------------|-------------|
+| Latencia              | Tiempo de respuesta p95  | `< 100ms`    | `< 200ms`   |
+| Rendimiento           | Solicitudes/segundo      | `> 5,000 RPS`| `> 2,000 RPS`|
+| Latencia de routing   | Tiempo interno de proxy  | `< 5ms`      | `< 10ms`    |
+| Utilización de CPU    | Uso promedio de CPU      | `< 70%`      | `< 85%`     |
+| Uso de memoria        | Uso promedio de memoria  | `< 2GB`      | `< 4GB`     |
 
 ```json
 // appsettings.Production.json (fragmento)
@@ -61,11 +61,11 @@
 
 ## 10.5 Disponibilidad
 
-| Componente | SLA | Downtime máximo/mes | RPO | RTO |
-|------------|-----|--------------------|-----|-----|
-| `API Gateway` | 99.9% | 43.2 minutos | 0 | 30 segundos |
-| `YARP Proxy` | 99.95% | 21.6 minutos | 0 | 15 segundos |
-| `Health Checks` | 99.99% | 4.32 minutos | 0 | 5 segundos |
+| Componente     | SLA     | Downtime máximo/mes | RPO | RTO         |
+|---------------|---------|---------------------|-----|-------------|
+| API Gateway   | 99.9%   | 43.2 minutos        | 0   | 30 segundos |
+| YARP Proxy    | 99.95%  | 21.6 minutos        | 0   | 15 segundos |
+| Health Checks | 99.99%  | 4.32 minutos        | 0   | 5 segundos  |
 
 ```csharp
 // Configuración de verificaciones de salud para alta disponibilidad
@@ -106,26 +106,26 @@ public void ConfigureServices(IServiceCollection services)
 
 ## 10.6 Escalabilidad
 
-| Dimensión | Capacidad actual | Capacidad objetivo | Estrategia |
-|-----------|------------------|-------------------|------------|
-| `Solicitudes concurrentes` | 1,000 | 10,000 | Escalado horizontal |
-| `Servicios backend` | 10 | 50+ | Enrutamiento dinámico |
-| `Tenants` | 100 | 1,000+ | Multi-tenant architecture |
-| `Regiones` | 1 | 3+ | Multi-region deployment |
+| Dimensión                | Capacidad actual | Capacidad objetivo | Estrategia             |
+|--------------------------|------------------|-------------------|------------------------|
+| Solicitudes concurrentes | 1,000            | 10,000            | Escalado horizontal    |
+| Servicios backend        | 10               | 50+               | Enrutamiento dinámico  |
+| Tenants                  | 100              | 1,000+            | Multi-tenant architecture |
+| Regiones                 | 1                | 3+                | Multi-region deployment|
 
 ## 10.7 Seguridad
 
-| Área | Requisito | Implementación | Verificación |
-|------|-----------|---------------|-------------|
-| `Autenticación` | OAuth2/OIDC + JWT | Identity Service integration | Token validation tests |
-| `Autorización` | RBAC por tenant | Claims-based policies | Policy unit tests |
-| `Encriptación` | TLS 1.3 en tránsito | HTTPS everywhere | SSL Labs A+ rating |
-| `Headers de seguridad` | OWASP compliance | Security middleware | Security scan tools |
-| `Rate limiting` | Prevenir DDoS | Distributed rate limiter | Testing de carga |
+| Área             | Requisito                | Implementación             | Verificación           |
+|------------------|-------------------------|----------------------------|------------------------|
+| Autenticación    | OAuth2/OIDC + JWT       | Identity Service integration| Token validation tests |
+| Autorización     | RBAC por tenant         | Claims-based policies      | Policy unit tests      |
+| Encriptación     | TLS 1.3 en tránsito     | HTTPS everywhere           | SSL Labs A+ rating     |
+| Headers seguridad| OWASP compliance        | Security middleware        | Security scan tools    |
+| Rate limiting    | Prevenir DDoS           | Distributed rate limiter   | Testing de carga       |
 
-## 10.8 Escenarios de calidad
+## 10.8 Escenarios De Calidad
 
-### 10.8.1 Rendimiento bajo carga
+### 10.8.1 Rendimiento Bajo Carga
 
 ```gherkin
 Feature: Rendimiento bajo alta carga
@@ -143,7 +143,7 @@ Scenario: Handling peak traffic
   And todas las instancias deben permanecer healthy
 ```
 
-### 10.8.2 Resiliencia ante fallos
+### 10.8.2 Resiliencia Ante Fallos
 
 ```gherkin
 Feature: Resiliencia ante fallos de servicios
@@ -193,11 +193,11 @@ Scenario: JWT token validation
   And no debe forwarding al servicio backend
 ```
 
-## 10.9 Métricas y monitoreo
+## 10.9 Métricas Y Monitoreo
 
-- KPIs y métricas expuestas vía `Prometheus` y visualizadas en `Grafana`.
+- KPIs y métricas expuestas vía `Prometheus` y visualizadas en Grafana.
 - Alertas automáticas configuradas en `Prometheus` para disponibilidad, latencia, errores y uso de recursos.
-- Dashboards de calidad y salud en `Grafana`.
+- Dashboards de calidad y salud en Grafana.
 
 ```csharp
 public class ApiGatewayMetrics
@@ -326,7 +326,7 @@ groups:
       description: "CPU usage is {{ $value }}% for the last 10 minutes"
 ```
 
-## 10.10 Pruebas de calidad
+## 10.10 Pruebas De Calidad
 
 - Pruebas de carga automatizadas (`k6`) para validar rendimiento y escalabilidad.
 - Pruebas de caos (`Polly`, simulación de fallos) para validar resiliencia.

@@ -1,18 +1,18 @@
-# 8. Conceptos transversales
+# 8. Conceptos Transversales
 
 ## 8.1 Seguridad
 
-| Aspecto | Implementación | Tecnología |
-|---------|----------------|-------------|
-| **Autenticación** | `JWT validation` | `OAuth2/OIDC` |
-| **Autorización** | `Claims-based`, `RBAC` | `.NET 8` |
-| **Rate limiting** | Por IP/Usuario | `Redis` |
-| **CORS** | Configuración dinámica | `ASP.NET Core` |
-| **Cifrado** | `TLS 1.3` | `HTTPS` |
+| Aspecto           | Implementación                | Tecnología         |
+|-------------------|-------------------------------|--------------------|
+| Autenticación     | `JWT validation`              | OAuth2/OIDC        |
+| Autorización      | Claims-based, RBAC            | `.NET 8`           |
+| Rate limiting     | Por IP/Usuario                | `Redis`            |
+| CORS              | Configuración dinámica         | ASP.NET Core       |
+| Cifrado           | `TLS 1.3`                     | `HTTPS`            |
 
-### 8.1.1 Autenticación y autorización
+### 8.1.1 Autenticación Y Autorización
 
-El API Gateway implementa un modelo de seguridad basado en `OAuth2/OIDC` con `JWT tokens` para garantizar acceso seguro a todos los servicios corporativos.
+El API Gateway implementa un modelo de seguridad basado en OAuth2/OIDC con JWT tokens para garantizar acceso seguro a todos los servicios corporativos.
 
 ```csharp
 // Configuración de autenticación JWT
@@ -58,7 +58,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-### 8.1.2 Cabeceras de seguridad y protección
+### 8.1.2 Cabeceras De Seguridad Y Protección
 
 ```csharp
 public class CabecerasSeguridadMiddleware
@@ -99,7 +99,7 @@ public class CabecerasSeguridadMiddleware
 }
 ```
 
-### 8.1.3 Rate limiting y throttling
+### 8.1.3 Rate Limiting Y Throttling
 
 ```csharp
 public class RateLimitingService : IRateLimitingService
@@ -153,20 +153,20 @@ public class RateLimitingService : IRateLimitingService
 }
 ```
 
-## 8.2 Observabilidad y monitoreo
+## 8.2 Observabilidad Y Monitoreo
 
-| Tipo | Herramienta | Propósito |
-|------|-------------|----------|
-| **Logs** | `Serilog` | Registro requests/eventos |
-| **Métricas** | `Prometheus` | Monitoreo performance |
-| **Tracing** | `OpenTelemetry`, `Jaeger` | Trazabilidad requests |
-| **Health** | Health Checks | Estado gateway |
+| Tipo        | Herramienta                  | Propósito                |
+|-------------|-----------------------------|--------------------------|
+| Logs        | `Serilog`                   | Registro requests/eventos|
+| Métricas    | `Prometheus`                | Monitoreo performance    |
+| Tracing     | OpenTelemetry, Jaeger       | Trazabilidad requests    |
+| Health      | Health Checks               | Estado gateway           |
 
-- Stack de observabilidad: `Grafana` (dashboards), `Prometheus` (métricas), `Loki` (logs), `Jaeger` (tracing distribuido).
+- Stack de observabilidad: Grafana (dashboards), `Prometheus` (métricas), `Loki` (logs), Jaeger (tracing distribuido).
 - Dashboards y alertas preconfiguradas para latencia, errores 5xx, disponibilidad y saturación de recursos.
 - Exporters y anotaciones automáticas en los contenedores para scraping de métricas y logs estructurados.
 
-### 8.2.1 Logging estructurado
+### 8.2.1 Logging Estructurado
 
 ```csharp
 // Configuración de Serilog
@@ -221,7 +221,7 @@ public class CorrelationMiddleware
 }
 ```
 
-### 8.2.2 Métricas y telemetría
+### 8.2.2 Métricas Y Telemetría
 
 ```csharp
 public class MetricsMiddleware
@@ -290,7 +290,7 @@ public class MetricsMiddleware
 }
 ```
 
-### 8.2.3 Trazabilidad distribuida
+### 8.2.3 Trazabilidad Distribuida
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -355,15 +355,15 @@ public class TracingEnrichmentMiddleware
 }
 ```
 
-## 8.3 Resiliencia y manejo de errores
+## 8.3 Resiliencia Y Manejo De Errores
 
-| Patrón | Implementación | Propósito |
-|---------|----------------|----------|
-| **Circuit Breaker** | `Polly` | Protección fallos |
-| **Retry** | Políticas exponenciales | Recuperación automática |
-| **Timeout** | Por endpoint | Prevención bloqueos |
+| Patrón           | Implementación         | Propósito                |
+|------------------|-----------------------|--------------------------|
+| Circuit Breaker  | `Polly`               | Protección fallos        |
+| Retry            | Políticas exponenciales| Recuperación automática  |
+| Timeout          | Por endpoint           | Prevención bloqueos      |
 
-### 8.3.1 Patrón circuit breaker
+### 8.3.1 Patrón Circuit Breaker
 
 ```csharp
 public class CircuitBreakerService : ICircuitBreakerService
@@ -441,7 +441,7 @@ public class CircuitBreakerState
 }
 ```
 
-### 8.3.2 Políticas de reintentos
+### 8.3.2 Políticas De Reintentos
 
 ```csharp
 public class RetryPolicyService
@@ -479,9 +479,9 @@ public class RetryPolicyService
 }
 ```
 
-## 8.4 Rendimiento y caching
+## 8.4 Rendimiento Y Caching
 
-### 8.4.1 Estrategia de caching multinivel
+### 8.4.1 Estrategia De Caching Multinivel
 
 ```csharp
 public class MultiLevelCacheService : ICacheService
@@ -543,7 +543,7 @@ public class MultiLevelCacheService : ICacheService
 }
 ```
 
-### 8.4.2 Agrupación de conexiones y reutilización
+### 8.4.2 Agrupación De Conexiones Y Reutilización
 
 ```csharp
 public class HttpClientService
@@ -577,9 +577,9 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-## 8.5 Multi-tenancy
+## 8.5 Multi-Tenancy
 
-### 8.5.1 Resolución de contexto de tenant
+### 8.5.1 Resolución De Contexto De Tenant
 
 ```csharp
 public class TenantContextMiddleware
@@ -590,7 +590,6 @@ public class TenantContextMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         var tenantId = ExtractTenantId(context);
-
         if (!string.IsNullOrEmpty(tenantId))
         {
             var tenant = await _tenantResolver.ResolveTenantAsync(tenantId);
@@ -598,30 +597,22 @@ public class TenantContextMiddleware
             {
                 context.Items["Tenant"] = tenant;
                 context.Items["TenantId"] = tenantId;
-
-                // Enriquecer request headers para servicios downstream
                 context.Request.Headers.Add("X-Tenant-ID", tenantId);
                 context.Request.Headers.Add("X-Tenant-Region", tenant.Region);
                 context.Request.Headers.Add("X-Tenant-Tier", tenant.Tier);
             }
         }
-
         await _next(context);
     }
 
     private string ExtractTenantId(HttpContext context)
     {
-        // 1. JWT claims
         var tenantFromJwt = context.User?.FindFirst("tenant_id")?.Value;
         if (!string.IsNullOrEmpty(tenantFromJwt))
             return tenantFromJwt;
-
-        // 2. Header explícito
         var tenantFromHeader = context.Request.Headers["X-Tenant-ID"].FirstOrDefault();
         if (!string.IsNullOrEmpty(tenantFromHeader))
             return tenantFromHeader;
-
-        // 3. Subdomain (tenant.api.corporate-services.com)
         var host = context.Request.Host.Host;
         if (host.Contains('.'))
         {
@@ -629,13 +620,12 @@ public class TenantContextMiddleware
             if (parts.Length >= 3 && parts[1] == "api")
                 return parts[0];
         }
-
         return null;
     }
 }
 ```
 
-### 8.5.2 Configuración específica por tenant
+### 8.5.2 Configuración Específica Por Tenant
 
 ```csharp
 public class TenantConfigurationService : ITenantConfigurationService
@@ -646,11 +636,9 @@ public class TenantConfigurationService : ITenantConfigurationService
     public async Task<TenantConfiguration> GetConfigurationAsync(string tenantId)
     {
         var cacheKey = $"tenant_config:{tenantId}";
-
         return await _cache.GetAsync(cacheKey, async () =>
         {
             var tenant = await _tenantRepository.GetByIdAsync(tenantId);
-
             return new TenantConfiguration
             {
                 TenantId = tenantId,

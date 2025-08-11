@@ -1,6 +1,6 @@
-# 7. Vista de implementación
+# 7. Vista De Implementación
 
-## 7.1 Estructura del proyecto
+## 7.1 Estructura Del Proyecto
 
 | Componente         | Ubicación           | Tecnología         |
 |--------------------|--------------------|--------------------|
@@ -11,21 +11,21 @@
 | `Docker`           | `/docker`          | `Dockerfile`        |
 | `Scripts`          | `/scripts`         | `PowerShell/Bash`   |
 
-## 7.2 Dependencias principales
+## 7.2 Dependencias Principales
 
 | Dependencia            | Versión | Propósito                |
 |------------------------|---------|--------------------------|
-| `YARP`                 | 2.0+    | `Reverse Proxy`          |
-| `StackExchange.Redis`  | 2.6+    | `Rate limiting`          |
-| `Polly`                | 7.0+    | `Resiliencia`            |
-| `Serilog`              | 3.0+    | `Logging`                |
-| `Redis`                | 7.0+    | `Cache y rate limiting`  |
+| `YARP`                 | `2.0+`  | Reverse Proxy            |
+| `StackExchange.Redis`  | `2.6+`  | Rate limiting            |
+| `Polly`                | `7.0+`  | Resiliencia              |
+| `Serilog`              | `3.0+`  | Logging                  |
+| `Redis`                | `7.0+`  | Cache y rate limiting    |
 
 ---
 
-## 7.3 Infraestructura y despliegue
+## 7.3 Infraestructura Y Despliegue
 
-### 7.3.1 Arquitectura de contenedores (local)
+### 7.3.1 Arquitectura De Contenedores (Local)
 
 ```yaml
 # docker-compose.yml para desarrollo local
@@ -82,7 +82,7 @@ volumes:
   redis-data:
 ```
 
-### 7.3.2 Dockerfile optimizado
+### 7.3.2 Dockerfile Optimizado
 
 ```dockerfile
 # Etapa de construcción
@@ -132,7 +132,7 @@ EXPOSE 8443
 ENTRYPOINT ["dotnet", "ApiGateway.dll"]
 ```
 
-### 7.3.3 Despliegue en AWS ECS con Terraform
+### 7.3.3 Despliegue En AWS ECS Con Terraform
 
 ```hcl
 # infrastructure/terraform/api-gateway-ecs.tf
@@ -231,9 +231,9 @@ resource "aws_elasticache_replication_group" "redis_cluster" {
 
 ---
 
-## 7.4 Configuración y secretos
+## 7.4 Configuración Y Secretos
 
-### 7.4.1 Configuración de la aplicación
+### 7.4.1 Configuración De La Aplicación
 
 ```json
 // appsettings.Production.json (fragmento)
@@ -277,17 +277,17 @@ resource "aws_elasticache_replication_group" "redis_cluster" {
 }
 ```
 
-### 7.4.2 Gestión de secretos
+### 7.4.2 Gestión De Secretos
 
 - `AWS Secrets Manager` para credenciales sensibles (`Redis`, JWT, certificados TLS).
 - Acceso a secretos vía variables de entorno y configuración segura en tiempo de despliegue.
 
 ---
 
-## 7.5 Infraestructura como código
+## 7.5 Infraestructura Como Código
 
 - Todo el despliegue productivo se realiza con `Terraform` sobre AWS (`ECS Fargate`, `ElastiCache`, `ALB`, `Secrets Manager`).
-- Los entornos de desarrollo usan `docker-compose` y scripts Bash/PowerShell.
+- Los entornos de desarrollo usan `docker-compose` y scripts `Bash`/`PowerShell`.
 - Los pipelines CI/CD integran validaciones de seguridad (`Checkov`), análisis de código (`SonarQube`) y despliegue automatizado (`GitHub Actions`).
 
 ---
@@ -426,7 +426,7 @@ jobs:
 
 ---
 
-## 7.7 Monitoring y observabilidad
+## 7.7 Monitoring Y Observabilidad
 
 - Stack de observabilidad: `Prometheus` (métricas), `Grafana` (dashboards), `Loki` (logs), `Jaeger` (tracing distribuido).
 - Dashboards y alertas preconfiguradas para latencia, errores 5xx, disponibilidad y saturación de recursos.
@@ -471,7 +471,7 @@ alertas:
           - alertmanager:9093
 ```
 
-### 7.7.2 Alertas rules
+### 7.7.2 Alertas Rules
 
 ```yaml
 # monitoring/prometheus/api-gateway-alerts.yml
@@ -484,8 +484,8 @@ groups:
     labels:
       severity: critical
     annotations:
-      summary: "API Gateway error rate is above 5%"
-      description: "API Gateway error rate is {{ $value | humanizePercentage }} for the last 5 minutes"
+      summary: "Error rate > 5% en API Gateway"
+      description: "Error rate actual: {{ $value | humanizePercentage }} (últimos 5 minutos)"
 
   - alert: APIGatewayHighLatency
     expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="api-gateway"}[5m])) > 1
@@ -493,8 +493,8 @@ groups:
     labels:
       severity: warning
     annotations:
-      summary: "API Gateway 95th percentile latency is high"
-      description: "API Gateway 95th percentile latency is {{ $value }}s"
+      summary: "Latencia P95 alta en API Gateway"
+      description: "Latencia P95 actual: {{ $value }}s"
 
   - alert: APIGatewayDown
     expr: up{job="api-gateway"} == 0
@@ -502,8 +502,8 @@ groups:
     labels:
       severity: critical
     annotations:
-      summary: "API Gateway is down"
-      description: "API Gateway has been down for more than 1 minute"
+      summary: "API Gateway caído"
+      description: "Sin disponibilidad por más de 1 minuto"
 ```
 
 ---

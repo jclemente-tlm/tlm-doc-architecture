@@ -1,27 +1,27 @@
-# 6. Vista de tiempo de ejecución
+# 6. Vista De Tiempo De Ejecución
 
-## 6.1 Escenarios principales
+## 6.1 Escenarios Principales
 
 | Escenario                  | Flujo principal                                      | Componentes involucrados                |
 |----------------------------|-----------------------------------------------------|-----------------------------------------|
-| `Proxy request`            | Cliente → Gateway → Backend                         | `YARP`, `ALB`, `.NET 8`                |
-| `Autenticación`            | JWT validation → Claims                             | `Auth Middleware`, `Keycloak`           |
-| `Rate limiting`            | Request → Redis → Allow/Deny                        | `Rate Limiter`, `Redis`                 |
-| `Circuit breaker`          | Proxy → Polly → Servicio/Fallback                   | `Polly`, `YARP`                        |
-| `Observabilidad`           | Request → Logging/Metrics/Tracing                   | `Serilog`, `Loki`, `Prometheus`, `Jaeger` |
+| Proxy request              | Cliente → Gateway → Backend                         | `YARP`, `ALB`, `.NET 8`                |
+| Autenticación              | Validación JWT → Claims                             | `Auth Middleware`, `Keycloak`           |
+| Rate limiting              | Request → `Redis` → Allow/Deny                     | `Rate Limiter`, `Redis`                 |
+| Circuit breaker            | Proxy → `Polly` → Servicio/Fallback                 | `Polly`, `YARP`                        |
+| Observabilidad             | Request → Logging/Metrics/Tracing                   | `Serilog`, `Loki`, `Prometheus`, `Jaeger` |
 
-## 6.2 Flujos de interacción y patrones
+## 6.2 Flujos De Interacción Y Patrones
 
-- **Autenticación y enrutamiento**: El gateway valida el token `JWT` (cache en `Redis`), resuelve el contexto de `tenant`, aplica `rate limiting` y enruta la solicitud al backend correspondiente, enriqueciendo los headers con información de tenant y usuario.
-- **Health checks y circuit breaker**: Monitoreo activo de instancias, apertura/cierre de circuitos y failover automático entre instancias saludables.
-- **Rate limiting distribuido**: Ventana deslizante de 1 minuto, sincronización entre instancias vía `Redis`, headers estándar de rate limit en la respuesta.
-- **Failover y degradación**: Switchover automático ante fallos, degradación controlada bajo sobrecarga, priorización de clientes premium.
-- **Multi-tenancy**: Resolución de tenant vía claims `JWT`, `API Key`, subdominio o query param; routing inteligente por tier y país.
-- **Observabilidad**: Trazabilidad distribuida (`Jaeger`), métricas en tiempo real (`Prometheus`), logs estructurados (`Loki`), dashboards y alertas (`Grafana`).
+- Autenticación y enrutamiento: validación de token `JWT` (cache en `Redis`), resolución de tenant, rate limiting y enrutamiento al backend, enriqueciendo headers con información relevante.
+- Health checks y circuit breaker: monitoreo activo, apertura/cierre de circuitos y failover automático.
+- Rate limiting distribuido: ventana deslizante de `1 minuto`, sincronización vía `Redis`, headers estándar en respuesta.
+- Failover y degradación: switchover automático, degradación controlada bajo sobrecarga, priorización de clientes premium.
+- Multi-tenancy: resolución de tenant vía claims `JWT`, `API Key`, subdominio o query param; routing inteligente por tier y país.
+- Observabilidad: trazabilidad distribuida (`Jaeger`), métricas en tiempo real (`Prometheus`), logs estructurados (`Loki`), dashboards y alertas (`Grafana`).
 
-## 6.3 Ejemplos de ejecución (diagramas de secuencia)
+## 6.3 Ejemplos De Ejecución (Diagramas De Secuencia)
 
-### 6.3.1 Flujo de autenticación y enrutamiento
+### 6.3.1 Flujo De Autenticación Y Enrutamiento
 
 ```mermaid
 sequenceDiagram
@@ -45,7 +45,7 @@ sequenceDiagram
     Gateway->>Client: Response con headers de rate limit
 ```
 
-### 6.3.2 Health check y circuit breaker
+### 6.3.2 Health Check Y Circuit Breaker
 
 ```mermaid
 sequenceDiagram
@@ -69,7 +69,7 @@ sequenceDiagram
     Gateway->>Service1: Route only to healthy
 ```
 
-### 6.3.3 Rate limiting distribuido
+### 6.3.3 Rate Limiting Distribuido
 
 ```mermaid
 sequenceDiagram
@@ -89,7 +89,7 @@ sequenceDiagram
     Gateway1->>Client: 429 Too Many Requests
 ```
 
-### 6.3.4 Failover automático y degradación
+### 6.3.4 Failover Automático Y Degradación
 
 ```mermaid
 sequenceDiagram
@@ -109,7 +109,7 @@ sequenceDiagram
     Gateway->>Client: Response
 ```
 
-### 6.3.5 Multi-tenancy y routing inteligente
+### 6.3.5 Multi-Tenancy Y Routing Inteligente
 
 ```mermaid
 sequenceDiagram
@@ -128,7 +128,7 @@ sequenceDiagram
     Gateway->>ClientB: Response
 ```
 
-### 6.3.6 Observabilidad y monitoreo
+### 6.3.6 Observabilidad Y Monitoreo
 
 ```mermaid
 sequenceDiagram
@@ -147,22 +147,22 @@ sequenceDiagram
     Grafana->>Jaeger: Query traces
 ```
 
-## 6.4 Objetivos de rendimiento y SLA
+## 6.4 Objetivos De Rendimiento Y SLA
 
-| Operación                  | Target         | Timeout | SLA    |
-|----------------------------|----------------|---------|--------|
-| `Token validation (cache)` | `< 10ms`       | 100ms   | 99.9%  |
-| `Token validation (fresh)` | `< 100ms`      | 500ms   | 99.5%  |
-| `Request routing`          | `< 5ms`        | 50ms    | 99.9%  |
-| `Health check`             | `< 200ms`      | 5s      | 95%    |
-| `Rate limit check`         | `< 5ms`        | 100ms   | 99.9%  |
-| `Config reload`            | `< 1s`         | 30s     | 99%    |
-| `Circuit breaker`          | `< 100ms`      | 500ms   | 99%    |
+| Operación                  | Target           | Timeout | SLA    |
+|----------------------------|------------------|---------|--------|
+| Token validation (cache)   | `< 10ms`         | `100ms` | `99.9%`  |
+| Token validation (fresh)   | `< 100ms`        | `500ms` | `99.5%`  |
+| Request routing            | `< 5ms`          | `50ms`  | `99.9%`  |
+| Health check               | `< 200ms`        | `5s`    | `95%`    |
+| Rate limit check           | `< 5ms`          | `100ms` | `99.9%`  |
+| Config reload              | `< 1s`           | `30s`   | `99%`    |
+| Circuit breaker            | `< 100ms`        | `500ms` | `99%`    |
 
-## 6.5 Manejo de errores y resiliencia
+## 6.5 Manejo De Errores Y Resiliencia
 
-- **Timeout downstream**: 30s, 3 reintentos con backoff, circuit breaker tras 5 fallos, responde 504 con retry-after.
-- **Identity service caído**: Cache de tokens extendido 1h, solo requests con tokens válidos, responde 503 para nuevas autenticaciones.
-- **Degradación bajo carga**: Priorización de clientes premium, cola para estándar, 503 si no hay capacidad.
+- Timeout downstream: `30s`, `3 reintentos` con backoff, circuit breaker tras `5 fallos`, responde `504` con `retry-after`.
+- Identity service caído: cache de tokens extendido `1h`, solo requests con tokens válidos, responde `503` para nuevas autenticaciones.
+- Degradación bajo carga: priorización de clientes premium, cola para estándar, `503` si no hay capacidad.
 
 ---

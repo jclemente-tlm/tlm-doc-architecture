@@ -1,4 +1,5 @@
 ---
+id: adr-001-multi-tenancy-paises
 title: "Multi-Tenancy y Gestión por Países"
 sidebar_position: 1
 ---
@@ -25,7 +26,7 @@ Las alternativas de multi-tenancy evaluadas fueron:
 - **Database per Tenant** (Aislamiento completo)
 - **Schema per Tenant** (Aislamiento intermedio)
 - **Row-Level Security** (Aislamiento lógico)
-- **Hybrid Approach** (Combinación según criticidad)
+- **Hybrid Approach** (Combinación según criticidad): Consiste en aplicar diferentes patrones de multi-tenancy según el tipo de servicio o dato. Por ejemplo, servicios críticos o regulados (como Identidad o Finanzas) se implementan como single-tenant (una base de datos dedicada por país o cliente), mientras que servicios operacionales o de soporte (como Track & Trace o Notificación) pueden usar modelos multi-tenant (por ejemplo, un esquema por país en una misma base de datos). Así, se logra un balance entre cumplimiento, seguridad, costos y eficiencia operativa.
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -50,16 +51,45 @@ Las alternativas de multi-tenancy evaluadas fueron:
 | **Multi-Tenant DB** | Moderado | Excelente | Muy limitada | Muy eficientes | 🟡 Considerada |
 | **Single-Tenant** | Excelente | Muy limitada | Máxima | Muy altos | ❌ Descartada |
 
-## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
+## 💰 Análisis de Costos (Ejemplo AWS, 2025)
 
-### Escenario: 4 países, 50GB datos por país
+**Supuestos:**
 
-| Solución | Infraestructura DB | Operación | Backup/DR | TCO 3 años |
-|----------|-------------------|-----------|-----------|------------|
-| **DB per Tenant** | US$48,000/año | US$60,000/año | US$24,000/año | **US$396,000** |
-| **Schema per Tenant** | US$18,000/año | US$36,000/año | US$12,000/año | **US$198,000** |
-| **Row-Level Security** | US$12,000/año | US$24,000/año | US$6,000/año | **US$126,000** |
-| **Hybrid Approach** | US$30,000/año | US$42,000/año | US$18,000/año | **US$270,000** |
+- 4 países (tenants), 50GB de datos por país/servicio
+- Instancia RDS PostgreSQL db.t3.medium (2 vCPU, 4GB RAM)
+- Almacenamiento: 200GB total (4x50GB)
+- Backups automáticos, alta disponibilidad Multi-AZ
+- Servicios desplegados en AWS ECS Fargate (2 vCPU, 4GB RAM por servicio)
+- Precios aproximados AWS región us-east-1 (agosto 2025)
+- Solo costos de base de datos y compute (no incluye red, soporte, etc.)
+
+### Servicio de Identidad (Multi-Tenant, DB compartida, tablas compartidas)
+
+| Concepto              | Cantidad | Precio Unitario (USD/mes) | Subtotal (USD/mes) |
+|-----------------------|----------|---------------------------|--------------------|
+| RDS db.t3.medium      | 1        | $70                       | $70                |
+| Almacenamiento (GB)   | 50       | $0.115                    | $5.75              |
+| Backups (GB)          | 50       | $0.095                    | $4.75              |
+| Multi-AZ              | 1        | $35                       | $35                |
+| Operación/monitoreo   | 1        | $10                       | $10                |
+| ECS Fargate (2 vCPU, 4GB RAM) | 1 | $55                      | $55                |
+| **Total mensual**     |          |                           | **$180.50**        |
+| **Total 3 años**      |          |                           | **$6,498**         |
+
+### Servicio Track & Trace (Multi-Tenant, DB separada por país)
+
+| Concepto              | Cantidad | Precio Unitario (USD/mes) | Subtotal (USD/mes) |
+|-----------------------|----------|---------------------------|--------------------|
+| RDS db.t3.medium      | 4        | $70                       | $280               |
+| Almacenamiento (GB)   | 200      | $0.115                    | $23                |
+| Backups (GB)          | 200      | $0.095                    | $19                |
+| Multi-AZ              | 4        | $35                       | $140               |
+| Operación/monitoreo   | 4        | $10                       | $40                |
+| ECS Fargate (2 vCPU, 4GB RAM) | 1 | $55                      | $55                |
+| **Total mensual**     |          |                           | **$557**           |
+| **Total 3 años**      |          |                           | **$20,052**        |
+
+> **Nota:** Precios referenciales de AWS Pricing Calculator y Fargate, pueden variar según región y descuentos. No incluye costos de red, instancias EC2, ni licencias adicionales.
 
 ## ⚖️ DECISIÓN
 
@@ -248,3 +278,9 @@ KPIs por País:
 **Decisión tomada por:** Equipo de Arquitectura + Legal + Compliance
 **Fecha:** Agosto 2025
 **Próxima revisión:** Agosto 2026
+
+## Alternativas descartadas
+
+- **Implementación propia:** alto riesgo de seguridad y mantenimiento
+- **LDAP tradicional:** menor flexibilidad, integración limitada con aplicaciones modernas
+- **Active Directory:** lock-in Microsoft, menor portabilidad y flexibilidad

@@ -1,5 +1,6 @@
 ---
-title: "Autenticación mediante SSO"
+id: adr-004-autenticacion-sso
+title: "Autenticación Centralizada SSO y Multi-Tenancy"
 sidebar_position: 4
 ---
 
@@ -11,24 +12,24 @@ Aceptada – Agosto 2025
 
 ## 🗺️ CONTEXTO
 
-Los servicios corporativos requieren una solución robusta de gestión de identidades que soporte:
+Los servicios corporativos requieren una solución robusta de gestión de identidades para:
 
-- **Autenticación centralizada** (SSO) para todos los servicios
+- **Autenticación centralizada (SSO) para todos los servicios**
 - **Multi-tenancy** para operaciones en Perú, Ecuador, Colombia y México
-- **Protocolos estándar** (OAuth2, OIDC, SAML) para integración
-- **Federación** con proveedores externos corporativos
-- **Escalabilidad** para miles de usuarios concurrentes
-- **Portabilidad** entre clouds y on-premises
+- **Protocolos estándar (OAuth2, OIDC, SAML) para integración**
+- **Federación con proveedores externos corporativos**
+- **Escalabilidad para miles de usuarios concurrentes**
+- **Portabilidad entre clouds y on-premises**
 
-La intención estratégica es **mantenerse agnóstico** y evitar lock-in con proveedores cloud específicos.
+La intención estratégica es mantener agnosticidad y evitar lock-in con proveedores cloud específicos.
 
 Las alternativas evaluadas fueron:
 
-- **Keycloak** (Open source, Red Hat, agnóstico)
-- **Auth0** (SaaS, Okta, gestionado)
-- **AWS Cognito** (Gestionado AWS, lock-in)
-- **Azure AD B2C** (Gestionado Azure, lock-in)
-- **Google Identity Platform** (Gestionado GCP, lock-in)
+- **Keycloak** (open source, agnóstico)
+- **Auth0** (SaaS, gestionado)
+- **AWS Cognito** (gestionado AWS)
+- **Azure AD B2C** (gestionado Azure)
+- **Google Identity Platform** (gestionado GCP)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -36,118 +37,113 @@ Las alternativas evaluadas fueron:
 
 | Criterio | Keycloak | Auth0 | AWS Cognito | Azure AD B2C | Google IdP |
 |----------|----------|-------|-------------|--------------|------------|
-| **Agnosticidad** | ✅ Totalmente agnóstico | 🟡 SaaS independiente | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP |
+| **Agnosticidad** | ❌ Lock-in OSS | 🟡 SaaS independiente | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP |
+| **Operación** | 🟡 Requiere gestión | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado |
+| **Seguridad** | ✅ Enterprise grade | ✅ Enterprise grade | ✅ Enterprise grade | ✅ Enterprise grade | ✅ Enterprise grade |
 | **Multi-tenancy** | ✅ Nativo y flexible | ✅ Excelente soporte | 🟡 Básico | ✅ Muy bueno | 🟡 Básico |
 | **Protocolos** | ✅ Todos los estándares | ✅ Completo | 🟡 Limitado | ✅ Completo | 🟡 Limitado |
-| **Operación** | 🟡 Requiere gestión | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado |
 | **Personalización** | ✅ Altamente personalizable | 🟡 Limitada | 🟡 Muy limitada | 🟡 Limitada | 🟡 Muy limitada |
 | **Costos** | ✅ Solo infraestructura | 🟡 Por usuario activo | 🟡 Por usuario activo | 🟡 Por usuario activo | 🟡 Por usuario activo |
 
 ### Matriz de Decisión
 
-| Solución | Agnosticidad | Operación | Costos | Multi-tenancy | Recomendación |
-|----------|--------------|-----------|--------|---------------|---------------|
-| **Keycloak** | Excelente | Manual | Bajo | Excelente | ✅ **Seleccionada** |
-| **Auth0** | Buena | Automática | Alto | Excelente | 🟡 Alternativa |
-| **AWS Cognito** | Mala | Automática | Medio | Limitada | ❌ Descartada |
-| **Azure AD B2C** | Mala | Automática | Medio | Buena | ❌ Descartada |
-| **Google IdP** | Mala | Automática | Medio | Limitada | ❌ Descartada |
+| Solución | Agnosticidad | Operación | Seguridad | Multi-tenancy | Recomendación |
+|----------|--------------|-----------|-----------|---------------|---------------|
+| **Keycloak** | Mala | Manual | Excelente | Excelente | ✅ **Seleccionada** |
+| **Auth0** | Mala | Excelente | Excelente | Excelente | 🟡 Alternativa |
+| **AWS Cognito** | Mala | Excelente | Excelente | Limitada | ❌ Descartada |
+| **Azure AD B2C** | Mala | Excelente | Excelente | Buena | ❌ Descartada |
+| **Google IdP** | Mala | Excelente | Excelente | Limitada | ❌ Descartada |
 
 ## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
 
-### Escenario Base: 10,000 usuarios activos, 4 países
+### Escenario de referencia: 10,000 usuarios activos, 4 países
+
+> **Metodología y supuestos:** Se asume un uso promedio de 10,000 usuarios activos, 4 países, considerando operación, escalabilidad y personalización. El TCO (Total Cost of Ownership) se calcula para un horizonte de 3 años, incluyendo costos directos y estimaciones de operación. Los valores pueden variar según el crecimiento de usuarios y la infraestructura.
 
 | Solución | Licenciamiento | Infraestructura | Operación | TCO 3 años |
-|----------|----------------|-----------------|-----------|------------|
-| **Keycloak** | US$0 (OSS) | US$3,600/año | US$48,000/año | **US$154,800** |
-| **Auth0** | US$23/usuario/mes | US$0 | US$12,000/año | **US$864,000** |
-| **AWS Cognito** | US$0.0055/MAU | US$0 | US$0 | **US$1,980/año** |
-| **Azure AD B2C** | US$0.00325/MAU | US$0 | US$0 | **US$1,170/año** |
-| **Google IdP** | US$0.006/MAU | US$0 | US$0 | **US$2,160/año** |
+|----------|----------------|----------------|-----------|------------|
+| Keycloak | US$0 (OSS) | US$3,600/año | US$48,000/año | US$154,800 |
+| Auth0 | US$23/usuario/mes | US$0 | US$12,000/año | US$864,000 |
+| AWS Cognito | US$0.0055/MAU | US$0 | US$0 | US$1,980/año |
+| Azure AD B2C | US$0.00325/MAU | US$0 | US$0 | US$1,170/año |
+| Google IdP | US$0.006/MAU | US$0 | US$0 | US$2,160/año |
 
 ### Escenario Alto Volumen: 50,000 usuarios activos
 
 | Solución | TCO 3 años | Escalabilidad |
 |----------|------------|---------------|
-| **Keycloak** | **US$240,000** | Lineal con infra |
-| **Auth0** | **US$4,140,000** | Automática |
-| **AWS Cognito** | **US$9,900** | Automática |
-| **Azure AD B2C** | **US$5,850** | Automática |
-| **Google IdP** | **US$10,800** | Automática |
+| Keycloak | US$240,000 | Lineal con infraestructura |
+| Auth0 | US$4,140,000 | Automática |
+| AWS Cognito | US$9,900 | Automática |
+| Azure AD B2C | US$5,850 | Automática |
+| Google IdP | US$10,800 | Automática |
 
-## ⚖️ DECISIÓN
+---
 
-**Seleccionamos Keycloak** como proveedor de identidad por:
+## Consideraciones técnicas y riesgos
 
-### Ventajas Clave
+### Límites clave
 
-- **Máxima agnosticidad**: Deployable en cualquier cloud/on-premises
-- **Multi-tenancy robusto**: Realms nativos para separación por país
-- **Protocolos completos**: OAuth2, OIDC, SAML 2.0 out-of-the-box
-- **Personalización total**: Temas, flujos, extensiones personalizadas
-- **Costo predecible**: Sin sorpresas por crecimiento de usuarios
-- **Control total**: Datos y configuración bajo control corporativo
+- **Keycloak:** Sin límite práctico de usuarios, escalabilidad horizontal, personalización total.
+- **Auth0/AWS Cognito/Azure AD B2C/Google IdP:** Límite por usuario activo, escalabilidad automática, personalización limitada.
 
-### Mitigación de Desventajas
+### Riesgos y mitigación
 
-- **Complejidad operacional**: Mitigada con contenedores y automatización
-- **Responsabilidad de updates**: Gestionada con CI/CD y testing automatizado
-- **Escalabilidad manual**: Planificada con métricas y auto-scaling
+- **Complejidad operacional:** mitigada con contenedores y automatización.
+- **Gestión de actualizaciones:** gestionada con CI/CD y testing automatizado.
+- **Curva de aprendizaje:** mitigada con capacitación y documentación.
 
-### Configuración Multi-tenant
+---
 
-```yaml
-Realms por País:
-- talma-peru: Usuarios y aplicaciones de Perú
-- talma-ecuador: Usuarios y aplicaciones de Ecuador
-- talma-colombia: Usuarios y aplicaciones de Colombia
-- talma-mexico: Usuarios y aplicaciones de México
-```
+## ✔️ DECISIÓN
 
-## 🔄 CONSECUENCIAS
+Se selecciona **Keycloak** como solución para la gestión de identidades y autenticación centralizada en todos los entornos del sistema corporativo.
 
-### Positivas
+## Justificación
 
-- ✅ **Portabilidad completa** sin dependencias de proveedor
-- ✅ **Multi-tenancy nativo** con aislamiento por país
-- ✅ **Personalización ilimitada** de flujos y UI
-- ✅ **Costos predecibles** independientes del crecimiento
-- ✅ **Cumplimiento regulatorio** con control total de datos
-- ✅ **Ecosistema .NET** excelente con librerías oficiales
+- Integración nativa con protocolos estándar y ecosistema `.NET`
+- Multi-tenancy robusto con aislamiento por país (`tenant (realm)`)
+- Personalización total de flujos y UI
+- Costos predecibles y control total de datos
+- Portabilidad y despliegue en cualquier cloud/on-premises
+- Menor complejidad operativa frente a SaaS, con control total
 
-### Negativas
+## Alternativas descartadas
 
-- ❌ **Mayor responsabilidad operacional** requiere expertise
-- ❌ **Gestión de actualizaciones** y parches manual
-- ❌ **Configuración inicial compleja** para multi-tenancy
+- **Auth0:** Costos altos y lock-in SaaS
+- **AWS Cognito:** Limitada integración y lock-in AWS
+- **Azure AD B2C:** Limitada integración y lock-in Azure
+- **Google IdP:** Limitada integración y lock-in GCP
 
-### Neutras
+---
 
-- 🔄 **Curva de aprendizaje** inicial pero conocimiento reutilizable
-- 🔄 **Monitoreo especializado** requerido pero estándar
+## ⚠️ CONSECUENCIAS
+
+- El ciclo de vida de identidades será gestionado exclusivamente en Keycloak.
+- Las aplicaciones y microservicios deben validar JWT y claims emitidos por Keycloak.
+- Se documentará el uso y acceso en los manuales de operación y seguridad.
+- Se implementarán las mitigaciones descritas y un plan de revisión anual.
+
+---
 
 ## 🏗️ ARQUITECTURA DE DESPLIEGUE
 
-### Configuración de Alta Disponibilidad
+- Cluster Keycloak: 3 instancias multi-AZ
+- Load Balancer: `YARP`/ALB
+- Base de datos: `PostgreSQL` replicado
+- Cache: `Redis` cluster
+- Sesiones: sticky sessions + persistencia en base de datos
+- Realms por país: `talma-peru`, `talma-ecuador`, `talma-colombia`, `talma-mexico`
 
-```yaml
-Keycloak Cluster:
-  Instancias: 3 (multi-AZ)
-  Load Balancer: YARP/ALB
-  Base de Datos: PostgreSQL (replicado)
-  Cache: Redis (cluster)
-  Sesiones: Sticky sessions + DB persistence
-```
+### Integración con servicios
 
-### Integración con Servicios
+- API Gateway: OIDC Client + validación de JWT
+- Notification: OAuth2 service-to-service
+- Track & Trace: JWT bearer tokens
+- SITA Messaging: Client credentials flow
 
-```yaml
-Servicios Corporativos:
-  API Gateway: OIDC Client + JWT validation
-  Notification: Service-to-service OAuth2
-  Track & Trace: JWT bearer tokens
-  SITA Messaging: Client credentials flow
-```
+---
 
 ## 📚 REFERENCIAS
 

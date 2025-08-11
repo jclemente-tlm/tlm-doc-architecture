@@ -1,5 +1,6 @@
 ---
-title: "Almacenamiento de Objetos"
+id: adr-014-almacenamiento-de-objetos
+title: "Almacenamiento de Objetos Empresarial"
 sidebar_position: 14
 ---
 
@@ -11,141 +12,149 @@ Aceptada – Agosto 2025
 
 ## 🗺️ CONTEXTO
 
-Los servicios corporativos distribuidos requieren una estrategia de Object Storage que soporte:
+Los servicios corporativos requieren una solución de almacenamiento de objetos que permita:
 
-- **Multi-cloud portabilidad** sin vendor lock-in entre AWS, Azure, GCP
+- **Portabilidad multi-cloud** sin lock-in (AWS, Azure, GCP, on-premises)
 - **Multi-tenancy** con segregación de datos por país/tenant
 - **Escalabilidad masiva** para documentos, imágenes, logs y backups
 - **Durabilidad garantizada** con replicación y versionado automático
 - **Seguridad avanzada** con encriptación, IAM y compliance
-- **API estándar S3** para máxima compatibilidad de herramientas
-- **Disaster recovery** con backup cross-region automático
+- **API estándar S3** para máxima compatibilidad
+- **Disaster recovery** con backup cross-region
 - **Costos optimizados** con lifecycle policies y storage classes
 - **Performance consistente** para aplicaciones críticas
 - **Integración CI/CD** para artifacts y deployment assets
 
-La intención estratégica es **priorizar agnosticidad vs simplicidad operacional** para Object Storage empresarial.
+Alternativas evaluadas:
 
-Las alternativas evaluadas fueron:
-
-- **MinIO** (S3-compatible, open source, self-hosted)
-- **AWS S3** (Managed service, AWS nativo)
-- **Azure Blob Storage** (Managed service, Azure nativo)
-- **Google Cloud Storage** (Managed service, GCP nativo)
-- **Ceph** (Distributed storage, open source)
-- **OpenStack Swift** (Object storage, open source)
+- **AWS S3** (estándar de mercado, alta durabilidad, ecosistema enorme)
+- **Azure Blob Storage** (fuerte en entornos Microsoft, buena integración)
+- **Google Cloud Storage (GCS)** (muy rápido, buen manejo de clases de almacenamiento)
+- **Wasabi** (administrado, muy bajo costo, S3 compatible, sin egress fees)
+- **MinIO** (auto-hosteado, open source, 100% S3 compatible, portable a cualquier infraestructura)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio | MinIO | AWS S3 | Azure Blob | GCS | Ceph | Swift |
-|----------|-------|--------|------------|-----|------|-------|
-| **Agnosticidad** | ✅ Totalmente agnóstico | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP | ✅ Totalmente agnóstico | ✅ Agnóstico |
-| **API S3** | ✅ 100% compatible | ✅ API nativa | 🟡 Compatible parcial | 🟡 Compatible parcial | 🟡 Compatible básico | ❌ No compatible |
-| **Operación** | 🟡 Self-hosted | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | 🟡 Compleja gestión | 🟡 Compleja gestión |
-| **Escalabilidad** | ✅ Horizontal | ✅ Ilimitada | ✅ Ilimitada | ✅ Ilimitada | ✅ Muy buena | ✅ Buena |
-| **Seguridad** | ✅ Encriptación, IAM | ✅ Enterprise grade | ✅ Enterprise grade | ✅ Enterprise grade | 🟡 Básica | 🟡 Básica |
-| **Ecosistema .NET** | ✅ AWS SDK compatible | ✅ AWS SDK nativo | ✅ Azure SDK nativo | ✅ Google SDK | 🟡 Clientes terceros | 🟡 Clientes limitados |
-| **Costos** | ✅ Solo infraestructura | 🟡 Por GB + requests | 🟡 Por GB + transacciones | 🟡 Por GB + operaciones | ✅ Solo infraestructura | ✅ Solo infraestructura |
+| Criterio              | AWS S3 | Wasabi | Azure Blob | GCS | MinIO |
+|----------------------|--------|--------|------------|-----|-------|
+| **Agnosticidad**     | ❌ Lock-in AWS | ✅ S3 compatible, multi-cloud | ❌ Lock-in Azure | ❌ Lock-in GCP | ✅ OSS, multi-cloud |
+| **API S3**           | ✅ Nativa | ✅ 100% compatible | 🟡 Parcial | 🟡 Parcial | ✅ 100% compatible |
+| **Operación**        | ✅ Gestionada | ✅ Gestionada | ✅ Gestionada | ✅ Gestionada | 🟡 Self-hosted |
+| **Escalabilidad**    | ✅ Ilimitada | ✅ Ilimitada | ✅ Ilimitada | ✅ Ilimitada | ✅ Horizontal |
+| **Seguridad**        | ✅ Enterprise grade | ✅ Encriptación, IAM | ✅ Enterprise grade | ✅ Enterprise grade | ✅ IAM, encriptación |
+| **Ecosistema .NET**  | ✅ AWS SDK nativo | ✅ AWS SDK compatible | ✅ Azure SDK nativo | ✅ Google SDK | ✅ AWS SDK compatible |
+| **Costos**           | 🟡 Pago por uso | ✅ Bajo costo, sin egress fees | 🟡 Pago por uso | 🟡 Pago por uso | ✅ Solo infraestructura |
 
 ### Matriz de Decisión
 
-| Solución | Agnosticidad | API S3 | Operación | Escalabilidad | Recomendación |
-|----------|--------------|--------|-----------|---------------|---------------|
-| **AWS S3** | Mala | Nativa | Gestionada | Ilimitada | ✅ **Seleccionada** |
-| **MinIO** | Excelente | Excelente | Self-hosted | Excelente | 🟡 Alternativa |
-| **Azure Blob Storage** | Mala | Parcial | Gestionada | Ilimitada | 🟡 Considerada |
-| **Google Cloud Storage** | Mala | Parcial | Gestionada | Ilimitada | ❌ Descartada |
-| **Ceph** | Excelente | Básico | Compleja | Muy buena | ❌ Descartada |
-| **OpenStack Swift** | Excelente | No compatible | Compleja | Buena | ❌ Descartada |
+| Solución         | Agnosticidad | API S3 | Operación | Escalabilidad | Recomendación         |
+|------------------|--------------|--------|-----------|---------------|-----------------------|
+| **AWS S3**       | Mala         | Nativa | Gestionada| Ilimitada     | ✅ **Seleccionada**    |
+| **Wasabi**       | Excelente    | Excelente | Gestionada | Excelente   | 🟡 Alternativa         |
+| **Azure Blob**   | Mala         | Parcial | Gestionada| Ilimitada     | 🟡 Considerada         |
+| **GCS**          | Mala         | Parcial | Gestionada| Ilimitada     | ❌ Descartada          |
+| **MinIO**        | Excelente    | Excelente | Self-hosted | Excelente   | 🟡 Alternativa         |
 
-### Comparativa de costos estimados (2025)
+## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
 
-| Solución             | Costo mensual base* | Costos adicionales         | Infra propia |
-|----------------------|---------------------|---------------------------|--------------|
-| AWS S3               | Pago por uso        | Almacenamiento, transfer. | No           |
-| Azure Blob Storage   | Pago por uso        | Almacenamiento, transfer. | No           |
-| Google Cloud Storage | Pago por uso        | Almacenamiento, transfer. | No           |
-| MinIO                | ~US$30/mes (VM)     | Discos, backup            | Sí           |
+> **Metodología y supuestos:** Se asume un uso promedio de 10TB storage, 1TB transferencia/mes, 4 regiones. El TCO (Total Cost of Ownership) se calcula para un horizonte de 3 años, incluyendo costos directos y estimaciones de operación. Los valores pueden variar según volumen y proveedor.
 
-*Precios aproximados, sujetos a variación según proveedor y volumen.
-
----
-
-## ANÁLISIS DE COSTOS (TCO 3 años)
-
-### Escenario Base: 10TB storage, 1TB transfer/mes, 4 regiones
-
-| Solución | Licenciamiento | Infraestructura | Operación | TCO 3 años |
-|----------|----------------|-----------------|-----------|------------|
-| **MinIO** | US$0 (OSS) | US$14,400/año | US$36,000/año | **US$151,200** |
-| **AWS S3** | Pago por uso | US$0 | US$0 | **US$10,800/año** |
-| **Azure Blob** | Pago por uso | US$0 | US$0 | **US$11,520/año** |
-| **Google Cloud Storage** | Pago por uso | US$0 | US$0 | **US$10,440/año** |
-| **Ceph** | US$0 (OSS) | US$18,000/año | US$48,000/año | **US$198,000** |
-| **OpenStack Swift** | US$0 (OSS) | US$21,600/año | US$54,000/año | **US$226,800** |
-
-### Escenario Alto Volumen: 500TB storage, 50TB transfer/mes
-
-| Solución | TCO 3 años | Durabilidad | Disponibilidad |
-|----------|------------|-------------|----------------|
-| **MinIO** | **US$540,000** | 99.999999999% | 99.9% |
-| **AWS S3** | **US$540,000** | 99.999999999% | 99.99% |
-| **Azure Blob** | **US$576,000** | 99.999999999% | 99.9% |
-| **Google Cloud Storage** | **US$522,000** | 99.999999999% | 99.95% |
-| **Ceph** | **US$720,000** | 99.9999999% | 99.5% |
-| **OpenStack Swift** | **US$864,000** | 99.999999% | 99.0% |
-
-### Factores de Costo Adicionales
-
-```yaml
-Consideraciones MinIO:
-  Hardware: NVMe SSD vs HDD tradicional (3x costo vs 50% performance)
-  Networking: 10Gbps vs 1Gbps (2x costo vs 10x performance)
-  Replicación: 3 replicas vs erasure coding (3x storage vs 1.5x)
-  Backup: S3 Glacier vs tape backup (US$0.004/GB vs US$0.0012/GB)
-  Migración: US$0 entre clouds vs US$0.09/GB egress costs
-  Capacitación: US$8K MinIO vs US$3K managed services
-  Downtime evitado: US$150K/año vs US$50K/año managed
-```
+| Solución         | Licenciamiento | Infraestructura | Operación      | TCO 3 años   |
+|------------------|---------------|----------------|---------------|--------------|
+| AWS S3           | Pago por uso  | US$0           | US$0          | US$10,800/año |
+| MinIO            | OSS           | US$14,400/año  | US$36,000/año | US$151,200   |
+| Azure Blob       | Pago por uso  | US$0           | US$0          | US$11,520/año |
+| GCS              | Pago por uso  | US$0           | US$0          | US$10,440/año |
+| Wasabi            | OSS           | US$5,400/año  | US$13,500/año | US$54,600   |
 
 ---
 
-## DECISIÓN
+## Consideraciones técnicas y riesgos
 
-Se recomienda desacoplar el almacenamiento de objetos mediante interfaces y adaptadores. Inicialmente se usará **AWS S3** como solución principal, pero la arquitectura soporta migración a MinIO o soluciones cloud equivalentes según necesidades de portabilidad o despliegue híbrido.
+### Límites clave
+
+- **AWS S3:** ilimitado, gestión automática de escalabilidad y durabilidad
+- **MinIO:** depende de infraestructura propia, requiere operación
+- **Azure Blob/GCS:** límites por cuenta y región, lock-in cloud
+- **Wasabi:** límites por cuenta, requiere evaluación de costos
+
+### Riesgos y mitigación
+
+- **Lock-in cloud:** mitigado con interfaces y adaptadores desacoplados
+- **Complejidad operativa MinIO:** mitigada con automatización y monitoreo
+- **Costos variables cloud:** monitoreo y revisión anual
+
+---
+
+## ✔️ DECISIÓN
+
+Se selecciona **AWS S3** como solución estándar de almacenamiento de objetos para todos los servicios y microservicios corporativos.
 
 ## Justificación
 
-- Permite almacenar archivos y datos no estructurados de forma segura y portable.
-- Facilita la portabilidad y despliegue multi-cloud.
-- El desacoplamiento del backend permite cambiar de tecnología sin impacto en la lógica de negocio.
-- **AWS S3** es la opción seleccionada por su operación gestionada, alta disponibilidad y costos competitivos en el contexto actual.
-- MinIO es una opción madura y ampliamente soportada para escenarios on-premises o híbridos.
-
-## Limitaciones
-
-- AWS S3, Azure Blob y Google Cloud Storage implican lock-in y costos variables.
-- MinIO requiere operación y monitoreo propio.
+- Operación gestionada, sin infraestructura propia
+- Escalabilidad y durabilidad garantizadas
+- Integración nativa con AWS y .NET
+- Costos bajos y pago por uso
+- Compatibilidad total con API S3 y herramientas del ecosistema
+- Observabilidad y monitoreo integrados
 
 ## Alternativas descartadas
 
-- Azure Blob Storage y Google Cloud Storage: lock-in cloud, menor portabilidad.
+- **MinIO:** mayor complejidad operativa y costos de infraestructura
+- **Azure Blob Storage:** lock-in Azure, menor portabilidad
+- **Google Cloud Storage:** lock-in GCP, menor portabilidad
+- **Wasabi:** aunque es una alternativa viable, se prefiere una solución con mayor integración nativa como AWS S3
 
 ---
 
 ## ⚠️ CONSECUENCIAS
 
-- El código debe desacoplarse del proveedor concreto mediante interfaces.
-- Se facilita la portabilidad y despliegue híbrido.
-- Se requiere mantener adaptadores y pruebas para cada backend soportado.
+- Todos los servicios nuevos deben usar AWS S3 salvo justificación técnica documentada
+- Se debe estandarizar la gestión de buckets, políticas y monitoreo
+- El equipo debe mantener adaptadores desacoplados para facilitar migración futura
+
+---
+
+## 🏗️ ARQUITECTURA DE DESPLIEGUE
+
+- Buckets segregados por país/tenant
+- Versionado y replicación cross-region
+- Integración con AWS SDK y librerías .NET
+- Monitoreo con CloudWatch y Prometheus
+
+---
+
+## 📊 MÉTRICAS Y MONITOREO
+
+### KPIs Clave
+
+- **Objetos almacenados**: > 99.99% disponibilidad
+- **Latencia promedio**: < 100ms
+- **Throughput**: > 10K objetos/minuto
+- **Errores de acceso**: < 0.01%
+
+### Alertas Críticas
+
+- Latencia > 500ms
+- Fallos de replicación
+- Errores de integración SDK
+- Objetos pendientes de replicar > umbral
 
 ---
 
 ## 📚 REFERENCIAS
 
 - [AWS S3](https://aws.amazon.com/s3/)
-- [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
-- [Google Cloud Storage](https://cloud.google.com/storage)
 - [MinIO](https://min.io/)
+- [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
+- [Google Cloud Storage](https://cloud.google.com/storage/)
+- [Wasabi](https://wasabi.com/)
+
+---
+
+**Decisión tomada por:** Equipo de Arquitectura
+**Fecha:** Agosto 2025
+**Próxima revisión:** Agosto 2026

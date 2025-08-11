@@ -1,16 +1,16 @@
-# 11. Riesgos y deuda técnica
+# 11. Riesgos Y Deuda Técnica
 
-## 11.1 Identificación y mitigación de riesgos
+## 11.1 Identificación Y Mitigación De Riesgos
 
-### 11.1.1 Riesgos técnicos
+### 11.1.1 Riesgos Técnicos
 
-| ID | Riesgo | Probabilidad | Impacto | Severidad | Mitigación |
-|----|--------|--------------|---------|-----------|------------|
-| `RT-01` | `YARP` como tecnología nueva | Media | Alto | ⚠️ Alto | Evaluación exhaustiva, pruebas piloto, plan de contingencia |
-| `RT-02` | Punto único de falla en `gateway` | Media | Crítico | 🔴 Crítico | Despliegue multi-AZ, health checks, auto-scaling |
-| `RT-03` | Degradación de rendimiento bajo carga | Alta | Alto | ⚠️ Alto | Pruebas de carga continuas, métricas en tiempo real, tuning |
-| `RT-04` | Fallos en cascada por `circuit breakers` | Media | Medio | 🟡 Medio | Configuración adaptativa, timeouts graduales |
-| `RT-05` | Vulnerabilidades en validación `JWT` | Baja | Alto | ⚠️ Alto | Auditorías de seguridad, validación rigurosa, logs |
+| ID     | Riesgo                                 | Probabilidad | Impacto | Severidad   | Mitigación                                                      |
+|--------|----------------------------------------|--------------|---------|-------------|-----------------------------------------------------------------|
+| RT-01  | `YARP` como tecnología nueva           | Media        | Alto    | ⚠️ Alto     | Evaluación exhaustiva, pruebas piloto, plan de contingencia     |
+| RT-02  | Punto único de falla en gateway        | Media        | Crítico | 🔴 Crítico  | Despliegue multi-AZ, health checks, auto-scaling                |
+| RT-03  | Degradación de rendimiento bajo carga  | Alta         | Alto    | ⚠️ Alto     | Pruebas de carga continuas, métricas en tiempo real, tuning     |
+| RT-04  | Fallos en cascada por circuit breakers | Media        | Medio   | 🟡 Medio    | Configuración adaptativa, timeouts graduales                    |
+| RT-05  | Vulnerabilidades en validación JWT     | Baja         | Alto    | ⚠️ Alto     | Auditorías de seguridad, validación rigurosa, logs              |
 
 ```csharp
 // Ejemplo de mitigación para riesgos técnicos
@@ -85,15 +85,15 @@ public class RiskMitigationService
 }
 ```
 
-### 11.1.2 Riesgos operacionales
+### 11.1.2 Riesgos Operacionales
 
-| ID | Riesgo | Probabilidad | Impacto | Severidad | Mitigación |
-|----|--------|--------------|---------|-----------|------------|
-| `RO-01` | Configuración incorrecta de routing | Media | Alto | ⚠️ Alto | Validación automática, tests de integración, blue-green |
-| `RO-02` | Saturación de `Redis` para rate limiting | Media | Medio | 🟡 Medio | Clustering, monitoreo, fallback local |
-| `RO-03` | Pérdida de conectividad con `Identity Service` | Baja | Alto | ⚠️ Alto | Cache local, degradación elegante, health checks |
-| `RO-04` | Logs excesivos que afectan rendimiento | Alta | Bajo | 🟢 Bajo | Filtrado inteligente, sampling, archiving |
-| `RO-05` | Desincronización entre instancias | Media | Medio | 🟡 Medio | Configuración centralizada, versionado |
+| ID     | Riesgo                                         | Probabilidad | Impacto | Severidad   | Mitigación                                 |
+|--------|------------------------------------------------|--------------|---------|-------------|--------------------------------------------|
+| RO-01  | Configuración incorrecta de routing            | Media        | Alto    | ⚠️ Alto     | Validación automática, tests de integración, blue-green |
+| RO-02  | Saturación de Redis para rate limiting         | Media        | Medio   | 🟡 Medio    | Clustering, monitoreo, fallback local       |
+| RO-03  | Pérdida de conectividad con Identity Service   | Baja         | Alto    | ⚠️ Alto     | Cache local, degradación elegante, health checks |
+| RO-04  | Logs excesivos que afectan rendimiento         | Alta         | Bajo    | 🟢 Bajo     | Filtrado inteligente, sampling, archiving   |
+| RO-05  | Desincronización entre instancias              | Media        | Medio   | 🟡 Medio    | Configuración centralizada, versionado      |
 
 ```yaml
 # Ejemplo de procedimientos de mitigación operacional
@@ -148,15 +148,15 @@ data:
       validationInterval: "00:30:00"
 ```
 
-### 11.1.3 Riesgos de seguridad
+### 11.1.3 Riesgos De Seguridad
 
-| ID | Riesgo | Probabilidad | Impacto | Severidad | Mitigación |
-|----|--------|--------------|---------|-----------|------------|
-| `RS-01` | Ataques de DDoS | Media | Alto | ⚠️ Alto | Rate limiting distribuido, WAF, CDN |
-| `RS-02` | `JWT` token hijacking | Baja | Crítico | 🔴 Crítico | HTTPS obligatorio, token rotation, monitoring |
-| `RS-03` | Exposición de servicios internos | Baja | Alto | ⚠️ Alto | Validación de routing, network policies |
-| `RS-04` | Bypass de autenticación | Muy Baja | Crítico | 🔴 Crítico | Middleware obligatorio, auditorías, tests |
-| `RS-05` | Logging de información sensible | Media | Medio | 🟡 Medio | Filtros de logs, enmascaramiento, retention |
+| ID     | Riesgo                        | Probabilidad | Impacto | Severidad   | Mitigación                                 |
+|--------|-------------------------------|--------------|---------|-------------|--------------------------------------------|
+| RS-01  | Ataques de DDoS               | Media        | Alto    | ⚠️ Alto     | Rate limiting distribuido, WAF, CDN        |
+| RS-02  | JWT token hijacking           | Baja         | Crítico | 🔴 Crítico  | HTTPS obligatorio, token rotation, monitoring |
+| RS-03  | Exposición de servicios internos| Baja        | Alto    | ⚠️ Alto     | Validación de routing, network policies    |
+| RS-04  | Bypass de autenticación       | Muy Baja     | Crítico | 🔴 Crítico  | Middleware obligatorio, auditorías, tests  |
+| RS-05  | Logging de información sensible| Media        | Medio   | 🟡 Medio    | Filtros de logs, enmascaramiento, retention |
 
 ```csharp
 // Ejemplo de mitigaciones de seguridad
@@ -275,15 +275,15 @@ public class ServicioMitigacionSeguridad
 
 ---
 
-## 11.2 Deuda técnica
+## 11.2 Deuda Técnica
 
-| Categoría | Descripción | Prioridad | Esfuerzo estimado | Timeline |
-|-----------|-------------|-----------|-------------------|----------|
-| `Arquitectura` | Migración completa a `YARP` desde API proxy legacy | Alta | 4-6 semanas | Q2 2024 |
-| `Monitoreo` | Implementación de tracing distribuido completo | Media | 2-3 semanas | Q2 2024 |
-| `Testing` | Cobertura de pruebas de integración < 60% | Alta | 3-4 semanas | Q1-Q2 2024 |
-| `Documentación` | APIs sin documentación `OpenAPI` completa | Media | 1-2 semanas | Q2 2024 |
-| `Rendimiento` | Optimización de `connection pooling` | Baja | 1 semana | Q3 2024 |
+| Categoría      | Descripción                                 | Prioridad | Esfuerzo estimado | Timeline  |
+|----------------|---------------------------------------------|-----------|-------------------|-----------|
+| Arquitectura   | Migración completa a YARP desde API proxy legacy | Alta      | 4-6 semanas       | Q2 2024   |
+| Monitoreo      | Implementación de tracing distribuido completo   | Media     | 2-3 semanas       | Q2 2024   |
+| Testing        | Cobertura de pruebas de integración < 60%        | Alta      | 3-4 semanas       | Q1-Q2 2024|
+| Documentación  | APIs sin documentación OpenAPI completa          | Media     | 1-2 semanas       | Q2 2024   |
+| Rendimiento    | Optimización de connection pooling               | Baja      | 1 semana          | Q3 2024   |
 
 ```csharp
 // Plan de resolución de deuda técnica
@@ -414,9 +414,9 @@ public class TechnicalDebtResolutionPlan
 
 ---
 
-## 11.3 Plan de contingencia
+## 11.3 Plan De Contingencia
 
-### 11.3.1 Escenarios de contingencia
+### 11.3.1 Escenarios De Contingencia
 
 ```yaml
 # Playbook de contingencia
@@ -475,7 +475,7 @@ contingency_plans:
         timeout: "Manual decision"
 ```
 
-### 11.3.2 Procedimientos de rollback
+### 11.3.2 Procedimientos De Rollback
 
 ```bash
 #!/bin/bash

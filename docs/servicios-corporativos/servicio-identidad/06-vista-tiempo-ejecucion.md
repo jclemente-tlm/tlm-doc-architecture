@@ -4,9 +4,9 @@
 
 | Escenario         | Flujo                                 | Componentes           |
 |-------------------|---------------------------------------|-----------------------|
-| Autenticación     | Usuario → Keycloak → JWT              | Keycloak Core         |
-| Validación Token  | Servicio → Keycloak → Validación      | JWT Validation        |
-| Federación        | IdP externo → Keycloak → Usuario      | Federation Connectors |
+| Autenticación     | Usuario → `Keycloak` → `JWT`          | Keycloak Core         |
+| Validación Token  | Servicio → `Keycloak` → Validación    | JWT Validation        |
+| Federación        | IdP externo → `Keycloak` → Usuario    | Federation Connectors |
 
 ## 6.2 Patrones De Interacción
 
@@ -21,8 +21,8 @@
 ### Participantes
 
 - User Browser
-- API Gateway (YARP)
-- Keycloak (tenant/realm)
+- API Gateway (`YARP`)
+- `Keycloak` (`tenant`/`realm`)
 - Identity Management API
 - Token Validation Service
 - Audit Service
@@ -82,13 +82,13 @@ sequenceDiagram
 
 | Fase                        | Target     | Medición           | Monitoreo           |
 |-----------------------------|------------|--------------------|---------------------|
-| Redirección inicial         | < 50ms     | Gateway latency    | Prometheus          |
-| Render login form           | < 200ms    | Keycloak response  | Application metrics |
-| Validación credenciales     | < 300ms    | LDAP/DB query      | Custom metrics      |
-| Validación MFA              | < 100ms    | TOTP algorithm     | Auth metrics        |
-| Token generation            | < 200ms    | JWT creation       | Session metrics     |
-| Token validation            | < 10ms     | gRPC/cache         | Token metrics       |
-| Flujo completo              | < 2s       | End-to-end         | Synthetic monitoring|
+| Redirección inicial         | `< 50ms`   | Gateway latency    | `Prometheus`        |
+| Render login form           | `< 200ms`  | Keycloak response  | Application metrics |
+| Validación credenciales     | `< 300ms`  | LDAP/DB query      | Custom metrics      |
+| Validación MFA              | `< 100ms`  | TOTP algorithm     | Auth metrics        |
+| Token generation            | `< 200ms`  | JWT creation       | Session metrics     |
+| Token validation            | `< 10ms`   | gRPC/cache         | Token metrics       |
+| Flujo completo              | `< 2s`     | End-to-end         | Synthetic monitoring|
 
 ### Manejo De Errores Y Resiliencia
 
@@ -99,15 +99,15 @@ sequenceDiagram
 | Token Service Down     | HTTP 503       | Circuit breaker + validación local    |
 | Audit Service Down     | Continuar      | Store local + replay posterior        |
 
-## 6.4 Escenario: Federación Con Google Workspace
+## 6.4 Escenario: Federación Con IdP SAML
 
 ### Participantes
 
-- Corporate User
-- Keycloak (SP)
-- Google Workspace (IdP)
-- SAML Processor
-- Audit Service
+- Usuario Corporativo
+- `Keycloak` (SP)
+- IdP Externo (IdP)
+- Procesador SAML
+- Servicio de Auditoría
 
 ### Flujo De Ejecución
 
@@ -116,19 +116,19 @@ sequenceDiagram
     participant User as Usuario
     participant Browser as Browser
     participant KC as Keycloak (SP)
-    participant Google as Google Workspace (IdP)
-    participant SAMLProc as SAML Processor
-    participant AuditSvc as Audit Service
-    User->>Browser: Click "Login with Google"
-    Browser->>KC: GET /auth/realms/tenant/broker/google/login
-    KC->>KC: Generate SAML AuthnRequest
-    KC->>Browser: Redirect to Google
-    Browser->>Google: POST SAML AuthnRequest
-    Google->>Google: Validar dominio
-    Google->>User: OAuth2 login (if needed)
-    User->>Google: Authorize application
-    Google->>Google: Generate SAML Response
-    Google->>Browser: SAML Response
+    participant IdP as IdP Externo (IdP)
+    participant SAMLProc as Procesador SAML
+    participant AuditSvc as Servicio de Auditoría
+    User->>Browser: Click "Login with IdP"
+    Browser->>KC: GET /auth/realms/tenant/broker/idp-saml/login
+    KC->>KC: Generar SAML AuthnRequest
+    KC->>Browser: Redirect a IdP SAML
+    Browser->>IdP: POST SAML AuthnRequest
+    IdP->>IdP: Validar dominio/usuario
+    IdP->>User: Autenticación (según IdP)
+    User->>IdP: Autorizar acceso
+    IdP->>IdP: Generar SAML Response
+    IdP->>Browser: SAML Response
     Browser->>KC: POST SAML Response
     KC->>SAMLProc: Procesar assertion
     SAMLProc->>KC: Validar assertion
@@ -140,10 +140,12 @@ sequenceDiagram
     Browser->>User: Acceso a aplicación
 ```
 
+> Este escenario describe la federación SAML entre un IdP externo corporativo y `Keycloak` en arquitectura multi-tenant. El flujo refleja la integración real, trazabilidad y auditoría, sin pasos ni componentes ajenos.
+
 ## 6.5 Métricas Y Monitoreo De Escenarios
 
-- Todas las fases instrumentadas con Prometheus, Grafana y logs estructurados.
-- Trazas distribuidas para flujos críticos.
+- Todas las fases instrumentadas con `Prometheus`, `Grafana` y logs estructurados.
+- Trazas distribuidas para flujos críticos (`OpenTelemetry`, `Jaeger`).
 - Alertas automáticas ante degradación de performance o fallos de integración.
 
 ## 6.6 Referencias

@@ -1,359 +1,294 @@
-# 5. Vista de Bloques de Construcción
+# 5. Vista De Bloques De Construcción
 
-Esta sección describe la estructura modular del **Sistema de Notificación**, detallando contenedores, componentes, esquemas de datos, APIs y ejemplos de implementación. Se incluyen diagramas C4 para ilustrar la arquitectura y la interacción entre los bloques principales.
+Esta sección describe la estructura modular del Sistema de Notificación, detallando contenedores, componentes, esquemas de datos, APIs y ejemplos de implementación. Se incluyen diagramas C4 para ilustrar la arquitectura y la interacción entre los bloques principales.
 
 ![Vista General del Sistema de Notificación](/diagrams/servicios-corporativos/notification_system.png)
 *Figura 5.1: Contenedores principales del sistema*
 
-![Componentes Notification API](/diagrams/servicios-corporativos/notification_system_api.png)
-*Figura 5.2: Componentes internos de la Notification API*
-
-![Componentes Notification Processor](/diagrams/servicios-corporativos/notification_system_processor.png)
-*Figura 5.3: Componentes internos del Notification Processor*
-
 ## 5.1 Contenedores Principales
 
-| Contenedor               | Responsabilidad                        | Tecnología              |
-|--------------------------|----------------------------------------|-------------------------|
-| **Notification API**     | Recepción y validación de solicitudes  | .NET 8 Web API          |
-| **Notification Processor** | Procesamiento y envío de notificaciones | .NET 8 Worker Service   |
-| **PostgreSQL**           | Persistencia de datos y auditoría      | PostgreSQL 15+          |
-| **Redis**                | Cola de mensajes y cache               | Redis 7+                |
-| **File Storage**         | Almacenamiento de adjuntos             | Sistema de archivos     |
+| Contenedor                | Responsabilidad                        | Tecnología              |
+|---------------------------|----------------------------------------|-------------------------|
+| Notification API          | Recepción y validación de solicitudes  | `.NET 8 Web API`        |
+| Notification Processor    | Procesamiento y envío de notificaciones| `.NET 8 Worker Service` |
+| Notification Database     | Persistencia de datos y auditoría      | `PostgreSQL 15+`        |
+| emailQueue                | Cola de mensajes email                 | `AWS SQS`               |
+| smsQueue                  | Cola de mensajes SMS                   | `AWS SQS`               |
+| whatsappQueue             | Cola de mensajes WhatsApp              | `AWS SQS`               |
+| pushQueue                 | Cola de mensajes push                  | `AWS SQS`               |
+| SNS (opcional)            | Notificación fan-out a colas SQS       | `AWS SNS`               |
+| Email Processor           | Procesamiento y envío de emails        | `.NET 8 Worker Service` |
+| SMS Processor             | Procesamiento y envío de SMS           | `.NET 8 Worker Service` |
+| WhatsApp Processor        | Procesamiento y envío de WhatsApp      | `.NET 8 Worker Service` |
+| Push Processor            | Procesamiento y envío de notificaciones push | `.NET 8 Worker Service` |
+| Attachment Storage        | Almacenamiento de adjuntos             | S3, File System         |
 
-## 5.2 Componentes del API
+## 5.2 Vista de Componentes y Detalles
 
-| Componente               | Responsabilidad                        | Tecnología              |
-|--------------------------|----------------------------------------|-------------------------|
-| **Notification Controller** | Exposición de endpoints REST         | ASP.NET Core            |
-| **Template Controller**     | Gestión de plantillas                | ASP.NET Core            |
-| **Attachment Service**      | Manejo de adjuntos                   | .NET 8                  |
-| **Validation Service**      | Validación de datos y reglas         | FluentValidation         |
+![Componentes Notification API](/diagrams/servicios-corporativos/notification_system_api.png)
+*Figura 5.2: Componentes internos de Notification API*
 
-## 5.3 Componentes del Processor
+| Componente                | Responsabilidad                        | Tecnología              |
+|---------------------------|----------------------------------------|-------------------------|
+| Notification Controller   | Exposición de endpoints REST           | `ASP.NET Core`          |
+| Template Controller       | Gestión de plantillas                  | `ASP.NET Core`          |
+| Attachment Service        | Manejo de adjuntos                     | `.NET 8`                |
+| Validation Service        | Validación de datos y reglas           | `FluentValidation`      |
 
-| Componente               | Responsabilidad                        | Tecnología              |
-|--------------------------|----------------------------------------|-------------------------|
-| **Orchestrator Service**    | Orquestación y control de flujos     | .NET 8                  |
-| **Template Engine**         | Procesamiento de plantillas          | RazorEngine             |
-| **Email Handler**           | Envío de emails                      | SMTP                    |
-| **SMS Handler**             | Envío de SMS                         | HTTP API                |
-| **Push Handler**            | Envío de notificaciones push         | HTTP API                |
-| **Scheduler Service**       | Programación y temporización         | .NET 8 Timer            |
+![Componentes Notification Processor](/diagrams/servicios-corporativos/notification_system_processor.png)
+*Figura 5.3: Componentes internos de Notification Processor*
 
-## 5.4 Esquemas de Base de Datos
+| Componente            | Responsabilidad                                                        | Tecnología                  |
+|-----------------------|------------------------------------------------------------------------|-----------------------------|
+| Consumer              | Consume mensajes desde la cola de solicitudes de notificación           | C# .NET 8, AWS SDK          |
+| Orchestrator Service  | Valida datos, construye el mensaje y lo distribuye al canal correspondiente | C# .NET 8              |
+| Message Builder       | Genera el mensaje final para cada canal utilizando plantillas y datos   | C# .NET 8                  |
+| Template Engine       | Renderiza plantillas con soporte i18n y variables dinámicas             | C#, Liquid Templates        |
+| Adapter              | Envía el mensaje procesado a la cola específica del canal               | C# .NET 8, AWS SDK          |
+| Repository            | Guarda el estado y eventos de las notificaciones procesadas en la base de datos | C# .NET 8, Entity Framework Core |
+| Configuration Manager | Gestiona configuraciones del servicio y por tenant                     | C#, .NET 8, EF Core         |
+
+### Email Processor
+
+![Componentes Email Processor](/diagrams/servicios-corporativos/notification_system_email_processor.png)
+*Figura 5.4: Componentes internos de Email Processor*
+
+| Componente           | Responsabilidad                                      | Tecnología                  |
+|----------------------|------------------------------------------------------|-----------------------------|
+| Consumer             | Consume mensajes de la cola de notificación Email    | C# .NET 8, AWS SDK         |
+| Service              | Procesa y envía notificaciones por email             | C# .NET 8                  |
+| Adapter              | Envía notificaciones al proveedor externo de email   | C# .NET 8, AWS SDK         |
+| Repository           | Actualiza el estado de las notificaciones enviadas   | C# .NET 8, Entity Framework Core |
+| Attachment Fetcher   | Obtiene archivos adjuntos desde almacenamiento       | C# .NET 8, AWS SDK         |
+| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+
+### SMS Processor
+
+![Componentes SMS Processor](/diagrams/servicios-corporativos/notification_system_sms_processor.png)
+*Figura 5.5: Componentes internos de SMS Processor*
+
+| Componente           | Responsabilidad                                      | Tecnología                  |
+|----------------------|------------------------------------------------------|-----------------------------|
+| Consumer             | Consume mensajes de la cola notificación SMS         | C# .NET 8, AWS SDK         |
+| Service              | Procesa y envía notificaciones SMS                   | C# .NET 8                  |
+| Adapter              | Envía notificaciones al proveedor externo de SMS     | C# .NET 8, AWS SDK         |
+| Repository           | Actualiza el estado de las notificaciones enviadas   | C# .NET 8, Entity Framework Core |
+| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+
+### WhatsApp Processor
+
+![Componentes WhatsApp Processor](/diagrams/servicios-corporativos/notification_system_whatsapp_processor.png)
+*Figura 5.6: Componentes internos de WhatsApp Processor*
+
+| Componente           | Responsabilidad                                      | Tecnología                  |
+|----------------------|------------------------------------------------------|-----------------------------|
+| Consumer             | Consume mensajes de la cola notificación WhatsApp    | C# .NET 8, AWS SDK         |
+| Service              | Procesa y envía notificaciones WhatsApp              | C# .NET 8                  |
+| Adapter              | Envía notificaciones al proveedor externo de WhatsApp| C# .NET 8, AWS SDK         |
+| Repository           | Actualiza el estado de las notificaciones enviadas   | C# .NET 8, Entity Framework Core |
+| Attachment Fetcher   | Obtiene archivos adjuntos desde almacenamiento       | C# .NET 8, AWS SDK         |
+| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+
+### Push Processor
+
+![Componentes Push Processor](/diagrams/servicios-corporativos/notification_system_push_processor.png)
+*Figura 5.7: Componentes internos de Push Processor*
+
+| Componente           | Responsabilidad                                      | Tecnología                  |
+|----------------------|------------------------------------------------------|-----------------------------|
+| Consumer             | Consume mensajes de la cola notificación Push         | C# .NET 8, AWS SDK         |
+| Service              | Procesa y envía notificaciones Push                  | C# .NET 8                  |
+| Adapter              | Envía notificaciones al proveedor externo de Push    | C# .NET 8, AWS SDK         |
+| Repository           | Actualiza el estado de las notificaciones enviadas   | C# .NET 8, Entity Framework Core |
+| Attachment Fetcher   | Obtiene archivos adjuntos desde almacenamiento       | C# .NET 8, AWS SDK         |
+| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+
+### Scheduler
+
+![Componentes Scheduler](/diagrams/servicios-corporativos/notification_system_scheduler.png)
+*Figura 5.8: Componentes internos de Scheduler*
+
+| Componente           | Responsabilidad                                      | Tecnología                  |
+|----------------------|------------------------------------------------------|-----------------------------|
+| Scheduler Worker     | Ejecuta tareas programadas para enviar notificaciones| Worker Service, C# .NET 8  |
+| Service              | Procesa y programa el envío de notificaciones        | C# .NET 8                  |
+| Queue Publisher      | Envía notificaciones programadas a la cola           | C# .NET 8, AWS SDK         |
+| Repository           | Acceso a notificaciones programadas en la base de datos| C# .NET 8, Entity Framework Core |
+| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+
+## 5.4 Esquemas De Base De Datos
 
 ### 5.4.1 Tabla: `notifications`
 
 | Campo              | Tipo           | Descripción                        | Restricciones                  |
 |--------------------|---------------|------------------------------------|-------------------------------|
-| `id`               | UUID          | Identificador único                | PRIMARY KEY                   |
-| `request_id`       | VARCHAR(100)  | ID de la solicitud                 | NOT NULL, INDEX               |
-| `message_id`       | VARCHAR(100)  | ID del mensaje                     | UNIQUE                        |
-| `tenant_id`        | VARCHAR(50)   | Identificador del tenant           | NOT NULL, INDEX               |
-| `user_id`          | VARCHAR(100)  | ID del usuario destinatario        | NOT NULL                      |
-| `notification_type`| VARCHAR(50)   | transactional, marketing           | NOT NULL                      |
-| `channels`         | JSONB         | Canales solicitados                | NOT NULL                      |
-| `recipient`        | JSONB         | Datos del destinatario             | NOT NULL                      |
-| `message_content`  | JSONB         | Contenido del mensaje              | NOT NULL                      |
-| `schedule`         | JSONB         | Configuración de programación      | NULL                          |
-| `metadata`         | JSONB         | Metadatos adicionales              | NULL                          |
-| `status`           | VARCHAR(20)   | pending, processing, sent, failed  | NOT NULL, DEFAULT 'pending'   |
-| `created_at`       | TIMESTAMP     | Fecha de creación                  | NOT NULL, DEFAULT NOW()       |
-| `updated_at`       | TIMESTAMP     | Fecha de actualización             | NOT NULL, DEFAULT NOW()       |
-| `sent_at`          | TIMESTAMP     | Fecha de envío                     | NULL                          |
+| id                 | UUID          | Identificador único                | PRIMARY KEY                   |
+| request_id         | VARCHAR(100)  | ID de la solicitud                 | NOT NULL, INDEX               |
+| message_id         | VARCHAR(100)  | ID del mensaje                     | UNIQUE                        |
+| tenant_id          | VARCHAR(50)   | Identificador del tenant           | NOT NULL, INDEX               |
+| user_id            | VARCHAR(100)  | ID del usuario destinatario        | NOT NULL                      |
+| notification_type  | VARCHAR(50)   | transactional, marketing           | NOT NULL                      |
+| channels           | JSONB         | Canales solicitados                | NOT NULL                      |
+| recipient          | JSONB         | Datos del destinatario             | NOT NULL                      |
+| message_content    | JSONB         | Contenido del mensaje              | NOT NULL                      |
+| schedule           | JSONB         | Configuración de programación      | NULL                          |
+| metadata           | JSONB         | Metadatos adicionales              | NULL                          |
+| status             | VARCHAR(20)   | pending, processing, sent, failed  | NOT NULL, DEFAULT 'pending'   |
+| created_at         | TIMESTAMP     | Fecha de creación                  | NOT NULL, DEFAULT NOW()       |
+| updated_at         | TIMESTAMP     | Fecha de actualización             | NOT NULL, DEFAULT NOW()       |
+| sent_at            | TIMESTAMP     | Fecha de envío                     | NULL                          |
 
 ### 5.4.2 Tabla: `notification_deliveries`
 
 | Campo                  | Tipo         | Descripción                        | Restricciones                  |
 |------------------------|-------------|------------------------------------|-------------------------------|
-| `id`                   | UUID        | Identificador único                | PRIMARY KEY                   |
-| `notification_id`      | UUID        | Referencia a notification          | FOREIGN KEY, NOT NULL         |
-| `channel`              | VARCHAR(20) | Canal: email, sms, push            | NOT NULL                      |
-| `status`               | VARCHAR(20) | pending, sent, delivered, failed   | NOT NULL                      |
-| `provider`             | VARCHAR(50) | Proveedor utilizado                | NOT NULL                      |
-| `provider_message_id`  | VARCHAR(200)| ID del proveedor                   | NULL                          |
-| `error_message`        | TEXT        | Mensaje de error                   | NULL                          |
-| `retry_count`          | INTEGER     | Número de reintentos               | DEFAULT 0                     |
-| `sent_at`              | TIMESTAMP   | Fecha de envío                     | NULL                          |
-| `delivered_at`         | TIMESTAMP   | Fecha de entrega confirmada        | NULL                          |
-| `created_at`           | TIMESTAMP   | Fecha de creación                  | NOT NULL, DEFAULT NOW()       |
+| id                     | UUID        | Identificador único                | PRIMARY KEY                   |
+| notification_id        | UUID        | Referencia a notification          | FOREIGN KEY, NOT NULL         |
+| channel                | VARCHAR(20) | Canal: email, sms, push, whatsapp, in-app | NOT NULL              |
+| status                 | VARCHAR(20) | pending, sent, delivered, failed   | NOT NULL                      |
+| provider               | VARCHAR(50) | Proveedor utilizado                | NOT NULL                      |
+| provider_message_id    | VARCHAR(200)| ID del proveedor                   | NULL                          |
+| error_message          | TEXT        | Mensaje de error                   | NULL                          |
+| retry_count            | INTEGER     | Número de reintentos               | DEFAULT 0                     |
+| sent_at                | TIMESTAMP   | Fecha de envío                     | NULL                          |
+| delivered_at           | TIMESTAMP   | Fecha de entrega confirmada        | NULL                          |
+| created_at             | TIMESTAMP   | Fecha de creación                  | NOT NULL, DEFAULT NOW()       |
 
 ### 5.4.3 Tabla: `notification_templates`
 
 | Campo              | Tipo         | Descripción                        | Restricciones                  |
 |--------------------|-------------|------------------------------------|-------------------------------|
-| `id`               | UUID        | Identificador único                | PRIMARY KEY                   |
-| `template_id`      | VARCHAR(100)| ID del template                    | UNIQUE, NOT NULL              |
-| `tenant_id`        | VARCHAR(50) | Identificador del tenant           | NOT NULL, INDEX               |
-| `name`             | VARCHAR(200)| Nombre descriptivo                 | NOT NULL                      |
-| `channel`          | VARCHAR(20) | Canal: email, sms, push            | NOT NULL                      |
-| `subject_template` | TEXT        | Template del asunto                | NULL                          |
-| `body_template`    | TEXT        | Template del cuerpo                | NOT NULL                      |
-| `variables`        | JSONB       | Variables disponibles              | NULL                          |
-| `is_active`        | BOOLEAN     | Estado del template                | DEFAULT true                  |
-| `created_at`       | TIMESTAMP   | Fecha de creación                  | NOT NULL, DEFAULT NOW()       |
-| `updated_at`       | TIMESTAMP   | Fecha de actualización             | NOT NULL, DEFAULT NOW()       |
+| id                 | UUID        | Identificador único                | PRIMARY KEY                   |
+| template_id        | VARCHAR(100)| ID del template                    | UNIQUE, NOT NULL              |
+| tenant_id          | VARCHAR(50) | Identificador del tenant           | NOT NULL, INDEX               |
+| name               | VARCHAR(200)| Nombre descriptivo                 | NOT NULL                      |
+| channel            | VARCHAR(20) | Canal: email, sms, push, whatsapp, in-app | NOT NULL              |
+| subject_template   | TEXT        | Template del asunto                | NULL                          |
+| body_template      | TEXT        | Template del cuerpo                | NOT NULL                      |
+| variables          | JSONB       | Variables disponibles              | NULL                          |
+| is_active          | BOOLEAN     | Estado del template                | DEFAULT true                  |
+| created_at         | TIMESTAMP   | Fecha de creación                  | NOT NULL, DEFAULT NOW()       |
+| updated_at         | TIMESTAMP   | Fecha de actualización             | NOT NULL, DEFAULT NOW()       |
 
-## 5.5 Endpoints de API
+## 5.5 Endpoints De API
 
 Se describen los principales endpoints REST para la gestión y consulta de notificaciones y plantillas. Los contratos de datos siguen el estándar DTO y están alineados con la arquitectura Clean Architecture.
 
 ### 5.5.1 Notification API
 
-- **POST `/api/v1/notifications`**: Enviar nueva notificación
-- **GET `/api/v1/notifications/{notificationId}`**: Consultar estado de notificación
-- **POST `/api/v1/notifications/bulk`**: Envío masivo de notificaciones
+- POST `/api/v1/notifications`: Enviar nueva notificación
+- GET `/api/v1/notifications/{notificationId}`: Consultar estado de notificación
 
-### 5.5.2 Template Management API
+## 5.6 Contratos De Datos (DTOs)
 
-- **GET `/api/v1/templates`**: Listar plantillas disponibles
-- **POST `/api/v1/templates`**: Crear nueva plantilla
+Los siguientes contratos definen la estructura de los datos de entrada y salida de la API:
 
-## 5.6 Contratos de Datos (DTOs)
+### 5.6.1 NotificationRequest (Contrato)
 
-Los siguientes DTOs definen la estructura de los datos de entrada y salida de la API:
+| Campo                | Tipo                | Descripción                                                                                 | Ejemplo                                      |
+|----------------------|---------------------|---------------------------------------------------------------------------------------------|----------------------------------------------|
+| requestId            | string              | Identificador único de la solicitud                                                         | "abc123"                                    |
+| timestamp            | string (ISO 8601)   | Fecha y hora de la solicitud                                                               | "2024-09-17T14:00:00Z"                      |
+| notificationType     | string              | Tipo de notificación: "transactional", "marketing", "alert"                                       | "transactional"                             |
+| channels             | array de string     | Canales solicitados                                                                        | ["email", "sms", "push"]                  |
+| recipient            | objeto              | Información del destinatario (ver subcampos)                                               | {...}                                        |
+| recipient.userId     | string              | Identificador del usuario                                                                  | "usuario789"                                |
+| recipient.email      | string (opcional)   | Correo electrónico del destinatario                                                        | "<usuario@ejemplo.com>"                       |
+| recipient.phone      | string (opcional)   | Teléfono del destinatario                                                                  | ""                                           |
+| recipient.pushToken  | string (opcional)   | Token push                                                                                 | ""                                           |
+| recipient.customFields | objeto (opcional)  | Campos personalizados del destinatario                                                  | {"pais": "PE"}                             |
+| message              | objeto              | Contenido del mensaje (ver subcampos)                                                      | {...}                                        |
+| message.subject      | string (opcional)   | Asunto (para email)                                                                        | "Confirmación de Pedido"                     |
+| message.body         | string              | Cuerpo del mensaje                                                                         | "¡Gracias por su pedido! Su pedido #123456 ha sido confirmado." |
+| message.attachments  | array de string (op)| URLs de adjuntos                                                                          | ["https://example.com/invoice123456.pdf"]    |
+| message.smsText      | string (opcional)   | Texto SMS                                                                                  | "¡Gracias por su pedido! Pedido #123456 confirmado." |
+| message.pushNotification | objeto (op)     | Datos para notificación push (ver subcampos)                                               | {...}                                        |
+| message.pushNotification.title | string    | Título de la notificación push                                                             | "Pedido Confirmado"                          |
+| message.pushNotification.body  | string    | Cuerpo de la notificación push                                                             | "Su pedido #123456 ha sido confirmado. Revise su correo para más detalles." |
+| message.pushNotification.icon  | string (op)| URL de icono                                                                              | "<https://example.com/icon.png>"              |
+| message.pushNotification.action| objeto (op)| Acción asociada                                                                           | {...}                                        |
+| message.pushNotification.action.type | string| Tipo de acción                                                                            | "verPedido"                                 |
+| message.pushNotification.action.url  | string| URL destino                                                                              | "<https://example.com/pedido/123456>"         |
+| schedule              | objeto (opcional)  | Programación de envío (ver subcampos)                                                      | {...}                                        |
+| schedule.sendAt       | string (ISO 8601)  | Fecha/hora de envío programado                                                             | "2024-09-17T15:00:00Z"                      |
+| schedule.timeZone     | string (opcional)  | Zona horaria                                                                              | "America/Lima"                              |
+| metadata              | objeto (opcional)   | Metadatos adicionales (prioridad, reintentos, etc.)                                     | {"priority": "high", "retries": 3, "sentBy": "OrderService", "templateId": "orderConfirmationTemplate"}        |
+| metadata.priority     | string              | Prioridad de la notificación                                                            | "high"                                      |
+| metadata.retries      | integer             | Número de reintentos permitidos                                                         | 3                                            |
+| metadata.sentBy       | string              | Servicio o sistema que origina la notificación                                          | "OrderService"                              |
+| metadata.templateId   | string              | Identificador de la plantilla utilizada                                                 | "orderConfirmationTemplate"                 |
 
-### 5.6.1 `NotificationRequest`
+#### Ejemplo de contrato NotificationRequest
 
-```csharp
-public class NotificationRequest
+```json
 {
-    public string RequestId { get; set; }
-    public DateTime Timestamp { get; set; }
-    public string NotificationType { get; set; } // "transactional" | "marketing"
-    public List<string> Channels { get; set; }
-    public RecipientDto Recipient { get; set; }
-    public MessageDto Message { get; set; }
-    public ScheduleDto Schedule { get; set; }
-    public Dictionary<string, object> Metadata { get; set; }
-}
-
-public class RecipientDto
-{
-    public string UserId { get; set; }
-    public string Email { get; set; }
-    public string Phone { get; set; }
-    public string PushToken { get; set; }
-    public Dictionary<string, string> CustomFields { get; set; }
-}
-
-public class MessageDto
-{
-    public string Subject { get; set; }
-    public string Body { get; set; }
-    public List<string> Attachments { get; set; }
-    public string SmsText { get; set; }
-    public PushNotificationDto PushNotification { get; set; }
-}
-
-public class PushNotificationDto
-{
-    public string Title { get; set; }
-    public string Body { get; set; }
-    public string Icon { get; set; }
-    public PushActionDto Action { get; set; }
-}
-
-public class PushActionDto
-{
-    public string Type { get; set; }
-    public string Url { get; set; }
-}
-
-public class ScheduleDto
-{
-    public DateTime? SendAt { get; set; }
-    public string TimeZone { get; set; }
+  "requestId": "abc123",
+  "timestamp": "2024-09-17T14:00:00Z",
+  "notificationType": "transactional",
+  "channels": ["email", "sms", "push"],
+  "recipient": {
+    "userId": "usuario789",
+    "email": "usuario@ejemplo.com"
+  },
+  "message": {
+    "subject": "Confirmación de Pedido",
+    "body": "¡Gracias por su pedido! Su pedido #123456 ha sido confirmado.",
+    "attachments": ["https://ejemplo.com/factura123456.pdf"],
+    "smsText": "¡Gracias por su pedido! Pedido #123456 confirmado.",
+    "pushNotification": {
+      "title": "Pedido Confirmado",
+      "body": "Su pedido #123456 ha sido confirmado. Revise su correo para más detalles.",
+      "icon": "https://ejemplo.com/icono.png",
+      "action": {
+        "type": "verPedido",
+        "url": "https://ejemplo.com/pedido/123456"
+      }
+    }
+  },
+  "schedule": {
+    "sendAt": "2024-09-17T15:00:00Z"
+  },
+  "metadata": {
+    "priority": "high",
+    "retries": 3,
+    "sentBy": "OrderService",
+    "templateId": "orderConfirmationTemplate"
+  }
 }
 ```
 
-### 5.6.2 `NotificationResponse`
+#### Ejemplo de notificación email generada
 
-```csharp
-public class NotificationResponse
+```json
 {
-    public string NotificationId { get; set; }
-    public string Status { get; set; }
-    public DateTime EstimatedDelivery { get; set; }
-    public List<string> Warnings { get; set; }
-}
-
-public class NotificationStatusResponse
-{
-    public string NotificationId { get; set; }
-    public string RequestId { get; set; }
-    public string Status { get; set; }
-    public List<ChannelDeliveryDto> Channels { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? SentAt { get; set; }
-}
-
-public class ChannelDeliveryDto
-{
-    public string Channel { get; set; }
-    public string Status { get; set; }
-    public DateTime? SentAt { get; set; }
-    public DateTime? DeliveredAt { get; set; }
-    public string Error { get; set; }
-    public int RetryCount { get; set; }
-}
-```
-
-## 5.7 Ejemplos de Implementación
-
-A continuación, se presentan ejemplos de implementación de controladores y servicios siguiendo buenas prácticas de Clean Architecture, DDD y manejo de errores.
-
-### 5.7.1 Controller de Notificaciones
-
-```csharp
-[ApiController]
-[Route("api/v1/[controller]")]
-public class NotificationsController : ControllerBase
-{
-    private readonly INotificationService _notificationService;
-    private readonly ILogger<NotificationsController> _logger;
-
-    public NotificationsController(
-        INotificationService notificationService,
-        ILogger<NotificationsController> logger)
-    {
-        _notificationService = notificationService;
-        _logger = logger;
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> SendNotification(
-        [FromBody] NotificationRequest request)
-    {
-        try
-        {
-            var result = await _notificationService.SendAsync(request);
-            return Accepted(result);
-        }
-        catch (ValidationException ex)
-        {
-            return BadRequest(new { error = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error sending notification {RequestId}", request.RequestId);
-            return StatusCode(500, new { error = "Internal server error" });
-        }
-    }
-
-    [HttpGet("{notificationId}")]
-    public async Task<IActionResult> GetNotificationStatus(string notificationId)
-    {
-        var status = await _notificationService.GetStatusAsync(notificationId);
-        if (status == null)
-            return NotFound();
-
-        return Ok(status);
-    }
-}
-```
-
-### 5.7.2 Servicio de Notificaciones
-
-```csharp
-public class NotificationService : INotificationService
-{
-    private readonly INotificationRepository _repository;
-    private readonly IQueueService _queueService;
-    private readonly ITemplateEngine _templateEngine;
-    private readonly ILogger<NotificationService> _logger;
-
-    public async Task<NotificationResponse> SendAsync(NotificationRequest request)
-    {
-        // Validar request
-        await ValidateRequestAsync(request);
-
-        // Crear notificación en BD
-        var notification = new Notification
-        {
-            Id = Guid.NewGuid(),
-            RequestId = request.RequestId,
-            MessageId = GenerateMessageId(),
-            TenantId = GetCurrentTenantId(),
-            UserId = request.Recipient.UserId,
-            NotificationType = request.NotificationType,
-            Channels = request.Channels,
-            Recipient = request.Recipient,
-            MessageContent = request.Message,
-            Schedule = request.Schedule,
-            Metadata = request.Metadata,
-            Status = NotificationStatus.Pending
-        };
-
-        await _repository.CreateAsync(notification);
-
-        // Encolar para procesamiento
-        if (request.Schedule?.SendAt != null && request.Schedule.SendAt > DateTime.UtcNow)
-        {
-            await _queueService.ScheduleAsync(notification, request.Schedule.SendAt.Value);
-        }
-        else
-        {
-            await _queueService.EnqueueAsync(notification);
-        }
-
-        return new NotificationResponse
-        {
-            NotificationId = notification.Id.ToString(),
-            Status = "accepted",
-            EstimatedDelivery = CalculateEstimatedDelivery(request)
-        };
-    }
-}
-```
-
-### 5.7.3 Procesador de Email
-
-```csharp
-public class EmailHandler : IChannelHandler
-{
-    private readonly ISmtpClient _smtpClient;
-    private readonly ITemplateEngine _templateEngine;
-    private readonly ILogger<EmailHandler> _logger;
-
-    public async Task<DeliveryResult> SendAsync(NotificationDelivery delivery)
-    {
-        try
-        {
-            var notification = delivery.Notification;
-            var emailContent = await _templateEngine.RenderEmailAsync(
-                notification.MessageContent,
-                notification.Metadata);
-
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("System", "noreply@company.com"));
-            message.To.Add(new MailboxAddress("", notification.Recipient.Email));
-            message.Subject = emailContent.Subject;
-
-            var bodyBuilder = new BodyBuilder
-            {
-                HtmlBody = emailContent.HtmlBody,
-                TextBody = emailContent.TextBody
-            };
-
-            // Agregar attachments
-            foreach (var attachment in emailContent.Attachments)
-            {
-                bodyBuilder.Attachments.Add(attachment.FileName, attachment.Content);
-            }
-
-            message.Body = bodyBuilder.ToMessageBody();
-
-            await _smtpClient.SendAsync(message);
-
-            return DeliveryResult.Success(DateTime.UtcNow);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to send email for delivery {DeliveryId}", delivery.Id);
-            return DeliveryResult.Failed(ex.Message);
-        }
-    }
+  "messageId": "msg12345",
+  "timestamp": "2024-09-17T14:00:00Z",
+  "notificationType": "transactional",
+  "channel": "email",
+  "recipient": {
+    "userId": "user789",
+    "email": "user@example.com"
+  },
+  "messageContent": {
+    "subject": "Confirmación de Pedido - Pedido #123456",
+    "body": {
+      "html": "<html><body><h1>¡Gracias por su pedido!</h1><p>Su pedido #123456 ha sido confirmado. Puede rastrear su pedido <a href='https://example.com/track'>aquí</a>.</p></body></html>",
+      "plainText": "¡Gracias por su pedido! Su pedido #123456 ha sido confirmado. Rastrear su pedido aquí: https://example.com/track"
+    },
+    "attachments": [
+      {
+        "url": "https://example.com/invoice123456.pdf",
+        "fileName": "invoice123456.pdf",
+        "mimeType": "application/pdf"
+      }
+    ]
+  },
+  "metadata": {
+    "priority": "high",
+    "retries": 3,
+    "sentBy": "OrderService",
+    "templateId": "orderConfirmationTemplate",
+    "requestId": "req9876"
+  }
 }
 ```

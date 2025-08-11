@@ -1,4 +1,5 @@
 ---
+id: adr-015-manejo-errores-en-cola
 title: "Manejo de Errores en Cola"
 sidebar_position: 15
 ---
@@ -11,81 +12,113 @@ Aceptada – Agosto 2025
 
 ## 🗺️ CONTEXTO
 
-Los servicios corporativos distribuidos con mensajería asíncrona requieren una estrategia robusta para manejar:
+Los servicios corporativos distribuidos requieren una estrategia robusta para el manejo de errores en colas de mensajería asíncrona, considerando:
 
-- **Mensajes fallidos** que no pueden procesarse después de múltiples reintentos
-- **Poison messages** que causan errores recurrentes en consumidores
-- **Recuperación de mensajes** para reprocesamiento manual o automatizado
-- **Auditoría de fallos** para análisis de patrones y mejora continua
-- **Aislamiento de errores** para evitar que mensajes problemáticos bloqueen colas
-- **Alertas proactivas** cuando se detectan patrones de fallo
-- **Retención configurable** según criticidad del mensaje
-- **Compatibilidad multi-tenant** con segregación por país
+- **Mensajes fallidos** tras múltiples reintentos
+- **Poison messages** que generan errores recurrentes
+- **Recuperación y reprocesamiento** manual o automatizado
+- **Auditoría y trazabilidad** de fallos
+- **Aislamiento de errores** para evitar bloqueos
+- **Alertas proactivas** ante patrones de fallo
+- **Retención configurable** según criticidad
+- **Compatibilidad multi-tenant** y multipaís
 
-La intención estratégica es **balancear resiliencia vs complejidad operacional** para sistemas de mensajería empresarial.
+La estrategia prioriza **resiliencia, observabilidad y simplicidad operativa** usando tecnologías y patrones aprobados.
 
-Las alternativas evaluadas fueron:
+Alternativas evaluadas:
 
-- **Dead Letter Queue (DLQ)** con Apache Kafka, AWS SQS, Azure Service Bus
+- **Dead Letter Queue (DLQ)** con AWS SQS, Azure Service Bus, RabbitMQ
 - **Reintentos exponenciales** sin DLQ
-- **Circuit Breaker** con bypass temporal
+- **Circuit Breaker** complementario
 - **Manual retry** con almacenamiento persistente
-- **Event Store** con replay capability
-- **Hybrid approach** (DLQ + Circuit Breaker)
+- **Event Store** con replay
+- **Enfoque híbrido** (DLQ + Circuit Breaker)
 
-### COMPARATIVA DE ALTERNATIVAS
+## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio | DLQ | Reintentos | Circuit Breaker | Manual Retry | Event Store | Hybrid |
-|----------|-----|------------|-----------------|--------------|-------------|--------|
-| **Resiliencia** | ✅ Recuperación completa | 🟡 Básica, puede perder | 🟡 Protección temporal | 🟡 Depende intervención | ✅ Replay completo | ✅ Máxima protección |
-| **Observabilidad** | ✅ Mensajes visibles | ❌ Muy limitada | 🟡 Métricas básicas | 🟡 Logs manuales | ✅ Historial completo | ✅ Visibilidad total |
-| **Operación** | ✅ Automatizada | ✅ Muy simple | 🟡 Configuración compleja | ❌ Intervención manual | 🟡 Compleja gestión | 🟡 Moderadamente compleja |
-| **Agnosticidad** | 🟡 Depende del broker | ✅ Totalmente agnóstico | ✅ Patrón universal | ✅ Totalmente agnóstico | ✅ Agnóstico | 🟡 Depende componentes |
-| **Prevención Pérdida** | ✅ Cero pérdida | ❌ Alta probabilidad | 🟡 Puede perder durante corte | ✅ Persistencia manual | ✅ Cero pérdida | ✅ Cero pérdida |
-| **Automatización** | ✅ Totalmente automática | ✅ Automática | ✅ Automática | ❌ Requiere intervención | 🟡 Semi-automática | ✅ Automática |
-| **Costos** | ✅ Moderados | ✅ Mínimos | ✅ Moderados | ✅ Bajos | 🟡 Altos | 🟡 Moderados-altos |
+| Criterio                | DLQ                      | Reintentos         | Circuit Breaker      | Manual Retry        | Event Store         | Híbrido (DLQ+CB)    |
+|------------------------|--------------------------|--------------------|---------------------|---------------------|---------------------|---------------------|
+| **Resiliencia**        | ✅ Completa              | 🟡 Limitada        | 🟡 Temporal          | 🟡 Parcial          | ✅ Completa         | ✅ Máxima           |
+| **Observabilidad**     | ✅ Alta                  | ❌ Muy limitada    | 🟡 Básica            | 🟡 Manual           | ✅ Completa         | ✅ Total            |
+| **Operación**          | ✅ Automatizada          | ✅ Simple          | 🟡 Config. compleja  | ❌ Manual           | 🟡 Compleja         | 🟡 Moderada         |
+| **Agnosticidad**       | 🟡 Depende del broker    | ✅ Total           | ✅ Universal         | ✅ Total            | ✅ Total            | 🟡 Parcial          |
+| **Prevención pérdida** | ✅ Cero pérdida          | ❌ Alta probabilidad| 🟡 Parcial           | ✅ Persistencia     | ✅ Cero pérdida     | ✅ Cero pérdida     |
+| **Automatización**     | ✅ Total                 | ✅ Total           | ✅ Total             | ❌ Manual           | 🟡 Parcial          | ✅ Total            |
+| **Costos**             | ✅ Moderados             | ✅ Bajos           | ✅ Moderados         | ✅ Bajos            | 🟡 Altos            | 🟡 Moderados-altos  |
 
 ### Matriz de Decisión
 
-| Solución | Resiliencia | Observabilidad | Operación | Prevención Pérdida | Recomendación |
-|----------|-------------|----------------|-----------|---------------------|---------------|
-| **Hybrid (DLQ + Circuit Breaker)** | Excelente | Excelente | Moderada | Excelente | ✅ **Seleccionada** |
-| **Dead Letter Queue** | Excelente | Excelente | Automática | Excelente | 🟡 Alternativa |
-| **Event Store** | Excelente | Excelente | Compleja | Excelente | 🟡 Considerada |
-| **Circuit Breaker** | Moderada | Básica | Compleja | Moderada | 🟡 Complementaria |
-| **Manual Retry** | Moderada | Limitada | Manual | Buena | ❌ Descartada |
-| **Reintentos sin DLQ** | Básica | Muy limitada | Simple | Mala | ❌ Descartada |
+| Solución                  | Resiliencia | Observabilidad | Operación | Prevención Pérdida | Recomendación         |
+|--------------------------|-------------|----------------|-----------|--------------------|-----------------------|
+| **Híbrido (DLQ + CB)**   | Excelente   | Excelente      | Moderada  | Excelente          | ✅ **Seleccionada**    |
+| **Dead Letter Queue**    | Excelente   | Excelente      | Automática| Excelente          | 🟡 Alternativa         |
+| **Event Store**          | Excelente   | Excelente      | Compleja  | Excelente          | 🟡 Considerada         |
+| **Circuit Breaker**      | Moderada    | Básica         | Compleja  | Moderada           | 🟡 Complementaria      |
+| **Manual Retry**         | Moderada    | Limitada       | Manual    | Buena              | ❌ Descartada          |
+| **Reintentos sin DLQ**   | Básica      | Muy limitada   | Simple    | Mala               | ❌ Descartada          |
 
 ---
 
-## DECISIÓN
+## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
 
-Se implementarán `Dead Letter Queues (DLQ)` en las `colas SQS` utilizadas por los `microservicios` y sistemas que requieran resiliencia en el procesamiento de mensajes.
+> **Supuesto:** Uso de AWS SQS con DLQ, 5 colas principales, 4 países, 1 millón de mensajes/mes por cola. Costos estimados para almacenamiento, transferencias y monitoreo.
+
+| Solución         | Licenciamiento | Infraestructura | Operación      | TCO 3 años   |
+|------------------|---------------|----------------|---------------|--------------|
+| AWS SQS + DLQ    | Pago por uso  | US$0           | US$0          | US$7,200     |
+| Azure Service Bus| Pago por uso  | US$0           | US$0          | US$8,400     |
+| RabbitMQ         | OSS           | US$4,800       | US$12,000     | US$50,400    |
+
+---
+
+## Consideraciones técnicas y riesgos
+
+### Límites clave
+
+- **AWS SQS/Azure Service Bus:** límites por tamaño de mensaje, retención y throughput
+- **RabbitMQ:** depende de infraestructura propia, requiere operación
+
+### Riesgos y mitigación
+
+- **Lock-in cloud:** mitigado con interfaces desacopladas
+- **Complejidad operativa RabbitMQ:** mitigada con automatización y monitoreo
+- **Pérdida de mensajes:** mitigada con DLQ y alertas
+
+---
+
+## ✔️ DECISIÓN
+
+Se selecciona un **enfoque híbrido**: uso de `Dead Letter Queues (DLQ)` en las colas de mensajería (AWS SQS, Azure Service Bus) complementado con `Circuit Breaker` para máxima resiliencia y observabilidad.
 
 ## Justificación
 
-- Permite aislar y analizar mensajes que no pudieron procesarse.
-- Facilita la recuperación y reprocesamiento manual o automatizado.
-- Mejora la trazabilidad y auditoría de errores.
-- Integración nativa con `AWS SQS` y `CloudWatch`.
-- Reduce el riesgo de pérdida de información.
+- Aislamiento y análisis de mensajes fallidos
+- Recuperación y reprocesamiento flexible
+- Observabilidad y auditoría completas
+- Integración nativa con ecosistema .NET y herramientas de monitoreo
+- Reducción de riesgo de pérdida de información
+- Cumplimiento de requisitos multi-tenant y multipaís
 
 ## Alternativas descartadas
 
-- **Reintentos sin DLQ**: Mayor riesgo de pérdida de mensajes y menor trazabilidad.
+- **Reintentos sin DLQ:** alto riesgo de pérdida y baja trazabilidad
+- **Manual Retry:** operación manual y poca escalabilidad
+- **RabbitMQ puro:** mayor complejidad operativa
 
 ---
 
 ## ⚠️ CONSECUENCIAS
 
-- Los mensajes fallidos se almacenan en DLQ para análisis y recuperación.
-- Se deben definir políticas de reprocesamiento y monitoreo.
+- Todos los servicios deben implementar DLQ y monitoreo de errores en colas
+- Se deben definir políticas de reprocesamiento y alertas automáticas
+- El código debe desacoplarse del broker mediante interfaces
 
 ---
 
 ## 📚 REFERENCIAS
 
 - [AWS SQS DLQ](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html)
-- [Arc42: Decisiones de arquitectura](https://arc42.org/decision/)
+- [Azure Service Bus DLQ](https://learn.microsoft.com/es-es/azure/service-bus-messaging/service-bus-dead-letter-queues)
+- [arc42: Decisiones de arquitectura](https://arc42.org/decision/)

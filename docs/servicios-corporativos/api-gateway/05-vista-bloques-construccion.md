@@ -1,10 +1,10 @@
-# 5. Vista de bloques de construcción
+# 5. Vista De Bloques De Construcción
 
 ![API Gateway - Vista de Componentes](/diagrams/servicios-corporativos/api_gateway_yarp.png)
 
-*Figura 5.1: Vista de componentes del `API Gateway` (ver modelo Structurizr para relaciones y dependencias)*
+*Figura 5.1: Vista de componentes principales del API Gateway.*
 
-## 5.1 Componentes principales
+## 5.1 Componentes Principales
 
 | Componente            | Responsabilidad                        | Tecnología                  |
 |-----------------------|----------------------------------------|-----------------------------|
@@ -18,7 +18,7 @@
 | `Tracing`             | Trazabilidad distribuida               | `Jaeger`, `OpenTelemetry`   |
 | `Configuración`       | Configuración dinámica y secretos      | `AWS SSM`, `Secrets Manager`|
 
-## 5.2 Flujo de procesamiento
+## 5.2 Flujo De Procesamiento
 
 | Paso | Acción                          | Componente         |
 |------|---------------------------------|--------------------|
@@ -30,14 +30,14 @@
 | `6`  | Logging y métricas              | `Serilog`, `Loki`, `Prometheus`, `Jaeger` |
 | `7`  | Respuesta al cliente            | `YARP Proxy`       |
 
-> Todos los bloques y relaciones están alineados con el modelo C4 en Structurizr y los ADRs globales. Los componentes de observabilidad (`Grafana`, `Prometheus`, `Loki`, `Jaeger`) son parte integral del flujo y monitoreo.
+> Todos los bloques y relaciones están alineados con el modelo C4 y los ADRs globales. Los componentes de observabilidad (`Grafana`, `Prometheus`, `Loki`, `Jaeger`) son parte integral del flujo y monitoreo.
 
-## 5.3 Relación con otros sistemas
+## 5.3 Relación Con Otros Sistemas
 
-- El `API Gateway` interactúa con microservicios corporativos, sistemas de identidad (`Keycloak`), servicios de notificación, y plataformas de configuración y secretos, según lo definido en los diagramas Structurizr.
+- El `API Gateway` interactúa con microservicios corporativos, sistemas de identidad (`Keycloak`), servicios de notificación y plataformas de configuración y secretos, según lo definido en los diagramas Structurizr.
 - La integración y dependencias están documentadas en los modelos DSL y se reflejan en las vistas de componentes y despliegue.
 
-## 5.4 Consideraciones de despliegue
+## 5.4 Consideraciones De Despliegue
 
 - Todos los componentes se despliegan en `AWS ECS Fargate` usando `Terraform`.
 - Observabilidad y monitoreo centralizados con `Grafana`, `Prometheus`, `Loki` y `Jaeger`.

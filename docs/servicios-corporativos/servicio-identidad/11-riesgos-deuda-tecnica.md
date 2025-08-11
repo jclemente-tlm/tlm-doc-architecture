@@ -2,34 +2,35 @@
 
 ## 11.1 Riesgos Identificados
 
-| Riesgo                    | Probabilidad | Impacto | Mitigación           |
-|---------------------------|--------------|---------|----------------------|
-| Vulnerabilidades Keycloak | Media        | Alto    | Updates regulares    |
-| Corrupción de tenant      | Baja         | Alto    | Backups + restore    |
-| Fallo en federación       | Media        | Medio   | Fallback local       |
-| Degradación rendimiento   | Media        | Medio   | Monitoring           |
+| Riesgo                        | Probabilidad | Impacto | Mitigación                                 |
+|-------------------------------|--------------|---------|--------------------------------------------|
+| Vulnerabilidades `Keycloak`   | Media        | Alto    | Actualizaciones regulares                  |
+| Corrupción de `tenant`        | Baja         | Alto    | Backups automáticos y pruebas de restauración |
+| Fallo en federación           | Media        | Medio   | Fallback local y alertas                   |
+| Degradación de rendimiento    | Media        | Medio   | Monitoreo y autoescalado                   |
+| Pérdida de logs/auditoría     | Baja         | Alto    | Centralización y backups                   |
 
 ## 11.2 Deuda Técnica
 
-| Área           | Descripción         | Prioridad | Esfuerzo |
-|----------------|---------------------|-----------|----------|
-| Monitoring     | Métricas custom     | Alta      | 1 sprint |
-| Backup         | Automated backup    | Alta      | 2 sprints|
-| Documentation  | Admin guides        | Media     | 1 sprint |
-| Testing        | Load testing        | Media     | 2 sprints|
+| Área           | Descripción                        | Prioridad | Esfuerzo   |
+|----------------|------------------------------------|-----------|------------|
+| Monitoring     | Métricas custom y alertas          | Alta      | 1 sprint   |
+| Backup         | Automatización y pruebas           | Alta      | 2 sprints  |
+| Documentación  | Guías de administración            | Media     | 1 sprint   |
+| Testing        | Pruebas de carga y resiliencia     | Media     | 2 sprints  |
 
 ## 11.3 Acciones Recomendadas
 
-| Acción                    | Plazo      | Responsable |
-|---------------------------|------------|-------------|
-| Setup monitoring completo | 2 semanas  | SRE         |
-| Implementar backup auto   | 1 mes      | DevOps      |
-| Pruebas de carga          | 1 mes      | QA          |
-| Security audit            | 6 semanas  | Security    |
+| Acción                            | Plazo      | Responsable   |
+|------------------------------------|------------|--------------|
+| Completar monitoreo y alertas      | 2 semanas  | SRE          |
+| Mejorar backup y restauración      | 1 mes      | DevOps       |
+| Pruebas de carga y stress          | 1 mes      | QA           |
+| Auditoría de seguridad             | 6 semanas  | Security     |
+| Revisión de documentación          | 2 semanas  | Arquitectura |
 
-- Matriz de riesgos y deuda técnica priorizada.
-- Estrategias de mitigación y responsables claros.
-- Seguimiento continuo y revisión periódica.
+- Matriz de riesgos y deuda técnica priorizada y revisada periódicamente.
+- Estrategias de mitigación claras, responsables asignados y seguimiento continuo.
 
 ## 11.4 Referencias
 

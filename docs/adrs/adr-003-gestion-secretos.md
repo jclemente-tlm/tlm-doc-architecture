@@ -1,4 +1,5 @@
 ---
+id: adr-003-gestion-de-secretos
 title: "Gestión de Secretos"
 sidebar_position: 3
 ---
@@ -93,16 +94,16 @@ Las alternativas evaluadas fueron:
 
 ---
 
-### Consideraciones técnicas y riesgos
+## Consideraciones técnicas y riesgos
 
-#### Límites clave
+### Límites clave
 
 - **AWS Secrets Manager:** hasta 500,000 secretos por cuenta, 64 KB por secreto, 10,000 solicitudes API/segundo.
 - **Azure Key Vault:** sin límite práctico de secretos, 25 KB por secreto, 4,000 operaciones de lectura/10 seg, 300 escrituras/10 seg.
 - **Google Secret Manager:** hasta 1 millón de versiones por proyecto, 64 KB por secreto, 90,000 accesos/minuto por proyecto.
 - **HashiCorp Vault:** sin límite de secretos, tamaño por entrada 512 KiB (Consul) o 1 MiB (integrated), depende de la infraestructura.
 
-#### Riesgos y mitigación
+### Riesgos y mitigación
 
 - **Vendor lock-in AWS:** mitigado con capa de abstracción (`ISecretStore`), módulos IaC reutilizables y plan de migración validado anualmente.
 - **Costo superior:** optimizado mediante caché local de secretos, consolidación segura y uso de AWS Parameter Store para secretos de baja sensibilidad.
@@ -127,9 +128,10 @@ Se selecciona **AWS Secrets Manager** por las siguientes razones:
 
 ## Alternativas descartadas
 
-- **Azure Key Vault:** Mayor latencia fuera de Azure; no aporta ventajas en el contexto AWS.
-- **Google Secret Manager:** Lock-in con GCP y limitada integración en el ecosistema actual.
-- **HashiCorp Vault:** Mayor complejidad operativa y mantenimiento innecesario para el alcance actual.
+- **AWS Secrets Manager:** lock-in AWS, costos adicionales
+- **Azure Key Vault:** lock-in Azure, costos adicionales
+- **Google Secret Manager:** lock-in GCP, costos adicionales
+- **Vault OSS:** mayor complejidad operativa
 
 ---
 
