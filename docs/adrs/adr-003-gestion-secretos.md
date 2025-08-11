@@ -1,5 +1,4 @@
 ---
-id: adr-003-gestion-de-secretos
 title: "Gestión de Secretos"
 sidebar_position: 3
 ---

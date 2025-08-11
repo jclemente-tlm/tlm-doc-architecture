@@ -1,5 +1,4 @@
 ---
-id: adr-019-configuraciones-scripts-bd
 title: "Configuraciones por Scripts en BD"
 sidebar_position: 4
 ---

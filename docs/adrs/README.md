@@ -25,7 +25,7 @@ Cada ADR sigue la estructura:
 | ADR | Título | Estado | Fecha Aprobación | Dependencia de Aprobación | Descripción |
 |-----|--------|--------|------------------|--------------------------|-------------|
 | [ADR-001](/docs/adrs/adr-001-multi-tenancy-paises) | Multi-tenancy por país | Aceptada | Agosto 2025 | Arquitectura + Equipos País | Estrategia de aislamiento y operación multipaís en todos los servicios. |
-| [ADR-002](/docs/adrs/adr-002-apis-rest-estandar) | APIs REST estándar | Aceptada | Agosto 2025 | Arquitectura | Definición de contratos, convenciones y versionado para APIs REST. |
+| [ADR-002](/docs/adrs/adr-002-estandard-apis-rest) | APIs REST estándar | Aceptada | Agosto 2025 | Arquitectura | Definición de contratos, convenciones y versionado para APIs REST. |
 | [ADR-003](/docs/adrs/adr-003-gestion-secretos) | Gestión de secretos | Aceptada | Agosto 2025 | Arquitectura + Seguridad | Solución para almacenamiento seguro y rotación de secretos. |
 | [ADR-004](/docs/adrs/adr-004-autenticacion-sso) | Autenticación SSO | Aceptada | Agosto 2025 | Arquitectura + Seguridad | Gestión centralizada de identidades y autenticación multi-tenant. |
 | [ADR-005](/docs/adrs/adr-005-gestion-configuraciones) | Gestión de configuraciones | Aceptada | Agosto 2025 | Arquitectura + DevOps | Estrategia para versionado, segregación y automatización de configuraciones. |
@@ -33,7 +33,7 @@ Cada ADR sigue la estructura:
 | [ADR-007](/docs/adrs/adr-007-contenedores-aws) | Contenedores en AWS | Aceptada | Agosto 2025 | Arquitectura + DevOps | Orquestación y despliegue de microservicios en contenedores. |
 | [ADR-008](/docs/adrs/adr-008-gateway-apis) | Gateway de APIs | Aceptada | Agosto 2025 | Arquitectura | Estandarización de entrada/salida y seguridad en el acceso a APIs. |
 | [ADR-009](/docs/adrs/adr-009-cicd-pipelines) | CI/CD Pipelines | Aceptada | Agosto 2025 | Arquitectura + DevOps | Automatización de integración y despliegue continuo. |
-| [ADR-010](/docs/adrs/adr-010-base-datos-standard) | Base de datos estándar | Aceptada | Agosto 2025 | Arquitectura | Selección y lineamientos para bases de datos relacionales. |
+| [ADR-010](/docs/adrs/adr-010-standard-base-datos) | Base de datos estándar | Aceptada | Agosto 2025 | Arquitectura | Selección y lineamientos para bases de datos relacionales. |
 | [ADR-011](/docs/adrs/adr-011-cache-distribuido) | Cache distribuido | Aceptada | Agosto 2025 | Arquitectura | Estrategia de caching y consistencia para servicios críticos. |
 | [ADR-012](/docs/adrs/adr-012-mensajeria-asincrona) | Mensajería asíncrona | Aceptada | Agosto 2025 | Arquitectura | Patrones y tecnologías para comunicación asíncrona y desacoplada. |
 | [ADR-013](/docs/adrs/adr-013-event-sourcing) | Event sourcing | Aceptada | Agosto 2025 | Arquitectura | Modelo de persistencia basado en eventos para trazabilidad y auditoría. |

@@ -1,5 +1,4 @@
 ---
-id: adr-010-estandar-base-datos
 title: "Estándar para Bases de Datos"
 sidebar_position: 10
 ---

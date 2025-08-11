@@ -1,5 +1,4 @@
 ---
-id: adr-001-multi-tenancy-paises
 title: "Multi-Tenancy y Gestión por Países"
 sidebar_position: 1
 ---

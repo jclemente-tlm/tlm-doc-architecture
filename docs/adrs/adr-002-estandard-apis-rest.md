@@ -1,5 +1,4 @@
 ---
-id: adr-002-estandar-apis-rest
 title: "Estándar para APIs REST"
 sidebar_position: 2
 ---

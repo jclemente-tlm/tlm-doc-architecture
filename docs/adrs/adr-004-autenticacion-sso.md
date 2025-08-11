@@ -1,5 +1,4 @@
 ---
-id: adr-004-autenticacion-sso
 title: "Autenticación Centralizada SSO y Multi-Tenancy"
 sidebar_position: 4
 ---

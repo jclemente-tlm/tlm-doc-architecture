@@ -1,5 +1,4 @@
 ---
-id: adr-006-infraestructura-iac
 title: "Infraestructura como Código (IaC)"
 sidebar_position: 6
 ---

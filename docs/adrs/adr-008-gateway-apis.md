@@ -1,5 +1,4 @@
 ---
-id: adr-008-api-gateway
 title: "API Gateway"
 sidebar_position: 8
 ---

@@ -1,5 +1,4 @@
 ---
-id: adr-011-cache-distribuido
 title: "Cache Distribuido Empresarial"
 sidebar_position: 11
 ---

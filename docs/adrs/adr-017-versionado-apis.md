@@ -1,5 +1,4 @@
 ---
-id: adr-017-versionado-de-apis
 title: "Versionado de APIs"
 sidebar_position: 17
 ---

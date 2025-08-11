@@ -1,5 +1,4 @@
 ---
-id: adr-015-manejo-errores-en-cola
 title: "Manejo de Errores en Cola"
 sidebar_position: 15
 ---
