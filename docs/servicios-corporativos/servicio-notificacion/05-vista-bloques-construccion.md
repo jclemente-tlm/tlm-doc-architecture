@@ -179,38 +179,38 @@ Los siguientes contratos definen la estructura de los datos de entrada y salida 
 
 ### 5.6.1 NotificationRequest (Contrato)
 
-| Campo                | Tipo                | Descripción                                                                                 | Ejemplo                                      |
-|----------------------|---------------------|---------------------------------------------------------------------------------------------|----------------------------------------------|
-| requestId            | string              | Identificador único de la solicitud                                                         | "abc123"                                    |
-| timestamp            | string (ISO 8601)   | Fecha y hora de la solicitud                                                               | "2024-09-17T14:00:00Z"                      |
-| notificationType     | string              | Tipo de notificación: "transactional", "marketing", "alert"                                       | "transactional"                             |
-| channels             | array de string     | Canales solicitados                                                                        | ["email", "sms", "push"]                  |
-| recipient            | objeto              | Información del destinatario (ver subcampos)                                               | {...}                                        |
-| recipient.userId     | string              | Identificador del usuario                                                                  | "usuario789"                                |
-| recipient.email      | string (opcional)   | Correo electrónico del destinatario                                                        | "<usuario@ejemplo.com>"                       |
-| recipient.phone      | string (opcional)   | Teléfono del destinatario                                                                  | ""                                           |
-| recipient.pushToken  | string (opcional)   | Token push                                                                                 | ""                                           |
-| recipient.customFields | objeto (opcional)  | Campos personalizados del destinatario                                                  | {"pais": "PE"}                             |
-| message              | objeto              | Contenido del mensaje (ver subcampos)                                                      | {...}                                        |
-| message.subject      | string (opcional)   | Asunto (para email)                                                                        | "Confirmación de Pedido"                     |
-| message.body         | string              | Cuerpo del mensaje                                                                         | "¡Gracias por su pedido! Su pedido #123456 ha sido confirmado." |
-| message.attachments  | array de string (op)| URLs de adjuntos                                                                          | ["https://example.com/invoice123456.pdf"]    |
-| message.smsText      | string (opcional)   | Texto SMS                                                                                  | "¡Gracias por su pedido! Pedido #123456 confirmado." |
-| message.pushNotification | objeto (op)     | Datos para notificación push (ver subcampos)                                               | {...}                                        |
-| message.pushNotification.title | string    | Título de la notificación push                                                             | "Pedido Confirmado"                          |
-| message.pushNotification.body  | string    | Cuerpo de la notificación push                                                             | "Su pedido #123456 ha sido confirmado. Revise su correo para más detalles." |
-| message.pushNotification.icon  | string (op)| URL de icono                                                                              | "<https://example.com/icon.png>"              |
-| message.pushNotification.action| objeto (op)| Acción asociada                                                                           | {...}                                        |
-| message.pushNotification.action.type | string| Tipo de acción                                                                            | "verPedido"                                 |
-| message.pushNotification.action.url  | string| URL destino                                                                              | "<https://example.com/pedido/123456>"         |
-| schedule              | objeto (opcional)  | Programación de envío (ver subcampos)                                                      | {...}                                        |
-| schedule.sendAt       | string (ISO 8601)  | Fecha/hora de envío programado                                                             | "2024-09-17T15:00:00Z"                      |
-| schedule.timeZone     | string (opcional)  | Zona horaria                                                                              | "America/Lima"                              |
-| metadata              | objeto (opcional)   | Metadatos adicionales (prioridad, reintentos, etc.)                                     | {"priority": "high", "retries": 3, "sentBy": "OrderService", "templateId": "orderConfirmationTemplate"}        |
-| metadata.priority     | string              | Prioridad de la notificación                                                            | "high"                                      |
-| metadata.retries      | integer             | Número de reintentos permitidos                                                         | 3                                            |
-| metadata.sentBy       | string              | Servicio o sistema que origina la notificación                                          | "OrderService"                              |
-| metadata.templateId   | string              | Identificador de la plantilla utilizada                                                 | "orderConfirmationTemplate"                 |
+| Campo                | Tipo                | Descripción                                                                                 |
+|----------------------|---------------------|---------------------------------------------------------------------------------------------|
+| requestId            | string              | Identificador único de la solicitud                                                         |
+| timestamp            | string (ISO 8601)   | Fecha y hora de la solicitud                                                               |
+| notificationType     | string              | Tipo de notificación: "transactional", "marketing", "alert"                              |
+| channels             | array de string     | Canales solicitados                                                                        |
+| recipient            | objeto              | Información del destinatario (ver subcampos)                                               |
+| recipient.userId     | string              | Identificador del usuario                                                                  |
+| recipient.email      | string (opcional)   | Correo electrónico del destinatario                                                        |
+| recipient.phone      | string (opcional)   | Teléfono del destinatario                                                                  |
+| recipient.pushToken  | string (opcional)   | Token push                                                                                 |
+| recipient.customFields | objeto (opcional)  | Campos personalizados del destinatario                                                     |
+| message              | objeto              | Contenido del mensaje (ver subcampos)                                                      |
+| message.subject      | string (opcional)   | Asunto (para email)                                                                        |
+| message.body         | string              | Cuerpo del mensaje                                                                         |
+| message.attachments  | array de string (op)| URLs de adjuntos                                                                          |
+| message.smsText      | string (opcional)   | Texto SMS                                                                                  |
+| message.pushNotification | objeto (op)     | Datos para notificación push (ver subcampos)                                               |
+| message.pushNotification.title | string    | Título de la notificación push                                                             |
+| message.pushNotification.body  | string    | Cuerpo de la notificación push                                                             |
+| message.pushNotification.icon  | string (op)| URL de icono                                                                              |
+| message.pushNotification.action| objeto (op)| Acción asociada                                                                           |
+| message.pushNotification.action.type | string| Tipo de acción                                                                            |
+| message.pushNotification.action.url  | string| URL destino                                                                              |
+| schedule              | objeto (opcional)  | Programación de envío (ver subcampos)                                                      |
+| schedule.sendAt       | string (ISO 8601)  | Fecha/hora de envío programado                                                             |
+| schedule.timeZone     | string (opcional)  | Zona horaria                                                                              |
+| metadata              | objeto (opcional)   | Metadatos adicionales (prioridad, reintentos, etc.)                                        |
+| metadata.priority     | string              | Prioridad de la notificación                                                               |
+| metadata.retries      | integer             | Número de reintentos permitidos                                                            |
+| metadata.sentBy       | string              | Servicio o sistema que origina la notificación                                             |
+| metadata.templateId   | string              | Identificador de la plantilla utilizada                                                    |
 
 #### Ejemplo de contrato NotificationRequest
 
@@ -247,42 +247,6 @@ Los siguientes contratos definen la estructura de los datos de entrada y salida 
     "retries": 3,
     "sentBy": "OrderService",
     "templateId": "orderConfirmationTemplate"
-  }
-}
-```
-
-#### Ejemplo de notificación email generada
-
-```json
-{
-  "messageId": "msg12345",
-  "timestamp": "2024-09-17T14:00:00Z",
-  "notificationType": "transactional",
-  "channel": "email",
-  "recipient": {
-    "userId": "user789",
-    "email": "user@example.com"
-  },
-  "messageContent": {
-    "subject": "Confirmación de Pedido - Pedido #123456",
-    "body": {
-      "html": "<html><body><h1>¡Gracias por su pedido!</h1><p>Su pedido #123456 ha sido confirmado. Puede rastrear su pedido <a href='https://example.com/track'>aquí</a>.</p></body></html>",
-      "plainText": "¡Gracias por su pedido! Su pedido #123456 ha sido confirmado. Rastrear su pedido aquí: https://example.com/track"
-    },
-    "attachments": [
-      {
-        "url": "https://example.com/invoice123456.pdf",
-        "fileName": "invoice123456.pdf",
-        "mimeType": "application/pdf"
-      }
-    ]
-  },
-  "metadata": {
-    "priority": "high",
-    "retries": 3,
-    "sentBy": "OrderService",
-    "templateId": "orderConfirmationTemplate",
-    "requestId": "req9876"
   }
 }
 ```
