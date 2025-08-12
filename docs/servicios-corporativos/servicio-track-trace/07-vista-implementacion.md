@@ -1,5 +1,8 @@
 # 7. Vista de Implementación
 
+![Vista de implementación del Sistema de Track & Trace](/diagrams/servicios-corporativos/track_and_trace_deployment.png)
+*Figura 7.1: Implementación de Componentes de principales del sistema*
+
 ## 7.1 Estructura del Proyecto
 
 | Componente                | Ubicación                        | Tecnología                |

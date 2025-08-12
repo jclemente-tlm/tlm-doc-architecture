@@ -1,5 +1,8 @@
 # 7. Vista de implementación
 
+![Vista de implementación del Mensajeria SITA](/diagrams/servicios-corporativos/sita_messaging_system_deployment.png)
+*Figura 7.1: Implementación de Componentes de principales del sistema*
+
 ## 7.1 Estructura del proyecto
 
 | Componente | Ubicación | Tecnología |

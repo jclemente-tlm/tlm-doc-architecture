@@ -2,73 +2,69 @@
 
 ## 11.1 Riesgos Identificados
 
-| Riesgo                | Probabilidad | Impacto | Mitigación                |
-|-----------------------|--------------|---------|---------------------------|
-| Falla de `Redis`      | Media        | Alto    | Clustering, backup        |
-| Corrupción de plantillas | Baja      | Medio   | Versionado                |
-| Límites de proveedores| Media        | Medio   | Multi-proveedor, failover |
-| Overflow en colas     | Media        | Alto    | Autoescalado, monitoreo   |
+| Riesgo                        | Probabilidad | Impacto | Mitigación Técnica                                                                 |
+|-------------------------------|--------------|---------|------------------------------------------------------------------------------------|
+| Falla de `Redis`              | Media        | Alto    | Clustering, backup automatizado, monitoreo con `Prometheus`, failover              |
+| Corrupción de plantillas      | Baja         | Medio   | Versionado, validación, backups, pruebas automatizadas                             |
+| Límites de proveedores        | Media        | Medio   | Multi-proveedor, failover automático, alertas, desacoplamiento vía interfaces      |
+| Overflow en colas             | Media        | Alto    | Autoescalado, monitoreo de profundidad, alertas críticas, DLQ                      |
+| Exposición de datos sensibles | Baja         | Crítico | Cifrado (`AES-256`), sanitización de logs, controles de acceso (`Keycloak`)        |
+| Cambios regulatorios          | Baja         | Alto    | Arquitectura flexible, revisiones legales periódicas, automatización de compliance  |
+| Abuso del sistema             | Baja         | Medio   | `Rate limiting` por `tenant (realm)`, monitoreo de patrones anómalos               |
 
 ## 11.2 Deuda Técnica
 
-| Área           | Descripción                | Prioridad | Esfuerzo |
-|----------------|---------------------------|-----------|----------|
-| Monitoreo      | Métricas custom            | Alta      | 1 sprint |
-| Testing        | Pruebas de carga           | Media     | 2 sprints|
-| Plantillas     | Editor visual              | Baja      | 3 sprints|
-| Analytics      | Métricas de entrega        | Media     | 2 sprints|
+| Área           | Descripción                        | Prioridad | Esfuerzo | Impacto en Calidad           |
+|----------------|-----------------------------------|-----------|----------|------------------------------|
+| Monitoreo      | Métricas custom insuficientes      | Alta      | 1 sprint | Observabilidad, alertabilidad|
+| Testing        | Pruebas de carga limitadas         | Media     | 2 sprints| Fiabilidad, performance      |
+| Plantillas     | Editor visual incompleto           | Baja      | 3 sprints| Usabilidad, mantenibilidad   |
+| Analytics      | Métricas de entrega parciales      | Media     | 2 sprints| Trazabilidad, reporting      |
+| Configuración  | Parámetros hardcodeados            | Alta      | 1 sprint | Seguridad, flexibilidad      |
 
 ## 11.3 Acciones Recomendadas
 
-| Acción                        | Plazo     | Responsable |
-|-------------------------------|-----------|-------------|
-| Implementar monitoreo completo| 2 semanas | SRE         |
-| Clustering de `Redis`         | 1 mes     | DevOps      |
-| Pruebas de carga              | 1 mes     | QA          |
-| Dashboard de analytics        | 6 semanas | Product     |
+| Acción                                 | Plazo     | Responsable | Entregable Principal                |
+|----------------------------------------|-----------|-------------|-------------------------------------|
+| Implementar monitoreo integral         | 2 semanas | SRE         | Dashboards y alertas en `Grafana`   |
+| Clustering y failover de `Redis`       | 1 mes     | DevOps      | Alta disponibilidad, pruebas de failover |
+| Pruebas de carga y stress              | 1 mes     | QA          | Reportes de performance y tuning    |
+| Dashboard de analytics                 | 6 semanas | Product     | Paneles de métricas de entrega      |
+| Refactorizar configuración externa     | 2 semanas | DevOps      | Uso de `AWS Secrets Manager`        |
+| Completar documentación y runbooks     | 2 semanas | Equipo      | Manuales operativos y API           |
 
 ## 11.4 Gestión De Riesgos
 
-- Riesgo de proveedores: fallo simultáneo, mitigado con multi-proveedor y failover automático.
-- Riesgo de infraestructura: saturación de colas en `Redis` o base de datos, mitigado con autoescalado y monitoreo.
-- Riesgo de seguridad: exposición de datos personales, mitigado con sanitización de logs, cifrado y controles de acceso (`Keycloak`).
-- Riesgo de cumplimiento: cambios regulatorios (GDPR, CAN-SPAM, TCPA), mitigado con arquitectura flexible y revisiones legales periódicas.
-- Riesgo operacional: abuso del sistema, mitigado con rate limiting por `tenant` y monitoreo de patrones anómalos.
+- Proveedores: fallo simultáneo mitigado con multi-proveedor, failover automático y monitoreo de SLA (`Prometheus`).
+- Infraestructura: saturación de colas en `Redis` o base de datos mitigada con autoescalado, alertas y DLQ.
+- Seguridad: exposición de datos personales mitigada con cifrado, sanitización de logs (`Serilog`), controles de acceso (`Keycloak`).
+- Cumplimiento: cambios regulatorios (`GDPR`, `CAN-SPAM`, `TCPA`) mitigados con arquitectura flexible y automatización de compliance.
+- Operacional: abuso del sistema mitigado con `rate limiting` por `tenant (realm)`, monitoreo de patrones anómalos y alertas automáticas.
 
 ## 11.5 Métricas Y Seguimiento
 
-- SLA de proveedores: `> 99.5%` disponibilidad
-- Tiempo de respuesta de base de datos: `< 50ms p95`
-- Code coverage: meta `85%`
-- Complejidad ciclomática: meta `< 10`
-- Duplicación de código: meta `< 5%`
-- Error rate: `> 1%` en 5 minutos → alerta inmediata
+- SLA de proveedores: `> 99.5%` disponibilidad (`Prometheus`)
+- Tiempo de respuesta de base de datos: `< 50ms p95` (`OpenTelemetry`)
+- Code coverage: meta `85%` (`SonarQube`)
+- Complejidad ciclomática: meta `< 10` (`SonarQube`)
+- Duplicación de código: meta `< 5%` (`SonarQube`)
+- Error rate: `> 1%` en 5 minutos → alerta inmediata (`Loki`)
 - Profundidad de cola: `> 10,000` mensajes → escalación automática
 - Delivery rate: `< 99%` → revisión semanal
+- Incidentes críticos: reporte y análisis post-mortem obligatorio
 
 ## 11.6 Plan De Remediación
 
-- Refactorización hacia interfaces abstractas para desacoplar proveedores
-- Implementar test contracts y mocks mejorados para integración
-- Estandarizar logging estructurado con `Serilog`
+- Refactorización hacia interfaces abstractas para desacoplar proveedores y facilitar multi-proveedor
+- Implementar test contracts y mocks mejorados para integración continua
+- Estandarizar logging estructurado con `Serilog` y exportación a `Loki`
 - Migrar parámetros hardcodeados a configuración externa segura (`AWS Secrets Manager`)
-- Completar documentación de APIs y runbooks operativos
+- Completar documentación de APIs y runbooks operativos accesibles
+- Automatizar pruebas de resiliencia y failover
 
 ## 11.7 Proceso De Revisión
 
-- Revisión quincenal en retrospectivas
-- Escalación si riesgo crítico > 50% o deuda impacta > 20% en velocity
-- Stakeholders: Tech Lead, Product Owner, DevOps Lead
-
-## 11.8 Indicadores De Alarma
-
-- Tasa de error: `> 1%` en 5 minutos
-- Latencia p99: `> 1s`
-- Profundidad de cola: `> 10,000` mensajes
-- Fallos de proveedor: `> 3` consecutivos
-- Delivery rate: `< 99%`
-- Incumplimiento de compliance: `1` → revisión inmediata
-
----
-
-Todas las tecnologías, riesgos y acciones aquí documentados están alineados con los DSL y ADRs oficiales del sistema. No se incluyen tecnologías no aprobadas ni patrones no implementados.
+- Revisión quincenal en retrospectivas técnicas
+- Escalación si riesgo crítico > `50%` o deuda impacta > `20%` en velocity
+- Seguimiento de acciones y métricas en tablero de calidad
+- Actualización continua de riesgos y deuda técnica según evolución del sistema

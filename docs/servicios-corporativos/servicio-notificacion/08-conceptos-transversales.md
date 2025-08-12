@@ -2,42 +2,47 @@
 
 ## 8.1 Seguridad y Autenticación
 
-- Autenticación y autorización con Keycloak (`OAuth2`, validación de `JWT`, control de `claims` y `roles`)
-- Cifrado en tránsito (`TLS 1.3`) y en reposo (`AES-256`)
-- Gestión de secretos centralizada (`AWS Secrets Manager`)
-- Control de acceso granular por rol y tenant (realm)
+- Autenticación y autorización con `Keycloak` (`OAuth2`, validación de `JWT`, control de `claims` y `roles`).
+- Cifrado en tránsito (`TLS 1.3`) y en reposo (`AES-256`).
+- Gestión de secretos centralizada (`AWS Secrets Manager`).
+- Control de acceso granular por rol y `tenant` (`realm`).
+- Cumplimiento de normativas (`GDPR`, `LGPD`) y protección de `PII`.
 
 ## 8.2 Observabilidad y Monitoreo
 
-- Logs estructurados (`Serilog`, exportados a `Loki`)
-- Métricas técnicas y de negocio (`Prometheus`, visualización en `Grafana`)
-- Trazabilidad distribuida (`OpenTelemetry`, visualización en `Jaeger`)
-- Health checks automatizados
+- Logs estructurados (`Serilog`, exportados a `Loki`).
+- Métricas técnicas y de negocio (`Prometheus`, visualización en `Grafana`).
+- Trazabilidad distribuida (`OpenTelemetry`, visualización en `Jaeger`).
+- Health checks automatizados y alertas proactivas.
 
 ## 8.3 Resiliencia y Escalabilidad
 
-- Circuit Breaker, reintentos y backoff exponencial
-- DLQ y manejo de errores clasificados
-- Escalado horizontal y particionado en servicios y almacenamiento
+- `Circuit Breaker`, reintentos y backoff exponencial.
+- `DLQ` y manejo de errores clasificados.
+- Escalado horizontal y particionado en servicios y almacenamiento.
+- Desacoplamiento mediante colas y procesadores independientes.
 
 ## 8.4 Multi-tenancy y Multipaís
 
-- Aislamiento de datos por esquema y `tenantId` (realm) en `PostgreSQL`
-- Configuración y personalización por tenant y país
-- Cumplimiento legal y localización (idiomas, monedas, zonas horarias)
+- Aislamiento de datos por esquema y `tenantId` (`realm`) en `PostgreSQL`.
+- Configuración y personalización por `tenant` y país.
+- Cumplimiento legal y localización (idiomas, monedas, zonas horarias).
+- Orquestación de flujos multi-tenant y multipaís en todos los componentes críticos.
 
 ## 8.5 Gestión de Configuración y Plantillas
 
-- Configuración jerárquica y por entorno (`YAML`, `JSON`)
-- Plantillas internacionalizadas (`RazorEngine`, `Liquid`, `i18n`)
-- Cache multi-nivel (memoria, `Redis`)
+- Configuración jerárquica y por entorno (`YAML`, `JSON`).
+- Plantillas internacionalizadas (`RazorEngine`, `Liquid`, `i18n`).
+- Cache multi-nivel (memoria, `Redis`).
+- Versionado y fallback automático de plantillas.
 
 ## 8.6 Mantenibilidad y Fiabilidad
 
-- Arquitectura modular, Clean Architecture y DDD
-- Documentación y pruebas automatizadas
-- Backups, replicación multi-AZ
-- Infraestructura como código (`Terraform`)
+- Arquitectura modular, `Clean Architecture` y `DDD`.
+- Documentación y pruebas automatizadas.
+- Backups, replicación multi-AZ.
+- Infraestructura como código (`Terraform`).
+- Estrategias de deduplicación e idempotencia en todos los flujos críticos.
 
 ---
 

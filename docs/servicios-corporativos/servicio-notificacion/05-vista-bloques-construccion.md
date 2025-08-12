@@ -1,120 +1,114 @@
 # 5. Vista De Bloques De Construcción
 
-Esta sección describe la estructura modular del Sistema de Notificación, detallando contenedores, componentes, esquemas de datos, APIs y ejemplos de implementación. Se incluyen diagramas C4 para ilustrar la arquitectura y la interacción entre los bloques principales.
+Esta sección describe la estructura modular y desacoplada del Sistema de Notificación, detallando contenedores, componentes, esquemas de datos, APIs y ejemplos de implementación. Se incluyen diagramas C4 para ilustrar la arquitectura y la interacción entre los bloques principales, priorizando la escalabilidad, resiliencia y observabilidad.
 
 ![Vista General del Sistema de Notificación](/diagrams/servicios-corporativos/notification_system.png)
 *Figura 5.1: Contenedores principales del sistema*
 
 ## 5.1 Contenedores Principales
 
-| Contenedor                | Responsabilidad                        | Tecnología              |
-|---------------------------|----------------------------------------|-------------------------|
-| Notification API          | Recepción y validación de solicitudes  | `.NET 8 Web API`        |
-| Notification Processor    | Procesamiento y envío de notificaciones| `.NET 8 Worker Service` |
-| Notification Database     | Persistencia de datos y auditoría      | `PostgreSQL 15+`        |
-| emailQueue                | Cola de mensajes email                 | `AWS SQS`               |
-| smsQueue                  | Cola de mensajes SMS                   | `AWS SQS`               |
-| whatsappQueue             | Cola de mensajes WhatsApp              | `AWS SQS`               |
-| pushQueue                 | Cola de mensajes push                  | `AWS SQS`               |
-| SNS (opcional)            | Notificación fan-out a colas SQS       | `AWS SNS`               |
-| Email Processor           | Procesamiento y envío de emails        | `.NET 8 Worker Service` |
-| SMS Processor             | Procesamiento y envío de SMS           | `.NET 8 Worker Service` |
-| WhatsApp Processor        | Procesamiento y envío de WhatsApp      | `.NET 8 Worker Service` |
-| Push Processor            | Procesamiento y envío de notificaciones push | `.NET 8 Worker Service` |
-| Attachment Storage        | Almacenamiento de adjuntos             | S3, File System         |
+| Contenedor                | Responsabilidad                                        | Tecnología              |
+|---------------------------|--------------------------------------------------------|-------------------------|
+| `Notification API`        | Recepción, validación, orquestación, deduplicación e idempotencia de solicitudes, gestión de plantillas | `.NET 8 Web API`        |
+| `Notification Database`   | Persistencia, auditoría, versionado de datos y plantillas | `PostgreSQL 15+`        |
+| `emailQueue`              | Desacoplamiento y buffering de mensajes `email`         | `AWS SQS`               |
+| `smsQueue`                | Desacoplamiento y buffering de mensajes `SMS`           | `AWS SQS`               |
+| `whatsappQueue`           | Desacoplamiento y buffering de mensajes `WhatsApp`      | `AWS SQS`               |
+| `pushQueue`               | Desacoplamiento y buffering de mensajes `push`          | `AWS SQS`               |
+| `SNS` (opcional)          | Fan-out y routing avanzado a colas SQS                 | `AWS SNS`               |
+| `Email Processor`         | Procesamiento y entrega de `email`                      | `.NET 8 Worker Service` |
+| `SMS Processor`           | Procesamiento y entrega de `SMS`                        | `.NET 8 Worker Service` |
+| `WhatsApp Processor`      | Procesamiento y entrega de `WhatsApp`                   | `.NET 8 Worker Service` |
+| `Push Processor`          | Procesamiento y entrega de notificaciones `push`        | `.NET 8 Worker Service` |
+| `Attachment Storage`      | Almacenamiento seguro y escalable de adjuntos           | `AWS S3`                |
+
+> La deduplicación, idempotencia y versionado de plantillas son responsabilidades internas de los componentes principales (`Notification API`, `Template Controller`, `Notification Database`) y se implementan mediante lógica de aplicación, claves de idempotencia y versionado en base de datos, no como contenedores independientes.
 
 ## 5.2 Vista de Componentes y Detalles
 
 ![Componentes Notification API](/diagrams/servicios-corporativos/notification_system_api.png)
 *Figura 5.2: Componentes internos de Notification API*
 
-| Componente                | Responsabilidad                        | Tecnología              |
-|---------------------------|----------------------------------------|-------------------------|
-| Notification Controller   | Exposición de endpoints REST           | `ASP.NET Core`          |
-| Template Controller       | Gestión de plantillas                  | `ASP.NET Core`          |
-| Attachment Service        | Manejo de adjuntos                     | `.NET 8`                |
-| Validation Service        | Validación de datos y reglas           | `FluentValidation`      |
+| Componente                | Responsabilidad                                        | Tecnología              |
+|---------------------------|--------------------------------------------------------|-------------------------|
+| `Notification Controller` | Exposición de endpoints `REST`, control de acceso, deduplicación e idempotencia | `ASP.NET Core`          |
+| `Template Controller`     | Gestión de plantillas con versionado e `i18n`          | `ASP.NET Core`          |
+| `Attachment Service`      | Manejo seguro y validación de adjuntos                 | `.NET 8`, `S3 SDK`      |
+| `Validation Service`      | Validación de datos, límites y reglas por tenant       | `FluentValidation`      |
+| `Message Publisher`       | Publicación confiable a colas (`outbox pattern`)       | `.NET 8`, `PostgreSQL`, `SQS`|
+| `Config Manager`          | Gestión de configuración multi-tenant                  | `.NET 8`, `EF Core`     |
+| `Structured Logger`       | Logging estructurado y trazabilidad                    | `Serilog`               |
+| `Metrics Collector`       | Recolección de métricas y monitoreo                    | `Prometheus.NET`        |
 
-![Componentes Notification Processor](/diagrams/servicios-corporativos/notification_system_processor.png)
-*Figura 5.3: Componentes internos de Notification Processor*
-
-| Componente            | Responsabilidad                                                        | Tecnología                  |
-|-----------------------|------------------------------------------------------------------------|-----------------------------|
-| Consumer              | Consume mensajes desde la cola de solicitudes de notificación           | C# .NET 8, AWS SDK          |
-| Orchestrator Service  | Valida datos, construye el mensaje y lo distribuye al canal correspondiente | C# .NET 8              |
-| Message Builder       | Genera el mensaje final para cada canal utilizando plantillas y datos   | C# .NET 8                  |
-| Template Engine       | Renderiza plantillas con soporte i18n y variables dinámicas             | C#, Liquid Templates        |
-| Adapter              | Envía el mensaje procesado a la cola específica del canal               | C# .NET 8, AWS SDK          |
-| Repository            | Guarda el estado y eventos de las notificaciones procesadas en la base de datos | C# .NET 8, Entity Framework Core |
-| Configuration Manager | Gestiona configuraciones del servicio y por tenant                     | C#, .NET 8, EF Core         |
+> La deduplicación, idempotencia y versionado de plantillas están integrados como lógica interna en los componentes críticos (`Notification API`, `Template Controller`, `Notification Database`), siguiendo el modelo real del sistema. No existen como servicios o contenedores independientes en el DSL.
 
 ### Email Processor
 
 ![Componentes Email Processor](/diagrams/servicios-corporativos/notification_system_email_processor.png)
-*Figura 5.4: Componentes internos de Email Processor*
+*Figura 5.3: Componentes internos de Email Processor*
 
 | Componente           | Responsabilidad                                      | Tecnología                  |
 |----------------------|------------------------------------------------------|-----------------------------|
-| Consumer             | Consume mensajes de la cola de notificación Email    | C# .NET 8, AWS SDK         |
-| Service              | Procesa y envía notificaciones por email             | C# .NET 8                  |
-| Adapter              | Envía notificaciones al proveedor externo de email   | C# .NET 8, AWS SDK         |
-| Repository           | Actualiza el estado de las notificaciones enviadas   | C# .NET 8, Entity Framework Core |
-| Attachment Fetcher   | Obtiene archivos adjuntos desde almacenamiento       | C# .NET 8, AWS SDK         |
-| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+| `Consumer`           | Consume mensajes de la cola de notificación `email`  | `C# .NET 8`, `AWS SDK`      |
+| `Service`            | Procesa y envía notificaciones por `email`           | `C# .NET 8`                 |
+| `Adapter`            | Envía notificaciones al proveedor externo de `email` | `C# .NET 8`, `AWS SDK`      |
+| `Repository`         | Actualiza el estado de las notificaciones enviadas   | `C# .NET 8`, `Entity Framework Core` |
+| `Attachment Fetcher` | Obtiene archivos adjuntos desde almacenamiento       | `C# .NET 8`, `AWS SDK`      |
+| `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
 ### SMS Processor
 
 ![Componentes SMS Processor](/diagrams/servicios-corporativos/notification_system_sms_processor.png)
-*Figura 5.5: Componentes internos de SMS Processor*
+*Figura 5.4: Componentes internos de SMS Processor*
 
 | Componente           | Responsabilidad                                      | Tecnología                  |
 |----------------------|------------------------------------------------------|-----------------------------|
-| Consumer             | Consume mensajes de la cola notificación SMS         | C# .NET 8, AWS SDK         |
-| Service              | Procesa y envía notificaciones SMS                   | C# .NET 8                  |
-| Adapter              | Envía notificaciones al proveedor externo de SMS     | C# .NET 8, AWS SDK         |
-| Repository           | Actualiza el estado de las notificaciones enviadas   | C# .NET 8, Entity Framework Core |
-| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+| `Consumer`           | Consume mensajes de la cola notificación `SMS`         | `C# .NET 8`, `AWS SDK`      |
+| `Service`            | Procesa y envía notificaciones `SMS`                   | `C# .NET 8`                 |
+| `Adapter`            | Envía notificaciones al proveedor externo de `SMS`     | `C# .NET 8`, `AWS SDK`      |
+| `Repository`         | Actualiza el estado de las notificaciones enviadas   | `C# .NET 8`, `Entity Framework Core` |
+| `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
 ### WhatsApp Processor
 
 ![Componentes WhatsApp Processor](/diagrams/servicios-corporativos/notification_system_whatsapp_processor.png)
-*Figura 5.6: Componentes internos de WhatsApp Processor*
+*Figura 5.5: Componentes internos de WhatsApp Processor*
 
 | Componente           | Responsabilidad                                      | Tecnología                  |
 |----------------------|------------------------------------------------------|-----------------------------|
-| Consumer             | Consume mensajes de la cola notificación WhatsApp    | C# .NET 8, AWS SDK         |
-| Service              | Procesa y envía notificaciones WhatsApp              | C# .NET 8                  |
-| Adapter              | Envía notificaciones al proveedor externo de WhatsApp| C# .NET 8, AWS SDK         |
-| Repository           | Actualiza el estado de las notificaciones enviadas   | C# .NET 8, Entity Framework Core |
-| Attachment Fetcher   | Obtiene archivos adjuntos desde almacenamiento       | C# .NET 8, AWS SDK         |
-| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+| `Consumer`           | Consume mensajes de la cola notificación `WhatsApp`    | `C# .NET 8`, `AWS SDK`      |
+| `Service`            | Procesa y envía notificaciones `WhatsApp`              | `C# .NET 8`                 |
+| `Adapter`            | Envía notificaciones al proveedor externo de `WhatsApp`| `C# .NET 8`, `AWS SDK`      |
+| `Repository`         | Actualiza el estado de las notificaciones enviadas   | `C# .NET 8`, `Entity Framework Core` |
+| `Attachment Fetcher` | Obtiene archivos adjuntos desde almacenamiento       | `C# .NET 8`, `AWS SDK`      |
+| `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
 ### Push Processor
 
 ![Componentes Push Processor](/diagrams/servicios-corporativos/notification_system_push_processor.png)
-*Figura 5.7: Componentes internos de Push Processor*
+*Figura 5.6: Componentes internos de Push Processor*
 
 | Componente           | Responsabilidad                                      | Tecnología                  |
 |----------------------|------------------------------------------------------|-----------------------------|
-| Consumer             | Consume mensajes de la cola notificación Push         | C# .NET 8, AWS SDK         |
-| Service              | Procesa y envía notificaciones Push                  | C# .NET 8                  |
-| Adapter              | Envía notificaciones al proveedor externo de Push    | C# .NET 8, AWS SDK         |
-| Repository           | Actualiza el estado de las notificaciones enviadas   | C# .NET 8, Entity Framework Core |
-| Attachment Fetcher   | Obtiene archivos adjuntos desde almacenamiento       | C# .NET 8, AWS SDK         |
-| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+| `Consumer`           | Consume mensajes de la cola notificación `Push`         | `C# .NET 8`, `AWS SDK`      |
+| `Service`            | Procesa y envía notificaciones `Push`                  | `C# .NET 8`                 |
+| `Adapter`            | Envía notificaciones al proveedor externo de `Push`    | `C# .NET 8`, `AWS SDK`      |
+| `Repository`         | Actualiza el estado de las notificaciones enviadas   | `C# .NET 8`, `Entity Framework Core` |
+| `Attachment Fetcher` | Obtiene archivos adjuntos desde almacenamiento       | `C# .NET 8`, `AWS SDK`      |
+| `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
 ### Scheduler
 
 ![Componentes Scheduler](/diagrams/servicios-corporativos/notification_system_scheduler.png)
-*Figura 5.8: Componentes internos de Scheduler*
+*Figura 5.7: Componentes internos de Scheduler*
 
 | Componente           | Responsabilidad                                      | Tecnología                  |
 |----------------------|------------------------------------------------------|-----------------------------|
-| Scheduler Worker     | Ejecuta tareas programadas para enviar notificaciones| Worker Service, C# .NET 8  |
-| Service              | Procesa y programa el envío de notificaciones        | C# .NET 8                  |
-| Queue Publisher      | Envía notificaciones programadas a la cola           | C# .NET 8, AWS SDK         |
-| Repository           | Acceso a notificaciones programadas en la base de datos| C# .NET 8, Entity Framework Core |
-| Configuration Manager| Gestiona configuraciones del servicio y por tenant   | C#, .NET 8, EF Core        |
+| `Scheduler Worker`   | Ejecuta tareas programadas para enviar notificaciones| `Worker Service`, `C# .NET 8`  |
+| `Service`            | Procesa y programa el envío de notificaciones        | `C# .NET 8`                 |
+| `Queue Publisher`    | Envía notificaciones programadas a la cola           | `C# .NET 8`, `AWS SDK`      |
+| `Repository`         | Acceso a notificaciones programadas en la base de datos| `C# .NET 8`, `Entity Framework Core` |
+| `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
 ## 5.4 Esquemas De Base De Datos
 
@@ -185,38 +179,38 @@ Los siguientes contratos definen la estructura de los datos de entrada y salida 
 
 ### 5.6.1 NotificationRequest (Contrato)
 
-| Campo                | Tipo                | Descripción                                                                                 |
-|----------------------|---------------------|---------------------------------------------------------------------------------------------|
-| requestId            | string              | Identificador único de la solicitud                                                         |
-| timestamp            | string (ISO 8601)   | Fecha y hora de la solicitud                                                               |
-| notificationType     | string              | Tipo de notificación: "transactional", "marketing", "alert"                              |
-| channels             | array de string     | Canales solicitados                                                                        |
-| recipient            | objeto              | Información del destinatario (ver subcampos)                                               |
-| recipient.userId     | string              | Identificador del usuario                                                                  |
-| recipient.email      | string (opcional)   | Correo electrónico del destinatario                                                        |
-| recipient.phone      | string (opcional)   | Teléfono del destinatario                                                                  |
-| recipient.pushToken  | string (opcional)   | Token push                                                                                 |
-| recipient.customFields | objeto (opcional)  | Campos personalizados del destinatario                                                     |
-| message              | objeto              | Contenido del mensaje (ver subcampos)                                                      |
-| message.subject      | string (opcional)   | Asunto (para email)                                                                        |
-| message.body         | string              | Cuerpo del mensaje                                                                         |
-| message.attachments  | array de string (op)| URLs de adjuntos                                                                          |
-| message.smsText      | string (opcional)   | Texto SMS                                                                                  |
-| message.pushNotification | objeto (op)     | Datos para notificación push (ver subcampos)                                               |
-| message.pushNotification.title | string    | Título de la notificación push                                                             |
-| message.pushNotification.body  | string    | Cuerpo de la notificación push                                                             |
-| message.pushNotification.icon  | string (op)| URL de icono                                                                              |
-| message.pushNotification.action| objeto (op)| Acción asociada                                                                           |
-| message.pushNotification.action.type | string| Tipo de acción                                                                            |
-| message.pushNotification.action.url  | string| URL destino                                                                              |
-| schedule              | objeto (opcional)  | Programación de envío (ver subcampos)                                                      |
-| schedule.sendAt       | string (ISO 8601)  | `Fecha/hora` de envío programado                                                             |
-| schedule.timeZone     | string (opcional)  | Zona horaria                                                                              |
-| metadata              | objeto (opcional)   | Metadatos adicionales (prioridad, reintentos, etc.)                                        |
-| metadata.priority     | string              | Prioridad de la notificación                                                               |
-| metadata.retries      | integer             | Número de reintentos permitidos                                                            |
-| metadata.sentBy       | string              | Servicio o sistema que origina la notificación                                             |
-| metadata.templateId   | string              | Identificador de la plantilla utilizada                                                    |
+| Campo                | Tipo                | Descripción                                                                                 | Ejemplo                                      |
+|----------------------|---------------------|---------------------------------------------------------------------------------------------|----------------------------------------------|
+| requestId            | string              | Identificador único de la solicitud                                                         | "abc123"                                    |
+| timestamp            | string (ISO 8601)   | Fecha y hora de la solicitud                                                               | "2024-09-17T14:00:00Z"                      |
+| notificationType     | string              | Tipo de notificación: "transactional", "marketing", "alert"                                       | "transactional"                             |
+| channels             | array de string     | Canales solicitados                                                                        | ["email", "sms", "push"]                  |
+| recipient            | objeto              | Información del destinatario (ver subcampos)                                               | {...}                                        |
+| recipient.userId     | string              | Identificador del usuario                                                                  | "usuario789"                                |
+| recipient.email      | string (opcional)   | Correo electrónico del destinatario                                                        | "<usuario@ejemplo.com>"                       |
+| recipient.phone      | string (opcional)   | Teléfono del destinatario                                                                  | ""                                           |
+| recipient.pushToken  | string (opcional)   | Token push                                                                                 | ""                                           |
+| recipient.customFields | objeto (opcional)  | Campos personalizados del destinatario                                                  | {"pais": "PE"}                             |
+| message              | objeto              | Contenido del mensaje (ver subcampos)                                                      | {...}                                        |
+| message.subject      | string (opcional)   | Asunto (para email)                                                                        | "Confirmación de Pedido"                     |
+| message.body         | string              | Cuerpo del mensaje                                                                         | "¡Gracias por su pedido! Su pedido #123456 ha sido confirmado." |
+| message.attachments  | array de string (op)| URLs de adjuntos                                                                          | ["https://example.com/invoice123456.pdf"]    |
+| message.smsText      | string (opcional)   | Texto SMS                                                                                  | "¡Gracias por su pedido! Pedido #123456 confirmado." |
+| message.pushNotification | objeto (op)     | Datos para notificación push (ver subcampos)                                               | {...}                                        |
+| message.pushNotification.title | string    | Título de la notificación push                                                             | "Pedido Confirmado"                          |
+| message.pushNotification.body  | string    | Cuerpo de la notificación push                                                             | "Su pedido #123456 ha sido confirmado. Revise su correo para más detalles." |
+| message.pushNotification.icon  | string (op)| URL de icono                                                                              | "<https://example.com/icon.png>"              |
+| message.pushNotification.action| objeto (op)| Acción asociada                                                                           | {...}                                        |
+| message.pushNotification.action.type | string| Tipo de acción                                                                            | "verPedido"                                 |
+| message.pushNotification.action.url  | string| URL destino                                                                              | "<https://example.com/pedido/123456>"         |
+| schedule              | objeto (opcional)  | Programación de envío (ver subcampos)                                                      | {...}                                        |
+| schedule.sendAt       | string (ISO 8601)  | Fecha/hora de envío programado                                                             | "2024-09-17T15:00:00Z"                      |
+| schedule.timeZone     | string (opcional)  | Zona horaria                                                                              | "America/Lima"                              |
+| metadata              | objeto (opcional)   | Metadatos adicionales (prioridad, reintentos, etc.)                                     | {"priority": "high", "retries": 3, "sentBy": "OrderService", "templateId": "orderConfirmationTemplate"}        |
+| metadata.priority     | string              | Prioridad de la notificación                                                            | "high"                                      |
+| metadata.retries      | integer             | Número de reintentos permitidos                                                         | 3                                            |
+| metadata.sentBy       | string              | Servicio o sistema que origina la notificación                                          | "OrderService"                              |
+| metadata.templateId   | string              | Identificador de la plantilla utilizada                                                 | "orderConfirmationTemplate"                 |
 
 #### Ejemplo de contrato NotificationRequest
 

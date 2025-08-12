@@ -1,5 +1,8 @@
 # 7. Vista De Implementación
 
+![Vista de implementación del API Gateway](/diagrams/servicios-corporativos/api_gateway_deployment.png)
+*Figura 7.1: Implementación de Componentes de principales del sistema*
+
 ## 7.1 Estructura Del Proyecto
 
 | Componente         | Ubicación           | Tecnología         |
