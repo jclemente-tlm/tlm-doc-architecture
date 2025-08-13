@@ -221,8 +221,8 @@ erDiagram
 
 | id                                   | request_id | message_id | tenant_id  | country_code | user_id    | notification_type | channels                                 | recipient                                                                 | message_content                                                                                                   | schedule                                 | metadata                                 | status    | created_at           | updated_at           | sent_at              |
 |---------------------------------------|------------|------------|------------|--------------|------------|-------------------|------------------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|------------------------------------------|------------------------------------------|-----------|----------------------|----------------------|----------------------|
-| 1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f | req-001    | msg-001    | tenant-pe   | PE           | usuario789 | transactional     | ["email", "sms", "push"]              | {"userId":"usuario789","email":"<usuario@ejemplo.com>"}              | {"subject":"Confirmación de Pedido","body":"¡Gracias por su pedido!"}                                      | {"sendAt":"2024-09-17T15:00:00Z"}   | {"priority":"high","retries":3}    | sent      | 2025-08-13T10:01:00Z | 2025-08-13T10:01:00Z | 2025-08-13T10:01:00Z |
-| 2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c | req-002    | msg-002    | tenant-ec   | EC           | usuario123 | marketing         | ["email"]                              | {"userId":"usuario123","email":"<otro@ejemplo.com>"}                 | {"subject":"Promo","body":"¡Oferta especial solo hoy!"}                                                  | NULL                                     | {"priority":"low","retries":1}     | pending   | 2025-08-13T11:00:00Z | 2025-08-13T11:00:00Z | NULL                 |
+| `1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f` | `req-001`    | `msg-001`    | `tenant-pe`   | `PE`           | `usuario789` | `transactional`     | `["email", "sms", "push"]`              | `{"userId":"usuario789","email":"<usuario@ejemplo.com>"}`              | `{"subject":"Confirmación de Pedido","body":"¡Gracias por su pedido!"}`                                      | `{"sendAt":"2024-09-17T15:00:00Z"}`   | `{"priority":"high","retries":3}`    | `sent`      | `2025-08-13T10:01:00Z` | `2025-08-13T10:01:00Z` | `2025-08-13T10:01:00Z` |
+| `2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c` | `req-002`    | `msg-002`    | `tenant-ec`   | `EC`           | `usuario123` | `marketing`         | `["email"]`                              | `{"userId":"usuario123","email":"<otro@ejemplo.com>"}`                 | `{"subject":"Promo","body":"¡Oferta especial solo hoy!"}`                                                  | `NULL`                                     | `{"priority":"low","retries":1}`     | `pending`   | `2025-08-13T11:00:00Z` | `2025-08-13T11:00:00Z` | `NULL`                 |
 
 ### 5.4.3 Tabla: `notification_logs`
 
@@ -244,8 +244,8 @@ erDiagram
 
 | log_id                               | tenant_id  | notification_id                        | channel | status    | error_message | retry_count | sent_at              | delivered_at         | created_at           | updated_at           |
 |---------------------------------------|------------|----------------------------------------|---------|-----------|--------------|------------|----------------------|----------------------|----------------------|----------------------|
-| 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d | tenant-pe  | 1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f   | email   | sent      | NULL         | 0          | 2025-08-13T10:01:00Z | 2025-08-13T10:01:10Z | 2025-08-13T10:01:00Z | 2025-08-13T10:01:00Z |
-| 2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e | tenant-pe  | 1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f   | sms     | failed    | "Timeout"    | 1          | 2025-08-13T10:01:05Z | NULL                 | 2025-08-13T10:01:05Z | 2025-08-13T10:01:05Z |
+| `1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d` | `tenant-pe`  | `1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f`   | `email`   | `sent`      | `NULL`         | `0`          | `2025-08-13T10:01:00Z` | `2025-08-13T10:01:10Z` | `2025-08-13T10:01:00Z` | `2025-08-13T10:01:00Z` |
+| `2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e` | `tenant-pe`  | `1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f`   | `sms`     | `failed`    | `"Timeout"`    | `1`          | `2025-08-13T10:01:05Z` | `NULL`                 | `2025-08-13T10:01:05Z` | `2025-08-13T10:01:05Z` |
 
 ---
 
@@ -268,8 +268,8 @@ erDiagram
 
 | id                                   | tenant_id  | name                    | channel | subject_template           | body_template                        | variables                                 | is_active | created_at           | updated_at           |
 |---------------------------------------|------------|-------------------------|---------|---------------------------|---------------------------------------|-------------------------------------------|-----------|----------------------|----------------------|
-| 3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f | tenant-pe  | Confirmación de Pedido  | email   | "Confirmación de Pedido" | "¡Gracias por su pedido, {{user}}!" | {"user":"string","orderId":"int"} | true      | 2025-08-13T09:00:00Z | 2025-08-13T09:00:00Z |
-| 4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a | tenant-ec  | Promoción Especial      | email   | "Promo"                  | "¡Oferta solo hoy, {{user}}!"       | {"user":"string"}                     | true      | 2025-08-13T09:30:00Z | 2025-08-13T09:30:00Z |
+| `3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f` | `tenant-pe`  | `Confirmación de Pedido`  | `email`   | `"Confirmación de Pedido"` | `"¡Gracias por su pedido, {{user}}!"` | `{"user":"string","orderId":"int"}` | `true`      | `2025-08-13T09:00:00Z` | `2025-08-13T09:00:00Z` |
+| `4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a` | `tenant-ec`  | `Promoción Especial`      | `email`   | `"Promo"`                  | `"¡Oferta solo hoy, {{user}}!"`       | `{"user":"string"}`                     | `true`      | `2025-08-13T09:30:00Z` | `2025-08-13T09:30:00Z` |
 
 ---
 
@@ -295,8 +295,8 @@ erDiagram
 
 | id                                   | tenant_id  | user_id    | notification_type | channels                      | schedule_time         | timezone   | message_content                                         | status    | priority | retries_left | created_at           | updated_at           |
 |---------------------------------------|------------|------------|-------------------|-------------------------------|----------------------|------------|--------------------------------------------------------|-----------|----------|-------------|----------------------|----------------------|
-| 5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b | tenant-co  | usuario789 | transactional     | ["email","sms"]            | 2025-08-14T09:00:00Z | America/Lima | {"subject":"Recordatorio","body":"No olvide su cita"} | scheduled | high     | 2           | 2025-08-13T08:00:00Z | 2025-08-13T08:00:00Z |
-| 6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c | tenant-mx  | usuario123 | marketing         | ["email"]                   | 2025-08-15T10:00:00Z | UTC        | {"subject":"Promo","body":"¡Solo hoy!"}              | pending   | low      | 1           | 2025-08-13T08:30:00Z | 2025-08-13T08:30:00Z |
+| `5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b` | `tenant-co`  | `usuario789` | `transactional`     | `["email","sms"]`            | `2025-08-14T09:00:00Z` | `America/Lima` | `{"subject":"Recordatorio","body":"No olvide su cita"}` | `scheduled` | `high`     | `2`           | `2025-08-13T08:00:00Z` | `2025-08-13T08:00:00Z` |
+| `6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c` | `tenant-mx`  | `usuario123` | `marketing`         | `["email"]`                   | `2025-08-15T10:00:00Z` | `UTC`        | `{"subject":"Promo","body":"¡Solo hoy!"}`              | `pending`   | `low`      | `1`           | `2025-08-13T08:30:00Z` | `2025-08-13T08:30:00Z` |
 
 ---
 
@@ -320,8 +320,8 @@ erDiagram
 
 | id                                   | tenant_id  | country_code | allowed_channels                | daily_limit | default_sender         | allowed_hours | preferences                                 | is_active | created_at           | updated_at           |
 |---------------------------------------|------------|--------------|-------------------------------|-------------|-----------------------|---------------|---------------------------------------------|-----------|----------------------|----------------------|
-| 7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d | tenant-pe  | PE           | ["email","sms","push"]    | 1000        | "<notificaciones@acme.com>" | [8,21]        | {"idioma":"es","formato":"html"}     | true      | 2025-08-13T07:00:00Z | 2025-08-13T07:00:00Z |
-| 8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e | tenant-ec  | EC           | ["email"]                    | 500         | "<info@ejemplo.com>"         | [9,18]        | {"idioma":"en"}                        | true      | 2025-08-13T07:30:00Z | 2025-08-13T07:30:00Z |
+| `7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d` | `tenant-pe`  | `PE`           | `["email","sms","push"]`    | `1000`        | `"<notificaciones@acme.com>"` | `[8,21]`        | `{"idioma":"es","formato":"html"}`     | `true`      | `2025-08-13T07:00:00Z` | `2025-08-13T07:00:00Z` |
+| `8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e` | `tenant-ec`  | `EC`           | `["email"]`                    | `500`         | `"<info@ejemplo.com>"`         | `[9,18]`        | `{"idioma":"en"}`                        | `true`      | `2025-08-13T07:30:00Z` | `2025-08-13T07:30:00Z` |
 
 ## 5.5 Endpoints De API
 
