@@ -18,6 +18,8 @@
     "@docusaurus/core": "3.8.1",
     "@docusaurus/preset-classic": "3.8.1",
     "@docusaurus/theme-mermaid": "^3.8.1",
+    "@fancyapps/fancybox": "^3.5.7",
+    "@fancyapps/ui": "^6.0.22",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "lg-fullscreen": "^1.2.1",
