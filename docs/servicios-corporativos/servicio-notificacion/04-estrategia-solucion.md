@@ -43,10 +43,3 @@
 | `Push`       | Proveedor `Push API`             | Notificaciones móviles            |
 
 > La arquitectura multi-canal desacopla la lógica de negocio de los proveedores, permitiendo cambios o ampliaciones sin impacto en el core del sistema. El uso de colas, adaptadores, deduplicación e idempotencia garantiza resiliencia, escalabilidad y entrega única.
-
----
-
-**Notas:**
-
-- El desacoplamiento de proveedores y canales permite tolerancia a fallos, escalabilidad y evolución independiente de cada integración.
-- Se prioriza la observabilidad, la trazabilidad y la entrega única en todos los flujos.

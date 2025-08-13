@@ -68,7 +68,7 @@ El Sistema de Notificaciones es una plataforma distribuida, multi-tenant y multi
 | Rol                    | Equipo/Contacto         | Responsabilidades                        | Expectativas                        |
 |------------------------|------------------------|------------------------------------------|-------------------------------------|
 | Product Owner          | Business Team          | Definición de funcionalidades, roadmap   | Funcionalidades entregadas a tiempo |
-| Arquitecto de Software | jclemente-tlm         | Decisiones técnicas, patrones, ADRs      | Diseño escalable, arquitectura mantenible |
+| Arquitecto de Software | Arch team         | Decisiones técnicas, patrones, ADRs      | Diseño escalable, arquitectura mantenible |
 | Equipo de Desarrollo   | Dev Team              | Implementación, testing, debugging       | Requisitos claros, documentación técnica |
 | DevOps/SRE             | SRE Team              | Despliegue, monitoreo, incidentes        | Despliegues confiables, alertas accionables |
 | Equipo de Seguridad    | Seguridad             | Cumplimiento, auditoría, vulnerabilidades| Seguridad por diseño, trazabilidad  |
@@ -81,7 +81,3 @@ El Sistema de Notificaciones es una plataforma distribuida, multi-tenant y multi
 | Destinatarios Finales  | Reciben notificaciones        | `Email`, apps móviles       | Entrega oportuna, preferencias      |
 
 > Nota: La visibilidad en tiempo real, la trazabilidad y la gestión de preferencias son clave para la satisfacción de usuarios y equipos de operaciones.
-
-## 1.6 Resumen Ejecutivo
-
-El Sistema de Notificaciones es un componente esencial de la plataforma de servicios corporativos. Facilita comunicaciones escalables, confiables y adaptables a normativas regionales, permitiendo la integración ágil de nuevos canales y proveedores. La arquitectura modular garantiza separación lógica y segura por tenant y país, promoviendo fiabilidad, mantenibilidad, observabilidad y cumplimiento.

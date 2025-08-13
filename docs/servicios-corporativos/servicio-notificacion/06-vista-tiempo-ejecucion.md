@@ -4,16 +4,15 @@
 
 | Escenario               | Flujo                              | Componentes         |
 |-------------------------|------------------------------------|---------------------|
-| Envío inmediato         | `Notification API` → `ingestionQueue` → `notificationProcessor` → `Notification Database` → [Colas de Canal] → [Procesadores de Canal] → Proveedor Externo → `Notification Database` | `Notification API`, `ingestionQueue`, `notificationProcessor`, `Notification Database`, `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor`, `Attachment Storage` |
-| Envío programado        | `Notification API` → `Notification Scheduler` → `ingestionQueue` → `notificationProcessor` → `Notification Database` → [Colas de Canal] → [Procesadores de Canal] → Proveedor Externo → `Notification Database` | `Notification API`, `Notification Scheduler`, `ingestionQueue`, `notificationProcessor`, `Notification Database`, `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor` |
-| Procesamiento plantilla | `Notification API` → `notificationProcessor` → `Notification Database` → [Colas de Canal] → [Procesadores de Canal] → Proveedor Externo → `Notification Database` | `Notification API`, `notificationProcessor`, `Notification Database`, `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor` |
+| `Envío inmediato`         | `Notification API` → `Colas de Canal` → `Procesadores de Canal` → `Proveedor Externo` → `Notification Database` | `Notification API`, `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor`, `Notification Database`, `Attachment Storage` |
+| `Envío programado`        | `Notification Scheduler` → `Colas de Canal` → `Procesadores de Canal` → `Proveedor Externo` → `Notification Database` | `Notification API`, `Notification Scheduler`, `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor`, `Notification Database` |
 
 ## 6.2 Patrones De Interacción
 
 | Patrón      | Descripción                   | Tecnología / Componente         |
 |-------------|------------------------------|---------------------------------|
-| `CQRS`      | Separación comando/consulta  | `Notification API`, `notificationProcessor`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor` |
-| `Queue`     | Cola de mensajes             | `ingestionQueue`, `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue` |
+| `CQRS`      | Separación comando/consulta  | `Notification API`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor` |
+| `Queue`     | Cola de mensajes             | `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue` |
 | `Template`  | Procesamiento de plantillas  | `Template Engine`               |
 
 Esta sección describe los principales escenarios de ejecución del sistema, mostrando cómo los componentes interactúan durante el tiempo de ejecución para cumplir con los casos de uso más relevantes arquitectónicamente. Se priorizan la resiliencia, el desacoplamiento, la deduplicación, la idempotencia y la observabilidad en todos los flujos.
@@ -24,8 +23,6 @@ Esta sección describe los principales escenarios de ejecución del sistema, mos
 
 - `Cliente`
 - `Notification API`
-- `ingestionQueue`
-- `notificationProcessor`
 - `Notification Database`
 - Colas de Canal (`emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue`)
 - Procesadores de Canal (`emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor`)
@@ -37,8 +34,6 @@ Esta sección describe los principales escenarios de ejecución del sistema, mos
 sequenceDiagram
     participant Cliente as Cliente
     participant API as Notification API
-    participant Ingestion as ingestionQueue
-    participant Processor as Notification Processor
     participant DB as Notification Database
     participant ColasCanal as Colas de Canal
     participant ProcCanal as Procesadores de Canal
@@ -47,17 +42,15 @@ sequenceDiagram
     Cliente->>API: 1. Solicita envío de notificación
     API->>API: 2.1. Valida datos de la solicitud
     API->>API: 2.2. Autentica y autoriza al cliente
-    API->>API: 2.3. Construye mensaje de notificación
-    API->>Ingestion: 3. Publica mensaje en ingestionQueue
-    API->>Cliente: 4. Confirma recepción (`HTTP 202`)
+    API->>API: 2.3. Valida reglas de negocio
+    API->>API: 2.4. Construye mensaje de notificación
+    API->>DB: 3. Persiste notificación
+    API->>ColasCanal: 4. Publica mensaje en colas por canal
+    API->>API: 5. Registra logs y métricas
+    API->>Cliente: 6. Confirma recepción (`HTTP 202`)
 
-    Ingestion->>Processor: 5. Notification Processor consume mensaje
-    Processor->>Processor: 5.1. Valida reglas de negocio
-    Processor->>Processor: 5.2. Determina canales y tipos de notificación
-    Processor->>Processor: 5.3. Genera mensaje mediante plantilla según tipo de notificación
-    Processor->>DB: 6. Registra notificación
-    Processor->>ColasCanal: 7. Encola mensajes generados en colas por canal
-    ColasCanal->>ProcCanal: 8. Procesadores de canal consumen mensaje
+    ColasCanal->>ProcCanal: 7. Procesadores de canal consumen mensaje
+    ProcCanal->>API: 8. Obtienen adjuntos si aplica
     ProcCanal->>Proveedor: 9. Envía notificación al proveedor externo
     ProcCanal->>DB: 10. Actualiza estado final
 ```
