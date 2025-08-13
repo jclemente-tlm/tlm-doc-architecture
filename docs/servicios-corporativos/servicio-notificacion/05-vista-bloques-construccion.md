@@ -110,9 +110,11 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 | `Repository`         | Acceso a notificaciones programadas en la base de datos| `C# .NET 8`, `Entity Framework Core` |
 | `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
+---
+
 ## 5.4 Esquemas De Base De Datos
 
-## 5.4.1 Modelo de Datos (ER)
+### 5.4.1 Modelo de Datos (ER)
 
 ```mermaid
 erDiagram
@@ -224,6 +226,8 @@ erDiagram
 | `1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f` | `req-001`    | `msg-001`    | `tenant-pe`   | `PE`           | `usuario789` | `transactional`     | `["email", "sms", "push"]`              | `{"userId":"usuario789","email":"<usuario@ejemplo.com>"}`              | `{"subject":"Confirmación de Pedido","body":"¡Gracias por su pedido!"}`                                      | `{"sendAt":"2024-09-17T15:00:00Z"}`   | `{"priority":"high","retries":3}`    | `sent`      | `2025-08-13T10:01:00Z` | `2025-08-13T10:01:00Z` | `2025-08-13T10:01:00Z` |
 | `2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c` | `req-002`    | `msg-002`    | `tenant-ec`   | `EC`           | `usuario123` | `marketing`         | `["email"]`                              | `{"userId":"usuario123","email":"<otro@ejemplo.com>"}`                 | `{"subject":"Promo","body":"¡Oferta especial solo hoy!"}`                                                  | `NULL`                                     | `{"priority":"low","retries":1}`     | `pending`   | `2025-08-13T11:00:00Z` | `2025-08-13T11:00:00Z` | `NULL`                 |
 
+---
+
 ### 5.4.3 Tabla: `notification_logs`
 
 | Campo            | Tipo           | Descripción                                 | Restricciones                  |
@@ -323,6 +327,8 @@ erDiagram
 | `7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d` | `tenant-pe`  | `PE`           | `["email","sms","push"]`    | `1000`        | `"<notificaciones@acme.com>"` | `[8,21]`        | `{"idioma":"es","formato":"html"}`     | `true`      | `2025-08-13T07:00:00Z` | `2025-08-13T07:00:00Z` |
 | `8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e` | `tenant-ec`  | `EC`           | `["email"]`                    | `500`         | `"<info@ejemplo.com>"`         | `[9,18]`        | `{"idioma":"en"}`                        | `true`      | `2025-08-13T07:30:00Z` | `2025-08-13T07:30:00Z` |
 
+---
+
 ## 5.5 Endpoints De API
 
 Se describen los principales endpoints REST para la gestión y consulta de notificaciones y plantillas. Los contratos de datos siguen el estándar DTO y están alineados con la arquitectura Clean Architecture.
@@ -339,6 +345,8 @@ Se describen los principales endpoints REST para la gestión y consulta de notif
 - DELETE `/api/v1/attachments/{attachmentId}`: Eliminar un archivo adjunto
 
 > Los adjuntos se almacenan en S3 y se asocian a notificaciones mediante URLs seguras. El endpoint de carga retorna la URL de acceso y el identificador del adjunto.
+
+---
 
 ## 5.6 Contratos De Datos (DTOs)
 
