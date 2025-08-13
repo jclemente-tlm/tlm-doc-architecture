@@ -112,7 +112,91 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 
 ## 5.4 Esquemas De Base De Datos
 
-### 5.4.1 Tabla: `notifications`
+## 5.4.1 Modelo de Datos (ER)
+
+```mermaid
+erDiagram
+    tenant_notification_settings {
+        UUID id PK
+        VARCHAR(50) tenant_id
+        VARCHAR(5) country_code
+        JSONB allowed_channels
+        INTEGER daily_limit
+        VARCHAR(200) default_sender
+        JSONB allowed_hours
+        JSONB preferences
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    notifications {
+        UUID id PK
+        VARCHAR(100) request_id
+        VARCHAR(100) message_id
+        VARCHAR(50) tenant_id
+        VARCHAR(5) country_code
+        VARCHAR(100) user_id
+        VARCHAR(50) notification_type
+        JSONB channels
+        JSONB recipient
+        JSONB message_content
+        JSONB schedule
+        JSONB metadata
+        VARCHAR(20) status
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+        TIMESTAMP sent_at
+    }
+    notification_logs {
+        UUID log_id PK
+        VARCHAR(50) tenant_id
+        UUID notification_id FK
+        VARCHAR(20) channel
+        VARCHAR(20) status
+        TEXT error_message
+        INTEGER retry_count
+        TIMESTAMP sent_at
+        TIMESTAMP delivered_at
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    notification_templates {
+        UUID id PK
+        VARCHAR(50) tenant_id
+        VARCHAR(200) name
+        VARCHAR(20) channel
+        TEXT subject_template
+        TEXT body_template
+        JSONB variables
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    scheduled_notifications {
+        UUID id PK
+        VARCHAR(50) tenant_id
+        VARCHAR(100) user_id
+        VARCHAR(50) notification_type
+        JSONB channels
+        TIMESTAMP schedule_time
+        VARCHAR(50) timezone
+        JSONB message_content
+        VARCHAR(20) status
+        VARCHAR(20) priority
+        INTEGER retries_left
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    tenant_notification_settings ||--o{ notifications : "1:N"
+    notifications ||--o{ notification_logs : "1:N"
+    tenant_notification_settings ||--o{ notification_templates : "1:N"
+    tenant_notification_settings ||--o{ scheduled_notifications : "1:N"
+```
+
+---
+
+### 5.4.2 Tabla: `notifications`
 
 | Campo              | Tipo           | Descripción                        | Restricciones                  |
 |--------------------|---------------|------------------------------------|-------------------------------|
@@ -120,6 +204,7 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 | request_id         | VARCHAR(100)  | ID de la solicitud                 | NOT NULL, INDEX               |
 | message_id         | VARCHAR(100)  | ID del mensaje                     | UNIQUE                        |
 | tenant_id          | VARCHAR(50)   | Identificador del tenant           | NOT NULL, INDEX               |
+| country_code       | VARCHAR(5)    | Código de país (PE, EC, CO, MX)    | NOT NULL, INDEX               |
 | user_id            | VARCHAR(100)  | ID del usuario destinatario        | NOT NULL                      |
 | notification_type  | VARCHAR(50)   | transactional, marketing           | NOT NULL                      |
 | channels           | JSONB         | Canales solicitados                | NOT NULL                      |
@@ -132,28 +217,43 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 | updated_at         | TIMESTAMP     | Fecha de actualización             | NOT NULL, DEFAULT NOW()       |
 | sent_at            | TIMESTAMP     | Fecha de envío                     | NULL                          |
 
-### 5.4.2 Tabla: `notification_deliveries`
+**Ejemplo de datos:**
 
-| Campo                  | Tipo         | Descripción                        | Restricciones                  |
-|------------------------|-------------|------------------------------------|-------------------------------|
-| id                     | UUID        | Identificador único                | PRIMARY KEY                   |
-| notification_id        | UUID        | Referencia a notification          | FOREIGN KEY, NOT NULL         |
-| channel                | VARCHAR(20) | Canal: email, sms, push, whatsapp, in-app | NOT NULL              |
-| status                 | VARCHAR(20) | pending, sent, delivered, failed   | NOT NULL                      |
-| provider               | VARCHAR(50) | Proveedor utilizado                | NOT NULL                      |
-| provider_message_id    | VARCHAR(200)| ID del proveedor                   | NULL                          |
-| error_message          | TEXT        | Mensaje de error                   | NULL                          |
-| retry_count            | INTEGER     | Número de reintentos               | DEFAULT 0                     |
-| sent_at                | TIMESTAMP   | Fecha de envío                     | NULL                          |
-| delivered_at           | TIMESTAMP   | Fecha de entrega confirmada        | NULL                          |
-| created_at             | TIMESTAMP   | Fecha de creación                  | NOT NULL, DEFAULT NOW()       |
+| id                                   | request_id | message_id | tenant_id  | country_code | user_id    | notification_type | channels                                 | recipient                                                                 | message_content                                                                                                   | schedule                                 | metadata                                 | status    | created_at           | updated_at           | sent_at              |
+|---------------------------------------|------------|------------|------------|--------------|------------|-------------------|------------------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|------------------------------------------|------------------------------------------|-----------|----------------------|----------------------|----------------------|
+| 1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f | req-001    | msg-001    | tenant-pe   | PE           | usuario789 | transactional     | ["email", "sms", "push"]              | {"userId":"usuario789","email":"<usuario@ejemplo.com>"}              | {"subject":"Confirmación de Pedido","body":"¡Gracias por su pedido!"}                                      | {"sendAt":"2024-09-17T15:00:00Z"}   | {"priority":"high","retries":3}    | sent      | 2025-08-13T10:01:00Z | 2025-08-13T10:01:00Z | 2025-08-13T10:01:00Z |
+| 2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c | req-002    | msg-002    | tenant-ec   | EC           | usuario123 | marketing         | ["email"]                              | {"userId":"usuario123","email":"<otro@ejemplo.com>"}                 | {"subject":"Promo","body":"¡Oferta especial solo hoy!"}                                                  | NULL                                     | {"priority":"low","retries":1}     | pending   | 2025-08-13T11:00:00Z | 2025-08-13T11:00:00Z | NULL                 |
 
-### 5.4.3 Tabla: `notification_templates`
+### 5.4.3 Tabla: `notification_logs`
+
+| Campo            | Tipo           | Descripción                                 | Restricciones                  |
+|------------------|----------------|---------------------------------------------|-------------------------------|
+| log_id           | UUID           | Identificador único del log                 | PRIMARY KEY                   |
+| tenant_id        | VARCHAR(50)    | Identificador del tenant                    | NOT NULL, INDEX               |
+| notification_id  | UUID           | Referencia a notification                   | FOREIGN KEY, NOT NULL         |
+| channel          | VARCHAR(20)    | Canal: email, sms, push, whatsapp, in-app   | NOT NULL                      |
+| status           | VARCHAR(20)    | Estado del intento: sent, delivered, failed | NOT NULL                      |
+| error_message    | TEXT           | Mensaje de error (si aplica)                | NULL                          |
+| retry_count      | INTEGER        | Número de reintentos en este intento        | DEFAULT 0                     |
+| sent_at          | TIMESTAMP      | Fecha/hora de envío                         | NULL                          |
+| delivered_at     | TIMESTAMP      | Fecha/hora de entrega confirmada            | NULL                          |
+| created_at       | TIMESTAMP      | Fecha de creación del log                   | NOT NULL, DEFAULT NOW()       |
+| updated_at       | TIMESTAMP      | Fecha de actualización del log              | NOT NULL, DEFAULT NOW()       |
+
+**Ejemplo de datos:**
+
+| log_id                               | tenant_id  | notification_id                        | channel | status    | error_message | retry_count | sent_at              | delivered_at         | created_at           | updated_at           |
+|---------------------------------------|------------|----------------------------------------|---------|-----------|--------------|------------|----------------------|----------------------|----------------------|----------------------|
+| 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d | tenant-pe  | 1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f   | email   | sent      | NULL         | 0          | 2025-08-13T10:01:00Z | 2025-08-13T10:01:10Z | 2025-08-13T10:01:00Z | 2025-08-13T10:01:00Z |
+| 2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e | tenant-pe  | 1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f   | sms     | failed    | "Timeout"    | 1          | 2025-08-13T10:01:05Z | NULL                 | 2025-08-13T10:01:05Z | 2025-08-13T10:01:05Z |
+
+---
+
+### 5.4.4 Tabla: `notification_templates`
 
 | Campo              | Tipo         | Descripción                        | Restricciones                  |
 |--------------------|-------------|------------------------------------|-------------------------------|
 | id                 | UUID        | Identificador único                | PRIMARY KEY                   |
-| template_id        | VARCHAR(100)| ID del template                    | UNIQUE, NOT NULL              |
 | tenant_id          | VARCHAR(50) | Identificador del tenant           | NOT NULL, INDEX               |
 | name               | VARCHAR(200)| Nombre descriptivo                 | NOT NULL                      |
 | channel            | VARCHAR(20) | Canal: email, sms, push, whatsapp, in-app | NOT NULL              |
@@ -164,6 +264,65 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 | created_at         | TIMESTAMP   | Fecha de creación                  | NOT NULL, DEFAULT NOW()       |
 | updated_at         | TIMESTAMP   | Fecha de actualización             | NOT NULL, DEFAULT NOW()       |
 
+**Ejemplo de datos:**
+
+| id                                   | tenant_id  | name                    | channel | subject_template           | body_template                        | variables                                 | is_active | created_at           | updated_at           |
+|---------------------------------------|------------|-------------------------|---------|---------------------------|---------------------------------------|-------------------------------------------|-----------|----------------------|----------------------|
+| 3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f | tenant-pe  | Confirmación de Pedido  | email   | "Confirmación de Pedido" | "¡Gracias por su pedido, {{user}}!" | {"user":"string","orderId":"int"} | true      | 2025-08-13T09:00:00Z | 2025-08-13T09:00:00Z |
+| 4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a | tenant-ec  | Promoción Especial      | email   | "Promo"                  | "¡Oferta solo hoy, {{user}}!"       | {"user":"string"}                     | true      | 2025-08-13T09:30:00Z | 2025-08-13T09:30:00Z |
+
+---
+
+### 5.4.5 Tabla: `scheduled_notifications`
+
+| Campo           | Tipo           | Descripción                                 | Restricciones                  |
+|-----------------|----------------|---------------------------------------------|-------------------------------|
+| id              | UUID           | Identificador único                         | PRIMARY KEY                   |
+| tenant_id       | VARCHAR(50)    | Identificador del tenant                    | NOT NULL, INDEX               |
+| user_id         | VARCHAR(100)   | ID del usuario destinatario                 | NOT NULL                      |
+| notification_type| VARCHAR(50)   | transactional, marketing, alert             | NOT NULL                      |
+| channels        | JSONB          | Canales solicitados                         | NOT NULL                      |
+| schedule_time   | TIMESTAMP      | Fecha/hora programada de envío              | NOT NULL                      |
+| timezone        | VARCHAR(50)    | Zona horaria                                | NULL                          |
+| message_content | JSONB          | Contenido del mensaje                       | NOT NULL                      |
+| status          | VARCHAR(20)    | pending, scheduled, sent, failed            | NOT NULL, DEFAULT 'pending'   |
+| priority        | VARCHAR(20)    | Prioridad de la notificación                | NULL                          |
+| retries_left    | INTEGER        | Reintentos restantes                        | DEFAULT 0                     |
+| created_at      | TIMESTAMP      | Fecha de creación                           | NOT NULL, DEFAULT NOW()       |
+| updated_at      | TIMESTAMP      | Fecha de actualización                      | NOT NULL, DEFAULT NOW()       |
+
+**Ejemplo de datos:**
+
+| id                                   | tenant_id  | user_id    | notification_type | channels                      | schedule_time         | timezone   | message_content                                         | status    | priority | retries_left | created_at           | updated_at           |
+|---------------------------------------|------------|------------|-------------------|-------------------------------|----------------------|------------|--------------------------------------------------------|-----------|----------|-------------|----------------------|----------------------|
+| 5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b | tenant-co  | usuario789 | transactional     | ["email","sms"]            | 2025-08-14T09:00:00Z | America/Lima | {"subject":"Recordatorio","body":"No olvide su cita"} | scheduled | high     | 2           | 2025-08-13T08:00:00Z | 2025-08-13T08:00:00Z |
+| 6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c | tenant-mx  | usuario123 | marketing         | ["email"]                   | 2025-08-15T10:00:00Z | UTC        | {"subject":"Promo","body":"¡Solo hoy!"}              | pending   | low      | 1           | 2025-08-13T08:30:00Z | 2025-08-13T08:30:00Z |
+
+---
+
+### 5.4.6 Tabla: `tenant_notification_settings`
+
+| Campo           | Tipo           | Descripción                                         | Restricciones                  |
+|-----------------|----------------|-----------------------------------------------------|-------------------------------|
+| id              | UUID           | Identificador único                                 | PRIMARY KEY                   |
+| tenant_id       | VARCHAR(50)    | Identificador del tenant                            | NOT NULL, INDEX               |
+| country_code    | VARCHAR(5)     | Código de país (PE, EC, CO, MX)                     | NOT NULL, INDEX               |
+| allowed_channels| JSONB          | Canales permitidos (email, sms, push, etc.)         | NOT NULL                      |
+| daily_limit     | INTEGER        | Límite diario de notificaciones                     | NULL                          |
+| default_sender  | VARCHAR(200)   | Remitente por defecto (email, nombre, etc.)         | NULL                          |
+| allowed_hours   | JSONB          | Horarios permitidos para envío (ej: [8,21])         | NULL                          |
+| preferences     | JSONB          | Preferencias adicionales (idioma, formato, etc.)    | NULL                          |
+| is_active       | BOOLEAN        | Configuración activa                                | DEFAULT true                  |
+| created_at      | TIMESTAMP      | Fecha de creación                                   | NOT NULL, DEFAULT NOW()       |
+| updated_at      | TIMESTAMP      | Fecha de actualización                              | NOT NULL, DEFAULT NOW()       |
+
+**Ejemplo de datos:**
+
+| id                                   | tenant_id  | country_code | allowed_channels                | daily_limit | default_sender         | allowed_hours | preferences                                 | is_active | created_at           | updated_at           |
+|---------------------------------------|------------|--------------|-------------------------------|-------------|-----------------------|---------------|---------------------------------------------|-----------|----------------------|----------------------|
+| 7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d | tenant-pe  | PE           | ["email","sms","push"]    | 1000        | "<notificaciones@acme.com>" | [8,21]        | {"idioma":"es","formato":"html"}     | true      | 2025-08-13T07:00:00Z | 2025-08-13T07:00:00Z |
+| 8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e | tenant-ec  | EC           | ["email"]                    | 500         | "<info@ejemplo.com>"         | [9,18]        | {"idioma":"en"}                        | true      | 2025-08-13T07:30:00Z | 2025-08-13T07:30:00Z |
+
 ## 5.5 Endpoints De API
 
 Se describen los principales endpoints REST para la gestión y consulta de notificaciones y plantillas. Los contratos de datos siguen el estándar DTO y están alineados con la arquitectura Clean Architecture.
@@ -172,6 +331,14 @@ Se describen los principales endpoints REST para la gestión y consulta de notif
 
 - POST `/api/v1/notifications`: Enviar nueva notificación
 - GET `/api/v1/notifications/{notificationId}`: Consultar estado de notificación
+
+### 5.5.2 Attachment API
+
+- POST `/api/v1/attachments/upload`: Subir un archivo adjunto (multipart/form-data)
+- GET `/api/v1/attachments/{attachmentId}/download`: Descargar un archivo adjunto
+- DELETE `/api/v1/attachments/{attachmentId}`: Eliminar un archivo adjunto
+
+> Los adjuntos se almacenan en S3 y se asocian a notificaciones mediante URLs seguras. El endpoint de carga retorna la URL de acceso y el identificador del adjunto.
 
 ## 5.6 Contratos De Datos (DTOs)
 
