@@ -85,9 +85,11 @@ const config: Config = {
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          href: 'https://github.com/jclemente-tlm/tlm-doc-architecture',
+          // label: 'GitHub',
           position: 'right',
+          className: "header--github-link",
+          "aria-label": "GitHub repository",
         },
       ],
     },
