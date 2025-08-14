@@ -1,6 +1,6 @@
-# 11. Riesgos Y Deuda Técnica
+# 11. Riesgos y deuda técnica
 
-## 11.1 Riesgos Identificados
+## 11.1 Riesgos identificados
 
 | Riesgo                        | Probabilidad | Impacto | Mitigación                                 |
 |-------------------------------|--------------|---------|--------------------------------------------|
@@ -10,7 +10,7 @@
 | Degradación de rendimiento    | Media        | Medio   | Monitoreo y autoescalado                   |
 | Pérdida de logs/auditoría     | Baja         | Alto    | Centralización y backups                   |
 
-## 11.2 Deuda Técnica
+## 11.2 Deuda técnica
 
 | Área           | Descripción                        | Prioridad | Esfuerzo   |
 |----------------|------------------------------------|-----------|------------|
@@ -19,7 +19,7 @@
 | Documentación  | Guías de administración            | Media     | 1 sprint   |
 | Testing        | Pruebas de carga y resiliencia     | Media     | 2 sprints  |
 
-## 11.3 Acciones Recomendadas
+## 11.3 Acciones recomendadas
 
 | Acción                            | Plazo      | Responsable   |
 |------------------------------------|------------|--------------|

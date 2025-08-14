@@ -1,6 +1,6 @@
-# 6. Vista De Tiempo De Ejecución
+# 6. Vista de tiempo de ejecución
 
-## 6.1 Escenarios Principales
+## 6.1 Escenarios principales
 
 | Escenario         | Flujo                                 | Componentes           |
 |-------------------|---------------------------------------|-----------------------|
@@ -8,7 +8,7 @@
 | Validación Token  | Servicio → `Keycloak` → Validación    | JWT Validation        |
 | Federación        | IdP externo → `Keycloak` → Usuario    | Federation Connectors |
 
-## 6.2 Patrones De Interacción
+## 6.2 Patrones de interacción
 
 | Patrón        | Descripción                | Tecnología |
 |---------------|---------------------------|------------|
@@ -16,7 +16,7 @@
 | JWT           | Tokens de acceso          | RS256      |
 | SAML          | Federación legacy         | SAML 2.0   |
 
-## 6.3 Escenario: Autenticación De Usuario Con MFA
+## 6.3 Escenario: autenticación de usuario con MFA
 
 ### Participantes
 
@@ -28,7 +28,7 @@
 - Audit Service
 - Notification Service
 
-### Flujo De Ejecución
+### Flujo de ejecución
 
 ```mermaid
 sequenceDiagram
@@ -78,7 +78,7 @@ sequenceDiagram
     end
 ```
 
-### Métricas De Performance
+### Métricas de performance
 
 | Fase                        | Target     | Medición           | Monitoreo           |
 |-----------------------------|------------|--------------------|---------------------|
@@ -90,7 +90,7 @@ sequenceDiagram
 | Token validation            | `< 10ms`   | gRPC/cache         | Token metrics       |
 | Flujo completo              | `< 2s`     | End-to-end         | Synthetic monitoring|
 
-### Manejo De Errores Y Resiliencia
+### Manejo de errores y resiliencia
 
 | Escenario Error         | Respuesta      | Acción De Recuperación                |
 |------------------------|----------------|---------------------------------------|
@@ -99,7 +99,7 @@ sequenceDiagram
 | Token Service Down     | HTTP 503       | Circuit breaker + validación local    |
 | Audit Service Down     | Continuar      | Store local + replay posterior        |
 
-## 6.4 Escenario: Federación Con IdP SAML
+## 6.4 Escenario: federación con IdP SAML
 
 ### Participantes
 
@@ -109,7 +109,7 @@ sequenceDiagram
 - Procesador SAML
 - Servicio de Auditoría
 
-### Flujo De Ejecución
+### Flujo de ejecución
 
 ```mermaid
 sequenceDiagram
@@ -142,7 +142,7 @@ sequenceDiagram
 
 > Este escenario describe la federación SAML entre un IdP externo corporativo y `Keycloak` en arquitectura multi-tenant. El flujo refleja la integración real, trazabilidad y auditoría, sin pasos ni componentes ajenos.
 
-## 6.5 Métricas Y Monitoreo De Escenarios
+## 6.5 Métricas y monitoreo de escenarios
 
 - Todas las fases instrumentadas con `Prometheus`, `Grafana` y logs estructurados.
 - Trazas distribuidas para flujos críticos (`OpenTelemetry`, `Jaeger`).

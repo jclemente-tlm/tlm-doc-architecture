@@ -1,8 +1,8 @@
-# 1. Introducción Y Objetivos
+# 1. Introducción y objetivos
 
 El Servicio de Identidad proporciona autenticación, autorización y federación centralizada para servicios corporativos multipaís, con aislamiento multi-tenant (`tenant`/`realm` por país), integración con sistemas cloud y legacy, y cumplimiento normativo internacional. Facilita la gestión de usuarios, autenticación federada, control de acceso basado en roles y cumplimiento regulatorio de forma segura y escalable.
 
-## 1.1 Funcionalidades Clave
+## 1.1 Funcionalidades clave
 
 | Funcionalidad   | Descripción breve                                                      |
 |-----------------|------------------------------------------------------------------------|
@@ -15,7 +15,7 @@ El Servicio de Identidad proporciona autenticación, autorización y federación
 | Observabilidad  | Métricas, trazas y logs centralizados                                  |
 | API Gateway     | Validación de tokens y forwarding seguro                               |
 
-## 1.2 Atributos De Calidad
+## 1.2 Atributos de calidad
 
 | Atributo       | Objetivo             | Métrica           |
 |----------------|---------------------|-------------------|
@@ -25,7 +25,7 @@ El Servicio de Identidad proporciona autenticación, autorización y federación
 | Seguridad      | Zero trust, GDPR    | `100% auditado`   |
 | Usabilidad     | SSO fluido          | `< 3 clics acceso`|
 
-## 1.3 Tipos De Usuarios Y Roles
+## 1.3 Tipos de usuarios y roles
 
 | Tipo de Usuario      | Descripción                  | Roles Típicos           | MFA                |
 |----------------------|-----------------------------|-------------------------|---------------------|

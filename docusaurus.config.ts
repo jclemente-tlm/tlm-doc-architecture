@@ -9,28 +9,20 @@ const config: Config = {
   tagline: 'Documentación de Talma',
   favicon: 'img/favicon.ico',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: true,
   },
 
-  // Set the production url of your site here
   url: 'https://jclemente-tlm.github.io',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/tlm-doc-architecture/',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'jclemente-tlm', // Nombre de la empresa
-  projectName: 'tlm-doc-architecture', // El nombre de tu repositorio
-  deploymentBranch: 'docs', // La rama donde se despliega la documentación
+  organizationName: 'jclemente-tlm',
+  projectName: 'tlm-doc-architecture',
+  deploymentBranch: 'docs',
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
-  // Configuración de internacionalización
   i18n: {
     defaultLocale: 'es',
     locales: ['es'],
@@ -41,99 +33,66 @@ const config: Config = {
       'classic',
       {
         docs: {
-          sidebarPath: './sidebars.ts',
-          // Cambiado para tu repo.
+          sidebarPath: require.resolve('./sidebars.ts'), // <- aquí se resuelve correctamente TS
           editUrl:
             'https://github.com/jclemente-tlm/tlm-doc-architecture/edit/main/',
         },
         blog: {
           showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Cambiado para tu repo.
+          feedOptions: { type: ['rss', 'atom'], xslt: true },
           editUrl:
             'https://github.com/jclemente-tlm/tlm-doc-architecture/edit/main/',
-          // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
         },
-        theme: {
-          customCss: './src/css/custom.css',
-        },
+        theme: { customCss: './src/css/custom.css' },
       } satisfies Preset.Options,
     ],
   ],
 
   themeConfig: {
-    // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      // title: 'Talma',
-      logo: {
-        alt: 'Talma Logo',
-        src: 'img/logo-talma.png',
-      },
+      logo: { alt: 'Talma Logo', src: 'img/logo-talma.png' },
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'principal',
           position: 'left',
           label: 'Documentación',
         },
-        // {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/jclemente-tlm/tlm-doc-architecture',
-          // label: 'GitHub',
           position: 'right',
-          className: "header--github-link",
-          "aria-label": "GitHub repository",
+          className: 'header--github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
+    },
+    docs: {
+      sidebar: {
+        autoCollapseCategories: true,
+      },
     },
     footer: {
       style: 'dark',
       links: [
         {
           title: 'Docs',
-          items: [
-            {
-              label: 'Documentación',
-              to: '/docs/intro',
-            },
-          ],
+          items: [{ label: 'Documentación', to: '/docs/intro' }],
         },
         {
           title: 'Comunidad',
           items: [
-            {
-              label: 'LinkedIn',
-              href: 'https://pe.linkedin.com/company/talma-servicios-aeroportuarios',
-            },
-            {
-              label: 'YouTube',
-              href: 'https://www.youtube.com/channel/UC-LkTBWGU2aSh-00bv83OlA',
-            },
-            {
-              label: 'Facebook',
-              href: 'https://www.facebook.com/talmaperu/?ref=br_rs',
-            },
+            { label: 'LinkedIn', href: 'https://pe.linkedin.com/company/talma-servicios-aeroportuarios' },
+            { label: 'YouTube', href: 'https://www.youtube.com/channel/UC-LkTBWGU2aSh-00bv83OlA' },
+            { label: 'Facebook', href: 'https://www.facebook.com/talmaperu/?ref=br_rs' },
           ],
         },
         {
           title: 'Más',
-          items: [
-            // {
-            //   label: 'Blog',
-            //   to: '/blog',
-            // },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/jclemente-tlm/tlm-doc-architecture',
-            },
-          ],
+          items: [{ label: 'GitHub', href: 'https://github.com/jclemente-tlm/tlm-doc-architecture' }],
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Talma. Documentación construida con Docusaurus.`,
@@ -142,43 +101,17 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
       additionalLanguages: [
-        'java',
-        'csharp',
-        'php',
-        'ruby',
-        'go',
-        'rust',
-        'kotlin',
-        'swift',
-        'sql',
-        'powershell',
-        'docker',
-        'yaml',
-        'json',
-        'bash',
-        'ini',
-        'perl',
-        'scala',
-        'groovy',
-        'graphql',
-        'typescript',
-        'python',
-        'markdown',
+        'java','csharp','php','ruby','go','rust','kotlin','swift','sql','powershell',
+        'docker','yaml','json','bash','ini','perl','scala','groovy','graphql','typescript','python','markdown',
       ],
     },
     mermaid: {
-      theme: {light: 'neutral', dark: 'dark'},
-      options: {
-        securityLevel: 'strict',
-      },
+      theme: { light: 'neutral', dark: 'dark' },
+      options: { securityLevel: 'strict' },
     },
   } satisfies Preset.ThemeConfig,
-  themes: [
-    '@docusaurus/theme-mermaid',
-  ],
-  markdown: {
-    mermaid: true,
-  },
+  themes: ['@docusaurus/theme-mermaid'],
+  markdown: { mermaid: true },
 };
 
 export default config;

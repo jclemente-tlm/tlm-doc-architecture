@@ -1,8 +1,8 @@
-# 2. Restricciones De La Arquitectura
+# 2. Restricciones de la arquitectura
 
 Esta sección documenta las limitaciones técnicas, organizativas, de proceso y de cumplimiento que condicionan el diseño y la evolución del Servicio de Identidad. Todas las restricciones aquí descritas son obligatorias y deben ser consideradas en cada decisión arquitectónica.
 
-## 2.1 Técnicas Y De Plataforma
+## 2.1 Técnicas y de plataforma
 
 | Categoría     | Restricción           | Impacto en la arquitectura           |
 |--------------|----------------------|--------------------------------------|
@@ -12,7 +12,7 @@ Esta sección documenta las limitaciones técnicas, organizativas, de proceso y 
 | Orquestación | `AWS ECS` + `Terraform` | Infraestructura como código, escalabilidad |
 | Protocolos   | `OAuth2`/`OIDC`, `SAML` | Interoperabilidad y seguridad     |
 
-## 2.2 Rendimiento Y Disponibilidad
+## 2.2 Rendimiento y disponibilidad
 
 | Métrica               | Objetivo      | Justificación           |
 |-----------------------|--------------|------------------------|
@@ -21,7 +21,7 @@ Esta sección documenta las limitaciones técnicas, organizativas, de proceso y 
 | Disponibilidad        | `99.9%`      | SLA corporativo         |
 | Failover              | `< 2 minutos`| Resiliencia ante fallos |
 
-## 2.3 Seguridad Y Compliance
+## 2.3 Seguridad y compliance
 
 | Aspecto       | Requerimiento                | Referencia                |
 |---------------|-----------------------------|---------------------------|
@@ -30,7 +30,7 @@ Esta sección documenta las limitaciones técnicas, organizativas, de proceso y 
 | Cifrado       | `TLS 1.3`, `AES-256`        | Protección de datos en tránsito y reposo |
 | Token         | `JWT RS256`                 | Integridad y autenticidad |
 
-## 2.4 Organizacionales Y Operativas
+## 2.4 Organizacionales y operativas
 
 | Área           | Restricción                        | Impacto                  |
 |----------------|------------------------------------|--------------------------|
@@ -39,7 +39,7 @@ Esta sección documenta las limitaciones técnicas, organizativas, de proceso y 
 | Documentación  | Arc42 + ADR                        | Trazabilidad de decisiones|
 | Automatización | `Terraform`, CI/CD                 | Despliegue seguro y repetible |
 
-## 2.5 Monitoreo Y Observabilidad
+## 2.5 Monitoreo y observabilidad
 
 | Herramienta   | Propósito                | Integración                |
 |---------------|--------------------------|----------------------------|
@@ -49,7 +49,7 @@ Esta sección documenta las limitaciones técnicas, organizativas, de proceso y 
 | `Jaeger`      | Trazas distribuidas      | OTLP (`OpenTelemetry`)     |
 | `CloudWatch`  | Monitoreo infraestructura| ECS, RDS, ALB              |
 
-## 2.6 Referencias Y Normativas
+## 2.6 Referencias y normativas
 
 - [Keycloak Server Installation Guide](https://www.keycloak.org/docs/latest/server_installation/)
 - [Keycloak High Availability Guide](https://www.keycloak.org/docs/latest/server_installation/#_clustering)

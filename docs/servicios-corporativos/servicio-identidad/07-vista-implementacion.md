@@ -1,9 +1,9 @@
-# 7. Vista De Implementación
+# 7. Vista de implementación
 
 ![Vista de implementación del Sistema de Identidad](/diagrams/servicios-corporativos/identity_system_deployment.png)
 *Figura 7.1: Implementación de Componentes de principales del sistema*
 
-## 7.1 Estructura Del Proyecto
+## 7.1 Estructura del proyecto
 
 | Componente    | Ubicación         | Tecnología                |
 |---------------|------------------|---------------------------|
@@ -11,7 +11,7 @@
 | `PostgreSQL`  | AWS RDS/Aurora   | PostgreSQL 15+            |
 | Configuración | AWS Secrets Manager | JSON                    |
 
-## 7.2 Dependencias Principales
+## 7.2 Dependencias principales
 
 | Dependencia   | Versión | Propósito           |
 |---------------|---------|---------------------|
@@ -29,14 +29,14 @@
 - Seguridad: Security Groups y Network ACLs
 - Secrets y configuración gestionados en AWS Secrets Manager
 
-## 7.4 Despliegue Y Configuración De Servicios
+## 7.4 Despliegue y configuración de servicios
 
 - `Keycloak`: Contenedor único (`Docker`) desplegado en ECS Fargate, autoescalado horizontal, health checks, métricas y logs habilitados
 - `Keycloak` únicamente se comunica con `PostgreSQL` (`RDS Aurora`), sin integración directa con otros servicios
 - Configuración de `ALB` para HTTPS, redirección HTTP→HTTPS, certificados ACM
 - Auto Scaling basado en CPU y métricas de servicio
 
-## 7.5 Ambientes Y Buenas Prácticas
+## 7.5 Ambientes y buenas prácticas
 
 | Ambiente     | Propósito                | Configuración clave                |
 |--------------|--------------------------|------------------------------------|
@@ -48,7 +48,7 @@
 - Acceso restringido por VPN y listas blancas de IP
 - Certificados TLS gestionados por ACM
 
-## 7.6 Backup Y Disaster Recovery
+## 7.6 Backup y disaster recovery
 
 - Backups automáticos diarios de base de datos (`30 días prod`, `7 días staging`)
 - Snapshots manuales antes de despliegues mayores
@@ -56,7 +56,7 @@
 - Backups de estado de infraestructura (`Terraform`, `CloudFormation`)
 - Plan de recuperación: `RTO < 4h`, `RPO < 15min`, cross-region para base de datos
 
-## 7.7 Seguridad Y Cumplimiento
+## 7.7 Seguridad y cumplimiento
 
 - `Keycloak` contenerizado en ECS Fargate, autoescalado horizontal
 - Comunicación exclusiva `Keycloak` ↔ `PostgreSQL`, sin exposición pública

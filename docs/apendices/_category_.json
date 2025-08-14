@@ -1,0 +1,10 @@
+{
+    "label": "Apéndices",
+    "position": 4,
+    "link": {
+        "type": "generated-index",
+        "title": "Apendices",
+        "slug": "/apendices",
+        "description": "Documentación de los apéndices de Talma."
+    }
+}

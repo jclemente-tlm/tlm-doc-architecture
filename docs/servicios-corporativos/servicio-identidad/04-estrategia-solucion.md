@@ -1,6 +1,6 @@
-# 4. Estrategia De Solución
+# 4. Estrategia de solución
 
-## 4.1 Decisiones Clave De Arquitectura
+## 4.1 Decisiones clave de arquitectura
 
 | Decisión                | Alternativas Evaluadas         | Seleccionada             |
 |-------------------------|-------------------------------|--------------------------|
@@ -10,7 +10,7 @@
 | Base de Datos           | MySQL, `PostgreSQL`           | `PostgreSQL`             |
 | Despliegue              | VM, contenedores, serverless  | Contenedores             |
 
-## 4.2 Patrones Y Estrategias Aplicadas
+## 4.2 Patrones y estrategias aplicadas
 
 - Multi-tenancy: Cada `tenant` (`realm`) es independiente en `Keycloak`, con aislamiento total de datos y configuración.
 - Federación: Integración con `LDAP` y `SAML`/`OIDC` para federar usuarios desde sistemas legados y Google Workspace.
@@ -21,7 +21,7 @@
 - Contenedores y orquestación: `Docker` y `AWS ECS` para portabilidad y escalabilidad.
 - DSLs de arquitectura: Modelado de contexto y componentes con C4 Model DSL y Structurizr DSL para trazabilidad y visualización.
 
-## 4.3 Mitigación De Riesgos
+## 4.3 Mitigación de riesgos
 
 | Riesgo                   | Probabilidad | Impacto | Mitigación                                    |
 |--------------------------|--------------|---------|-----------------------------------------------|

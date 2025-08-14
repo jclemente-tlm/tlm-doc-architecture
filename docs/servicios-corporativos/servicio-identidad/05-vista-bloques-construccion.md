@@ -1,10 +1,10 @@
-# 5. Vista de Bloques de Construcción
+# 5. Vista de bloques de construcción
 
 ![Sistema de Identidad - Vista de Componentes](/diagrams/servicios-corporativos/identity_system.png)
 
 > Figura 5.1: Vista de componentes del Servicio de Identidad
 
-## 5.1 Componentes Principales
+## 5.1 Componentes principales
 
 | Componente                | Responsabilidad                                      | Tecnología                  | Interfaces                  |
 |---------------------------|------------------------------------------------------|-----------------------------|-----------------------------|
@@ -14,19 +14,19 @@
 | Gateway Federación        | Integración con IdPs externos                        | Conectores Keycloak         | SAML, OIDC, LDAP            |
 | Consola Administración    | Interfaz administrativa                              | Keycloak Admin Console      | Web UI, Admin API           |
 
-## 5.2 Relaciones y Estructura
+## 5.2 Relaciones y estructura
 
 - Keycloak se despliega como contenedor Docker oficial, conectado a una base de datos PostgreSQL dedicada.
 - No se desarrollan componentes propios, se configura y extiende Keycloak mediante su consola y APIs.
 
-## 5.3 Principios de Construcción
+## 5.3 Principios de construcción
 
 - Uso de componentes estándar y soportados por la comunidad.
 - Separación de responsabilidades por componente.
 - Multi-tenancy gestionado a nivel de tenant (realm) en Keycloak.
 - Observabilidad y auditoría integradas desde el diseño.
 
-## 5.4 Observabilidad y Monitoreo
+## 5.4 Observabilidad y monitoreo
 
 - Métricas de autenticación, latencia y errores expuestas vía Prometheus y visualizadas en Grafana.
 - Logs estructurados centralizados en Loki y ELK Stack.
@@ -36,7 +36,7 @@
 
 - Keycloak almacena toda la información de identidades, configuración y sesiones en PostgreSQL usando su propio modelo de datos interno, el cual no es personalizado ni extendido por el equipo.
 
-## 5.6 Interfaces Externas
+## 5.6 Interfaces externas
 
 | Servicio Integrado         | Propósito principal           |
 |---------------------------|-------------------------------|
@@ -47,9 +47,9 @@
 | Federation Partners       | Integración IdPs externos     |
 | Monitoring & Observability| Métricas, trazas, logs        |
 
-## 5.7 Ejemplos Técnicos
+## 5.7 Ejemplos técnicos
 
-### Obtención de Token de Acceso (OAuth2/OIDC Client Credentials)
+### Obtención de token de acceso (OAuth2/OIDC client credentials)
 
 _Ejemplo de autenticación máquina a máquina (M2M) usando el flujo client credentials de OAuth2/OIDC en Keycloak. Este flujo es utilizado por servicios o aplicaciones backend para obtener un token de acceso sin intervención de usuario, típico en integraciones API-to-API multi-tenant._
 

@@ -1,4 +1,4 @@
-# 10. Requisitos De Calidad
+# 10. Requisitos de calidad
 
 ## 10.1 Rendimiento
 
@@ -36,7 +36,7 @@
 - Arquitectura multi-tenant y autoescalable.
 - Pruebas de carga periódicas para validar límites y crecimiento.
 
-## 10.4 Latencia Y Capacidad Crítica
+## 10.4 Latencia y capacidad crítica
 
 | Operación                  | P50   | P95   | P99   | SLA Crítico |
 |----------------------------|-------|-------|-------|-------------|

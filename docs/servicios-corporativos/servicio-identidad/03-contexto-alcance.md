@@ -1,10 +1,10 @@
-# 3. Contexto Y Alcance
+# 3. Contexto y alcance
 
 ![Vista de Contexto](/diagrams/servicios-corporativos/identity_system.png)
 
 *Figura 3.1: Vista de contexto del Servicio de Identidad*
 
-## 3.1 Contexto De Negocio
+## 3.1 Contexto de negocio
 
 El Servicio de Identidad centraliza autenticación, autorización y federación para servicios corporativos multipaís, priorizando seguridad, SSO, cumplimiento normativo y eficiencia operativa. La solución es multi-tenant: cada país opera en un `tenant` (`realm`) independiente, garantizando aislamiento y escalabilidad.
 
@@ -16,7 +16,7 @@ El Servicio de Identidad centraliza autenticación, autorización y federación 
 | Compliance       | Auditoría, regulaciones | Trazabilidad, reportes      | Cumplimiento normativo      |
 | Usuarios Finales | Usuarios             | Acceso a aplicaciones           | Experiencia fluida y segura |
 
-## 3.2 Contexto Técnico
+## 3.2 Contexto técnico
 
 ```mermaid
 graph TD
@@ -52,9 +52,9 @@ graph TD
     B --> T4
 ```
 
-## 3.3 Fronteras Y Alcance
+## 3.3 Fronteras y alcance
 
-### Dentro Del Alcance
+### Dentro del alcance
 
 | Componente                  | Descripción                | Responsabilidad                  |
 |-----------------------------|----------------------------|----------------------------------|
@@ -66,7 +66,7 @@ graph TD
 | APIs Programáticas          | APIs REST                  | Gestión programática de usuarios |
 | Auditoría y Logging         | Eventos de seguridad       | Rastro de auditoría completo     |
 
-### Fuera Del Alcance
+### Fuera del alcance
 
 | Componente                  | Razón de Exclusión         | Responsable                      |
 |-----------------------------|----------------------------|----------------------------------|
@@ -76,7 +76,7 @@ graph TD
 | Gestión de Certificados     | Infraestructura PKI        | Equipo de seguridad              |
 | Plataforma de Monitoreo     | Observabilidad             | Equipo DevOps                    |
 
-## 3.4 Interfaces Externas
+## 3.4 Interfaces externas
 
 | Actor                        | Tipo    | Descripción                        | Interacciones                                 |
 |------------------------------|---------|------------------------------------|-----------------------------------------------|

@@ -1,8 +1,8 @@
-# 9. Decisiones De Arquitectura
+# 9. Decisiones de arquitectura
 
 Esta sección documenta las decisiones arquitectónicas clave del sistema de identidad, siguiendo el formato ADR y alineando cada decisión a los principios de portabilidad, estándares abiertos, multi-tenant y operación cloud-agnostic.
 
-## 9.1 Decisiones Principales
+## 9.1 Decisiones principales
 
 | ADR     | Decisión                        | Estado    | Justificación         |
 |---------|----------------------------------|-----------|----------------------|
@@ -11,7 +11,7 @@ Esta sección documenta las decisiones arquitectónicas clave del sistema de ide
 | ADR-003 | `PostgreSQL` backend             | Aceptado  | Robustez             |
 | ADR-004 | Federación híbrida               | Aceptado  | Flexibilidad         |
 
-## 9.2 Alternativas Evaluadas
+## 9.2 Alternativas evaluadas
 
 | Componente   | Alternativas           | Selección   | Razón         |
 |--------------|-----------------------|-------------|---------------|
@@ -22,7 +22,7 @@ Esta sección documenta las decisiones arquitectónicas clave del sistema de ide
 
 > Todas las decisiones siguen los principios: agnóstico de nube, sin desarrollo personalizado, basado en estándares, multi-tenant (`realm`), contenedores primero, sin dependencia de proveedor. Cada ADR documenta contexto, justificación y consecuencias.
 
-## 9.3 Resumen De Decisiones
+## 9.3 Resumen de decisiones
 
 | #       | Decisión                    | Estado     | Impacto | Fecha       |
 |---------|-----------------------------|------------|---------|-------------|
@@ -31,7 +31,7 @@ Esta sección documenta las decisiones arquitectónicas clave del sistema de ide
 | ADR-003 | Database-backed Sessions    | Aprobado   | Medio   | 2024-01-25  |
 | ADR-004 | OAuth2 + OIDC Standard      | Aprobado   | Alto    | 2024-01-30  |
 
-## 9.4 Principios Arquitectónicos
+## 9.4 Principios arquitectónicos
 
 - Portabilidad entre nubes: `Keycloak` y `PostgreSQL` desplegables en AWS, Azure, GCP o on-premise
 - Sin desarrollo personalizado: Uso de `Keycloak` y `PostgreSQL` listos para usar
@@ -48,9 +48,9 @@ Esta sección documenta las decisiones arquitectónicas clave del sistema de ide
 
 ---
 
-# 9. Decisiones De Arquitectura (Detalle ADR)
+# 9. Decisiones de arquitectura (detalle ADR)
 
-## 9.1 Decisiones Principales
+## 9.1 Decisiones principales
 
 | ADR      | Decisión                        | Estado    | Justificación         |
 |----------|----------------------------------|-----------|----------------------|
@@ -59,7 +59,7 @@ Esta sección documenta las decisiones arquitectónicas clave del sistema de ide
 | ADR-003  | `PostgreSQL` backend             | Aceptado  | Robustez             |
 | ADR-004  | Federación híbrida               | Aceptado  | Flexibilidad         |
 
-## 9.2 Alternativas Evaluadas
+## 9.2 Alternativas evaluadas
 
 | Componente | Alternativas           | Selección   | Razón         |
 |------------|-----------------------|-------------|---------------|
@@ -70,7 +70,7 @@ Esta sección documenta las decisiones arquitectónicas clave del sistema de ide
 
 Esta sección documenta las decisiones arquitectónicas más importantes del sistema de identidad utilizando el formato ADR, proporcionando contexto, justificación y consecuencias de cada decisión.
 
-## ADR-001: `Keycloak` Containerizado Como Identity Provider Central
+## ADR-001: `Keycloak` containerizado como identity provider central
 
 | Campo         | Valor                                         |
 |---------------|-----------------------------------------------|
@@ -93,7 +93,7 @@ La organización requiere centralizar la gestión de identidades para múltiples
 - Agnóstico de nube: Portable entre AWS, Azure, GCP
 - Cero desarrollo personalizado: Usar `Keycloak` listo para usar
 
-### Alternativas Consideradas
+### Alternativas consideradas
 
 | Solución                | Portabilidad | Desarrollo Custom | Costo/Año | Vendor Lock-in |
 |-------------------------|--------------|------------------|-----------|---------------|
@@ -107,7 +107,7 @@ La organización requiere centralizar la gestión de identidades para múltiples
 
 Adoptar `Keycloak` containerizado como proveedor de identidad central con deployment cloud-agnostic usando `Docker`/`Kubernetes`.
 
-### Arquitectura Containerizada
+### Arquitectura containerizada
 
 ```yaml
 # Keycloak Container Stack
@@ -150,7 +150,7 @@ volumes:
   postgres_data:
 ```
 
-### Configuración Multi-tenant (Realms)
+### Configuración multi-tenant (realms)
 
 ```yaml
 # Realm Configuration per Country
@@ -210,7 +210,7 @@ Realms:
 
 ---
 
-## ADR-002: JWT Con RS256 Como Formato De Token Estándar
+## ADR-002: JWT con RS256 como formato de token estándar
 
 | Campo         | Valor                                         |
 |---------------|-----------------------------------------------|
@@ -228,7 +228,7 @@ Los microservicios requieren un mecanismo de autenticación/autorización que se
 - Secure: Integridad y no repudio
 - Standard: Amplio soporte en librerías
 
-### Alternativas Consideradas
+### Alternativas consideradas
 
 | Formato         | Pros                        | Contras                  | Decisión         |
 |-----------------|-----------------------------|--------------------------|------------------|
@@ -254,7 +254,7 @@ Utilizar `JWT` (JSON Web Tokens) con algoritmo de firma RS256 para todos los acc
 - Amigable para debugging: Payload legible para humanos
 - Basado en claims: Contexto rico en payload del token
 
-### Token Structure
+### Token structure
 
 ```json
 {
@@ -279,7 +279,7 @@ Utilizar `JWT` (JSON Web Tokens) con algoritmo de firma RS256 para todos los acc
 }
 ```
 
-### Key Management Strategy
+### Key management strategy
 
 ```yaml
 Key Rotation Policy:
@@ -309,7 +309,7 @@ Key Rotation Policy:
 
 ---
 
-## ADR-003: Multi-Realm Strategy Para Aislamiento Multi-Tenant
+## ADR-003: Multi-realm strategy para aislamiento multi-tenant
 
 | Campo         | Valor                                         |
 |---------------|-----------------------------------------------|
@@ -328,7 +328,7 @@ La organización opera en 4 países con requisitos específicos:
 - Isolated user management: Administradores locales por país
 - Compliance: Auditorías independientes por jurisdicción
 
-### Alternativas Consideradas
+### Alternativas consideradas
 
 | Estrategia                | Isolation Level | Pros             | Contras                | Decisión         |
 |---------------------------|----------------|------------------|------------------------|------------------|
@@ -341,7 +341,7 @@ La organización opera en 4 países con requisitos específicos:
 
 Implementar un `realm` `Keycloak` separado por tenant/país con configuración independiente.
 
-### Arquitectura De Realms
+### Arquitectura de realms
 
 ```yaml
 Keycloak Realm Structure:
@@ -379,7 +379,7 @@ Keycloak Realm Structure:
     currency: "MXN"
 ```
 
-### Tenant Resolution Strategy
+### Tenant resolution strategy
 
 ```csharp
 public class TenantResolver
@@ -435,7 +435,7 @@ public class TenantResolver
 
 ---
 
-## ADR-004: Redis Cluster Para Token Validation Caching
+## ADR-004: Redis cluster para token validation caching
 
 | Campo         | Valor                                         |
 |---------------|-----------------------------------------------|
@@ -460,7 +460,7 @@ Sin caching:
 - Scalability issue: Degradación lineal con carga
 - Cost impact: Mayor consumo de cómputo
 
-### Alternativas Consideradas
+### Alternativas consideradas
 
 | Solución         | Pros         | Contras                  | Performance | Decisión         |
 |------------------|--------------|--------------------------|-------------|------------------|
@@ -474,7 +474,7 @@ Sin caching:
 
 Implementar `Redis Cluster` para caching distribuido de metadatos de validación de tokens.
 
-### Cache Strategy
+### Cache strategy
 
 ```yaml
 Caching Layers:
@@ -542,7 +542,7 @@ public class TokenValidationCache
 }
 ```
 
-### Infrastructure Configuration
+### Infrastructure configuration
 
 ```yaml
 Redis Cluster:
@@ -598,7 +598,7 @@ Redis Cluster:
 
 ---
 
-## ADR-005: Event Sourcing Para Audit Trail Compliance
+## ADR-005: Event sourcing para audit trail compliance
 
 | Campo         | Valor                                         |
 |---------------|-----------------------------------------------|
@@ -615,7 +615,7 @@ Redis Cluster:
 - Monitoreo en tiempo real: Detección inmediata de eventos de seguridad
 - Forensic analysis: Capacidad de investigación detallada
 
-### Alternativas Consideradas
+### Alternativas consideradas
 
 | Aspecto         | Logging Tradicional | Event Sourcing | Decisión         |
 |-----------------|--------------------|----------------|------------------|
@@ -629,7 +629,7 @@ Redis Cluster:
 
 Implementar `Event Sourcing` para audit trail y compliance reporting.
 
-### Event Store Architecture
+### Event store architecture
 
 ```yaml
 Event Store:
@@ -665,7 +665,7 @@ Event Categories:
     - ConsentRevoked
 ```
 
-### Event Schema Design
+### Event schema design
 
 ```csharp
 public abstract class IdentityEvent
@@ -702,7 +702,7 @@ public class RoleAssignedEvent : IdentityEvent
 }
 ```
 
-### Event Store Implementation
+### Event store implementation
 
 ```csharp
 public class PostgreSQLEventStore : IEventStore
@@ -755,7 +755,7 @@ public class PostgreSQLEventStore : IEventStore
 }
 ```
 
-### Real-time Event Processing
+### Real-time event processing
 
 ```csharp
 public class SecurityEventProcessor
@@ -816,7 +816,7 @@ public class SecurityEventProcessor
 
 ---
 
-## Resumen De Decisiones
+## Resumen de decisiones
 
 | ADR         | Decisión                  | Impacto | Estado         |
 |-------------|---------------------------|---------|----------------|

@@ -1,6 +1,6 @@
 # 12. Glosario
 
-## 12.1 Términos Principales
+## 12.1 Términos principales
 
 | Término         | Definición                                      |
 |-----------------|-------------------------------------------------|
