@@ -1,5 +1,5 @@
 ---
-title: "Estándar para Bases de Datos"
+title: "ADR-010: Estándar para Bases de Datos"
 sidebar_position: 10
 ---
 

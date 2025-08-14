@@ -48,7 +48,6 @@ Aplica a todos los equipos que gestionan ramas en repositorios de Talma.
 ## Referencias
 
 - [Git Branch Naming](https://nvie.com/posts/a-successful-git-branching-model/)
-- [Documentación interna de Talma](../README.md)
 
 ## Última revisión
 

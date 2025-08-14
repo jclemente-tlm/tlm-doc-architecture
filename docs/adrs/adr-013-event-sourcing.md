@@ -1,5 +1,5 @@
 ---
-title: "Event Sourcing"
+title: "ADR-013: Event Sourcing"
 sidebar_position: 13
 ---
 

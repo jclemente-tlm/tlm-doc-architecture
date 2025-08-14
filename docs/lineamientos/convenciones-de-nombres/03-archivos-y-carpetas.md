@@ -40,7 +40,6 @@ Aplica a todos los proyectos y equipos de Talma.
 ## Referencias
 
 - [Guía de estilo Node.js](https://nodejs.org/es/docs/guides/style-guide/)
-- [Documentación interna de Talma](../README.md)
 
 ## Última revisión
 

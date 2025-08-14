@@ -1,5 +1,5 @@
 ---
-title: "Gestión de Configuraciones"
+title: "ADR-005: Gestión de Configuraciones"
 sidebar_position: 5
 ---
 

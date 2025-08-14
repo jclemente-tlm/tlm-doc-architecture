@@ -43,6 +43,8 @@ Cada ADR sigue la estructura:
 | [ADR-017](/docs/adrs/adr-017-versionado-apis) | Versionado de APIs | Aceptada | Agosto 2025 | Arquitectura | Estrategia de versionado y ciclo de vida de APIs. |
 | [ADR-018](/docs/adrs/adr-018-arquitectura-microservicios) | Arquitectura de microservicios | Aceptada | Agosto 2025 | Arquitectura | Modelo de descomposición, comunicación y despliegue basado en microservicios para escalabilidad y resiliencia. |
 | [ADR-019](/docs/adrs/adr-019-configuraciones-scripts-bd) | Configuraciones por scripts en BD | Aceptada | Agosto 2025 | Arquitectura + DevOps | Ejecución controlada y versionada de scripts SQL para configuraciones iniciales o puntuales en base de datos multi-motor. |
+| [ADR-020](/docs/adrs/adr-020-alojamiento-nugets) | ADR-020: Alojamiento de NuGets Internos | Aceptada | Agosto 2025 | Arquitectura + DevOps | Solución para gestión y distribución de paquetes NuGet internos para microservicios y librerías compartidas. |
+| [ADR-021](/docs/adrs/adr-021-observabilidad) | ADR-021: Observabilidad | Propuesto | Agosto 2025 | Arquitectura | Estrategia y herramientas para monitoreo, métricas y logs integrados en la plataforma corporativa. |
 
 ### ADRs ESPECÍFICOS DE SERVICIO
 

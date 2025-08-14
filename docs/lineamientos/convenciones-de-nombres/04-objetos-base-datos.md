@@ -87,7 +87,6 @@ Aplica a todos los proyectos y equipos que diseñen o modifiquen bases de datos 
 ## Referencias
 
 - [Guía de estilo de SQL Server](https://docs.microsoft.com/es-es/sql/relational-databases/databases/database-identifiers?view=sql-server-ver16)
-- [Documentación interna de Talma](../README.md)
 
 ## Última revisión
 

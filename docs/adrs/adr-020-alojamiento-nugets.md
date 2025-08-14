@@ -1,6 +1,6 @@
 ---
-title: "Alojamiento de NuGets Internos"
-sidebar_position: 4
+title: "ADR-020: Alojamiento de NuGets Internos"
+sidebar_position: 20
 ---
 
 ## ✅ ESTADO

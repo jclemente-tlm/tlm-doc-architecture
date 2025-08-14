@@ -1,6 +1,6 @@
 ---
-title: "Configuraciones por Scripts en BD"
-sidebar_position: 4
+title: "ADR-019: Configuraciones por Scripts en BD"
+sidebar_position: 19
 ---
 
 ## ✅ ESTADO

@@ -90,7 +90,6 @@ Usamos un formato claro y consistente:
 ## Referencias
 
 - [Guía oficial de GitHub](https://docs.github.com/es/repositories/creating-and-managing-repositories/about-repositories)
-- [Documentación interna de Talma](../README.md)
 
 ## Última revisión
 

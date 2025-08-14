@@ -1,5 +1,5 @@
 ---
-title: "API Gateway"
+title: "ADR-008: API Gateway"
 sidebar_position: 8
 ---
 

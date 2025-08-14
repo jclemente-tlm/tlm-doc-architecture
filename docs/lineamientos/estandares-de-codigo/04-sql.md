@@ -21,7 +21,7 @@ Aplica a todos los desarrolladores que trabajen con SQL, PostgreSQL u Oracle en 
 
 ## Principios clave para SQL
 
-- Nombres descriptivos y consistentes para tablas, columnas y objetos. Consulta la [guía de convenciones de nombres](../convenciones-de-nombres/04-objetos-de-base-de-datos.md).
+- Nombres descriptivos y consistentes para tablas, columnas y objetos. Consulta la [guía de convenciones de nombres](../convenciones-de-nombres/04-objetos-base-datos.md).
 - Usa MAYÚSCULAS para palabras reservadas.
 - Indenta consultas para mejorar la legibilidad.
 - Evita SELECT * y usa solo las columnas necesarias.
@@ -48,7 +48,7 @@ Aplica a todos los desarrolladores que trabajen con SQL, PostgreSQL u Oracle en 
 
 ## Lineamientos para PostgreSQL
 
-- Nombres descriptivos y consistentes para tablas, columnas y objetos. Consulta la [guía de convenciones de nombres](../convenciones-de-nombres/04-objetos-de-base-de-datos.md).
+- Nombres descriptivos y consistentes para tablas, columnas y objetos. Consulta la [guía de convenciones de nombres](../convenciones-de-nombres/04-objetos-base-datos.md).
 - Usa tipos de datos nativos de Postgres (ej: `SERIAL`, `UUID`, `JSONB`).
 - Prefiere `RETURNING` para obtener valores tras un `INSERT` o `UPDATE`.
 - Aprovecha funciones y operadores avanzados (`ARRAY`, `COALESCE`, `ILIKE`).

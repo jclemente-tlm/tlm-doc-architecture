@@ -1,5 +1,5 @@
 ---
-title: "Logging Estructurado"
+title: "ADR-016: Logging Estructurado"
 sidebar_position: 16
 ---
 

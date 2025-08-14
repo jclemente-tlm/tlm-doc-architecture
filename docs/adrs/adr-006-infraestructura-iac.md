@@ -1,5 +1,5 @@
 ---
-title: "Infraestructura como Código (IaC)"
+title: "ADR-006: Infraestructura como Código (IaC)"
 sidebar_position: 6
 ---
 

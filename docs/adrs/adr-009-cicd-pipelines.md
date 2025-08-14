@@ -1,5 +1,5 @@
 ---
-title: "Pipelines CI/CD"
+title: "ADR-009: Pipelines CI/CD"
 sidebar_position: 9
 ---
 

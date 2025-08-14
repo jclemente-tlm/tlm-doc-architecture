@@ -1,5 +1,5 @@
 ---
-title: "Autenticación Centralizada SSO y Multi-Tenancy"
+title: "ADR-004: Autenticación Centralizada SSO y Multi-Tenancy"
 sidebar_position: 4
 ---
 
