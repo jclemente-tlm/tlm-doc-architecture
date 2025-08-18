@@ -1,4 +1,7 @@
-# Registros de Decisiones Arquitectónicas (ADRs)
+---
+title: "Registros de Decisiones Arquitectónicas (ADRs)"
+sidebar_position: 0
+---
 
 Este directorio contiene los Registros de Decisiones Arquitectónicas (Architecture Decision Records - ADRs) para el proyecto de servicios corporativos.
 

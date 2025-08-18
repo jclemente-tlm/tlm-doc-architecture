@@ -1,0 +1,10 @@
+{
+    "label": "Capa de Integración",
+    "position": 5,
+    "link": {
+        "type": "generated-index",
+        "title": "Capa de Integración",
+        "slug": "/capa-integracion",
+        "description": "Documentación de la capa de integración de Talma."
+    }
+}

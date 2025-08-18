@@ -1,0 +1,10 @@
+{
+    "label": "Aplicaciones",
+    "position": 4,
+    "link": {
+        "type": "generated-index",
+        "title": "Aplicaciones",
+        "slug": "/aplicaciones",
+        "description": "Documentación de las aplicaciones de Talma."
+    }
+}

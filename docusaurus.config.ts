@@ -58,7 +58,7 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'principal',
+          sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Documentación',
         },
@@ -98,8 +98,10 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Talma. Documentación construida con Docusaurus.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      // theme: prismThemes.github,
+      // darkTheme: prismThemes.dracula,
+      theme: prismThemes.vsLight,   // tema para modo claro
+      darkTheme: prismThemes.vsDark, // tema para modo oscuro
       additionalLanguages: [
         'java','csharp','php','ruby','go','rust','kotlin','swift','sql','powershell',
         'docker','yaml','json','bash','ini','perl','scala','groovy','graphql','typescript','python','markdown',
