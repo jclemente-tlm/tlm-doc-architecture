@@ -1,6 +1,6 @@
-# 11. Riesgos Y Deuda Técnica
+# 11. Riesgos y deuda técnica
 
-## 11.1 Riesgos Identificados
+## 11.1 Riesgos identificados
 
 | Riesgo                        | Probabilidad | Impacto | Mitigación Técnica                                                                 |
 |-------------------------------|--------------|---------|------------------------------------------------------------------------------------|
@@ -12,7 +12,7 @@
 | Cambios regulatorios          | Baja         | Alto    | Arquitectura flexible, revisiones legales periódicas, automatización de compliance  |
 | Abuso del sistema             | Baja         | Medio   | `Rate limiting` por `tenant (realm)`, monitoreo de patrones anómalos               |
 
-## 11.2 Deuda Técnica
+## 11.2 Deuda técnica
 
 | Área           | Descripción                        | Prioridad | Esfuerzo | Impacto en Calidad           |
 |----------------|-----------------------------------|-----------|----------|------------------------------|
@@ -22,7 +22,7 @@
 | Analytics      | Métricas de entrega parciales      | Media     | 2 sprints| Trazabilidad, reporting      |
 | Configuración  | Parámetros hardcodeados            | Alta      | 1 sprint | Seguridad, flexibilidad      |
 
-## 11.3 Acciones Recomendadas
+## 11.3 Acciones recomendadas
 
 | Acción                                 | Plazo     | Responsable | Entregable Principal                |
 |----------------------------------------|-----------|-------------|-------------------------------------|
@@ -33,7 +33,7 @@
 | Refactorizar configuración externa     | 2 semanas | DevOps      | Uso de `AWS Secrets Manager`        |
 | Completar documentación y runbooks     | 2 semanas | Equipo      | Manuales operativos y API           |
 
-## 11.4 Gestión De Riesgos
+## 11.4 Gestión de riesgos
 
 - Proveedores: fallo simultáneo mitigado con multi-proveedor, failover automático y monitoreo de SLA (`Prometheus`).
 - Infraestructura: saturación de colas en `Redis` o base de datos mitigada con autoescalado, alertas y DLQ.
@@ -41,7 +41,7 @@
 - Cumplimiento: cambios regulatorios (`GDPR`, `CAN-SPAM`, `TCPA`) mitigados con arquitectura flexible y automatización de compliance.
 - Operacional: abuso del sistema mitigado con `rate limiting` por `tenant (realm)`, monitoreo de patrones anómalos y alertas automáticas.
 
-## 11.5 Métricas Y Seguimiento
+## 11.5 Métricas y seguimiento
 
 - SLA de proveedores: `> 99.5%` disponibilidad (`Prometheus`)
 - Tiempo de respuesta de base de datos: `< 50ms p95` (`OpenTelemetry`)
@@ -53,7 +53,7 @@
 - Delivery rate: `< 99%` → revisión semanal
 - Incidentes críticos: reporte y análisis post-mortem obligatorio
 
-## 11.6 Plan De Remediación
+## 11.6 Plan de remediación
 
 - Refactorización hacia interfaces abstractas para desacoplar proveedores y facilitar multi-proveedor
 - Implementar test contracts y mocks mejorados para integración continua
@@ -62,7 +62,7 @@
 - Completar documentación de APIs y runbooks operativos accesibles
 - Automatizar pruebas de resiliencia y failover
 
-## 11.7 Proceso De Revisión
+## 11.7 Proceso de revisión
 
 - Revisión quincenal en retrospectivas técnicas
 - Escalación si riesgo crítico > `50%` o deuda impacta > `20%` en velocity

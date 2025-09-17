@@ -1,4 +1,4 @@
-# 3. Contexto Y Alcance Del Sistema
+# 3. Contexto y alcance
 
 ![Servicios Corporativos - Vista de Contexto](/diagrams/servicios-corporativos/corporate_services.png)
 
@@ -8,7 +8,7 @@
 
 *Figura 3.2: Vista de contexto del Sistema de Notificación*
 
-## 3.1 Alcance Funcional Del Sistema
+## 3.1 Alcance funcional del sistema
 
 | Aspecto   | Descripción                                                                                                                         |
 |-----------|-------------------------------------------------------------------------------------------------------------------------------------|
@@ -17,7 +17,7 @@
 
 > El alcance se centra en la orquestación, entrega y trazabilidad de notificaciones, desacoplando la lógica de negocio y la gestión de usuarios para mantener cohesión y facilitar la evolución independiente de los sistemas consumidores. La resiliencia y escalabilidad se logran mediante el uso de colas, procesadores y desacoplamiento de proveedores externos.
 
-## 3.2 Actores Y Sistemas Externos
+## 3.2 Actores y sistemas externos
 
 | Actor/Sistema              | Rol         | Interacción                                                                                 |
 |---------------------------|-------------|---------------------------------------------------------------------------------------------|

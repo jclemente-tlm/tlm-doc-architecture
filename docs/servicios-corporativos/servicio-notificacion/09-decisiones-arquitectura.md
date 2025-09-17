@@ -1,6 +1,6 @@
-# 9. Decisiones De Arquitectura
+# 9. Decisiones de arquitectura
 
-## 9.1 Decisiones Principales
+## 9.1 Decisiones principales
 
 | ADR        | Decisión                        | Estado    | Justificación                |
 |------------|----------------------------------|-----------|------------------------------|
@@ -10,7 +10,7 @@
 | `ADR-004`  | Multi-canal handlers            | Aprobado  | Extensibilidad y modularidad |
 | `ADR-005`  | Mensajería basada en base de datos | Aprobado | Portabilidad y cloud agnostic|
 
-## 9.2 Alternativas Evaluadas
+## 9.2 Alternativas evaluadas
 
 | Componente   | Alternativas                | Selección | Razón         |
 |--------------|-----------------------------|-----------|---------------|
@@ -29,7 +29,7 @@ Las decisiones arquitectónicas del sistema de notificaciones siguen los princip
 - Abstracción completa de proveedores
 - Desacoplamiento, resiliencia, deduplicación, idempotencia y observabilidad en todos los flujos críticos
 
-## Resumen De Decisiones Arquitectónicas
+## Resumen de decisiones arquitectónicas
 
 | #      | Decisión                        | Estado     | Impacto | Fecha       |
 |--------|----------------------------------|------------|---------|-------------|
@@ -41,13 +41,13 @@ Las decisiones arquitectónicas del sistema de notificaciones siguen los princip
 
 ---
 
-## `ADR-001`: Estrategia Multi-Proveedor
+## `ADR-001`: Estrategia multi-proveedor
 
 - Alta disponibilidad y failover automático por canal (`SendGrid`, `Twilio`, `FCM`, `WhatsApp Business API`, `SES`, `Mailgun`, `360dialog`).
 - Abstracción de proveedores y selección dinámica según salud, costo y cobertura.
 - Reducción de `SPOF` y optimización de costos.
 
-## `ADR-002`: Mensajería Basada En Base De Datos Y Redis
+## `ADR-002`: Mensajería basada en base de datos y redis
 
 - Uso de colas en `PostgreSQL` y `Redis` para mensajería y procesamiento asíncrono.
 - Portabilidad total entre nubes, sin vendor lock-in.
@@ -69,7 +69,7 @@ NotificationQueues:
     retention: 7d
 ```
 
-## `ADR-003`: Motor De Plantillas Liquid Y RazorEngine
+## `ADR-003`: Motor de plantillas liquid y razorengine
 
 - Plantillas seguras, internacionalizadas y editables por negocio.
 - Ejecución en sandbox, filtros personalizados y soporte multi-idioma.
@@ -88,7 +88,7 @@ public class CustomLiquidFilters
 Template.RegisterFilter("t", CustomLiquidFilters.Translate);
 ```
 
-## `ADR-004`: Arquitectura Dirigida Por Eventos
+## `ADR-004`: Arquitectura dirigida por eventos
 
 - Eventos de dominio para comunicación asíncrona y desacoplada.
 - Registro y auditoría de eventos críticos (`NotificationRequested`, `NotificationSent`, `NotificationDelivered`, `NotificationFailed`).
@@ -104,7 +104,7 @@ public class NotificationRequested : NotificationDomainEvent
 }
 ```
 
-## `ADR-005`: Librería NuGet Multi-nube
+## `ADR-005`: Librería NuGet multi-nube
 
 - Abstracción de servicios cloud para facilitar despliegue en `AWS`, `Azure` y `GCP`.
 - Configuración centralizada y desacoplada.

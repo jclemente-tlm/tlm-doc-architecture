@@ -1,64 +1,44 @@
-# 8. Conceptos Transversales
+# 8. Conceptos transversales
 
 ## 8.1 Seguridad
 
 | Aspecto         | Implementación         | Tecnología         |
 |-----------------|-----------------------|--------------------|
-| Autenticación   | JWT (`Keycloak`)      | OAuth2, .NET 8     |
-| Autorización    | Claims y roles        | .NET 8             |
-| Cifrado         | TLS 1.3, AES-256      | HTTPS              |
-| Datos sensibles | Tokenización, cifrado | AES-256            |
+| Autenticación   | JWT                   | .NET 8, ASP.NET Core |
+| Autorización    | Claims y roles        | .NET 8, ASP.NET Core |
+| Cifrado         | TLS 1.3, AES-256      | HTTPS, PostgreSQL  |
+| Datos sensibles | Cifrado en reposo y tránsito | AWS KMS, TLS 1.3 |
 
 ## 8.2 Observabilidad
 
 | Tipo        | Herramienta     | Propósito         |
 |-------------|-----------------|-------------------|
-| Logs        | `Serilog`       | Registro eventos  |
-| Métricas    | `Prometheus`    | Monitoreo         |
-| Trazas      | `OpenTelemetry`, `Jaeger` | Trazabilidad |
+| Logs        | Serilog         | Registro eventos  |
+| Métricas    | Prometheus      | Monitoreo         |
+| Trazas      | OpenTelemetry   | Trazabilidad      |
 | Health      | Health Checks   | Estado servicios  |
 
 ## 8.3 Multi-tenancy
 
 | Aspecto         | Implementación         | Propósito              |
 |-----------------|-----------------------|------------------------|
-| Aislamiento     | Por tenant (realm)    | Separación de datos    |
-| Deduplicación   | Por tenant (realm)    | Prevención duplicados  |
-| Rate limiting   | Por organización      | Protección recursos    |
+| Aislamiento     | Por tenant            | Separación de datos    |
+| Configuración   | Por tenant            | Personalización        |
+| Rate limiting   | Por tenant            | Protección recursos    |
 
-## 8.4 Modelo de Dominio
+## 8.4 Persistencia
 
-- `Event Sourcing` como principio arquitectónico: todos los cambios de estado se capturan como eventos inmutables en el `Event Store`.
-- `CQRS` aplicado: separación de comandos y consultas en la capa de aplicación.
-- Proyecciones especializadas para consultas y dashboards.
+- Almacenamiento de eventos y estados en PostgreSQL (AWS RDS).
+- Esquema y configuración por tenant para aislamiento.
+- Consultas optimizadas mediante índices y particionamiento.
 
-## 8.5 Seguridad
+## 8.5 Comunicación e integración
 
-- Autenticación y autorización con `Keycloak` (JWT), validación de claims y roles.
-- Aislamiento de datos por tenant (realm) usando esquemas separados y filtros automáticos.
-- Cifrado en tránsito (`TLS 1.3`) y en reposo (`AES-256`).
-- Cumplimiento normativo: GDPR, SOX, auditoría completa.
+- Integración con sistemas externos mediante eventos (AWS SQS, SITA Messaging).
+- Publicación y consumo de eventos con garantías de entrega.
+- API REST para ingesta y consulta de eventos.
 
-## 8.6 Comunicación e Integración
-
-- Comunicación basada en eventos (`Event Bus`) para integración con sistemas externos (`SITA Messaging`).
-- Publicación y consumo de eventos con garantía transaccional.
-- Integración API REST con validación y control de errores.
-
-## 8.7 Persistencia
-
-- `Tracking Database` en `PostgreSQL` como almacén de eventos y proyecciones.
-- Esquema por tenant (realm) para aislamiento.
-- Proyecciones para consultas optimizadas.
-
-## 8.8 Observabilidad
-
-- Logs estructurados con `Serilog`.
-- Métricas expuestas vía `Prometheus`.
-- Trazas distribuidas con `OpenTelemetry` y visualización en `Jaeger`.
-- Health checks y endpoints de monitoreo.
-
-## 8.9 Testing
+## 8.6 Testing
 
 - Pruebas unitarias y de integración sobre lógica de dominio y eventos.
 - Validación de contratos de eventos y proyecciones.

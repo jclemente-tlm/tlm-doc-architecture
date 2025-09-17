@@ -1,6 +1,6 @@
-# 2. Restricciones De La Arquitectura
+# 2. Restricciones de la arquitectura
 
-## 2.1 Restricciones Técnicas
+## 2.1 Restricciones técnicas
 
 | Categoría           | Restricción                | Justificación         |
 |---------------------|---------------------------|----------------------|
@@ -22,7 +22,7 @@
 
 > Todas las tecnologías y patrones deben implementarse usando únicamente las herramientas y librerías aprobadas (`.NET 8`, `PostgreSQL`, `Redis`, `Docker`, `Entity Framework Core`, `FluentValidation`, `Serilog`, `Mapster`, `xUnit`, `SonarQube`, `Checkov`).
 
-## 2.2 Restricciones De Rendimiento
+## 2.2 Restricciones de rendimiento
 
 | Métrica        | Objetivo                        | Razón              |
 |----------------|---------------------------------|--------------------|
@@ -34,7 +34,7 @@
 
 > El sistema debe soportar reintentos automáticos, deduplicación, idempotencia y manejo eficiente de picos mediante colas y `DLQ`.
 
-## 2.3 Restricciones De Seguridad
+## 2.3 Restricciones de seguridad
 
 | Aspecto         | Requerimiento                | Estándar         |
 |-----------------|------------------------------|------------------|
@@ -46,7 +46,7 @@
 
 > La autenticación y autorización se implementa exclusivamente con `Keycloak` y validación de `JWT`.
 
-## 2.4 Restricciones Organizacionales
+## 2.4 Restricciones organizacionales
 
 | Área           | Restricción                   | Impacto              |
 |----------------|------------------------------|----------------------|

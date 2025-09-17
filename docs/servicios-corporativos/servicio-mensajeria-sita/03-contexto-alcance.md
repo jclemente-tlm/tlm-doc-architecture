@@ -1,6 +1,7 @@
-# 3. Contexto y alcance del sistema
 
-Este capítulo describe el contexto funcional y técnico del **Sistema SITA Messaging**, delimitando claramente su alcance, actores externos y relaciones clave con otros sistemas corporativos.
+# 3. Contexto y alcance
+
+El sistema SITA Messaging se integra en el ecosistema corporativo para gestionar la generación, transmisión y monitoreo de mensajes aeronáuticos bajo estándares internacionales, interactuando con sistemas internos y externos clave.
 
 ![Servicios Corporativos - Vista de Contexto](/diagrams/servicios-corporativos/corporate_services.png)
 
@@ -14,19 +15,15 @@ Este capítulo describe el contexto funcional y técnico del **Sistema SITA Mess
 
 | Aspecto      | Descripción                                                                 |
 |--------------|-----------------------------------------------------------------------------|
-| **Incluido** | Generación y transmisión de mensajes SITA, plantillas, enrutamiento AFTN, integración con Track & Trace, monitoreo y auditoría, cumplimiento de protocolos aeronáuticos. |
-| **Excluido** | Lógica de negocio de vuelos, gestión de itinerarios, edición de contenido de mensajes, administración de usuarios finales. |
+| Incluido     | Generación y transmisión de mensajes SITA, plantillas, enrutamiento AFTN, integración con Track & Trace, monitoreo, auditoría, cumplimiento de protocolos aeronáuticos. |
+| Excluido     | Lógica de vuelos, gestión de itinerarios, edición de mensajes, administración de usuarios finales. |
 
 ## 3.2 Actores y sistemas externos
 
-| Actor/Sistema           | Rol         | Interacción principal                        |
-|------------------------|-------------|---------------------------------------------|
-| **Track & Trace System** | Proveedor   | Provee eventos operacionales para mensajería |
-| **Red SITA Global**     | Destinatario| Transmisión y recepción de mensajes SITA     |
-| **Partners Aeronáuticos** | Destinatario| Recepción de mensajes y coordinación operativa|
-| **Sistema Identidad**   | Proveedor   | Autenticación y autorización de servicios    |
-| **Observabilidad**      | Consumidor  | Consumo de métricas, logs y alertas          |
-
----
-
-> Para más detalles sobre integración y restricciones, ver secciones 2 y 4.
+| Actor/Sistema         | Rol         | Interacción principal                        |
+|----------------------|-------------|---------------------------------------------|
+| Track & Trace        | Proveedor   | Eventos operacionales para mensajería        |
+| Red SITA Global      | Destinatario| Transmisión y recepción de mensajes SITA     |
+| Partners aeronáuticos| Destinatario| Recepción y coordinación operativa           |
+| Identidad            | Proveedor   | Autenticación y autorización                 |
+| Observabilidad       | Consumidor  | Métricas, logs y alertas                     |

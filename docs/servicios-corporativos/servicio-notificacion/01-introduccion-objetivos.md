@@ -1,8 +1,8 @@
-# 1. Introducción y Objetivos
+# 1. Introducción y objetivos
 
 El Sistema de Notificaciones es una plataforma distribuida, multi-tenant y multipaís, orientada a la entrega confiable y escalable de mensajes por múltiples canales. Permite a las aplicaciones corporativas enviar notificaciones a usuarios finales a través de Email, SMS, WhatsApp, Push e In-App, con aislamiento completo por tenant y configuraciones específicas por país. El diseño prioriza resiliencia, entrega única, deduplicación, reintentos y trazabilidad, siguiendo prácticas de sistemas escalables.
 
-## 1.1 Funcionalidades Clave
+## 1.1 Funcionalidades clave
 
 | Funcionalidad   | Descripción breve |
 |-----------------|-------------------|
@@ -18,7 +18,7 @@ El Sistema de Notificaciones es una plataforma distribuida, multi-tenant y multi
 | Idempotencia    | Garantía de entrega única por solicitud, evitando duplicados ante reintentos o fallos |
 | Deduplicación   | Supresión de mensajes duplicados mediante hash y claves de idempotencia |
 
-## 1.2 Objetivos de Calidad
+## 1.2 Objetivos de calidad
 
 | Atributo        | Objetivo                | Métrica                  |
 |-----------------|------------------------|--------------------------|
@@ -30,7 +30,7 @@ El Sistema de Notificaciones es una plataforma distribuida, multi-tenant y multi
 | Seguridad       | Cifrado de datos, autenticación robusta, rate limiting         | AES-256, TLS 1.3         |
 | Archivado       | Gestión de históricos y logs a bajo costo                      | Políticas de retención   |
 
-## 1.3 Requisitos Principales
+## 1.3 Requisitos principales
 
 | ID         | Requisito                        | Descripción |
 |------------|----------------------------------|-------------|
@@ -52,7 +52,7 @@ El Sistema de Notificaciones es una plataforma distribuida, multi-tenant y multi
 | RF-NOT-17  | Idempotencia y Deduplicación     | Garantía de entrega única, supresión de duplicados por hash/idempotency key |
 | RF-NOT-18  | Versionado de Plantillas         | Soporte de múltiples versiones y fallback automático |
 
-## 1.4 Tipos De Notificaciones
+## 1.4 Tipos de notificaciones
 
 | Tipo           | Descripción                        | Canales         | Prioridad | SLA           |
 |----------------|------------------------------------|-----------------|-----------|---------------|
@@ -63,7 +63,7 @@ El Sistema de Notificaciones es una plataforma distribuida, multi-tenant y multi
 
 > Nota: Los SLA y prioridades se definen según la criticidad y el canal, siguiendo mejores prácticas de la industria para asegurar entrega oportuna y confiable.
 
-## 1.5 Partes Interesadas Y Usuarios
+## 1.5 Partes interesadas y usuarios
 
 | Rol                    | Equipo/Contacto         | Responsabilidades                        | Expectativas                        |
 |------------------------|------------------------|------------------------------------------|-------------------------------------|

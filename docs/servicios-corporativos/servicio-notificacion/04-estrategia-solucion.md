@@ -1,6 +1,6 @@
-# 4. Estrategia De Solución
+# 4. Estrategia de solución
 
-## 4.1 Decisiones Clave
+## 4.1 Decisiones clave
 
 | Decisión         | Alternativa Elegida                | Justificación                                                                 |
 |------------------|------------------------------------|-------------------------------------------------------------------------------|
@@ -17,7 +17,7 @@
 
 > Todas las decisiones priorizan resiliencia, trazabilidad, entrega única y facilidad de evolución, alineadas con los objetivos de calidad y restricciones técnicas del sistema.
 
-## 4.2 Patrones Aplicados
+## 4.2 Patrones aplicados
 
 | Patrón             | Propósito                                 | Implementación / Componente Principal           |
 |--------------------|-------------------------------------------|------------------------------------------------|

@@ -1,11 +1,11 @@
-# 5. Vista De Bloques De Construcción
+# 5. Vista de bloques de construcción
 
 Esta sección describe la estructura modular y desacoplada del Sistema de Notificación, detallando contenedores, componentes, esquemas de datos, APIs y ejemplos de implementación. Se incluyen diagramas C4 para ilustrar la arquitectura y la interacción entre los bloques principales, priorizando la escalabilidad, resiliencia y observabilidad.
 
 ![Vista General del Sistema de Notificación](/diagrams/servicios-corporativos/notification_system.png)
 *Figura 5.1: Contenedores principales del sistema*
 
-## 5.1 Contenedores Principales
+## 5.1 Contenedores principales
 
 | Contenedor                | Responsabilidad                                        | Tecnología              |
 |---------------------------|--------------------------------------------------------|-------------------------|
@@ -24,7 +24,7 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 
 > La deduplicación, idempotencia y versionado de plantillas son responsabilidades internas de los componentes principales (`Notification API`, `Template Controller`, `Notification Database`) y se implementan mediante lógica de aplicación, claves de idempotencia y versionado en base de datos, no como contenedores independientes.
 
-## 5.2 Vista de Componentes y Detalles
+## 5.2 Vista de componentes y detalles
 
 ![Componentes Notification API](/diagrams/servicios-corporativos/notification_system_api.png)
 *Figura 5.2: Componentes internos de Notification API*
@@ -42,7 +42,7 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 
 > La deduplicación, idempotencia y versionado de plantillas están integrados como lógica interna en los componentes críticos (`Notification API`, `Template Controller`, `Notification Database`), siguiendo el modelo real del sistema. No existen como servicios o contenedores independientes en el DSL.
 
-### Email Processor
+### Email processor
 
 ![Componentes Email Processor](/diagrams/servicios-corporativos/notification_system_email_processor.png)
 *Figura 5.3: Componentes internos de Email Processor*
@@ -56,7 +56,7 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 | `Attachment Fetcher` | Obtiene archivos adjuntos desde almacenamiento       | `C# .NET 8`, `AWS SDK`      |
 | `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
-### SMS Processor
+### SMS processor
 
 ![Componentes SMS Processor](/diagrams/servicios-corporativos/notification_system_sms_processor.png)
 *Figura 5.4: Componentes internos de SMS Processor*
@@ -69,7 +69,7 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 | `Repository`         | Actualiza el estado de las notificaciones enviadas   | `C# .NET 8`, `Entity Framework Core` |
 | `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
-### WhatsApp Processor
+### WhatsApp processor
 
 ![Componentes WhatsApp Processor](/diagrams/servicios-corporativos/notification_system_whatsapp_processor.png)
 *Figura 5.5: Componentes internos de WhatsApp Processor*
@@ -83,7 +83,7 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 | `Attachment Fetcher` | Obtiene archivos adjuntos desde almacenamiento       | `C# .NET 8`, `AWS SDK`      |
 | `Configuration Manager`| Gestiona configuraciones del servicio y por tenant | `C# .NET 8`, `EF Core`      |
 
-### Push Processor
+### Push processor
 
 ![Componentes Push Processor](/diagrams/servicios-corporativos/notification_system_push_processor.png)
 *Figura 5.6: Componentes internos de Push Processor*
@@ -112,9 +112,9 @@ Esta sección describe la estructura modular y desacoplada del Sistema de Notifi
 
 ---
 
-## 5.4 Esquemas De Base De Datos
+## 5.4 Esquemas de base de datos
 
-### 5.4.1 Modelo de Datos (ER)
+### 5.4.1 Modelo de datos (ER)
 
 ```mermaid
 erDiagram
@@ -190,10 +190,9 @@ erDiagram
         TIMESTAMP updated_at
     }
 
-    tenant_notification_settings ||--o{ notifications : "1:N"
+
     notifications ||--o{ notification_logs : "1:N"
-    tenant_notification_settings ||--o{ notification_templates : "1:N"
-    tenant_notification_settings ||--o{ scheduled_notifications : "1:N"
+
 ```
 
 ---
@@ -329,7 +328,7 @@ erDiagram
 
 ---
 
-## 5.5 Endpoints De API
+## 5.5 Endpoints de API
 
 Se describen los principales endpoints REST para la gestión y consulta de notificaciones y plantillas. Los contratos de datos siguen el estándar DTO y están alineados con la arquitectura Clean Architecture.
 
@@ -348,7 +347,7 @@ Se describen los principales endpoints REST para la gestión y consulta de notif
 
 ---
 
-## 5.6 Contratos De Datos (DTOs)
+## 5.6 Contratos de datos
 
 Los siguientes contratos definen la estructura de los datos de entrada y salida de la API:
 

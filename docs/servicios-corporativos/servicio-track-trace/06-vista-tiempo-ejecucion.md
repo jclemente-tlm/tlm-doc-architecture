@@ -1,65 +1,54 @@
-# 6. Vista de Tiempo de Ejecución
+# 6. Vista de tiempo de ejecución
 
-## 6.1 Escenarios Principales
+## 6.1 Escenarios principales
 
-| Escenario                | Flujo                                                        | Componentes principales         |
-|--------------------------|--------------------------------------------------------------|---------------------------------|
-| **Captura de hito y transmisión SITA** | `API REST` → `Validator` → `Event Store` → `Event Bus` → `SITA Messaging` | `API`, `Validator`, `Event Store`, `Event Bus`, `SITA` |
-| **Consulta de trazabilidad**           | `API REST` → `Auth` → `Cache`/`Query Handler` → `Read Store`  | `API`, `Auth`, `Cache`, `Query Handler`, `Read Store`   |
+| Escenario                        | Flujo principal                                                                                  | Componentes involucrados                        |
+|----------------------------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| Captura y procesamiento de evento| Cliente externo → Tracking Ingest API → Tracking Event Queue → Tracking Event Processor → Tracking Database / SITA Messaging | Tracking Ingest API, Tracking Event Queue, Tracking Event Processor, Tracking Database, SITA Messaging |
+| Consulta de trazabilidad         | Cliente externo → Tracking Query API → Tracking Database                                         | Tracking Query API, Tracking Database           |
 
-## 6.2 Patrones de Interacción
+## 6.2 Patrones de interacción
 
-| Patrón         | Descripción                  | Tecnología         |
-|---------------|------------------------------|--------------------|
-| **CQRS**          | Separación comando/consulta  | `API`, `Processor`     |
-| **Event Sourcing**| Registro de eventos          | `PostgreSQL`         |
-| **Pub/Sub**       | Propagación de eventos       | `Event Bus`, `SITA`    |
+| Patrón         | Descripción                                      | Tecnología/Componente         |
+|----------------|--------------------------------------------------|-------------------------------|
+| Asincronía     | Desacople entre ingesta y procesamiento          | AWS SQS, Tracking Event Queue |
+| Persistencia   | Almacenamiento de eventos y estados              | PostgreSQL, Tracking Database |
+| Integración    | Publicación de eventos a sistemas externos (SITA)| SITA Messaging, SNS/SQS       |
 
-## 6.3 Escenarios de Runtime
+## 6.3 Escenarios de runtime
 
-### 6.3.1 Captura de hito operacional y transmisión SITA
+### 6.3.1 Captura y procesamiento de evento
 
 ```mermaid
 sequenceDiagram
     participant Cliente as Cliente externo
-    participant API as Tracking API
-    participant EventStore as Tracking Database
+    participant API as Tracking Ingest API
+    participant Queue as Tracking Event Queue
     participant Processor as Tracking Event Processor
-    participant EventBus as Event Bus
+    participant DB as Tracking Database
     participant SITA as SITA Messaging
 
-    Cliente->>API: POST /api/v1/events (hito)
-    API->>API: Validar evento
-    alt Evento válido
-        API->>EventStore: Guardar evento
-        alt Guardado exitoso
-            EventStore-->>API: Confirmación
-            Processor->>EventStore: Leer nuevos eventos (polling/suscripción)
-            Processor->>EventBus: Publicar evento relevante
-            SITA->>EventBus: Suscribirse a eventos relevantes
-            EventBus-->>SITA: Mensaje SITA
-            SITA-->>Processor: Confirmación (ACK)
-        else Error al guardar
-            EventStore-->>API: Error
-            API-->>Cliente: 400 BadRequest
-        end
-    else Evento inválido
-        API-->>Cliente: 400 BadRequest
+    Cliente->>API: POST /api/v1/events
+    API->>API: Validar y transformar evento
+    API->>Queue: Publicar evento
+    Processor->>Queue: Consumir evento
+    Processor->>DB: Guardar evento y actualizar estado
+    alt Evento relevante para SITA
+        Processor->>SITA: Publicar evento SITA
     end
+    API-->>Cliente: 202 Accepted
 ```
 
-### 6.3.2 Consulta de Trazabilidad
+### 6.3.2 Consulta de trazabilidad
 
 ```mermaid
 sequenceDiagram
     participant Cliente as Cliente externo
-    participant API as Tracking API
-    participant BD as Tracking Database
+    participant API as Tracking Query API
+    participant DB as Tracking Database
 
     Cliente->>API: GET /api/v1/trace/{entityId}
-    API->>API: Procesar consulta (Query Handler interno)
-    API->>BD: Consultar eventos de entidad
-    BD-->>API: ListaEventos[]
-    API->>API: Construir vista de trazabilidad
+    API->>DB: Consultar eventos y estado
+    DB-->>API: Datos de trazabilidad
     API-->>Cliente: 200 OK {datosTrazabilidad}
 ```

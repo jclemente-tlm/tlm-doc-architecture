@@ -1,19 +1,21 @@
-# 7. Vista de Implementación
+# 7. Vista de implementación
 
 ![Vista de implementación del Sistema de Track & Trace](/diagrams/servicios-corporativos/track_and_trace_deployment.png)
-*Figura 7.1: Implementación de Componentes de principales del sistema*
+*Figura 7.1: Implementación de componentes principales del sistema*
 
-## 7.1 Estructura del Proyecto
+## 7.1 Estructura de despliegue
 
-| Componente                | Ubicación                        | Tecnología                |
-|---------------------------|----------------------------------|---------------------------|
-| **Tracking API**          | `/src/TrackingAPI`               | `.NET 8 Web API`          |
-| **Tracking Event Processor** | `/src/TrackingEventProcessor`  | `.NET 8 Worker`           |
-| **Tracking Database**     | `AWS RDS`                        | `PostgreSQL 15+`          |
-| **Event Bus**             | `AWS MSK` / `RabbitMQ`           | `Kafka` / `RabbitMQ`      |
-| **SITA Messaging**        | `Externo`                        | `SITA`                    |
+| Componente                    | Plataforma/Ubicación                | Tecnología                |
+|-------------------------------|-------------------------------------|---------------------------|
+| Tracking Ingest API           | ECS Fargate (Docker)                | .NET 8, ASP.NET Core      |
+| Tracking Query API            | ECS Fargate (Docker)                | .NET 8, ASP.NET Core      |
+| Tracking Event Processor      | ECS Fargate (Docker)                | .NET 8 Worker             |
+| Tracking Dashboard            | ECS Fargate (Docker)                | React, TypeScript         |
+| Tracking Event Queue          | AWS SQS                             | SQS                       |
+| Tracking Database             | AWS RDS (Aurora PostgreSQL)         | PostgreSQL                |
+| Load Balancer                 | AWS Elastic Load Balancer           | ELB                       |
 
-## 7.2 Dependencias Principales
+## 7.2 Dependencias principales
 
 | Dependencia           | Versión | Propósito                |
 |----------------------|---------|--------------------------|
@@ -24,44 +26,18 @@
 | `OpenTelemetry`         | 1.7+    | Trazas y métricas       |
 | `Prometheus-net`        | 6.0+    | Métricas                |
 
-## 7.3 Organización de Código
+## 7.3 Configuración de despliegue
 
-```text
-src/
-├── TrackingAPI/                  # API REST principal
-│   ├── Controllers/              # Controladores REST
-│   ├── Middleware/               # Middleware HTTP
-│   ├── Configuration/            # Configuración DI
-│   └── Program.cs                # Entry Point
-├── Application/                  # Lógica de aplicación (CQRS)
-│   ├── Commands/                 # Comandos
-│   ├── Queries/                  # Consultas
-│   ├── Validators/               # Reglas FluentValidation
-│   ├── Services/                 # Servicios de aplicación
-│   └── DTOs/                     # Data Transfer Objects
-├── Domain/                       # Modelo de dominio
-│   ├── Entities/                 # Entidades
-│   ├── ValueObjects/             # Value Objects
-│   ├── Events/                   # Eventos de dominio
-│   └── Services/                 # Servicios de dominio
-├── Infrastructure/               # Infraestructura
-│   ├── EventStore/               # Implementación Event Store
-│   ├── EventBus/                 # Integración Event Bus
-│   ├── Authentication/           # Keycloak/JWT
-│   └── Observabilidad/           # Logs, métricas, trazas
-└── Tests/                        # Pruebas
-    ├── Unit/                     # Unit Tests
-    └── Integration/              # Integration Tests
-```
-
-## 7.4 Configuración de Despliegue
-
-- Contenedores Docker multi-stage para `Tracking API` y `Tracking Event Processor`
-- Despliegue en Kubernetes con probes de salud y recursos definidos
+- Contenedores Docker multi-stage para cada servicio.
+- Orquestación y despliegue en AWS ECS Fargate.
+- Balanceo de carga con AWS ELB.
+- Probes de salud y métricas expuestas.
+- Persistencia en AWS RDS (Aurora PostgreSQL).
+- Mensajería desacoplada con AWS SQS.
 - Variables de entorno para conexión a base de datos, autenticación y observabilidad
 - Instrumentación obligatoria: logs (`Serilog`), métricas (`Prometheus-net`), trazas (`OpenTelemetry`, Jaeger)
 
-## 7.5 Seguridad y Observabilidad
+## 7.4 Seguridad y observabilidad
 
 - Autenticación y autorización con `Keycloak` (JWT)
 - Logs estructurados con `Serilog`
@@ -69,7 +45,7 @@ src/
 - Trazas distribuidas con `OpenTelemetry` y `Jaeger`
 - Health checks y endpoints de monitoreo
 
-## 7.6 Infraestructura como Código
+## 7.5 Infraestructura como código
 
 - `Terraform` para provisión de `AWS RDS`, `Event Bus` y recursos de red
 - `Helm Charts` para despliegue en Kubernetes

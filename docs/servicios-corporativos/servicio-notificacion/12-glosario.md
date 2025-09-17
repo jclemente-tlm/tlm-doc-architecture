@@ -2,7 +2,7 @@
 
 Este glosario define los términos técnicos, conceptos clave y acrónimos utilizados en la documentación del `Sistema de Notificaciones`, proporcionando claridad y consistencia para equipos técnicos y stakeholders.
 
-## 12.1 Términos Principales
+## 12.1 Términos principales
 
 | Término           | Definición                                                      |
 |-------------------|-----------------------------------------------------------------|
@@ -29,7 +29,7 @@ Este glosario define los términos técnicos, conceptos clave y acrónimos utili
 | Rate Limiting     | Control de la cantidad de solicitudes permitidas por unidad de tiempo |
 | Runbook           | Guía operativa para resolución de incidentes o tareas repetitivas|
 
-## 12.2 Acrónimos y Abreviaturas
+## 12.2 Acrónimos y abreviaturas
 
 | Acrónimo | Significado                        | Contexto                                      |
 |----------|------------------------------------|-----------------------------------------------|
@@ -61,7 +61,7 @@ Este glosario define los términos técnicos, conceptos clave y acrónimos utili
 | WAL      | Write-Ahead Logging                | Estrategia de backup y recuperación           |
 | DLQ      | Dead Letter Queue                  | Cola de mensajes no procesados                |
 
-## 12.3 Conceptos Clave y Patrones
+## 12.3 Conceptos clave y patrones
 
 - `API First Design`: Estrategia donde el diseño de la API precede a la implementación.
 - `API Gateway`: Punto de entrada unificado que maneja autenticación, autorización y enrutamiento hacia microservicios (`YARP`).

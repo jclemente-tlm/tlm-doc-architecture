@@ -1,13 +1,13 @@
-# 6. Vista De Tiempo De Ejecución
+# 6. Vista de tiempo de ejecución
 
-## 6.1 Escenarios Principales
+## 6.1 Escenarios principales
 
 | Escenario               | Flujo                              | Componentes         |
 |-------------------------|------------------------------------|---------------------|
 | `Envío inmediato`         | `Notification API` → `Colas de Canal` → `Procesadores de Canal` → `Proveedor Externo` → `Notification Database` | `Notification API`, `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor`, `Notification Database`, `Attachment Storage` |
 | `Envío programado`        | `Notification Scheduler` → `Colas de Canal` → `Procesadores de Canal` → `Proveedor Externo` → `Notification Database` | `Notification API`, `Notification Scheduler`, `emailQueue`, `smsQueue`, `whatsappQueue`, `pushQueue`, `emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor`, `Notification Database` |
 
-## 6.2 Patrones De Interacción
+## 6.2 Patrones de interacción
 
 | Patrón      | Descripción                   | Tecnología / Componente         |
 |-------------|------------------------------|---------------------------------|
@@ -17,7 +17,7 @@
 
 Esta sección describe los principales escenarios de ejecución del sistema, mostrando cómo los componentes interactúan durante el tiempo de ejecución para cumplir con los casos de uso más relevantes arquitectónicamente. Se priorizan la resiliencia, el desacoplamiento, la deduplicación, la idempotencia y la observabilidad en todos los flujos.
 
-## 6.3 Escenario: Envío Transaccional Individual
+## 6.3 Escenario: envío transaccional individual
 
 ### Participantes
 
@@ -28,7 +28,7 @@ Esta sección describe los principales escenarios de ejecución del sistema, mos
 - Procesadores de Canal (`emailProcessor`, `smsProcessor`, `whatsappProcessor`, `pushProcessor`)
 - Proveedor Externo
 
-### Flujo Principal
+### Flujo principal
 
 ```mermaid
 sequenceDiagram
@@ -55,7 +55,7 @@ sequenceDiagram
     ProcCanal->>DB: 10. Actualiza estado final
 ```
 
-### Aspectos Notables
+### Aspectos notables
 
 - El flujo implementa desacoplamiento total entre recepción, procesamiento y entrega mediante colas y procesadores independientes.
 - La deduplicación e idempotencia se garantizan en la `Notification API` y en los procesadores de canal.
@@ -63,7 +63,7 @@ sequenceDiagram
 - La resiliencia se logra mediante reintentos automáticos, `DLQ` y fallback de proveedores.
 - Todos los nombres y responsabilidades de los componentes coinciden con el DSL.
 
-## 6.4 Métricas De Ejecución
+## 6.4 Métricas de ejecución
 
 | Métrica                   | Target                | Medición                |
 |---------------------------|----------------------|-------------------------|

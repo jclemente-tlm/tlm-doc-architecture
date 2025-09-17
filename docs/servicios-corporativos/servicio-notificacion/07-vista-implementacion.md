@@ -1,9 +1,9 @@
-# 7. Vista De Implementación
+# 7. Vista de implementación
 
 ![Vista de implementación del Sistema de Notificación](/diagrams/servicios-corporativos/notification_system_deployment.png)
 *Figura 7.1: Implementación de Componentes de principales del sistema*
 
-## 7.1 Estructura Del Proyecto
+## 7.1 Estructura del proyecto
 
 | Componente             | Ubicación                   | Tecnología           |
 |------------------------|-----------------------------|----------------------|
@@ -12,7 +12,7 @@
 | `Redis`                | `AWS ElastiCache`           | `Redis 7+`           |
 | `File Storage`         | `AWS EFS`                   | Sistema de archivos  |
 
-## 7.2 Dependencias Principales
+## 7.2 Dependencias principales
 
 | Dependencia         | Versión   | Propósito     |
 |---------------------|-----------|--------------|
@@ -23,13 +23,13 @@
 | `Serilog`           | `3.0+`    | Logging      |
 | `OpenTelemetry`     | `1.7+`    | Trazas       |
 
-## 7.3 Infraestructura De Despliegue
+## 7.3 Infraestructura de despliegue
 
-### Contenedores Principales
+### Contenedores principales
 
 - `Notification API`: expuesto vía `YARP` y `ALB`, escalable, acceso a base de datos y colas de mensajes.
 
-#### Ejemplo de despliegue (`Kubernetes`)
+#### Ejemplo de despliegue (kubernetes)
 
 ```yaml
 apiVersion: apps/v1
@@ -62,19 +62,19 @@ spec:
             cpu: "500m"
 ```
 
-### Mensajería y Almacenamiento
+### Mensajería y almacenamiento
 
 - Event Bus agnóstico (`Kafka`): 3 brokers, 12 particiones por tópico, retención 7 días.
 - Tópicos principales: `notification-requests` (delete, 7 días), `notification-status` (compact, 30 días).
 - Almacenamiento de archivos: `AWS EFS`.
 
-## 7.4 Entornos De Despliegue
+## 7.4 Entornos de despliegue
 
 - **Desarrollo:** `minikube`, `PostgreSQL` local, `Kafka` y `Redis` single instance, `Mailhog`, logs locales.
 - **Staging:** `AWS EKS`, `RDS`, `MSK`, `ElastiCache`, `SendGrid`/`Twilio` test, `Prometheus`, `Grafana`, `Loki`, `Jaeger`, `CloudWatch`.
 - **Producción:** `AWS EKS` multi-AZ, `RDS` multi-AZ, `MSK`, `ElastiCache` cluster, `CloudFront`, `SendGrid+SES+Mailgun`, `Twilio+SNS+360dialog`, `FCM+APNS`, `WhatsApp Business API`.
 
-## 7.5 Integración Con Proveedores
+## 7.5 Integración con proveedores
 
 - `Email`: `SendGrid` (primario), `SES` (secundario), `Mailgun` (emergencia).
 - `SMS`: `Twilio` (primario), `SNS` (secundario), `360dialog` (`WhatsApp`).
@@ -113,14 +113,14 @@ public class EmailProviderFactory
 - Gestión de secretos: `AWS Secrets Manager` para credenciales de proveedores.
 - Cifrado: `AES-256` en reposo, `TLS 1.3` en tránsito, `mTLS` interno, protección de `PII` (hash, cifrado).
 
-## 7.7 Observabilidad Y Monitoreo
+## 7.7 Observabilidad y monitoreo
 
 - Métricas: `Prometheus` (notificaciones enviadas, entregadas, fallidas, tiempos de entrega, uso de API, profundidad de cola, tiempos de respuesta de proveedores, cache hit ratio).
 - Logging: `Serilog` + `Loki` (`JSON`, `correlationId`, niveles `DEBUG`/`INFO`/`WARN`/`ERROR`/`FATAL`).
 - Trazas: `OpenTelemetry` + `Jaeger` (`API`, procesamiento, proveedores, base de datos; sampling adaptativo por entorno).
 - Visualización: `Grafana`.
 
-## 7.8 CI/CD Pipeline
+## 7.8 CI/CD pipeline
 
 - Build: `GitHub Actions`, `.NET 8`, tests, cobertura, `SonarQube`, `Docker`, `Trivy`, push a registry.
 - Deploy: validación de manifiestos, despliegue a staging, pruebas de integración, carga y seguridad, aprobación manual, blue-green, smoke tests.
@@ -128,7 +128,7 @@ public class EmailProviderFactory
 - Infraestructura como código: `Terraform`.
 - Migraciones: `Liquibase`, cambios compatibles, rollback, pipeline validado y automatizado.
 
-## 7.9 Estrategia De Escalado
+## 7.9 Estrategia de escalado
 
 - Autoescalado horizontal por canal y tipo de notificación (`Kubernetes HPA`, `AWS ASG`).
 - Umbrales de CPU, profundidad de cola y latencia para disparar escalado.
