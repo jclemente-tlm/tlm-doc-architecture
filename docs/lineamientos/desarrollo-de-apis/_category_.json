@@ -3,6 +3,8 @@
     "position": 7,
     "link": {
         "type": "generated-index",
+        "title": "Desarrollo de APIs",
+        "slug": "/desarrollo-de-apis",
         "description": "Lineamientos y mejores prácticas para el desarrollo de APIs REST en Talma."
     }
 }
