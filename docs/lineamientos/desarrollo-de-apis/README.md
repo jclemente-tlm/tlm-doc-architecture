@@ -4,7 +4,7 @@ Esta sección contiene las mejores prácticas y estándares para el desarrollo d
 
 ## 📚 Contenido
 
-### [01. Diseño y arquitectura](/docs/lineamientos/desarrollo-de-apis/01-diseno-y-arquitectura)
+### [01. Diseño y arquitectura](./01-diseno-y-arquitectura.md)
 
 Principios fundamentales de diseño RESTful, convenciones de naming, estructura de recursos y códigos de estado HTTP.
 
@@ -17,7 +17,7 @@ Principios fundamentales de diseño RESTful, convenciones de naming, estructura 
 - Códigos de estado HTTP
 - Implementación con ASP.NET Core
 
-### [02. Seguridad en APIs](/docs/lineamientos/desarrollo-de-apis/02-seguridad)
+### [02. Seguridad en APIs](./02-seguridad.md)
 
 Lineamientos de seguridad específicos para APIs REST, incluyendo autenticación, autorización y protección contra vulnerabilidades.
 
@@ -30,7 +30,7 @@ Lineamientos de seguridad específicos para APIs REST, incluyendo autenticación
 - Manejo seguro de datos sensibles
 - Monitoreo de seguridad
 
-### [03. Validación y manejo de errores](/docs/lineamientos/desarrollo-de-apis/03-validacion-y-errores)
+### [03. Validación y manejo de errores](./03-validacion-y-errores.md)
 
 Estrategias para validación robusta de entrada y manejo consistente de errores siguiendo RFC 7807.
 
@@ -42,7 +42,7 @@ Estrategias para validación robusta de entrada y manejo consistente de errores 
 - Estructura estándar de errores (RFC 7807)
 - Logging de errores
 
-### [04. Versionado y documentación](/docs/lineamientos/desarrollo-de-apis/04-versionado-y-documentacion)
+### [04. Versionado y documentación](./04-versionado-y-documentacion.md)
 
 Políticas de versionado, compatibilidad hacia atrás y documentación automática con OpenAPI/Swagger.
 
@@ -54,7 +54,7 @@ Políticas de versionado, compatibilidad hacia atrás y documentación automáti
 - Documentación con OpenAPI/Swagger
 - Changelogs y guías de migración
 
-### [05. Performance y monitoreo](/docs/lineamientos/desarrollo-de-apis/05-performance-y-monitoreo)
+### [05. Performance y monitoreo](./05-performance-y-monitoreo.md)
 
 Optimización de performance, métricas, logging estructurado y monitoreo de salud de APIs.
 
