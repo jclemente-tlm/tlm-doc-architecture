@@ -186,7 +186,7 @@ El JSON actualizado sería:
 | timestamp       | string (ISO 8601)   | Fecha de ocurrencia                         |
 | payload         | objeto              | Datos del evento                            |
 
-**Ejemplo:**
+**Ejemplo de solicitud:**
 
 ```json
 {
@@ -202,28 +202,102 @@ El JSON actualizado sería:
 }
 ```
 
-### Contrato de salida: TraceResponse (Tracking Query API)
-
-| Campo           | Tipo                | Descripción                                 |
-|-----------------|---------------------|---------------------------------------------|
-| tenant_id       | string              | Identificador del tenant                    |
-| correlation_id  | string              | ID de correlación                           |
-| aggregate_id    | UUID                | ID de la entidad agregada                   |
-| status          | string              | Estado actual                               |
-| events          | array de objetos    | Historial de eventos                        |
-
-**Ejemplo:**
+**Respuesta exitosa:**
 
 ```json
 {
-    "tenant_id": "talma-pe",
-    "correlation_id": "ABC123",
-    "aggregate_id": "BAG001",
-    "status": "arrived",
-    "events": [
-        { "event_type": "checked_in", "timestamp": "2025-09-11T08:00:00Z", "payload": { "location": "LIM" } },
-        { "event_type": "loaded", "timestamp": "2025-09-11T08:30:00Z", "payload": { "location": "LIM" } },
-        { "event_type": "arrived", "timestamp": "2025-09-11T09:15:00Z", "payload": { "location": "JFK" } }
-    ]
+    "status": "success",
+    "data": {
+        "event_id": "ev_7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d",
+        "aggregate_id": "BAG001",
+        "event_type": "tracking_arrived",
+        "processed_at": "2025-09-11T09:15:30Z"
+    },
+    "meta": {
+        "timestamp": "2025-09-11T09:15:30Z"
+    },
+    "trace_id": "track_abc123-def456-789012"
 }
 ```
+
+### Contrato de salida: TraceResponse (Tracking Query API)
+
+**Endpoint:** `GET /api/v1/trace/{aggregate_id}`
+
+**Respuesta exitosa:**
+
+```json
+{
+    "status": "success",
+    "data": {
+        "tenant_id": "talma-pe",
+        "correlation_id": "ABC123",
+        "aggregate_id": "BAG001",
+        "status": "arrived",
+        "events": [
+            {
+                "event_id": "ev_1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+                "event_type": "checked_in",
+                "timestamp": "2025-09-11T08:00:00Z",
+                "payload": {
+                    "location": "LIM",
+                    "operator": "Maria Garcia"
+                }
+            },
+            {
+                "event_id": "ev_2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+                "event_type": "loaded",
+                "timestamp": "2025-09-11T08:30:00Z",
+                "payload": {
+                    "location": "LIM",
+                    "flight": "LA2001"
+                }
+            },
+            {
+                "event_id": "ev_3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
+                "event_type": "arrived",
+                "timestamp": "2025-09-11T09:15:00Z",
+                "payload": {
+                    "location": "JFK",
+                    "operator": "Juan Perez"
+                }
+            }
+        ]
+    },
+    "meta": {
+        "timestamp": "2025-09-11T09:16:00Z",
+        "pagination": {
+            "page": 1,
+            "per_page": 50,
+            "total": 3,
+            "total_pages": 1
+        }
+    },
+    "links": {
+        "self": "/api/v1/trace/BAG001",
+        "related": "/api/v1/trace/BAG001/timeline"
+    },
+    "trace_id": "query_def789-abc012-345678"
+}
+```
+
+**Respuesta de error (agregado no encontrado):**
+
+```json
+{
+    "status": "error",
+    "error": {
+        "code": "AGGREGATE_NOT_FOUND",
+        "message": "No se encontraron eventos para el identificador especificado",
+        "details": [
+            {
+                "field": "aggregate_id",
+                "issue": "No se encontró ningún evento con el identificador 'BAG999'"
+            }
+        ]
+    },
+    "meta": {
+        "timestamp": "2025-09-11T09:16:00Z"
+    },
+    "trace_id": "query_error_ghi345-jkl678-901234"
+}
