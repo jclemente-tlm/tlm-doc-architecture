@@ -24,13 +24,12 @@ Esta sección describe la estructura modular del sistema **Track & Trace**, pres
 
 | Componente                  | Función                                                        | Tecnología                 |
 |-----------------------------|----------------------------------------------------------------|----------------------------|
-| Tracking Event Controller   | Expone endpoints REST para recepción masiva de eventos          | ASP.NET Core               |
-| Tracking Event Service      | Procesa y valida eventos, aplica reglas de negocio y enriquecimiento | C#                    |
-| Tracking Event Publisher    | Publica eventos validados en la cola AWS SQS                    | C#, AWS SDK (SQS)          |
-| Configuration Manager       | Gestiona configuraciones del servicio y por tenant              | C#, .NET 8, EF Core        |
-| Health Check                | Monitoreo de salud del API                                      | ASP.NET Core Health Checks |
-| Metrics Collector           | Recolección de métricas para observabilidad                     | Prometheus.NET             |
-| Structured Logger           | Logging estructurado unificado                                  | Serilog                    |
+| Tracking Event Controller   | Endpoints REST para recepción masiva de eventos                 | ASP.NET Core               |
+| Tracking Event Service      | Procesa y valida eventos, reglas de negocio                     | C#                         |
+| Tracking Event Publisher    | Publica eventos validados en la cola SQS                        | C#, AWS SDK (SQS)          |
+| TenantSettings Repository   | Gestiona configuraciones por tenant                             | C#, .NET 8, EF Core        |
+| SecretsAndConfigs           | Acceso centralizado a configuraciones y secretos                | AWS Secrets Manager, AppConfig |
+| Observability               | Logging, métricas, health checks                                | Serilog, Prometheus, HealthChecks |
 
 ### Tracking Query API
 
@@ -38,13 +37,12 @@ Esta sección describe la estructura modular del sistema **Track & Trace**, pres
 
 | Componente                  | Función                                                        | Tecnología                 |
 |-----------------------------|----------------------------------------------------------------|----------------------------|
-| Tracking Query Controller   | Expone endpoints REST para consultas                            | ASP.NET Core               |
-| Tracking Query Service      | Orquesta operaciones de consulta y aplica lógica de negocio     | C#                         |
+| Tracking Query Controller   | Endpoints REST para consultas de trazabilidad                   | ASP.NET Core               |
+| Tracking Query Service      | Orquesta consultas y lógica de negocio                          | C#                         |
 | Tracking Data Repository    | Acceso optimizado a datos de tracking                           | C#, EF Core                |
-| Configuration Manager       | Gestión de configuraciones                                      | C#, .NET 8, EF Core        |
-| Health Check                | Monitoreo de salud del API                                      | ASP.NET Core Health Checks |
-| Metrics Collector           | Recolección de métricas                                         | Prometheus.NET             |
-| Structured Logger           | Logging estructurado                                            | Serilog                    |
+| TenantSettings Repository   | Gestiona configuraciones por tenant                             | C#, .NET 8, EF Core        |
+| SecretsAndConfigs           | Acceso centralizado a configuraciones y secretos                | AWS Secrets Manager, AppConfig |
+| Observabilidad               | Logging, métricas, health checks                                | Serilog, Prometheus, HealthChecks |
 
 ### Tracking Event Processor
 
@@ -52,15 +50,14 @@ Esta sección describe la estructura modular del sistema **Track & Trace**, pres
 
 | Componente                  | Función                                                        | Tecnología                 |
 |-----------------------------|----------------------------------------------------------------|----------------------------|
-| Tracking Event Consumer     | Consume eventos desde la cola                                   | C#, AWS SDK (SQS)          |
-| Tracking Event Handler      | Valida y aplica reglas de negocio a los eventos                 | C#                         |
-| Tracking Processing Service | Lógica de enriquecimiento y correlación                         | C#                         |
-| Tracking Event Repository   | Persistencia de eventos                                         | C#, EF Core                |
+| Tracking Event Consumer     | Consume eventos desde la cola SQS                               | C#, AWS SDK (SQS)          |
+| Tracking Event Handler      | Validaciones y reglas de negocio                                | C#                         |
+| Tracking Processing Service | Lógica de negocio para enriquecimiento y correlación            | C#                         |
+| Tracking Event Repository   | Persiste eventos crudos y enriquecidos                          | C#, EF Core                |
 | Downstream Event Publisher  | Publica eventos procesados a sistemas downstream                | C#, AWS SDK (SNS)          |
-| Configuration Manager       | Gestión de configuraciones                                      | C#, .NET 8, EF Core        |
-| Health Check                | Monitoreo de salud                                              | ASP.NET Core Health Checks |
-| Metrics Collector           | Métricas                                                       | Prometheus.NET             |
-| Structured Logger           | Logging estructurado                                            | Serilog                    |
+| TenantSettings Repository   | Gestiona configuraciones por tenant                             | C#, .NET 8, EF Core        |
+| SecretsAndConfigs           | Acceso centralizado a configuraciones y secretos                | AWS Secrets Manager, AppConfig |
+| Observabilidad               | Logging, métricas, health checks                                | Serilog, Prometheus, HealthChecks |
 
 ## 5.3 Esquemas de datos
 
@@ -186,7 +183,7 @@ El JSON actualizado sería:
 | timestamp       | string (ISO 8601)   | Fecha de ocurrencia                         |
 | payload         | objeto              | Datos del evento                            |
 
-**Ejemplo de solicitud:**
+**Ejemplo:**
 
 ```json
 {
@@ -202,102 +199,28 @@ El JSON actualizado sería:
 }
 ```
 
-**Respuesta exitosa:**
-
-```json
-{
-    "status": "success",
-    "data": {
-        "event_id": "ev_7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d",
-        "aggregate_id": "BAG001",
-        "event_type": "tracking_arrived",
-        "processed_at": "2025-09-11T09:15:30Z"
-    },
-    "meta": {
-        "timestamp": "2025-09-11T09:15:30Z"
-    },
-    "trace_id": "track_abc123-def456-789012"
-}
-```
-
 ### Contrato de salida: TraceResponse (Tracking Query API)
 
-**Endpoint:** `GET /api/v1/trace/{aggregate_id}`
+| Campo           | Tipo                | Descripción                                 |
+|-----------------|---------------------|---------------------------------------------|
+| tenant_id       | string              | Identificador del tenant                    |
+| correlation_id  | string              | ID de correlación                           |
+| aggregate_id    | UUID                | ID de la entidad agregada                   |
+| status          | string              | Estado actual                               |
+| events          | array de objetos    | Historial de eventos                        |
 
-**Respuesta exitosa:**
+**Ejemplo:**
 
 ```json
 {
-    "status": "success",
-    "data": {
-        "tenant_id": "talma-pe",
-        "correlation_id": "ABC123",
-        "aggregate_id": "BAG001",
-        "status": "arrived",
-        "events": [
-            {
-                "event_id": "ev_1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
-                "event_type": "checked_in",
-                "timestamp": "2025-09-11T08:00:00Z",
-                "payload": {
-                    "location": "LIM",
-                    "operator": "Maria Garcia"
-                }
-            },
-            {
-                "event_id": "ev_2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
-                "event_type": "loaded",
-                "timestamp": "2025-09-11T08:30:00Z",
-                "payload": {
-                    "location": "LIM",
-                    "flight": "LA2001"
-                }
-            },
-            {
-                "event_id": "ev_3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
-                "event_type": "arrived",
-                "timestamp": "2025-09-11T09:15:00Z",
-                "payload": {
-                    "location": "JFK",
-                    "operator": "Juan Perez"
-                }
-            }
-        ]
-    },
-    "meta": {
-        "timestamp": "2025-09-11T09:16:00Z",
-        "pagination": {
-            "page": 1,
-            "per_page": 50,
-            "total": 3,
-            "total_pages": 1
-        }
-    },
-    "links": {
-        "self": "/api/v1/trace/BAG001",
-        "related": "/api/v1/trace/BAG001/timeline"
-    },
-    "trace_id": "query_def789-abc012-345678"
+    "tenant_id": "talma-pe",
+    "correlation_id": "ABC123",
+    "aggregate_id": "BAG001",
+    "status": "arrived",
+    "events": [
+        { "event_type": "checked_in", "timestamp": "2025-09-11T08:00:00Z", "payload": { "location": "LIM" } },
+        { "event_type": "loaded", "timestamp": "2025-09-11T08:30:00Z", "payload": { "location": "LIM" } },
+        { "event_type": "arrived", "timestamp": "2025-09-11T09:15:00Z", "payload": { "location": "JFK" } }
+    ]
 }
 ```
-
-**Respuesta de error (agregado no encontrado):**
-
-```json
-{
-    "status": "error",
-    "error": {
-        "code": "AGGREGATE_NOT_FOUND",
-        "message": "No se encontraron eventos para el identificador especificado",
-        "details": [
-            {
-                "field": "aggregate_id",
-                "issue": "No se encontró ningún evento con el identificador 'BAG999'"
-            }
-        ]
-    },
-    "meta": {
-        "timestamp": "2025-09-11T09:16:00Z"
-    },
-    "trace_id": "query_error_ghi345-jkl678-901234"
-}
