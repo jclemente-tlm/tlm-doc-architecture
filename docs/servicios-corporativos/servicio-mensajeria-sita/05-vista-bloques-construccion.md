@@ -154,7 +154,7 @@ erDiagram
 
 | id                                   | partner_id  | file_type | content                  | variables                                 | version | created_at           |
 |---------------------------------------|-------------|-----------|--------------------------|-------------------------------------------|---------|----------------------|
-| `tpl-001`                            | `partner-01`| `FBL`     | `...contenido...`        | {"flightNumber":"string","date":"date"} | 1       | `2025-09-24T09:00:00Z`|
+| `tpl-001`                            | `partner-01`| `FBL`     | `...contenido...`        | `{"flightNumber":"string","date":"date"}` | 1       | `2025-09-24T09:00:00Z`|
 
 ---
 
