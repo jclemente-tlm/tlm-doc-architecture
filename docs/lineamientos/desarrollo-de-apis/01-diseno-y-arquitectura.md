@@ -59,14 +59,19 @@ GET /api/v1/users?search=juan&fields=id,name,email
 
 ### 📌 Elementos obligatorios
 
-Toda respuesta debe incluir los siguientes elementos:
+Toda respuesta debe incluir los siguientes atributos en la raíz:
 
-- `status`: estado de la operación (`"success"` o `"error"`)
-- `data`: recurso(s) principal(es) solicitado(s) (solo si `status = "success"`)
-- `error`: información de error (solo si `status = "error"`)
-- `meta`: metadatos adicionales de la respuesta
-- `links`: enlaces relacionados (opcional)
-- `trace_id`: identificador único de la petición (obligatorio)
+- `status`: "success" o "error".
+- `data`: objeto o arreglo; en caso de error debe ser `null`.
+- `errors`: arreglo de errores; en éxito debe ser `[]`.
+- `meta`: objeto que debe contener al menos `trace_id` y `timestamp`.
+
+#### Atributos opcionales dentro de `meta`
+
+- `tenant`: identificador del tenant (si aplica multi-tenant).
+- `pagination`: información de paginación (por ejemplo: `page`, `size`, `total`).
+- `links`: enlaces relacionados.
+- `extra`: extensiones futuras (warnings, flags, etc.).
 
 ### ✅ Respuestas exitosas
 
@@ -82,14 +87,15 @@ Toda respuesta debe incluir los siguientes elementos:
     "active": true,
     "created_at": "2024-01-15T10:30:00Z"
   },
+  "errors": [],
   "meta": {
-    "timestamp": "2024-01-15T10:30:01Z"
-  },
-  "trace_id": "c1d2e3f4-5678-90ab-cdef-1234567890ab"
+    "timestamp": "2024-01-15T10:30:01Z",
+    "trace_id": "c1d2e3f4-5678-90ab-cdef-1234567890ab"
+  }
 }
 ```
 
-#### Colección con paginación
+#### Colección con paginación y atributos opcionales
 
 ```json
 {
@@ -110,21 +116,23 @@ Toda respuesta debe incluir los siguientes elementos:
       "created_at": "2024-01-15T11:00:00Z"
     }
   ],
+  "errors": [],
   "meta": {
     "timestamp": "2024-01-15T10:30:01Z",
+    "trace_id": "a9b8c7d6-5432-10fe-dcba-0987654321ff",
     "pagination": {
       "page": 1,
-      "per_page": 20,
+      "size": 20,
       "total": 150,
       "total_pages": 8
-    }
-  },
-  "links": {
-    "self": "/api/v1/users?page=1",
-    "next": "/api/v1/users?page=2",
-    "last": "/api/v1/users?page=8"
-  },
-  "trace_id": "a9b8c7d6-5432-10fe-dcba-0987654321ff"
+    },
+    "links": {
+      "self": "/api/v1/users?page=1",
+      "next": "/api/v1/users?page=2",
+      "last": "/api/v1/users?page=8"
+    },
+    "tenant": "talma-pe"
+  }
 }
 ```
 
@@ -135,24 +143,21 @@ Toda respuesta debe incluir los siguientes elementos:
 ```json
 {
   "status": "error",
-  "error": {
-    "code": "VALIDATION_FAILED",
-    "message": "La solicitud contiene errores de validación",
-    "details": [
-      {
-        "field": "email",
-        "issue": "El formato no es válido"
-      },
-      {
-        "field": "name",
-        "issue": "Es un campo requerido"
-      }
-    ]
-  },
+  "data": null,
+  "errors": [
+    {
+      "code": "VALIDATION_FAILED",
+      "message": "La solicitud contiene errores de validación",
+      "details": [
+        { "field": "email", "issue": "El formato no es válido" },
+        { "field": "name", "issue": "Es un campo requerido" }
+      ]
+    }
+  ],
   "meta": {
-    "timestamp": "2024-01-15T10:30:01Z"
-  },
-  "trace_id": "de9f8c7b-6543-21fe-cdba-123456789abc"
+    "timestamp": "2024-01-15T10:30:01Z",
+    "trace_id": "de9f8c7b-6543-21fe-cdba-123456789abc"
+  }
 }
 ```
 
@@ -161,20 +166,20 @@ Toda respuesta debe incluir los siguientes elementos:
 ```json
 {
   "status": "error",
-  "error": {
-    "code": "USER_NOT_FOUND",
-    "message": "El usuario no existe",
-    "details": [
-      {
-        "field": "id",
-        "issue": "No se encontró ningún usuario con el identificador '999'"
-      }
-    ]
-  },
+  "data": null,
+  "errors": [
+    {
+      "code": "USER_NOT_FOUND",
+      "message": "El usuario no existe",
+      "details": [
+        { "field": "id", "issue": "No se encontró ningún usuario con el identificador '999'" }
+      ]
+    }
+  ],
   "meta": {
-    "timestamp": "2024-01-15T10:30:01Z"
-  },
-  "trace_id": "12ab34cd-5678-90ef-gh12-34567890abcd"
+    "timestamp": "2024-01-15T10:30:01Z",
+    "trace_id": "12ab34cd-5678-90ef-gh12-34567890abcd"
+  }
 }
 ```
 
@@ -340,54 +345,57 @@ public class UsersController : ControllerBase
 ```csharp
 public class ApiResponse<T>
 {
+    [JsonPropertyName("status")]
     public string Status { get; set; } = "success";
-    public T Data { get; set; }
-    public ErrorInfo Error { get; set; }
+    [JsonPropertyName("data")]
+    public T Data { get; set; } // null en error
+    [JsonPropertyName("errors")]
+    public List<ErrorInfo> Errors { get; set; } = new(); // [] en éxito
+    [JsonPropertyName("meta")]
     public MetaData Meta { get; set; } = new();
-    public Dictionary<string, string> Links { get; set; }
-    [JsonPropertyName("trace_id")]
-    public string TraceId { get; set; }
-}
-
-public class PagedResponse<T> : ApiResponse<IEnumerable<T>>
-{
-    public PagedResponse()
-    {
-        Links = new Dictionary<string, string>();
-    }
 }
 
 public class MetaData
 {
+    [JsonPropertyName("trace_id")]
+    public string TraceId { get; set; }
+    [JsonPropertyName("timestamp")]
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-    public PaginationMeta Pagination { get; set; }
-    public List<WarningInfo> Warnings { get; set; } = new();
+    [JsonPropertyName("tenant")]
+    public string Tenant { get; set; } // opcional
+    [JsonPropertyName("pagination")]
+    public PaginationMeta Pagination { get; set; } // opcional
+    [JsonPropertyName("links")]
+    public Dictionary<string, string> Links { get; set; } // opcional
+    [JsonPropertyName("extra")]
+    public object Extra { get; set; } // extensiones futuras
 }
 
 public class ErrorInfo
 {
+    [JsonPropertyName("code")]
     public string Code { get; set; }
+    [JsonPropertyName("message")]
     public string Message { get; set; }
+    [JsonPropertyName("details")]
     public List<ErrorDetail> Details { get; set; } = new();
 }
 
 public class ErrorDetail
 {
+    [JsonPropertyName("field")]
     public string Field { get; set; }
+    [JsonPropertyName("issue")]
     public string Issue { get; set; }
-}
-
-public class WarningInfo
-{
-    public string Code { get; set; }
-    public string Message { get; set; }
 }
 
 public class PaginationMeta
 {
+    [JsonPropertyName("page")]
     public int Page { get; set; }
-    [JsonPropertyName("per_page")]
-    public int PerPage { get; set; }
+    [JsonPropertyName("size")]
+    public int Size { get; set; }
+    [JsonPropertyName("total")]
     public int Total { get; set; }
     [JsonPropertyName("total_pages")]
     public int TotalPages { get; set; }
@@ -395,9 +403,13 @@ public class PaginationMeta
 
 public class UserDto
 {
+    [JsonPropertyName("id")]
     public string Id { get; set; }
+    [JsonPropertyName("name")]
     public string Name { get; set; }
+    [JsonPropertyName("email")]
     public string Email { get; set; }
+    [JsonPropertyName("active")]
     public bool Active { get; set; }
     [JsonPropertyName("created_at")]
     public DateTime CreatedAt { get; set; }
@@ -407,13 +419,16 @@ public class CreateUserRequest
 {
     [Required]
     [StringLength(100, MinimumLength = 2)]
+    [JsonPropertyName("name")]
     public string Name { get; set; }
 
     [Required]
     [EmailAddress]
+    [JsonPropertyName("email")]
     public string Email { get; set; }
 
     [Phone]
+    [JsonPropertyName("phone")]
     public string Phone { get; set; }
 }
 ```
