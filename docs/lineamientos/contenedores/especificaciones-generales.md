@@ -5,20 +5,19 @@ sidebar_position: 1
 
 ## 1. Imágenes de Contenedores
 
-- Usar imágenes oficiales y ligeras (preferir Alpine o Slim).
+- Usar imágenes oficiales y ligeras basadas en versiones LTS estables (evitar versiones experimentales o no soportadas).
+- Preferir imágenes **Alpine**; si no es compatible usar imágenes **Slim**.
 - Mantener Dockerfiles simples, legibles y con comentarios claros.
 - Eliminar dependencias innecesarias y archivos temporales.
 
-**Ejemplo Dockerfile para .NET (usando imagen slim o alpine):**
+**Ejemplo Dockerfile para .NET:**
 
 ```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-slim AS base
-# Alternativamente puedes usar: mcr.microsoft.com/dotnet/aspnet:8.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-slim AS build
-# Alternativamente puedes usar: mcr.microsoft.com/dotnet/sdk:8.0-alpine
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /src
 COPY ["MyApp/MyApp.csproj", "MyApp/"]
 RUN dotnet restore "MyApp/MyApp.csproj"
@@ -60,7 +59,7 @@ ENTRYPOINT ["dotnet", "MyApp.dll"]
       "image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp:v1.0.0",
       "environment": [
         { "name": "ASPNETCORE_ENVIRONMENT", "value": "Production" },
-        { "name": "ConnectionStrings__Default", "value": "..." }
+        { "name": "LOG_LEVEL", "value": "Information" }
       ]
     }
   ]
