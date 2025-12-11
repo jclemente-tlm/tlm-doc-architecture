@@ -133,7 +133,7 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 - Base de datos: `PostgreSQL` replicado
 - Cache: `Redis` cluster
 - Sesiones: sticky sessions + persistencia en base de datos
-- Realms por país: `talma-peru`, `talma-ecuador`, `talma-colombia`, `talma-mexico`
+- Realms por país: `tlm-pe`, `tlm-ec`, `tlm-co`, `tlm-mx`
 
 ### Integración con servicios
 

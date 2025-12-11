@@ -55,7 +55,7 @@
   "sub": "system:notification-processor",
   "aud": "notification-api",
   "scope": "notifications:send notifications:read",
-  "tenant": "talma-pe",
+  "tenant": "tlm-pe",
   "roles": ["notification-sender"],
   "exp": 1640995200
 }
@@ -72,11 +72,11 @@ Log.Information("Notification {NotificationId} sent via {Channel} to {RecipientC
 
 ```json
 {
-  "tenantId": "talma-pe",
+  "tenantId": "tlm-pe",
   "channels": {
     "email": {
       "provider": "sendgrid",
-      "apiKey": "secretsmanager://talma-pe/sendgrid",
+      "apiKey": "secretsmanager://tlm-pe/sendgrid",
       "templates": {
         "default": "peru-branding-template"
       }

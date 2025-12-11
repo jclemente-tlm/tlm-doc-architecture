@@ -215,9 +215,9 @@ AZURE_CLIENT_SECRET=your-azure-app-secret
     "details": []
   },
   "meta": {
+    "traceId": "sec_abc123-def456-789012",
     "timestamp": "2025-09-22T10:30:00Z"
-  },
-  "trace_id": "sec_abc123-def456-789012"
+  }
 }
 ```
 
@@ -232,9 +232,9 @@ AZURE_CLIENT_SECRET=your-azure-app-secret
     "details": []
   },
   "meta": {
+    "traceId": "sec_def456-ghi789-012345",
     "timestamp": "2025-09-22T10:30:00Z"
-  },
-  "trace_id": "sec_def456-ghi789-012345"
+  }
 }
 ```
 

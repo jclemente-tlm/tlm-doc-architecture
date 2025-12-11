@@ -64,7 +64,7 @@ Toda respuesta debe incluir los siguientes atributos en la raíz:
 - `status`: "success" o "error".
 - `data`: objeto o arreglo; en caso de error debe ser `null`.
 - `errors`: arreglo de errores; en éxito debe ser `[]`.
-- `meta`: objeto que debe contener al menos `trace_id` y `timestamp`.
+- `meta`: objeto que debe contener al menos `traceId` y `timestamp`.
 
 #### Atributos opcionales dentro de `meta`
 
@@ -83,14 +83,15 @@ Toda respuesta debe incluir los siguientes atributos en la raíz:
   "data": {
     "id": "123",
     "name": "Juan Pérez",
+    "userName": "jperez",
     "email": "juan.perez@talma.pe",
     "active": true,
-    "created_at": "2024-01-15T10:30:00Z"
+    "createdAt": "2024-01-15T10:30:00Z"
   },
   "errors": [],
   "meta": {
-    "timestamp": "2024-01-15T10:30:01Z",
-    "trace_id": "c1d2e3f4-5678-90ab-cdef-1234567890ab"
+    "traceId": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
+    "timestamp": "2024-01-15T10:30:01Z"
   }
 }
 ```
@@ -104,22 +105,24 @@ Toda respuesta debe incluir los siguientes atributos en la raíz:
     {
       "id": "123",
       "name": "Juan Pérez",
+      "userName": "jperez",
       "email": "juan.perez@talma.pe",
       "active": true,
-      "created_at": "2024-01-15T10:30:00Z"
+      "createdAt": "2024-01-15T10:30:00Z"
     },
     {
       "id": "124",
       "name": "Ana Gómez",
+      "userName": "agomez",
       "email": "ana.gomez@talma.pe",
       "active": true,
-      "created_at": "2024-01-15T11:00:00Z"
+      "createdAt": "2024-01-15T11:00:00Z"
     }
   ],
   "errors": [],
   "meta": {
+    "traceId": "a9b8c7d6-5432-10fe-dcba-0987654321ff",
     "timestamp": "2024-01-15T10:30:01Z",
-    "trace_id": "a9b8c7d6-5432-10fe-dcba-0987654321ff",
     "pagination": {
       "page": 1,
       "size": 20,
@@ -131,7 +134,7 @@ Toda respuesta debe incluir los siguientes atributos en la raíz:
       "next": "/api/v1/users?page=2",
       "last": "/api/v1/users?page=8"
     },
-    "tenant": "talma-pe"
+    "tenant": "tlm-pe"
   }
 }
 ```
@@ -150,13 +153,14 @@ Toda respuesta debe incluir los siguientes atributos en la raíz:
       "message": "La solicitud contiene errores de validación",
       "details": [
         { "field": "email", "issue": "El formato no es válido" },
-        { "field": "name", "issue": "Es un campo requerido" }
+        { "field": "name", "issue": "Es un campo requerido" },
+        { "field": "userName", "issue": "Es un campo requerido" }
       ]
     }
   ],
   "meta": {
-    "timestamp": "2024-01-15T10:30:01Z",
-    "trace_id": "de9f8c7b-6543-21fe-cdba-123456789abc"
+    "traceId": "de9f8c7b-6543-21fe-cdba-123456789abc",
+    "timestamp": "2024-01-15T10:30:01Z"
   }
 }
 ```
@@ -177,8 +181,8 @@ Toda respuesta debe incluir los siguientes atributos en la raíz:
     }
   ],
   "meta": {
-    "timestamp": "2024-01-15T10:30:01Z",
-    "trace_id": "12ab34cd-5678-90ef-gh12-34567890abcd"
+    "traceId": "12ab34cd-5678-90ef-gh12-34567890abcd",
+    "timestamp": "2024-01-15T10:30:01Z"
   }
 }
 ```
@@ -345,91 +349,64 @@ public class UsersController : ControllerBase
 ```csharp
 public class ApiResponse<T>
 {
-    [JsonPropertyName("status")]
-    public string Status { get; set; } = "success";
-    [JsonPropertyName("data")]
-    public T Data { get; set; } // null en error
-    [JsonPropertyName("errors")]
-    public List<ErrorInfo> Errors { get; set; } = new(); // [] en éxito
-    [JsonPropertyName("meta")]
-    public MetaData Meta { get; set; } = new();
+  public string Status { get; set; } = "success";
+  public T Data { get; set; } // null en error
+  public List<ErrorInfo> Errors { get; set; } = new(); // [] en éxito
+  public MetaData Meta { get; set; } = new();
 }
 
 public class MetaData
 {
-    [JsonPropertyName("trace_id")]
-    public string TraceId { get; set; }
-    [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-    [JsonPropertyName("tenant")]
-    public string Tenant { get; set; } // opcional
-    [JsonPropertyName("pagination")]
-    public PaginationMeta Pagination { get; set; } // opcional
-    [JsonPropertyName("links")]
-    public Dictionary<string, string> Links { get; set; } // opcional
-    [JsonPropertyName("extra")]
-    public object Extra { get; set; } // extensiones futuras
+  public string TraceId { get; set; }
+  public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+  public string Tenant { get; set; } // opcional
+  public PaginationMeta Pagination { get; set; } // opcional
+  public Dictionary<string, string> Links { get; set; } // opcional
+  public object Extra { get; set; } // extensiones futuras
 }
 
 public class ErrorInfo
 {
-    [JsonPropertyName("code")]
-    public string Code { get; set; }
-    [JsonPropertyName("message")]
-    public string Message { get; set; }
-    [JsonPropertyName("details")]
-    public List<ErrorDetail> Details { get; set; } = new();
+  public string Code { get; set; }
+  public string Message { get; set; }
+  public List<ErrorDetail> Details { get; set; } = new();
 }
 
 public class ErrorDetail
 {
-    [JsonPropertyName("field")]
-    public string Field { get; set; }
-    [JsonPropertyName("issue")]
-    public string Issue { get; set; }
+  public string Field { get; set; }
+  public string Issue { get; set; }
 }
 
 public class PaginationMeta
 {
-    [JsonPropertyName("page")]
-    public int Page { get; set; }
-    [JsonPropertyName("size")]
-    public int Size { get; set; }
-    [JsonPropertyName("total")]
-    public int Total { get; set; }
-    [JsonPropertyName("total_pages")]
-    public int TotalPages { get; set; }
+  public int Page { get; set; }
+  public int Size { get; set; }
+  public int Total { get; set; }
+  public int TotalPages { get; set; }
 }
 
 public class UserDto
 {
-    [JsonPropertyName("id")]
-    public string Id { get; set; }
-    [JsonPropertyName("name")]
-    public string Name { get; set; }
-    [JsonPropertyName("email")]
-    public string Email { get; set; }
-    [JsonPropertyName("active")]
-    public bool Active { get; set; }
-    [JsonPropertyName("created_at")]
-    public DateTime CreatedAt { get; set; }
+  public string Id { get; set; }
+  public string Name { get; set; }
+  public string Email { get; set; }
+  public bool Active { get; set; }
+  public DateTime CreatedAt { get; set; }
 }
 
 public class CreateUserRequest
 {
-    [Required]
-    [StringLength(100, MinimumLength = 2)]
-    [JsonPropertyName("name")]
-    public string Name { get; set; }
+  [Required]
+  [StringLength(100, MinimumLength = 2)]
+  public string Name { get; set; }
 
-    [Required]
-    [EmailAddress]
-    [JsonPropertyName("email")]
-    public string Email { get; set; }
+  [Required]
+  [EmailAddress]
+  public string Email { get; set; }
 
-    [Phone]
-    [JsonPropertyName("phone")]
-    public string Phone { get; set; }
+  [Phone]
+  public string Phone { get; set; }
 }
 ```
 

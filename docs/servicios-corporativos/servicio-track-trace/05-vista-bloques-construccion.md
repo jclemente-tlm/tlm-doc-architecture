@@ -187,7 +187,7 @@ El JSON actualizado sería:
 
 ```json
 {
-    "tenant_id": "talma-pe",
+    "tenant_id": "tlm-pe",
     "correlation_id": "ABC123",
     "aggregate_id": "BAG001",
     "event_type": "tracking_arrived",
@@ -213,7 +213,7 @@ El JSON actualizado sería:
 
 ```json
 {
-    "tenant_id": "talma-pe",
+    "tenant_id": "tlm-pe",
     "correlation_id": "ABC123",
     "aggregate_id": "BAG001",
     "status": "arrived",

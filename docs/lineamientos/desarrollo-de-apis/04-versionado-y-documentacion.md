@@ -53,7 +53,7 @@ public class UsersController : ControllerBase
     [MapToApiVersion("1.0")]
     public async Task<ActionResult<UserV1Dto[]>> GetUsersV1()
     {
-        // Implementación v1
+        "traceId": "abc123-def456-789012",
     }
 
     [HttpGet]
@@ -271,6 +271,7 @@ public async Task<ActionResult<PagedResponse<UserDto>>> GetUsers(
 ///     POST /api/v1/users
 ///     {
 ///         "name": "Juan Pérez",
+///         "userName": "jperez",
 ///         "email": "juan.perez@talma.pe",
 ///         "phone": "+51987654321",
 ///         "age": 30,

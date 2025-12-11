@@ -185,8 +185,13 @@ public class ApiResponse<T>
     public ErrorInfo Error { get; set; }
     public MetaData Meta { get; set; } = new();
     public Dictionary<string, string> Links { get; set; }
-    [JsonPropertyName("trace_id")]
+}
+
+public class MetaData
+{
     public string TraceId { get; set; }
+    public DateTime Timestamp { get; set; }
+    // Otros campos de meta si aplica
 }
 
 public class ErrorInfo
@@ -252,11 +257,13 @@ public class GlobalExceptionMiddleware
             Meta = new MetaData(),
             TraceId = Activity.Current?.Id ?? context.TraceIdentifier
         };
-
+                "field": "name",
+                "field": "userName",
         switch (exception)
         {
             case ValidationException validationEx:
-                errorResponse.Error = new ErrorInfo
+            "name": "Juan Pérez",
+            "userName": "jperez",
                 {
                     Code = "VALIDATION_FAILED",
                     Message = "La solicitud contiene errores de validación",
@@ -589,7 +596,7 @@ app.Run();
     "message": "La solicitud contiene errores de validación",
     "details": [
       {
-        "field": "name",
+        "field": "userName",
         "issue": "El nombre es obligatorio"
       },
       {
@@ -607,9 +614,9 @@ app.Run();
     ]
   },
   "meta": {
-    "timestamp": "2025-09-22T10:30:00Z"
-  },
-  "trace_id": "c1d2e3f4-5678-90ab-cdef-1234567890ab"
+        "traceId": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
+        "timestamp": "2025-09-22T10:30:00Z"
+    }
 }
 ```
 
@@ -623,10 +630,10 @@ app.Run();
     "message": "Ya existe un usuario con este email",
     "details": []
   },
-  "meta": {
-    "timestamp": "2025-09-22T10:30:00Z"
-  },
-  "trace_id": "de9f8c7b-6543-21fe-cdba-123456789abc"
+    "meta": {
+        "traceId": "de9f8c7b-6543-21fe-cdba-123456789abc",
+        "timestamp": "2025-09-22T10:30:00Z"
+    }
 }
 ```
 
@@ -640,10 +647,10 @@ app.Run();
     "message": "No tienes permisos para realizar esta acción",
     "details": []
   },
-  "meta": {
-    "timestamp": "2025-09-22T10:30:00Z"
-  },
-  "trace_id": "12ab34cd-5678-90ef-gh12-34567890abcd"
+    "meta": {
+        "traceId": "12ab34cd-5678-90ef-gh12-34567890abcd",
+        "timestamp": "2025-09-22T10:30:00Z"
+    }
 }
 ```
 
@@ -654,15 +661,15 @@ app.Run();
   "status": "success",
   "data": {
     "id": "usr_123",
-    "name": "Juan Pérez",
+    "userName": "Juan Pérez",
     "email": "juan.perez@talma.pe",
     "active": true,
-    "created_at": "2025-09-22T10:30:00Z"
+    "createdAt": "2025-09-22T10:30:00Z"
   },
-  "meta": {
-    "timestamp": "2025-09-22T10:30:01Z"
-  },
-  "trace_id": "abc123-def456-789012"
+    "meta": {
+        "traceId": "abc123-def456-789012",
+        "timestamp": "2025-09-22T10:30:01Z"
+    }
 }
 ```
 
