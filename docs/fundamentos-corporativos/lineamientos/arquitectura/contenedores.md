@@ -1,5 +1,5 @@
 ---
-title: "Especificaciones Generales"
+title: "Lineamientos para contenedores"
 sidebar_position: 1
 ---
 

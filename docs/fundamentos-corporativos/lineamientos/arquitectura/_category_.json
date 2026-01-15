@@ -1,0 +1,10 @@
+{
+    "label": "Arquitectura",
+    "position": 8,
+    "link": {
+        "type": "generated-index",
+        "title": "Arquitectura",
+        "slug": "/arquitectura",
+        "description": "Lineamientos y mejores prácticas para la arquitectura en Talma."
+    }
+}

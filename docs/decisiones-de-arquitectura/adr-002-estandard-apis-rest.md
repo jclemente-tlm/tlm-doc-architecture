@@ -185,8 +185,8 @@ Error Servidor:
     ]
   },
   "meta": {
-    "timestamp": "2025-08-06T17:55:20Z",
-    "trace_id": "abc123def456"
+    "traceId": "abc123def456",
+    "timestamp": "2025-08-06T17:55:20Z"
   }
 }
 
@@ -196,13 +196,13 @@ Error Servidor:
     "code": "TEMPLATE_NOT_FOUND",
     "message": "La plantilla solicitada no existe",
     "details": {
-      "template_id": "123",
+      "templateId": "123",
       "tenant": "peru"
     }
   },
   "meta": {
     "timestamp": "2025-08-06T17:55:20Z",
-    "trace_id": "abc123def456"
+    "traceId": "abc123def456"
   }
 }
 ```
@@ -254,16 +254,16 @@ Request Headers:
   Authorization: Bearer {jwt_token}
   Content-Type: application/json
   Accept: application/json
-  X-Tenant-ID: {tenant_id}
-  X-Trace-ID: {trace_id}
-  X-Request-ID: {request_id}
+  X-Tenant-ID: {tenantId}
+  X-Trace-ID: {traceId}
+  X-Request-ID: {requestId}
 
 Response Headers:
   Content-Type: application/json
   X-Rate-Limit-Remaining: {count}
   X-Rate-Limit-Reset: {timestamp}
-  X-Trace-ID: {trace_id}
-  X-Request-ID: {request_id}
+  X-Trace-ID: {traceId}
+  X-Request-ID: {requestId}
 ```
 
 ## 🔒 SEGURIDAD ESTÁNDAR
