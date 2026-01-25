@@ -1,72 +1,74 @@
 # Estilo y Enfoque Arquitectónico
 
-## Propósito
+## 1. Propósito
 
-Definir los estilos arquitectónicos permitidos en la organización, los criterios para su selección y los límites que deben respetarse, con el objetivo de construir soluciones sostenibles, evolutivas y alineadas al negocio.
-
-Este documento establece **criterios arquitectónicos**, no tecnologías ni frameworks.
+Definir los estilos arquitectónicos permitidos, criterios de selección y límites, asegurando soluciones sostenibles, escalables y alineadas al negocio.
 
 ---
 
-## Estilos arquitectónicos permitidos
+## 2. Alcance
 
-### Monolito Modular
+Aplica a todas las soluciones desarrolladas por la organización:
 
-Aplicable cuando:
+- Aplicaciones internas y externas
+- Plataformas distribuidas y monolitos
+- Integraciones internas y con terceros
 
-- El dominio es acotado y bien comprendido
-- El ritmo de cambio es bajo o moderado
-- El equipo es reducido o centralizado
-- La complejidad operativa debe mantenerse baja
-
-Criterios obligatorios:
-
-- Separación explícita de módulos por responsabilidad
-- Dependencias unidireccionales entre módulos
-- Prohibición de dependencias circulares
-- Capacidad de evolución hacia una arquitectura distribuida
+No aplica a configuraciones operativas específicas ni decisiones tecnológicas menores que no impacten la arquitectura general.
 
 ---
 
-### Arquitectura de Microservicios
+## 3. Lineamientos Obligatorios
 
-Aplicable cuando:
-
-- Existen dominios claramente desacoplables
-- Se requiere escalabilidad independiente
-- Hay múltiples equipos con autonomía
-- El dominio presenta alta variabilidad o crecimiento
-
-Criterios obligatorios:
-
-- Cada servicio representa una capacidad de negocio
-- Autonomía en despliegue y evolución
-- Datos encapsulados por servicio
-- Comunicación mediante contratos explícitos
-
----
-
-### Arquitectura Orientada a Eventos
-
-Aplicable cuando:
-
-- Se requiere desacoplamiento temporal
-- Se manejan flujos asíncronos
-- Existen múltiples consumidores de información
-- Se prioriza escalabilidad y resiliencia
-
-Criterios obligatorios:
-
-- Eventos representan hechos del dominio
-- Productores desconocen a los consumidores
-- Diseño tolerante a consistencia eventual
+- Seleccionar un **estilo arquitectónico** válido y documentado.
+- No mezclar estilos sin justificación aprobada.
+- Estilos permitidos:
+  - **Monolito Modular:** dominios acotados, bajo cambio, equipos pequeños.
+    - Separación clara de módulos
+    - Dependencias unidireccionales
+    - Evolución posible hacia arquitectura distribuida
+  - **Microservicios:** dominios desacoplables, crecimiento sostenido, múltiples equipos autónomos.
+    - Cada servicio representa una capacidad de negocio
+    - Autonomía en despliegue y evolución
+    - Datos encapsulados por servicio
+    - Comunicación mediante contratos explícitos
+  - **Arquitectura Orientada a Eventos:** desacoplamiento temporal, flujos asíncronos, alta resiliencia.
+    - Eventos representan hechos del dominio
+    - Productores desconocen a los consumidores
+    - Consistencia eventual tolerada
 
 ---
 
-## Antipatrones a evitar
+## 4. Decisiones de Diseño Esperadas
 
-- Uso de microservicios sin necesidad real
-- Arquitecturas híbridas sin reglas claras
-- Acoplamiento fuerte entre componentes
-- Dependencias técnicas ocultas
-- Selección de estilo basada en moda o tecnología
+- Definición clara del estilo arquitectónico adoptado.
+- Documentación de límites y responsabilidades de módulos o servicios.
+- Estrategia de comunicación entre componentes (síncrona o asíncrona) alineada al estilo.
+- Justificación de desviaciones respecto a los estilos definidos.
+
+---
+
+## 5. Antipatrones y Prácticas Prohibidas
+
+- Selección de estilo basada en moda o tecnología.
+- Microservicios para dominios triviales o con bajo cambio.
+- Mezcla de estilos sin reglas claras.
+- Dependencias técnicas ocultas o acoplamiento no documentado.
+
+---
+
+## 6. Principios Relacionados
+
+- Arquitectura Limpia
+- Arquitectura de Microservicios
+- Arquitectura Orientada a Eventos
+- Simplicidad Intencional
+- Desacoplamiento y Autonomía
+
+---
+
+## 7. Validación y Cumplimiento
+
+- Revisiones de arquitectura antes de producción.
+- Documentación de decisiones arquitectónicas y estilo adoptado en ADRs.
+- Auditorías internas para verificar límites, responsabilidades y comunicación entre componentes.

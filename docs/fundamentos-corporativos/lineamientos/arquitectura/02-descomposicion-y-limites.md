@@ -1,46 +1,60 @@
-# Descomposición y Límites Arquitectónicos
+# Descomposición y Límites
 
-## Propósito
+## 1. Propósito
 
-Establecer reglas claras para la descomposición de sistemas, la definición de límites y la asignación de responsabilidades, evitando arquitecturas acopladas y sistemas espagueti.
-
----
-
-## Bounded Contexts
-
-- Cada contexto representa un modelo de dominio consistente
-- No se comparten modelos internos entre contextos
-- La integración entre contextos se realiza mediante contratos
+Definir cómo dividir sistemas en componentes, módulos o servicios, estableciendo límites claros de responsabilidad y propiedad para facilitar mantenimiento, evolución y gobernanza.
 
 ---
 
-## Autonomía de servicios
+## 2. Alcance
 
-Un servicio debe ser autónomo en:
+Aplica a todas las soluciones desarrolladas por la organización, incluyendo:
 
-- Evolución
-- Despliegue
-- Datos
-- Decisiones internas de diseño
-
-No se permite:
-
-- Acceso directo a datos de otro servicio
-- Dependencias implícitas de ejecución
+- Monolitos modulares
+- Microservicios
+- Arquitecturas orientadas a eventos
+- Integraciones internas y externas
 
 ---
 
-## Reglas de dependencia
+## 3. Lineamientos Obligatorios
 
-- Las dependencias deben ser explícitas
-- Prohibidas dependencias circulares
-- La comunicación entre dominios se realiza vía contratos
-- Las dependencias técnicas no deben dictar el diseño del dominio
+- Identificar límites de responsabilidad por componente o servicio.
+- Evitar acoplamiento innecesario entre módulos.
+- Documentar la propiedad de cada módulo o servicio.
+- Garantizar coherencia en la comunicación y flujo de datos entre límites.
 
 ---
 
-## Ownership técnico
+## 4. Decisiones de Diseño Esperadas
 
-- Cada servicio o contexto tiene un responsable claro
-- El ownership incluye calidad, seguridad y evolución
-- Las decisiones locales deben respetar principios globales
+- Definición de límites claros por componente o servicio.
+- Documentación de dependencias entre componentes.
+- Mapas de responsabilidad y propiedad técnica y funcional.
+- Estrategias de integración y comunicación entre componentes.
+
+---
+
+## 5. Antipatrones y Prácticas Prohibidas
+
+- Componentes sin límites claros.
+- Mezcla de responsabilidades en un mismo módulo o servicio.
+- Acoplamiento oculto entre componentes.
+- Comunicación ad-hoc sin contratos explícitos.
+
+---
+
+## 6. Principios Relacionados
+
+- Arquitectura de Microservicios
+- Desacoplamiento y Autonomía
+- Contratos de Integración
+- Simplicidad Intencional
+
+---
+
+## 7. Validación y Cumplimiento
+
+- Revisiones de diseño para verificar límites y responsabilidades.
+- Documentación de decisiones en ADRs.
+- Auditorías internas sobre dependencias y propiedad de componentes.
