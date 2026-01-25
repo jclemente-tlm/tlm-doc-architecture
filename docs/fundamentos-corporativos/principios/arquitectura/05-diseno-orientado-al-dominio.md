@@ -1,25 +1,48 @@
-# Diseño Orientado al Dominio
+# Diseño Orientado al Dominio (DDD)
 
-## Enunciado
+## Declaración del Principio
 
-La arquitectura debe reflejar explícitamente el dominio del negocio, utilizando su lenguaje, reglas y límites como base del diseño del sistema.
+La arquitectura debe estructurarse en torno al dominio del negocio, reflejando sus conceptos, reglas y límites, y no únicamente consideraciones técnicas.
 
-## Intención
+## Propósito
 
-Reducir la brecha entre negocio y tecnología, asegurando que el software modele correctamente la realidad que busca resolver.
+Alinear el diseño del sistema con el negocio, facilitando la comprensión, evolución y sostenibilidad de la solución en el tiempo.
 
-## Alcance conceptual
+## Justificación
 
-Aplica a sistemas donde el dominio contiene reglas, procesos o decisiones relevantes.
-No es prioritario en sistemas puramente técnicos o utilitarios.
+Cuando la arquitectura se define principalmente desde lo técnico, el sistema pierde significado para el negocio, se vuelve difícil de mantener y costoso de cambiar.
 
-## Implicaciones arquitectónicas
+El Diseño Orientado al Dominio promueve que el software modele explícitamente las reglas, procesos y conceptos relevantes del negocio, reduciendo malentendidos entre equipos técnicos y no técnicos.
 
-- El dominio guía la estructura del sistema.
-- El lenguaje del negocio se convierte en lenguaje del software.
-- Los límites del dominio influyen en la descomposición arquitectónica.
-- El diseño se centra en comportamientos, no solo en datos.
+El dominio es la fuente principal de decisiones arquitectónicas, no una consecuencia de ellas.
 
-## Compensaciones (trade-offs)
+## Alcance Conceptual
 
-Requiere mayor involucramiento del negocio y esfuerzo de modelado inicial, a cambio de sistemas más comprensibles, alineados y sostenibles.
+Aplica a:
+
+- Sistemas con lógica de negocio relevante o compleja
+- Soluciones que evolucionan con el negocio
+- Arquitecturas con múltiples equipos o dominios
+- Plataformas donde el conocimiento del negocio es crítico
+
+No implica el uso obligatorio de patrones o tácticas específicas de DDD, sino una orientación conceptual al dominio.
+
+## Implicaciones Arquitectónicas
+
+- Los límites del sistema reflejan contextos del dominio.
+- El lenguaje utilizado en el diseño y la comunicación es consistente con el negocio.
+- Las responsabilidades se asignan según capacidades del dominio.
+- La arquitectura evita mezclar lógicas de dominios distintos.
+
+## Compensaciones (Trade-offs)
+
+Requiere mayor esfuerzo inicial de análisis y colaboración con el negocio, a cambio de mayor claridad, menor deuda conceptual y una arquitectura más adaptable al cambio.
+
+## Relación con Decisiones Arquitectónicas (ADRs)
+
+Este principio se refleja en ADRs relacionados con:
+
+- Identificación de dominios y contextos
+- Definición de límites entre componentes o servicios
+- Asignación de responsabilidades
+- Estrategias de integración entre dominios

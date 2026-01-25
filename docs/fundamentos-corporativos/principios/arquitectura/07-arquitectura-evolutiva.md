@@ -1,20 +1,48 @@
 # Arquitectura Evolutiva
 
-## Enunciado
-La arquitectura debe diseñarse para cambiar de forma incremental y controlada a lo largo del tiempo.
+## Declaración del Principio
 
-## Intención
-Aceptar que los requerimientos, el negocio y la tecnología evolucionan, evitando arquitecturas rígidas.
+La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, aceptando que los requisitos, el negocio y la tecnología evolucionarán con el tiempo.
 
-## Alcance conceptual
-Aplica a sistemas con expectativas de vida media o larga.
-No busca anticipar todo el futuro, sino permitir adaptabilidad.
+## Propósito
 
-## Implicaciones arquitectónicas
-- Las decisiones arquitectónicas son revisables.
-- Se priorizan opciones reversibles.
-- La arquitectura se valida continuamente.
-- El cambio es una condición normal del sistema.
+Permitir que el sistema incorpore cambios sin necesidad de rediseños completos, reduciendo el costo y el riesgo de la evolución.
 
-## Compensaciones (trade-offs)
-Puede implicar mayor esfuerzo de diseño y validación continua, a cambio de menor riesgo de obsolescencia y reescrituras costosas.
+## Justificación
+
+Las arquitecturas que asumen estabilidad permanente tienden a volverse rígidas, costosas de modificar y desconectadas de las necesidades reales del negocio.
+
+Diseñar para la evolución no significa anticipar todo, sino crear estructuras que toleren cambios, errores y ajustes progresivos.
+
+El cambio no es una excepción, es una condición normal del sistema.
+
+## Alcance Conceptual
+
+Aplica a:
+
+- Sistemas de larga vida
+- Plataformas en crecimiento
+- Arquitecturas con múltiples equipos
+- Entornos tecnológicos cambiantes
+
+No implica ausencia de decisiones, sino decisiones conscientes sobre qué debe ser estable y qué puede cambiar.
+
+## Implicaciones Arquitectónicas
+
+- Las decisiones arquitectónicas se revisan y ajustan en el tiempo.
+- Se prioriza la reversibilidad de decisiones cuando es posible.
+- Los límites y contratos ayudan a contener el impacto del cambio.
+- La arquitectura admite refactorización y mejora continua.
+
+## Compensaciones (Trade-offs)
+
+Puede implicar mayor disciplina en el diseño y gobierno arquitectónico, a cambio de menor rigidez, menor deuda estructural y mayor alineación con el negocio.
+
+## Relación con Decisiones Arquitectónicas (ADRs)
+
+Este principio se refleja en ADRs relacionados con:
+
+- Elección y reemplazo de tecnologías
+- Definición de contratos y versionado
+- Estrategias de transición y migración
+- Evaluación periódica de decisiones arquitectónicas

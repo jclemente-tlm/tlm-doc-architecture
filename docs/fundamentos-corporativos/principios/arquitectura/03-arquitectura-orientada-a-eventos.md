@@ -1,40 +1,60 @@
 ---
-id: 03-orientada-a-eventos
+id: 03-arquitectura-orientada-a-eventos
 sidebar_position: 3
-title: Arquitectura orientada a eventos
+# title: Arquitectura orientada a eventos
 ---
-
-<!-- ## Principios
-
-- Desacopla productores y consumidores mediante eventos.
-- Usa mensajes inmutables y bien definidos.
-- Garantiza la entrega y el orden de los eventos según necesidad.
-
-## Buenas prácticas
-
-- Documenta el esquema de los eventos.
-- Implementa idempotencia en consumidores.
-- Monitorea colas y flujos de eventos.
-- Usa mecanismos de retry y DLQ (Dead Letter Queue). -->
 
 # Arquitectura Orientada a Eventos
 
-## Enunciado
-Los sistemas deben comunicar hechos relevantes del dominio mediante eventos explícitos, permitiendo reacciones desacopladas y asincrónicas.
+## Declaración del Principio
 
-## Intención
-Reducir dependencias directas entre sistemas y facilitar la evolución independiente de productores y consumidores.
+Un sistema puede comunicarse y coordinarse mediante eventos que representan hechos relevantes del dominio, promoviendo desacoplamiento temporal y estructural entre componentes.
 
-## Alcance conceptual
-Aplica en escenarios donde el desacoplamiento temporal, la escalabilidad y la resiliencia son prioritarios.
+## Propósito
 
-No sustituye completamente a la comunicación síncrona.
+Reducir el acoplamiento entre sistemas y servicios, habilitar escalabilidad y resiliencia, y permitir que múltiples consumidores reaccionen a cambios del negocio sin dependencias directas.
 
-## Implicaciones arquitectónicas
-- El dominio se expresa mediante hechos observables.
-- Los consumidores reaccionan sin conocimiento directo del productor.
-- La consistencia puede ser eventual.
-- El flujo de control se distribuye.
+## Justificación
 
-## Compensaciones (trade-offs)
-Se pierde simplicidad en el flujo secuencial a cambio de mayor flexibilidad, escalabilidad y tolerancia a fallos.
+En arquitecturas síncronas y fuertemente acopladas, los sistemas dependen de la disponibilidad inmediata de otros componentes, lo que incrementa:
+
+- La fragilidad ante fallos
+- La dificultad de escalar
+- El impacto de cambios en cascada
+
+La arquitectura orientada a eventos permite que los sistemas reaccionen a hechos ocurridos sin requerir conocimiento directo de quién consume esa información, favoreciendo evolución independiente y tolerancia a fallos.
+
+No sustituye a las APIs ni elimina la comunicación síncrona, sino que las complementa donde el contexto lo requiere.
+
+## Alcance Conceptual
+
+Aplica especialmente cuando:
+
+- Se requiere desacoplamiento temporal entre componentes
+- Existen múltiples consumidores de información
+- Se tolera consistencia eventual
+- El sistema debe escalar de forma distribuida
+
+No todos los flujos deben modelarse como eventos; su uso debe responder a necesidades reales del dominio.
+
+## Implicaciones Arquitectónicas
+
+- Los eventos representan **hechos del dominio**, no comandos ni instrucciones.
+- Los productores de eventos no conocen a sus consumidores.
+- Los consumidores reaccionan a eventos de forma independiente.
+- La consistencia eventual es un modelo aceptado y explícito.
+- El diseño debe considerar idempotencia y manejo de duplicados.
+- La observabilidad del flujo de eventos es una preocupación central.
+
+## Compensaciones (Trade-offs)
+
+Introduce mayor complejidad conceptual y operativa, así como desafíos en trazabilidad y consistencia, a cambio de mayor desacoplamiento, escalabilidad y resiliencia del sistema.
+
+## Relación con Decisiones Arquitectónicas (ADRs)
+
+Este principio se refleja en ADRs relacionados con:
+
+- Uso de mensajería o streaming de eventos
+- Definición de eventos de dominio
+- Estrategias de integración entre sistemas
+- Manejo de consistencia y asincronía

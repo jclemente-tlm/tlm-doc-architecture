@@ -1,46 +1,60 @@
 ---
-id: 02-microservicios
+id: 02-arquitectura-de-microservicios
 sidebar_position: 2
-title: Microservicios
+# title: Arquitectura de Microservicios
 ---
-
-<!-- ## Principios
-
-- Cada microservicio es autónomo y responsable de un único dominio.
-- Comunicación preferente vía APIs bien definidas.
-- Despliegue y escalado independientes.
-
-## Buenas prácticas
-
-- Usa contratos claros (OpenAPI, gRPC).
-- Implementa observabilidad (logs, métricas, trazas).
-- Maneja errores y timeouts de forma robusta.
-- Automatiza pruebas y despliegues.
-- Minimiza dependencias entre servicios. -->
 
 # Arquitectura de Microservicios
 
-## Enunciado
+## Declaración del Principio
 
-Un sistema puede descomponerse en servicios autónomos alineados a capacidades de negocio, capaces de evolucionar y desplegarse de forma independiente.
+Un sistema puede descomponerse en servicios autónomos, alineados a capacidades de negocio, que pueden evolucionar y desplegarse de forma independiente.
 
-## Intención
+## Propósito
 
-Permitir escalabilidad técnica y organizacional en contextos donde el dominio y los equipos crecen de forma sostenida.
+Habilitar escalabilidad técnica y organizacional, reducir el impacto de cambios y permitir que distintos equipos trabajen de forma autónoma sobre un mismo ecosistema.
 
-## Alcance conceptual
+## Justificación
 
-Aplica cuando existen dominios claramente separables y equipos con capacidad de asumir ownership técnico y funcional.
+En sistemas grandes o en crecimiento, las arquitecturas monolíticas tienden a:
 
-No es un principio obligatorio para todo sistema.
+- Limitar la velocidad de cambio
+- Aumentar el impacto de errores
+- Generar dependencias difíciles de gestionar entre equipos
 
-## Implicaciones arquitectónicas
+La arquitectura de microservicios permite aislar responsabilidades, reducir el radio de impacto de los cambios y escalar tanto la plataforma como la organización de forma controlada.
 
-- Los límites del sistema reflejan capacidades del negocio.
-- Cada servicio asume responsabilidad completa sobre su evolución.
-- La comunicación entre servicios se vuelve una preocupación arquitectónica central.
-- El sistema se concibe como un ecosistema distribuido.
+No es una solución universal ni obligatoria, sino una respuesta arquitectónica a contextos específicos de complejidad y crecimiento.
 
-## Compensaciones (trade-offs)
+## Alcance Conceptual
 
-Introduce mayor complejidad operativa y de coordinación a cambio de mayor autonomía, escalabilidad y velocidad de cambio.
+Aplica principalmente cuando existen:
+
+- Dominios o capacidades de negocio claramente separables
+- Necesidad de escalabilidad independiente
+- Múltiples equipos con ownership técnico y funcional
+- Evolución continua del sistema
+
+No todos los sistemas deben adoptar microservicios; en dominios simples o equipos pequeños, otros estilos pueden ser más adecuados.
+
+## Implicaciones Arquitectónicas
+
+- Cada servicio representa una capacidad clara del negocio.
+- Los servicios son autónomos en despliegue y evolución.
+- Cada servicio es responsable de sus propios datos.
+- No se permite acceso directo a datos de otros servicios.
+- La comunicación entre servicios se realiza mediante contratos explícitos.
+- La observabilidad y la resiliencia son preocupaciones centrales del diseño.
+
+## Compensaciones (Trade-offs)
+
+Introduce mayor complejidad operativa, de monitoreo y de coordinación entre equipos, a cambio de mayor autonomía, escalabilidad y capacidad de evolución del sistema a largo plazo.
+
+## Relación con Decisiones Arquitectónicas (ADRs)
+
+Este principio se refleja en ADRs relacionados con:
+
+- Descomposición del sistema
+- Definición de límites de servicio
+- Estrategias de comunicación síncrona y asíncrona
+- Gobierno de datos y contratos de integración

@@ -1,40 +1,53 @@
 ---
-id: 01-clean-architecture
+id: 01-arquitectura-limpia
 sidebar_position: 1
-title: Clean Architecture
+# title: Arquitectura Limpia
 ---
-
-<!-- ## Principios
-
-- Separación clara de responsabilidades (capas: dominio, aplicación, infraestructura, presentación).
-- Las dependencias siempre apuntan hacia el dominio.
-- Entidades y lógica de negocio independientes de frameworks.
-
-## Buenas prácticas
-
-- Usa interfaces para desacoplar dependencias.
-- Mantén el dominio libre de detalles técnicos.
-- Aplica inyección de dependencias.
-- Escribe pruebas unitarias para el dominio. -->
 
 # Arquitectura Limpia
 
-## Enunciado
-La arquitectura debe proteger el núcleo del negocio de dependencias técnicas, organizando el sistema alrededor del dominio y no de frameworks o tecnologías.
+## Declaración del Principio
 
-## Intención
-Evitar que decisiones técnicas tempranas limiten la evolución del negocio y reducir el costo de cambio ante nuevas necesidades funcionales o tecnológicas.
+La arquitectura de un sistema debe separar claramente las decisiones de negocio de los detalles técnicos, permitiendo que el dominio evolucione de forma independiente a frameworks, infraestructura o tecnologías específicas.
 
-## Alcance conceptual
-Aplica a todo sistema que represente reglas de negocio relevantes, independientemente de su tamaño o estilo arquitectónico.
+## Propósito
 
-No busca eliminar el uso de frameworks, sino evitar que estos definan la estructura del sistema.
+Preservar la claridad del dominio, reducir el acoplamiento técnico y facilitar la evolución del sistema a lo largo del tiempo.
 
-## Implicaciones arquitectónicas
-- El dominio se convierte en el centro del diseño.
-- Las dependencias conceptuales se orientan hacia el negocio.
-- Las decisiones técnicas se consideran reemplazables en el tiempo.
-- La arquitectura se evalúa por su capacidad de absorber cambios.
+## Justificación
 
-## Compensaciones (trade-offs)
-Incrementa el esfuerzo de diseño inicial y requiere mayor disciplina del equipo, a cambio de mayor mantenibilidad, testabilidad y vida útil del sistema.
+Cuando las decisiones técnicas dominan la estructura del sistema, los cambios tecnológicos impactan directamente en la lógica de negocio, incrementando el costo de mantenimiento y la rigidez del sistema.
+
+La Arquitectura Limpia propone que el negocio sea el eje central del diseño, y que los detalles técnicos se adapten a él, no al revés.
+
+Este principio no busca imponer una estructura rígida, sino establecer una dirección clara sobre qué decisiones deben ser más estables y cuáles pueden cambiar con mayor facilidad.
+
+## Alcance Conceptual
+
+Aplica a:
+
+- Sistemas con lógica de negocio relevante
+- Soluciones con expectativa de evolución en el tiempo
+- Arquitecturas donde se desea reducir dependencia tecnológica
+
+No requiere una implementación literal de capas o patrones específicos, ni es exclusiva de un estilo arquitectónico particular.
+
+## Implicaciones Arquitectónicas
+
+- La lógica de negocio no depende de frameworks, bases de datos o mecanismos de entrega.
+- Las dependencias se orientan hacia el dominio, no hacia los detalles técnicos.
+- Los cambios tecnológicos deben tener impacto limitado en el núcleo del sistema.
+- La estructura del sistema refleja prioridades del negocio antes que decisiones técnicas.
+
+## Compensaciones (Trade-offs)
+
+Puede introducir mayor esfuerzo inicial de diseño y disciplina en la estructura del sistema, a cambio de mayor mantenibilidad, claridad y capacidad de evolución a largo plazo.
+
+## Relación con Decisiones Arquitectónicas (ADRs)
+
+Este principio suele reflejarse en ADRs relacionados con:
+
+- Estructuración del código y responsabilidades
+- Selección y reemplazo de frameworks
+- Estrategias de aislamiento del dominio
+- Límites entre lógica de negocio y componentes técnicos

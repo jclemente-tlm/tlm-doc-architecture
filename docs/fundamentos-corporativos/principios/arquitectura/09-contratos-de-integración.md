@@ -1,31 +1,54 @@
-<!-- ## Propósito
+# Contratos de Integración
 
-## Declaración del principio
+## Declaración del Principio
+
+La integración entre sistemas y servicios debe basarse en contratos explícitos, versionados y acordados, que definan claramente las expectativas entre productores y consumidores.
+
+## Propósito
+
+Reducir el acoplamiento entre sistemas, permitir la evolución independiente y evitar dependencias implícitas que generen fallos difíciles de detectar y corregir.
 
 ## Justificación
 
-## Implicancias arquitectónicas
+Cuando las integraciones se basan en supuestos no documentados o en detalles internos de otros sistemas, cualquier cambio puede provocar errores en cascada.
 
-## Relación con ADRs
+Los contratos de integración establecen un acuerdo claro sobre:
 
-## Ejemplos (alto nivel) -->
+- Qué se expone
+- Cómo se consume
+- Qué se garantiza
+- Qué no debe asumirse
 
-# Contratos de Integración
+Esto permite que los sistemas evolucionen sin romper a sus consumidores y facilita el gobierno de las integraciones.
 
-## Enunciado
-Las interacciones entre sistemas deben definirse mediante contratos explícitos, estables y versionables.
+## Alcance Conceptual
 
-## Intención
-Reducir acoplamiento implícito y permitir evolución independiente entre productores y consumidores.
+Aplica a:
 
-## Alcance conceptual
-Aplica a toda integración entre sistemas, servicios o componentes externos al dominio inmediato.
+- APIs (REST, SOAP, gRPC, etc.)
+- Eventos y mensajería
+- Integraciones síncronas y asíncronas
+- Flujos batch e intercambios de datos
 
-## Implicaciones arquitectónicas
-- Las integraciones se diseñan como acuerdos formales.
-- Los cambios deben considerar compatibilidad.
-- La comunicación se gobierna, no se improvisa.
-- Los contratos son parte de la arquitectura.
+El principio es independiente del estilo arquitectónico o la tecnología utilizada.
 
-## Compensaciones (trade-offs)
-Requiere mayor disciplina y gobierno, a cambio de integraciones más estables, predecibles y escalables.
+## Implicaciones Arquitectónicas
+
+- Las integraciones deben definirse mediante contratos explícitos.
+- Los contratos forman parte de la arquitectura y deben ser versionados.
+- Los consumidores no deben depender de estructuras internas del proveedor.
+- Los cambios deben gestionarse considerando compatibilidad hacia atrás.
+- La comunicación entre sistemas se diseña como una relación contractual, no como un acceso directo.
+
+## Compensaciones (Trade-offs)
+
+Reduce la flexibilidad inmediata para realizar cambios rápidos, a cambio de mayor estabilidad, previsibilidad y capacidad de evolución del ecosistema de sistemas.
+
+## Relación con Decisiones Arquitectónicas (ADRs)
+
+Este principio se refleja en ADRs relacionados con:
+
+- Estrategias de integración
+- Versionado de APIs y eventos
+- Compatibilidad hacia atrás
+- Gestión de cambios entre sistemas

@@ -1,121 +1,54 @@
-<!-- # Protección de Datos Sensibles
-
-## Enunciado
-Los datos sensibles deben ser protegidos durante todo su ciclo de vida.
-
-## Intención
-Reducir riesgos legales, reputacionales y operativos.
-
-## Alcance conceptual
-Aplica a datos personales, financieros, regulatorios y críticos.
-
-## Implicaciones arquitectónicas
-- El diseño considera clasificación de datos.
-- La exposición es mínima y controlada.
-- La protección no depende del entorno.
-
-## Compensaciones (trade-offs)
-Mayor esfuerzo de diseño y control, a cambio de menor impacto ante incidentes. -->
-
 # Protección de Datos Sensibles
 
 ## Declaración del Principio
 
-Los datos sensibles deben ser identificados, protegidos y expuestos de forma controlada durante todo su ciclo de vida.
+La arquitectura debe identificar, clasificar y proteger explícitamente los datos sensibles, asegurando que su almacenamiento, procesamiento y exposición estén alineados con su nivel de criticidad y riesgo.
 
 ## Propósito
 
-Reducir el impacto de incidentes de seguridad y cumplir con requisitos regulatorios y de negocio.
+Reducir el riesgo de exposición, uso indebido o pérdida de información crítica, garantizando que los datos sensibles reciban un tratamiento diferenciado y coherente desde el diseño del sistema.
 
 ## Justificación
 
-No todos los datos tienen el mismo nivel de riesgo.
-La arquitectura debe reconocer estas diferencias y tratarlas explícitamente, evitando exposiciones innecesarias.
+No todos los datos tienen el mismo valor ni el mismo impacto ante una brecha de seguridad.
+Cuando los sistemas tratan toda la información de forma uniforme:
 
-## Alcance Conceptual
+- Se exponen datos críticos innecesariamente
+- Se incrementa la superficie de ataque
+- Se dificulta el cumplimiento normativo y la auditoría
 
-Aplica a:
-
-- Datos en tránsito
-- Datos en reposo
-- Integraciones
-- Observabilidad y logging
-
-## Implicaciones Arquitectónicas
-
-- La arquitectura debe clasificar los datos según su sensibilidad.
-- El acceso a datos sensibles debe ser explícito y justificado.
-- Se deben minimizar copias, exposiciones y propagación innecesaria.
-- Los flujos de datos deben ser visibles y controlados.
-
-## Compensaciones (Trade-offs)
-
-Puede restringir el acceso y aumentar controles, a cambio de menor exposición y mayor cumplimiento normativo.
-
-## Relación con Decisiones Arquitectónicas (ADRs)
-
-Relacionado con ADRs sobre:
-
-- Manejo y flujo de datos
-- Integraciones
-- Estrategias de protección y acceso
-
-
-
-
-
-# Protección de Datos Sensibles
-
-## Declaración del Principio
-
-Los datos sensibles deben ser identificados, tratados y protegidos explícitamente en la arquitectura, controlando su exposición durante todo su ciclo de vida.
-
-## Propósito
-
-Reducir el impacto de incidentes de seguridad, proteger a la organización y a los usuarios, y facilitar el cumplimiento de requisitos regulatorios y de negocio.
-
-## Justificación
-
-No todos los datos presentan el mismo nivel de riesgo.
-La arquitectura debe reconocer estas diferencias y tomar decisiones conscientes sobre cómo los datos son:
-
-- creados
-- transportados
-- almacenados
-- expuestos
-- observados
-
-La ausencia de un tratamiento diferenciado conduce a exposiciones innecesarias, mayor superficie de ataque y mayores costos ante incidentes.
+La protección efectiva de datos sensibles comienza identificándolos y estableciendo decisiones arquitectónicas acordes a su nivel de riesgo, no solo aplicando controles técnicos posteriores.
 
 ## Alcance Conceptual
 
 Este principio aplica a:
 
-- Datos en tránsito entre componentes
-- Datos en reposo
-- Integraciones internas y externas
-- Eventos, APIs y procesos batch
-- Observabilidad, logging y trazabilidad
+- Datos personales y sensibles
+- Información financiera, contractual o regulada
+- Credenciales, secretos y tokens
+- Datos críticos para el negocio
 
-Aplica tanto a datos regulados como a información crítica para el negocio.
+Cubre todo el ciclo de vida del dato: generación, transporte, almacenamiento, acceso, uso y eliminación.
 
 ## Implicaciones Arquitectónicas
 
-- La arquitectura debe clasificar los datos según su nivel de sensibilidad y riesgo.
-- El acceso a datos sensibles debe ser intencional, explícito y justificable.
-- Se deben minimizar copias, propagación y exposición innecesaria de datos.
-- Los flujos de datos sensibles deben ser visibles y comprensibles a nivel arquitectónico.
-- La observabilidad no debe exponer datos sensibles salvo justificación explícita.
+- Los datos sensibles deben identificarse y clasificarse explícitamente.
+- El acceso a datos sensibles debe estar estrictamente controlado y justificado.
+- La exposición de datos debe minimizarse por diseño.
+- La arquitectura debe considerar segregación, aislamiento y protección diferencial.
+- Los flujos de datos sensibles deben ser visibles y trazables.
+- La persistencia y transporte de datos sensibles requieren medidas adicionales desde el diseño.
 
 ## Compensaciones (Trade-offs)
 
-Puede introducir restricciones de acceso y mayor esfuerzo de diseño, a cambio de reducir significativamente la exposición, el impacto de incidentes y el riesgo legal y reputacional.
+Introduce mayor complejidad en diseño, operación y gobierno de datos, a cambio de reducir significativamente el impacto de incidentes de seguridad, facilitar el cumplimiento normativo y proteger activos críticos del negocio.
 
 ## Relación con Decisiones Arquitectónicas (ADRs)
 
 Este principio se refleja en ADRs relacionados con:
 
-- Modelos de datos y su exposición
-- Integraciones y contratos
-- Estrategias de acceso y protección de información
-- Manejo de datos en observabilidad y trazabilidad
+- Clasificación y manejo de datos
+- Estrategias de almacenamiento y segregación
+- Políticas de acceso y exposición de información
+- Manejo de secretos y credenciales
+- Retención y eliminación de datos

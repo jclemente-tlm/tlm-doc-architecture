@@ -1,105 +1,48 @@
-<!-- # Defensa en Profundidad
-
-## Enunciado
-La seguridad debe implementarse en múltiples capas complementarias.
-
-## Intención
-Reducir el impacto de fallos individuales de seguridad.
-
-## Alcance conceptual
-Aplica a arquitectura, infraestructura y aplicaciones.
-
-## Implicaciones arquitectónicas
-- Los controles no son únicos ni aislados.
-- El fallo de una capa no compromete todo el sistema.
-- La seguridad es redundante por diseño.
-
-## Compensaciones (trade-offs)
-Mayor complejidad y costos operativos, a cambio de mayor robustez ante ataques. -->
-
-
 # Defensa en Profundidad
 
 ## Declaración del Principio
 
-La seguridad debe implementarse mediante múltiples capas complementarias, evitando dependencias en un único mecanismo de control.
+La arquitectura debe diseñarse incorporando múltiples capas de protección independientes, de modo que la falla o evasión de un control no comprometa la seguridad del sistema en su conjunto.
 
 ## Propósito
 
-Aumentar la resiliencia ante fallos de seguridad, errores humanos o vulnerabilidades no detectadas.
+Reducir el impacto de fallos, errores humanos o accesos indebidos, evitando que un único punto de falla exponga activos críticos o comprometa todo el sistema.
 
 ## Justificación
 
-Ningún control es infalible.
-Confiar en una sola barrera de protección expone al sistema a fallos catastróficos cuando dicho control es superado.
-
-La arquitectura debe asumir que los controles pueden fallar.
-
-## Alcance Conceptual
-
-Aplica a:
-
-- Accesos
-- Comunicación
-- Manejo de datos
-- Exposición de servicios
-
-No implica redundancia innecesaria, sino capas con responsabilidades claras.
-
-## Implicaciones Arquitectónicas
-
-- Los controles de seguridad se distribuyen en diferentes niveles.
-- El fallo de un control no debe comprometer todo el sistema.
-- Las capas deben ser independientes y complementarias.
-- La arquitectura debe evitar puntos únicos de fallo en seguridad.
-
-## Compensaciones (Trade-offs)
-
-Incrementa la complejidad del diseño y la coordinación entre capas, a cambio de una reducción significativa del riesgo sistémico.
-
-## Relación con Decisiones Arquitectónicas (ADRs)
-
-Relacionado con ADRs sobre:
-
-- Segmentación de componentes
-- Controles de acceso
-- Manejo de errores y validaciones
-
-
-# Defensa en Profundidad
-
-## Declaración del Principio
-La seguridad debe diseñarse mediante múltiples capas complementarias, de modo que la falla de un único control no comprometa todo el sistema.
-
-## Propósito
-Reducir el impacto de vulnerabilidades, errores humanos o fallos de configuración, evitando dependencias críticas en un solo mecanismo de seguridad.
-
-## Justificación
 Ningún control de seguridad es infalible.
-Las arquitecturas que dependen de una única barrera de protección presentan un alto riesgo sistémico cuando dicha barrera es superada.
+Las configuraciones pueden fallar, los accesos pueden ser mal otorgados y los mecanismos de protección pueden ser evadidos.
 
-La defensa en profundidad asume que los controles pueden fallar y diseña la arquitectura para contener y limitar el impacto de esos fallos.
+La defensa en profundidad asume esta realidad y establece que la seguridad no depende de un único control, sino de la combinación coherente de múltiples barreras que limitan el alcance y la propagación de un incidente.
 
 ## Alcance Conceptual
-Este principio aplica a decisiones arquitectónicas relacionadas con:
-- Acceso a sistemas y recursos
-- Comunicación entre componentes
-- Manejo y exposición de datos
-- Publicación de capacidades y servicios
 
-No implica duplicación innecesaria de controles, sino la definición consciente de capas con responsabilidades diferenciadas.
+Este principio aplica a:
+
+- Componentes y servicios
+- Acceso a datos y recursos críticos
+- Integraciones internas y externas
+- Flujos de información dentro de la arquitectura
+
+No implica duplicar controles sin criterio, sino diseñar capas complementarias y con responsabilidades claras.
 
 ## Implicaciones Arquitectónicas
-- Los controles de seguridad deben distribuirse en distintos niveles de la arquitectura.
-- El fallo de una capa no debe permitir el compromiso total del sistema.
-- Las capas deben ser independientes y complementarias.
-- La arquitectura debe evitar puntos únicos de fallo relacionados con seguridad.
+
+- No debe existir un único punto cuya falla comprometa activos críticos.
+- Las capas de seguridad deben ser independientes y complementarias.
+- El acceso y las capacidades deben limitarse progresivamente.
+- La arquitectura debe facilitar la detección, contención y aislamiento de incidentes.
+- Los controles deben distribuirse en distintos niveles de la arquitectura.
 
 ## Compensaciones (Trade-offs)
-Introduce mayor complejidad en el diseño y coordinación de controles, a cambio de una reducción significativa del riesgo y una mayor capacidad de contención ante incidentes.
+
+Introduce mayor complejidad en diseño, operación y gobierno de la seguridad, a cambio de una reducción significativa del impacto de incidentes y una mayor resiliencia ante fallos inevitables.
 
 ## Relación con Decisiones Arquitectónicas (ADRs)
+
 Este principio suele reflejarse en ADRs relacionados con:
-- Segmentación de sistemas y componentes
-- Estrategias de control de acceso
-- Definición de límites y validaciones entre capas
+
+- Segmentación de componentes y dominios
+- Estrategias de protección de datos y servicios
+- Diseño de capas de acceso y control
+- Mecanismos de aislamiento y contención

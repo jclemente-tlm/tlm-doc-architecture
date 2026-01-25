@@ -1,69 +1,52 @@
-<!-- # Seguridad desde el Diseño
-
-## Enunciado
-
-La seguridad debe considerarse una propiedad inherente del sistema desde su definición arquitectónica.
-
-## Intención
-
-Evitar arquitecturas que dependan de controles externos o correctivos tardíos.
-
-## Alcance conceptual
-
-Aplica a todo sistema sin excepción.
-
-## Implicaciones arquitectónicas
-
-- La seguridad influye en decisiones estructurales.
-- Se consideran escenarios de abuso.
-- La arquitectura reduce superficie de ataque.
-
-## Compensaciones (trade-offs)
-
-Puede aumentar complejidad inicial, a cambio de menor riesgo y mayor control. -->
-
 # Seguridad desde el Diseño
 
 ## Declaración del Principio
-La seguridad debe ser considerada explícitamente en las decisiones arquitectónicas iniciales del sistema y no añadirse posteriormente como un conjunto de controles aislados.
+
+La seguridad debe ser una consideración explícita desde las decisiones arquitectónicas iniciales del sistema y no incorporarse posteriormente como controles aislados o correctivos.
 
 ## Propósito
-Reducir riesgos previsibles desde la estructura del sistema, evitando depender únicamente de controles correctivos o configuraciones posteriores.
+
+Reducir riesgos previsibles desde la estructura del sistema, evitando arquitecturas que dependan exclusivamente de configuraciones tardías o medidas reactivas.
 
 ## Justificación
-Las decisiones arquitectónicas determinan:
+
+Las decisiones arquitectónicas definen aspectos fundamentales del sistema, como:
 
 - Qué componentes existen y cómo se relacionan
 - Qué capacidades se exponen y a quién
 - Cómo circulan los datos dentro y fuera del sistema
 - Dónde se establecen los límites de confianza
 
-Si estos aspectos se definen sin considerar seguridad, los controles añadidos posteriormente solo mitigan síntomas y no eliminan las causas del riesgo, generando soluciones frágiles y costosas de corregir.
+Si estos elementos se diseñan sin considerar seguridad, los controles añadidos posteriormente solo mitigan síntomas y no las causas del riesgo, generando soluciones frágiles, costosas de mantener y difíciles de corregir.
 
 ## Alcance Conceptual
+
 Aplica a decisiones relacionadas con:
 
 - Definición de componentes, responsabilidades y dependencias
 - Exposición de servicios, APIs, eventos e integraciones
 - Flujo, persistencia y acceso a datos
-- Identificación de activos críticos y puntos de acceso
+- Identificación de activos críticos y puntos de entrada al sistema
 
-Este principio no reemplaza controles técnicos, sino que define el marco en el que dichos controles son coherentes y efectivos.
+Este principio no reemplaza controles técnicos específicos, sino que establece el marco arquitectónico que permite que dichos controles sean coherentes, efectivos y sostenibles.
 
 ## Implicaciones Arquitectónicas
-- Identificación temprana de componentes y datos críticos.
-- Definición explícita de límites y relaciones de confianza.
-- Exposición intencional y mínima de capacidades.
-- Estructuras que dificulten el acceso no autorizado por diseño.
-- Consideración de escenarios de uso indebido desde la arquitectura.
+
+- Los componentes y datos críticos deben identificarse desde el diseño.
+- Los límites y relaciones de confianza deben definirse de forma explícita.
+- La exposición de capacidades debe ser intencional y mínima.
+- La arquitectura debe reducir la superficie de ataque por diseño.
+- Deben considerarse escenarios de uso indebido y abuso desde la etapa de definición arquitectónica.
 
 ## Compensaciones (Trade-offs)
-Requiere mayor análisis y discusión en etapas tempranas del diseño, a cambio de reducir significativamente el riesgo, la deuda técnica en seguridad y los costos de corrección posteriores.
+
+Requiere mayor análisis y alineación en etapas tempranas del diseño, a cambio de una reducción significativa del riesgo, menor deuda técnica en seguridad y menores costos de corrección en fases posteriores.
 
 ## Relación con Decisiones Arquitectónicas (ADRs)
-Este principio se materializa en ADRs relacionados con:
 
-- Límites entre sistemas y dominios
+Este principio suele reflejarse en ADRs relacionados con:
+
+- Definición de límites entre sistemas y dominios
 - Estrategias de integración y exposición
-- Modelos de acceso y confianza
+- Modelos de acceso, identidad y confianza
 - Manejo y circulación de datos sensibles

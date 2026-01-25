@@ -1,56 +1,49 @@
-<!-- # Zero Trust
-
-## Enunciado
-Ningún componente, usuario o sistema es confiable por defecto.
-
-## Intención
-Eliminar supuestos implícitos de confianza basados en red o ubicación.
-
-## Alcance conceptual
-Aplica especialmente en sistemas distribuidos y multi-entorno.
-
-## Implicaciones arquitectónicas
-- Toda interacción requiere verificación.
-- La confianza es contextual y temporal.
-- Los límites de confianza son explícitos.
-
-## Compensaciones (trade-offs)
-Incrementa validaciones y controles, a cambio de mayor seguridad y trazabilidad. -->
-
-
 # Zero Trust
 
 ## Declaración del Principio
-Ningún componente, usuario o sistema debe considerarse confiable por defecto, independientemente de su ubicación, red o entorno de ejecución.
+
+Ningún componente, usuario o sistema es confiable por defecto; toda interacción debe evaluarse explícitamente, independientemente de su origen o ubicación.
 
 ## Propósito
-Eliminar supuestos implícitos de confianza y reducir el riesgo de accesos indebidos o propagación de incidentes dentro del sistema.
+
+Eliminar supuestos implícitos de confianza y reducir el riesgo de accesos indebidos, movimientos laterales y propagación de incidentes dentro de la arquitectura.
 
 ## Justificación
-En arquitecturas modernas, los sistemas están compuestos por múltiples componentes, servicios e integraciones que interactúan entre sí de forma continua.
 
-Asumir confianza implícita —por estar “dentro” de la red o del sistema— aumenta el impacto de errores, configuraciones incorrectas o accesos no autorizados.
+Las arquitecturas modernas están compuestas por múltiples servicios, componentes, usuarios e integraciones que interactúan de forma continua y distribuida.
 
-Zero Trust establece que la confianza debe ser siempre explícita, validada y limitada al contexto de cada interacción.
+Asumir confianza implícita —por pertenecer a una red, entorno o sistema— amplifica el impacto de errores, configuraciones incorrectas o compromisos de seguridad.
+
+El enfoque Zero Trust establece que la confianza no se presume: se define, se valida y se limita según el contexto de cada interacción.
 
 ## Alcance Conceptual
+
 Este principio aplica a:
-- Comunicación entre componentes y servicios
-- Acceso a datos y recursos
+
+- Interacciones entre componentes y servicios
+- Acceso de usuarios y sistemas a recursos
 - Integraciones internas y externas
-- Sistemas distribuidos, multi-entorno y multi-tenant
+- Arquitecturas distribuidas, multi-entorno y multi-tenant
+
+Zero Trust no depende de un mecanismo específico, sino de un modelo coherente de control y verificación.
 
 ## Implicaciones Arquitectónicas
-- Toda interacción debe ser evaluada antes de otorgar acceso.
-- La confianza no es permanente ni global.
-- Los límites de confianza deben ser claros y explícitos.
-- La arquitectura no debe depender de redes o zonas “confiables”.
+
+- Toda interacción debe estar sujeta a verificación explícita.
+- La confianza es contextual, limitada y no permanente.
+- Los límites de confianza deben definirse de forma clara en la arquitectura.
+- La arquitectura no debe basarse en redes, zonas o entornos considerados implícitamente confiables.
+- El acceso debe evaluarse según identidad, contexto y propósito.
 
 ## Compensaciones (Trade-offs)
-Puede aumentar la cantidad de validaciones y controles necesarios, a cambio de una reducción significativa del impacto de fallos de seguridad y una mayor trazabilidad de accesos.
+
+Incrementa la necesidad de controles, validaciones y diseño explícito de accesos, a cambio de una reducción significativa del impacto de incidentes y una mayor trazabilidad y control.
 
 ## Relación con Decisiones Arquitectónicas (ADRs)
-Este principio suele reflejarse en ADRs relacionados con:
+
+Este principio se refleja comúnmente en ADRs relacionados con:
+
 - Definición de límites de confianza
-- Modelos de acceso entre componentes
-- Estrategias de autenticación y autorización
+- Modelos de autenticación y autorización
+- Estrategias de acceso entre servicios y dominios
+- Segmentación lógica y control de identidades

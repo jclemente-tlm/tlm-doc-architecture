@@ -1,20 +1,48 @@
-# Diseño Orientado al Dominio
+# Desacoplamiento y Autonomía
 
-## Enunciado
-La arquitectura debe reflejar explícitamente el dominio del negocio, utilizando su lenguaje, reglas y límites como base del diseño del sistema.
+## Declaración del Principio
 
-## Intención
-Reducir la brecha entre negocio y tecnología, asegurando que el software modele correctamente la realidad que busca resolver.
+Los componentes del sistema deben diseñarse para minimizar dependencias entre sí y maximizar su capacidad de evolucionar, desplegarse y operar de forma independiente.
 
-## Alcance conceptual
-Aplica a sistemas donde el dominio contiene reglas, procesos o decisiones relevantes.
-No es prioritario en sistemas puramente técnicos o utilitarios.
+## Propósito
 
-## Implicaciones arquitectónicas
-- El dominio guía la estructura del sistema.
-- El lenguaje del negocio se convierte en lenguaje del software.
-- Los límites del dominio influyen en la descomposición arquitectónica.
-- El diseño se centra en comportamientos, no solo en datos.
+Reducir el impacto de cambios, fallos y decisiones locales, permitiendo que el sistema y los equipos evolucionen de forma sostenible.
 
-## Compensaciones (trade-offs)
-Requiere mayor involucramiento del negocio y esfuerzo de modelado inicial, a cambio de sistemas más comprensibles, alineados y sostenibles.
+## Justificación
+
+El acoplamiento excesivo entre componentes provoca efectos en cascada: un cambio pequeño genera impactos amplios, aumenta el riesgo operativo y ralentiza la entrega.
+
+La autonomía permite que cada componente asuma responsabilidad sobre su comportamiento, sus datos y su evolución, reduciendo dependencias implícitas y coordinaciones innecesarias.
+
+Este principio no busca eliminar toda dependencia, sino hacerlas explícitas, conscientes y gestionables.
+
+## Alcance Conceptual
+
+Aplica a:
+
+- Componentes y servicios
+- Dominios y contextos
+- Equipos y responsabilidades técnicas
+- Sistemas distribuidos o modulares
+
+No implica aislamiento absoluto ni duplicación descontrolada, sino independencia razonable alineada al dominio.
+
+## Implicaciones Arquitectónicas
+
+- Las dependencias entre componentes deben ser explícitas y estables.
+- Los componentes deben poder evolucionar sin requerir cambios sincronizados.
+- Cada componente asume ownership sobre sus decisiones internas.
+- La comunicación entre componentes se gestiona mediante contratos claros.
+
+## Compensaciones (Trade-offs)
+
+Puede incrementar el esfuerzo de diseño inicial y la coordinación contractual, a cambio de mayor resiliencia, escalabilidad organizacional y velocidad de cambio.
+
+## Relación con Decisiones Arquitectónicas (ADRs)
+
+Este principio se refleja en ADRs relacionados con:
+
+- Definición de límites de componentes o servicios
+- Estrategias de integración y comunicación
+- Gestión de dependencias entre dominios
+- Ownership técnico y organizacional

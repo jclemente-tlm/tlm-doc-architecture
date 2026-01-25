@@ -1,48 +1,60 @@
 ---
-id: 04-nube
+id: 04-arquitectura-cloud-native
 sidebar_position: 4
-title: Nube
+# title: Arquitectura Cloud-Native
 ---
-
-<!-- ## Principios
-
-- Usa servicios administrados siempre que sea posible.
-- Automatiza la infraestructura (IaC: Terraform, CloudFormation, Bicep).
-- Aplica el principio de menor privilegio en IAM/roles.
-- Diseña para alta disponibilidad y tolerancia a fallos.
-- Implementa monitoreo y alertas desde el inicio.
-
-## Buenas prácticas
-
-- Versiona la infraestructura como código.
-- Usa múltiples zonas/regiones para resiliencia.
-- Protege datos en tránsito y en reposo (cifrado).
-- Realiza pruebas de recuperación ante desastres.
-- Documenta la arquitectura y dependencias clave. -->
 
 # Arquitectura Cloud-Native
 
-## Enunciado
+## Declaración del Principio
 
-Los sistemas deben diseñarse asumiendo infraestructuras dinámicas, distribuidas y automatizadas como condición normal de operación.
+Un sistema puede diseñarse siguiendo principios cloud-native cuando se espera que opere en entornos dinámicos, escalables y automatizados, aprovechando las capacidades propias de plataformas cloud.
 
-## Intención
+## Propósito
 
-Aprovechar elasticidad, resiliencia y automatización para soportar cargas variables y fallos parciales.
+Permitir que los sistemas se adapten al cambio, escalen bajo demanda y se operen de forma confiable en entornos distribuidos y automatizados.
 
-## Alcance conceptual
+## Justificación
 
-Aplica a sistemas desplegados sobre plataformas cloud o infraestructuras virtualizadas modernas.
+Diseñar sistemas únicamente para entornos estáticos o infraestructuras predecibles limita su capacidad de escalar, recuperarse ante fallos y evolucionar de forma eficiente.
 
-No implica dependencia directa a un proveedor específico.
+La arquitectura cloud-native asume que:
 
-## Implicaciones arquitectónicas
+- la infraestructura es dinámica,
+- los recursos no son permanentes,
+- los fallos son esperables,
+- y la automatización es una condición básica de operación.
 
-- Los fallos se consideran inevitables.
-- El escalado y la recuperación son responsabilidades del diseño.
-- La infraestructura es efímera y reemplazable.
-- La automatización es un supuesto arquitectónico.
+No todo sistema requiere un enfoque cloud-native, pero cuando se adopta la nube como plataforma principal, el diseño debe alinearse a estas realidades.
 
-## Compensaciones (trade-offs)
+## Alcance Conceptual
 
-Reduce control directo sobre la infraestructura a cambio de mayor agilidad, escalabilidad y resiliencia.
+Aplica principalmente a:
+
+- Sistemas desplegados en plataformas cloud
+- Arquitecturas distribuidas
+- Servicios que requieren escalabilidad y elasticidad
+- Entornos con despliegues frecuentes y automatizados
+
+No implica migrar sistemas existentes sin evaluación ni utilizar servicios cloud por defecto.
+
+## Implicaciones Arquitectónicas
+
+- Los sistemas deben tolerar fallos y reemplazo de componentes.
+- El estado debe gestionarse de forma explícita y preferentemente externa.
+- La configuración debe separarse del código.
+- El escalado y la recuperación no dependen de intervención manual.
+- La observabilidad y automatización son requisitos arquitectónicos, no operativos.
+
+## Compensaciones (Trade-offs)
+
+Introduce mayor complejidad inicial en diseño y operación, a cambio de mayor elasticidad, resiliencia y capacidad de adaptación al cambio.
+
+## Relación con Decisiones Arquitectónicas (ADRs)
+
+Este principio se refleja en ADRs relacionados con:
+
+- Estrategias de despliegue
+- Manejo de estado y configuración
+- Automatización y operación del sistema
+- Uso de capacidades gestionadas de la plataforma
