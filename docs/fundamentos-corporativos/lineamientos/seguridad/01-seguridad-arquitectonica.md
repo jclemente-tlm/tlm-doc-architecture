@@ -1,80 +1,72 @@
 ---
-id: 01-seguridad-arquitectonica
+id: seguridad-arquitectonica
 sidebar_position: 1
 title: Seguridad Arquitectónica
+description: Seguridad como propiedad inherente del sistema desde el diseño
 ---
-
-<!-- ## Principios
-
-- Valida y sanitiza todas las entradas del usuario.
-- Usa autenticación y autorización robustas.
-- No expongas información sensible en logs o mensajes de error.
-- Mantén las dependencias actualizadas.
-
-## Buenas prácticas
-
-- Usa herramientas de análisis estático.
-- Aplica el principio de menor privilegio.
-- Revisa el código para detectar vulnerabilidades. -->
-
 
 # Seguridad Arquitectónica
 
-## Propósito
-Establecer lineamientos arquitectónicos para incorporar la seguridad como una propiedad inherente del sistema, asegurando que sea considerada desde las primeras decisiones de diseño y no como un agregado posterior.
+## 1. Propósito
 
-## Alcance
-Aplica a todos los sistemas, servicios y componentes diseñados, modificados o integrados bajo la arquitectura corporativa.
+Establecer que la seguridad debe ser una propiedad inherente del sistema, considerada desde las primeras decisiones de diseño y no como un agregado posterior.
 
-## Criterios Arquitectónicos
+---
 
-### Seguridad desde el Diseño (Security by Design)
-La arquitectura debe considerar la seguridad desde las decisiones iniciales de diseño.
+## 2. Alcance
 
-Los sistemas deben:
-- Diseñar componentes considerando escenarios de abuso y uso indebido
+Aplica a:
+
+- Todos los sistemas, servicios y componentes diseñados o modificados
+- Arquitecturas nuevas y evolución de sistemas existentes
+- Integraciones internas y externas
+- Infraestructura y plataforma
+
+---
+
+## 3. Lineamientos Obligatorios
+
+- Aplicar Security by Design en todas las decisiones arquitectónicas
+- Realizar modelado de amenazas para nuevos sistemas o cambios significativos
+- Definir explícitamente los límites de confianza (trust boundaries)
 - Reducir la superficie de ataque mediante exposición controlada
-- Evitar dependencias innecesarias o implícitas
-- Preferir configuraciones seguras por defecto
-
-La ausencia de controles de seguridad explícitos se considera un defecto de diseño arquitectónico.
+- Aplicar defensa en profundidad (múltiples capas de seguridad)
 
 ---
 
-### Modelado de Amenazas (Threat Modeling)
-La arquitectura debe incorporar análisis sistemático de amenazas como parte del diseño.
+## 4. Decisiones de Diseño Esperadas
 
-El análisis debe incluir:
-- Identificación de activos críticos
-- Identificación de actores y fuentes de amenaza
-- Evaluación de vectores de ataque
-- Análisis de impacto y probabilidad
-
-El modelado de amenazas es obligatorio en los siguientes casos:
-- Diseño de nuevos sistemas
-- Cambios arquitectónicos relevantes
-- Exposición de nuevas interfaces, integraciones o canales de acceso
+- Identificación de activos críticos y amenazas
+- Definición de trust boundaries y controles en cada límite
+- Estrategia de autenticación y autorización
+- Mecanismos de protección de datos sensibles
+- Controles de seguridad por capa arquitectónica
 
 ---
 
-### Definición de Límites de Confianza (Trust Boundaries)
-La arquitectura debe definir explícitamente los límites de confianza del sistema.
+## 5. Antipatrones y Prácticas Prohibidas
 
-Estos límites deben identificarse:
-- Entre sistemas internos y externos
-- Entre capas de la solución
-- Entre servicios o componentes
-- Entre tenants, dominios o contextos organizacionales
-
-Todo cruce de un límite de confianza debe implicar controles explícitos de validación, autenticación y autorización.
-
----
-
-## Antipatrones
 - Asumir que entornos internos o redes privadas son confiables por defecto
-- Delegar completamente la seguridad a la infraestructura o al entorno de despliegue
-- Incorporar controles de seguridad únicamente en etapas finales del ciclo de vida
-- Reutilizar credenciales, secretos o identidades entre componentes
+- Delegar completamente la seguridad a la infraestructura
+- Incorporar controles de seguridad solo en etapas finales
+- Reutilizar credenciales o identidades entre componentes
+- Configuraciones inseguras por defecto
 
-## Resultado Esperado
-Arquitecturas con seguridad integrada, coherente y auditable, alineadas con los objetivos de protección y gobierno del sistema.
+---
+
+## 6. Principios Relacionados
+
+- Seguridad desde el Diseño
+- Zero Trust
+- Defensa en Profundidad
+- Mínimo Privilegio
+
+---
+
+## 7. Validación y Cumplimiento
+
+- Modelado de amenazas documentado en ADRs
+- Revisiones de seguridad en architecture reviews
+- Pruebas de penetración en sistemas críticos
+- Auditoría de controles de seguridad implementados
+- Escaneo de vulnerabilidades automatizado en CI/CD

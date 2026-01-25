@@ -1,52 +1,72 @@
-# Integración y Comunicación
+---
+id: resiliencia-y-disponibilidad
+sidebar_position: 4
+title: Resiliencia y Disponibilidad
+description: Lineamientos para diseñar sistemas tolerantes a fallos y altamente disponibles
+---
+
+# Resiliencia y Disponibilidad
 
 ## 1. Propósito
-Definir cómo los componentes, servicios y sistemas intercambian información de manera coherente, segura y mantenible.
+
+Definir cómo diseñar sistemas que mantengan su funcionamiento ante fallos, degradaciones o picos de carga, garantizando disponibilidad y recuperación oportuna.
 
 ---
 
 ## 2. Alcance
+
 Aplica a:
 
-- APIs internas y externas
-- Eventos y flujos asíncronos
-- Integraciones batch y en tiempo real
+- Servicios críticos de negocio
+- APIs públicas y privadas
+- Sistemas distribuidos y cloud native
+- Integraciones con terceros
 
 ---
 
 ## 3. Lineamientos Obligatorios
-- Utilizar contratos explícitos para intercambio de datos.
-- Separar comunicación síncrona de asíncrona según necesidad.
-- Evitar acoplamiento directo entre productores y consumidores.
-- Documentar protocolos, formatos y restricciones de comunicación.
+
+- Implementar circuit breakers y timeouts en llamadas externas
+- Diseñar para degradación graceful ante fallos de dependencias
+- Aplicar retry con backoff exponencial cuando corresponda
+- Documentar estrategias de failover y recuperación
+- Definir SLOs (Service Level Objectives) claros
 
 ---
 
 ## 4. Decisiones de Diseño Esperadas
-- Definición de contratos y versiones de APIs o eventos.
-- Estrategia de comunicación (síncrona/asíncrona).
-- Mecanismos de manejo de errores y resiliencia.
-- Documentación de dependencias entre sistemas y servicios.
+
+- Estrategia de manejo de fallos de dependencias
+- Definición de SLOs y SLAs del servicio
+- Mecanismos de retry, timeout y circuit breaking
+- Plan de contingencia y recuperación ante desastres
+- Estrategia de health checks y readiness probes
 
 ---
 
 ## 5. Antipatrones y Prácticas Prohibidas
-- Comunicación implícita entre sistemas.
-- Dependencias ocultas de datos.
-- Eventos o APIs sin contratos ni versionado.
-- Acoplamiento fuerte sin separación de responsabilidades.
+
+- Llamadas sin timeout a servicios externos
+- Dependencias críticas sin circuit breaker
+- Retry infinito sin backoff
+- Fallos silenciosos sin alertas
+- Ausencia de degradación graceful
 
 ---
 
 ## 6. Principios Relacionados
-- Contratos de Integración
-- Contratos de Datos
-- Microservicios
+
 - Resiliencia y Tolerancia a Fallos
+- Arquitectura Cloud Native
+- Observabilidad desde el Diseño
+- Desacoplamiento y Autonomía
 
 ---
 
 ## 7. Validación y Cumplimiento
-- Revisión de contratos y dependencias antes de producción.
-- Documentación en ADRs de integraciones.
-- Auditoría de comunicación y versionado.
+
+- Pruebas de caos (chaos engineering) en entornos no productivos
+- Simulación de fallos de dependencias
+- Monitoreo de SLOs y alertas configuradas
+- Documentación de estrategias en ADRs
+- Revisión de resiliencia en architecture reviews

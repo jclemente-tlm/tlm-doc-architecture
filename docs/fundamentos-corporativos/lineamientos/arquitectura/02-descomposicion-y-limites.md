@@ -1,60 +1,80 @@
+---
+id: descomposicion-y-limites
+sidebar_position: 2
+title: Descomposición y Límites
+description: Cómo dividir sistemas en componentes con límites claros de responsabilidad
+---
+
 # Descomposición y Límites
 
 ## 1. Propósito
 
-Definir cómo dividir sistemas en componentes, módulos o servicios, estableciendo límites claros de responsabilidad y propiedad para facilitar mantenimiento, evolución y gobernanza.
+Establecer cómo dividir sistemas en componentes con límites claros de responsabilidad, facilitando mantenimiento, evolución independiente y gobernanza efectiva.
 
 ---
 
 ## 2. Alcance
 
-Aplica a todas las soluciones desarrolladas por la organización, incluyendo:
+Aplica a:
 
 - Monolitos modulares
-- Microservicios
+- Arquitecturas de microservicios
 - Arquitecturas orientadas a eventos
-- Integraciones internas y externas
+- Sistemas legacy en evolución
 
 ---
 
 ## 3. Lineamientos Obligatorios
 
-- Identificar límites de responsabilidad por componente o servicio.
-- Evitar acoplamiento innecesario entre módulos.
-- Documentar la propiedad de cada módulo o servicio.
-- Garantizar coherencia en la comunicación y flujo de datos entre límites.
+- Identificar límites por capacidad de negocio, no por tecnología
+- Cada componente debe tener responsabilidad única y bien definida
+- Evitar dependencias cíclicas entre componentes
+- Documentar propiedad clara de cada componente (equipo responsable)
+- Definir contratos explícitos en los límites
+
+**Criterios de descomposición:**
+
+- **Por dominio:** Agrupar por capacidad de negocio cohesiva
+- **Por volatilidad:** Separar lo que cambia frecuentemente
+- **Por escalabilidad:** Independizar lo que requiere escalar diferente
+- **Por equipo:** Alinear a estructuras de equipos autónomos
 
 ---
 
 ## 4. Decisiones de Diseño Esperadas
 
-- Definición de límites claros por componente o servicio.
-- Documentación de dependencias entre componentes.
-- Mapas de responsabilidad y propiedad técnica y funcional.
-- Estrategias de integración y comunicación entre componentes.
+- Mapa de componentes/servicios con límites claros
+- Matriz de responsabilidades (RACI) por componente
+- Diagrama de dependencias entre componentes
+- Estrategia de comunicación entre límites (API, eventos, etc.)
+- Plan de gestión de transacciones entre límites
 
 ---
 
 ## 5. Antipatrones y Prácticas Prohibidas
 
-- Componentes sin límites claros.
-- Mezcla de responsabilidades en un mismo módulo o servicio.
-- Acoplamiento oculto entre componentes.
-- Comunicación ad-hoc sin contratos explícitos.
+- Componentes sin propósito claro ("God service")
+- Límites basados solo en capas técnicas
+- Dependencias ocultas entre componentes
+- Acceso directo a datos de otros componentes
+- Componentes sin dueño claro
 
 ---
 
 ## 6. Principios Relacionados
 
+- Diseño Orientado al Dominio
 - Arquitectura de Microservicios
 - Desacoplamiento y Autonomía
-- Contratos de Integración
 - Simplicidad Intencional
+- Contratos de Integración
 
 ---
 
 ## 7. Validación y Cumplimiento
 
-- Revisiones de diseño para verificar límites y responsabilidades.
-- Documentación de decisiones en ADRs.
-- Auditorías internas sobre dependencias y propiedad de componentes.
+- Architecture review validando límites propuestos
+- Verificación de matriz de dependencias
+- Auditoría de propiedad documentada
+- Análisis de acoplamiento entre componentes
+- Documentación en ADR de decisiones de descomposición

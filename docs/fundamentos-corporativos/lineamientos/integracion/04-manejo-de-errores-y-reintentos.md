@@ -1,33 +1,72 @@
-# Performance y Escalabilidad
+---
+id: manejo-de-errores-y-reintentos
+sidebar_position: 4
+title: Manejo de Errores y Reintentos
+description: Estrategias para gestión de errores, reintentos y recuperación en integraciones
+---
 
-## Propósito
-Definir criterios arquitectónicos para asegurar que las integraciones soporten crecimiento, carga variable y uso controlado de recursos.
+# Manejo de Errores y Reintentos
 
-## Alcance
-Aplica a todas las APIs y mecanismos de integración que formen parte de la arquitectura corporativa.
+## 1. Propósito
 
-## Criterios Arquitectónicos
+Definir cómo manejar errores, implementar estrategias de reintento y garantizar recuperación en integraciones entre sistemas.
 
-### Límites
-- Toda integración debe definir límites explícitos de uso.
-- Los límites protegen al productor y garantizan estabilidad del sistema.
-- El diseño debe asumir que los límites pueden ser alcanzados.
+---
 
-### Throttling
-- La arquitectura debe permitir control de consumo por cliente o consumidor.
-- El throttling es un mecanismo de protección, no una falla.
-- Los consumidores deben recibir señales claras cuando se alcanza un límite.
+## 2. Alcance
 
-### Caching (conceptual)
-- El caching debe considerarse cuando exista repetición de lecturas.
-- No todo dato es cacheable; la decisión depende del dominio.
-- El caching no debe comprometer la consistencia requerida por el negocio.
+Aplica a:
 
-## Antipatrones
-- APIs sin límites de consumo.
-- Dependencia de escalabilidad infinita sin control.
-- Uso de caching sin considerar consistencia o expiración.
-- Suposiciones de bajo tráfico sin validación arquitectónica.
+- Llamadas a APIs externas
+- Consumo de mensajes/eventos
+- Procesos batch y ETL
+- Integraciones síncronas y asíncronas
+- Webhooks y callbacks
 
-## Resultado Esperado
-Integraciones preparadas para escalar de forma controlada, manteniendo rendimiento predecible y estabilidad del ecosistema.
+---
+
+## 3. Lineamientos Obligatorios
+
+- Implementar retry con backoff exponencial
+- Usar circuit breakers para dependencias externas
+- Definir timeouts apropiados para cada integración
+- Registrar errores con contexto suficiente para diagnóstico
+- Implementar DLQ (Dead Letter Queue) para errores no recuperables
+
+---
+
+## 4. Decisiones de Diseño Esperadas
+
+- Estrategia de retry (intentos, backoff, jitter)
+- Configuración de circuit breaker (thresholds, timeout)
+- Timeouts por tipo de operación
+- Estrategia de compensación para errores
+- Alertas y monitoreo de errores
+
+---
+
+## 5. Antipatrones y Prácticas Prohibidas
+
+- Retry infinito sin backoff
+- Llamadas sin timeout
+- Errores silenciosos sin logging
+- Circuit breaker sin estrategia de recuperación
+- Ausencia de DLQ para mensajes fallidos
+
+---
+
+## 6. Principios Relacionados
+
+- Resiliencia y Tolerancia a Fallos
+- Observabilidad desde el Diseño
+- Arquitectura Cloud Native
+
+---
+
+## 7. Validación y Cumplimiento
+
+- Pruebas de manejo de errores y timeouts
+- Simulación de fallos de dependencias
+- Verificación de configuración de circuit breakers
+- Monitoreo de reintentos y DLQ
+- Validación de logs de errores con contexto
