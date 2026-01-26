@@ -1,11 +1,11 @@
 ---
-id: seguridad-arquitectonica
+id: seguridad-desde-el-diseno
 sidebar_position: 1
-title: Seguridad Arquitectónica
+title: Seguridad desde el Diseño
 description: Seguridad como propiedad inherente del sistema desde el diseño
 ---
 
-# Seguridad Arquitectónica
+# Seguridad desde el Diseño
 
 ## 1. Propósito
 

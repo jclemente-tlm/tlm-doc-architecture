@@ -1,11 +1,11 @@
 ---
-id: esquemas-de-datos
+id: esquemas-de-dominio
 sidebar_position: 2
-title: Esquemas de Datos
-description: Definición explícita de esquemas de datos de dominio versionados y documentados
+title: Esquemas de Dominio
+description: Definición explícita de esquemas de dominio versionados y documentados
 ---
 
-# Esquemas de Datos
+# Esquemas de Dominio
 
 ## 1. Propósito
 

@@ -31,6 +31,8 @@ Aplica a:
 - Aplicar retry con backoff exponencial cuando corresponda
 - Documentar estrategias de failover y recuperación
 - Definir SLOs (Service Level Objectives) claros
+- Implementar Dead Letter Queue (DLQ) para mensajes no procesables
+- Definir estrategias de compensación para transacciones distribuidas
 
 ---
 

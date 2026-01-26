@@ -1,6 +1,6 @@
 ---
 id: observabilidad
-sidebar_position: 6
+sidebar_position: 5
 title: Observabilidad
 description: Observabilidad como requisito arquitectónico desde el diseño
 ---

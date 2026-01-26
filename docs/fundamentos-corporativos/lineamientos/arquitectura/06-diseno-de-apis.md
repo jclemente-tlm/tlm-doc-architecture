@@ -1,6 +1,6 @@
 ---
 id: diseno-de-apis
-sidebar_position: 1
+sidebar_position: 6
 title: Diseño de APIs
 description: Principios y lineamientos para diseñar APIs REST coherentes y mantenibles
 ---

@@ -1,6 +1,6 @@
 ---
 id: contratos-de-integracion
-sidebar_position: 2
+sidebar_position: 7
 title: Contratos de Integración
 description: Definición y gestión de contratos de comunicación entre sistemas y servicios
 ---
