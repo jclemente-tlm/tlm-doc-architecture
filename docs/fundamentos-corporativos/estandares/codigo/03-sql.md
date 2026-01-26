@@ -183,6 +183,14 @@ var orders = await dbContext.Orders
 
 ## Referencias
 
+### Lineamientos relacionados
+
+- [Calidad de Código](/docs/fundamentos-corporativos/lineamientos/desarrollo/calidad-de-codigo)
+- [Gestión de Datos Maestros](/docs/fundamentos-corporativos/lineamientos/datos/gestion-de-datos-maestros)
+- [Seguridad desde el Diseño](/docs/fundamentos-corporativos/lineamientos/seguridad/seguridad-desde-el-diseno)
+
+### Recursos externos
+
 - [Guía de estilo SQL](https://www.sqlstyle.guide/es/)
 - [Documentación oficial de PostgreSQL](https://www.postgresql.org/docs/)
 - [Documentación oficial de Oracle](https://docs.oracle.com/en/database/)

@@ -230,6 +230,11 @@ app.UseIpRateLimiting();
 
 ## 📖 Referencias
 
+### Lineamientos relacionados
+
+- [Performance y Eficiencia](/docs/fundamentos-corporativos/lineamientos/arquitectura/performance-y-eficiencia)
+- [Desarrollo de APIs](/docs/fundamentos-corporativos/lineamientos/desarrollo/desarrollo-de-apis)
+
 ### ADRs relacionados
 
 - [ADR-011: Cache distribuido](/docs/decisiones-de-arquitectura/adr-011-cache-distribuido)

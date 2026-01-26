@@ -459,6 +459,11 @@ public async Task GetUsers_V1_MaintainsCompatibility()
 
 ## 📖 Referencias
 
+### Lineamientos relacionados
+
+- [Desarrollo de APIs](/docs/fundamentos-corporativos/lineamientos/desarrollo/desarrollo-de-apis)
+- [Evolución y Cambios Controlados](/docs/fundamentos-corporativos/lineamientos/arquitectura/evolucion-y-cambios-controlados)
+
 ### ADRs relacionados
 
 - [ADR-002: Estándar para APIs REST](/docs/adrs/adr-002-estandard-apis-rest)

@@ -270,6 +270,12 @@ AZURE_CLIENT_SECRET=your-azure-app-secret
 
 ## 📖 Referencias
 
+### Lineamientos relacionados
+
+- [Seguridad desde el Diseño](/docs/fundamentos-corporativos/lineamientos/seguridad/seguridad-desde-el-diseno)
+- [Protección de Datos](/docs/fundamentos-corporativos/lineamientos/seguridad/proteccion-de-datos)
+- [Desarrollo de APIs](/docs/fundamentos-corporativos/lineamientos/desarrollo/desarrollo-de-apis)
+
 ### ADRs relacionados
 
 - [ADR-004: Autenticación SSO](/docs/adrs/adr-004-autenticacion-sso)

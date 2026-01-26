@@ -679,6 +679,11 @@ app.Run();
 
 ## 📖 Referencias
 
+### Lineamientos relacionados
+
+- [Desarrollo de APIs](/docs/fundamentos-corporativos/lineamientos/desarrollo/desarrollo-de-apis)
+- [Observabilidad](/docs/fundamentos-corporativos/lineamientos/arquitectura/observabilidad)
+
 ### ADRs relacionados
 
 - [ADR-002: Estándar para APIs REST](/docs/adrs/adr-002-estandard-apis-rest)

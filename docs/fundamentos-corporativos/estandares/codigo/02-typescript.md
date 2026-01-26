@@ -267,6 +267,13 @@ test("calculateTotal retorna el valor correcto", () => {
 
 ## Referencias
 
+### Lineamientos relacionados
+
+- [Calidad de Código](/docs/fundamentos-corporativos/lineamientos/desarrollo/calidad-de-codigo)
+- [Seguridad desde el Diseño](/docs/fundamentos-corporativos/lineamientos/seguridad/seguridad-desde-el-diseno)
+
+### Recursos externos
+
 - [clean-code-typescript](https://github.com/labs42io/clean-code-typescript)
 - [Guía oficial de TypeScript](https://www.typescriptlang.org/docs/)
 - [ESLint](https://eslint.org/docs/latest/)

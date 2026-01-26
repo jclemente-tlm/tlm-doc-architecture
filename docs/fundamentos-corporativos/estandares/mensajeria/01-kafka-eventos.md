@@ -8,6 +8,7 @@ description: Estándares para mensajería basada en eventos con Apache Kafka
 ## 1. Principios de Event-Driven Architecture
 
 - **Event-first thinking**: Modelar el dominio como una serie de eventos
+- **Desacoplamiento**: Productores y consumidores no se conocen entre sí, solo comparten el contrato del evento
 - **Inmutabilidad**: Los eventos son hechos inmutables del pasado
 - **At-least-once delivery**: Diseñar consumidores idempotentes
 - **Schema evolution**: Mantener compatibilidad en evolución de eventos
@@ -413,6 +414,10 @@ public class DeadLetterQueueHandler
 - [ ] **Partitioning**: Estrategia de particionamiento definida
 
 ## 📖 Referencias
+
+### Principios relacionados
+
+- [Desacoplamiento](/docs/fundamentos-corporativos/principios/arquitectura/desacoplamiento)
 
 ### Lineamientos relacionados
 

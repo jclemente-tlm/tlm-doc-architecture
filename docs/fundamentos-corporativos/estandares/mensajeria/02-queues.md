@@ -439,6 +439,10 @@ public class RabbitMqPublisher : IDisposable
 
 ## 📖 Referencias
 
+### Principios relacionados
+
+- [Desacoplamiento](/docs/fundamentos-corporativos/principios/arquitectura/desacoplamiento)
+
 ### Lineamientos relacionados
 
 - [Comunicación Asíncrona y Eventos](/docs/fundamentos-corporativos/lineamientos/arquitectura/comunicacion-asincrona-y-eventos)

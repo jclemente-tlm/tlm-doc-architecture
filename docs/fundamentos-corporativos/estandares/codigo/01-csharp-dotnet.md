@@ -243,6 +243,13 @@ public void CalculateTotal_ReturnsCorrectValue() {
 
 ## Referencias
 
+### Lineamientos relacionados
+
+- [Calidad de Código](/docs/fundamentos-corporativos/lineamientos/desarrollo/calidad-de-codigo)
+- [Seguridad desde el Diseño](/docs/fundamentos-corporativos/lineamientos/seguridad/seguridad-desde-el-diseno)
+
+### Recursos externos
+
 - [clean-code-dotnet](https://github.com/thangchung/clean-code-dotnet)
 - [Guía de estilo de C#](https://learn.microsoft.com/es-es/dotnet/csharp/fundamentals/coding-style/coding-conventions)
 - [Principios SOLID](https://es.wikipedia.org/wiki/SOLID)

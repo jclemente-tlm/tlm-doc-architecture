@@ -11,6 +11,10 @@ description: Estándar para crear diagramas arquitectónicos consistentes usando
 
 Establecer el **Modelo C4** como estándar para crear diagramas arquitectónicos en Talma, asegurando visualizaciones consistentes y comprensibles en 4 niveles de abstracción.
 
+:::tip
+Usa C4 Model para los **diagramas arquitectónicos** y [arc42](./01-arc42.md) para la **estructura de documentación**. Los diagramas C4 se integran en las secciones 3, 5, 6 y 7 de arc42.
+:::
+
 ## 2. Alcance
 
 - Diagramas de arquitectura para documentación técnica

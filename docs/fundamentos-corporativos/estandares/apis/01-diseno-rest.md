@@ -419,6 +419,11 @@ public class CreateUserRequest
 
 ## 📖 Referencias
 
+### Lineamientos relacionados
+
+- [Desarrollo de APIs](/docs/fundamentos-corporativos/lineamientos/desarrollo/desarrollo-de-apis)
+- [Desacoplamiento](/docs/fundamentos-corporativos/lineamientos/arquitectura/desacoplamiento)
+
 ### ADRs relacionados
 
 - [ADR-002: Estándar para APIs REST](/docs/adrs/adr-002-estandard-apis-rest)
