@@ -29,12 +29,15 @@ Estándares para contenedores e infraestructura cloud:
 1. **Docker**: Dockerfile, imágenes, seguridad, multi-stage builds
 2. **Infraestructura como Código**: Terraform, AWS CDK, state management, módulos
 3. **Gestión de Secretos**: AWS Secrets Manager, Azure Key Vault, rotación
+4. **Docker Compose**: Orquestación multi-contenedor para desarrollo local
 
 ### [Testing](./testing/)
 
 Estándares para pruebas y cobertura de código:
 
-1. **Testing Unitario e Integración**: xUnit, Jest, mocking, coverage mínimo 80%
+1. **Testing Unitario**: xUnit, Jest, mocking, AAA pattern, coverage 80%
+2. **Testing de Integración**: WebApplicationFactory, TestContainers, bases de datos reales
+3. **Testing End-to-End (E2E)**: Playwright, Cypress, flujos completos de usuario
 
 ### [Observabilidad](./observabilidad/)
 
@@ -54,8 +57,9 @@ Estándares para mensajería asíncrona y colas:
 
 Estándares para documentación técnica y diagramas:
 
-1. **Diagramas Arquitectónicos**: C4 model, arc42, Structurizr, PlantUML, Mermaid
-2. **Documentación de APIs**: OpenAPI/Swagger, especificaciones REST
+1. **arc42**: Plantilla de documentación arquitectónica con 12 secciones
+2. **C4 Model**: Diagramas arquitectónicos en 4 niveles (Context, Container, Component, Code)
+3. **OpenAPI/Swagger**: Documentación de APIs REST
 
 ## 🔗 Relación con otros niveles
 

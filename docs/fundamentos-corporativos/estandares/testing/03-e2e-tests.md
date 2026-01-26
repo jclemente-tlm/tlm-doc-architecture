@@ -1,6 +1,6 @@
 ---
 id: e2e-tests
-sidebar_position: 2
+sidebar_position: 3
 title: Testing End-to-End (E2E)
 description: Estándar para implementar pruebas E2E automatizadas con Playwright y Cypress, validando flujos completos de usuario.
 ---

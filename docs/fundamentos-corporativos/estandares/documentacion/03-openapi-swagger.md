@@ -1,6 +1,6 @@
 ---
 id: openapi-swagger
-sidebar_position: 2
+sidebar_position: 3
 title: Documentación de APIs con OpenAPI
 description: Estándares para documentar APIs usando OpenAPI/Swagger y especificaciones REST
 ---
