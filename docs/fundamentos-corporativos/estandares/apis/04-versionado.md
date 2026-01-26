@@ -1,13 +1,13 @@
 ---
-id: versionado-y-documentacion
+id: versionado
 sidebar_position: 4
-title: Versionado y documentación
-description: Estrategias de versionado y documentación de APIs para evolución compatible y mantenible
+title: Versionado de APIs
+description: Estrategias de versionado para evolución compatible y mantenible de APIs REST
 ---
 
-# Versionado y documentación
+# Versionado de APIs
 
-Esta guía define las estrategias de versionado y documentación de APIs para garantizar evolución compatible y mantenibilidad.
+Esta guía define las estrategias de versionado de APIs para garantizar evolución compatible y mantenibilidad.
 
 ## 📊 Estrategias de versionado
 

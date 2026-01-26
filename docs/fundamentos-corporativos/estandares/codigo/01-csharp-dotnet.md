@@ -1,8 +1,8 @@
 ---
-id: csharp
+id: csharp-dotnet
 sidebar_position: 1
 title: C# y .NET
-description: Lineamientos de Clean Code, estilo, buenas prácticas y seguridad para C# y .NET
+description: Estándares de Clean Code, estilo, buenas prácticas y seguridad para C# y .NET
 ---
 
 ## Introducción

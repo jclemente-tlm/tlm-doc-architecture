@@ -2,7 +2,7 @@
 id: typescript
 sidebar_position: 2
 title: TypeScript
-description: Lineamientos de Clean Code, estilo, buenas prácticas y seguridad para TypeScript
+description: Estándares de Clean Code, estilo, buenas prácticas y seguridad para TypeScript
 ---
 
 ## Introducción

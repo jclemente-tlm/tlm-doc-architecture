@@ -1,8 +1,8 @@
 ---
 id: sql
-sidebar_position: 4
+sidebar_position: 3
 title: SQL
-description: Lineamientos de estilo, buenas prácticas y seguridad para SQL, PostgreSQL y Oracle
+description: Estándares de estilo, buenas prácticas y seguridad para SQL, PostgreSQL y Oracle
 ---
 
 ## Introducción

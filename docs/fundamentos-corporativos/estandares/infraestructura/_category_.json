@@ -1,0 +1,8 @@
+{
+    "label": "Infraestructura",
+    "position": 3,
+    "link": {
+        "type": "generated-index",
+        "description": "Estándares para contenedores, IaC y gestión de infraestructura cloud."
+    }
+}

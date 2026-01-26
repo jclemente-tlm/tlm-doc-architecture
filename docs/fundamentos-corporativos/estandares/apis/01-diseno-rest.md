@@ -1,11 +1,11 @@
 ---
-id: diseno-y-arquitectura
+id: diseno-rest
 sidebar_position: 1
-title: Diseño y arquitectura de APIs
+title: Diseño REST
 description: Principios fundamentales para diseño de APIs REST estructuradas, escalables y mantenibles
 ---
 
-# Diseño y arquitectura de APIs
+# Diseño REST
 
 Esta guía establece los principios fundamentales para el diseño de APIs REST bien estructuradas, escalables y mantenibles en Talma.
 

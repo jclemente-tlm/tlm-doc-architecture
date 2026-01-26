@@ -1,0 +1,8 @@
+{
+    "label": "Mensajería",
+    "position": 7,
+    "link": {
+        "type": "generated-index",
+        "description": "Estándares para mensajería asíncrona, eventos y colas de mensajes."
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "label": "Observabilidad",
+    "position": 5,
+    "link": {
+        "type": "generated-index",
+        "description": "Estándares para logging, monitoreo, métricas y trazabilidad distribuida."
+    }
+}

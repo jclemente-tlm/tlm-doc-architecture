@@ -1,5 +1,5 @@
 ---
-id: seguridad
+id: seguridad-apis
 sidebar_position: 2
 title: Seguridad de APIs
 description: Estándares de seguridad para APIs REST: autenticación, autorización y protección de datos
