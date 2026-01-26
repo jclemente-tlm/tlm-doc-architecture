@@ -1,5 +1,8 @@
 ---
+id: observabilidad-desde-el-diseno
 sidebar_position: 5
+title: Observabilidad desde el Diseño
+description: Observabilidad como propiedad arquitectónica desde las primeras decisiones
 ---
 
 # Observabilidad desde el Diseño

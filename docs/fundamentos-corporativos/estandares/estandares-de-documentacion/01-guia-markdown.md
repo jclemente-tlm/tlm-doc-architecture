@@ -1,3 +1,10 @@
+---
+id: guia-markdown
+sidebar_position: 1
+title: Guía de estilo para Markdown
+description: Lineamientos para crear documentación estructurada y clara usando Markdown
+---
+
 # Guía de estilo para Markdown
 
 ## Principios

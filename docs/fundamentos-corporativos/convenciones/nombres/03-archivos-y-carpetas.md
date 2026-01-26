@@ -1,8 +1,8 @@
 ---
-title: "Archivos y carpetas"
-description: "Lineamientos para nombrar archivos y carpetas en proyectos de Talma."
-id: 03-archivos-y-carpetas
+id: archivos-y-carpetas
 sidebar_position: 3
+title: Archivos y Carpetas
+description: Lineamientos para nombrar archivos y carpetas en proyectos
 ---
 
 ## Objetivo
@@ -24,12 +24,12 @@ Aplica a todos los proyectos y equipos de Talma.
 
 ### Ejemplos
 
-| Correcto              | Incorrecto         |
-|-----------------------|-------------------|
-| user-controller.js    | UserController.js |
-| order-service.ts      | orderService.ts   |
-| config/               | Config/           |
-| utils/                | utilidades/       |
+| Correcto           | Incorrecto        |
+| ------------------ | ----------------- |
+| user-controller.js | UserController.js |
+| order-service.ts   | orderService.ts   |
+| config/            | Config/           |
+| utils/             | utilidades/       |
 
 ## Buenas prácticas
 

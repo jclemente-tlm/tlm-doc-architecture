@@ -1,7 +1,11 @@
 ---
-title: "Seguridad de APIs"
+id: seguridad
 sidebar_position: 2
+title: Seguridad de APIs
+description: Estándares de seguridad para APIs REST: autenticación, autorización y protección de datos
 ---
+
+# Seguridad de APIs
 
 Esta guía establece los estándares de seguridad esenciales para APIs REST, cubriendo autenticación, autorización, comunicación segura y protección de datos.
 

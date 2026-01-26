@@ -1,3 +1,10 @@
+---
+id: diagramas
+sidebar_position: 2
+title: Lineamientos para diagramas
+description: Herramientas y mejores prácticas para crear diagramas arquitectónicos
+---
+
 # Lineamientos para diagramas
 
 ## Herramientas recomendadas

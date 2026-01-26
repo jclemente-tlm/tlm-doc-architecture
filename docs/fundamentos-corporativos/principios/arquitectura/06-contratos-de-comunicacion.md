@@ -1,5 +1,8 @@
 ---
+id: contratos-de-comunicacion
 sidebar_position: 6
+title: Contratos de Comunicación
+description: Interfaces basadas en contratos explícitos, versionados y acordados
 ---
 
 # Contratos de Comunicación

@@ -1,7 +1,8 @@
 ---
-id: 02-trunk-based
+id: trunk-based
 sidebar_position: 2
 title: Trunk Based
+description: Estrategia de integración continua en rama principal
 ---
 
 ## Estrategia Trunk Based

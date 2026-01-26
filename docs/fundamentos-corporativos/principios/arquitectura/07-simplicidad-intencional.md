@@ -1,5 +1,8 @@
 ---
+id: simplicidad-intencional
 sidebar_position: 7
+title: Simplicidad Intencional
+description: Priorizar soluciones simples y comprensibles evitando sobreingeniería
 ---
 
 # Simplicidad Intencional

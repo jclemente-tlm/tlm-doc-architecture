@@ -1,7 +1,8 @@
 ---
-id: 01-arquitectura-limpia
+id: arquitectura-limpia
 sidebar_position: 1
-# title: Arquitectura Limpia
+title: Arquitectura Limpia
+description: Separación clara entre decisiones de negocio y detalles técnicos
 ---
 
 # Arquitectura Limpia

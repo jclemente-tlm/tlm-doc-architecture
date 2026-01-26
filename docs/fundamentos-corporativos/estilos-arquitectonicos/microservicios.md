@@ -2,6 +2,7 @@
 id: microservicios
 sidebar_position: 2
 title: Arquitectura de Microservicios
+description: Estilo de servicios independientes con dominios acotados y escalabilidad diferenciada
 ---
 
 # Arquitectura de Microservicios

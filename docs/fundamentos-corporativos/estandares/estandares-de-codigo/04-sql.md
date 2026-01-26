@@ -1,8 +1,8 @@
 ---
-title: "SQL"
-description: "Lineamientos de estilo, buenas prácticas y seguridad para SQL, PostgreSQL y Oracle."
-id: 04-sql
+id: sql
 sidebar_position: 4
+title: SQL
+description: Lineamientos de estilo, buenas prácticas y seguridad para SQL, PostgreSQL y Oracle
 ---
 
 ## Introducción
@@ -24,15 +24,15 @@ Aplica a todos los desarrolladores que trabajen con SQL, PostgreSQL u Oracle en 
 - Nombres descriptivos y consistentes para tablas, columnas y objetos. Consulta la [guía de convenciones de nombres](../convenciones-de-nombres/04-objetos-base-datos.md).
 - Usa MAYÚSCULAS para palabras reservadas.
 - Indenta consultas para mejorar la legibilidad.
-- Evita SELECT * y usa solo las columnas necesarias.
+- Evita SELECT \* y usa solo las columnas necesarias.
 - Documenta procedimientos, funciones y vistas.
 
 ### Ejemplos generales
 
-| Correcto                                 | Incorrecto         |
-|------------------------------------------|-------------------|
-| SELECT user_id, created_at FROM users;   | select * from users; |
-| UPDATE orders SET status = 'paid';       | update Orders set Status='paid'; |
+| Correcto                               | Incorrecto                       |
+| -------------------------------------- | -------------------------------- |
+| SELECT user_id, created_at FROM users; | select \* from users;            |
+| UPDATE orders SET status = 'paid';     | update Orders set Status='paid'; |
 
 ---
 

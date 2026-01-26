@@ -1,8 +1,8 @@
 ---
-title: "Ramas"
-description: "Lineamientos para la nomenclatura de ramas en Git."
-id: 02-ramas
+id: ramas
 sidebar_position: 2
+title: Ramas
+description: Lineamientos para la nomenclatura de ramas en Git
 ---
 
 ## Objetivo
@@ -33,11 +33,11 @@ Aplica a todos los equipos que gestionan ramas en repositorios de Talma.
 
 ### Ejemplos
 
-| Correcto                | Incorrecto         |
-|-------------------------|-------------------|
-| feature/login-api       | Feature/LoginApi   |
-| bugfix/fix-login        | bug_fix/fixLogin   |
-| release/1.2.0           | release-1.2.0      |
+| Correcto          | Incorrecto       |
+| ----------------- | ---------------- |
+| feature/login-api | Feature/LoginApi |
+| bugfix/fix-login  | bug_fix/fixLogin |
+| release/1.2.0     | release-1.2.0    |
 
 ## Buenas prácticas
 

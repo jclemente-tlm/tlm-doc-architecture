@@ -1,7 +1,11 @@
 ---
-title: "Validación y manejo de errores"
+id: validacion-y-errores
 sidebar_position: 3
+title: Validación y manejo de errores
+description: Mejores prácticas para validación de entrada y manejo consistente de errores en APIs REST
 ---
+
+# Validación y manejo de errores
 
 Esta guía define las mejores prácticas para validación de entrada y manejo consistente de errores en APIs REST.
 
@@ -614,9 +618,9 @@ app.Run();
     ]
   },
   "meta": {
-        "traceId": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
-        "timestamp": "2025-09-22T10:30:00Z"
-    }
+    "traceId": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
+    "timestamp": "2025-09-22T10:30:00Z"
+  }
 }
 ```
 
@@ -630,10 +634,10 @@ app.Run();
     "message": "Ya existe un usuario con este email",
     "details": []
   },
-    "meta": {
-        "traceId": "de9f8c7b-6543-21fe-cdba-123456789abc",
-        "timestamp": "2025-09-22T10:30:00Z"
-    }
+  "meta": {
+    "traceId": "de9f8c7b-6543-21fe-cdba-123456789abc",
+    "timestamp": "2025-09-22T10:30:00Z"
+  }
 }
 ```
 
@@ -647,10 +651,10 @@ app.Run();
     "message": "No tienes permisos para realizar esta acción",
     "details": []
   },
-    "meta": {
-        "traceId": "12ab34cd-5678-90ef-gh12-34567890abcd",
-        "timestamp": "2025-09-22T10:30:00Z"
-    }
+  "meta": {
+    "traceId": "12ab34cd-5678-90ef-gh12-34567890abcd",
+    "timestamp": "2025-09-22T10:30:00Z"
+  }
 }
 ```
 
@@ -666,10 +670,10 @@ app.Run();
     "active": true,
     "createdAt": "2025-09-22T10:30:00Z"
   },
-    "meta": {
-        "traceId": "abc123-def456-789012",
-        "timestamp": "2025-09-22T10:30:01Z"
-    }
+  "meta": {
+    "traceId": "abc123-def456-789012",
+    "timestamp": "2025-09-22T10:30:01Z"
+  }
 }
 ```
 

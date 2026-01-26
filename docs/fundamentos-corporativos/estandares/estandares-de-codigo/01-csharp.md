@@ -1,8 +1,8 @@
 ---
-title: "C# y .NET"
-description: "Lineamientos de Clean Code, estilo, buenas prácticas y seguridad para C# y .NET."
-id: 01-csharp
+id: csharp
 sidebar_position: 1
+title: C# y .NET
+description: Lineamientos de Clean Code, estilo, buenas prácticas y seguridad para C# y .NET
 ---
 
 ## Introducción
@@ -19,7 +19,7 @@ Aplica a todos los desarrolladores que trabajen con C# y .NET en la organizació
 
 ---
 
-## Principios clave de Clean Code en C #
+## Principios clave de Clean Code en C
 
 ### 1. Nombres claros y significativos
 

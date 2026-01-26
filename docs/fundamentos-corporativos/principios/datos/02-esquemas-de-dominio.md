@@ -1,5 +1,8 @@
 ---
+id: esquemas-de-dominio
 sidebar_position: 2
+title: Esquemas de Dominio
+description: Datos de dominio con esquemas explícitos, versionados y documentados
 ---
 
 # Esquemas de Dominio

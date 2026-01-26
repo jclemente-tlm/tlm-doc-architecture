@@ -1,5 +1,8 @@
 ---
+id: consistencia-contextual
 sidebar_position: 3
+title: Consistencia Contextual
+description: Nivel de consistencia definido según necesidades de cada dominio
 ---
 
 # Consistencia Contextual

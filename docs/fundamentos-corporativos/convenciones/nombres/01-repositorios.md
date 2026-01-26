@@ -1,7 +1,8 @@
 ---
-id: 01-repositorios
+id: repositorios
 sidebar_position: 1
 title: Repositorios
+description: Nomenclatura corporativa para repositorios en GitHub
 ---
 
 ## Introducción
@@ -49,20 +50,20 @@ Usamos un formato claro y consistente:
 
 ### Tabla de categorías (ejemplos)
 
-| Categoría | Uso                                              | Ejemplo de repo           |
-|-----------|-------------------------------------------------|--------------------------|
+| Categoría | Uso                                                             | Ejemplo de repo           |
+| --------- | --------------------------------------------------------------- | ------------------------- |
 | doc       | Repositorios netamente de documentación y portales (Docusaurus) | `tlm-doc-architecture`    |
-| svc       | Microservicio o servicio backend                 | `tlm-svc-orders`          |
-| app       | Aplicación monolítica o portal                    | `tlm-app-erp`             |
-| int       | Capa de integración / conectores / CDC / middleware | `tlm-int-cdc-kafka`       |
-| corp      | Servicios corporativos (agrupan varias funciones internas) | `tlm-corp-notifications`  |
-| arc       | Arquetipos / plantillas para iniciar proyectos   | `tlm-arc-api-rest`        |
-| lib       | Librerías internas / SDKs                         | `tlm-lib-logging`         |
-| infra     | IaC, terraform, playbooks                         | `tlm-infra-kafka`         |
-| ops       | Herramientas operativas / scripts                 | `tlm-ops-ci-tools`        |
-| tpl       | Boilerplates, plantillas no code                  | `tlm-tpl-service-dotnet`  |
-| api       | Repos con sólo definición de contratos (OpenAPI, schemas) | `tlm-api-orders`          |
-| web       | Frontend web                                      | `tlm-web-portal-clientes` |
+| svc       | Microservicio o servicio backend                                | `tlm-svc-orders`          |
+| app       | Aplicación monolítica o portal                                  | `tlm-app-erp`             |
+| int       | Capa de integración / conectores / CDC / middleware             | `tlm-int-cdc-kafka`       |
+| corp      | Servicios corporativos (agrupan varias funciones internas)      | `tlm-corp-notifications`  |
+| arc       | Arquetipos / plantillas para iniciar proyectos                  | `tlm-arc-api-rest`        |
+| lib       | Librerías internas / SDKs                                       | `tlm-lib-logging`         |
+| infra     | IaC, terraform, playbooks                                       | `tlm-infra-kafka`         |
+| ops       | Herramientas operativas / scripts                               | `tlm-ops-ci-tools`        |
+| tpl       | Boilerplates, plantillas no code                                | `tlm-tpl-service-dotnet`  |
+| api       | Repos con sólo definición de contratos (OpenAPI, schemas)       | `tlm-api-orders`          |
+| web       | Frontend web                                                    | `tlm-web-portal-clientes` |
 
 ---
 
@@ -72,14 +73,14 @@ Usamos un formato claro y consistente:
 
 ## Ejemplos de nombres correctos e incorrectos
 
-| Correcto               | Incorrecto         | Explicación                                      |
-|------------------------|-------------------|--------------------------------------------------|
-| tlm-svc-orders         | orders-tlm        | Prefijo corporativo al inicio                    |
-| tlm-api-users          | tlm_users         | Usa guiones, no guion bajo                      |
-| tlm-docs-architecture  | docs-tlm-arch     | Prefijo y orden correcto                        |
-| tlm-infra-pipelines    | infra-tlm         | Prefijo y categoría al inicio                   |
-| tlm-svc-payments       | svc-payments-tlm  | Prefijo y categoría juntos, no al final         |
-| tlm-svc-user-profile   | tlm-svc-userprofile| Palabras separadas por guión, no juntas         |
+| Correcto              | Incorrecto          | Explicación                             |
+| --------------------- | ------------------- | --------------------------------------- |
+| tlm-svc-orders        | orders-tlm          | Prefijo corporativo al inicio           |
+| tlm-api-users         | tlm_users           | Usa guiones, no guion bajo              |
+| tlm-docs-architecture | docs-tlm-arch       | Prefijo y orden correcto                |
+| tlm-infra-pipelines   | infra-tlm           | Prefijo y categoría al inicio           |
+| tlm-svc-payments      | svc-payments-tlm    | Prefijo y categoría juntos, no al final |
+| tlm-svc-user-profile  | tlm-svc-userprofile | Palabras separadas por guión, no juntas |
 
 ## Buenas prácticas
 

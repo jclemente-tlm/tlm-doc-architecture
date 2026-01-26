@@ -1,5 +1,8 @@
 ---
+id: seguridad-desde-el-diseno
 sidebar_position: 1
+title: Seguridad desde el Diseño
+description: Seguridad como consideración explícita desde decisiones iniciales
 ---
 
 # Seguridad desde el Diseño

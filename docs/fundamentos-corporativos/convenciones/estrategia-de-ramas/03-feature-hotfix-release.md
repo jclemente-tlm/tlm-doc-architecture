@@ -1,7 +1,8 @@
 ---
-id: 03-feature-hotfix-release
+id: feature-hotfix-release
 sidebar_position: 3
 title: Feature, Hotfix y Release
+description: Convenciones para ramas de features, hotfixes y releases
 ---
 
 ## Estrategia Feature, Hotfix y Release

@@ -1,5 +1,8 @@
 ---
+id: identidad-y-acceso
 sidebar_position: 4
+title: Identidad y Acceso Explícitos
+description: Definición explícita de identidades y accesos a recursos
 ---
 
 # Identidad y Acceso Explícitos

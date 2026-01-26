@@ -1,3 +1,10 @@
+---
+id: documentacion-api
+sidebar_position: 3
+title: Convenciones para documentar APIs
+description: Estándares para documentación de APIs usando OpenAPI/Swagger y especificaciones
+---
+
 # Convenciones para documentar APIs
 
 ## Principios

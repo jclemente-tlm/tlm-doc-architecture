@@ -1,6 +1,8 @@
 ---
-title: "Lineamientos para contenedores"
+id: contenedores
 sidebar_position: 1
+title: Lineamientos para contenedores
+description: Estándares para construcción, despliegue y gestión de contenedores Docker
 ---
 
 ## 1. Imágenes de Contenedores

@@ -1,7 +1,8 @@
 ---
-id: 05-versionado-semantico
+id: versionado-semantico
 sidebar_position: 5
-title: Versionado semántico
+title: Versionado Semántico
+description: Estándar SemVer para versionado de software
 ---
 
 ## Uso de SemVer

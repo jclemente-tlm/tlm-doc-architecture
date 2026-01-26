@@ -1,5 +1,8 @@
 ---
+id: automatizacion-como-principio
 sidebar_position: 1
+title: Automatización como Principio
+description: Automatizar toda actividad repetible de construcción, despliegue y operación
 ---
 
 # Automatización como Principio

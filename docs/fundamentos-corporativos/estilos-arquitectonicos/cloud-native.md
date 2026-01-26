@@ -2,6 +2,7 @@
 id: cloud-native
 sidebar_position: 4
 title: Arquitectura Cloud Native
+description: Estilo optimizado para entornos cloud dinámicos, escalables y distribuidos
 ---
 
 # Arquitectura Cloud Native

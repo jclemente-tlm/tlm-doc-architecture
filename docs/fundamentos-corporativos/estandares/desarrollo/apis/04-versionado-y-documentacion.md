@@ -1,7 +1,11 @@
 ---
-title: "Versionado y documentación"
+id: versionado-y-documentacion
 sidebar_position: 4
+title: Versionado y documentación
+description: Estrategias de versionado y documentación de APIs para evolución compatible y mantenible
 ---
+
+# Versionado y documentación
 
 Esta guía define las estrategias de versionado y documentación de APIs para garantizar evolución compatible y mantenibilidad.
 
@@ -387,28 +391,32 @@ docs/
 
 ### Changelog y guías de migración
 
-```markdown
+````markdown
 # API Changelog
 
 ## v2.0.0 (2024-03-01)
 
 ### Breaking Changes
+
 - `GET /api/v1/users` ahora requiere paginación obligatoria
 - Campo `user.created_date` renombrado a `user.created_at`
 - Eliminado endpoint deprecado `POST /api/v1/login`
 
 ### New Features
+
 - Nuevo endpoint `GET /api/v2/users/{id}/permissions`
 - Agregado soporte para filtrado por múltiples campos
 - Nuevo campo `user.department` en respuestas
 
 ### Bug Fixes
+
 - Corregida validación de email para dominios internacionales
 - Mejorada performance en consultas paginadas
 
 ## Migration Guide v1 → v2
 
 ### Required Changes
+
 1. **Paginación**: Agregar parámetros `page` y `limit`
 2. **Campo renamed**: `created_date` → `created_at`
 3. **Autenticación**: Migrar de `/login` a `/auth/token`
@@ -417,11 +425,12 @@ docs/
 
 ```javascript
 // v1
-fetch('/api/v1/users')
+fetch("/api/v1/users");
 
 // v2
-fetch('/api/v2/users?page=1&limit=20')
+fetch("/api/v2/users?page=1&limit=20");
 ```
+````
 
 ### Testing de compatibilidad
 

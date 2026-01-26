@@ -1,5 +1,8 @@
 ---
+id: calidad-desde-el-diseno
 sidebar_position: 3
+title: Calidad desde el Diseño
+description: Calidad integrada desde el diseño y no como actividad posterior
 ---
 
 # Calidad desde el Diseño

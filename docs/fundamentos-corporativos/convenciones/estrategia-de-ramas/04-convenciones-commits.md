@@ -1,7 +1,8 @@
 ---
-id: 04-convenciones-commits
+id: convenciones-commits
 sidebar_position: 4
 title: Convenciones de Commits
+description: Estándar de mensajes de commits siguiendo Conventional Commits
 ---
 
 ## Convenciones de Commits

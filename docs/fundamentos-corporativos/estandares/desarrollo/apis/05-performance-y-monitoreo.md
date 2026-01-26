@@ -1,7 +1,11 @@
 ---
-title: "Performance y monitoreo"
+id: performance-y-monitoreo
 sidebar_position: 5
+title: Performance y monitoreo
+description: Mejores prácticas para optimización de performance y monitoreo efectivo de APIs REST
 ---
+
+# Performance y monitoreo
 
 Esta guía establece las mejores prácticas para optimización de performance y monitoreo efectivo de APIs REST.
 

@@ -1,5 +1,8 @@
 ---
+id: proteccion-de-datos-sensibles
 sidebar_position: 5
+title: Protección de Datos Sensibles
+description: Identificación, clasificación y protección explícita de datos sensibles
 ---
 
 # Protección de Datos Sensibles

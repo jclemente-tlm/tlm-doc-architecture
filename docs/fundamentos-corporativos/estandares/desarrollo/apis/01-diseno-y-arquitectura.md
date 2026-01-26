@@ -1,7 +1,11 @@
 ---
-title: "Diseño y arquitectura de APIs"
+id: diseno-y-arquitectura
 sidebar_position: 1
+title: Diseño y arquitectura de APIs
+description: Principios fundamentales para diseño de APIs REST estructuradas, escalables y mantenibles
 ---
+
+# Diseño y arquitectura de APIs
 
 Esta guía establece los principios fundamentales para el diseño de APIs REST bien estructuradas, escalables y mantenibles en Talma.
 
@@ -176,7 +180,10 @@ Toda respuesta debe incluir los siguientes atributos en la raíz:
       "code": "USER_NOT_FOUND",
       "message": "El usuario no existe",
       "details": [
-        { "field": "id", "issue": "No se encontró ningún usuario con el identificador '999'" }
+        {
+          "field": "id",
+          "issue": "No se encontró ningún usuario con el identificador '999'"
+        }
       ]
     }
   ],

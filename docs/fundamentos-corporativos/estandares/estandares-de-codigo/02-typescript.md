@@ -1,8 +1,8 @@
 ---
-title: "TypeScript"
-description: "Lineamientos de Clean Code, estilo, buenas prácticas y seguridad para TypeScript."
-id: 02-typescript
+id: typescript
 sidebar_position: 2
+title: TypeScript
+description: Lineamientos de Clean Code, estilo, buenas prácticas y seguridad para TypeScript
 ---
 
 ## Introducción
@@ -30,7 +30,7 @@ Aplica a todos los desarrolladores que trabajen con TypeScript en la organizaci�
 
 ```typescript
 let userAge: number;
-const customerEmail: string = '';
+const customerEmail: string = "";
 class InvoiceProcessor {}
 ```
 
@@ -38,7 +38,7 @@ class InvoiceProcessor {}
 
 ```typescript
 let a: number;
-const ce = '';
+const ce = "";
 class IP {}
 ```
 
@@ -50,7 +50,9 @@ class IP {}
 **Correcto:**
 
 ```typescript
-function sendEmail(to: string, body: string): void { /* ... */ }
+function sendEmail(to: string, body: string): void {
+  /* ... */
+}
 ```
 
 **Incorrecto:**
@@ -77,8 +79,12 @@ function isAdult(user: User): boolean {
 **Incorrecto:**
 
 ```typescript
-if (user.age < 18) { /* ... */ }
-if (user.age < 18) { /* ... */ }
+if (user.age < 18) {
+  /* ... */
+}
+if (user.age < 18) {
+  /* ... */
+}
 ```
 
 ### 4. Simplicidad (KISS)
@@ -89,13 +95,17 @@ if (user.age < 18) { /* ... */ }
 **Correcto:**
 
 ```typescript
-if (user.isActive) { /* ... */ }
+if (user.isActive) {
+  /* ... */
+}
 ```
 
 **Incorrecto:**
 
 ```typescript
-if ((user.status === 1 || user.status === 2) && !user.isBanned) { /* ... */ }
+if ((user.status === 1 || user.status === 2) && !user.isBanned) {
+  /* ... */
+}
 ```
 
 ### 5. No escribas código que no necesitas (YAGNI)
@@ -106,7 +116,9 @@ if ((user.status === 1 || user.status === 2) && !user.isBanned) { /* ... */ }
 
 ```typescript
 // Métodos y clases no usados ni requeridos
-function futureFeature() { /* ... */ }
+function futureFeature() {
+  /* ... */
+}
 ```
 
 ### 6. Manejo adecuado de errores
@@ -141,14 +153,18 @@ try {
 
 ```typescript
 // Calcula el total del pedido incluyendo impuestos
-function calculateTotal() { /* ... */ }
+function calculateTotal() {
+  /* ... */
+}
 ```
 
 **Incorrecto:**
 
 ```typescript
 // ct
-function ct() { /* ... */ }
+function ct() {
+  /* ... */
+}
 ```
 
 ### 8. Organización y modularidad
@@ -160,7 +176,9 @@ function ct() { /* ... */ }
 
 ```typescript
 // src/orders/services/OrderService.ts
-export class OrderService { /* ... */ }
+export class OrderService {
+  /* ... */
+}
 ```
 
 **Incorrecto:**
@@ -177,7 +195,7 @@ export class OrderService { /* ... */ }
 **Correcto:**
 
 ```typescript
-const activeUsers = users.filter(u => u.isActive);
+const activeUsers = users.filter((u) => u.isActive);
 ```
 
 **Incorrecto:**
@@ -219,7 +237,7 @@ class OrderService {
 **Correcto:**
 
 ```typescript
-test('calculateTotal retorna el valor correcto', () => {
+test("calculateTotal retorna el valor correcto", () => {
   // ...
 });
 ```

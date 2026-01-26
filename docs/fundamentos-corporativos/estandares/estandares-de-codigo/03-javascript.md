@@ -1,8 +1,8 @@
 ---
-title: "JavaScript"
-description: "Lineamientos de Clean Code, estilo, buenas prácticas y seguridad para JavaScript."
-id: 03-javascript
+id: javascript
 sidebar_position: 3
+title: JavaScript
+description: Lineamientos de Clean Code, estilo, buenas prácticas y seguridad para JavaScript
 ---
 
 ## Introducción
@@ -30,7 +30,7 @@ Aplica a todos los desarrolladores que trabajen con JavaScript en la organizaci�
 
 ```javascript
 let userAge;
-const customerEmail = '';
+const customerEmail = "";
 class InvoiceProcessor {}
 ```
 
@@ -38,7 +38,7 @@ class InvoiceProcessor {}
 
 ```javascript
 let a;
-const ce = '';
+const ce = "";
 class IP {}
 ```
 
@@ -50,7 +50,9 @@ class IP {}
 **Correcto:**
 
 ```javascript
-function sendEmail(to, body) { /* ... */ }
+function sendEmail(to, body) {
+  /* ... */
+}
 ```
 
 **Incorrecto:**
@@ -77,8 +79,12 @@ function isAdult(user) {
 **Incorrecto:**
 
 ```javascript
-if (user.age < 18) { /* ... */ }
-if (user.age < 18) { /* ... */ }
+if (user.age < 18) {
+  /* ... */
+}
+if (user.age < 18) {
+  /* ... */
+}
 ```
 
 ### 4. Simplicidad (KISS)
@@ -89,13 +95,17 @@ if (user.age < 18) { /* ... */ }
 **Correcto:**
 
 ```javascript
-if (user.isActive) { /* ... */ }
+if (user.isActive) {
+  /* ... */
+}
 ```
 
 **Incorrecto:**
 
 ```javascript
-if ((user.status === 1 || user.status === 2) && !user.isBanned) { /* ... */ }
+if ((user.status === 1 || user.status === 2) && !user.isBanned) {
+  /* ... */
+}
 ```
 
 ### 5. No escribas código que no necesitas (YAGNI)
@@ -106,7 +116,9 @@ if ((user.status === 1 || user.status === 2) && !user.isBanned) { /* ... */ }
 
 ```javascript
 // Métodos y clases no usados ni requeridos
-function futureFeature() { /* ... */ }
+function futureFeature() {
+  /* ... */
+}
 ```
 
 ### 6. Manejo adecuado de errores
@@ -141,14 +153,18 @@ try {
 
 ```javascript
 // Calcula el total del pedido incluyendo impuestos
-function calculateTotal() { /* ... */ }
+function calculateTotal() {
+  /* ... */
+}
 ```
 
 **Incorrecto:**
 
 ```javascript
 // ct
-function ct() { /* ... */ }
+function ct() {
+  /* ... */
+}
 ```
 
 ### 8. Organización y modularidad
@@ -160,7 +176,9 @@ function ct() { /* ... */ }
 
 ```javascript
 // src/orders/services/orderService.js
-export class OrderService { /* ... */ }
+export class OrderService {
+  /* ... */
+}
 ```
 
 **Incorrecto:**
@@ -177,7 +195,7 @@ export class OrderService { /* ... */ }
 **Correcto:**
 
 ```javascript
-const activeUsers = users.filter(u => u.isActive);
+const activeUsers = users.filter((u) => u.isActive);
 ```
 
 **Incorrecto:**
@@ -223,7 +241,7 @@ class OrderService {
 **Correcto:**
 
 ```javascript
-test('calculateTotal retorna el valor correcto', () => {
+test("calculateTotal retorna el valor correcto", () => {
   // ...
 });
 ```

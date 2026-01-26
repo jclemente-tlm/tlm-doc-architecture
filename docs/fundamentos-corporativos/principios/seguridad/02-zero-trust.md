@@ -1,5 +1,8 @@
 ---
+id: zero-trust
 sidebar_position: 2
+title: Zero Trust
+description: Ningún componente es confiable por defecto, toda interacción se evalúa
 ---
 
 # Zero Trust

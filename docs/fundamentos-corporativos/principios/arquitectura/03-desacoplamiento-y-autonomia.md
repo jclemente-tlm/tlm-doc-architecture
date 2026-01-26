@@ -1,5 +1,8 @@
 ---
+id: desacoplamiento-y-autonomia
 sidebar_position: 3
+title: Desacoplamiento y Autonomía
+description: Componentes con mínimas dependencias y máxima capacidad de evolución independiente
 ---
 
 # Desacoplamiento y Autonomía

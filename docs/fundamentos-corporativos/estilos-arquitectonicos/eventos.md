@@ -2,6 +2,7 @@
 id: eventos
 sidebar_position: 3
 title: Arquitectura Orientada a Eventos
+description: Estilo basado en comunicación asíncrona mediante eventos de dominio
 ---
 
 # Arquitectura Orientada a Eventos

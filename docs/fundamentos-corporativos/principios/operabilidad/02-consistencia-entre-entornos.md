@@ -1,5 +1,8 @@
 ---
+id: consistencia-entre-entornos
 sidebar_position: 2
+title: Consistencia entre Entornos
+description: Entornos consistentes en estructura y comportamiento
 ---
 
 # Consistencia entre Entornos

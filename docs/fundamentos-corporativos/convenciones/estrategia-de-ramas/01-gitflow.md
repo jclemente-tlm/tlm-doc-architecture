@@ -1,7 +1,8 @@
 ---
-id: 01-gitflow
+id: gitflow
 sidebar_position: 1
 title: Gitflow
+description: Estrategia de ramas Gitflow con main, develop y ramas de soporte
 ---
 
 ## Ramas principales
