@@ -18,25 +18,7 @@ Esta guía establece los principios fundamentales para el diseño de APIs REST b
 - **Representación uniforme**: Consistencia en estructura de URLs y respuestas
 - **Sin estado**: Cada request debe contener toda la información necesaria
 
-### Naming conventions
-
-```http
-✅ CORRECTO
-GET    /api/v1/users              # Obtener lista de usuarios
-GET    /api/v1/users/123          # Obtener usuario específico
-POST   /api/v1/users              # Crear nuevo usuario
-PUT    /api/v1/users/123          # Actualizar usuario completo
-PATCH  /api/v1/users/123          # Actualizar campos específicos
-DELETE /api/v1/users/123          # Eliminar usuario
-
-GET    /api/v1/users/123/orders   # Obtener órdenes del usuario
-POST   /api/v1/users/123/orders   # Crear orden para el usuario
-
-❌ INCORRECTO
-GET    /api/v1/getUsers           # Verbo en URL
-POST   /api/v1/user               # Singular en colección
-GET    /api/v1/users/delete/123   # Verbo en lugar de método HTTP
-```
+> Para convenciones de naming de endpoints, consulta [Convenciones - Naming Endpoints](/docs/fundamentos-corporativos/convenciones/apis/naming-endpoints).
 
 ## 📊 Estructura de recursos
 
@@ -59,140 +41,7 @@ GET /api/v1/users?filter[department]=IT&filter[active]=true
 GET /api/v1/users?search=juan&fields=id,name,email
 ```
 
-## 📋 Estructura de respuesta estándar
-
-### 📌 Elementos obligatorios
-
-Toda respuesta debe incluir los siguientes atributos en la raíz:
-
-- `status`: "success" o "error".
-- `data`: objeto o arreglo; en caso de error debe ser `null`.
-- `errors`: arreglo de errores; en éxito debe ser `[]`.
-- `meta`: objeto que debe contener al menos `traceId` y `timestamp`.
-
-#### Atributos opcionales dentro de `meta`
-
-- `tenant`: identificador del tenant (si aplica multi-tenant).
-- `pagination`: información de paginación (por ejemplo: `page`, `size`, `total`).
-- `links`: enlaces relacionados.
-- `extra`: extensiones futuras (warnings, flags, etc.).
-
-### ✅ Respuestas exitosas
-
-#### Recurso único
-
-```json
-{
-  "status": "success",
-  "data": {
-    "id": "123",
-    "name": "Juan Pérez",
-    "userName": "jperez",
-    "email": "juan.perez@talma.pe",
-    "active": true,
-    "createdAt": "2024-01-15T10:30:00Z"
-  },
-  "errors": [],
-  "meta": {
-    "traceId": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
-    "timestamp": "2024-01-15T10:30:01Z"
-  }
-}
-```
-
-#### Colección con paginación y atributos opcionales
-
-```json
-{
-  "status": "success",
-  "data": [
-    {
-      "id": "123",
-      "name": "Juan Pérez",
-      "userName": "jperez",
-      "email": "juan.perez@talma.pe",
-      "active": true,
-      "createdAt": "2024-01-15T10:30:00Z"
-    },
-    {
-      "id": "124",
-      "name": "Ana Gómez",
-      "userName": "agomez",
-      "email": "ana.gomez@talma.pe",
-      "active": true,
-      "createdAt": "2024-01-15T11:00:00Z"
-    }
-  ],
-  "errors": [],
-  "meta": {
-    "traceId": "a9b8c7d6-5432-10fe-dcba-0987654321ff",
-    "timestamp": "2024-01-15T10:30:01Z",
-    "pagination": {
-      "page": 1,
-      "size": 20,
-      "total": 150,
-      "total_pages": 8
-    },
-    "links": {
-      "self": "/api/v1/users?page=1",
-      "next": "/api/v1/users?page=2",
-      "last": "/api/v1/users?page=8"
-    },
-    "tenant": "tlm-pe"
-  }
-}
-```
-
-### ❌ Respuestas de error
-
-#### Error de validación
-
-```json
-{
-  "status": "error",
-  "data": null,
-  "errors": [
-    {
-      "code": "VALIDATION_FAILED",
-      "message": "La solicitud contiene errores de validación",
-      "details": [
-        { "field": "email", "issue": "El formato no es válido" },
-        { "field": "name", "issue": "Es un campo requerido" },
-        { "field": "userName", "issue": "Es un campo requerido" }
-      ]
-    }
-  ],
-  "meta": {
-    "traceId": "de9f8c7b-6543-21fe-cdba-123456789abc",
-    "timestamp": "2024-01-15T10:30:01Z"
-  }
-}
-```
-
-#### Recurso no encontrado
-
-```json
-{
-  "status": "error",
-  "data": null,
-  "errors": [
-    {
-      "code": "USER_NOT_FOUND",
-      "message": "El usuario no existe",
-      "details": [
-        {
-          "field": "id",
-          "issue": "No se encontró ningún usuario con el identificador '999'"
-        }
-      ]
-    }
-  ],
-  "meta": {
-    "traceId": "12ab34cd-5678-90ef-gh12-34567890abcd",
-    "timestamp": "2024-01-15T10:30:01Z"
-  }
-}
-```
+> Para estructura de respuesta JSON (envelope, errores, paginación), consulta [Convenciones - Formato de Respuestas](/docs/fundamentos-corporativos/convenciones/apis/formato-respuestas).
 
 ## 🔧 Códigos de estado HTTP
 
@@ -218,206 +67,122 @@ Toda respuesta debe incluir los siguientes atributos en la raíz:
 503 Service Unavailable  - Servicio temporalmente no disponible
 ```
 
-## 🏗️ Implementación con ASP.NET Core
+## 🏗️ Tecnologías y Herramientas Obligatorias
 
-### Controller base pattern
+### ASP.NET Core Web API
+
+**Versión mínima**: 8.0+
+
+**Librerías requeridas**:
+
+- `Microsoft.AspNetCore.Mvc.Versioning` (5.0+) - API Versioning
+- `Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer` (5.0+) - API Explorer
+- `AutoMapper` (12.0+) - Mapeo de DTOs
+- `Swashbuckle.AspNetCore` (6.5+) - Documentación OpenAPI
+
+**Configuración obligatoria**:
 
 ```csharp
-[ApiController]
-[Route("api/v{version:apiVersion}/[controller]")]
-[ApiVersion("1.0")]
-public class UsersController : ControllerBase
+// Program.cs
+var builder = WebApplication.CreateBuilder(args);
+
+// Controllers con versionado
+builder.Services.AddControllers();
+builder.Services.AddApiVersioning(options =>
 {
-    private readonly IUserService _userService;
-    private readonly IMapper _mapper;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+});
 
-    public UsersController(IUserService userService, IMapper mapper)
-    {
-        _userService = userService;
-        _mapper = mapper;
-    }
+// JSON camelCase
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 
-    [HttpGet]
-    [ProducesResponseType(typeof(PagedResponse<UserDto>), 200)]
-    public async Task<ActionResult<PagedResponse<UserDto>>> GetUsers(
-        [FromQuery] UserQuery query)
-    {
-        var users = await _userService.GetUsersAsync(query);
+// HTTPS
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+    options.HttpsPort = 443;
+});
 
-        var response = new PagedResponse<UserDto>
-        {
-            Status = "success",
-            Data = _mapper.Map<IEnumerable<UserDto>>(users.Items),
-            Meta = new MetaData
-            {
-                Pagination = new PaginationMeta
-                {
-                    Page = users.Page,
-                    PerPage = users.PerPage,
-                    Total = users.Total,
-                    TotalPages = users.TotalPages
-                }
-            },
-            Links = new Dictionary<string, string>
-            {
-                { "self", $"/api/v1/users?page={users.Page}" },
-                { "next", users.HasNext ? $"/api/v1/users?page={users.Page + 1}" : null },
-                { "last", $"/api/v1/users?page={users.TotalPages}" }
-            }.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value),
-            TraceId = HttpContext.TraceIdentifier
-        };
+var app = builder.Build();
 
-        return Ok(response);
-    }
-
-    [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ApiResponse<UserDto>), 200)]
-    [ProducesResponseType(typeof(ApiResponse<object>), 404)]
-    public async Task<ActionResult<ApiResponse<UserDto>>> GetUser(string id)
-    {
-        var user = await _userService.GetUserByIdAsync(id);
-        if (user == null)
-        {
-            var errorResponse = new ApiResponse<object>
-            {
-                Status = "error",
-                Error = new ErrorInfo
-                {
-                    Code = "USER_NOT_FOUND",
-                    Message = "El usuario no existe",
-                    Details = new List<ErrorDetail>
-                    {
-                        new() { Field = "id", Issue = $"No se encontró ningún usuario con el identificador '{id}'" }
-                    }
-                },
-                Meta = new MetaData(),
-                TraceId = HttpContext.TraceIdentifier
-            };
-
-            return NotFound(errorResponse);
-        }
-
-        var response = new ApiResponse<UserDto>
-        {
-            Status = "success",
-            Data = _mapper.Map<UserDto>(user),
-            Meta = new MetaData(),
-            TraceId = HttpContext.TraceIdentifier
-        };
-
-        return Ok(response);
-    }
-
-    [HttpPost]
-    [ProducesResponseType(typeof(ApiResponse<UserDto>), 201)]
-    [ProducesResponseType(typeof(ApiResponse<object>), 400)]
-    public async Task<ActionResult<ApiResponse<UserDto>>> CreateUser(
-        [FromBody] CreateUserRequest request)
-    {
-        if (!ModelState.IsValid)
-        {
-            var errorResponse = new ApiResponse<object>
-            {
-                Status = "error",
-                Error = new ErrorInfo
-                {
-                    Code = "VALIDATION_FAILED",
-                    Message = "La solicitud contiene errores de validación",
-                    Details = ModelState.SelectMany(x => x.Value.Errors.Select(e => new ErrorDetail
-                    {
-                        Field = x.Key,
-                        Issue = e.ErrorMessage
-                    })).ToList()
-                },
-                Meta = new MetaData(),
-                TraceId = HttpContext.TraceIdentifier
-            };
-
-            return BadRequest(errorResponse);
-        }
-
-        var user = await _userService.CreateUserAsync(request);
-        var response = new ApiResponse<UserDto>
-        {
-            Status = "success",
-            Data = _mapper.Map<UserDto>(user),
-            Meta = new MetaData(),
-            TraceId = HttpContext.TraceIdentifier
-        };
-
-        return CreatedAtAction(nameof(GetUser),
-            new { id = user.Id }, response);
-    }
-}
+// HTTPS obligatorio
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
+app.Run();
 ```
 
-### DTOs y modelos de respuesta
+### Seguridad y Autenticación
+
+**HTTPS/TLS**: Versión mínima TLS 1.3
+**JWT**: Algoritmo RS256 obligatorio
+**OAuth 2.0**: Para autenticación de usuarios
 
 ```csharp
-public class ApiResponse<T>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Jwt:Authority"];
+        options.Audience = builder.Configuration["Jwt:Audience"];
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidAlgorithms = new[] { SecurityAlgorithms.RsaSha256 }
+        };
+    });
+```
+
+### Validación
+
+**FluentValidation**: 11.0+
+Obligatorio para validación de entrada (ver [Validación y Errores](/docs/fundamentos-corporativos/estandares/apis/validacion-y-errores))
+
+```csharp
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+```
+
+### Documentación OpenAPI
+
+**Swashbuckle**: 6.5+
+
+```csharp
+builder.Services.AddSwaggerGen(c =>
 {
-  public string Status { get; set; } = "success";
-  public T Data { get; set; } // null en error
-  public List<ErrorInfo> Errors { get; set; } = new(); // [] en éxito
-  public MetaData Meta { get; set; } = new();
-}
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Talma API",
+        Version = "v1",
+        Description = "API REST de Talma"
+    });
 
-public class MetaData
-{
-  public string TraceId { get; set; }
-  public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-  public string Tenant { get; set; } // opcional
-  public PaginationMeta Pagination { get; set; } // opcional
-  public Dictionary<string, string> Links { get; set; } // opcional
-  public object Extra { get; set; } // extensiones futuras
-}
-
-public class ErrorInfo
-{
-  public string Code { get; set; }
-  public string Message { get; set; }
-  public List<ErrorDetail> Details { get; set; } = new();
-}
-
-public class ErrorDetail
-{
-  public string Field { get; set; }
-  public string Issue { get; set; }
-}
-
-public class PaginationMeta
-{
-  public int Page { get; set; }
-  public int Size { get; set; }
-  public int Total { get; set; }
-  public int TotalPages { get; set; }
-}
-
-public class UserDto
-{
-  public string Id { get; set; }
-  public string Name { get; set; }
-  public string Email { get; set; }
-  public bool Active { get; set; }
-  public DateTime CreatedAt { get; set; }
-}
-
-public class CreateUserRequest
-{
-  [Required]
-  [StringLength(100, MinimumLength = 2)]
-  public string Name { get; set; }
-
-  [Required]
-  [EmailAddress]
-  public string Email { get; set; }
-
-  [Phone]
-  public string Phone { get; set; }
-}
+    // JWT Bearer
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header usando Bearer scheme",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer"
+    });
+});
 ```
 
 ## 📖 Referencias
+
+### Convenciones relacionadas
+
+- [Convenciones - Naming Endpoints](/docs/fundamentos-corporativos/convenciones/apis/naming-endpoints) - Nombres de endpoints, recursos, verbos HTTP
+- [Convenciones - Formato de Respuestas](/docs/fundamentos-corporativos/convenciones/apis/formato-respuestas) - Estructura JSON envelope, errores, paginación
 
 ### Lineamientos relacionados
 

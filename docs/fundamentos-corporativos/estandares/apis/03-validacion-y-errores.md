@@ -7,9 +7,17 @@ description: Mejores prácticas para validación de entrada y manejo consistente
 
 # Validación y manejo de errores
 
-Esta guía define las mejores prácticas para validación de entrada y manejo consistente de errores en APIs REST.
+Esta guía define las tecnologías y herramientas obligatorias para validación de entrada y manejo consistente de errores en APIs REST.
+
+> **Nota**: Para formatos de respuesta JSON, códigos HTTP y estructuras de error, consulta [Convenciones de APIs - Formato de Respuestas](/docs/fundamentos-corporativos/convenciones/apis/formato-respuestas).
 
 ## 🔍 Validación de entrada
+
+### Versiones Mínimas Requeridas
+
+- FluentValidation: 11.0+ (recomendado)
+- FluentValidation.AspNetCore: 11.0+
+- System.ComponentModel.DataAnnotations (alternativa, incluido en .NET)
 
 ### Principios de validación
 
@@ -177,25 +185,24 @@ public class Result<T>
 
 ## ⚠️ Manejo de errores
 
-### Estructura estándar de respuesta de error
+### Herramientas Obligatorias
 
-Siguiendo el estándar definido en los lineamientos de desarrollo de APIs:
+- **Middleware global**: Captura y manejo centralizado de excepciones
+- **Excepciones personalizadas**: Jerarquía de excepciones de negocio
+- **Logging estructurado**: ILogger + contexto (ver [ADR-016](/docs/adrs/adr-016-logging-estructurado))
+- **Activity/TraceId**: Propagación de correlation ID
+
+### Estructura de Respuesta de Error
+
+> **Importante**: La estructura de respuesta estándar está definida en [Convenciones - Formato de Respuestas](/docs/fundamentos-corporativos/convenciones/apis/formato-respuestas).
 
 ```csharp
 public class ApiResponse<T>
 {
     public string Status { get; set; } = "success";
     public T Data { get; set; }
-    public ErrorInfo Error { get; set; }
+    public List<ErrorInfo> Errors { get; set; } = new();
     public MetaData Meta { get; set; } = new();
-    public Dictionary<string, string> Links { get; set; }
-}
-
-public class MetaData
-{
-    public string TraceId { get; set; }
-    public DateTime Timestamp { get; set; }
-    // Otros campos de meta si aplica
 }
 
 public class ErrorInfo
@@ -209,18 +216,6 @@ public class ErrorDetail
 {
     public string Field { get; set; }
     public string Issue { get; set; }
-}
-
-public class MetaData
-{
-    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-    public List<WarningInfo> Warnings { get; set; } = new();
-}
-
-public class WarningInfo
-{
-    public string Code { get; set; }
-    public string Message { get; set; }
 }
 ```
 
@@ -258,16 +253,15 @@ public class GlobalExceptionMiddleware
         var errorResponse = new ApiResponse<object>
         {
             Status = "error",
-            Meta = new MetaData(),
-            TraceId = Activity.Current?.Id ?? context.TraceIdentifier
+            Data = null,
+            Errors = new List<ErrorInfo>(),
+            Meta = new MetaData()
         };
-                "field": "name",
-                "field": "userName",
+
         switch (exception)
         {
             case ValidationException validationEx:
-            "name": "Juan Pérez",
-            "userName": "jperez",
+                errorResponse.Errors.Add(new ErrorInfo
                 {
                     Code = "VALIDATION_FAILED",
                     Message = "La solicitud contiene errores de validación",
@@ -277,58 +271,58 @@ public class GlobalExceptionMiddleware
                             Field = kvp.Key,
                             Issue = error
                         })).ToList()
-                };
+                });
                 response.StatusCode = 400;
                 break;
 
             case NotFoundException notFoundEx:
-                errorResponse.Error = new ErrorInfo
+                errorResponse.Errors.Add(new ErrorInfo
                 {
                     Code = "RESOURCE_NOT_FOUND",
                     Message = notFoundEx.Message,
                     Details = new List<ErrorDetail>()
-                };
+                });
                 response.StatusCode = 404;
                 break;
 
             case UnauthorizedException unauthorizedEx:
-                errorResponse.Error = new ErrorInfo
+                errorResponse.Errors.Add(new ErrorInfo
                 {
                     Code = "UNAUTHORIZED_ACCESS",
                     Message = "Credenciales inválidas o sesión expirada",
                     Details = new List<ErrorDetail>()
-                };
+                });
                 response.StatusCode = 401;
                 break;
 
             case ForbiddenException forbiddenEx:
-                errorResponse.Error = new ErrorInfo
+                errorResponse.Errors.Add(new ErrorInfo
                 {
                     Code = "FORBIDDEN_ACCESS",
                     Message = "No tienes permisos para realizar esta acción",
                     Details = new List<ErrorDetail>()
-                };
+                });
                 response.StatusCode = 403;
                 break;
 
             case BusinessLogicException businessEx:
-                errorResponse.Error = new ErrorInfo
+                errorResponse.Errors.Add(new ErrorInfo
                 {
                     Code = businessEx.ErrorCode ?? "BUSINESS_LOGIC_ERROR",
                     Message = businessEx.Message,
                     Details = businessEx.Details ?? new List<ErrorDetail>()
-                };
+                });
                 response.StatusCode = 422;
                 break;
 
             default:
                 _logger.LogError(exception, "Error interno no controlado");
-                errorResponse.Error = new ErrorInfo
+                errorResponse.Errors.Add(new ErrorInfo
                 {
                     Code = "INTERNAL_SERVER_ERROR",
                     Message = "Ocurrió un error interno. Contacta al administrador.",
                     Details = new List<ErrorDetail>()
-                };
+                });
                 response.StatusCode = 500;
                 break;
         }
@@ -399,18 +393,21 @@ public class UsersController : ControllerBase
             var errorResponse = new ApiResponse<object>
             {
                 Status = "error",
-                Error = new ErrorInfo
+                Data = null,
+                Errors = new List<ErrorInfo>
                 {
-                    Code = "VALIDATION_FAILED",
-                    Message = "La solicitud contiene errores de validación",
-                    Details = validationResult.Errors.Select(error => new ErrorDetail
+                    new ErrorInfo
                     {
-                        Field = error.PropertyName,
-                        Issue = error.ErrorMessage
-                    }).ToList()
+                        Code = "VALIDATION_FAILED",
+                        Message = "La solicitud contiene errores de validación",
+                        Details = validationResult.Errors.Select(error => new ErrorDetail
+                        {
+                            Field = error.PropertyName,
+                            Issue = error.ErrorMessage
+                        }).ToList()
+                    }
                 },
-                Meta = new MetaData(),
-                TraceId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                Meta = new MetaData()
             };
 
             return BadRequest(errorResponse);
@@ -422,14 +419,17 @@ public class UsersController : ControllerBase
             var businessErrorResponse = new ApiResponse<object>
             {
                 Status = "error",
-                Error = new ErrorInfo
+                Data = null,
+                Errors = new List<ErrorInfo>
                 {
-                    Code = result.ErrorCode,
-                    Message = result.Error,
-                    Details = new List<ErrorDetail>()
+                    new ErrorInfo
+                    {
+                        Code = result.ErrorCode,
+                        Message = result.Error,
+                        Details = new List<ErrorDetail>()
+                    }
                 },
-                Meta = new MetaData(),
-                TraceId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                Meta = new MetaData()
             };
 
             return UnprocessableEntity(businessErrorResponse);
@@ -439,8 +439,8 @@ public class UsersController : ControllerBase
         {
             Status = "success",
             Data = _mapper.Map<UserDto>(result.Value),
-            Meta = new MetaData(),
-            TraceId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            Errors = new List<ErrorInfo>(),
+            Meta = new MetaData()
         };
 
         return CreatedAtAction(nameof(GetUser),
@@ -458,17 +458,20 @@ public class UsersController : ControllerBase
             var errorResponse = new ApiResponse<object>
             {
                 Status = "error",
-                Error = new ErrorInfo
+                Data = null,
+                Errors = new List<ErrorInfo>
                 {
-                    Code = "USER_NOT_FOUND",
-                    Message = "El usuario no existe",
-                    Details = new List<ErrorDetail>
+                    new ErrorInfo
                     {
-                        new() { Field = "id", Issue = $"No se encontró ningún usuario con el identificador '{id}'" }
+                        Code = "USER_NOT_FOUND",
+                        Message = "El usuario no existe",
+                        Details = new List<ErrorDetail>
+                        {
+                            new() { Field = "id", Issue = $"No se encontró ningún usuario con el identificador '{id}'" }
+                        }
                     }
                 },
-                Meta = new MetaData(),
-                TraceId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                Meta = new MetaData()
             };
 
             return NotFound(errorResponse);
@@ -478,8 +481,8 @@ public class UsersController : ControllerBase
         {
             Status = "success",
             Data = _mapper.Map<UserDto>(user),
-            Meta = new MetaData(),
-            TraceId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            Errors = new List<ErrorInfo>(),
+            Meta = new MetaData()
         };
 
         return Ok(response);
@@ -588,35 +591,40 @@ app.MapControllers();
 app.Run();
 ```
 
-## ✅ Ejemplos de respuestas
+## ✅ Ejemplos de Respuestas
+
+> **Nota**: Los ejemplos completos están en [Convenciones - Formato de Respuestas](/docs/fundamentos-corporativos/convenciones/apis/formato-respuestas).
 
 ### Error de validación (400)
 
 ```json
 {
   "status": "error",
-  "error": {
-    "code": "VALIDATION_FAILED",
-    "message": "La solicitud contiene errores de validación",
-    "details": [
-      {
-        "field": "userName",
-        "issue": "El nombre es obligatorio"
-      },
-      {
-        "field": "email",
-        "issue": "El formato del email no es válido"
-      },
-      {
-        "field": "email",
-        "issue": "Solo se permiten emails de dominios: talma.pe, talma.com"
-      },
-      {
-        "field": "age",
-        "issue": "La edad debe estar entre 18 y 120 años"
-      }
-    ]
-  },
+  "data": null,
+  "errors": [
+    {
+      "code": "VALIDATION_FAILED",
+      "message": "La solicitud contiene errores de validación",
+      "details": [
+        {
+          "field": "name",
+          "issue": "El nombre es obligatorio"
+        },
+        {
+          "field": "email",
+          "issue": "El formato del email no es válido"
+        },
+        {
+          "field": "email",
+          "issue": "Solo se permiten emails de dominios: talma.pe, talma.com"
+        },
+        {
+          "field": "age",
+          "issue": "La edad debe estar entre 18 y 120 años"
+        }
+      ]
+    }
+  ],
   "meta": {
     "traceId": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
     "timestamp": "2025-09-22T10:30:00Z"
@@ -629,11 +637,14 @@ app.Run();
 ```json
 {
   "status": "error",
-  "error": {
-    "code": "EMAIL_EXISTS",
-    "message": "Ya existe un usuario con este email",
-    "details": []
-  },
+  "data": null,
+  "errors": [
+    {
+      "code": "EMAIL_EXISTS",
+      "message": "Ya existe un usuario con este email",
+      "details": []
+    }
+  ],
   "meta": {
     "traceId": "de9f8c7b-6543-21fe-cdba-123456789abc",
     "timestamp": "2025-09-22T10:30:00Z"
@@ -646,11 +657,14 @@ app.Run();
 ```json
 {
   "status": "error",
-  "error": {
-    "code": "FORBIDDEN_ACCESS",
-    "message": "No tienes permisos para realizar esta acción",
-    "details": []
-  },
+  "data": null,
+  "errors": [
+    {
+      "code": "FORBIDDEN_ACCESS",
+      "message": "No tienes permisos para realizar esta acción",
+      "details": []
+    }
+  ],
   "meta": {
     "traceId": "12ab34cd-5678-90ef-gh12-34567890abcd",
     "timestamp": "2025-09-22T10:30:00Z"
@@ -665,11 +679,12 @@ app.Run();
   "status": "success",
   "data": {
     "id": "usr_123",
-    "userName": "Juan Pérez",
+    "name": "Juan Pérez",
     "email": "juan.perez@talma.pe",
     "active": true,
     "createdAt": "2025-09-22T10:30:00Z"
   },
+  "errors": [],
   "meta": {
     "traceId": "abc123-def456-789012",
     "timestamp": "2025-09-22T10:30:01Z"
@@ -678,6 +693,10 @@ app.Run();
 ```
 
 ## 📖 Referencias
+
+### Convenciones relacionadas
+
+- [Convenciones - Formato de Respuestas](/docs/fundamentos-corporativos/convenciones/apis/formato-respuestas) - Estructura JSON, códigos HTTP, ejemplos de respuestas
 
 ### Lineamientos relacionados
 
