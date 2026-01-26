@@ -1,0 +1,8 @@
+{
+    "label": "Base de Datos",
+    "position": 5,
+    "link": {
+        "type": "generated-index",
+        "description": "Convenciones para objetos de base de datos y migraciones."
+    }
+}

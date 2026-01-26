@@ -1,0 +1,8 @@
+{
+    "label": "Código",
+    "position": 2,
+    "link": {
+        "type": "generated-index",
+        "description": "Convenciones de nomenclatura, formato y estructura para código fuente."
+    }
+}
