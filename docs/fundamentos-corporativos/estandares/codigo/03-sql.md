@@ -9,6 +9,12 @@ description: Estándares de estilo, buenas prácticas y seguridad para SQL, Post
 
 Este documento define los lineamientos para escribir código SQL en Talma, incluyendo recomendaciones específicas para PostgreSQL y Oracle.
 
+**Versiones mínimas requeridas:**
+
+- PostgreSQL: 14+
+- MySQL: 8.0+ (si aplica)
+- SQL Server: 2019+ (si aplica)
+
 ## Objetivo
 
 Promover consultas SQL legibles, eficientes y seguras, aplicando buenas prácticas para cada motor. Fomentar que la lógica de negocio resida en las aplicaciones y que las bases de datos sean solo repositorios de datos.

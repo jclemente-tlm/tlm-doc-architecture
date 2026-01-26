@@ -9,7 +9,7 @@ description: Seguridad como propiedad inherente del sistema desde el diseño
 
 ## 1. Propósito
 
-Establecer que la seguridad debe ser una propiedad inherente del sistema, considerada desde las primeras decisiones de diseño y no como un agregado posterior.
+Establecer que se recomienda que la seguridad sea una propiedad inherente del sistema, considerada desde las primeras decisiones de diseño y no como un agregado posterior.
 
 ---
 

@@ -5,6 +5,12 @@ title: Documentación de APIs con OpenAPI
 description: Estándares para documentar APIs usando OpenAPI/Swagger y especificaciones REST
 ---
 
+**Versiones mínimas requeridas:**
+
+- OpenAPI Specification: 3.0+
+- Swagger UI: 4.0+
+- Spectral (linting): 6.0+
+
 ## Principios
 
 - Usa OpenAPI/Swagger para REST, gRPC/proto para servicios gRPC.

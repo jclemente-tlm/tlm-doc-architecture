@@ -135,20 +135,20 @@ X-Frame-Options: SAMEORIGIN
 X-XSS-Protection: 1; mode=block
 ```
 
-## 5. Propagación de Headers en Microservicios
+## 5. Headers de Contexto
 
-Headers que **DEBEN** propagarse entre servicios:
+Headers que mantienen contexto entre llamadas:
 
-- ✅ `X-Correlation-ID` - Tracking end-to-end
-- ✅ `X-Tenant-ID` - Multi-tenancy
-- ✅ `Authorization` - Autenticación
-- ✅ `Accept-Language` - Internacionalización
+- `X-Correlation-ID` - ID de tracking transaccional
+- `X-Tenant-ID` - Identificador de tenant
+- `Authorization` - Token de autenticación
+- `Accept-Language` - Preferencia de idioma
 
-Headers que **NO** se propagan:
+Headers generados por cada servicio:
 
-- ❌ `X-Request-ID` - Generar nuevo por cada hop
-- ❌ `Host` - Específico de cada servicio
-- ❌ `User-Agent` - Del cliente original
+- `X-Request-ID` - ID único por request
+- `Host` - Específico del endpoint
+- `User-Agent` - Identificación del cliente
 
 ## 6. Tabla de Referencia Rápida
 

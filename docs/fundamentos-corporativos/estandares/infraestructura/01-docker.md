@@ -5,6 +5,12 @@ title: Estándares para Docker
 description: Estándares para construcción, despliegue y gestión de contenedores Docker
 ---
 
+**Versiones mínimas requeridas:**
+
+- Docker Engine: 24.0+
+- Docker Compose: 2.20+
+- BuildKit: 0.12+ (habilitado por defecto)
+
 ## 1. Imágenes de Contenedores
 
 - Usar imágenes oficiales y ligeras basadas en versiones LTS estables (evitar versiones experimentales o no soportadas).

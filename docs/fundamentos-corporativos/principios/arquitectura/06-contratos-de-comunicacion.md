@@ -34,7 +34,7 @@ Esto permite que los sistemas evolucionen sin romper a sus consumidores y facili
 
 Aplica específicamente a:
 
-- APIs (REST, GraphQL, gRPC, SOAP)
+- APIs y protocolos de comunicación síncrona
 - Mensajería y eventos (colas, topics, streaming)
 - Contratos de servicios síncronos y asíncronos
 - Webhooks y callbacks

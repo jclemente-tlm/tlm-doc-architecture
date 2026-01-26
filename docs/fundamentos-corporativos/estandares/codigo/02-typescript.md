@@ -9,6 +9,13 @@ description: Estándares de Clean Code, estilo, buenas prácticas y seguridad pa
 
 Este documento adapta los principios de Clean Code para TypeScript, basado en la guía [clean-code-typescript](https://github.com/labs42io/clean-code-typescript), con ejemplos prácticos y recomendaciones clave.
 
+**Versiones mínimas requeridas:**
+
+- TypeScript: 5.0+
+- Node.js: 18 LTS+
+- ESLint: 8.0+
+- Prettier: 3.0+
+
 ## Objetivo
 
 Promover un código legible, mantenible y seguro en proyectos TypeScript, aplicando Clean Code.

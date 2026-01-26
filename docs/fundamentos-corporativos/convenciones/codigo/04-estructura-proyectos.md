@@ -7,11 +7,11 @@ description: Convención para organizar carpetas y archivos en proyectos
 
 ## 1. Principio
 
-La estructura de directorios debe reflejar la arquitectura y facilitar la navegación, siguiendo patrones establecidos por la comunidad de cada tecnología.
+La estructura de directorios debe ser consistente, predecible y seguir convenciones establecidas por la comunidad de cada tecnología para facilitar la navegación.
 
 ## 2. Reglas
 
-### Regla 1: Proyectos .NET - Clean Architecture
+### Regla 1: Proyectos .NET - Estructura por Capas
 
 ```
 src/

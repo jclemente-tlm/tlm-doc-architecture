@@ -5,6 +5,12 @@ title: Infraestructura como Código
 description: Estándares para definir, provisionar y gestionar infraestructura mediante código
 ---
 
+**Versiones mínimas requeridas:**
+
+- Terraform: 1.6+
+- AWS CDK: 2.100+ (si aplica)
+- Pulumi: 3.80+ (si aplica)
+
 ## 1. Principios
 
 - **Everything as Code**: Toda infraestructura debe estar definida como código.

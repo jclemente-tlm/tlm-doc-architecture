@@ -9,6 +9,12 @@ description: Estándares de Clean Code, estilo, buenas prácticas y seguridad pa
 
 Este documento resume y adapta los principios de Clean Code para C# y .NET, basado en la guía [clean-code-dotnet](https://github.com/thangchung/clean-code-dotnet), con ejemplos prácticos y recomendaciones clave.
 
+**Versiones mínimas requeridas:**
+
+- .NET: 8.0+
+- C#: 12+
+- ASP.NET Core: 8.0+
+
 ## Objetivo
 
 Promover un código legible, mantenible y seguro en proyectos C# y .NET, aplicando Clean Code.
