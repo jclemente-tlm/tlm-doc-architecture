@@ -1,19 +1,21 @@
-# Gestión de Identidades y Accesos
+# Identidad y Acceso Explícitos
 
 ## Declaración del Principio
 
-La arquitectura debe definir y gobernar de forma explícita las identidades y los accesos a los recursos del sistema, asegurando que solo entidades autorizadas puedan interactuar con capacidades y datos según su rol y contexto.
+La arquitectura debe definir explícitamente qué identidades existen (usuarios, servicios, sistemas) y qué accesos tienen a recursos, asegurando que toda interacción sea autenticada, autorizada y trazable.
 
 ## Propósito
 
-Controlar quién puede acceder a qué, bajo qué condiciones y durante cuánto tiempo, reduciendo el riesgo de accesos indebidos y facilitando la trazabilidad y el gobierno de la seguridad.
+Controlar explícitamente quién (humano o no-humano) puede acceder a qué recursos, bajo qué condiciones y durante cuánto tiempo, reduciendo el riesgo de accesos indebidos y facilitando la auditoría.
+
+> **Relación:** Este principio materializa [Zero Trust](02-zero-trust.md) mediante control explícito de identidades y [Mínimo Privilegio](06-minimo-privilegio.md) mediante restricción de accesos.
 
 ## Justificación
 
 En arquitecturas modernas, no solo los usuarios humanos acceden a los sistemas.
 Servicios, aplicaciones, procesos automatizados e integraciones externas también requieren identidad y permisos.
 
-Sin una gestión clara de identidades y accesos:
+Sin definición explícita de identidades y accesos:
 
 - Los permisos tienden a crecer sin control
 - Se generan accesos implícitos difíciles de auditar

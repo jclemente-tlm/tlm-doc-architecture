@@ -64,7 +64,7 @@ Aplica a:
 ## 6. Principios Relacionados
 
 - Diseño Orientado al Dominio
-- Arquitectura de Microservicios
+- [Arquitectura de Microservicios](../../estilos-arquitectonicos/microservicios.md)
 - Desacoplamiento y Autonomía
 - Simplicidad Intencional
 - Contratos de Integración

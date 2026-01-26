@@ -57,7 +57,7 @@ Aplica a:
 
 ## 6. Principios Relacionados
 
-- Arquitectura Orientada a Eventos
+- [Arquitectura Orientada a Eventos](../../estilos-arquitectonicos/eventos.md)
 - Desacoplamiento y Autonomía
 - Resiliencia y Tolerancia a Fallos
 - Contratos de Datos

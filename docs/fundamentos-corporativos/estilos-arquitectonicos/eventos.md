@@ -1,18 +1,48 @@
 ---
-id: 03-arquitectura-orientada-a-eventos
+id: eventos
 sidebar_position: 3
-# title: Arquitectura orientada a eventos
+title: Arquitectura Orientada a Eventos
 ---
 
 # Arquitectura Orientada a Eventos
 
-## Declaración del Principio
+> **Tipo:** Estilo Arquitectónico Contextual
+> **Aplicabilidad:** Sistemas con desacoplamiento temporal, múltiples consumidores y tolerancia a consistencia eventual
+
+## Declaración del Estilo
 
 Un sistema puede comunicarse y coordinarse mediante eventos que representan hechos relevantes del dominio, promoviendo desacoplamiento temporal y estructural entre componentes.
+
+## Principios que Materializa
+
+Este estilo arquitectónico implementa los siguientes principios corporativos:
+
+- ✅ [Desacoplamiento y Autonomía](../principios/arquitectura/06-desacoplamiento-y-autonomia.md)
+- ✅ [Resiliencia y Tolerancia a Fallos](../principios/arquitectura/11-resiliencia-y-tolerancia-a-fallos.md)
+- ✅ [Arquitectura Evolutiva](../principios/arquitectura/07-arquitectura-evolutiva.md)
+- ✅ [Consistencia Contextual](../principios/datos/03-consistencia-contextual.md)
 
 ## Propósito
 
 Reducir el acoplamiento entre sistemas y servicios, habilitar escalabilidad y resiliencia, y permitir que múltiples consumidores reaccionen a cambios del negocio sin dependencias directas.
+
+## Cuándo Usar este Estilo
+
+✅ **Aplicar cuando:**
+
+- Se requiere desacoplamiento temporal entre componentes
+- Existen múltiples consumidores de la misma información
+- Se tolera consistencia eventual
+- El sistema debe escalar de forma distribuida
+- Necesidad de reacción a hechos del dominio
+- Arquitecturas de microservicios con comunicación asíncrona
+
+❌ **NO aplicar cuando:**
+
+- Se requiere consistencia fuerte inmediata
+- Flujos síncronos críticos (ej: validación en línea)
+- Sistemas simples sin necesidad de desacoplamiento temporal
+- Dificultad para rastrear flujos asíncronos
 
 ## Justificación
 

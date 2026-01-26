@@ -59,7 +59,7 @@ Aplica a:
 
 - Consistencia según el Contexto
 - Resiliencia y Tolerancia a Fallos
-- Arquitectura Orientada a Eventos
+- [Arquitectura Orientada a Eventos](../../estilos-arquitectonicos/eventos.md)
 - Desacoplamiento y Autonomía
 
 ---

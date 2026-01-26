@@ -58,7 +58,7 @@ Aplica a:
 
 - Datos como Responsabilidad del Dominio
 - Desacoplamiento y Autonomía
-- Arquitectura de Microservicios
+- [Arquitectura de Microservicios](../../estilos-arquitectonicos/microservicios.md)
 - Contratos de Datos
 
 ---

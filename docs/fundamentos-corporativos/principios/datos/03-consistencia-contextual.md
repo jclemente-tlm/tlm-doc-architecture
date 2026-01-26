@@ -1,8 +1,8 @@
-# Consistencia según el Contexto
+# Consistencia Contextual
 
 ## Declaración del Principio
 
-El nivel de consistencia de los datos debe definirse según el contexto y las necesidades del dominio, y no imponerse de manera uniforme en toda la arquitectura.
+El nivel de consistencia de los datos debe definirse según las necesidades específicas de cada dominio o caso de uso, aceptando que diferentes partes del sistema pueden requerir modelos de consistencia distintos (fuerte, eventual, causal).
 
 ## Propósito
 

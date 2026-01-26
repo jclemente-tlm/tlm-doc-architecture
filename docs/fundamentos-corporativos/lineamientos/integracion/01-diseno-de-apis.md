@@ -58,7 +58,7 @@ Aplica a:
 
 - Contratos de Integración
 - Simplicidad Intencional
-- Arquitectura de Microservicios
+- [Arquitectura de Microservicios](../../estilos-arquitectonicos/microservicios.md)
 
 ---
 

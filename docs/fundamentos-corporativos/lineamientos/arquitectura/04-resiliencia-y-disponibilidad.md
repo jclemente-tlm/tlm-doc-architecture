@@ -57,7 +57,7 @@ Aplica a:
 ## 6. Principios Relacionados
 
 - Resiliencia y Tolerancia a Fallos
-- Arquitectura Cloud Native
+- [Arquitectura Cloud Native](../../estilos-arquitectonicos/cloud-native.md)
 - Observabilidad desde el Diseño
 - Desacoplamiento y Autonomía
 

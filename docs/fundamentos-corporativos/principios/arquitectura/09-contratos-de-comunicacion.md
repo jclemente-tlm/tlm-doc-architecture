@@ -1,18 +1,20 @@
-# Contratos de Integración
+# Contratos de Comunicación
 
 ## Declaración del Principio
 
-La integración entre sistemas y servicios debe basarse en contratos explícitos, versionados y acordados, que definan claramente las expectativas entre productores y consumidores.
+La comunicación entre sistemas y servicios debe basarse en contratos explícitos, versionados y acordados, que definan claramente las expectativas de las interfaces de integración (APIs, mensajería, eventos).
 
 ## Propósito
 
-Reducir el acoplamiento entre sistemas, permitir la evolución independiente y evitar dependencias implícitas que generen fallos difíciles de detectar y corregir.
+Reducir el acoplamiento entre sistemas, permitir la evolución independiente y evitar dependencias implícitas en las interfaces de comunicación (APIs, mensajería).
+
+> **Nota:** Este principio se enfoca en **contratos de comunicación** (APIs REST, GraphQL, gRPC, mensajería). Para esquemas de datos de dominio (BD, modelos) ver [Esquemas de Dominio](../../datos/02-esquemas-de-dominio.md).
 
 ## Justificación
 
 Cuando las integraciones se basan en supuestos no documentados o en detalles internos de otros sistemas, cualquier cambio puede provocar errores en cascada.
 
-Los contratos de integración establecen un acuerdo claro sobre:
+Los contratos de comunicación establecen un acuerdo claro sobre:
 
 - Qué se expone
 - Cómo se consume
@@ -23,12 +25,17 @@ Esto permite que los sistemas evolucionen sin romper a sus consumidores y facili
 
 ## Alcance Conceptual
 
-Aplica a:
+Aplica específicamente a:
 
-- APIs (REST, SOAP, gRPC, etc.)
-- Eventos y mensajería
-- Integraciones síncronas y asíncronas
-- Flujos batch e intercambios de datos
+- APIs (REST, GraphQL, gRPC, SOAP)
+- Mensajería y eventos (colas, topics, streaming)
+- Contratos de servicios síncronos y asíncronos
+- Webhooks y callbacks
+
+No aplica a:
+
+- Esquemas de bases de datos (ver Esquemas de Dominio)
+- Modelos de dominio internos
 
 El principio es independiente del estilo arquitectónico o la tecnología utilizada.
 

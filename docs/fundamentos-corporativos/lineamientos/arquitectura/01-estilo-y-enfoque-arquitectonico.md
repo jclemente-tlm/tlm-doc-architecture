@@ -88,8 +88,8 @@ No aplica a:
 ## 6. Principios Relacionados
 
 - Arquitectura Limpia
-- Arquitectura de Microservicios
-- Arquitectura Orientada a Eventos
+- [Arquitectura de Microservicios](../../estilos-arquitectonicos/microservicios.md)
+- [Arquitectura Orientada a Eventos](../../estilos-arquitectonicos/eventos.md)
 - Simplicidad Intencional
 - Desacoplamiento y Autonomía
 

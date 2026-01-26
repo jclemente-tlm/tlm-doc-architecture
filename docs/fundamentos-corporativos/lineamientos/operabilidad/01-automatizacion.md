@@ -58,7 +58,7 @@ Aplica a:
 ## 6. Principios Relacionados
 
 - Automatización como Principio
-- Infraestructura como Código
+- [Automatización como Principio](../../principios/operabilidad/01-automatizacion-como-principio.md)
 - Consistencia entre Entornos
 - Calidad desde el Diseño
 

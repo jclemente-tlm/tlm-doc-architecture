@@ -59,7 +59,7 @@ Aplica a:
 
 - Resiliencia y Tolerancia a Fallos
 - Observabilidad desde el Diseño
-- Arquitectura Cloud Native
+- [Arquitectura Cloud Native](../../estilos-arquitectonicos/cloud-native.md)
 
 ---
 

@@ -58,9 +58,8 @@ Aplica a:
 ## 6. Principios Relacionados
 
 - Consistencia entre Entornos
-- Infraestructura como Código
-- Automatización como Principio
-- Arquitectura Cloud Native
+- [Automatización como Principio](../../principios/operabilidad/01-automatizacion-como-principio.md)
+- [Arquitectura Cloud Native](../../estilos-arquitectonicos/cloud-native.md)
 
 ---
 

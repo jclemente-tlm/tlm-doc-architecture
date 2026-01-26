@@ -1,18 +1,48 @@
 ---
-id: 04-arquitectura-cloud-native
+id: cloud-native
 sidebar_position: 4
-# title: Arquitectura Cloud-Native
+title: Arquitectura Cloud Native
 ---
 
-# Arquitectura Cloud-Native
+# Arquitectura Cloud Native
 
-## Declaración del Principio
+> **Tipo:** Estilo Arquitectónico Contextual
+> **Aplicabilidad:** Sistemas diseñados para operar en plataformas cloud con elasticidad y resiliencia automáticas
+
+## Declaración del Estilo
 
 Un sistema puede diseñarse siguiendo principios cloud-native cuando se espera que opere en entornos dinámicos, escalables y automatizados, aprovechando las capacidades propias de plataformas cloud.
+
+## Principios que Materializa
+
+Este estilo arquitectónico implementa los siguientes principios corporativos:
+
+- ✅ [Resiliencia y Tolerancia a Fallos](../principios/arquitectura/11-resiliencia-y-tolerancia-a-fallos.md)
+- ✅ [Automatización como Principio](../principios/operabilidad/01-automatizacion-como-principio.md)
+- ✅ [Observabilidad desde el Diseño](../principios/arquitectura/08-observabilidad-desde-el-diseno.md)
+- ✅ [Consistencia entre Entornos](../principios/operabilidad/03-consistencia-entre-entornos.md)
+- ✅ [Arquitectura Evolutiva](../principios/arquitectura/07-arquitectura-evolutiva.md)
 
 ## Propósito
 
 Permitir que los sistemas se adapten al cambio, escalen bajo demanda y se operen de forma confiable en entornos distribuidos y automatizados.
+
+## Cuándo Usar este Estilo
+
+✅ **Aplicar cuando:**
+
+- Sistemas desplegados en plataformas cloud (AWS, Azure, GCP)
+- Arquitecturas distribuidas con múltiples servicios
+- Necesidad de escalabilidad y elasticidad automática
+- Entornos con despliegues frecuentes y automatizados
+- Tolerancia requerida a fallos de infraestructura
+
+❌ **NO aplicar cuando:**
+
+- Sistemas on-premise sin planes de migración
+- Infraestructura estática y predecible
+- Complejidad operativa no justificada
+- Equipos sin madurez DevOps/SRE
 
 ## Justificación
 

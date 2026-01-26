@@ -88,7 +88,7 @@ No aplica a:
 
 ## 6. Principios Relacionados
 
-- Arquitectura Cloud Native
+- [Arquitectura Cloud Native](../../estilos-arquitectonicos/cloud-native.md)
 - Resiliencia y Tolerancia a Fallos
 - Consistencia entre Entornos
 - Desacoplamiento y Autonomía
