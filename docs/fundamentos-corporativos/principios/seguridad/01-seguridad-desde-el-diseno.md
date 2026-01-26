@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Seguridad desde el Diseño
 
 ## Declaración del Principio

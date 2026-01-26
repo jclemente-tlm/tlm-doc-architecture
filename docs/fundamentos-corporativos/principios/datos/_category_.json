@@ -1,0 +1,10 @@
+{
+    "label": "Principios de Datos",
+    "position": 2,
+    "link": {
+        "type": "generated-index",
+        "title": "Principios de Datos",
+        "slug": "/principios/datos",
+        "description": "Principios fundamentales para la gestión y gobernanza de datos en Talma."
+    }
+}

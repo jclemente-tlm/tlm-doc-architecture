@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Esquemas de Dominio
 
 ## Declaración del Principio

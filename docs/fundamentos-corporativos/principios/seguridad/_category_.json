@@ -1,0 +1,10 @@
+{
+    "label": "Principios de Seguridad",
+    "position": 3,
+    "link": {
+        "type": "generated-index",
+        "title": "Principios de Seguridad",
+        "slug": "/principios/seguridad",
+        "description": "Principios fundamentales de seguridad para proteger sistemas y datos en Talma."
+    }
+}

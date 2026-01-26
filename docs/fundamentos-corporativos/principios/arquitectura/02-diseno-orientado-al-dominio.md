@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Diseño Orientado al Dominio (DDD)
 
 ## Declaración del Principio

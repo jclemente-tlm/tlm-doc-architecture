@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # Contratos de Comunicación
 
 ## Declaración del Principio

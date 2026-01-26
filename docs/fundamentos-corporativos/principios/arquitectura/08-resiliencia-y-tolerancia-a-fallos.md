@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # Resiliencia y Tolerancia a Fallos
 
 ## Declaración del Principio

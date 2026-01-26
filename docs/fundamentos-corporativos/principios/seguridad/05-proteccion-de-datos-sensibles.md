@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # Protección de Datos Sensibles
 
 ## Declaración del Principio

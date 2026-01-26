@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Calidad desde el Diseño
 
 ## Declaración del Principio

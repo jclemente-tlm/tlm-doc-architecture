@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Consistencia entre Entornos
 
 ## Declaración del Principio

@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Automatización como Principio
 
 ## Declaración del Principio

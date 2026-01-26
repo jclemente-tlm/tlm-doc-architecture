@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Consistencia Contextual
 
 ## Declaración del Principio

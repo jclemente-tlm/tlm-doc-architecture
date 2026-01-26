@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Zero Trust
 
 ## Declaración del Principio
