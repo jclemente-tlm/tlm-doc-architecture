@@ -2,14 +2,16 @@
 id: contratos-de-integracion
 sidebar_position: 2
 title: Contratos de Integración
-description: Definición y gestión de contratos entre sistemas y servicios
+description: Definición y gestión de contratos de comunicación entre sistemas y servicios
 ---
 
 # Contratos de Integración
 
 ## 1. Propósito
 
-Establecer cómo definir, versionar y gestionar contratos de integración entre sistemas, garantizando compatibilidad y evolución controlada.
+Establecer cómo definir, versionar y gestionar contratos de comunicación (APIs, mensajes) entre sistemas, garantizando compatibilidad y evolución controlada.
+
+> **Nota:** Para esquemas de datos de dominio (BD, eventos) ver [Esquemas de Datos](../datos/02-contratos-y-esquemas.md).
 
 ---
 
@@ -17,40 +19,49 @@ Establecer cómo definir, versionar y gestionar contratos de integración entre 
 
 Aplica a:
 
-- Contratos de APIs REST y GraphQL
-- Contratos de mensajes y eventos
-- Contratos de servicios SOAP (legacy)
+- Contratos de APIs REST y GraphQL (OpenAPI, GraphQL Schema)
+- Contratos de mensajes asíncronos (AsyncAPI)
+- Contratos gRPC (Protobuf)
+- Contratos de servicios SOAP (legacy, WSDL)
 - Interfaces de integración con terceros
+
+No aplica a:
+
+- Esquemas de bases de datos (ver Datos/02)
+- Modelos de dominio internos (ver Datos/02)
 
 ---
 
 ## 3. Lineamientos Obligatorios
 
-- Definir contratos explícitos con esquemas formales (OpenAPI, AsyncAPI)
-- Versionar contratos semánticamente (major.minor.patch)
-- Validar requests y responses contra esquemas
-- Mantener retrocompatibilidad o gestionar breaking changes
-- Publicar contratos en registro centralizado
+- Definir contratos de API con especificaciones estándar (OpenAPI 3.x, AsyncAPI 2.x+)
+- Versionar contratos semánticamente en URL o header (v1, v2)
+- Validar requests y responses contra contratos en runtime
+- Mantener retrocompatibilidad durante deprecación (mínimo 6 meses)
+- Publicar contratos en repositorio accesible (API Portal, Git)
 
 ---
 
 ## 4. Decisiones de Diseño Esperadas
 
-- Formato de contratos (OpenAPI, AsyncAPI, Protobuf)
-- Estrategia de versionado y deprecación
-- Schema registry o repositorio de contratos
-- Proceso de aprobación de cambios de contrato
-- Herramientas de validación y testing de contratos
+- Formato de contratos por tipo (OpenAPI para REST, AsyncAPI para eventos, Protobuf para gRPC)
+- Estrategia de versionado de APIs (URL path /v1, header, query param)
+- Proceso de deprecación de versiones (timeline, comunicación)
+- API Portal o repositorio de contratos (Swagger UI, Postman, Backstage)
+- Herramientas de contract testing (Pact, Spring Cloud Contract, Dredd)
+- Políticas de breaking changes (cuándo incrementar major)
 
 ---
 
 ## 5. Antipatrones y Prácticas Prohibidas
 
-- Integraciones sin contrato definido
-- Breaking changes sin incremento de versión mayor
-- Contratos solo en documentación, no en código
-- Validación solo en consumidor, no en productor
-- Cambios de contrato sin comunicación
+- APIs sin especificación OpenAPI/AsyncAPI
+- Breaking changes sin nueva versión de API
+- Especificaciones desactualizadas (no reflejan implementación)
+- Validación solo en consumidor (client-side)
+- Cambios de contrato sin deprecation period
+- Contratos no publicados o inaccesibles
+- Versionado solo en código, no en URL/header
 
 ---
 
@@ -65,8 +76,10 @@ Aplica a:
 
 ## 7. Validación y Cumplimiento
 
-- Contract testing automatizado (Pact, Spring Cloud Contract)
-- Validación de breaking changes en CI/CD
+- Contract testing automatizado en CI/CD (Pact, Spring Cloud Contract, Dredd)
+- Validación de especificación OpenAPI con linters (Spectral, Redocly)
 - Revisión de cambios de contrato en PRs
-- Monitoreo de versiones deprecadas en uso
-- Auditoría de contratos publicados vs implementados
+- Monitoreo de versiones de API en uso (métricas por versión)
+- Auditoría de drift entre especificación y código
+- Verificación de contratos publicados en API Portal
+- Alertas de uso de endpoints deprecados
