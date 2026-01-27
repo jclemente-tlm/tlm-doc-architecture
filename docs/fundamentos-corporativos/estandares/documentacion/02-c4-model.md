@@ -9,71 +9,152 @@ description: Estándar para crear diagramas arquitectónicos consistentes usando
 
 ## 1. Propósito
 
-Establecer el **Modelo C4** como estándar para crear diagramas arquitectónicos en Talma, asegurando visualizaciones consistentes y comprensibles en 4 niveles de abstracción.
+Establecer el **Modelo C4** como estándar corporativo para crear diagramas arquitectónicos en Talma, asegurando visualizaciones consistentes y comprensibles en 4 niveles de abstracción que faciliten la comunicación técnica entre todos los stakeholders.
 
-:::tip
+:::tip Complementariedad
 Usa C4 Model para los **diagramas arquitectónicos** y [arc42](./01-arc42.md) para la **estructura de documentación**. Los diagramas C4 se integran en las secciones 3, 5, 6 y 7 de arc42.
 :::
 
 ## 2. Alcance
 
-- Diagramas de arquitectura para documentación técnica
-- Presentaciones a stakeholders
-- Onboarding de equipos
-- Revisiones de diseño
-- Integración con plantilla [arc42](./01-arc42.md)
+### 2.1 Aplicaciones Objetivo
 
-## 3. ¿Qué es C4 Model?
+- ✅ Diagramas de arquitectura para documentación técnica
+- ✅ Presentaciones a stakeholders (técnicos y no técnicos)
+- ✅ Onboarding de equipos de desarrollo
+- ✅ Revisiones de diseño arquitectónico
+- ✅ Integración con plantilla [arc42](./01-arc42.md)
+- ✅ Comunicación de decisiones arquitectónicas (ADRs)
 
-El **C4 Model** define **4 niveles de diagramas arquitectónicos**, cada uno con diferente nivel de detalle y audiencia objetivo:
+### 2.2 Uso Obligatorio
 
-| Nivel | Nombre    | Audiencia                      | Zoom                                |
-| ----- | --------- | ------------------------------ | ----------------------------------- |
-| **1** | Context   | Todos (técnicos y no técnicos) | Sistema completo en su entorno      |
-| **2** | Container | Arquitectos, DevOps            | Aplicaciones, servicios, BD         |
-| **3** | Component | Arquitectos, Desarrolladores   | Componentes dentro de un contenedor |
-| **4** | Code      | Desarrolladores                | Clases, interfaces (UML)            |
+- Documentación de arquitectura de sistemas nuevos
+- Actualización de diagramas existentes en migraciones
+- Revisiones de diseño (design reviews)
+- Documentación de microservicios y sistemas distribuidos
 
-## 4. Nivel 1: Diagrama de Contexto
+### 2.3 Uso Recomendado
 
-### 4.1 Propósito
+- Diagramas para presentaciones ejecutivas (Level 1)
+- Documentación de POCs que puedan evolucionar a producción
+- Onboarding de desarrolladores junior
+
+## 3. Tecnologías Obligatorias
+
+### 3.1 Herramientas de Diagramación
+
+| Herramienta | Versión | Formato | Uso | Exportación |
+|-------------|---------|---------|-----|-------------|
+| **Structurizr DSL** | 2.0+ | `.dsl` | Obligatorio (preferido) | PNG, SVG, PlantUML |
+| **C4-PlantUML** | Latest | `.puml` | Alternativa | PNG, SVG |
+| **Mermaid** | 10.0+ | Markdown | Alternativa (diagramas simples) | PNG, SVG |
+| **Draw.io** | - | `.drawio` | ❌ No permitido | - |
+| **Lucidchart** | - | Propietario | ❌ No permitido | - |
+
+### 3.2 Instalación Structurizr CLI
+
+```bash
+# Instalación de Structurizr CLI
+brew install structurizr-cli  # macOS
+
+# O descargar binario
+wget https://github.com/structurizr/cli/releases/download/v2.0.0/structurizr-cli.zip
+unzip structurizr-cli.zip -d /usr/local/bin/
+
+# Exportar diagramas
+structurizr-cli export -workspace workspace.dsl -format plantuml
+structurizr-cli export -workspace workspace.dsl -format png
+```
+
+### 3.3 Integración con Docusaurus
+
+```markdown
+# docs/arquitectura/03-contexto-alcance.md
+
+## Diagrama de Contexto
+
+![Sistema de Usuarios - Contexto](../../static/diagrams/users-context.png)
+
+**Código fuente**: [diagrams/users-context.dsl](../../static/diagrams/users-context.dsl)
+
+<!-- Opción alternativa con Mermaid embebido -->
+```mermaid
+C4Context
+  title Contexto del Sistema de Usuarios
+  Person(user, "Usuario", "Empleado de Talma")
+  System(userSys, "Sistema de Usuarios", "Gestión centralizada")
+  System_Ext(ad, "Active Directory", "LDAP")
+  Rel(user, userSys, "Usa", "HTTPS")
+  Rel(userSys, ad, "Autentica", "LDAP")
+```
+```
+
+## 4. Especificaciones Técnicas
+
+### 4.1 Los 4 Niveles del Modelo C4
+
+| Nivel | Nombre | Audiencia | Elementos Clave | Zoom |
+|-------|--------|-----------|-----------------|------|
+| **1** | **Context** | Todos (técnicos y no técnicos) | Person, Software System | Sistema completo en su entorno |
+| **2** | **Container** | Arquitectos, DevOps, Líderes Técnicos | Container (App, DB, Queue) | Aplicaciones, servicios, BD |
+| **3** | **Component** | Arquitectos, Desarrolladores | Component (Controller, Service) | Componentes internos |
+| **4** | **Code** | Desarrolladores | Class, Interface (UML) | Clases e interfaces |
+
+### 4.2 Nivel 1: Diagrama de Contexto (Context)
+
+#### Propósito
 
 Mostrar **cómo el sistema encaja en el mundo** que lo rodea:
-
 - Usuarios del sistema (personas y sistemas externos)
-- Fronteras del sistema
+- Fronteras del sistema (scope)
 - Relaciones de alto nivel
 
-### 4.2 Elementos
+#### Elementos
 
-- **Person**: Usuario humano (empleado, cliente, admin)
+- **Person**: Usuario humano (empleado, cliente, administrador)
 - **Software System**: Sistema (el tuyo o externo)
-- **Relationships**: Interacciones entre elementos
+- **Relationship**: Interacciones entre elementos
 
-### 4.3 Ejemplo: Structurizr DSL
+#### Ejemplo: Structurizr DSL
 
 ```dsl
-workspace "Sistema de Usuarios Talma" {
+workspace "Sistema de Usuarios Talma" "Gestión centralizada de identidades" {
     model {
         # Personas
-        employee = person "Empleado" "Empleado de Talma que usa el sistema"
-        admin = person "Administrador IT" "Gestiona usuarios y permisos"
+        employee = person "Empleado" {
+            description "Empleado de Talma que usa aplicaciones corporativas"
+        }
+        admin = person "Administrador IT" {
+            description "Gestiona usuarios, roles y permisos"
+        }
 
         # Sistema principal
-        userSystem = softwareSystem "Sistema de Usuarios" "Gestión centralizada de usuarios, autenticación y autorización"
+        userSystem = softwareSystem "Sistema de Usuarios" {
+            description "Gestión centralizada de usuarios, autenticación y autorización"
+            tags "Main System"
+        }
 
         # Sistemas externos
-        activeDirectory = softwareSystem "Active Directory" "Directorio corporativo" "External"
-        sapHR = softwareSystem "SAP HR" "Sistema de recursos humanos" "External"
-        emailService = softwareSystem "SendGrid" "Servicio de email" "External"
+        activeDirectory = softwareSystem "Active Directory" {
+            description "Directorio corporativo de Windows"
+            tags "External"
+        }
+        sapHR = softwareSystem "SAP HR" {
+            description "Sistema de recursos humanos"
+            tags "External"
+        }
+        emailService = softwareSystem "SendGrid" {
+            description "Servicio de envío de emails"
+            tags "External"
+        }
 
         # Relaciones
-        employee -> userSystem "Inicia sesión en aplicaciones"
-        admin -> userSystem "Gestiona usuarios y roles"
+        employee -> userSystem "Inicia sesión en aplicaciones" "HTTPS"
+        admin -> userSystem "Gestiona usuarios y roles" "HTTPS"
 
-        userSystem -> activeDirectory "Autentica usuarios" "LDAP"
-        userSystem -> sapHR "Sincroniza datos de empleados" "REST API"
-        userSystem -> emailService "Envía notificaciones" "HTTPS"
+        userSystem -> activeDirectory "Autentica usuarios contra" "LDAP/636"
+        userSystem -> sapHR "Sincroniza datos de empleados desde" "REST API/HTTPS"
+        userSystem -> emailService "Envía notificaciones vía" "REST API/HTTPS"
     }
 
     views {
@@ -92,6 +173,10 @@ workspace "Sistema de Usuarios Talma" {
                 background #1168BD
                 color #ffffff
             }
+            element "Main System" {
+                background #2E7D32
+                color #ffffff
+            }
             element "External" {
                 background #999999
                 color #ffffff
@@ -101,7 +186,7 @@ workspace "Sistema de Usuarios Talma" {
 }
 ```
 
-### 4.4 Ejemplo: PlantUML
+#### Ejemplo: PlantUML
 
 ```plantuml
 @startuml
@@ -109,579 +194,650 @@ workspace "Sistema de Usuarios Talma" {
 
 LAYOUT_WITH_LEGEND()
 
+title Diagrama de Contexto - Sistema de Usuarios Talma
+
 Person(employee, "Empleado", "Empleado de Talma")
-Person(admin, "Administrador IT", "Gestiona usuarios")
+Person(admin, "Administrador IT", "Gestiona usuarios y permisos")
 
 System(userSystem, "Sistema de Usuarios", "Gestión centralizada de identidades")
 
 System_Ext(ad, "Active Directory", "Directorio corporativo")
-System_Ext(sap, "SAP HR", "Recursos humanos")
+System_Ext(sap, "SAP HR", "Sistema de RRHH")
 System_Ext(email, "SendGrid", "Servicio de email")
 
-Rel(employee, userSystem, "Inicia sesión")
-Rel(admin, userSystem, "Gestiona usuarios")
+Rel(employee, userSystem, "Inicia sesión", "HTTPS")
+Rel(admin, userSystem, "Gestiona usuarios", "HTTPS")
 
-Rel(userSystem, ad, "Autentica", "LDAP")
-Rel(userSystem, sap, "Sincroniza datos", "REST")
-Rel(userSystem, email, "Envía emails", "HTTPS")
+Rel(userSystem, ad, "Autentica usuarios", "LDAP/636")
+Rel(userSystem, sap, "Sincroniza datos", "REST/HTTPS")
+Rel(userSystem, email, "Envía notificaciones", "REST/HTTPS")
 
 @enduml
 ```
 
-### 4.5 Ejemplo: Mermaid
+### 4.3 Nivel 2: Diagrama de Contenedores (Container)
 
-```mermaid
-C4Context
-    title Contexto del Sistema de Usuarios Talma
-
-    Person(employee, "Empleado", "Empleado de Talma")
-    Person(admin, "Admin IT", "Gestiona usuarios")
-
-    System(userSystem, "Sistema de Usuarios", "Gestión centralizada")
-
-    System_Ext(ad, "Active Directory", "Directorio corporativo")
-    System_Ext(sap, "SAP HR", "RRHH")
-    System_Ext(email, "SendGrid", "Email")
-
-    Rel(employee, userSystem, "Inicia sesión", "HTTPS")
-    Rel(admin, userSystem, "Gestiona", "HTTPS")
-
-    Rel(userSystem, ad, "Autentica", "LDAP")
-    Rel(userSystem, sap, "Sincroniza", "REST")
-    Rel(userSystem, email, "Notifica", "HTTPS")
-```
-
-## 5. Nivel 2: Diagrama de Contenedores
-
-### 5.1 Propósito
+#### Propósito
 
 Mostrar **la arquitectura de alto nivel** del sistema:
+- Aplicaciones ejecutables (web apps, APIs, CLIs)
+- Servicios (microservicios, workers)
+- Bases de datos (PostgreSQL, Redis, MongoDB)
+- Tecnologías clave de cada contenedor
 
-- Aplicaciones ejecutables
-- Servicios
-- Bases de datos
-- Tecnologías clave
+**Nota Importante**: "Container" = **unidad deployable** (no necesariamente Docker container)
 
-**Nota**: "Container" = unidad deployable (no Docker container)
+#### Elementos
 
-### 5.2 Elementos
+- **Web Application**: SPA (React, Angular), MVC app (ASP.NET MVC)
+- **API Application**: REST API, GraphQL, gRPC
+- **Database**: PostgreSQL, SQL Server, MongoDB, Redis
+- **Message Broker**: Kafka, RabbitMQ, AWS SQS
+- **File System**: AWS S3, Azure Blob Storage
 
-- **Web Application**: SPA, MVC app
-- **API Application**: REST API, GraphQL
-- **Database**: PostgreSQL, MongoDB, Redis
-- **Message Broker**: Kafka, RabbitMQ
-- **File System**: S3, almacenamiento
-
-### 5.3 Ejemplo: Structurizr DSL
+#### Ejemplo: Structurizr DSL
 
 ```dsl
-container userSystem "Containers" {
-    # Frontend
-    spa = container "Single Page App" "Interfaz de usuario" "React + TypeScript" "Web Browser"
+workspace "Sistema de Usuarios" {
+    model {
+        employee = person "Empleado"
+        admin = person "Administrador IT"
+        
+        activeDirectory = softwareSystem "Active Directory" "LDAP" "External"
+        sapHR = softwareSystem "SAP HR" "RRHH" "External"
 
-    # Backend
-    api = container "Web API" "API REST para operaciones" "ASP.NET Core 8" {
-        tags "API"
+        userSystem = softwareSystem "Sistema de Usuarios" {
+            # Frontend
+            spa = container "Single Page App" {
+                description "Interfaz de usuario para gestión de usuarios"
+                technology "React 18 + TypeScript 5"
+                tags "Web Browser"
+            }
+
+            # Backend
+            api = container "Web API" {
+                description "API REST para operaciones CRUD de usuarios"
+                technology "ASP.NET Core 8.0"
+                tags "API"
+            }
+
+            # Datos
+            database = container "Database" {
+                description "Almacena usuarios, roles, permisos"
+                technology "PostgreSQL 16"
+                tags "Database"
+            }
+
+            cache = container "Cache" {
+                description "Cache de sesiones y tokens"
+                technology "Redis 7"
+                tags "Database"
+            }
+
+            # Mensajería
+            queue = container "Message Queue" {
+                description "Cola de eventos de usuarios"
+                technology "RabbitMQ 3.12"
+                tags "Queue"
+            }
+
+            # Relaciones Frontend-Backend
+            employee -> spa "Usa la aplicación web" "HTTPS/443"
+            admin -> spa "Gestiona usuarios" "HTTPS/443"
+            spa -> api "Hace llamadas API" "JSON/HTTPS"
+
+            # Relaciones Backend-Datos
+            api -> database "Lee y escribe datos" "TCP/5432 (Entity Framework Core)"
+            api -> cache "Cachea sesiones" "TCP/6379 (StackExchange.Redis)"
+            api -> queue "Publica eventos (UserCreated, UserDeleted)" "AMQP/5672"
+
+            # Relaciones Backend-Externos
+            api -> activeDirectory "Autentica usuarios" "LDAP/636"
+            api -> sapHR "Sincroniza empleados" "HTTPS/REST"
+        }
     }
 
-    # Datos
-    database = container "Database" "Almacena usuarios, roles" "PostgreSQL 16" "Database"
-    cache = container "Cache" "Cache de sesiones" "Redis 7" "Database"
+    views {
+        container userSystem "Containers" {
+            include *
+            autolayout lr
+        }
 
-    # Mensajería
-    queue = container "Message Queue" "Cola de eventos" "RabbitMQ" "Queue"
-
-    # Relaciones
-    employee -> spa "Usa" "HTTPS"
-    admin -> spa "Gestiona" "HTTPS"
-
-    spa -> api "Hace llamadas API" "HTTPS/JSON"
-
-    api -> database "Lee/Escribe" "TCP/5432"
-    api -> cache "Cachea sesiones" "TCP/6379"
-    api -> queue "Publica eventos" "AMQP"
-    api -> activeDirectory "Autentica" "LDAP/636"
-    api -> sapHR "Sincroniza" "HTTPS/REST"
+        styles {
+            element "Web Browser" {
+                shape WebBrowser
+                background #438DD5
+            }
+            element "API" {
+                shape RoundedBox
+                background #85BBF0
+            }
+            element "Database" {
+                shape Cylinder
+                background #438DD5
+            }
+            element "Queue" {
+                shape Pipe
+                background #FFA500
+            }
+        }
+    }
 }
 ```
 
-### 5.4 Ejemplo: PlantUML
+#### Ejemplo: PlantUML
 
 ```plantuml
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
+LAYOUT_WITH_LEGEND()
+
+title Diagrama de Contenedores - Sistema de Usuarios
+
 Person(user, "Usuario", "Empleado")
+Person(admin, "Admin", "Administrador IT")
 
 System_Boundary(c1, "Sistema de Usuarios") {
-    Container(spa, "SPA", "React", "Interfaz web")
-    Container(api, "API", "ASP.NET Core", "API REST")
-    ContainerDb(db, "Database", "PostgreSQL", "Datos persistentes")
-    ContainerDb(cache, "Cache", "Redis", "Sesiones")
-    ContainerQueue(queue, "Queue", "RabbitMQ", "Eventos")
+    Container(spa, "SPA", "React 18 + TypeScript 5", "Interfaz web de usuario")
+    Container(api, "Web API", "ASP.NET Core 8.0", "API REST para operaciones de usuarios")
+    ContainerDb(db, "Database", "PostgreSQL 16", "Almacena usuarios, roles, permisos")
+    ContainerDb(cache, "Cache", "Redis 7", "Sesiones y tokens en memoria")
+    ContainerQueue(queue, "Message Queue", "RabbitMQ 3.12", "Eventos de usuarios")
 }
 
-System_Ext(ad, "Active Directory", "LDAP")
+System_Ext(ad, "Active Directory", "Directorio LDAP")
+System_Ext(sap, "SAP HR", "Sistema RRHH")
 
 Rel(user, spa, "Usa", "HTTPS")
-Rel(spa, api, "API calls", "JSON/HTTPS")
-Rel(api, db, "Lee/Escribe", "TCP/5432")
-Rel(api, cache, "Cachea", "TCP/6379")
-Rel(api, queue, "Publica", "AMQP")
-Rel(api, ad, "Autentica", "LDAP")
+Rel(admin, spa, "Gestiona", "HTTPS")
+Rel(spa, api, "Llamadas API", "JSON/HTTPS")
+Rel(api, db, "Lee/Escribe", "TCP/5432 (EF Core)")
+Rel(api, cache, "Cachea", "TCP/6379 (StackExchange.Redis)")
+Rel(api, queue, "Publica eventos", "AMQP/5672")
+Rel(api, ad, "Autentica", "LDAP/636")
+Rel(api, sap, "Sincroniza", "REST/HTTPS")
 
 @enduml
 ```
 
-## 6. Nivel 3: Diagrama de Componentes
+### 4.4 Nivel 3: Diagrama de Componentes (Component)
 
-### 6.1 Propósito
+#### Propósito
 
 Descomponer un **contenedor** en sus componentes internos:
-
-- Controllers, Services, Repositories
-- Módulos lógicos
+- Controllers, Services, Repositories (patrón arquitectónico)
+- Módulos lógicos y capas
 - Responsabilidades de cada componente
 
-### 6.2 Ejemplo: Structurizr DSL
+**Nota**: Crear un diagrama de componentes **por contenedor** (normalmente solo para contenedores complejos como APIs)
+
+#### Elementos
+
+- **Component**: Unidad lógica de código (Controller, Service, Repository)
+- **Relaciones**: Dependencias entre componentes
+
+#### Ejemplo: Structurizr DSL
 
 ```dsl
-component api "APIComponents" {
-    # Controllers
-    authController = component "Auth Controller" "Endpoints de autenticación" "ASP.NET MVC"
-    userController = component "User Controller" "CRUD de usuarios" "ASP.NET MVC"
+workspace "Sistema de Usuarios - Componentes de Web API" {
+    model {
+        spa = container "SPA" "React"
+        database = container "Database" "PostgreSQL"
+        cache = container "Cache" "Redis"
 
-    # Services (Business Logic)
-    authService = component "Auth Service" "Lógica de autenticación" "C#"
-    userService = component "User Service" "Lógica de usuarios" "C#"
+        api = container "Web API" "ASP.NET Core 8" {
+            # Controllers (Presentation Layer)
+            authController = component "Auth Controller" {
+                description "Endpoints de autenticación (login, logout, refresh)"
+                technology "ASP.NET Core MVC Controllers"
+            }
+            userController = component "User Controller" {
+                description "CRUD de usuarios (GET, POST, PUT, DELETE)"
+                technology "ASP.NET Core MVC Controllers"
+            }
 
-    # Repositories (Data Access)
-    userRepository = component "User Repository" "Acceso a datos de usuarios" "EF Core"
+            # Services (Business Logic Layer)
+            authService = component "Auth Service" {
+                description "Lógica de autenticación y generación de tokens JWT"
+                technology "C# Service Class"
+            }
+            userService = component "User Service" {
+                description "Lógica de negocio de usuarios (validaciones, reglas)"
+                technology "C# Service Class"
+            }
 
-    # Infrastructure
-    cacheService = component "Cache Service" "Abstracción de Redis" "C#"
+            # Repositories (Data Access Layer)
+            userRepository = component "User Repository" {
+                description "Acceso a datos de usuarios (CRUD)"
+                technology "Entity Framework Core Repository"
+            }
 
-    # Relaciones
-    spa -> authController "POST /auth/login"
-    spa -> userController "GET /users"
+            # Infrastructure
+            cacheService = component "Cache Service" {
+                description "Abstracción de Redis para caching"
+                technology "StackExchange.Redis"
+            }
 
-    authController -> authService "Valida credenciales"
-    userController -> userService "Operaciones CRUD"
+            # Relaciones SPA -> Controllers
+            spa -> authController "POST /api/v1/auth/login"
+            spa -> userController "GET /api/v1/users"
 
-    authService -> userRepository "Busca usuario"
-    userService -> userRepository "CRUD"
+            # Relaciones Controllers -> Services
+            authController -> authService "Valida credenciales"
+            userController -> userService "Operaciones CRUD"
 
-    authService -> cacheService "Cachea tokens"
-    userRepository -> database "SQL queries"
-    cacheService -> cache "Redis commands"
+            # Relaciones Services -> Repositories
+            authService -> userRepository "Busca usuario por email"
+            userService -> userRepository "CRUD de usuarios"
+
+            # Relaciones Services -> Infrastructure
+            authService -> cacheService "Cachea refresh tokens"
+
+            # Relaciones Repositories/Cache -> Contenedores externos
+            userRepository -> database "SQL queries (EF Core)"
+            cacheService -> cache "Comandos Redis (SET, GET, DEL)"
+        }
+    }
+
+    views {
+        component api "APIComponents" {
+            include *
+            autolayout lr
+        }
+
+        styles {
+            element "Component" {
+                background #85BBF0
+            }
+        }
+    }
 }
 ```
 
-### 6.3 Ejemplo: PlantUML
+#### Ejemplo: PlantUML
 
 ```plantuml
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+LAYOUT_WITH_LEGEND()
+
+title Diagrama de Componentes - Web API
+
 Container(spa, "SPA", "React")
 ContainerDb(db, "Database", "PostgreSQL")
 ContainerDb(cache, "Cache", "Redis")
 
-Container_Boundary(api, "Web API") {
-    Component(authCtrl, "Auth Controller", "ASP.NET MVC", "Endpoints auth")
-    Component(userCtrl, "User Controller", "ASP.NET MVC", "CRUD users")
+Container_Boundary(api, "Web API - ASP.NET Core") {
+    ' Presentation Layer
+    Component(authCtrl, "Auth Controller", "MVC Controller", "Endpoints de autenticación")
+    Component(userCtrl, "User Controller", "MVC Controller", "CRUD de usuarios")
 
-    Component(authSvc, "Auth Service", "C#", "Lógica auth")
-    Component(userSvc, "User Service", "C#", "Lógica users")
+    ' Business Logic Layer
+    Component(authSvc, "Auth Service", "C# Service", "Lógica de autenticación JWT")
+    Component(userSvc, "User Service", "C# Service", "Lógica de negocio de usuarios")
 
-    Component(userRepo, "User Repository", "EF Core", "Data access")
-    Component(cacheSvc, "Cache Service", "C#", "Redis abstraction")
+    ' Data Access Layer
+    Component(userRepo, "User Repository", "EF Core", "Acceso a datos de usuarios")
+    Component(cacheSvc, "Cache Service", "StackExchange.Redis", "Abstracción de Redis")
 }
 
-Rel(spa, authCtrl, "POST /auth/login", "JSON")
-Rel(spa, userCtrl, "GET /users", "JSON")
+' Relaciones externas
+Rel(spa, authCtrl, "POST /auth/login", "JSON/HTTPS")
+Rel(spa, userCtrl, "GET /users", "JSON/HTTPS")
 
-Rel(authCtrl, authSvc, "Valida")
-Rel(userCtrl, userSvc, "Opera")
+' Relaciones internas
+Rel(authCtrl, authSvc, "Valida credenciales")
+Rel(userCtrl, userSvc, "Operaciones CRUD")
 
-Rel(authSvc, userRepo, "Busca")
+Rel(authSvc, userRepo, "Busca usuario")
 Rel(userSvc, userRepo, "CRUD")
 
-Rel(authSvc, cacheSvc, "Cachea")
-Rel(userRepo, db, "SQL", "TCP/5432")
-Rel(cacheSvc, cache, "Commands", "TCP/6379")
+Rel(authSvc, cacheSvc, "Cachea tokens")
+
+Rel(userRepo, db, "SQL", "EF Core")
+Rel(cacheSvc, cache, "Redis", "StackExchange.Redis")
 
 @enduml
 ```
 
-## 7. Nivel 4: Diagrama de Código
+### 4.5 Nivel 4: Diagrama de Código (Code)
 
-### 7.1 Propósito
+#### Propósito
 
-Mostrar **detalles de implementación** a nivel de clases (UML):
+Mostrar **detalles de implementación** a nivel de clases e interfaces (UML).
 
-- Diagramas de clases
-- Diagramas de secuencia
-- Relaciones entre clases
+**Nota**: **No es obligatorio** y generalmente **no se recomienda** porque:
+- El código fuente ya tiene esta información
+- Difícil de mantener sincronizado
+- Solo útil en casos muy específicos (algoritmos complejos, patrones de diseño)
 
-**Nota**: Usar solo cuando sea necesario (la mayoría de veces el código es suficiente).
+#### Cuándo Usar
 
-### 7.2 Ejemplo: PlantUML Class Diagram
+- ✅ Documentar patrones de diseño complejos (Factory, Strategy, Observer)
+- ✅ Explicar algoritmos críticos de negocio
+- ✅ Onboarding en código legacy complejo
 
-```plantuml
-@startuml
-class UserController {
-    - IUserService _userService
-    + GetUsers() : ActionResult<List<UserDto>>
-    + GetUserById(int id) : ActionResult<UserDto>
-    + CreateUser(CreateUserRequest) : ActionResult<UserDto>
-}
+#### Cuándo NO Usar
 
-interface IUserService {
-    + GetAllUsersAsync() : Task<List<User>>
-    + GetUserByIdAsync(int id) : Task<User?>
-    + CreateUserAsync(CreateUserRequest) : Task<User>
-}
+- ❌ Documentación rutinaria (el código es suficiente)
+- ❌ Clases CRUD simples (Controllers, Repositories básicos)
+- ❌ DTOs y entidades (autogenerados por IDEs)
 
-class UserService {
-    - IUserRepository _repository
-    - IValidator<CreateUserRequest> _validator
-    + GetAllUsersAsync() : Task<List<User>>
-    + GetUserByIdAsync(int id) : Task<User?>
-    + CreateUserAsync(CreateUserRequest) : Task<User>
-}
+## 5. Buenas Prácticas
 
-interface IUserRepository {
-    + GetAllAsync() : Task<List<User>>
-    + GetByIdAsync(int id) : Task<User?>
-    + AddAsync(User user) : Task<User>
-}
-
-class UserRepository {
-    - AppDbContext _context
-    + GetAllAsync() : Task<List<User>>
-    + GetByIdAsync(int id) : Task<User?>
-    + AddAsync(User user) : Task<User>
-}
-
-UserController --> IUserService : uses
-UserService ..|> IUserService : implements
-UserService --> IUserRepository : uses
-UserRepository ..|> IUserRepository : implements
-
-@enduml
-```
-
-## 8. Herramientas Recomendadas
-
-### 8.1 Structurizr DSL (Recomendado para C4)
-
-**Ventajas**:
-
-- ✅ Diseñado específicamente para C4
-- ✅ Diagrams as Code (versionable en Git)
-- ✅ Genera los 4 niveles automáticamente
-- ✅ Soporta múltiples vistas del mismo modelo
-- ✅ Exporta a PlantUML, Mermaid, PNG
-
-**Instalación**:
-
-```bash
-# Structurizr CLI
-brew install structurizr-cli
-
-# O descargar JAR
-wget https://github.com/structurizr/cli/releases/latest/download/structurizr-cli.zip
-```
-
-**Uso**:
-
-```bash
-# Renderizar workspace.dsl
-structurizr-cli export -workspace workspace.dsl -format plantuml
-
-# Publicar a Structurizr cloud
-structurizr-cli push -workspace workspace.dsl -id 12345 -key xxx -secret yyy
-```
-
-### 8.2 PlantUML
-
-**Ventajas**:
-
-- ✅ Ampliamente soportado (VS Code, IntelliJ, Confluence)
-- ✅ C4 plugin disponible
-- ✅ Múltiples tipos de diagramas (secuencia, clases, deployment)
-- ✅ Integra con CI/CD
-
-**Instalación**:
-
-```bash
-brew install plantuml
-
-# VS Code extension
-code --install-extension jebbs.plantuml
-```
-
-### 8.3 Mermaid
-
-**Ventajas**:
-
-- ✅ Integrado en GitHub, GitLab, Docusaurus
-- ✅ Sintaxis simple
-- ✅ Renderiza en Markdown sin build
-- ✅ Soporte para C4 (desde v9.0)
-
-**Limitación**: Menos features que Structurizr/PlantUML.
-
-### 8.4 draw.io / Excalidraw
-
-**Ventajas**:
-
-- ✅ WYSIWYG (lo que ves es lo que obtienes)
-- ✅ Fácil para presentaciones rápidas
-
-**Desventajas**:
-
-- ❌ No es "diagrams as code"
-- ❌ Difícil de versionar (binario/XML)
-- ❌ No se actualiza automáticamente
-
-**Uso**: Solo para sketches rápidos, no para documentación oficial.
-
-## 9. Convenciones de Estilos
-
-### 9.1 Colores Estándar
-
-```
-┌─────────────────────────────────────┐
-│ Elemento            │ Color (Hex)   │
-├─────────────────────┼───────────────┤
-│ Person              │ #08427B       │
-│ Sistema Interno     │ #1168BD       │
-│ Sistema Externo     │ #999999       │
-│ Database            │ #438DD5       │
-│ Cache (Redis)       │ #FF6B6B       │
-│ Message Queue       │ #FFA500       │
-│ File Storage (S3)   │ #569A31       │
-│ Web Browser         │ #777777       │
-└─────────────────────────────────────┘
-```
-
-### 9.2 Tipos de Líneas
-
-```
-────▶  Sincrónico (HTTP, gRPC, LDAP)
-····▶  Asíncrono (mensajes, eventos)
-═══▶   Flujo de datos principal/crítico
-```
-
-### 9.3 Tags y Estilos
-
-**Structurizr DSL**:
+### 5.1 Nombres Descriptivos
 
 ```dsl
+# ✅ Buenos nombres descriptivos
+container "Web API" {
+    description "API REST para gestión de usuarios, autenticación y autorización"
+    technology "ASP.NET Core 8.0 + Entity Framework Core 8.0"
+}
+
+# ❌ Nombres genéricos
+container "API" {
+    technology ".NET"
+}
+```
+
+### 5.2 Especificar Tecnologías
+
+```dsl
+# ✅ Tecnologías específicas con versiones
+database = container "Database" {
+    technology "PostgreSQL 16 (RDS Multi-AZ)"
+}
+
+# ❌ Tecnologías genéricas
+database = container "Database" {
+    technology "SQL Database"
+}
+```
+
+### 5.3 Incluir Protocolos en Relaciones
+
+```dsl
+# ✅ Protocolo y puerto especificados
+api -> database "Lee/Escribe datos de usuarios" "TCP/5432 (Entity Framework Core)"
+api -> cache "Cachea sesiones" "TCP/6379 (StackExchange.Redis)"
+
+# ❌ Sin protocolo
+api -> database "Lee/Escribe"
+```
+
+### 5.4 Un Diagrama Por Nivel
+
+```markdown
+✅ **Sí**: Separar niveles en archivos diferentes
+- diagrams/users-context.dsl      (Level 1)
+- diagrams/users-containers.dsl   (Level 2)
+- diagrams/users-api-components.dsl (Level 3)
+
+❌ **No**: Mezclar niveles en un mismo diagrama
+- Context + Components en un mismo .dsl
+```
+
+### 5.5 Usar Colores Consistentes
+
+```dsl
+# ✅ Paleta corporativa consistente
 styles {
     element "Person" {
-        shape person
-        background #08427B
+        background #08427B  # Azul oscuro
         color #ffffff
     }
-    element "Software System" {
-        background #1168BD
+    element "Internal System" {
+        background #2E7D32  # Verde
         color #ffffff
     }
-    element "External" {
-        background #999999
+    element "External System" {
+        background #999999  # Gris
         color #ffffff
     }
     element "Database" {
-        shape cylinder
-        background #438DD5
+        background #438DD5  # Azul medio
         color #ffffff
     }
-    element "Queue" {
-        shape pipe
-        background #FFA500
-        color #000000
-    }
 }
 ```
 
-## 10. Integración con arc42
+## 6. Antipatrones
 
-Los diagramas C4 se integran perfectamente con [arc42](./01-arc42.md):
+### 6.1 ❌ Diagramas Demasiado Complejos
 
-| C4 Level      | arc42 Section                           | Descripción              |
-| ------------- | --------------------------------------- | ------------------------ |
-| **Context**   | Sección 3: Contexto y Alcance           | Fronteras del sistema    |
-| **Container** | Sección 5.1: Vista de Bloques - Nivel 1 | Aplicaciones y servicios |
-| **Component** | Sección 5.2: Vista de Bloques - Nivel 2 | Componentes internos     |
-| **Code**      | Sección 5.3: Vista de Bloques - Nivel 3 | Clases (opcional)        |
-
-## 11. Organización de Archivos
-
-```
-docs/
-├── arquitectura/
-│   ├── 03-contexto-alcance.md          # arc42 sección 3 + C4 Context
-│   ├── 05-vista-bloques.md             # arc42 sección 5 + C4 Container/Component
-│   └── 06-vista-runtime.md             # Diagramas de secuencia
-├── diagramas/
-│   ├── c4/
-│   │   ├── workspace.dsl               # Structurizr workspace principal
-│   │   ├── 01-context.puml             # Exportado desde Structurizr
-│   │   ├── 02-containers.puml          # Exportado
-│   │   ├── 03-components-api.puml      # Exportado
-│   │   └── README.md                   # Cómo generar diagramas
-│   ├── plantuml/
-│   │   ├── secuencia-login.puml        # Diagrama de secuencia
-│   │   └── deployment.puml             # Diagrama de deployment
-│   └── mermaid/
-│       └── flujos-negocio.md           # Flujos embebidos en Markdown
-└── src/
-    └── (código que implementa la arquitectura)
+**Problema**:
+```dsl
+# ❌ 30+ elementos en un solo diagrama
+systemContext userSystem "Context" {
+    include *  # Incluye 30 sistemas externos
+}
 ```
 
-## 12. Checklist de Diagramas C4
+**Solución**:
+```dsl
+# ✅ Dividir en múltiples vistas
+systemContext userSystem "Context-Core" {
+    include employee admin userSystem activeDirectory sapHR
+    # Solo 5 elementos principales
+}
 
-- [ ] **Nivel especificado**: Indicar si es Context/Container/Component/Code
-- [ ] **Título claro**: `"[C4 Container] Sistema de Usuarios - Production"`
-- [ ] **Audiencia definida**: ¿Para arquitectos? ¿Devs? ¿Ejecutivos?
-- [ ] **Leyenda incluida**: Colores, símbolos, tipos de líneas
-- [ ] **Tecnologías visibles**: Indicar stack (ASP.NET, PostgreSQL, Redis)
-- [ ] **Relaciones etiquetadas**: Protocolo y propósito ("HTTPS/JSON", "Autentica")
-- [ ] **Formato correcto**: Usar shapes apropiados (person, cylinder, pipe)
-- [ ] **Código fuente**: Preferir DSL (.dsl, .puml) sobre imágenes (.png)
-- [ ] **Versionado**: Archivos en Git junto al código
-- [ ] **Actualizado**: Refleja estado actual (no diseño futuro)
-- [ ] **Exportado**: Si usa Structurizr, exportar a PlantUML/PNG para visualización
-
-## 13. Mejores Prácticas
-
-### 13.1 Simplicidad
-
-```
-✅ BIEN: 5-9 elementos por diagrama (cognitiva load)
-❌ MAL: 20+ elementos (sobrecarga visual)
+systemContext userSystem "Context-Integraciones" {
+    include userSystem emailService smsService paymentGateway
+    # Integraciones secundarias separadas
+}
 ```
 
-### 13.2 Consistencia
+### 6.2 ❌ Mezclar Niveles
 
-- Usar mismos colores en todos los diagramas
-- Mismos nombres (no "API", "Web API", "Backend API" inconsistentemente)
-- Misma herramienta en todo el proyecto
+**Problema**:
+```dsl
+# ❌ Context + Components en un mismo diagrama
+systemContext userSystem {
+    # Level 1: Systems
+    include userSystem sapHR
+    
+    # Level 3: Components (¡INCORRECTO!)
+    include authController userService
+}
+```
 
-### 13.3 Documentación Complementaria
+**Solución**:
+```dsl
+# ✅ Un diagrama por nivel
+# context.dsl
+systemContext userSystem {
+    include userSystem sapHR activeDirectory
+}
+
+# components.dsl
+component api {
+    include authController userService authRepository
+}
+```
+
+### 6.3 ❌ Diagramas Sin Código Fuente
+
+**Problema**:
+```markdown
+# ❌ Solo imagen PNG sin código fuente
+![Arquitectura](architecture.png)
+<!-- ¿Cómo se generó? ¿Cómo actualizar? -->
+```
+
+**Solución**:
+```markdown
+# ✅ Código fuente versionado + imagen exportada
+![Sistema de Usuarios - Contexto](diagrams/users-context.png)
+
+**Código fuente**: [diagrams/users-context.dsl](diagrams/users-context.dsl)
+
+<!-- Regenerar con: structurizr-cli export -workspace users-context.dsl -format png -->
+```
+
+### 6.4 ❌ Omitir Tecnologías
+
+**Problema**:
+```dsl
+# ❌ Sin tecnologías especificadas
+container "API" {
+    description "Backend API"
+}
+```
+
+**Solución**:
+```dsl
+# ✅ Tecnologías con versiones
+container "Web API" {
+    description "API REST para gestión de usuarios"
+    technology "ASP.NET Core 8.0, Entity Framework Core 8.0, Serilog 3.1"
+}
+```
+
+## 7. Validación y Testing
+
+### 7.1 Checklist de Diagramas C4
 
 ```markdown
-## [C4 Container] Sistema de Usuarios
+# Checklist para cada diagrama C4
 
-### Web API (ASP.NET Core)
+## Level 1: Context
+- [ ] Todos los usuarios (personas) identificados
+- [ ] Sistema principal claramente diferenciado
+- [ ] Sistemas externos con tag "External"
+- [ ] Protocolos especificados en relaciones
+- [ ] Descripción de cada elemento
+- [ ] Menos de 10 elementos totales
+- [ ] Código fuente (.dsl/.puml) versionado
 
-**Responsabilidad**: API REST para gestión de usuarios
+## Level 2: Containers
+- [ ] Todos los contenedores deployables incluidos
+- [ ] Tecnologías con versiones especificadas
+- [ ] Bases de datos con tipo (PostgreSQL, Redis, etc.)
+- [ ] Protocolos y puertos especificados
+- [ ] Menos de 15 contenedores
+- [ ] Código fuente versionado
 
-**Tecnologías**:
+## Level 3: Components
+- [ ] Solo componentes de UN contenedor
+- [ ] Capas arquitectónicas diferenciadas (Controller, Service, Repository)
+- [ ] Responsabilidades claras de cada componente
+- [ ] Tecnologías especificadas
+- [ ] Menos de 20 componentes
+- [ ] Código fuente versionado
 
-- ASP.NET Core 8
-- Entity Framework Core 8
-- Serilog
-
-**Endpoints principales**:
-
-- `POST /auth/login` - Autenticación
-- `GET /users` - Listar usuarios
-- `POST /users` - Crear usuario
-
-**Configuración**:
-
-- Puerto: 5000 (dev), 443 (prod)
-- Health check: `/health`
-- Métricas: `/metrics` (Prometheus)
-
-**Referencias**:
-
-- [Código fuente](https://github.com/talma/users-api)
-- [OpenAPI Spec](https://api.talma.com/swagger)
-- [ADR-002: Estándar REST](../../decisiones/adr-002.md)
+## General
+- [ ] Leyenda presente (con LAYOUT_WITH_LEGEND en PlantUML)
+- [ ] Colores consistentes con paleta corporativa
+- [ ] Autolayout aplicado (o layout manual optimizado)
+- [ ] Imagen exportada (PNG/SVG) actualizada
+- [ ] Documentado en sección correspondiente de arc42
 ```
 
-## 14. Ejemplos Avanzados
+### 7.2 Script de Validación
 
-### 14.1 Multi-Región Deployment
+```bash
+#!/bin/bash
+# scripts/validate-c4-diagrams.sh
 
-```dsl
-deploymentEnvironment "Production" {
-    deploymentNode "AWS us-east-1" {
-        deploymentNode "ECS Cluster" {
-            deploymentNode "Fargate Task (API)" {
-                containerInstance api
-            }
-        }
-        deploymentNode "RDS Multi-AZ" {
-            containerInstance database primary
-        }
-    }
+DIAGRAMS_DIR="docs/static/diagrams"
 
-    deploymentNode "AWS us-west-2" {
-        deploymentNode "RDS Read Replica" {
-            containerInstance database replica
-        }
-    }
-}
+echo "🔍 Validando diagramas C4..."
+
+# Verificar que todos los .dsl compilan
+for dsl_file in $DIAGRAMS_DIR/*.dsl; do
+    echo "Validando $dsl_file..."
+    
+    structurizr-cli validate -workspace "$dsl_file"
+    
+    if [ $? -ne 0 ]; then
+        echo "❌ Error en $dsl_file"
+        exit 1
+    fi
+done
+
+# Verificar que existen PNG exportados
+for dsl_file in $DIAGRAMS_DIR/*.dsl; do
+    base_name=$(basename "$dsl_file" .dsl)
+    png_file="$DIAGRAMS_DIR/$base_name.png"
+    
+    if [ ! -f "$png_file" ]; then
+        echo "⚠️ Falta PNG exportado para $dsl_file"
+        echo "   Generando..."
+        structurizr-cli export -workspace "$dsl_file" -format png
+    fi
+done
+
+echo "✅ Todos los diagramas C4 válidos"
 ```
 
-### 14.2 Microservicios
+### 7.3 GitHub Action para Validación
 
-```dsl
-softwareSystem ecommerce "E-commerce Talma" {
-    # API Gateway
-    apiGateway = container "API Gateway" "Kong"
+```yaml
+# .github/workflows/c4-diagrams.yml
+name: Validate C4 Diagrams
 
-    # Microservicios
-    usersService = container "Users Service" "ASP.NET Core"
-    ordersService = container "Orders Service" "Node.js"
-    paymentsService = container "Payments Service" "ASP.NET Core"
+on:
+  pull_request:
+    paths:
+      - 'docs/static/diagrams/**'
 
-    # Event Bus
-    eventBus = container "Event Bus" "Kafka"
-
-    # Relaciones
-    spa -> apiGateway "HTTPS/JSON"
-    apiGateway -> usersService "gRPC"
-    apiGateway -> ordersService "REST"
-    apiGateway -> paymentsService "REST"
-
-    ordersService -> eventBus "Publica OrderCreated"
-    paymentsService -> eventBus "Suscribe OrderCreated"
-}
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Structurizr CLI
+        run: |
+          wget https://github.com/structurizr/cli/releases/download/v2.0.0/structurizr-cli.zip
+          unzip structurizr-cli.zip -d /usr/local/bin/
+      
+      - name: Validate DSL files
+        run: |
+          for dsl in docs/static/diagrams/*.dsl; do
+            echo "Validating $dsl..."
+            structurizr-cli validate -workspace "$dsl"
+          done
+      
+      - name: Export diagrams
+        run: |
+          for dsl in docs/static/diagrams/*.dsl; do
+            structurizr-cli export -workspace "$dsl" -format png
+            structurizr-cli export -workspace "$dsl" -format plantuml
+          done
+      
+      - name: Commit exported diagrams
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: Update C4 diagrams (auto-generated)"
+          file_pattern: docs/static/diagrams/*.png
 ```
 
-## 15. NO Hacer
-
-❌ **NO** usar C4 Level 4 (Code) en la mayoría de casos (redundante con código)
-❌ **NO** mezclar niveles en un mismo diagrama (Context + Component)
-❌ **NO** crear diagramas con 20+ elementos (dividir en múltiples vistas)
-❌ **NO** omitir tecnologías (indicar PostgreSQL, no solo "Database")
-❌ **NO** usar colores arbitrarios (seguir paleta estándar)
-❌ **NO** crear diagramas sin leyenda
-❌ **NO** usar imágenes PNG/JPG sin código fuente (.dsl/.puml)
-
-## 16. Referencias
-
-### Documentación Oficial
-
-- [C4 Model](https://c4model.com/)
-- [Structurizr](https://structurizr.com/)
-- [Structurizr DSL](https://github.com/structurizr/dsl)
-- [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML)
-- [Mermaid C4 Diagrams](https://mermaid.js.org/syntax/c4.html)
+## 8. Referencias
 
 ### Lineamientos Relacionados
+- [Decisiones Arquitectónicas](/docs/fundamentos-corporativos/lineamientos/gobierno/decisiones-arquitectonicas)
+- [Documentación de Código](/docs/fundamentos-corporativos/lineamientos/desarrollo/documentacion-codigo)
 
-- [Lineamiento Gov. 03: Decisiones Arquitectónicas](../../lineamientos/gobierno/03-decisiones-arquitectonicas.md)
-- [Lineamiento Dev. 05: Documentación](../../lineamientos/desarrollo/05-documentacion.md)
-
-### Otros Estándares
-
-- [arc42](./01-arc42.md) - Plantilla de documentación
+### Estándares Relacionados
+- [arc42](./01-arc42.md) - Plantilla de documentación arquitectónica
 - [OpenAPI/Swagger](./03-openapi-swagger.md) - Documentación de APIs
+
+### ADRs Relacionados
+- No hay ADRs específicos para C4 Model (es la herramienta para visualizar ADRs)
+
+### Recursos Externos
+- [C4 Model Official Site](https://c4model.com/)
+- [Structurizr](https://structurizr.com/)
+- [Structurizr DSL Language Reference](https://github.com/structurizr/dsl/blob/master/docs/language-reference.md)
+- [C4-PlantUML GitHub](https://github.com/plantuml-stdlib/C4-PlantUML)
+- [Mermaid C4 Diagrams](https://mermaid.js.org/syntax/c4.html)
+
+## 9. Changelog
+
+| Versión | Fecha | Autor | Cambios |
+|---------|-------|-------|---------|
+| 2.0 | 2025-08-08 | Equipo de Arquitectura | Reestructuración completa con template de 9 secciones |
+| 1.0 | 2024-01-15 | Equipo de Arquitectura | Versión inicial con 4 niveles C4 |

@@ -586,56 +586,203 @@ make logs
 make test
 ```
 
-## 11. Troubleshooting
+## 5. Buenas Prácticas
 
-### 11.1 Problemas Comunes
-
-| Problema                           | Solución                                                    |
-| ---------------------------------- | ----------------------------------------------------------- |
-| Puerto ya en uso                   | Cambiar puerto en `.env` o en `docker-compose.override.yml` |
-| Volúmenes con permisos incorrectos | Verificar UID/GID en Dockerfile con `user: "${UID}:${GID}"` |
-| Hot reload no funciona             | Verificar bind mounts y reiniciar contenedor                |
-| Health check falla                 | Aumentar `start_period` o verificar comando de health check |
-| Variables de entorno no se cargan  | Verificar `.env` existe y sintaxis correcta                 |
-
-### 11.2 Debugging de Configuración
+### 5.1 Uso de .env para Configuración
 
 ```bash
-# Ver configuración final después de merge
-docker-compose config
+# .env (NO versionado)
+COMPOSE_PROJECT_NAME=talma-api
+API_PORT=5000
+POSTGRES_VERSION=16-alpine
+REDIS_VERSION=7-alpine
+DB_PASSWORD=dev_password_123
+```
 
+### 5.2 Override Files por Entorno
+
+```yaml
+# docker-compose.override.yml (desarrollo local, auto-cargado)
+services:
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ./src:/app:cached  # Hot reload
+
+# docker-compose.ci.yml (CI/CD)
+services:
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Testing
+    volumes: []  # Sin bind mounts en CI
+```
+
+### 5.3 Healthchecks Robustos
+
+```yaml
+services:
+  postgres:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+```
+
+## 6. Antipatrones
+
+### 6.1 ❌ Sin Health Checks
+
+**Problema**:
+```yaml
+# ❌ API inicia antes que la BD esté lista
+services:
+  api:
+    depends_on:
+      - postgres  # Solo espera que el contenedor inicie, no que esté saludable
+```
+
+**Solución**:
+```yaml
+# ✅ Esperar health check
+services:
+  api:
+    depends_on:
+      postgres:
+        condition: service_healthy
+```
+
+### 6.2 ❌ Volúmenes Anónimos
+
+**Problema**:
+```yaml
+# ❌ Volumen anónimo, difícil de gestionar
+services:
+  postgres:
+    volumes:
+      - /var/lib/postgresql/data
+```
+
+**Solución**:
+```yaml
+# ✅ Volumen nombrado
+services:
+  postgres:
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    name: talma_postgres_data
+```
+
+### 6.3 ❌ Exponer Todos los Puertos
+
+**Problema**:
+```yaml
+# ❌ Base de datos expuesta al host innecesariamente
+services:
+  postgres:
+    ports:
+      - "5432:5432"  # Accesible desde localhost:5432
+```
+
+**Solución**:
+```yaml
+# ✅ Solo exponer lo necesario (API)
+services:
+  postgres:
+    expose:
+      - "5432"  # Solo accesible dentro de la red Docker
+  
+  api:
+    ports:
+      - "5000:5000"  # Solo la API es accesible externamente
+```
+
+### 6.4 ❌ Usar latest Tag
+
+**Problema**:
+```yaml
+# ❌ Sin version pinning, builds no reproducibles
+services:
+  postgres:
+    image: postgres:latest
+```
+
+**Solución**:
+```yaml
+# ✅ Versión específica
+services:
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+```
+
+## 7. Validación y Testing
+
+### 7.1 Tests de Configuración
+
+```bash
 # Validar sintaxis YAML
 docker-compose config -q
 
-# Ver variables interpoladas
-docker-compose config --resolve-image-digests
+# Ver configuración final
+docker-compose config
+
+# Verificar que todos los servicios inicien
+docker-compose up -d
+docker-compose ps | grep -q "Up" && echo "✅ OK" || echo "❌ FAIL"
 ```
 
-## 12. NO Hacer
+### 7.2 Tests de Integración en CI
 
-❌ **NO** usar Docker Compose en producción (usar Kubernetes, ECS, etc.)
-❌ **NO** versionar `.env` con credenciales reales
-❌ **NO** usar `network_mode: host` (rompe aislamiento)
-❌ **NO** exponer todos los puertos innecesariamente
-❌ **NO** usar volúmenes anónimos para datos críticos
-❌ **NO** omitir health checks en servicios críticos
-❌ **NO** usar `latest` tag sin version pinning en `.env`
+```yaml
+# .github/workflows/ci.yml
+name: CI
+on: [push]
 
-## 13. Referencias
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Start services
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
+      
+      - name: Wait for services
+        run: |
+          timeout 60 bash -c 'until docker-compose ps | grep -q "healthy"; do sleep 2; done'
+      
+      - name: Run tests
+        run: docker-compose exec -T api dotnet test
+      
+      - name: Cleanup
+        run: docker-compose down -v
+```
 
-### Documentación Oficial
-
-- [Docker Compose Documentation](https://docs.docker.com/compose/)
-- [Compose File Specification](https://docs.docker.com/compose/compose-file/)
-- [Compose CLI Reference](https://docs.docker.com/compose/reference/)
+## 8. Referencias
 
 ### Lineamientos Relacionados
+- [Diseño Cloud Native](/docs/fundamentos-corporativos/lineamientos/arquitectura/diseno-cloud-native)
+- [Infraestructura como Código](/docs/fundamentos-corporativos/lineamientos/operabilidad/infraestructura-como-codigo)
 
-- [Lineamiento Arq. 03: Diseño Cloud Native](../../lineamientos/arquitectura/03-diseno-cloud-native.md)
-- [Lineamiento Op. 02: Infraestructura como Código](../../lineamientos/operaciones/02-infraestructura-como-codigo.md)
+### Estándares Relacionados
+- [Docker](./01-docker.md)
+- [Infraestructura como Código](./02-infraestructura-como-codigo.md)
+- [Testing de Integración](../testing/02-integration-tests.md)
 
-### Otros Estándares
+### ADRs Relacionados
+- [ADR-007: Contenedores AWS](/docs/decisiones-de-arquitectura/adr-007-contenedores-aws)
 
-- [Docker](./01-docker.md) - Construcción de imágenes
-- [Infraestructura como Código](./02-infraestructura-como-codigo.md) - Terraform, AWS CDK
-- [Testing](../testing/01-unit-integration-tests.md) - Tests en contenedores
+### Recursos Externos
+- [Docker Compose Documentation](https://docs.docker.com/compose/)
+- [Compose File Specification](https://docs.docker.com/compose/compose-file/)
+
+## 9. Changelog
+
+| Versión | Fecha | Autor | Cambios |
+|---------|-------|-------|---------|  
+| 1.0 | 2025-08-08 | Equipo de Arquitectura | Versión inicial con template de 9 secciones |

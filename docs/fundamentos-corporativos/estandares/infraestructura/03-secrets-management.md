@@ -457,77 +457,205 @@ jobs:
           dotnet publish -c Release
 ```
 
-## 8. Rotación de Secretos
+## 5. Buenas Prácticas
 
-### Lambda de rotación (ejemplo)
+### 5.1 Separación por Entorno
 
-```python
-import boto3
-import json
-
-def lambda_handler(event, context):
-    service_client = boto3.client('secretsmanager')
-
-    # Obtener token de rotación
-    token = event['Token']
-    secret_arn = event['SecretId']
-    step = event['Step']
-
-    if step == "createSecret":
-        # Generar nueva contraseña
-        new_password = generate_password()
-
-        # Guardar como AWSPENDING
-        service_client.put_secret_value(
-            SecretId=secret_arn,
-            ClientRequestToken=token,
-            SecretString=json.dumps({"password": new_password}),
-            VersionStages=['AWSPENDING']
-        )
-
-    elif step == "setSecret":
-        # Actualizar contraseña en la base de datos
-        update_database_password(new_password)
-
-    elif step == "testSecret":
-        # Probar nueva contraseña
-        test_database_connection(new_password)
-
-    elif step == "finishSecret":
-        # Marcar como AWSCURRENT
-        service_client.update_secret_version_stage(
-            SecretId=secret_arn,
-            VersionStage='AWSCURRENT',
-            MoveToVersionId=token
-        )
+```bash
+# ✅ Secretos separados por entorno
+/talma/dev/db/postgres/credentials
+/talma/staging/db/postgres/credentials
+/talma/prod/db/postgres/credentials
 ```
 
-## 9. Checklist de Secrets Management
+### 5.2 Cache de Secretos con TTL
 
-- [ ] **No hardcoding**: Sin secretos en código, configuración o variables de entorno commiteadas
-- [ ] **Secrets Manager configurado**: AWS Secrets Manager o Azure Key Vault en uso
-- [ ] **Naming convention**: Nomenclatura consistente para secretos
-- [ ] **Separation por entorno**: Secretos diferentes para dev/staging/prod
-- [ ] **IAM/RBAC**: Permisos de acceso configurados con least privilege
-- [ ] **Rotación automática**: Secretos críticos rotan automáticamente
-- [ ] **Auditoría**: Logs de acceso a secretos habilitados
-- [ ] **Encriptación**: KMS keys configuradas apropiadamente
-- [ ] **Cache**: Implementado con TTL corto para reducir llamadas
-- [ ] **Terraform**: Secretos gestionados como IaC (sin valores hardcodeados)
+```csharp
+public class CachedSecretsProvider
+{
+    private readonly IMemoryCache _cache;
+    private readonly IAmazonSecretsManager _client;
+    private readonly TimeSpan _cacheDuration = TimeSpan.FromMinutes(5);
 
-## 📖 Referencias
+    public async Task<string> GetSecretAsync(string secretName)
+    {
+        return await _cache.GetOrCreateAsync(secretName, async entry =>
+        {
+            entry.AbsoluteExpirationRelativeToNow = _cacheDuration;
+            var response = await _client.GetSecretValueAsync(new GetSecretValueRequest
+            {
+                SecretId = secretName
+            });
+            return response.SecretString;
+        });
+    }
+}
+```
 
-### Lineamientos relacionados
+### 5.3 Rotación Automática
 
+```bash
+# Configurar rotación automática cada 30 días
+aws secretsmanager rotate-secret \
+    --secret-id /talma/prod/db/postgres/credentials \
+    --rotation-lambda-arn arn:aws:lambda:us-east-1:123456789012:function:SecretsManagerRotation \
+    --rotation-rules AutomaticallyAfterDays=30
+```
+
+## 6. Antipatrones
+
+### 6.1 ❌ Secretos Hardcodeados
+
+**Problema**:
+```csharp
+// ❌ NUNCA hacer esto
+public class DatabaseConfig
+{
+    public string ConnectionString = "Server=db.talma.com;User=admin;Password=P@ssw0rd123";
+}
+```
+
+**Solución**:
+```csharp
+// ✅ Obtener de Secrets Manager
+public class DatabaseConfig
+{
+    private readonly ISecretsProvider _secrets;
+
+    public async Task<string> GetConnectionStringAsync()
+    {
+        var secret = await _secrets.GetSecretAsync("/talma/prod/db/postgres/credentials");
+        var credentials = JsonSerializer.Deserialize<DbCredentials>(secret);
+        return $"Server={credentials.Host};User={credentials.Username};Password={credentials.Password}";
+    }
+}
+```
+
+### 6.2 ❌ Secretos en Variables de Entorno Commiteadas
+
+**Problema**:
+```bash
+# ❌ .env versionado en Git
+DB_PASSWORD=mysecretpassword123
+API_KEY=sk_live_abc123def456
+```
+
+**Solución**:
+```bash
+# ✅ .env solo con referencias, valores en Secrets Manager
+SECRET_NAME=/talma/prod/db/postgres/credentials
+AWS_REGION=us-east-1
+
+# .gitignore
+.env.local
+.env.*.local
+```
+
+### 6.3 ❌ Sin Rotación de Secretos
+
+**Problema**:
+```bash
+# ❌ Secreto creado hace 2 años sin rotación
+aws secretsmanager create-secret --name db-password --secret-string "OldPassword2022"
+# Nunca se actualizó
+```
+
+**Solución**:
+```bash
+# ✅ Configurar rotación automática
+aws secretsmanager rotate-secret \
+    --secret-id db-password \
+    --rotation-lambda-arn arn:aws:lambda:us-east-1:123:function:RotateSecret \
+    --rotation-rules AutomaticallyAfterDays=90
+```
+
+### 6.4 ❌ Permisos IAM Demasiado Amplios
+
+**Problema**:
+```json
+{
+  "Effect": "Allow",
+  "Action": "secretsmanager:*",
+  "Resource": "*"
+}
+```
+
+**Solución**:
+```json
+{
+  "Effect": "Allow",
+  "Action": [
+    "secretsmanager:GetSecretValue"
+  ],
+  "Resource": "arn:aws:secretsmanager:us-east-1:123456789012:secret:/talma/prod/api/*"
+}
+```
+
+## 7. Validación y Testing
+
+### 7.1 Tests de Recuperación de Secretos
+
+```csharp
+public class SecretsProviderTests
+{
+    [Fact]
+    public async Task GetSecret_ValidSecretName_ReturnsSecret()
+    {
+        // Arrange
+        var mockClient = new Mock<IAmazonSecretsManager>();
+        mockClient.Setup(c => c.GetSecretValueAsync(It.IsAny<GetSecretValueRequest>(), default))
+            .ReturnsAsync(new GetSecretValueResponse
+            {
+                SecretString = "{\"password\":\"test123\"}"
+            });
+
+        var provider = new SecretsProvider(mockClient.Object);
+
+        // Act
+        var secret = await provider.GetSecretAsync("/test/secret");
+
+        // Assert
+        secret.Should().Contain("password");
+    }
+}
+```
+
+### 7.2 Validación de Rotación
+
+```bash
+# Script para verificar rotación automática configurada
+#!/bin/bash
+SECRETS=$(aws secretsmanager list-secrets --query 'SecretList[?RotationEnabled==`false`].Name' --output text)
+
+if [ -n "$SECRETS" ]; then
+    echo "⚠️ Secretos sin rotación automática:"
+    echo "$SECRETS"
+    exit 1
+else
+    echo "✅ Todos los secretos tienen rotación configurada"
+fi
+```
+
+## 8. Referencias
+
+### Lineamientos Relacionados
+- [Seguridad desde el Diseño](/docs/fundamentos-corporativos/lineamientos/seguridad/seguridad-desde-el-diseno)
 - [Protección de Datos](/docs/fundamentos-corporativos/lineamientos/seguridad/proteccion-de-datos)
-- [Infraestructura como Código](/docs/fundamentos-corporativos/lineamientos/operabilidad/infraestructura-como-codigo)
 
-### ADRs relacionados
+### Estándares Relacionados
+- [Infraestructura como Código](./02-infraestructura-como-codigo.md)
+- [Seguridad de APIs](../apis/02-seguridad-apis.md)
 
+### ADRs Relacionados
 - [ADR-003: Gestión de Secretos](/docs/decisiones-de-arquitectura/adr-003-gestion-secretos)
+- [ADR-006: Infraestructura IaC](/docs/decisiones-de-arquitectura/adr-006-infraestructura-iac)
 
-### Recursos externos
-
+### Recursos Externos
 - [AWS Secrets Manager Best Practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html)
-- [Azure Key Vault Best Practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices)
-- [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
+- [OWASP Secrets Management](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
+
+## 9. Changelog
+
+| Versión | Fecha | Autor | Cambios |
+|---------|-------|-------|---------|  
+| 1.0 | 2025-08-08 | Equipo de Arquitectura | Versión inicial con template de 9 secciones |
