@@ -493,24 +493,49 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 };
 ```
 
-## 📖 Referencias
+## 7. Checklist
 
-### Estándares relacionados
+- [ ] Respuestas exitosas usan estructura envelope con `status`, `data`, `errors`, `meta`
+- [ ] Errores siguen RFC 7807 Problem Details
+- [ ] Paginación incluye metadata completa (`page`, `size`, `total`, `totalPages`)
+- [ ] camelCase en todos los campos JSON
+- [ ] Fechas en formato ISO 8601 UTC
+- [ ] Montos en formato decimal (2 decimales)
+- [ ] Arrays vacíos en lugar de null
+- [ ] Códigos HTTP correctos según operación
+- [ ] `traceId` presente en todas las respuestas
+- [ ] Documentación actualizada en OpenAPI/Swagger
 
-- [Validación y Errores](/docs/fundamentos-corporativos/estandares/apis/validacion-y-errores)
-- [Diseño REST](/docs/fundamentos-corporativos/estandares/apis/diseno-rest)
+## 8. Referencias
 
-### Convenciones relacionadas
+### Estándares Relacionados
 
-- [Headers HTTP](./02-headers-http.md)
-- [Formato de Fechas](./04-formato-fechas-moneda.md)
+- [Validación y Errores](../../estandares/apis/03-validacion-y-errores.md) - RFC 7807 y FluentValidation
+- [Diseño REST](../../estandares/apis/01-diseno-rest.md) - Estructura de APIs
+- [Performance](../../estandares/apis/05-performance.md) - Paginación y caching
 
-### Recursos externos
+### Lineamientos Relacionados
+
+- [Diseño de APIs](../../lineamientos/arquitectura/06-diseno-de-apis.md) - Lineamientos de diseño
+
+### Principios Relacionados
+
+- [Contratos de Comunicación](../../principios/arquitectura/06-contratos-de-comunicacion.md) - Contratos estables
+- [Simplicidad Intencional](../../principios/arquitectura/07-simplicidad-intencional.md) - Respuestas simples
+
+### Otras Convenciones
+
+- [Headers HTTP](./02-headers-http.md) - Convenciones de headers
+- [Formato Fechas y Moneda](./04-formato-fechas-moneda.md) - Formatos de datos específicos
+- [Naming Endpoints](./01-naming-endpoints.md) - Nomenclatura de recursos
+
+### Documentación Externa
 
 - [Microsoft REST API Guidelines - Responses](https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md)
 - [JSON API Specification](https://jsonapi.org/)
+- [RFC 7807 - Problem Details](https://www.rfc-editor.org/rfc/rfc7807)
 
 ---
 
-**Última revisión**: 26 de enero 2026
+**Última revisión**: 26 de enero 2026  
 **Responsable**: Equipo de Arquitectura

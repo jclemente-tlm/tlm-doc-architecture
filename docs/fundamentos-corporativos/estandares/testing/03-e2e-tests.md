@@ -718,31 +718,164 @@ export default defineConfig({
 });
 ```
 
-## 10. NO Hacer
+## 10. Antipatrones (NO Hacer)
 
-❌ **NO** testear todo con E2E (usar pirámide de tests)
-❌ **NO** usar selectores frágiles (CSS classes, XPath complejos)
-❌ **NO** hacer sleeps/waits arbitrarios (`waitForTimeout`)
-❌ **NO** tener tests interdependientes (cada test debe ser independiente)
-❌ **NO** compartir estado entre tests
-❌ **NO** ignorar flakiness (investigar y resolver)
-❌ **NO** correr E2E en cada commit (solo en CI/CD para PRs y main)
+> **Nota**: Para convenciones de nomenclatura de tests E2E, consulta [Convenciones - Naming Tests](../../convenciones/testing/01-naming-tests.md).
 
-## 11. Referencias
+### ❌ Antipatrón 1: Selectores Frágiles (CSS classes, XPath)
 
-### Documentación Oficial
+```typescript
+// ❌ MAL - Selectores frágiles que cambian frecuentemente
+await page.click('.btn-primary.submit-form'); // CSS class puede cambiar
+await page.fill('input[name="email"]'); // Estructura HTML puede cambiar
+await page.click('//div[@class="modal"]//button[2]'); // XPath complejo
 
-- [Playwright Documentation](https://playwright.dev/)
-- [Cypress Documentation](https://docs.cypress.io/)
-- [Testing Library Best Practices](https://testing-library.com/docs/guiding-principles)
+// ✅ BIEN - Usar data-testid para estabilidad
+await page.click('[data-testid="submit-button"]');
+await page.fill('[data-testid="email-input"]');
+await page.click('[data-testid="confirm-modal-button"]');
+```
+
+**Problema**: Tests se rompen con cada cambio de CSS o HTML.  
+**Solución**: Usar `data-testid` atributos dedicados para testing.
+
+### ❌ Antipatrón 2: Sleeps/Waits Arbitrarios
+
+```typescript
+// ❌ MAL - Usar timeouts arbitrarios
+await page.click('[data-testid="submit-button"]');
+await page.waitForTimeout(3000); // Espera 3s (frágil)
+await expect(page.locator('[data-testid="success-message"]')).toBeVisible();
+
+// ✅ BIEN - Usar auto-wait de Playwright
+await page.click('[data-testid="submit-button"]');
+await expect(page.locator('[data-testid="success-message"]')).toBeVisible({
+  timeout: 5000 // Espera hasta 5s, pero continúa apenas aparece
+});
+```
+
+**Problema**: Tests lentos e impredecibles (timing race conditions).  
+**Solución**: Confiar en auto-wait de Playwright/Cypress.
+
+### ❌ Antipatrón 3: Testear Todo con E2E (Pirámide Invertida)
+
+```typescript
+// ❌ MAL - Testear validaciones simples con E2E
+test('email validation shows error for invalid format', async ({ page }) => {
+  await page.goto('/signup');
+  await page.fill('[data-testid="email-input"]', 'invalid-email');
+  await page.click('[data-testid="submit-button"]');
+  await expect(page.locator('[data-testid="email-error"]')).toContainText('Email inválido');
+});
+
+// ✅ BIEN - Validaciones en unit tests, solo happy path en E2E
+test('complete signup flow for valid user', async ({ page }) => {
+  await page.goto('/signup');
+  await page.fill('[data-testid="email-input"]', 'valid@talma.com');
+  await page.fill('[data-testid="password-input"]', 'Password123!');
+  await page.click('[data-testid="submit-button"]');
+  await expect(page).toHaveURL('/dashboard');
+});
+```
+
+**Problema**: Suite E2E lenta (30+ minutos), costosa, frágil.  
+**Solución**: E2E solo para flujos críticos happy path. Validaciones en unit tests.
+
+### ❌ Antipatrón 4: Tests Interdependientes
+
+```typescript
+// ❌ MAL - Tests dependen de ejecución previa
+test.describe.serial('User Workflow', () => { // Serial = orden forzado
+  test('1. should create user', async ({ page }) => {
+    // Crea usuario
+  });
+
+  test('2. should login with created user', async ({ page }) => {
+    // Asume que test 1 corrió primero
+  });
+});
+
+// ✅ BIEN - Cada test es independiente
+test.describe('User Workflow', () => {
+  test.beforeEach(async ({ page }) => {
+    // Setup: crear usuario via API antes de cada test
+    await apiClient.createUser({ email: 'test@talma.com', password: 'Pass123!' });
+  });
+
+  test('should login with valid credentials', async ({ page }) => {
+    await page.goto('/login');
+    await page.fill('[data-testid="email-input"]', 'test@talma.com');
+    await page.fill('[data-testid="password-input"]', 'Pass123!');
+    await page.click('[data-testid="login-button"]');
+    await expect(page).toHaveURL('/dashboard');
+  });
+});
+```
+
+**Problema**: Tests fallan si se ejecutan en orden diferente o en paralelo.  
+**Solución**: Cada test crea su propio setup (via API o fixtures).
+
+## 11. Validación y Cumplimiento
+
+### 11.1 Checklist de Implementación
+
+- [ ] **Playwright** o **Cypress** configurado
+- [ ] **Page Object Model (POM)** implementado
+- [ ] **data-testid** en todos los elementos interactivos
+- [ ] **Auto-wait** sin `waitForTimeout` arbitrarios
+- [ ] **Tests independientes** (sin estado compartido)
+- [ ] **Fixtures** para autenticación y setup común
+- [ ] **Paralelización** habilitada (Playwright workers)
+- [ ] **Screenshots y videos** en failures
+- [ ] **Integración con CI/CD** (solo en PRs y main)
+- [ ] **Cobertura E2E ≤ 20%** de suite total de tests
+
+### 11.2 Métricas de Calidad
+
+| Métrica                           | Target  | Verificación                           |
+| --------------------------------- | ------- | -------------------------------------- |
+| Tiempo ejecución por test E2E     | < 30s   | Reportes de Playwright                 |
+| Flakiness rate                    | < 5%    | Retries en CI, análisis de fallos      |
+| Cobertura E2E                     | 10-20%  | Proporción vs total de tests           |
+| Tests con data-testid             | 100%    | Lint rule personalizada                |
+| Tests con POM                     | 90%+    | Code review                            |
+| Uso de waitForTimeout             | 0       | Grep search, lint rule                 |
+
+## 12. Referencias
+
+### Estándares Relacionados
+
+- [Unit Tests](./01-unit-tests.md) - Testing unitario con mocks
+- [Integration Tests](./02-integration-tests.md) - Testing con dependencias reales
+- [TypeScript](../codigo/02-typescript.md) - Clean Code TypeScript
+
+### Convenciones Relacionadas
+
+- [Naming Tests](../../convenciones/testing/01-naming-tests.md) - Nomenclatura de tests
 
 ### Lineamientos Relacionados
 
-- [Lineamiento Arq. 07: Calidad y Testing](../../lineamientos/arquitectura/07-calidad-testing.md)
-- [Lineamiento Dev. 03: Testing](../../lineamientos/desarrollo/03-testing.md)
+- [Testing](../../lineamientos/desarrollo/03-testing.md) - Lineamientos generales de testing
+- [Calidad y Testing](../../lineamientos/arquitectura/07-calidad-testing.md) - Enfoque arquitectónico
 
-### Otros Estándares
+### Principios Relacionados
 
-- [Unit & Integration Tests](./01-unit-integration-tests.md) - Testing unitario e integración
-- [C# / .NET](../codigo/01-csharp-dotnet.md) - Clean Code y testing en .NET
-- [TypeScript](../codigo/02-typescript.md) - Clean Code TypeScript
+- [Calidad desde el Diseño](../../principios/arquitectura/08-calidad-desde-el-diseno.md) - Fundamento de calidad
+- [Simplicidad Intencional](../../principios/arquitectura/07-simplicidad-intencional.md) - Tests simples
+
+### ADRs Relacionados
+
+- [ADR-009: CI/CD Pipelines](../../../decisiones-de-arquitectura/adr-009-cicd-pipelines.md) - Integración con CI/CD
+
+### Documentación Externa
+
+- [Playwright Documentation](https://playwright.dev/) - Framework E2E recomendado
+- [Cypress Documentation](https://docs.cypress.io/) - Framework E2E alternativo
+- [Testing Library Best Practices](https://testing-library.com/docs/guiding-principles) - Principios de testing
+- [Page Object Model](https://playwright.dev/docs/pom) - Patrón de diseño
+- [E2E Testing Best Practices](https://martinfowler.com/articles/practical-test-pyramid.html) - Martin Fowler
+
+---
+
+**Última actualización**: 27 de enero 2026  
+**Responsable**: Equipo de Arquitectura

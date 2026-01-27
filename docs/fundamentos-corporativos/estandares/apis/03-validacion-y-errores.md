@@ -1,30 +1,47 @@
 ---
 id: validacion-y-errores
 sidebar_position: 3
-title: Validación y manejo de errores
-description: Mejores prácticas para validación de entrada y manejo consistente de errores en APIs REST
+title: Validación y Manejo de Errores
+description: Estándar para validación de entrada con FluentValidation, manejo de errores con RFC 7807 Problem Details y middleware global de excepciones
 ---
 
-# Validación y manejo de errores
+# Estándar: Validación y Manejo de Errores
 
-Esta guía define las tecnologías y herramientas obligatorias para validación de entrada y manejo consistente de errores en APIs REST.
+## 1. Propósito
 
-> **Nota**: Para formatos de respuesta JSON, códigos HTTP y estructuras de error, consulta [Convenciones de APIs - Formato de Respuestas](/docs/fundamentos-corporativos/convenciones/apis/formato-respuestas).
+Definir la implementación técnica obligatoria para **validación de entrada** y **manejo consistente de errores** en APIs REST, usando FluentValidation 11+, RFC 7807 Problem Details, middleware global de excepciones y logging estructurado.
 
-## 🔍 Validación de entrada
+> **Nota**: Para formatos de respuesta JSON (envelope, códigos HTTP), consulta [Convenciones - Formato de Respuestas](../../convenciones/apis/03-formato-respuestas.md).
 
-### Versiones Mínimas Requeridas
+## 2. Alcance
 
-- FluentValidation: 11.0+ (recomendado)
-- FluentValidation.AspNetCore: 11.0+
-- System.ComponentModel.DataAnnotations (alternativa, incluido en .NET)
+### Aplica a
 
-### Principios de validación
+- ✅ Validación de DTOs de entrada (requests)
+- ✅ Validación de lógica de negocio
+- ✅ Manejo de excepciones globales
+- ✅ Respuestas de error consistentes (RFC 7807)
 
-- **Validar todo**: Nunca confíes en los datos de entrada
-- **Fallar rápido**: Validar antes de procesar lógica de negocio
-- **Mensajes claros**: Proporcionar feedback útil al cliente
-- **Consistencia**: Usar estructura estándar de respuesta para todos los errores
+### NO aplica a
+
+- ❌ Validación en frontend (responsabilidad del cliente)
+- ❌ Validación de entidades de dominio (use domain validation patterns)
+
+## 3. Tecnologías Obligatorias
+
+### Stack de Validación y Errores
+
+| Tecnología                          | Versión Mínima | Propósito                           |
+| ----------------------------------- | -------------- | ----------------------------------- |
+| **FluentValidation**                | 11.0+          | Validación de DTOs (recomendado)    |
+| **FluentValidation.AspNetCore**     | 11.0+          | Integración con ASP.NET Core        |
+| **Hellang.Middleware.ProblemDetails**| 6.5+          | RFC 7807 Problem Details middleware |
+| **Serilog.AspNetCore**              | 8.0+           | Logging estructurado de errores     |
+
+### Estándares Web
+
+- **RFC 7807**: Problem Details for HTTP APIs (formato de error estándar)
+- **Códigos HTTP**: Uso correcto de 4xx (client errors) y 5xx (server errors)
 
 ### Implementación con FluentValidation (Recomendado)
 
@@ -692,24 +709,207 @@ app.Run();
 }
 ```
 
-## 📖 Referencias
+```
 
-### Convenciones relacionadas
+## 7. Antipatrones (NO Hacer)
 
-- [Convenciones - Formato de Respuestas](/docs/fundamentos-corporativos/convenciones/apis/formato-respuestas) - Estructura JSON, códigos HTTP, ejemplos de respuestas
+### ❌ Antipatrón 1: Retornar 200 OK con error en el body
 
-### Lineamientos relacionados
+```csharp
+// ❌ MAL - Retornar 200 OK con status="error" en body
+[HttpPost]
+public async Task<IActionResult> CreateUser(CreateUserRequest request)
+{
+    if (string.IsNullOrEmpty(request.Email))
+    {
+        return Ok(new { status = "error", message = "Email requerido" }); // ❌ 200 OK
+    }
+    // ...
+}
 
-- [Desarrollo de APIs](/docs/fundamentos-corporativos/lineamientos/desarrollo/desarrollo-de-apis)
-- [Observabilidad](/docs/fundamentos-corporativos/lineamientos/arquitectura/observabilidad)
+// ✅ BIEN - Usar códigos HTTP correctos
+[HttpPost]
+public async Task<IActionResult> CreateUser(CreateUserRequest request)
+{
+    var validationResult = await _validator.ValidateAsync(request);
+    if (!validationResult.IsValid)
+    {
+        return BadRequest(new ApiResponse<object> // ✅ 400 Bad Request
+        {
+            Status = "error",
+            Errors = MapValidationErrors(validationResult.Errors)
+        });
+    }
+    // ...
+}
+```
 
-### ADRs relacionados
+**Problema**: Clientes HTTP no pueden distinguir errores de éxitos (status code = 200).  
+**Solución**: Usar códigos HTTP apropiados (400, 404, 422, 500) según el tipo de error.
 
-- [ADR-002: Estándar para APIs REST](/docs/adrs/adr-002-estandard-apis-rest)
-- [ADR-016: Logging estructurado](/docs/adrs/adr-016-logging-estructurado)
+### ❌ Antipatrón 2: No Validar Entrada (Confiar en el Cliente)
 
-### Recursos externos
+```csharp
+// ❌ MAL - No validar entrada
+[HttpPost]
+public async Task<IActionResult> CreateUser(CreateUserRequest request)
+{
+    var user = await _userService.CreateAsync(request); // ❌ Sin validación
+    return Ok(user);
+}
 
-- [FluentValidation Documentation](https://docs.fluentvalidation.net/)
-- [ASP.NET Core Model Validation](https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation)
-- [System.Text.Json Documentation](https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-overview)
+// ✅ BIEN - Validar con FluentValidation
+[HttpPost]
+public async Task<IActionResult> CreateUser(CreateUserRequest request)
+{
+    var validationResult = await _validator.ValidateAsync(request);
+    if (!validationResult.IsValid)
+    {
+        return BadRequest(MapValidationErrors(validationResult));
+    }
+    
+    var user = await _userService.CreateAsync(request);
+    return Ok(user);
+}
+```
+
+**Problema**: Datos inválidos llegan a la BD (SQL injection, XSS, data corruption).  
+**Solución**: Siempre validar entrada con FluentValidation o Data Annotations.
+
+### ❌ Antipatrón 3: Mensajes de Error Genéricos
+
+```csharp
+// ❌ MAL - Mensaje genérico sin detalles
+catch (Exception ex)
+{
+    return StatusCode(500, new { error = "Error" }); // ❌ No útil
+}
+
+// ✅ BIEN - Mensajes específicos con traceId
+catch (Exception ex)
+{
+    _logger.LogError(ex, "Error creando usuario: {Email}", request.Email);
+    
+    return StatusCode(500, new ApiResponse<object>
+    {
+        Status = "error",
+        Errors = new List<ErrorInfo>
+        {
+            new()
+            {
+                Code = "INTERNAL_SERVER_ERROR",
+                Message = "Error interno. Contacta soporte con el traceId.",
+                Details = new()
+            }
+        },
+        Meta = new() { TraceId = HttpContext.TraceIdentifier }
+    });
+}
+```
+
+**Problema**: Usuarios no saben qué falló, soporte no puede debuggear.  
+**Solución**: Mensajes claros + traceId + logging estructurado.
+
+### ❌ Antipatrón 4: Exponer Stack Traces en Producción
+
+```csharp
+// ❌ MAL - Exponer stack trace al cliente
+catch (Exception ex)
+{
+    return StatusCode(500, new 
+    { 
+        error = ex.Message,
+        stackTrace = ex.StackTrace // ❌ Información sensible
+    });
+}
+
+// ✅ BIEN - Solo en Development, no en Production
+catch (Exception ex)
+{
+    _logger.LogError(ex, "Error interno");
+    
+    var errorResponse = new ApiResponse<object>
+    {
+        Status = "error",
+        Errors = new List<ErrorInfo>
+        {
+            new()
+            {
+                Code = "INTERNAL_SERVER_ERROR",
+                Message = _env.IsDevelopment() 
+                    ? ex.Message // Solo en dev
+                    : "Error interno del servidor",
+                Details = new()
+            }
+        }
+    };
+    
+    return StatusCode(500, errorResponse);
+}
+```
+
+**Problema**: Stack traces revelan estructura de código, rutas, versiones (vulnerabilidad de seguridad).  
+**Solución**: Solo mostrar stack trace en Development, mensajes genéricos en Production.
+
+## 8. Validación y Cumplimiento
+
+### 8.1 Checklist de Implementación
+
+- [ ] **FluentValidation 11+** configurado
+- [ ] **Validators** para todos los DTOs de entrada
+- [ ] **Middleware global** de excepciones implementado
+- [ ] **RFC 7807 Problem Details** (o estructura envelope consistente)
+- [ ] **Códigos HTTP correctos** (400, 404, 422, 500)
+- [ ] **Logging estructurado** de errores con traceId
+- [ ] **Excepciones personalizadas** (ValidationException, NotFoundException, etc.)
+- [ ] **Mensajes de error claros** con campo/issue detallado
+- [ ] **No exponer stack traces** en producción
+- [ ] **Validación de negocio** separada de validación de input
+
+### 8.2 Métricas de Cumplimiento
+
+| Métrica                              | Target | Verificación                          |
+| ------------------------------------ | ------ | ------------------------------------- |
+| DTOs con validadores                 | 100%   | Cada Request DTO tiene Validator      |
+| Uso de códigos HTTP correctos        | 95%+   | Code review, auditoría de responses   |
+| Errores loggeados con traceId        | 100%   | Logs en Application Insights          |
+| Endpoints con manejo de errores      | 100%   | Middleware global activo              |
+| Respuestas con estructura consistente| 100%   | ApiResponse<T> en todos los endpoints |
+
+## 9. Referencias
+
+### Estándares Relacionados
+
+- [Diseño REST](./01-diseno-rest.md) - Implementación técnica de APIs
+- [Seguridad APIs](./02-seguridad-apis.md) - Validación de seguridad
+
+### Convenciones Relacionadas
+
+- [Formato Respuestas](../../convenciones/apis/03-formato-respuestas.md) - Estructura JSON y códigos HTTP
+
+### Lineamientos Relacionados
+
+- [Desarrollo de APIs](../../lineamientos/desarrollo/desarrollo-de-apis.md) - Lineamientos de APIs
+- [Observabilidad](../../lineamientos/arquitectura/05-observabilidad.md) - Logging y tracing
+
+### Principios Relacionados
+
+- [Calidad desde el Diseño](../../principios/arquitectura/08-calidad-desde-el-diseno.md) - Fundamento de validación
+- [Simplicidad Intencional](../../principios/arquitectura/07-simplicidad-intencional.md) - Mensajes claros
+
+### ADRs Relacionados
+
+- [ADR-002: Estándar para APIs REST](../../../decisiones-de-arquitectura/adr-002-estandard-apis-rest.md)
+- [ADR-016: Logging Estructurado](../../../decisiones-de-arquitectura/adr-016-logging-estructurado.md)
+
+### Documentación Externa
+
+- [FluentValidation Documentation](https://docs.fluentvalidation.net/) - Librería de validación
+- [RFC 7807 - Problem Details](https://www.rfc-editor.org/rfc/rfc7807) - Formato estándar de errores
+- [ASP.NET Core Model Validation](https://learn.microsoft.com/en-us/aspnet/core/mvc/models/validation) - Microsoft Docs
+- [Hellang.Middleware.ProblemDetails](https://github.com/khellang/Middleware) - Middleware RFC 7807
+
+---
+
+**Última actualización**: 27 de enero 2026  
+**Responsable**: Equipo de Arquitectura

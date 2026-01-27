@@ -811,7 +811,187 @@ integration-tests:
     - dotnet test --filter "Category=Integration"
 ```
 
-## 13. Referencias
+## 13. Antipatrones (NO Hacer)
+
+### ❌ Antipatrón 1: Compartir Estado entre Tests
+
+```csharp
+// ❌ MAL - Tests comparten misma BD sin limpiar
+public class OrdersControllerTests : IClassFixture<IntegrationTestFactory>
+{
+    [Fact]
+    public async Task Test1_CreateOrder()
+    {
+        await _client.PostAsJsonAsync("/api/v1/orders", order);
+        // No limpia la BD
+    }
+
+    [Fact]
+    public async Task Test2_GetOrders() // Depende de Test1
+    {
+        var response = await _client.GetAsync("/api/v1/orders");
+        var orders = await response.Content.ReadFromJsonAsync<List<Order>>();
+        orders.Should().HaveCount(1); // Asume orden de Test1
+    }
+}
+
+// ✅ BIEN - Cada test limpia su estado
+public class OrdersControllerTests : IClassFixture<IntegrationTestFactory>
+{
+    private readonly Respawner _respawner;
+
+    [Fact]
+    public async Task CreateOrder_ValidData_ReturnsCreated()
+    {
+        // Arrange: Limpiar BD antes del test
+        await _respawner.ResetAsync(_dbConnection);
+        
+        // Act & Assert
+        await _client.PostAsJsonAsync("/api/v1/orders", order);
+    }
+}
+```
+
+**Problema**: Tests fallan aleatoriamente según orden de ejecución.  
+**Solución**: Usar Respawn o limpiar BD en cada test con `beforeEach`.
+
+### ❌ Antipatrón 2: No Usar TestContainers (usar BD local)
+
+```csharp
+// ❌ MAL - Conectar a PostgreSQL local del desarrollador
+services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql("Host=localhost;Database=talma_dev")); // ❌ BD compartida
+
+// ✅ BIEN - Usar TestContainers para aislamiento
+var dbContainer = new PostgreSqlBuilder()
+    .WithImage("postgres:16-alpine")
+    .WithDatabase("talma_test")
+    .Build();
+
+await dbContainer.StartAsync();
+
+services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(dbContainer.GetConnectionString())); // ✅ BD aislada por test run
+```
+
+**Problema**: Tests interfieren con desarrollo local, no aislados, fallan en CI.  
+**Solución**: Siempre usar TestContainers para crear BD efímera por ejecución.
+
+### ❌ Antipatrón 3: Tests Lentos sin Paralelización
+
+```csharp
+// ❌ MAL - Tests secuenciales (lentos)
+[Collection("Sequential")] // Fuerza ejecución secuencial
+public class SlowIntegrationTests { }
+
+// ✅ BIEN - Tests paralelos con aislamiento
+[Collection("IntegrationTests")] // Permite paralelización
+public class OrdersControllerTests : IClassFixture<IntegrationTestFactory>
+{
+    // Cada instancia de factory = contenedor separado
+}
+```
+
+**Problema**: Suite de 100 integration tests toma 30+ minutos.  
+**Solución**: Permitir paralelización con fixtures independientes.
+
+### ❌ Antipatrón 4: No Verificar BD después de operaciones
+
+```csharp
+// ❌ MAL - Solo verificar HTTP response
+[Fact]
+public async Task CreateUser_ReturnsCreated()
+{
+    var response = await _client.PostAsJsonAsync("/api/v1/users", newUser);
+    response.StatusCode.Should().Be(HttpStatusCode.Created); // Solo verifica API
+}
+
+// ✅ BIEN - Verificar que se guardó en BD
+[Fact]
+public async Task CreateUser_SavesToDatabase()
+{
+    var response = await _client.PostAsJsonAsync("/api/v1/users", newUser);
+    response.StatusCode.Should().Be(HttpStatusCode.Created);
+
+    // Verificar BD directamente
+    using var scope = _factory.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var savedUser = await dbContext.Users.FirstOrDefaultAsync(u => u.Email == newUser.Email);
+    
+    savedUser.Should().NotBeNull();
+    savedUser!.Name.Should().Be(newUser.Name);
+}
+```
+
+**Problema**: API retorna 201 pero no guardó en BD (false positive).  
+**Solución**: Siempre verificar persistencia real consultando BD directamente.
+
+## 14. Validación y Cumplimiento
+
+### 14.1 Checklist de Implementación
+
+- [ ] **WebApplicationFactory** (C#) o **Supertest** (TypeScript) configurado
+- [ ] **TestContainers** para PostgreSQL/SQL Server/Redis
+- [ ] **Limpieza de BD** con Respawn entre tests
+- [ ] **Migrations aplicadas** automáticamente en test setup
+- [ ] **Seed data** consistente y mínimo
+- [ ] **Tests independientes** (sin estado compartido)
+- [ ] **Verificación de BD** después de operaciones POST/PUT/DELETE
+- [ ] **Paralelización** habilitada (fixtures independientes)
+- [ ] **Integración con CI/CD** (GitHub Actions, GitLab CI)
+- [ ] **Cobertura 30-40%** de la suite total de tests
+
+### 14.2 Métricas de Calidad
+
+| Métrica                           | Target  | Verificación                           |
+| --------------------------------- | ------- | -------------------------------------- |
+| Tiempo ejecución por test         | < 5s    | Reportes de xUnit / Jest               |
+| Flakiness rate                    | < 2%    | Retries en CI, análisis de fallos      |
+| Cobertura integration tests       | 30-40%  | Proporción vs total de tests           |
+| Tests con TestContainers          | 100%    | Code review                            |
+| Tests con limpieza de BD          | 100%    | Validación de Respawn usage            |
+| Paralelización habilitada         | Sí      | Configuración de test runner           |
+
+## 15. Referencias
+
+### Estándares Relacionados
+
+- [Unit Tests](./01-unit-tests.md) - Testing unitario con mocks
+- [E2E Tests](./03-e2e-tests.md) - Testing end-to-end con Playwright
+- [Docker](../infraestructura/01-docker.md) - Containerización
+- [PostgreSQL](../bases-de-datos/01-postgresql.md) - Configuración de base de datos
+
+### Convenciones Relacionadas
+
+- [Naming Tests](../../convenciones/testing/01-naming-tests.md) - Nomenclatura de métodos de test
+
+### Lineamientos Relacionados
+
+- [Testing](../../lineamientos/desarrollo/03-testing.md) - Lineamientos generales de testing
+- [Calidad y Testing](../../lineamientos/arquitectura/07-calidad-testing.md) - Enfoque arquitectónico
+
+### Principios Relacionados
+
+- [Calidad desde el Diseño](../../principios/arquitectura/08-calidad-desde-el-diseno.md) - Fundamento de calidad
+- [Observabilidad desde el Diseño](../../principios/arquitectura/05-observabilidad-desde-el-diseno.md) - Testing de observabilidad
+
+### ADRs Relacionados
+
+- [ADR-010: Estándar Base de Datos](../../../decisiones-de-arquitectura/adr-010-standard-base-datos.md) - PostgreSQL y migraciones
+- [ADR-007: Contenedores AWS](../../../decisiones-de-arquitectura/adr-007-contenedores-aws.md) - Containerización
+
+### Documentación Externa
+
+- [WebApplicationFactory](https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests) - Microsoft Docs
+- [TestContainers](https://testcontainers.com/) - Documentación oficial
+- [Supertest](https://github.com/ladjs/supertest) - GitHub
+- [Respawn](https://github.com/jbogard/Respawn) - Database cleanup
+- [Integration Testing Best Practices](https://martinfowler.com/bliki/IntegrationTest.html) - Martin Fowler
+
+---
+
+**Última actualización**: 27 de enero 2026  
+**Responsable**: Equipo de Arquitectura
 
 ### Documentación Oficial
 

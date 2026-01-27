@@ -237,15 +237,27 @@ dotnet_naming_style.camel_case_with_underscore.required_prefix = _
 
 ### Estándares relacionados
 
-- [C# Clean Code](/docs/fundamentos-corporativos/estandares/codigo/csharp-dotnet)
+## 6. Referencias
 
-### Recursos externos
+### Estándares Relacionados
 
-- [Microsoft C# Coding Conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
-- [.NET Runtime Coding Style](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/coding-style.md)
-- [StyleCop Rules](https://github.com/DotNetAnalyzers/StyleCopAnalyzers)
+- [C# y .NET](../../estandares/codigo/01-csharp-dotnet.md) - Estándares de Clean Code y SOLID
 
----
+### Lineamientos Relacionados
 
-**Última revisión**: 26 de enero 2026
-**Responsable**: Equipo de Arquitectura
+- [Testing y Calidad](../../lineamientos/operabilidad/04-testing-y-calidad.md) - Lineamientos de calidad de código
+
+### Principios Relacionados
+
+- [Calidad desde el Diseño](../../principios/operabilidad/03-calidad-desde-el-diseno.md) - Fundamento de código limpio
+
+### Otras Convenciones
+
+- [Comentarios de Código](./03-comentarios-codigo.md) - Documentación en código
+- [Estructura de Proyectos](./04-estructura-proyectos.md) - Organización de soluciones
+
+### Documentación Externa
+
+- [Microsoft C# Coding Conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions) - Guía oficial
+- [.NET Runtime Coding Style](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/coding-style.md) - Estilo del runtime
+- [StyleCop Rules](https://github.com/DotNetAnalyzers/StyleCopAnalyzers) - Reglas de análisis estático

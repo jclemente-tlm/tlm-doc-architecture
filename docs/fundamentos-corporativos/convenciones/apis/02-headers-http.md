@@ -211,23 +211,47 @@ export const traceabilityHeaders: RequestHandler = (req, res, next) => {
 };
 ```
 
-## 📖 Referencias
+## 6. Checklist
 
-### Estándares relacionados
+- [ ] `X-Correlation-ID` presente en todas las requests
+- [ ] `X-Request-ID` generado para cada request
+- [ ] `X-Tenant-ID` cuando aplique multi-tenancy
+- [ ] `Authorization` con formato correcto (`Bearer {token}`)
+- [ ] `Content-Type: application/json` en requests POST/PUT/PATCH
+- [ ] `Accept: application/json` en requests
+- [ ] Headers de seguridad configurados (HSTS, CSP, X-Frame-Options)
+- [ ] Headers documentados en OpenAPI/Swagger
 
-- [Seguridad de APIs](/docs/fundamentos-corporativos/estandares/apis/seguridad-apis)
-- [Logging Estructurado](/docs/fundamentos-corporativos/estandares/observabilidad/logging)
+## 7. Referencias
 
-### Convenciones relacionadas
+### Estándares Relacionados
 
-- [Correlation IDs](/docs/fundamentos-corporativos/convenciones/logs/correlation-ids)
+- [Seguridad APIs](../../estandares/apis/02-seguridad-apis.md) - JWT y autenticación
+- [Diseño REST](../../estandares/apis/01-diseno-rest.md) - Implementación de APIs
+- [Logging](../../estandares/observabilidad/01-logging.md) - Uso de correlation IDs
 
-### Recursos externos
+### Lineamientos Relacionados
+
+- [Observabilidad](../../lineamientos/arquitectura/05-observabilidad.md) - Trazabilidad de requests
+- [Seguridad desde el Diseño](../../lineamientos/seguridad/01-seguridad-desde-el-diseno.md) - Headers de seguridad
+
+### Principios Relacionados
+
+- [Observabilidad desde el Diseño](../../principios/arquitectura/05-observabilidad-desde-el-diseno.md) - Fundamento de trazabilidad
+- [Seguridad desde el Diseño](../../principios/seguridad/01-seguridad-desde-el-diseno.md) - Fundamento de autenticación
+
+### Otras Convenciones
+
+- [Correlation IDs](../logs/02-correlation-ids.md) - Formato de IDs de correlación
+- [Naming Endpoints](./01-naming-endpoints.md) - Nomenclatura de endpoints
+
+### Documentación Externa
 
 - [HTTP Headers - MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
 - [OWASP Secure Headers](https://owasp.org/www-project-secure-headers/)
+- [RFC 7231 - HTTP/1.1 Semantics](https://www.rfc-editor.org/rfc/rfc7231)
 
 ---
 
-**Última revisión**: 26 de enero 2026
+**Última revisión**: 26 de enero 2026  
 **Responsable**: Equipo de Arquitectura

@@ -672,31 +672,9 @@ tests/
 
 ## 10. Mejores Prácticas
 
-### 10.1 Naming Conventions
+> **Nota**: Para convenciones de nomenclatura de tests, consulta [Convenciones - Naming Tests](../../convenciones/testing/01-naming-tests.md).
 
-```csharp
-// ✅ BIEN: Descriptivo y claro
-[Fact]
-public async Task GetUserAsync_UserExists_ReturnsUser()
-
-[Fact]
-public async Task GetUserAsync_UserNotFound_ReturnsNull()
-
-[Fact]
-public async Task CreateUserAsync_InvalidEmail_ThrowsValidationException()
-
-// ❌ MAL: No descriptivo
-[Fact]
-public async Task Test1()
-
-[Fact]
-public async Task UserTest()
-
-[Fact]
-public async Task It_Works()
-```
-
-### 10.2 Un Concepto por Test
+### 10.1 Un Concepto por Test
 
 ```csharp
 // ✅ BIEN: Un test, un assertion lógico
@@ -726,7 +704,7 @@ public async Task CreateUser_Works()
 }
 ```
 
-### 10.3 Tests Deterministicos
+### 10.2 Tests Deterministicos
 
 ```typescript
 // ✅ BIEN: Inyectar tiempo, no usar Date.now()
@@ -764,17 +742,134 @@ async createUser(request: CreateUserRequest): Promise<User> {
 }
 ```
 
-## 11. Antipatrones
+## 11. Antipatrones (NO Hacer)
 
-❌ **Tests interdependientes**: Cada test debe ejecutarse independientemente
-❌ **Sleeps/Timeouts**: `await Task.Delay(1000)` hace tests lentos y frágiles
-❌ **Estado global**: Modificar singletons o variables estáticas
-❌ **Tests sin assertions**: Solo verificar que no hay excepciones
-❌ **Tests frágiles**: Depender de orden de ejecución
-❌ **Over-mocking**: Mockear todo, incluso clases simples (DTOs, models)
-❌ **Tests que prueban mocks**: Verificar comportamiento del mock, no del SUT
+### ❌ Antipatrón 1: Tests Interdependientes
 
-## 12. Integración con CI/CD
+```csharp
+// ❌ MAL - Tests dependen unos de otros
+private static User? _sharedUser;
+
+[Fact]
+public async Task Test1_CreateUser()
+{
+    _sharedUser = await _sut.CreateUserAsync(request);
+    Assert.NotNull(_sharedUser);
+}
+
+[Fact]
+public async Task Test2_UpdateUser() // Depende de Test1
+{
+    _sharedUser!.Name = "New Name";
+    await _sut.UpdateUserAsync(_sharedUser);
+}
+
+// ✅ BIEN - Cada test es independiente
+[Fact]
+public async Task CreateUserAsync_ValidData_ReturnsCreatedUser()
+{
+    var user = await _sut.CreateUserAsync(request);
+    Assert.NotNull(user);
+}
+
+[Fact]
+public async Task UpdateUserAsync_ValidData_UpdatesUser()
+{
+    var user = new UserBuilder().Build(); // Creado en este test
+    await _sut.UpdateUserAsync(user);
+}
+```
+
+**Problema**: Tests fallan si se ejecutan en orden diferente o en paralelo.  
+**Solución**: Cada test crea su propio setup (Arrange) independiente.
+
+### ❌ Antipatrón 2: Usar Task.Delay() / setTimeout()
+
+```csharp
+// ❌ MAL - Usar delays hace tests lentos y frágiles
+[Fact]
+public async Task ProcessAsync_EventuallyCompletes()
+{
+    await _sut.StartProcessAsync();
+    await Task.Delay(5000); // Espera 5 segundos
+    var result = await _sut.GetResultAsync();
+    Assert.True(result.IsComplete);
+}
+
+// ✅ BIEN - Usar polling con timeout o mocks síncronos
+[Fact]
+public async Task ProcessAsync_CompletesImmediately()
+{
+    _mockProcessor.Setup(p => p.ProcessAsync())
+        .ReturnsAsync(new ProcessResult { IsComplete = true });
+    
+    var result = await _sut.ProcessAsync();
+    Assert.True(result.IsComplete);
+}
+```
+
+**Problema**: Tests lentos (5s por test), timing no determinístico.  
+**Solución**: Mockear operaciones asíncronas para hacerlas instantáneas.
+
+### ❌ Antipatrón 3: Over-Mocking (Mockear Todo)
+
+```csharp
+// ❌ MAL - Mockear clases simples que no tienen dependencias
+var mockUser = new Mock<User>(); // User es un POCO/DTO simple
+var mockRequest = new Mock<CreateUserRequest>();
+
+// ✅ BIEN - Solo mockear interfaces y dependencias externas
+var mockRepository = new Mock<IUserRepository>(); // ✅ Dependencia externa
+var mockLogger = new Mock<ILogger<UserService>>(); // ✅ Dependencia externa
+
+var realUser = new User { Id = 1, Name = "Test" }; // ✅ POCO real
+var realRequest = new CreateUserRequest { Name = "Test" }; // ✅ DTO real
+```
+
+**Problema**: Complejidad innecesaria, tests difíciles de mantener.  
+**Solución**: Solo mockear interfaces de servicios, repositorios, loggers. Usar objetos reales para POCOs/DTOs.
+
+### ❌ Antipatrón 4: Tests sin Assertions
+
+```csharp
+// ❌ MAL - No verificar nada, solo que no lance excepción
+[Fact]
+public async Task CreateUserAsync_DoesNotThrow()
+{
+    await _sut.CreateUserAsync(request); // Solo verifica que no explota
+}
+
+// ✅ BIEN - Siempre verificar el resultado esperado
+[Fact]
+public async Task CreateUserAsync_ValidData_ReturnsCreatedUser()
+{
+    var result = await _sut.CreateUserAsync(request);
+    
+    Assert.NotNull(result);
+    Assert.True(result.Id > 0);
+    Assert.Equal(request.Name, result.Name);
+}
+```
+
+**Problema**: Test pasa incluso si el código está mal (false positive).  
+**Solución**: Siempre tener al menos una assertion explícita del comportamiento esperado.
+
+## 12. Validación y Cumplimiento
+
+### 12.1 Checklist de Implementación
+
+- [ ] **xUnit 2.6+** (C#) o **Jest 29+** (TypeScript) configurado
+- [ ] **Patrón AAA** (Arrange-Act-Assert) en todos los tests
+- [ ] **Mocks** solo para dependencias externas (interfaces)
+- [ ] **Cobertura de código ≥ 80%** (lines, branches)
+- [ ] **Test Data Builders** o factories para objetos complejos
+- [ ] **Tests independientes** (sin estado compartido)
+- [ ] **Tests rápidos** (< 100ms por test unitario)
+- [ ] **FluentAssertions** (C#) configurado para assertions legibles
+- [ ] **Integración con CI/CD** (GitHub Actions, GitLab CI)
+- [ ] **Reportes de coverage** generados y revisados
+
+### 12.2 Integración con CI/CD
 
 ### 12.1 GitHub Actions
 
@@ -826,22 +921,55 @@ test:
         path: "**/coverage.cobertura.xml"
 ```
 
+### 12.3 Métricas de Calidad
+
+| Métrica                           | Target | Verificación                           |
+| --------------------------------- | ------ | -------------------------------------- |
+| Cobertura de líneas               | ≥ 80%  | Coverlet / Jest coverage               |
+| Cobertura de branches             | ≥ 80%  | Coverlet / Jest coverage               |
+| Tiempo ejecución por test         | < 100ms| Reportes de xUnit / Jest               |
+| Tests con patrón AAA              | 100%   | Code review                            |
+| Tests con FluentAssertions        | 90%+   | Grep search en tests                   |
+| Tests independientes (no estado)  | 100%   | Validación en CI (tests en paralelo)   |
+
 ## 13. Referencias
 
-### Documentación Oficial
+### Estándares Relacionados
 
-- [xUnit Documentation](https://xunit.net/)
-- [Moq Documentation](https://github.com/moq/moq4)
-- [Jest Documentation](https://jestjs.io/)
-- [FluentAssertions](https://fluentassertions.com/)
+- [Integration Tests](./02-integration-tests.md) - Testing con dependencias reales (DB, APIs)
+- [E2E Tests](./03-e2e-tests.md) - Testing end-to-end con Playwright
+- [C# / .NET](../codigo/01-csharp-dotnet.md) - Clean Code y mejores prácticas de código
+- [TypeScript](../codigo/02-typescript.md) - Type Safety y patrones TypeScript
+
+### Convenciones Relacionadas
+
+- [Naming Tests](../../convenciones/testing/01-naming-tests.md) - Nomenclatura de métodos de test
 
 ### Lineamientos Relacionados
 
-- [Lineamiento Dev. 03: Testing](../../lineamientos/desarrollo/03-testing.md)
-- [Lineamiento Arq. 07: Calidad y Testing](../../lineamientos/arquitectura/07-calidad-testing.md)
+- [Testing](../../lineamientos/desarrollo/03-testing.md) - Lineamientos generales de testing
+- [Calidad y Testing](../../lineamientos/arquitectura/07-calidad-testing.md) - Enfoque arquitectónico
 
-### Otros Estándares
+### Principios Relacionados
 
-- [Integration Tests](./02-integration-tests.md) - Testing con dependencias reales
-- [E2E Tests](./03-e2e-tests.md) - Testing end-to-end con Playwright
-- [C# / .NET](../codigo/01-csharp-dotnet.md) - Clean Code y mejores prácticas
+- [Calidad desde el Diseño](../../principios/arquitectura/08-calidad-desde-el-diseno.md) - Fundamento de calidad
+- [Simplicidad Intencional](../../principios/arquitectura/07-simplicidad-intencional.md) - Tests simples y claros
+
+### ADRs Relacionados
+
+- [ADR-016: Logging Estructurado](../../../decisiones-de-arquitectura/adr-016-logging-estructurado.md) - Testing con logs
+- [ADR-021: Observabilidad](../../../decisiones-de-arquitectura/adr-021-observabilidad.md) - Testing de métricas
+
+### Documentación Externa
+
+- [xUnit Documentation](https://xunit.net/) - Framework de testing para .NET
+- [Moq Documentation](https://github.com/moq/moq4) - Mocking library para .NET
+- [Jest Documentation](https://jestjs.io/) - Framework de testing para JavaScript/TypeScript
+- [FluentAssertions](https://fluentassertions.com/) - Assertions legibles para .NET
+- [Test-Driven Development (TDD)](https://martinfowler.com/bliki/TestDrivenDevelopment.html) - Martin Fowler
+- [Unit Testing Best Practices](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices) - Microsoft
+
+---
+
+**Última actualización**: 27 de enero 2026  
+**Responsable**: Equipo de Arquitectura

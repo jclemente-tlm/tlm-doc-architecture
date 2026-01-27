@@ -322,18 +322,38 @@ export const serializeDate = (date: Date): string => {
 }
 ```
 
-## 📖 Referencias
+## 8. Checklist
 
-### Estándares relacionados
+- [ ] Fechas en ISO 8601 (`YYYY-MM-DDTHH:mm:ss.sssZ`)
+- [ ] Siempre UTC (terminan en `Z`)
+- [ ] Moneda en formato objeto con `amount` y `currency`
+- [ ] Código de moneda ISO 4217 (`USD`, `EUR`, `PEN`)
+- [ ] Cantidades numéricas (no strings)
+- [ ] Decimales con punto (no coma)
+- [ ] Precisión: 2 decimales para monedas estándar
+- [ ] Validación con Regex/FluentValidation
+- [ ] Documentación actualizada
 
-- [Diseño REST](/docs/fundamentos-corporativos/estandares/apis/diseno-rest)
-- [Validación y Errores](/docs/fundamentos-corporativos/estandares/apis/validacion-y-errores)
+## 9. Referencias
 
-### Convenciones relacionadas
+### Estándares Relacionados
 
-- [Formato de Respuestas](./03-formato-respuestas.md)
+- [Diseño REST](../../estandares/apis/01-diseno-rest.md) - Implementación de APIs
+- [Validación y Errores](../../estandares/apis/03-validacion-y-errores.md) - Validación de formatos
 
-### Recursos externos
+### Lineamientos Relacionados
+
+- [Diseño de APIs](../../lineamientos/arquitectura/06-diseno-de-apis.md) - Convenciones de APIs
+
+### Principios Relacionados
+
+- [Contratos de Comunicación](../../principios/arquitectura/06-contratos-de-comunicacion.md) - Formatos consistentes
+
+### Otras Convenciones
+
+- [Formato Respuestas](./03-formato-respuestas.md) - Estructura de respuestas
+
+### Documentación Externa
 
 - [ISO 8601 - Date and Time](https://www.iso.org/iso-8601-date-and-time-format.html)
 - [ISO 4217 - Currency Codes](https://www.iso.org/iso-4217-currency-codes.html)
@@ -341,5 +361,5 @@ export const serializeDate = (date: Date): string => {
 
 ---
 
-**Última revisión**: 26 de enero 2026
+**Última revisión**: 26 de enero 2026  
 **Responsable**: Equipo de Arquitectura

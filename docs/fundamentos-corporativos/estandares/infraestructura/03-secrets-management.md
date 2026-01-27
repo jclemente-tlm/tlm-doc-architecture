@@ -2,42 +2,81 @@
 id: secrets-management
 sidebar_position: 3
 title: Gestión de Secretos
-description: Estándares para gestión segura de secretos con AWS Secrets Manager y Azure Key Vault
+description: Estándar técnico obligatorio para gestión segura de secretos con AWS Secrets Manager, rotación automática, least privilege y auditoría
 ---
 
-## 1. Principios de Gestión de Secretos
+# Gestión de Secretos
 
-- **Never hardcode**: Nunca incluir secretos en código fuente
-- **Rotation**: Rotar secretos periódicamente
-- **Least privilege**: Acceso mínimo necesario a secretos
-- **Encryption in transit and at rest**: Secretos siempre encriptados
-- **Audit**: Registrar todos los accesos a secretos
-- **Separation**: Secretos diferentes por entorno (dev, staging, prod)
+## 1. Propósito
 
-## 2. Tipos de Secretos
+Definir la configuración técnica obligatoria para gestionar secretos (passwords, API keys, certificados) de forma segura mediante:
+- **AWS Secrets Manager** como herramienta principal con rotación automática
+- **Never hardcode** - Cero secretos en código fuente, variables de entorno o logs
+- **Rotación automática** cada 30-90 días con Lambda functions
+- **Least privilege** - IAM policies granulares por servicio
+- **Encryption** - AES-256 en reposo, TLS 1.3 en tránsito
+- **Auditoría completa** - CloudTrail para todos los accesos
 
-| Tipo                       | Ejemplos                            | Gestión         |
-| -------------------------- | ----------------------------------- | --------------- |
-| **Credenciales de BD**     | User, password, connection string   | Secrets Manager |
-| **API Keys**               | Third-party services, internal APIs | Secrets Manager |
-| **Certificados**           | SSL/TLS certificates, signing keys  | Key Vault / ACM |
-| **Tokens**                 | OAuth tokens, JWT secrets           | Secrets Manager |
-| **Claves de encriptación** | Encryption keys, master keys        | KMS / Key Vault |
+Garantiza cero leaks de secretos, compliance con PCI-DSS/SOC2, y recuperación ante compromiso.
 
-## 3. AWS Secrets Manager
+## 2. Alcance
 
-### Naming Conventions
+### Aplica a:
+
+- ✅ Credenciales de bases de datos (PostgreSQL, SQL Server, Redis)
+- ✅ API keys de servicios externos (Stripe, SendGrid, AWS services)
+- ✅ OAuth tokens, JWT signing keys
+- ✅ Certificados SSL/TLS privados
+- ✅ Claves de encriptación simétricas/asimétricas
+- ✅ Secretos en dev, staging, production (separados)
+
+### NO aplica a:
+
+- ❌ Configuraciones públicas (URLs de endpoints públicos)
+- ❌ Feature flags (usar servicios específicos como LaunchDarkly)
+- ❌ Valores no sensibles (timeouts, limits, nombres de recursos)
+- ❌ Certificados públicos (estos son públicos por definición)
+
+## 3. Tecnologías Obligatorias
+
+| Categoría          | Tecnología / Configuración                | Versión   | Justificación                           |
+| ------------------ | ----------------------------------------- | --------- | --------------------------------------- |
+| **Secrets Store**  | AWS Secrets Manager                       | -         | Rotación automática, integración AWS    |
+| **Encryption**     | AWS KMS (AES-256)                         | -         | Encryption at rest managed             |
+| **SDK .NET**       | `AWSSDK.SecretsManager`                   | 3.7+      | Cliente oficial AWS                     |
+| **SDK Node.js**    | `@aws-sdk/client-secrets-manager`         | 3.0+      | Cliente oficial AWS v3                  |
+| **Rotation**       | AWS Lambda + RDS/Custom rotation          | -         | Rotación sin downtime                   |
+| **Auditoría**      | AWS CloudTrail                            | -         | Log de todos los accesos                |
+| **IAM**            | Políticas granulares por servicio         | -         | Least privilege                         |
+
+### Tipos de Secretos
+
+| Tipo                       | Ejemplos                            | Herramienta         | Rotación      |
+| -------------------------- | ----------------------------------- | ------------------- | ------------- |
+| **Credenciales BD**        | User, password, connection string   | Secrets Manager     | 30 días       |
+| **API Keys**               | Stripe, SendGrid, third-party       | Secrets Manager     | 90 días       |
+| **Certificados**           | SSL/TLS private keys                | ACM, Secrets Manager| 1 año         |
+| **OAuth Tokens**           | Access tokens, refresh tokens       | Secrets Manager     | Por proveedor |
+| **Encryption Keys**        | Symmetric/asymmetric keys           | AWS KMS             | 1 año         |
+
+## 4. Configuración Técnica Obligatoria
+
+### 4.1 Naming Convention para Secretos
+
+### 4.1 Naming Convention para Secretos
 
 ```
 {environment}/{service}/{secret-type}/{name}
 
-Ejemplos:
-- prod/orders-api/database/master-password
-- prod/orders-api/external-api/stripe-api-key
+✅ Ejemplos AWS Secrets Manager:
+- prod/users-api/database/master-password
+- prod/users-api/external-api/stripe-api-key
+- prod/orders-api/jwt/signing-key
 - staging/notifications/smtp/password
+- dev/shared/redis/password
 ```
 
-### Creación de secretos
+### 4.2 Creación de Secretos con AWS CLI
 
 ```bash
 # Crear secreto simple

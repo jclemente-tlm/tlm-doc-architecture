@@ -2,266 +2,380 @@
 id: csharp-dotnet
 sidebar_position: 1
 title: C# y .NET
-description: Estándares de Clean Code, estilo, buenas prácticas y seguridad para C# y .NET
+description: Estándares de Clean Code, principios SOLID y buenas prácticas para C# y .NET
 ---
 
-## Introducción
+# C# y .NET
 
-Este documento resume y adapta los principios de Clean Code para C# y .NET, basado en la guía [clean-code-dotnet](https://github.com/thangchung/clean-code-dotnet), con ejemplos prácticos y recomendaciones clave.
+## 1. Propósito
 
-**Versiones mínimas requeridas:**
+Establecer los estándares técnicos de Clean Code y principios SOLID para garantizar que el código C# y .NET sea legible, mantenible, testeable y seguro.
 
-- .NET: 8.0+
-- C#: 12+
-- ASP.NET Core: 8.0+
+> **Nota:** Para convenciones de nomenclatura (naming), consulta [Convenciones - Naming C#](../../convenciones/codigo/01-naming-csharp.md).
 
-## Objetivo
+## 2. Alcance
 
-Promover un código legible, mantenible y seguro en proyectos C# y .NET, aplicando Clean Code.
+**Aplica a:**
+- Proyectos .NET 8.0+ (backend, APIs, servicios)
+- Librerías y componentes reutilizables en C#
+- Aplicaciones web con ASP.NET Core
+- Microservicios y servicios cloud-native
 
-## Alcance
+**No aplica a:**
+- Proyectos legacy en .NET Framework <4.8 sin planes de migración
+- Scripts de automatización simples
 
-Aplica a todos los desarrolladores que trabajen con C# y .NET en la organización.
+## 3. Tecnologías y Herramientas Obligatorias
 
----
+### Versiones Mínimas
 
-## Principios clave de Clean Code en C
+- **.NET:** 8.0+
+- **C#:** 12+
+- **ASP.NET Core:** 8.0+ (para APIs y web)
 
-### 1. Nombres claros y significativos
+### Herramientas de Calidad
 
-- Usa nombres descriptivos para variables, funciones y clases.
-- Evita abreviaturas, nombres genéricos y prefijos innecesarios.
+**Análisis estático (obligatorio):**
 
-**Correcto:**
-
-```csharp
-int userAge;
-string customerEmail;
-class InvoiceProcessor {}
+```xml
+<ItemGroup>
+  <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
+  <PackageReference Include="SonarAnalyzer.CSharp" Version="9.16.0.82469" />
+  <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
+</ItemGroup>
 ```
 
-**Incorrecto:**
+**Configuración `.editorconfig`:**
 
-```csharp
-int a;
-string ce;
-class IP {}
+```ini
+[*.cs]
+indent_style = space
+indent_size = 4
+
+# Code quality rules
+dotnet_diagnostic.CA1062.severity = warning  # Validate arguments
+dotnet_diagnostic.CA1031.severity = warning  # Do not catch general exceptions
+dotnet_diagnostic.CA2007.severity = warning  # ConfigureAwait
 ```
 
-### 2. Funciones cortas y de una sola responsabilidad (SRP)
+## 4. Configuración Estándar
 
-- Cada función debe hacer solo una cosa.
-- Prefiere funciones pequeñas y reutilizables.
+### Inyección de Dependencias
 
-**Correcto:**
+**Program.cs (ASP.NET Core 8+):**
 
 ```csharp
-void SendEmail(string to, string body) { /* ... */ }
+var builder = WebApplication.CreateBuilder(args);
+
+// Servicios con tiempo de vida apropiado
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddSingleton<ICacheService, RedisCacheService>();
+builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
 ```
 
-**Incorrecto:**
+### Manejo de Errores Global
 
 ```csharp
-void ProcessOrder() {
-  // ...
-  // envío de email incluido aquí (mala práctica)
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exceptionHandlerPathFeature = 
+            context.Features.Get<IExceptionHandlerPathFeature>();
+        
+        var exception = exceptionHandlerPathFeature?.Error;
+        
+        await Results.Problem(
+            title: "An error occurred",
+            statusCode: StatusCodes.Status500InternalServerError
+        ).ExecuteAsync(context);
+    });
+});
+```
+
+## 5. Ejemplos Prácticos
+
+### Ejemplo 1: Single Responsibility Principle (SRP)
+
+**✅ Correcto:**
+
+```csharp
+public class OrderService
+{
+    private readonly IOrderRepository _repository;
+    private readonly IOrderValidator _validator;
+    
+    public OrderService(IOrderRepository repository, IOrderValidator validator)
+    {
+        _repository = repository;
+        _validator = validator;
+    }
+    
+    public async Task<Order> CreateOrderAsync(CreateOrderDto dto)
+    {
+        // Solo responsabilidad de crear órdenes
+        _validator.Validate(dto);
+        var order = dto.ToEntity();
+        return await _repository.AddAsync(order);
+    }
 }
 ```
 
-### 3. Evita duplicidad (DRY)
-
-- Extrae lógica repetida en funciones o clases reutilizables.
-
-**Correcto:**
+**❌ Incorrecto:**
 
 ```csharp
-bool IsAdult(User user) => user.Age >= 18;
-```
-
-**Incorrecto:**
-
-```csharp
-if (user.Age < 18) { /* ... */ }
-if (user.Age < 18) { /* ... */ }
-```
-
-### 4. Simplicidad (KISS)
-
-- Prefiere soluciones simples y directas.
-- Evita lógica innecesariamente compleja.
-
-**Correcto:**
-
-```csharp
-if (user.IsActive) { /* ... */ }
-```
-
-**Incorrecto:**
-
-```csharp
-if ((user.Status == 1 || user.Status == 2) && !user.IsBanned) { /* ... */ }
-```
-
-### 5. No escribas código que no necesitas (YAGNI)
-
-- Implementa solo lo necesario para el requerimiento actual.
-
-**Incorrecto:**
-
-```csharp
-// Métodos y clases no usados ni requeridos
-void FutureFeature() { /* ... */ }
-```
-
-### 6. Manejo adecuado de errores
-
-- Usa excepciones específicas y mensajes claros.
-- No ocultes errores ni uses catch vacíos.
-
-**Correcto:**
-
-```csharp
-try {
-  // ...
-} catch (FileNotFoundException ex) {
-  LogError(ex.Message);
+public class OrderService
+{
+    public async Task<Order> CreateOrderAsync(CreateOrderDto dto)
+    {
+        // Mezcla validación, persistencia, notificación (múltiples responsabilidades)
+        if (string.IsNullOrEmpty(dto.CustomerId)) throw new Exception("Invalid");
+        var order = new Order { /* ... */ };
+        SaveToDatabase(order);
+        SendEmail(order.CustomerEmail, "Order created");
+        return order;
+    }
 }
 ```
 
-**Incorrecto:**
+### Ejemplo 2: Dependency Injection
+
+**✅ Correcto:**
 
 ```csharp
-try {
-  // ...
-} catch { }
-```
-
-### 7. Comentarios útiles y documentación
-
-- Comenta solo lo necesario para aclarar intenciones o casos especiales.
-- Prefiere código autoexplicativo.
-
-**Correcto:**
-
-```csharp
-// Calcula el total del pedido incluyendo impuestos
-void CalculateTotal() { /* ... */ }
-```
-
-**Incorrecto:**
-
-```csharp
-// ct
-void ct() { /* ... */ }
-```
-
-### 8. Organización y modularidad
-
-- Separa responsabilidades en archivos y clases distintas.
-- Usa namespaces y carpetas para organizar el código.
-
-**Correcto:**
-
-```csharp
-namespace Talma.Orders.Services {
-  public class OrderService { /* ... */ }
+public class PaymentProcessor
+{
+    private readonly IPaymentGateway _gateway;
+    private readonly ILogger<PaymentProcessor> _logger;
+    
+    public PaymentProcessor(IPaymentGateway gateway, ILogger<PaymentProcessor> logger)
+    {
+        _gateway = gateway ?? throw new ArgumentNullException(nameof(gateway));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
+    
+    public async Task<PaymentResult> ProcessAsync(Payment payment)
+    {
+        _logger.LogInformation("Processing payment {PaymentId}", payment.Id);
+        return await _gateway.ChargeAsync(payment);
+    }
 }
 ```
 
-### 9. Colecciones y estructuras de control
+### Ejemplo 3: Async/Await Correcto
 
-- Prefiere LINQ y métodos funcionales para manipular colecciones.
-- Evita bucles anidados y lógica compleja en una sola función.
-
-**Correcto:**
+**✅ Correcto:**
 
 ```csharp
-var activeUsers = users.Where(u => u.IsActive).ToList();
-```
-
-**Incorrecto:**
-
-```csharp
-List<User> activeUsers = new List<User>();
-foreach (var u in users) {
-  if (u.IsActive) activeUsers.Add(u);
+public async Task<List<Order>> GetActiveOrdersAsync()
+{
+    return await _dbContext.Orders
+        .Where(o => o.Status == OrderStatus.Active)
+        .ToListAsync();
 }
 ```
 
-### 10. Manejo de dependencias
-
-- Usa inyección de dependencias para facilitar pruebas y mantenimiento.
-- Evita dependencias ocultas o acoplamiento fuerte.
-
-**Correcto:**
+**❌ Incorrecto:**
 
 ```csharp
-public class OrderService {
-  private readonly IEmailSender _emailSender;
-  public OrderService(IEmailSender emailSender) {
-    _emailSender = emailSender;
-  }
+// NO usar .Result o .Wait() - bloquea thread
+public List<Order> GetActiveOrders()
+{
+    return _dbContext.Orders
+        .Where(o => o.Status == OrderStatus.Active)
+        .ToListAsync().Result;  // ❌ Deadlock risk
 }
 ```
 
-**Incorrecto:**
+### Ejemplo 4: LINQ en lugar de bucles
+
+**✅ Correcto:**
 
 ```csharp
-public class OrderService {
-  private EmailSender _emailSender = new EmailSender();
+var activeUsers = users
+    .Where(u => u.IsActive && u.RegistrationDate > cutoffDate)
+    .OrderBy(u => u.Name)
+    .Select(u => new UserDto 
+    { 
+        Id = u.Id, 
+        Name = u.Name 
+    })
+    .ToList();
+```
+
+**❌ Incorrecto:**
+
+```csharp
+var activeUsers = new List<UserDto>();
+foreach (var u in users)
+{
+    if (u.IsActive && u.RegistrationDate > cutoffDate)
+    {
+        activeUsers.Add(new UserDto { Id = u.Id, Name = u.Name });
+    }
+}
+activeUsers.Sort((a, b) => a.Name.CompareTo(b.Name));
+```
+
+## 6. Mejores Prácticas
+
+### Principios SOLID
+
+✅ **Single Responsibility:** Una clase, una responsabilidad  
+✅ **Open/Closed:** Abierto a extensión, cerrado a modificación  
+✅ **Liskov Substitution:** Subtipos deben ser sustituibles  
+✅ **Interface Segregation:** Interfaces pequeñas y específicas  
+✅ **Dependency Inversion:** Depender de abstracciones
+
+### Manejo de Errores
+
+✅ **Usar excepciones específicas:** `FileNotFoundException`, `ArgumentNullException`  
+✅ **Validar argumentos:** Null checks en constructores y métodos públicos  
+✅ **Logging estructurado:** Usar Serilog o ILogger con contexto  
+✅ **Global exception handler:** Middleware para APIs
+
+### Async/Await
+
+✅ **Siempre async hasta el final:** No mezclar sync/async  
+✅ **ConfigureAwait(false):** En librerías (no en ASP.NET Core)  
+✅ **Evitar async void:** Solo en event handlers  
+✅ **CancellationToken:** En operaciones largas
+
+## 7. NO Hacer (Antipatrones)
+
+### Antipatrón 1: God Classes
+
+❌ **NO** crear clases que hacen demasiado
+
+```csharp
+// ❌ Clase con 50+ métodos y múltiples responsabilidades
+public class OrderManager
+{
+    public void CreateOrder() { }
+    public void SendEmail() { }
+    public void ProcessPayment() { }
+    public void GenerateInvoice() { }
+    public void UpdateInventory() { }
+    // ... 45 métodos más
 }
 ```
 
-### 11. Pruebas y refactorización
+**Razón:** Viola SRP, difícil de mantener y testear
 
-- Escribe pruebas unitarias para lógica crítica.
-- Refactoriza regularmente para mantener el código limpio.
-- Usa mocks y fakes para aislar dependencias en pruebas.
+**Alternativa:** Separar en `OrderService`, `EmailService`, `PaymentService`, etc.
 
-**Correcto:**
+### Antipatrón 2: Catch Genérico Vacío
+
+❌ **NO** ocultar errores
 
 ```csharp
-[Test]
-public void CalculateTotal_ReturnsCorrectValue() {
-  // ...
+try
+{
+    await ProcessOrderAsync(order);
+}
+catch  // ❌ Catch sin tipo y sin manejo
+{
+    // Silenciosamente ignora el error
 }
 ```
 
-### 12. Antipatrones comunes a evitar
+**Razón:** Pérdida de información crítica, bugs ocultos
 
-- Métodos y clases demasiado grandes.
-- Variables globales o estáticas innecesarias.
-- Código duplicado o sin uso.
-- Comentarios que explican código confuso en vez de refactorizarlo.
+**Alternativa:**
 
----
+```csharp
+try
+{
+    await ProcessOrderAsync(order);
+}
+catch (ValidationException ex)
+{
+    _logger.LogWarning(ex, "Order validation failed");
+    throw;
+}
+```
 
-## Buenas prácticas adicionales
+### Antipatrón 3: Strings Mágicos
 
-- Usa herramientas de análisis estático y linters.
-- Aplica principios SOLID.
-- Mantén el código alineado y ordenado.
+❌ **NO** usar valores hardcodeados
 
-## Seguridad
+```csharp
+if (user.Role == "admin")  // ❌ String mágico
+{
+    // ...
+}
+```
 
-- Valida entradas del usuario.
-- No expongas información sensible en logs.
+**Alternativa:**
 
-## Referencias
+```csharp
+public static class Roles
+{
+    public const string Admin = "admin";
+    public const string User = "user";
+}
 
-### Lineamientos relacionados
+if (user.Role == Roles.Admin)  // ✅
+{
+    // ...
+}
+```
 
-- [Calidad de Código](/docs/fundamentos-corporativos/lineamientos/desarrollo/calidad-de-codigo)
-- [Seguridad desde el Diseño](/docs/fundamentos-corporativos/lineamientos/seguridad/seguridad-desde-el-diseno)
+### Antipatrón 4: Uso de .Result o .Wait()
 
-### Recursos externos
+❌ **NO** bloquear código asíncrono
 
-- [clean-code-dotnet](https://github.com/thangchung/clean-code-dotnet)
-- [Guía de estilo de C#](https://learn.microsoft.com/es-es/dotnet/csharp/fundamentals/coding-style/coding-conventions)
-- [Principios SOLID](https://es.wikipedia.org/wiki/SOLID)
-- [Clean Code (Robert C. Martin)](https://www.oreilly.com/library/view/clean-code/9780136083238/)
+```csharp
+var result = GetDataAsync().Result;  // ❌ Riesgo de deadlock
+```
 
-## Última revisión
+**Razón:** Bloquea thread, puede causar deadlocks
 
-- Fecha: 2025-08-08
-- Responsable: Equipo de Arquitectura
+**Alternativa:** Usar `await` correctamente
+
+## 8. Validación y Cumplimiento
+
+**Criterios verificables:**
+
+- [ ] Todos los proyectos usan .NET 8.0+
+- [ ] StyleCop.Analyzers configurado sin errores
+- [ ] SonarQube muestra 0 bugs críticos
+- [ ] Cobertura de código >80% en servicios core
+- [ ] Dependency Injection en todos los servicios
+- [ ] No existen `async void` (excepto event handlers)
+- [ ] No se usan `.Result` ni `.Wait()`
+- [ ] Global exception handler configurado
+
+**Herramientas de validación:**
+
+- **SonarQube** - Análisis de código continuo
+- **EditorConfig** - Validación en IDE
+- **CI/CD** - Build falla si hay violaciones críticas
+
+## 9. Referencias
+
+### Lineamientos Relacionados
+
+- [Testing y Calidad](../../lineamientos/operabilidad/04-testing-y-calidad.md) - Estándares de calidad en desarrollo
+
+### Principios Relacionados
+
+- [Calidad desde el Diseño](../../principios/operabilidad/03-calidad-desde-el-diseno.md) - Fundamento de estos estándares
+
+### Convenciones Relacionadas
+
+- [Naming - C#](../../convenciones/codigo/01-naming-csharp.md) - Convenciones de nomenclatura
+- [Comentarios de Código](../../convenciones/codigo/03-comentarios-codigo.md) - Guía de documentación
+- [Estructura de Proyectos](../../convenciones/codigo/04-estructura-proyectos.md) - Organización de soluciones
+
+### Otros Estándares
+
+- [Testing Unitario](../testing/01-unit-tests.md) - xUnit y pruebas
+- [Testing de Integración](../testing/02-integration-tests.md) - Pruebas con dependencias
+
+### Documentación Externa
+
+- [clean-code-dotnet](https://github.com/thangchung/clean-code-dotnet) - Guía adaptada para .NET
+- [Microsoft C# Coding Conventions](https://learn.microsoft.com/es-es/dotnet/csharp/fundamentals/coding-style/coding-conventions) - Guía oficial
+- [Clean Code (Robert C. Martin)](https://www.oreilly.com/library/view/clean-code/9780136083238/) - Libro fundamental
+- [Principios SOLID](https://learn.microsoft.com/es-es/dotnet/architecture/modern-web-apps-azure/architectural-principles#solid) - Arquitectura .NET

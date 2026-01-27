@@ -149,6 +149,44 @@ POST /api/v1/users/batch     # Crear múltiples
 PUT  /api/v1/users/batch     # Actualizar múltiples
 ```
 
+## 7. Checklist
+
+- [ ] Todos los endpoints siguen `/api/v{version}/{recurso}`
+- [ ] Recursos en plural (`/users`, no `/user`)
+- [ ] kebab-case para recursos compuestos (`/order-items`)
+- [ ] Verbos HTTP correctos (GET, POST, PUT, PATCH, DELETE)
+- [ ] Query parameters para filtros (no en path)
+- [ ] Acciones no-CRUD como sub-recursos (`/orders/123/cancel`)
+- [ ] Documentación actualizada en OpenAPI/Swagger
+
+## 8. Referencias
+
+### Estándares Relacionados
+
+- [Diseño REST](../../estandares/apis/01-diseno-rest.md) - Implementación técnica de APIs REST
+- [Versionado APIs](../../estandares/apis/04-versionado.md) - Estrategias de versionado
+- [OpenAPI/Swagger](../../estandares/documentacion/03-openapi-swagger.md) - Documentación de endpoints
+
+### Lineamientos Relacionados
+
+- [Diseño de APIs](../../lineamientos/arquitectura/06-diseno-de-apis.md) - Lineamientos arquitectónicos
+
+### Principios Relacionados
+
+- [Contratos de Comunicación](../../principios/arquitectura/06-contratos-de-comunicacion.md) - Fundamento de APIs estables
+- [Simplicidad Intencional](../../principios/arquitectura/07-simplicidad-intencional.md) - APIs simples y predecibles
+
+### Otras Convenciones
+
+- [Headers HTTP](./02-headers-http.md) - Convenciones de headers
+- [Formato Respuestas](./03-formato-respuestas.md) - Estructura de respuestas JSON
+- [Formato Fechas y Moneda](./04-formato-fechas-moneda.md) - Formatos de datos
+
+---
+
+**Última actualización**: 26 de enero 2026  
+**Responsable**: Equipo de Arquitectura
+
 ## 7. Herramientas de Validación
 
 ### OpenAPI / Swagger

@@ -2,25 +2,64 @@
 id: docker-compose
 sidebar_position: 4
 title: Docker Compose
-description: Estándar para orquestar entornos multi-contenedor en desarrollo local con Docker Compose.
+description: Estándar técnico obligatorio para orquestación multi-contenedor en desarrollo local con Docker Compose, health checks, volúmenes y networks
 ---
 
-# Estándar: Docker Compose
+# Docker Compose
 
 ## 1. Propósito
 
-Establecer las mejores prácticas para usar **Docker Compose** en entornos de desarrollo local, facilitando la orquestación de aplicaciones multi-contenedor con configuraciones reproducibles y mantenibles.
+Definir la configuración técnica obligatoria para orquestar entornos multi-contenedor en desarrollo local mediante:
+- **Docker Compose** v2.20+ con formato v3.9 para reproducibilidad
+- **Separación de entornos** con override files (base, local, CI)
+- **Health checks** para garantizar dependencias saludables
+- **Volúmenes nombrados** para persistencia de datos
+- **Networks aisladas** para segmentación de servicios
+- **Variables de entorno** con archivos .env (NO versionados)
+
+Garantiza entornos de desarrollo idénticos entre equipos, onboarding en <10 min, zero-config.
 
 ## 2. Alcance
 
-- Entornos de desarrollo local y CI/CD
-- Orquestación de múltiples servicios (API, BD, cache, colas)
-- Configuración de redes, volúmenes y variables de entorno
-- Sincronización de código local con contenedores
+### Aplica a:
 
-## 3. Principios
+- ✅ Desarrollo local de aplicaciones multi-contenedor
+- ✅ CI/CD pipelines para testing automatizado
+- ✅ Stacks con API + BD + Cache + Message Broker
+- ✅ Hot reload de código durante desarrollo
+- ✅ Inicialización de datos de testing/seed
 
-### 3.1 Separación de Entornos
+### NO aplica a:
+
+- ❌ Producción (usar ECS/Fargate, Kubernetes)
+- ❌ Staging/Pre-producción (usar orquestadores cloud)
+- ❌ Contenedores standalone simples (usar `docker run`)
+- ❌ Ambientes de alta disponibilidad
+
+## 3. Tecnologías Obligatorias
+
+| Categoría          | Tecnología / Configuración                | Versión   | Justificación                           |
+| ------------------ | ----------------------------------------- | --------- | --------------------------------------- |
+| **Compose**        | Docker Compose                            | 2.20+     | Orquestación declarativa multi-contenedor |
+| **Formato**        | Compose file format                       | 3.9       | Compatible con Docker Engine 19.03+    |
+| **Variables**      | `.env` files + `${VAR}` syntax            | -         | Configuración por entorno               |
+| **Networks**       | Bridge driver                             | -         | Aislamiento de servicios                |
+| **Volúmenes**      | Named volumes, bind mounts                | -         | Persistencia y hot reload               |
+| **Health Checks**  | `healthcheck` directive                   | -         | Dependencias confiables                 |
+
+### Estructura de Archivos
+
+| Archivo                      | Propósito                                | Versionado |
+| ---------------------------- | ---------------------------------------- | ---------- |
+| `docker-compose.yml`         | Configuración base (shared)              | ✅ Sí      |
+| `docker-compose.override.yml`| Overrides locales (auto-merge)           | ❌ No      |
+| `docker-compose.ci.yml`      | Configuración para CI/CD                 | ✅ Sí      |
+| `.env.example`               | Template de variables (documentación)    | ✅ Sí      |
+| `.env`                       | Valores reales de variables locales      | ❌ No      |
+
+## 4. Configuración Técnica Obligatoria
+
+### 4.1 Separación de Entornos
 
 ```yaml
 # docker-compose.yml - Base para desarrollo
