@@ -874,7 +874,7 @@ catch (Exception ex)
 | Uso de códigos HTTP correctos        | 95%+   | Code review, auditoría de responses   |
 | Errores loggeados con traceId        | 100%   | Logs en Application Insights          |
 | Endpoints con manejo de errores      | 100%   | Middleware global activo              |
-| Respuestas con estructura consistente| 100%   | ApiResponse<T> en todos los endpoints |
+| Respuestas con estructura consistente| 100%   | `ApiResponse<T>` en todos los endpoints |
 
 ## 9. Referencias
 

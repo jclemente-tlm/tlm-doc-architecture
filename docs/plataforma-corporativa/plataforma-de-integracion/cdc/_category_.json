@@ -1,0 +1,10 @@
+{
+  "label": "CDC (Change Data Capture)",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Change Data Capture (CDC)",
+    "slug": "/plataforma/cdc",
+    "description": "Componente de captura de datos de cambio para sincronización entre sistemas."
+  }
+}

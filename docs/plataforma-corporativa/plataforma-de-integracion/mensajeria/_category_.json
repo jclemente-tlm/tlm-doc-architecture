@@ -1,0 +1,10 @@
+{
+  "label": "Mensajería",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "Mensajería y Eventos",
+    "slug": "/plataforma/mensajeria",
+    "description": "Infraestructura de mensajería asíncrona y eventos corporativos."
+  }
+}

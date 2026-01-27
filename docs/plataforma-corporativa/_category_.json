@@ -1,0 +1,10 @@
+{
+  "label": "Plataforma Corporativa",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Plataforma Corporativa",
+    "slug": "/plataforma",
+    "description": "Arquitectura de la plataforma de integración y servicios corporativos de Talma."
+  }
+}

@@ -5,784 +5,184 @@ title: Docker Compose
 description: Estándar técnico obligatorio para orquestación multi-contenedor en desarrollo local con Docker Compose, health checks, volúmenes y networks
 ---
 
-# Docker Compose
+# Estándar Técnico — Docker Compose
+
+---
 
 ## 1. Propósito
+Garantizar entornos de desarrollo idénticos entre equipos mediante Docker Compose v2.20+ (formato v3.9), separación de entornos con override files, health checks, volúmenes nombrados y onboarding <10 min.
 
-Definir la configuración técnica obligatoria para orquestar entornos multi-contenedor en desarrollo local mediante:
-- **Docker Compose** v2.20+ con formato v3.9 para reproducibilidad
-- **Separación de entornos** con override files (base, local, CI)
-- **Health checks** para garantizar dependencias saludables
-- **Volúmenes nombrados** para persistencia de datos
-- **Networks aisladas** para segmentación de servicios
-- **Variables de entorno** con archivos .env (NO versionados)
-
-Garantiza entornos de desarrollo idénticos entre equipos, onboarding en <10 min, zero-config.
+---
 
 ## 2. Alcance
 
-### Aplica a:
+**Aplica a:**
+- Desarrollo local multi-contenedor (API + DB + Cache + Broker)
+- CI/CD pipelines para testing automatizado
+- Hot reload de código durante desarrollo
 
-- ✅ Desarrollo local de aplicaciones multi-contenedor
-- ✅ CI/CD pipelines para testing automatizado
-- ✅ Stacks con API + BD + Cache + Message Broker
-- ✅ Hot reload de código durante desarrollo
-- ✅ Inicialización de datos de testing/seed
+**No aplica a:**
+- Producción (usar ECS/Fargate, Kubernetes)
+- Staging/Pre-producción (usar orquestadores cloud)
+- Contenedores standalone simples (usar `docker run`)
 
-### NO aplica a:
+---
 
-- ❌ Producción (usar ECS/Fargate, Kubernetes)
-- ❌ Staging/Pre-producción (usar orquestadores cloud)
-- ❌ Contenedores standalone simples (usar `docker run`)
-- ❌ Ambientes de alta disponibilidad
+## 3. Tecnologías Aprobadas
 
-## 3. Tecnologías Obligatorias
+| Componente | Tecnología | Versión mínima | Observaciones |
+|-----------|------------|----------------|---------------|
+| **Compose** | Docker Compose | 2.20+ | Orquestación declarativa multi-contenedor |
+| **Formato** | Compose file format | 3.9 | Compatible Docker Engine 19.03+ |
+| **Variables** | .env files + ${VAR} | - | Configuración por entorno |
+| **Networks** | Bridge driver | - | Aislamiento de servicios |
+| **Volúmenes** | Named volumes, bind mounts | - | Persistencia y hot reload |
+| **Health Checks** | healthcheck directive | - | Dependencias confiables |
 
-| Categoría          | Tecnología / Configuración                | Versión   | Justificación                           |
-| ------------------ | ----------------------------------------- | --------- | --------------------------------------- |
-| **Compose**        | Docker Compose                            | 2.20+     | Orquestación declarativa multi-contenedor |
-| **Formato**        | Compose file format                       | 3.9       | Compatible con Docker Engine 19.03+    |
-| **Variables**      | `.env` files + `${VAR}` syntax            | -         | Configuración por entorno               |
-| **Networks**       | Bridge driver                             | -         | Aislamiento de servicios                |
-| **Volúmenes**      | Named volumes, bind mounts                | -         | Persistencia y hot reload               |
-| **Health Checks**  | `healthcheck` directive                   | -         | Dependencias confiables                 |
+> El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
-### Estructura de Archivos
+---
 
-| Archivo                      | Propósito                                | Versionado |
-| ---------------------------- | ---------------------------------------- | ---------- |
-| `docker-compose.yml`         | Configuración base (shared)              | ✅ Sí      |
-| `docker-compose.override.yml`| Overrides locales (auto-merge)           | ❌ No      |
-| `docker-compose.ci.yml`      | Configuración para CI/CD                 | ✅ Sí      |
-| `.env.example`               | Template de variables (documentación)    | ✅ Sí      |
-| `.env`                       | Valores reales de variables locales      | ❌ No      |
+## 4. Requisitos Obligatorios 🔴
 
-## 4. Configuración Técnica Obligatoria
+- [ ] Formato v3.9 (version: "3.9")
+- [ ] Archivo base `docker-compose.yml` versionado
+- [ ] Override file `docker-compose.override.yml` NO versionado
+- [ ] Variables en `.env` (NO versionado), template en `.env.example` (versionado)
+- [ ] Health checks configurados para todos los servicios con dependencies
+- [ ] Named volumes para persistencia de datos
+- [ ] Networks aisladas por stack
+- [ ] Nomenclatura servicios: `{proyecto}-{servicio}-{tipo}`
+- [ ] `depends_on` con `condition: service_healthy`
+- [ ] Restart policy: `restart: unless-stopped` en desarrollo
+- [ ] Resource limits (memory, cpu) configurados
+- [ ] Ports expuestos solo los necesarios
 
-### 4.1 Separación de Entornos
+---
+
+## 5. Prohibiciones
+
+- ❌ Usar Docker Compose en producción
+- ❌ Versionar archivo `.env` con secretos
+- ❌ Hardcodear secrets en docker-compose.yml
+- ❌ `depends_on` sin health checks (unsafe)
+- ❌ Bind mounts absolutos (usar paths relativos)
+- ❌ Servicios sin resource limits
+
+---
+
+## 6. Configuración Mínima
 
 ```yaml
-# docker-compose.yml - Base para desarrollo
-# docker-compose.override.yml - Configuración local (auto-merge)
-# docker-compose.ci.yml - Para CI/CD
-# docker-compose.prod.yml - Referencia (NO usar en producción)
-```
+# docker-compose.yml (BASE - versionado)
+version: "3.9"
 
-### 3.2 Nomenclatura de Servicios
-
-```yaml
 services:
-  # Patrón: {proyecto}-{servicio}-{tipo}
-  talma-users-api: # API de usuarios
-  talma-users-db: # Base de datos
-  talma-redis-cache: # Cache compartido
-  talma-rabbitmq: # Message broker
+  api:
+    build: .
+    ports:
+      - "${API_PORT:-5000}:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgres://user:${POSTGRES_PASSWORD}@db:5432/appdb
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  db:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  redis:
+    image: redis:${REDIS_VERSION:-7}-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  app-network:
+    driver: bridge
 ```
 
-### 3.3 Uso de Variables de Entorno
-
-```yaml
-# .env (NO versionarlo - solo .env.example)
+```bash
+# .env.example (VERSIONADO - template)
 POSTGRES_VERSION=16
-POSTGRES_PASSWORD=dev_password_123
+POSTGRES_PASSWORD=change_me_in_local_env
+REDIS_VERSION=7
+API_PORT=5000
+
+# .env (NO VERSIONADO - valores reales locales)
+POSTGRES_VERSION=16
+POSTGRES_PASSWORD=dev_password_secure_123
 REDIS_VERSION=7
 API_PORT=5000
 ```
 
-## 4. Configuración Base
+---
 
-### 4.1 Archivo Principal: docker-compose.yml
-
-```yaml
-version: "3.9"
-
-services:
-  # API Backend
-  api:
-    build:
-      context: ./src/API
-      dockerfile: Dockerfile
-      target: development # Multi-stage build
-    container_name: talma-users-api
-    ports:
-      - "${API_PORT:-5000}:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=db;Database=talma_users;Username=postgres;Password=${POSTGRES_PASSWORD}
-      - Redis__ConnectionString=cache:6379
-      - RabbitMQ__Host=rabbitmq
-    volumes:
-      - ./src/API:/app # Hot reload
-      - /app/bin # Exclude bin
-      - /app/obj # Exclude obj
-    depends_on:
-      db:
-        condition: service_healthy
-      cache:
-        condition: service_started
-      rabbitmq:
-        condition: service_healthy
-    networks:
-      - talma-network
-    restart: unless-stopped
-
-  # PostgreSQL Database
-  db:
-    image: postgres:${POSTGRES_VERSION:-16}-alpine
-    container_name: talma-users-db
-    environment:
-      - POSTGRES_DB=talma_users
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - talma-network
-    restart: unless-stopped
-
-  # Redis Cache
-  cache:
-    image: redis:${REDIS_VERSION:-7}-alpine
-    container_name: talma-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-    command: redis-server --appendonly yes
-    networks:
-      - talma-network
-    restart: unless-stopped
-
-  # RabbitMQ
-  rabbitmq:
-    image: rabbitmq:3.12-management-alpine
-    container_name: talma-rabbitmq
-    ports:
-      - "5672:5672" # AMQP
-      - "15672:15672" # Management UI
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD:-admin123}
-    volumes:
-      - rabbitmq-data:/var/lib/rabbitmq
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    networks:
-      - talma-network
-    restart: unless-stopped
-
-volumes:
-  postgres-data:
-    driver: local
-  redis-data:
-    driver: local
-  rabbitmq-data:
-    driver: local
-
-networks:
-  talma-network:
-    driver: bridge
-```
-
-### 4.2 Override para Desarrollo Local
-
-**docker-compose.override.yml** (auto-merge con docker-compose.yml):
-
-```yaml
-version: "3.9"
-
-services:
-  api:
-    build:
-      args:
-        - CONFIGURATION=Debug
-    environment:
-      - ASPNETCORE_URLS=http://+:8080
-      - Logging__LogLevel__Default=Debug
-    # Hot reload habilitado por volúmenes en base
-
-  db:
-    ports:
-      - "5433:5432" # Puerto diferente para evitar conflictos locales
-
-  # Servicio adicional solo en local
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: talma-pgadmin
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@talma.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    ports:
-      - "8081:80"
-    depends_on:
-      - db
-    networks:
-      - talma-network
-```
-
-### 4.3 Configuración para CI/CD
-
-**docker-compose.ci.yml**:
-
-```yaml
-version: "3.9"
-
-services:
-  api:
-    build:
-      target: test # Stage específico para tests
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Testing
-      - ConnectionStrings__Default=Host=db;Database=talma_test;Username=postgres;Password=test_password
-    depends_on:
-      db:
-        condition: service_healthy
-
-  db:
-    environment:
-      - POSTGRES_DB=talma_test
-      - POSTGRES_PASSWORD=test_password
-    # Sin puertos expuestos en CI
-    ports: []
-```
-
-**Uso en pipeline**:
+## 7. Validación
 
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build --abort-on-container-exit
-```
+# Validar sintaxis
+docker-compose config
 
-## 5. Mejores Prácticas
+# Verificar health checks
+docker-compose ps
 
-### 5.1 Health Checks
-
-```yaml
-healthcheck:
-  test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-  interval: 30s
-  timeout: 10s
-  retries: 3
-  start_period: 40s # Tiempo inicial antes de checks
-```
-
-### 5.2 Depends On con Condiciones
-
-```yaml
-depends_on:
-  db:
-    condition: service_healthy # Espera a que DB esté healthy
-  cache:
-    condition: service_started # Solo espera a que inicie
-```
-
-### 5.3 Volúmenes Nombrados vs Bind Mounts
-
-```yaml
-volumes:
-  # Named volume - Datos persistentes gestionados por Docker
-  - postgres-data:/var/lib/postgresql/data
-
-  # Bind mount - Hot reload desde código local
-  - ./src/API:/app
-
-  # Anonymous volume - Excluir directorios específicos
-  - /app/bin
-  - /app/obj
-```
-
-### 5.4 Redes Personalizadas
-
-```yaml
-networks:
-  # Red para backend services
-  backend:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16
-
-  # Red para frontend
-  frontend:
-    driver: bridge
-```
-
-### 5.5 Recursos y Límites
-
-```yaml
-services:
-  api:
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 512M
-        reservations:
-          cpus: "0.25"
-          memory: 256M
-```
-
-## 6. Comandos Esenciales
-
-### 6.1 Desarrollo Diario
-
-```bash
-# Iniciar servicios en background
-docker-compose up -d
-
-# Ver logs en tiempo real
+# Logs de servicios
 docker-compose logs -f api
 
-# Rebuild después de cambios en Dockerfile
-docker-compose up --build
+# Verificar networks
+docker network ls | grep app-network
 
-# Detener servicios
-docker-compose down
+# Verificar volúmenes
+docker volume ls | grep postgres-data
 
-# Detener y eliminar volúmenes (reset completo)
+# Tiempo de inicio (debe ser <2 min)
+time docker-compose up -d
+
+# Cleanup
 docker-compose down -v
 ```
 
-### 6.2 Debugging
+**Métricas de cumplimiento:**
 
-```bash
-# Ejecutar comando en contenedor corriendo
-docker-compose exec api bash
+| Métrica | Target | Verificación |
+|---------|--------|--------------|  
+| Tiempo onboarding | < 10 min | `time docker-compose up -d` < 2min |
+| Health checks pasando | 100% | `docker-compose ps` all healthy |
+| Secrets en repo | 0 | `.env` en .gitignore |
+| Services con resource limits | 100% | `docker-compose config \| grep -c limits` |
 
-# Ver estado de servicios
-docker-compose ps
+Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
-# Inspeccionar configuración final (con merges)
-docker-compose config
-
-# Reiniciar un servicio específico
-docker-compose restart api
-```
-
-### 6.3 Cleanup
-
-```bash
-# Eliminar contenedores, redes, imágenes anónimas
-docker-compose down --rmi local
-
-# Limpiar todo el sistema Docker
-docker system prune -a --volumes
-```
-
-## 7. Multi-Stage Builds con Compose
-
-### 7.1 Dockerfile Multi-Stage
-
-```dockerfile
-# Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY ["API.csproj", "./"]
-RUN dotnet restore
-COPY . .
-RUN dotnet build -c Release -o /app/build
-
-# Stage de desarrollo (hot reload)
-FROM build AS development
-WORKDIR /app
-ENTRYPOINT ["dotnet", "watch", "run"]
-
-# Stage de test
-FROM build AS test
-WORKDIR /src
-RUN dotnet test --logger trx --results-directory /testresults
-
-# Stage de producción
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS production
-WORKDIR /app
-COPY --from=build /app/build .
-ENTRYPOINT ["dotnet", "API.dll"]
-```
-
-### 7.2 Compose Targeting Stages
-
-```yaml
-services:
-  api:
-    build:
-      context: ./src/API
-      target: development # Cambia según entorno
-```
-
-## 8. Perfiles para Servicios Opcionales
-
-```yaml
-services:
-  # Servicio principal - siempre activo
-  api:
-    # ...
-
-  # Servicio opcional - solo con profile
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    ports:
-      - "16686:16686"
-    profiles:
-      - observability # Solo se inicia con: docker-compose --profile observability up
-
-  monitoring:
-    image: prom/prometheus:latest
-    profiles:
-      - observability
-```
-
-**Uso**:
-
-```bash
-# Solo servicios sin profile
-docker-compose up
-
-# Con profile específico
-docker-compose --profile observability up
-```
-
-## 9. Ejemplo Completo: Microservicios
-
-**docker-compose.yml**:
-
-```yaml
-version: "3.9"
-
-services:
-  # API Gateway
-  gateway:
-    build: ./services/gateway
-    ports:
-      - "8080:8080"
-    environment:
-      - SERVICES_USERS=http://users-api:8080
-      - SERVICES_ORDERS=http://orders-api:8080
-    depends_on:
-      - users-api
-      - orders-api
-    networks:
-      - talma-network
-
-  # Users Microservice
-  users-api:
-    build: ./services/users
-    environment:
-      - DATABASE_URL=postgresql://db:5432/users
-      - REDIS_URL=redis://cache:6379
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - talma-network
-
-  # Orders Microservice
-  orders-api:
-    build: ./services/orders
-    environment:
-      - DATABASE_URL=postgresql://db:5432/orders
-      - KAFKA_BROKERS=kafka:9092
-    depends_on:
-      - db
-      - kafka
-    networks:
-      - talma-network
-
-  # Shared Database
-  db:
-    image: postgres:16-alpine
-    environment:
-      - POSTGRES_USER=talma
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U talma"]
-      interval: 10s
-    networks:
-      - talma-network
-
-  # Shared Cache
-  cache:
-    image: redis:7-alpine
-    networks:
-      - talma-network
-
-  # Message Broker
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    environment:
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-    depends_on:
-      - zookeeper
-    networks:
-      - talma-network
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    environment:
-      - ZOOKEEPER_CLIENT_PORT=2181
-    networks:
-      - talma-network
-
-volumes:
-  db-data:
-
-networks:
-  talma-network:
-    driver: bridge
-```
-
-## 10. Integración con Makefile
-
-**Makefile**:
-
-```makefile
-.PHONY: up down logs restart clean test
-
-up:
- docker-compose up -d
-
-down:
- docker-compose down
-
-logs:
- docker-compose logs -f
-
-restart:
- docker-compose restart
-
-clean:
- docker-compose down -v --rmi local
-
-test:
- docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --abort-on-container-exit
-
-rebuild:
- docker-compose up --build -d
-
-shell-api:
- docker-compose exec api bash
-
-db-migrate:
- docker-compose exec api dotnet ef database update
-```
-
-**Uso**:
-
-```bash
-make up
-make logs
-make test
-```
-
-## 5. Buenas Prácticas
-
-### 5.1 Uso de .env para Configuración
-
-```bash
-# .env (NO versionado)
-COMPOSE_PROJECT_NAME=talma-api
-API_PORT=5000
-POSTGRES_VERSION=16-alpine
-REDIS_VERSION=7-alpine
-DB_PASSWORD=dev_password_123
-```
-
-### 5.2 Override Files por Entorno
-
-```yaml
-# docker-compose.override.yml (desarrollo local, auto-cargado)
-services:
-  api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    volumes:
-      - ./src:/app:cached  # Hot reload
-
-# docker-compose.ci.yml (CI/CD)
-services:
-  api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Testing
-    volumes: []  # Sin bind mounts en CI
-```
-
-### 5.3 Healthchecks Robustos
-
-```yaml
-services:
-  postgres:
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-```
-
-## 6. Antipatrones
-
-### 6.1 ❌ Sin Health Checks
-
-**Problema**:
-```yaml
-# ❌ API inicia antes que la BD esté lista
-services:
-  api:
-    depends_on:
-      - postgres  # Solo espera que el contenedor inicie, no que esté saludable
-```
-
-**Solución**:
-```yaml
-# ✅ Esperar health check
-services:
-  api:
-    depends_on:
-      postgres:
-        condition: service_healthy
-```
-
-### 6.2 ❌ Volúmenes Anónimos
-
-**Problema**:
-```yaml
-# ❌ Volumen anónimo, difícil de gestionar
-services:
-  postgres:
-    volumes:
-      - /var/lib/postgresql/data
-```
-
-**Solución**:
-```yaml
-# ✅ Volumen nombrado
-services:
-  postgres:
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
-    name: talma_postgres_data
-```
-
-### 6.3 ❌ Exponer Todos los Puertos
-
-**Problema**:
-```yaml
-# ❌ Base de datos expuesta al host innecesariamente
-services:
-  postgres:
-    ports:
-      - "5432:5432"  # Accesible desde localhost:5432
-```
-
-**Solución**:
-```yaml
-# ✅ Solo exponer lo necesario (API)
-services:
-  postgres:
-    expose:
-      - "5432"  # Solo accesible dentro de la red Docker
-  
-  api:
-    ports:
-      - "5000:5000"  # Solo la API es accesible externamente
-```
-
-### 6.4 ❌ Usar latest Tag
-
-**Problema**:
-```yaml
-# ❌ Sin version pinning, builds no reproducibles
-services:
-  postgres:
-    image: postgres:latest
-```
-
-**Solución**:
-```yaml
-# ✅ Versión específica
-services:
-  postgres:
-    image: postgres:${POSTGRES_VERSION:-16-alpine}
-```
-
-## 7. Validación y Testing
-
-### 7.1 Tests de Configuración
-
-```bash
-# Validar sintaxis YAML
-docker-compose config -q
-
-# Ver configuración final
-docker-compose config
-
-# Verificar que todos los servicios inicien
-docker-compose up -d
-docker-compose ps | grep -q "Up" && echo "✅ OK" || echo "❌ FAIL"
-```
-
-### 7.2 Tests de Integración en CI
-
-```yaml
-# .github/workflows/ci.yml
-name: CI
-on: [push]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Start services
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
-      
-      - name: Wait for services
-        run: |
-          timeout 60 bash -c 'until docker-compose ps | grep -q "healthy"; do sleep 2; done'
-      
-      - name: Run tests
-        run: docker-compose exec -T api dotnet test
-      
-      - name: Cleanup
-        run: docker-compose down -v
-```
+---
 
 ## 8. Referencias
 
-### Lineamientos Relacionados
-- [Diseño Cloud Native](/docs/fundamentos-corporativos/lineamientos/arquitectura/diseno-cloud-native)
-- [Infraestructura como Código](/docs/fundamentos-corporativos/lineamientos/operabilidad/infraestructura-como-codigo)
-
-### Estándares Relacionados
 - [Docker](./01-docker.md)
-- [Infraestructura como Código](./02-infraestructura-como-codigo.md)
-- [Testing de Integración](../testing/02-integration-tests.md)
-
-### ADRs Relacionados
-- [ADR-007: Contenedores AWS](/docs/decisiones-de-arquitectura/adr-007-contenedores-aws)
-
-### Recursos Externos
+- [Gestión de Secretos](./03-secrets-management.md)
 - [Docker Compose Documentation](https://docs.docker.com/compose/)
-- [Compose File Specification](https://docs.docker.com/compose/compose-file/)
-
-## 9. Changelog
-
-| Versión | Fecha | Autor | Cambios |
-|---------|-------|-------|---------|  
-| 1.0 | 2025-08-08 | Equipo de Arquitectura | Versión inicial con template de 9 secciones |
+- [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/compose-file-v3/)

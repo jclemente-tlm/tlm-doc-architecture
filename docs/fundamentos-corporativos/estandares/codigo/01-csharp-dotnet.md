@@ -22,7 +22,7 @@ Establecer los estándares técnicos de Clean Code y principios SOLID para garan
 - Microservicios y servicios cloud-native
 
 **No aplica a:**
-- Proyectos legacy en .NET Framework <4.8 sin planes de migración
+- Proyectos legacy en .NET Framework `<4.8` sin planes de migración
 - Scripts de automatización simples
 
 ## 3. Tecnologías y Herramientas Obligatorias

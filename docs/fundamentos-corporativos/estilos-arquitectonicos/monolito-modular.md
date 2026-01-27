@@ -1,7 +1,8 @@
 ---
 id: monolito-modular
 sidebar_position: 5
-title: Monolito Modulardescription: Estilo de sistema unificado con módulos cohesivos y bajo acoplamiento interno
+title: Monolito Modular
+description: Estilo de sistema unificado con módulos cohesivos y bajo acoplamiento interno
 ---
 
 # Monolito Modular

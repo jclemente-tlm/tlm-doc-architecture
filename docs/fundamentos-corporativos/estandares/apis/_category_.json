@@ -1,8 +1,10 @@
 {
-    "label": "APIs REST",
-    "position": 1,
-    "link": {
-        "type": "generated-index",
-        "description": "Estándares técnicos para el desarrollo de APIs REST en Talma."
-    }
+  "label": "APIs REST",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "title": "Estándares de APIs REST",
+    "slug": "/estandares/apis",
+    "description": "Estándares técnicos para el desarrollo de APIs REST en Talma."
+  }
 }

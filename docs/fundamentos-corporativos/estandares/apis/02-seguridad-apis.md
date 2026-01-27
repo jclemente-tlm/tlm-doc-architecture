@@ -2,7 +2,7 @@
 id: seguridad-apis
 sidebar_position: 2
 title: Seguridad de APIs
-description: Estándar de seguridad para APIs REST: autenticación JWT/OAuth, autorización RBAC, HTTPS/TLS, rate limiting y protección de datos
+description: Estándar de seguridad para APIs REST; autenticación JWT/OAuth, autorización RBAC, HTTPS/TLS, rate limiting y protección de datos
 ---
 
 # Estándar: Seguridad de APIs

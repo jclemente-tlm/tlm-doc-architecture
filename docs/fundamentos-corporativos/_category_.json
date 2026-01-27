@@ -1,0 +1,10 @@
+{
+  "label": "Fundamentos Corporativos",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "title": "Fundamentos Corporativos",
+    "slug": "/fundamentos",
+    "description": "Principios, lineamientos, estándares y convenciones que rigen la arquitectura de Talma."
+  }
+}

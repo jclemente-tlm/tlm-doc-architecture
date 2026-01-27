@@ -1,0 +1,10 @@
+{
+  "label": "Observabilidad",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "title": "Observabilidad Corporativa",
+    "slug": "/plataforma/observabilidad",
+    "description": "Stack de observabilidad corporativa (logs, métricas, trazas)."
+  }
+}
