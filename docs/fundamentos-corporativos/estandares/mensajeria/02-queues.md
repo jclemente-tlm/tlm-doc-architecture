@@ -2,27 +2,59 @@
 id: queues
 sidebar_position: 2
 title: Colas de Mensajes
-description: Estándares para colas de mensajes con AWS SQS y RabbitMQ
+description: Estándares para message queues con AWS SQS, RabbitMQ 3.12+ y patrones de retry
 ---
 
-## 1. Principios de Message Queues
+## 1. Propósito
 
-- **Decoupling**: Desacoplar productores y consumidores
-- **Load leveling**: Manejar picos de carga
-- **Guaranteed delivery**: Asegurar entrega de mensajes
-- **Ordering**: Definir si se requiere orden (FIFO) o no
-- **Retry y DLQ**: Manejo de errores con reintentos y dead letter queues
+Este estándar define cómo implementar colas de mensajes para desacoplamiento, load leveling y guaranteed delivery en aplicaciones de Talma. Establece:
+- **AWS SQS** (Standard/FIFO) para colas managed en AWS
+- **RabbitMQ** para colas on-premise con exchanges avanzados
+- **Dead Letter Queue** para manejo de errores y reintentos
+- **Idempotencia** en consumidores (at-least-once delivery)
+- **Long polling** para reducir latencia y costos
 
-## 2. AWS SQS
+Permite procesamiento asíncrono de tareas, manejo de picos de carga y garantía de entrega de mensajes.
 
-### Tipos de colas
+**Versión**: 1.0  
+**Última actualización**: 2025-08-08
 
-| Tipo         | Uso                                | Throughput     | Ordering       |
-| ------------ | ---------------------------------- | -------------- | -------------- |
-| **Standard** | Alto throughput, orden best-effort | Ilimitado      | No garantizado |
-| **FIFO**     | Orden exacto, exactamente-una-vez  | 300-3000 msg/s | Garantizado    |
+## 2. Alcance
 
-### Naming Conventions
+### Aplica a:
+- Procesamiento asíncrono de tareas (envío de emails, generación de reportes)
+- Desacoplamiento entre servicios con garantía de entrega
+- Manejo de picos de carga (load leveling)
+- Workflows con pasos secuenciales (FIFO queues)
+- Retry automático de operaciones fallidas
+
+### No aplica a:
+- Event-driven architecture multi-consumidor (usar Kafka)
+- Comunicación en tiempo real (usar WebSockets/SignalR)
+- Broadcasting a múltiples servicios (usar Kafka o RabbitMQ Fanout)
+- Transferencia de archivos (usar S3 con SQS notification)
+
+## 3. Tecnologías Obligatorias
+
+| Tecnología | Versión Mínima | Propósito |
+|------------|----------------|-----------|  
+| **AWS SQS** | - | Colas managed en AWS (Standard/FIFO) |
+| **AWSSDK.SQS** | 3.7+ | Cliente .NET para SQS |
+| **RabbitMQ** | 3.12+ | Message broker on-premise con exchanges avanzados |
+| **RabbitMQ.Client** | 6.6+ | Cliente .NET para RabbitMQ |
+| **MassTransit** | 8.1+ | Framework de mensajería para .NET (abstracción sobre SQS/RabbitMQ) |
+| **amqplib** (Node.js) | 0.10+ | Cliente RabbitMQ para Node.js |
+
+## 4. Especificaciones Técnicas
+
+### 4.1 AWS SQS - Tipos de Colas
+
+| Tipo | Uso | Throughput | Ordering |
+|------|-----|------------|----------|
+| **Standard** | Alto throughput, orden best-effort | Ilimitado | No garantizado |
+| **FIFO** | Orden exacto, exactamente-una-vez | 300-3000 msg/s | Garantizado |
+
+### 4.2 Convenciones de Nomenclatura
 
 ```
 {environment}-{service}-{purpose}
@@ -426,38 +458,219 @@ public class RabbitMqPublisher : IDisposable
 }
 ```
 
-## 7. Checklist de Message Queues
+## 5. Buenas Prácticas
 
-- [ ] **Dead Letter Queue**: Configurada para mensajes fallidos
-- [ ] **Visibility Timeout**: Configurado apropiadamente (> tiempo de procesamiento)
-- [ ] **Retention Period**: Definido según necesidades de negocio
-- [ ] **Idempotencia**: Consumidores manejan mensajes duplicados
-- [ ] **Monitoring**: Métricas de tamaño de cola, age of oldest message
-- [ ] **Alertas**: Configuradas para colas creciendo indefinidamente
-- [ ] **Batch processing**: Usado cuando sea apropiado para eficiencia
-- [ ] **Long polling**: Habilitado para reducir costos y latencia (SQS)
+### 5.1 Long Polling (SQS)
 
-## 📖 Referencias
+```csharp
+// ✅ Usar long polling para reducir costos y latencia
+var request = new ReceiveMessageRequest
+{
+    QueueUrl = queueUrl,
+    WaitTimeSeconds = 20, // Long polling (máximo 20s)
+    MaxNumberOfMessages = 10
+};
+```
 
-### Principios relacionados
+### 5.2 Batch Processing
 
-- [Desacoplamiento](/docs/fundamentos-corporativos/principios/arquitectura/desacoplamiento)
+```csharp
+// ✅ Procesar mensajes en batch para eficiencia
+public async Task SendBatchAsync<T>(string queueUrl, IEnumerable<T> messages)
+{
+    var batches = messages.Chunk(10); // SQS: máximo 10 por batch
 
-### Lineamientos relacionados
+    foreach (var batch in batches)
+    {
+        var entries = batch.Select(msg => new SendMessageBatchRequestEntry
+        {
+            Id = Guid.NewGuid().ToString(),
+            MessageBody = JsonSerializer.Serialize(msg)
+        }).ToList();
 
+        await _sqsClient.SendMessageBatchAsync(new SendMessageBatchRequest
+        {
+            QueueUrl = queueUrl,
+            Entries = entries
+        });
+    }
+}
+```
+
+### 5.3 Visibility Timeout Apropiado
+
+```csharp
+// ✅ Configurar visibility timeout > tiempo de procesamiento esperado
+var request = new SetQueueAttributesRequest
+{
+    QueueUrl = queueUrl,
+    Attributes = new Dictionary<string, string>
+    {
+        ["VisibilityTimeout"] = "300" // 5 minutos
+    }
+};
+```
+
+## 6. Antipatrones
+
+### 6.1 ❌ Sin Dead Letter Queue
+
+**Problema**:
+```csharp
+// ❌ Sin DLQ, mensajes fallidos se pierden o reintentan infinitamente
+var consumer = new SqsConsumer(queueUrl);
+```
+
+**Solución**:
+```csharp
+// ✅ Configurar DLQ con maxReceiveCount
+await ConfigureQueueWithDlqAsync(
+    queueUrl,
+    dlqArn,
+    maxReceiveCount: 3); // Después de 3 intentos, va a DLQ
+```
+
+### 6.2 ❌ Visibility Timeout Muy Corto
+
+**Problema**:
+```csharp
+// ❌ Visibility timeout de 30s, pero procesamiento toma 2 minutos
+// Resultado: mensaje se vuelve visible antes de terminar, se procesa 2 veces
+```
+
+**Solución**:
+```csharp
+// ✅ Visibility timeout > tiempo de procesamiento + buffer
+var visibilityTimeout = 180; // 3 minutos (2 min procesamiento + 1 min buffer)
+```
+
+### 6.3 ❌ Sin Idempotencia
+
+**Problema**:
+```csharp
+// ❌ Procesa mensaje sin verificar duplicados
+protected override async Task ProcessMessageAsync(EmailMessage message)
+{
+    await _emailService.SendAsync(message.To, message.Body);
+    // Si SQS reintenta, envía email duplicado
+}
+```
+
+**Solución**:
+```csharp
+// ✅ Verificar si ya se procesó
+protected override async Task ProcessMessageAsync(EmailMessage message)
+{
+    if (await _processedMessagesRepo.ExistsAsync(message.MessageId))
+        return;
+
+    await _emailService.SendAsync(message.To, message.Body);
+    await _processedMessagesRepo.MarkAsProcessedAsync(message.MessageId);
+}
+```
+
+### 6.4 ❌ Sin Monitoreo de Queue Depth
+
+**Problema**:
+```csharp
+// ❌ Cola crece indefinidamente sin alertas
+// Resultado: latencia alta, pérdida de mensajes por retention period
+```
+
+**Solución**:
+```csharp
+// ✅ Monitorear métricas y alertar
+public class QueueMetrics
+{
+    public async Task<QueueStats> GetStatsAsync(string queueUrl)
+    {
+        var attrs = await _sqsClient.GetQueueAttributesAsync(new GetQueueAttributesRequest
+        {
+            QueueUrl = queueUrl,
+            AttributeNames = new List<string> 
+            { 
+                "ApproximateNumberOfMessages",
+                "ApproximateAgeOfOldestMessage" 
+            }
+        });
+
+        var queueDepth = int.Parse(attrs.Attributes["ApproximateNumberOfMessages"]);
+        var oldestMessageAge = int.Parse(attrs.Attributes["ApproximateAgeOfOldestMessage"]);
+
+        if (queueDepth > 10000)
+            _logger.LogWarning("High queue depth: {QueueDepth}", queueDepth);
+
+        return new QueueStats { Depth = queueDepth, OldestMessageAge = oldestMessageAge };
+    }
+}
+```
+
+## 7. Validación y Testing
+
+### 7.1 Tests de Integración con LocalStack
+
+```csharp
+public class SqsIntegrationTests : IAsyncLifetime
+{
+    private LocalStackContainer _localStack = null!;
+    private IAmazonSQS _sqsClient = null!;
+
+    public async Task InitializeAsync()
+    {
+        _localStack = new LocalStackBuilder()
+            .WithImage("localstack/localstack:3.0")
+            .WithServices("sqs")
+            .Build();
+
+        await _localStack.StartAsync();
+
+        _sqsClient = new AmazonSQSClient(new AmazonSQSConfig
+        {
+            ServiceURL = _localStack.GetConnectionString()
+        });
+    }
+
+    [Fact]
+    public async Task SendMessage_ConsumerReceives_ProcessesCorrectly()
+    {
+        // Arrange
+        var queueUrl = await CreateQueueAsync("test-queue");
+        var publisher = new SqsPublisher(_sqsClient);
+        var message = new OrderMessage { OrderId = "123" };
+
+        // Act
+        await publisher.SendMessageAsync(queueUrl, message);
+
+        var response = await _sqsClient.ReceiveMessageAsync(queueUrl);
+
+        // Assert
+        response.Messages.Should().HaveCount(1);
+    }
+
+    public async Task DisposeAsync() => await _localStack.DisposeAsync();
+}
+```
+
+## 8. Referencias
+
+### Lineamientos Relacionados
 - [Comunicación Asíncrona y Eventos](/docs/fundamentos-corporativos/lineamientos/arquitectura/comunicacion-asincrona-y-eventos)
 - [Resiliencia y Disponibilidad](/docs/fundamentos-corporativos/lineamientos/arquitectura/resiliencia-y-disponibilidad)
 
-### Estándares relacionados
+### Estándares Relacionados
+- [Mensajería con Kafka](./01-kafka-eventos.md)
+- [Logging Estructurado](../observabilidad/01-logging.md)
 
-- [Kafka y Eventos](/docs/fundamentos-corporativos/estandares/mensajeria/kafka-eventos)
-
-### ADRs relacionados
-
+### ADRs Relacionados
 - [ADR-012: Mensajería Asíncrona](/docs/decisiones-de-arquitectura/adr-012-mensajeria-asincrona)
 - [ADR-015: Manejo de Errores y Cola](/docs/decisiones-de-arquitectura/adr-015-manejo-errores-cola)
 
-### Recursos externos
-
+### Recursos Externos
 - [AWS SQS Best Practices](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-best-practices.html)
 - [RabbitMQ Production Checklist](https://www.rabbitmq.com/production-checklist.html)
+
+## 9. Changelog
+
+| Versión | Fecha | Autor | Cambios |
+|---------|-------|-------|---------|  
+| 1.0 | 2025-08-08 | Equipo de Arquitectura | Versión inicial con template de 9 secciones |

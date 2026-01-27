@@ -1,35 +1,67 @@
 ---
 id: kafka-eventos
 sidebar_position: 1
-title: Kafka y Eventos
-description: Estándares para mensajería basada en eventos con Apache Kafka
+title: Mensajería con Kafka
+description: Estándares para event-driven architecture con Apache Kafka 3.6+, Confluent Platform y Avro
 ---
 
-## 1. Principios de Event-Driven Architecture
+## 1. Propósito
 
-- **Event-first thinking**: Modelar el dominio como una serie de eventos
-- **Desacoplamiento**: Productores y consumidores no se conocen entre sí, solo comparten el contrato del evento
-- **Inmutabilidad**: Los eventos son hechos inmutables del pasado
-- **At-least-once delivery**: Diseñar consumidores idempotentes
-- **Schema evolution**: Mantener compatibilidad en evolución de eventos
-- **Event sourcing**: Considerar el log de eventos como source of truth
+Este estándar define cómo implementar mensajería basada en eventos con Apache Kafka para arquitecturas distribuidas de Talma. Establece:
+- **Event-driven architecture** con desacoplamiento entre productores y consumidores
+- **Event schema design** con estructura estándar (eventId, eventType, timestamp, payload)
+- **At-least-once delivery** con consumidores idempotentes
+- **Schema evolution** con Confluent Schema Registry y Avro
+- **Dead Letter Queue** para manejo de errores
 
-## 2. Naming Conventions
+Permite comunicación asíncrona entre microservicios, event sourcing y procesamiento de eventos en tiempo real.
 
-### Topics
+**Versión**: 1.0  
+**Última actualización**: 2025-08-08
 
+## 2. Alcance
+
+### Aplica a:
+- Microservicios con comunicación asíncrona (órdenes, pagos, notificaciones)
+- Event sourcing (log de eventos como source of truth)
+- Procesamiento de eventos en tiempo real (analytics, auditoría)
+- Integración entre bounded contexts (DDD)
+- Notificaciones cross-service (email, SMS, push)
+
+### No aplica a:
+- Comunicación síncrona request-response (usar APIs REST)
+- Transacciones ACID entre servicios (usar Saga pattern con eventos)
+- Transferencia de archivos grandes (usar S3 con event notification)
+- Métricas de tiempo real (usar métricas directas, no eventos)
+
+## 3. Tecnologías Obligatorias
+
+| Tecnología | Versión Mínima | Propósito |
+|------------|----------------|-----------|  
+| **Apache Kafka** | 3.6+ | Message broker distribuido con particiones y replicación |
+| **Confluent.Kafka** | 2.3+ | Cliente .NET para Kafka (producer/consumer) |
+| **Confluent Schema Registry** | 7.5+ | Registro centralizado de schemas Avro/Protobuf/JSON |
+| **Apache Avro** | 1.11+ | Serialización binaria con schema evolution |
+| **Confluent.SchemaRegistry.Serdes.Avro** | 2.3+ | Serializadores Avro para .NET |
+| **kafkajs** (Node.js) | 2.2+ | Cliente Kafka para Node.js/TypeScript |
+| **AWS MSK** (opcional) | 3.6+ | Kafka managed service en AWS |
+
+## 4. Especificaciones Técnicas
+
+### 4.1 Convenciones de Nomenclatura
+
+**Topics**:
 ```
 {domain}.{entity}.{event-type}
 
 Ejemplos:
 - orders.order.created
-- orders.order.cancelled
+- orders.order.cancelled  
 - shipping.shipment.dispatched
 - billing.invoice.paid
 ```
 
-### Consumer Groups
-
+**Consumer Groups**:
 ```
 {service-name}.{topic-name}
 
@@ -38,7 +70,7 @@ Ejemplos:
 - analytics-service.orders.order.created
 ```
 
-## 3. Event Schema Design
+### 4.2 Event Schema Design
 
 ### Estructura estándar de evento
 
@@ -402,34 +434,219 @@ public class DeadLetterQueueHandler
 }
 ```
 
-## 9. Checklist de Kafka
+## 5. Buenas Prácticas
 
-- [ ] **Naming**: Topics siguen convención `domain.entity.event`
-- [ ] **Schema**: Eventos tienen estructura estándar con metadata
-- [ ] **Idempotencia**: Consumidores manejan duplicados correctamente
-- [ ] **Error handling**: DLQ configurado para eventos fallidos
-- [ ] **Monitoring**: Métricas de lag, throughput, errors
-- [ ] **Security**: SSL/SASL habilitado en producción
-- [ ] **Retention**: Políticas de retención configuradas
-- [ ] **Partitioning**: Estrategia de particionamiento definida
+### 5.1 Idempotencia en Consumidores
 
-## 📖 Referencias
+```csharp
+public class OrderCreatedConsumer : KafkaConsumerBase<OrderCreatedEvent>
+{
+    private readonly IOrderRepository _repository;
 
-### Principios relacionados
+    protected override async Task ProcessEventAsync(
+        OrderCreatedEvent @event,
+        CancellationToken cancellationToken)
+    {
+        // ✅ Verificar si ya se procesó (idempotencia)
+        var existingOrder = await _repository.GetByEventIdAsync(@event.EventId);
+        if (existingOrder != null)
+        {
+            _logger.LogInformation("Event {EventId} already processed", @event.EventId);
+            return; // Ya procesado, skip
+        }
 
-- [Desacoplamiento](/docs/fundamentos-corporativos/principios/arquitectura/desacoplamiento)
+        // Procesar evento
+        var order = Order.CreateFromEvent(@event);
+        await _repository.AddAsync(order, cancellationToken);
+    }
+}
+```
 
-### Lineamientos relacionados
+### 5.2 Schema Evolution (Backward Compatible)
 
+```json
+// V1
+{
+  "orderId": "123",
+  "totalAmount": 100.0
+}
+
+// V2 - Agregar campo con default
+{
+  "orderId": "123",
+  "totalAmount": 100.0,
+  "currency": "USD"  // Nuevo campo con default
+}
+```
+
+### 5.3 Partitioning Strategy
+
+```csharp
+// Particionar por clave de negocio para garantizar orden
+var message = new Message<string, string>
+{
+    Key = order.CustomerId.ToString(), // Misma partición para mismo cliente
+    Value = JsonSerializer.Serialize(orderEvent)
+};
+
+await _producer.ProduceAsync("orders.order.created", message);
+```
+
+## 6. Antipatrones
+
+### 6.1 ❌ Consumidores No Idempotentes
+
+**Problema**:
+```csharp
+// ❌ Procesa evento sin verificar duplicados
+protected override async Task ProcessEventAsync(OrderCreatedEvent @event)
+{
+    await _emailService.SendOrderConfirmationAsync(@event.OrderId);
+    // Si Kafka reintenta, envía email duplicado
+}
+```
+
+**Solución**:
+```csharp
+// ✅ Verificar si ya se procesó
+protected override async Task ProcessEventAsync(OrderCreatedEvent @event)
+{
+    if (await _processedEventsRepository.ExistsAsync(@event.EventId))
+        return;
+
+    await _emailService.SendOrderConfirmationAsync(@event.OrderId);
+    await _processedEventsRepository.MarkAsProcessedAsync(@event.EventId);
+}
+```
+
+### 6.2 ❌ Eventos Sin CorrelationId
+
+**Problema**:
+```csharp
+// ❌ Sin correlationId, imposible correlacionar eventos
+var @event = new OrderCreatedEvent
+{
+    EventId = Guid.NewGuid(),
+    OrderId = orderId
+};
+```
+
+**Solución**:
+```csharp
+// ✅ Propagar correlationId
+var @event = new OrderCreatedEvent
+{
+    EventId = Guid.NewGuid(),
+    CorrelationId = Activity.Current?.Id ?? Guid.NewGuid().ToString(),
+    OrderId = orderId
+};
+```
+
+### 6.3 ❌ Schema Breaking Changes
+
+**Problema**:
+```json
+// V1
+{ "orderId": "123", "amount": 100.0 }
+
+// V2 - Renombrar campo (breaking change)
+{ "orderId": "123", "totalAmount": 100.0 }
+```
+
+**Solución**:
+```json
+// V2 - Mantener campo viejo y agregar nuevo
+{
+  "orderId": "123",
+  "amount": 100.0,      // Deprecated, mantener por compatibilidad
+  "totalAmount": 100.0  // Nuevo campo
+}
+```
+
+### 6.4 ❌ Consumer Lag Ignorado
+
+**Problema**:
+```csharp
+// ❌ Sin monitoreo de consumer lag
+// Si el consumidor se atrasa, no hay alertas
+```
+
+**Solución**:
+```csharp
+// ✅ Monitorear consumer lag con métricas
+public class KafkaMetrics
+{
+    private readonly Counter<long> _messagesProcessed;
+    private readonly Gauge<long> _consumerLag;
+
+    public void RecordLag(long lag)
+    {
+        _consumerLag.Record(lag);
+        
+        if (lag > 10000)
+            _logger.LogWarning("High consumer lag: {Lag}", lag);
+    }
+}
+```
+
+## 7. Validación y Testing
+
+### 7.1 Tests de Integración con TestContainers
+
+```csharp
+public class KafkaIntegrationTests : IAsyncLifetime
+{
+    private KafkaContainer _kafkaContainer = null!;
+
+    public async Task InitializeAsync()
+    {
+        _kafkaContainer = new KafkaBuilder()
+            .WithImage("confluentinc/cp-kafka:7.5.0")
+            .Build();
+
+        await _kafkaContainer.StartAsync();
+    }
+
+    [Fact]
+    public async Task PublishEvent_ConsumerReceives_ProcessesCorrectly()
+    {
+        // Arrange
+        var producer = new KafkaProducer(_kafkaContainer.GetBootstrapAddress());
+        var consumer = new OrderCreatedConsumer(_kafkaContainer.GetBootstrapAddress());
+
+        // Act
+        await producer.PublishAsync("orders.order.created", new OrderCreatedEvent());
+        await Task.Delay(1000); // Esperar procesamiento
+
+        // Assert
+        var processedOrder = await _repository.GetByIdAsync(orderId);
+        processedOrder.Should().NotBeNull();
+    }
+
+    public async Task DisposeAsync() => await _kafkaContainer.DisposeAsync();
+}
+```
+
+## 8. Referencias
+
+### Lineamientos Relacionados
 - [Comunicación Asíncrona y Eventos](/docs/fundamentos-corporativos/lineamientos/arquitectura/comunicacion-asincrona-y-eventos)
 - [Resiliencia y Disponibilidad](/docs/fundamentos-corporativos/lineamientos/arquitectura/resiliencia-y-disponibilidad)
 
-### ADRs relacionados
+### Estándares Relacionados
+- [Colas de Mensajes](./02-queues.md)
+- [Logging Estructurado](../observabilidad/01-logging.md)
 
+### ADRs Relacionados
 - [ADR-012: Mensajería Asíncrona](/docs/decisiones-de-arquitectura/adr-012-mensajeria-asincrona)
 - [ADR-013: Event Sourcing](/docs/decisiones-de-arquitectura/adr-013-event-sourcing)
 
-### Recursos externos
-
+### Recursos Externos
 - [Confluent Kafka Best Practices](https://docs.confluent.io/platform/current/kafka/deployment.html)
-- [Event-Driven Architecture Patterns](https://martinfowler.com/articles/201701-event-driven.html)
+- [Event-Driven Architecture](https://martinfowler.com/articles/201701-event-driven.html)
+
+## 9. Changelog
+
+| Versión | Fecha | Autor | Cambios |
+|---------|-------|-------|---------|  
+| 1.0 | 2025-08-08 | Equipo de Arquitectura | Versión inicial con template de 9 secciones |
