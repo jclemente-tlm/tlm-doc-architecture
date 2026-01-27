@@ -963,7 +963,7 @@ public async Task CreateUser_SavesToDatabase()
 
 ### Convenciones Relacionadas
 
-- [Naming Tests](../../convenciones/testing/01-naming-tests.md) - Nomenclatura de métodos de test
+- [Naming C#](../../convenciones/codigo/01-naming-csharp.md) - Nomenclatura de clases y métodos
 
 ### Lineamientos Relacionados
 

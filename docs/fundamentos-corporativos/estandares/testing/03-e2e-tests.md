@@ -720,8 +720,6 @@ export default defineConfig({
 
 ## 10. Antipatrones (NO Hacer)
 
-> **Nota**: Para convenciones de nomenclatura de tests E2E, consulta [Convenciones - Naming Tests](../../convenciones/testing/01-naming-tests.md).
-
 ### ❌ Antipatrón 1: Selectores Frágiles (CSS classes, XPath)
 
 ```typescript
@@ -851,7 +849,7 @@ test.describe('User Workflow', () => {
 
 ### Convenciones Relacionadas
 
-- [Naming Tests](../../convenciones/testing/01-naming-tests.md) - Nomenclatura de tests
+- [Naming TypeScript](../../convenciones/codigo/02-naming-typescript.md) - Nomenclatura de funciones
 
 ### Lineamientos Relacionados
 

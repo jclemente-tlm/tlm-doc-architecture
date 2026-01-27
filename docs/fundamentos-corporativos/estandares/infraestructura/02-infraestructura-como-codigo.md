@@ -805,7 +805,9 @@ output "db_password_secret_arn" {
 
 ### Convenciones Relacionadas
 
-- [Naming Infraestructura](../../convenciones/infraestructura/01-naming.md) - Nomenclatura de recursos
+- [Naming AWS](../../convenciones/infraestructura/01-naming-aws.md) - Nomenclatura de recursos AWS
+- [Tags y Metadatos](../../convenciones/infraestructura/02-tags-metadatos.md) - Etiquetado de recursos
+- [Variables de Entorno](../../convenciones/infraestructura/03-variables-entorno.md) - Gestión de configuración
 
 ### Lineamientos Relacionados
 

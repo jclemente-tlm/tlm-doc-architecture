@@ -672,8 +672,6 @@ tests/
 
 ## 10. Mejores Prácticas
 
-> **Nota**: Para convenciones de nomenclatura de tests, consulta [Convenciones - Naming Tests](../../convenciones/testing/01-naming-tests.md).
-
 ### 10.1 Un Concepto por Test
 
 ```csharp

@@ -567,7 +567,7 @@ ENTRYPOINT ["dotnet", "MyApp.dll"]
 
 ### Convenciones Relacionadas
 
-- [Naming Infraestructura](../../convenciones/infraestructura/01-naming.md) - Nomenclatura de imágenes
+- [Naming AWS](../../convenciones/infraestructura/01-naming-aws.md) - Nomenclatura de recursos AWS
 
 ### Lineamientos Relacionados
 
