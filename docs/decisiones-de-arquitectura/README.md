@@ -45,7 +45,9 @@ Cada ADR sigue la estructura:
 | [ADR-020](/docs/adrs/adr-020-github-packages-nuget) | GitHub Packages NuGet | Aceptada | Agosto 2025 | Arquitectura + DevOps | GitHub Packages como registry de paquetes NuGet internos corporativos. |
 | [ADR-021](/docs/adrs/adr-021-prometheus-grafana-observabilidad) | Prometheus + Grafana Observabilidad | Aceptada | Enero 2026 | Arquitectura + SRE | Stack OSS completo: Prometheus, Grafana, Loki, Jaeger y OpenTelemetry. |
 | [ADR-022](/docs/adrs/adr-022-github-container-registry) | GitHub Container Registry | Aceptada | Enero 2026 | Arquitectura + DevOps | GitHub Container Registry (ghcr.io) para imágenes Docker corporativas. |
-| [ADR-023](/docs/adrs/adr-023-trivy-checkov-security-scanning) | Trivy + Checkov Security Scanning | Aceptada | Enero 2026 | Arquitectura + Security | Escaneo automatizado de vulnerabilidades con Trivy (containers) y Checkov (IaC). |
+| [ADR-023](/docs/adrs/adr-023-trivy-container-scanning) | Trivy Container Scanning | Aceptada | Enero 2026 | Arquitectura + Security | Escaneo automatizado de vulnerabilidades en containers y dependencias con Trivy. |
+| [ADR-024](/docs/adrs/adr-024-checkov-iac-scanning) | Checkov IaC Scanning | Aceptada | Enero 2026 | Arquitectura + Security | Escaneo automatizado de misconfigurations en infraestructura como código con Checkov. |
+| [ADR-025](/docs/adrs/adr-025-sonarqube-sast-code-quality) | SonarQube SAST Code Quality | Aceptada | Enero 2026 | Arquitectura + Desarrollo | Análisis estático de código (SAST) multi-lenguaje con SonarQube Community. |
 
 ### ADRs ESPECÍFICOS DE SERVICIO
 
@@ -84,8 +86,8 @@ Cada ADR sigue la estructura:
 
 ## Métricas de ADRs
 
-- **Total ADRs activos**: 19 globales
-- **ADRs Aceptados**: 19
+- **Total ADRs activos**: 21 globales
+- **ADRs Aceptados**: 21
 - **ADRs en Propuesta**: 0
 - **ADRs eliminados** (estándares de industria / patrones genéricos): 4
 - **Cobertura de decisiones críticas**: 100%
