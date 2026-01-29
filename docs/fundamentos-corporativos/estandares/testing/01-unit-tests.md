@@ -2,7 +2,7 @@
 id: unit-tests
 sidebar_position: 1
 title: Testing Unitario
-description: Estándar para pruebas unitarias con xUnit, Jest, cobertura de código y mejores prácticas de testing aislado.
+description: Estándar para pruebas unitarias con xUnit, Moq, cobertura de código y mejores prácticas de testing aislado.
 ---
 
 # Estándar Técnico — Testing Unitario
@@ -10,7 +10,7 @@ description: Estándar para pruebas unitarias con xUnit, Jest, cobertura de cód
 ---
 
 ## 1. Propósito
-Garantizar código confiable mediante tests unitarios con xUnit (C#) / Jest (TypeScript), cobertura >80%, patrón AAA (Arrange-Act-Assert), mocks con Moq/jest.mock() y ejecución <500ms.
+Garantizar código confiable mediante tests unitarios con xUnit + Moq + FluentAssertions, cobertura >80%, patrón AAA (Arrange-Act-Assert) y ejecución <500ms.
 
 ---
 
@@ -33,12 +33,11 @@ Garantizar código confiable mediante tests unitarios con xUnit (C#) / Jest (Typ
 
 | Componente | Tecnología | Versión mínima | Observaciones |
 |-----------|------------|----------------|---------------|
-| **Framework C#** | xUnit | 2.6+ | Testing .NET |
-| **Mocking C#** | Moq / NSubstitute | 4.20+ / 5.1+ | Mocks/stubs |
-| **Assertions C#** | FluentAssertions | 6.12+ | Expresividad |
-| **Framework TS** | Jest / Vitest | 29+ / 1.0+ | Testing Node.js |
-| **Mocking TS** | jest.mock() | - | Mocks nativos Jest |
-| **Coverage** | Coverlet / NYC | 6.0+ / 15.0+ | Cobertura de código |
+| **Framework** | xUnit | 2.6+ | Testing .NET |
+| **Mocking** | Moq | 4.20+ | Mocks/stubs |
+| **Assertions** | FluentAssertions | 6.12+ | Expresividad |
+| **Coverage** | Coverlet | 6.0+ | Cobertura de código |
+| **Análisis** | SonarQube | 10.0+ | Calidad y cobertura |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -46,9 +45,9 @@ Garantizar código confiable mediante tests unitarios con xUnit (C#) / Jest (Typ
 
 ## 4. Requisitos Obligatorios 🔴
 
-- [ ] xUnit (C#) / Jest (TypeScript) en todos los proyectos
+- [ ] xUnit 2.6+ en todos los proyectos
 - [ ] Patrón AAA (Arrange-Act-Assert) obligatorio
-- [ ] Mocks con Moq/jest.mock() (NO dependencias reales)
+- [ ] Mocks con Moq 4.20+ (NO dependencias reales)
 - [ ] Tests aislados (NO compartir estado entre tests)
 - [ ] Naming: `MethodName_Scenario_ExpectedResult`
 - [ ] Ejecución <500ms para suite completa de unit tests
@@ -132,84 +131,16 @@ public class OrderServiceTests
 }
 ```
 
-### TypeScript con Jest
-```json
-// package.json
-{
-  "devDependencies": {
-    "jest": "^29.0.0",
-    "@types/jest": "^29.0.0",
-    "ts-jest": "^29.0.0"
-  },
-  "scripts": {
-    "test": "jest",
-    "test:coverage": "jest --coverage"
-  }
-}
-```
-
-```typescript
-// orderService.test.ts
-import { OrderService } from './orderService';
-import { IOrderRepository } from './IOrderRepository';
-
-describe('OrderService', () => {
-  let orderRepository: jest.Mocked<IOrderRepository>;
-  let sut: OrderService;
-
-  beforeEach(() => {
-    orderRepository = {
-      getById: jest.fn(),
-      create: jest.fn(),
-    } as jest.Mocked<IOrderRepository>;
-    
-    sut = new OrderService(orderRepository);
-  });
-
-  it('getOrder_OrderExists_ReturnsOrder', async () => {
-    // Arrange
-    const orderId = '123';
-    const expectedOrder = { orderId, status: 'PENDING' };
-    orderRepository.getById.mockResolvedValue(expectedOrder);
-
-    // Act
-    const result = await sut.getOrder(orderId);
-
-    // Assert
-    expect(result).toEqual(expectedOrder);
-    expect(orderRepository.getById).toHaveBeenCalledWith(orderId);
-  });
-
-  it.each([
-    [''],
-    [null],
-    [undefined]
-  ])('createOrder_InvalidUserId_ThrowsError', async (invalidUserId) => {
-    // Arrange
-    const request = { userId: invalidUserId };
-
-    // Act & Assert
-    await expect(sut.createOrder(request)).rejects.toThrow();
-  });
-});
-```
-
 ---
 
 ## 7. Validación
 
 ```bash
-# C# - Ejecutar tests
+# Ejecutar tests
 dotnet test
 
-# C# - Coverage report
+# Coverage report
 dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-
-# TypeScript - Ejecutar tests
-npm test
-
-# TypeScript - Coverage
-npm run test:coverage
 
 # Verificar coverage >80%
 grep -A 5 "TOTAL" coverage/coverage-summary.json
@@ -231,7 +162,6 @@ Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 ## 8. Referencias
 
 - [Integration Tests](02-integration-tests.md)
-- [E2E Tests](03-e2e-tests.md)
 - [xUnit Documentation](https://xunit.net/)
-- [Jest Documentation](https://jestjs.io/)
 - [Moq Quickstart](https://github.com/moq/moq4)
+- [FluentAssertions](https://fluentassertions.com/)

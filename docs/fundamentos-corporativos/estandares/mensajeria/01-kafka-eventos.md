@@ -35,8 +35,7 @@ Implementar event-driven architecture con Apache Kafka 3.6+, Confluent.Kafka 2.3
 | Componente | Tecnología | Versión mínima | Observaciones |
 |-----------|------------|----------------|---------------|
 | **Broker** | Apache Kafka | 3.6+ | Message broker distribuido |
-| **Cliente .NET** | Confluent.Kafka | 2.3+ | Producer/Consumer |
-| **Cliente Node.js** | kafkajs | 2.2+ | Producer/Consumer |
+| **Cliente** | Confluent.Kafka | 2.3+ | Producer/Consumer .NET |
 | **Schema Registry** | Confluent Schema Registry | 7.5+ | Registro schemas Avro |
 | **Serialization** | Apache Avro | 1.11+ | Schema evolution |
 | **AWS Managed** | AWS MSK | 3.6+ | Kafka managed service |

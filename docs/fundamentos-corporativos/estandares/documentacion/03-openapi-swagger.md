@@ -10,7 +10,7 @@ description: Estándares para documentar APIs REST usando OpenAPI 3.1+, Swagger 
 ---
 
 ## 1. Propósito
-Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada automáticamente con Swashbuckle.AspNetCore 6.5+ (C#) o ts-openapi 2.0+ (TypeScript), validada con Spectral y publicada en Swagger UI 5.0+.
+Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada automáticamente con Swashbuckle.AspNetCore 6.5+, validada con Spectral y publicada en Swagger UI 5.0+.
 
 ---
 
@@ -35,10 +35,9 @@ Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada
 |-----------|------------|----------------|---------------|
 | **Spec** | OpenAPI Specification | 3.1+ | YAML/JSON |
 | **UI** | Swagger UI | 5.0+ | Interfaz interactiva |
-| **C# Generator** | Swashbuckle.AspNetCore | 6.5+ | ASP.NET Core |
-| **TS Generator** | ts-openapi | 2.0+ | NestJS/Express |
+| **Generator** | Swashbuckle.AspNetCore | 6.5+ | ASP.NET Core |
 | **Linter** | Spectral | 6.11+ | Validación reglas |
-| **Client Gen** | NSwag | 14.0+ | Clientes TypeScript/C# |
+| **Client Gen** | NSwag | 14.0+ | Clientes C# |
 | **Alternativa** | Redoc | 2.1+ | Documentación estática |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
@@ -48,7 +47,7 @@ Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada
 ## 4. Requisitos Obligatorios 🔴
 
 - [ ] OpenAPI 3.1+ generado automáticamente
-- [ ] Swashbuckle (C#) o ts-openapi (TypeScript)
+- [ ] Swashbuckle.AspNetCore 6.5+ (.NET)
 - [ ] Swagger UI habilitado en `/api-docs`
 - [ ] Información de contacto y licencia
 - [ ] XML comments (C#) para descripciones
@@ -175,9 +174,6 @@ curl http://localhost:5000/swagger/v1/swagger.json > swagger.json
 
 # Validar con Spectral
 spectral lint swagger.json
-
-# Generar cliente TypeScript
-nswag openapi2tsclient /input:swagger.json /output:clients/users-client.ts
 
 # Generar cliente C#
 nswag openapi2csclient /input:swagger.json /output:clients/UsersClient.cs

@@ -33,8 +33,8 @@ Validar interacción entre componentes reales (APIs, PostgreSQL, Redis, RabbitMQ
 
 | Componente | Tecnología | Versión mínima | Observaciones |
 |-----------|------------|----------------|---------------|
-| **Factory C#** | WebApplicationFactory | 8.0+ | Testing API .NET |
-| **Containers** | Testcontainers | 3.7+ | PostgreSQL, Redis, RabbitMQ |
+| **Factory** | WebApplicationFactory | 8.0+ | Testing API .NET |
+| **Containers** | Testcontainers | 3.7+ | PostgreSQL, Oracle, Redis, Kafka |
 | **Framework** | xUnit | 2.6+ | IClassFixture support |
 | **HTTP** | HttpClient | - | Testing endpoints |
 | **Assertions** | FluentAssertions | 6.12+ | Expresividad |

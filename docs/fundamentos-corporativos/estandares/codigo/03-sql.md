@@ -34,12 +34,12 @@ Garantizar código SQL seguro contra SQL Injection mediante parametrización, op
 | Componente | Tecnología | Versión mínima | Observaciones |
 |-----------|------------|----------------|---------------|
 | **BD Principal** | PostgreSQL | 14.0+ | Transaccional OLTP |
-| **BD Legacy** | Oracle Database | 19c+ | Sistemas existentes |
-| **ORM** | Entity Framework Core | 8.0+ | ORM principal .NET |
+| **BD Corporativa** | Oracle Database | 19c+ | Sistemas corporativos |
+| **ORM Principal** | Entity Framework Core | 8.0+ | ORM completo .NET |
+| **Micro-ORM** | Dapper | 2.1+ | Queries optimizados |
 | **Provider PG** | Npgsql | 8.0+ | JSON/JSONB support |
 | **Provider Oracle** | Oracle.EntityFrameworkCore | 8.0+ | Soporte Oracle |
-| **Migrations** | EF Migrations / Flyway | 10.0+ | Versionado esquemas |
-| **Admin PG** | pgAdmin | 7.0+ | Herramienta administración |
+| **Migrations** | EF Migrations | - | Versionado esquemas |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 

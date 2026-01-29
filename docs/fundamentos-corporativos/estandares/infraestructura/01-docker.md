@@ -17,7 +17,7 @@ Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos
 ## 2. Alcance
 
 **Aplica a:**
-- Aplicaciones backend (.NET, Node.js, Python) desplegadas en contenedores
+- Aplicaciones backend (.NET) desplegadas en contenedores
 - APIs REST, microservicios, workers, jobs en Amazon ECR/Azure ACR
 - Entornos Dev, Staging, Production
 
@@ -38,8 +38,6 @@ Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos
 | **Scanner** | Trivy, Snyk, AWS ECR scan | Latest | Detecta CVEs antes de publicar |
 | **Registry** | Amazon ECR, Azure ACR | - | Registries privados con IAM/RBAC |
 | **.NET** | `dotnet/aspnet:8.0-alpine` | 8.0 | ~110MB |
-| **Node.js** | `node:20-alpine3.19` | 20 | ~120MB |
-| **Python** | `python:3.12-alpine3.19` | 3.12 | ~50MB |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -94,27 +92,6 @@ USER appuser
 HEALTHCHECK --interval=30s --timeout=5s CMD curl -f http://localhost:8080/health || exit 1
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "MyApp.dll"]
-```
-
-### Node.js
-```dockerfile
-# syntax=docker/dockerfile:1.4
-FROM node:20-alpine3.19 AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-
-FROM node:20-alpine3.19 AS final
-RUN addgroup -g 1001 appuser && adduser -D -u 1001 -G appuser appuser
-WORKDIR /app
-COPY --from=build --chown=appuser:appuser /app/dist ./dist
-COPY --from=build --chown=appuser:appuser /app/node_modules ./node_modules
-USER appuser
-HEALTHCHECK --interval=30s --timeout=5s CMD curl -f http://localhost:3000/health || exit 1
-EXPOSE 3000
-CMD ["node", "dist/main.js"]
 ```
 
 ---

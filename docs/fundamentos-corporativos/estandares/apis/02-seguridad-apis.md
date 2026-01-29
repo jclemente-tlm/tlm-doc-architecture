@@ -31,9 +31,10 @@ Garantizar seguridad mediante autenticación JWT/OAuth 2.0 con RS256, autorizaci
 
 | Componente | Tecnología | Versión mínima | Observaciones |
 |-----------|------------|----------------|---------------|
+| **IAM (Identity)** | Keycloak | 23.0+ | Gestión de identidades, SSO, OAuth 2.0/OIDC |
+| **API Gateway** | Kong | 3.5+ | Rate limiting, CORS, routing |
 | **Autenticación** | AspNetCore.Authentication.JwtBearer | 8.0+ | JWT Bearer con RS256 |
-| **OAuth/OIDC** | Microsoft.Identity.Web | 2.15+ | Azure AD / OAuth 2.0 / OpenID |
-| **Rate Limiting** | AspNetCoreRateLimit | 5.0+ | Límites por IP/usuario |
+| **OAuth/OIDC** | Keycloak.AuthServices.AspNetCore | 2.0+ | Integración Keycloak en .NET |
 | **CORS** | AspNetCore.Cors | 8.0+ | Configuración explícita de orígenes |
 | **TLS** | TLS 1.3 (1.2 compatible) | - | Encryption en tránsito |
 | **JWT Algorithm** | RS256 (RSA + SHA256) | - | Asimétrico obligatorio |

@@ -18,9 +18,8 @@ Estándares técnicos para el desarrollo de APIs REST:
 
 Estándares de Clean Code por lenguaje de programación:
 
-1. **C# y .NET**: Principios SOLID, naming, manejo de errores, async/await
-2. **TypeScript**: Clean Code adaptado para TypeScript
-3. **SQL**: Estilo, buenas prácticas para PostgreSQL y Oracle
+1. **C# y .NET**: Principios SOLID, naming, manejo de errores, async/await, Mapster
+2. **SQL**: Estilo, buenas prácticas para PostgreSQL y Oracle (EF Core + Dapper)
 
 ### [Infraestructura](./infraestructura/)
 
@@ -33,25 +32,23 @@ Estándares para contenedores e infraestructura cloud:
 
 ### [Testing](./testing/)
 
-Estándares para pruebas y cobertura de código:
+Estándares para pruebas automatizadas:
 
-1. **Testing Unitario**: xUnit, Jest, mocking, AAA pattern, coverage 80%
-2. **Testing de Integración**: WebApplicationFactory, TestContainers, bases de datos reales
-3. **Testing End-to-End (E2E)**: Playwright, Cypress, flujos completos de usuario
+1. **Testing Unitario**: xUnit, Moq, FluentAssertions, AAA pattern, coverage 80%
+2. **Testing de Integración**: WebApplicationFactory, Testcontainers (Oracle/PostgreSQL/Kafka)
 
 ### [Observabilidad](./observabilidad/)
 
 Estándares para logging, monitoreo y trazabilidad:
 
-1. **Logging Estructurado**: Serilog, Winston, formato JSON, correlation IDs
-2. **Monitoreo y Métricas**: OpenTelemetry, health checks, distributed tracing, Prometheus
+1. **Logging Estructurado**: Serilog → Loki (OpenTelemetry), formato JSON, correlation IDs
+2. **Monitoreo y Métricas**: Grafana Mimir (métricas), Grafana Tempo (traces), Grafana Alloy (colector), Grafana (visualización)
 
 ### [Mensajería](./mensajeria/)
 
-Estándares para mensajería asíncrona y colas:
+Estándares para mensajería asíncrona:
 
-1. **Kafka y Eventos**: Event-driven architecture, event schemas, Kafka producers/consumers
-2. **Colas de Mensajes**: AWS SQS, RabbitMQ, dead letter queues, batch processing
+1. **Kafka y Eventos**: Event-driven architecture, event schemas, Kafka producers/consumers (Confluent.Kafka)
 
 ### [Documentación](./documentacion/)
 

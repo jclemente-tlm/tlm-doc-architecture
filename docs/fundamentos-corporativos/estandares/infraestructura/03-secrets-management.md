@@ -37,7 +37,6 @@ Garantizar cero leaks de secretos y compliance mediante AWS Secrets Manager con 
 | **Secrets Store** | AWS Secrets Manager | - | Rotación automática, integración AWS |
 | **Encryption** | AWS KMS (AES-256) | - | Encryption at rest managed |
 | **SDK .NET** | AWSSDK.SecretsManager | 3.7+ | Cliente oficial AWS |
-| **SDK Node.js** | @aws-sdk/client-secrets-manager | 3.0+ | Cliente oficial AWS v3 |
 | **Rotation** | AWS Lambda + RDS rotation | - | Rotación sin downtime |
 | **Auditoría** | AWS CloudTrail | - | Log de todos los accesos |
 
@@ -95,23 +94,6 @@ public class SecretsService
 // Configuración en Program.cs
 var dbSecret = await secretsService.GetSecretAsync("prod/users-api/database/connection");
 var connectionString = JsonSerializer.Deserialize<DbSecret>(dbSecret);
-```
-
-### Node.js
-```typescript
-import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
-
-const client = new SecretsManagerClient({ region: 'us-east-1' });
-
-async function getSecret(secretName: string): Promise<string> {
-  const command = new GetSecretValueCommand({ SecretId: secretName });
-  const response = await client.send(command);
-  return response.SecretString!;
-}
-
-// Uso
-const dbSecret = JSON.parse(await getSecret('prod/orders-api/database/connection'));
-const connectionString = `postgres://${dbSecret.username}:${dbSecret.password}@${dbSecret.host}:${dbSecret.port}/${dbSecret.database}`;
 ```
 
 ---

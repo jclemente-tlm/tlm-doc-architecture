@@ -43,9 +43,9 @@ title: Instrucciones Mejoradas para GitHub Copilot
 | ORM              | Entity Framework Core        | Acceso y persistencia                       |
 | CQRS             | Sin MediatR                  | Comandos y queries en capa de aplicación    |
 | Autenticación    | Keycloak                     | Identidad y autorización                    |
-| Observabilidad   | Prometheus, Grafana          | Métricas y visualización                    |
+| Observabilidad   | Mimir, Grafana          | Métricas y visualización                    |
 | Observabilidad   | Loki, Serilog, OpenTelemetry | Logs estructurados y trazas distribuidas    |
-| Observabilidad   | Jaeger                       | Visualización de trazas                     |
+| Observabilidad   | Tempo                       | Visualización de trazas                     |
 | Contenedores     | Docker                       | Despliegue de servicios                     |
 
 ### Reglas de Generación de Código para Copilot

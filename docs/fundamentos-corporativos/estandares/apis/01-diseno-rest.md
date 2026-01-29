@@ -33,11 +33,13 @@ Definir implementación técnica de APIs REST con ASP.NET Core 8.0+, JSON camelC
 | Componente | Tecnología | Versión mínima | Observaciones |
 |-----------|------------|----------------|---------------|
 | **Framework** | ASP.NET Core | 8.0+ | Framework base de API |
+| **API Gateway** | Kong | 3.5+ | Gestión centralizada de APIs |
+| **IAM** | Keycloak | 23.0+ | Autenticación y autorización |
 | **Versionado** | AspNetCore.Mvc.Versioning | 5.0+ | URL versioning (v1, v2) |
 | **Documentación** | Swashbuckle.AspNetCore | 6.5+ | OpenAPI/Swagger |
 | **Validación** | FluentValidation.AspNetCore | 11.0+ | Validación entrada |
-| **Mapeo** | AutoMapper | 12.0+ | Mapeo DTOs |
-| **Autenticación** | AspNetCore.Authentication.Jwt | 8.0+ | JWT Bearer |
+| **Mapeo** | Mapster | 7.4+ | Mapeo de objetos (DTOs) |
+| **Autenticación** | AspNetCore.Authentication.JwtBearer | 8.0+ | JWT Bearer |
 | **Logging** | Serilog.AspNetCore | 8.0+ | Logging estructurado |
 | **Protocolo** | HTTPS/TLS 1.3, HTTP/2 | - | TLS 1.3 mínimo |
 

@@ -33,11 +33,12 @@ Garantizar código C# legible, mantenible y testeable mediante Clean Code, SOLID
 |-----------|------------|----------------|---------------|
 | **Framework** | .NET | 8.0+ | LTS recomendado |
 | **Lenguaje** | C# | 12+ | Nullable reference types |
+| **Mapeo** | Mapster | 7.4+ | Object mapping (NO AutoMapper) |
 | **Análisis** | StyleCop.Analyzers | 1.2+ | Reglas de estilo |
 | **Análisis** | SonarAnalyzer.CSharp | 9.16+ | Detección bugs/vulnerabilidades |
-| **Análisis** | Microsoft.CodeAnalysis.NetAnalyzers | 8.0+ | Reglas de calidad |
-| **Testing** | xUnit / NUnit | 2.6+ / 4.0+ | Framework de pruebas |
-| **Mocking** | Moq / NSubstitute | 4.20+ / 5.1+ | Mocks para tests |
+| **Análisis** | SonarQube | 10.0+ | Análisis continuo código |
+| **Testing** | xUnit | 2.6+ | Framework de pruebas |
+| **Mocking** | Moq | 4.20+ | Mocks para tests |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 

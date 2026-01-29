@@ -17,7 +17,7 @@ Garantizar trazabilidad y debugging en entornos distribuidos mediante logging es
 ## 2. Alcance
 
 **Aplica a:**
-- APIs REST (.NET, Node.js) y microservicios backend
+- APIs REST (.NET) y microservicios backend
 - Workers, background jobs, Lambdas AWS
 
 **No aplica a:**
@@ -31,11 +31,11 @@ Garantizar trazabilidad y debugging en entornos distribuidos mediante logging es
 
 | Componente | Tecnología | Versión mínima | Observaciones |
 |-----------|------------|----------------|---------------|
-| **Logger .NET** | Serilog + Serilog.AspNetCore | 3.1+ / 8.0+ | Logging estructurado con sinks configurables |
-| **Logger Node.js** | Winston | 3.11+ | Transports configurables (Console, File, CloudWatch) |
-| **Sinks** | Serilog.Sinks.Console, Serilog.Sinks.File | 5.0+ | JSON en prod, rotación diaria, retención 7 días |
-| **Centralización** | AWS CloudWatch Logs | - | Sink: Serilog.Sinks.AwsCloudWatch, winston-cloudwatch |
-| **Rotación** | winston-daily-rotate-file | 4.7+ | Rotación automática Node.js |
+| **Logger** | Serilog + Serilog.AspNetCore | 3.1+ / 8.0+ | Logging estructurado .NET |
+| **OpenTelemetry** | OpenTelemetry.Exporter.OpenTelemetryProtocol | 1.7+ | Exportar logs a Loki via OTLP |
+| **Centralización** | Grafana Loki | 2.9+ | Almacenamiento logs agregados |
+| **Collector** | Grafana Alloy | 1.0+ | Recolector OpenTelemetry |
+| **Visualización** | Grafana | 10.0+ | Dashboards y alertas |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -52,14 +52,14 @@ Garantizar trazabilidad y debugging en entornos distribuidos mediante logging es
 - [ ] Logs a stdout/stderr (NO archivos en contenedores)
 - [ ] Retención: Error=90d, Warning/Info=30d, Debug=7d
 - [ ] Contexto en excepciones: UserId, CorrelationId, RequestPath
-- [ ] Logs estructurados vía `ILogger<T>` (.NET) o Winston logger (Node.js)
+- [ ] Logs estructurados vía `ILogger<T>` (.NET)
 
 ---
 
 ## 5. Prohibiciones
 
 - ❌ Logs en texto plano en producción
-- ❌ `Console.WriteLine()` o `console.log()` directo (usar logger estructurado)
+- ❌ `Console.WriteLine()` directo (usar `ILogger<T>` estructurado)
 - ❌ Passwords, tokens, API keys sin enmascarar
 - ❌ Logs síncronos que bloquean requests (usar async sinks)
 - ❌ Nivel Trace/Debug en producción (filtrar con MinimumLevel)
@@ -95,28 +95,6 @@ app.Use(async (context, next) =>
 });
 ```
 
-### Node.js
-```typescript
-import winston from 'winston';
-
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'talma-api' },
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs/app.log', maxsize: 100000000, maxFiles: 7 })
-  ]
-});
-
-// Middleware Correlation ID
-app.use((req, res, next) => {
-  req.correlationId = req.headers['x-correlation-id'] || uuidv4();
-  res.setHeader('x-correlation-id', req.correlationId);
-  next();
-});
-```
-
 ---
 
 ## 7. Validación
@@ -138,7 +116,6 @@ grep -i "password" logs/app.json
 
 # Tests unitarios
 dotnet test --filter Category=Logging
-npm test -- --grep "logging"
 ```
 
 **Métricas de cumplimiento:**
