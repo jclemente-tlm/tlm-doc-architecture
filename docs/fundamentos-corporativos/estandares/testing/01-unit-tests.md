@@ -150,7 +150,7 @@ grep -A 5 "TOTAL" coverage/coverage-summary.json
 
 | Métrica | Target | Verificación |
 |---------|--------|--------------|  
-| Code coverage Services | >80% | Coverlet/NYC report |
+| Code coverage Services | >80% | Coverlet report |
 | Tests ejecutados | 100% pass | CI/CD pipeline |
 | Ejecución suite completa | <500ms | `dotnet test` output |
 | Tests con patrón AAA | 100% | Code review |

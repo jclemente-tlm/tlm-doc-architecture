@@ -27,7 +27,7 @@ Estándares para contenedores e infraestructura cloud:
 
 1. **Docker**: Dockerfile, imágenes, seguridad, multi-stage builds
 2. **Infraestructura como Código**: Terraform, AWS CDK, state management, módulos
-3. **Gestión de Secretos**: AWS Secrets Manager, Azure Key Vault, rotación
+3. **Gestión de Secretos**: AWS Secrets Manager, rotación automática
 4. **Docker Compose**: Orquestación multi-contenedor para desarrollo local
 
 ### [Testing](./testing/)

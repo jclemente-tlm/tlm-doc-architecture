@@ -18,7 +18,7 @@ Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos
 
 **Aplica a:**
 - Aplicaciones backend (.NET) desplegadas en contenedores
-- APIs REST, microservicios, workers, jobs en Amazon ECR/Azure ACR
+- APIs REST, microservicios, workers, jobs en GitHub Container Registry
 - Entornos Dev, Staging, Production
 
 **No aplica a:**
@@ -35,8 +35,8 @@ Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos
 | **Docker Engine** | Docker Engine | 24.0+ | BuildKit nativo, multi-platform builds |
 | **BuildKit** | Habilitado por defecto | 0.12+ | Cache eficiente, builds paralelos |
 | **Imágenes Base** | Alpine (preferida), Slim | Latest LTS | Tamaño reducido 70-80% |
-| **Scanner** | Trivy, Snyk, AWS ECR scan | Latest | Detecta CVEs antes de publicar |
-| **Registry** | Amazon ECR, Azure ACR | - | Registries privados con IAM/RBAC |
+| **Scanner** | Trivy | Latest | Detecta CVEs antes de publicar |
+| **Registry** | GitHub Container Registry (ghcr.io) | - | Registry privado integrado con GitHub |
 | **.NET** | `dotnet/aspnet:8.0-alpine` | 8.0 | ~110MB |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
@@ -51,7 +51,7 @@ Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos
 - [ ] Health check configurado (interval 30s, timeout 5s)
 - [ ] Tags semánticos v<MAJOR>.<MINOR>.<PATCH> (NO `latest` en prod)
 - [ ] Secretos NO hardcodeados (usar Secrets Manager)
-- [ ] Escaneo vulnerabilidades ejecutado (Trivy/Snyk)
+- [ ] Escaneo vulnerabilidades ejecutado (Trivy)
 - [ ] CVEs críticos resueltos antes de push
 - [ ] .dockerignore configurado (.git, node_modules, bin, obj, .env)
 - [ ] BuildKit habilitado para cache eficiente
@@ -122,7 +122,7 @@ git log -1 --format=%B | grep DOCKER_BUILDKIT
 | Tamaño imagen | ≤ 200MB | `docker images` output |
 | CVEs críticos | 0 | `trivy --severity CRITICAL` |
 | Usuario no-root | 100% | `docker inspect \| grep User` |
-| Tags `latest` en prod | 0% | ECR registry inspection |
+| Tags `latest` en prod | 0% | ghcr.io registry inspection |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 

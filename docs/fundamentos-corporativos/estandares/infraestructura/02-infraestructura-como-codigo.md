@@ -38,8 +38,8 @@ Garantizar infraestructura reproducible, auditable y versionada mediante Terrafo
 | **Módulos** | Terraform Registry | - | Versionado semántico (v1.2.3) |
 | **Validation** | terraform fmt/validate | Built-in | Sintaxis y formato consistente |
 | **Linting** | tflint | 0.50+ | Detecta errores y malas prácticas |
-| **Security Scan** | Checkov, tfsec | Latest | Detecta vulnerabilidades de seguridad |
-| **CI/CD** | GitHub Actions, GitLab CI | - | Automatización de plan/apply |
+| **Security Scan** | Checkov | Latest | Detecta vulnerabilidades de seguridad |
+| **CI/CD** | GitHub Actions | - | Automatización de plan/apply |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -54,7 +54,7 @@ Garantizar infraestructura reproducible, auditable y versionada mediante Terrafo
 - [ ] GitOps workflow: PR → `terraform plan` automático → `terraform apply` manual
 - [ ] `terraform fmt` ejecutado antes de commit
 - [ ] `terraform validate` pasando en CI/CD
-- [ ] Escaneo de seguridad con Checkov/tfsec en CI/CD
+- [ ] Escaneo de seguridad con Checkov en CI/CD
 - [ ] Outputs documentados en README.md por módulo
 - [ ] Tags obligatorios: Environment, Project, ManagedBy=Terraform
 - [ ] State lock timeout configurado (10 minutos máx)
@@ -140,7 +140,6 @@ tflint --recursive
 
 # Security scan
 checkov -d . --framework terraform
-tfsec .
 
 # Plan y apply
 terraform plan -out=plan.tfplan
@@ -157,7 +156,7 @@ aws dynamodb get-item --table-name terraform-state-lock --key '{"LockID":{"S":"t
 |---------|--------|--------------|  
 | State remoto habilitado | 100% | Verificar backend.tf en todos los entornos |
 | Modules con versionado | 100% | `grep 'version =' *.tf` |
-| Checkov/tfsec pasando | 100% | CI/CD pipeline status |
+| Checkov pasando | 100% | CI/CD pipeline status |
 | Secrets en state | 0 | `terraform show \| grep -i password` |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
