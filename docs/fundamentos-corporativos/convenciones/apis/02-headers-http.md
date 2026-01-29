@@ -193,24 +193,6 @@ public class TraceabilityHeadersMiddleware
 }
 ```
 
-### Middleware TypeScript (Express)
-
-```typescript
-export const traceabilityHeaders: RequestHandler = (req, res, next) => {
-  // Generar X-Request-ID
-  req.headers["x-request-id"] = req.headers["x-request-id"] || uuidv4();
-
-  // Validar X-Correlation-ID
-  if (!req.headers["x-correlation-id"]) {
-    return res.status(400).json({
-      error: "X-Correlation-ID header is required",
-    });
-  }
-
-  next();
-};
-```
-
 ## 6. Checklist
 
 - [ ] `X-Correlation-ID` presente en todas las requests

@@ -31,7 +31,7 @@ Los nombres de recursos AWS deben ser descriptivos, incluir el ambiente y seguir
 ✅ Correcto:
 tlm-dev-users-api-asg
 tlm-prod-orders-db-rds
-tlm-stg-payments-queue-sqs
+tlm-stg-kafka-cluster-msk
 
 ❌ Incorrecto:
 tlm-development-users-api  # Usar código corto
@@ -75,12 +75,12 @@ tlm_prod_invoices_s3       # Guiones bajos no permitidos
   - `tlm-dev-orders-mysql-rds`
   - `tlm-prod-analytics-aurora-rds`
 
-### Regla 6: ECS/EKS Clusters
+### Regla 6: ECS Clusters
 
-- **Formato**: `tlm-{env}-{tipo}-cluster`
+- **Formato**: `tlm-{env}-ecs-cluster`
 - **Ejemplos**:
   - `tlm-prod-ecs-cluster`
-  - `tlm-dev-eks-cluster`
+  - `tlm-dev-ecs-cluster`
   - `tlm-stg-ecs-cluster`
 
 ### Regla 7: ECS Services
@@ -113,21 +113,6 @@ tlm_prod_invoices_s3       # Guiones bajos no permitidos
   - `tlm-prod-orders-process-payment-lambda`
   - `tlm-dev-users-send-welcome-email-lambda`
 
-### Regla 11: SQS Queues
-
-- **Formato**: `tlm-{env}-{servicio}-{proposito}-queue`
-- **Ejemplos**:
-  - `tlm-prod-orders-processing-queue`
-  - `tlm-dev-notifications-email-queue`
-  - `tlm-prod-orders-processing-dlq` (Dead Letter Queue)
-
-### Regla 12: SNS Topics
-
-- **Formato**: `tlm-{env}-{servicio}-{evento}-topic`
-- **Ejemplos**:
-  - `tlm-prod-orders-created-topic`
-  - `tlm-dev-users-registered-topic`
-
 ## 3. Tabla de Sufijos por Tipo de Recurso
 
 | Recurso AWS          | Sufijo          | Ejemplo                         |
@@ -140,8 +125,7 @@ tlm_prod_invoices_s3       # Guiones bajos no permitidos
 | Load Balancer        | `-alb` / `-nlb` | `tlm-prod-api-alb`              |
 | Security Group       | `-sg`           | `tlm-prod-api-public-sg`        |
 | Lambda Function      | `-lambda`       | `tlm-prod-process-order-lambda` |
-| SQS Queue            | `-queue`        | `tlm-prod-orders-queue`         |
-| SNS Topic            | `-topic`        | `tlm-prod-order-created-topic`  |
+| MSK Cluster (Kafka)  | `-msk`          | `tlm-prod-kafka-msk`            |
 | VPC                  | `-vpc`          | `tlm-prod-main-vpc`             |
 | Subnet               | `-subnet`       | `tlm-prod-public-subnet-1a`     |
 | IAM Role             | `-role`         | `tlm-prod-ecs-task-role`        |

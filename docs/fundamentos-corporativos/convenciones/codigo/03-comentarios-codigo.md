@@ -41,38 +41,13 @@ public async Task<Money> CalculateTotalPriceAsync(int orderId, bool applyDiscoun
 }
 ```
 
-### Regla 2: Documentar APIs Públicas (TypeScript - JSDoc)
+### Regla 2: NO Comentar Código Obvio
 
-- **Formato**: JSDoc con `/** */`
-- **Obligatorio**: Funciones exportadas, clases e interfaces públicas
-- **Ejemplo correcto**:
-
-````typescript
-/**
- * Valida que un correo electrónico cumpla con el formato corporativo.
- *
- * @param email - Dirección de correo a validar
- * @returns true si el email es válido y pertenece al dominio @talma.com
- * @throws {ValidationError} Si el formato del email es inválido
- *
- * @example
- * ```typescript
- * const isValid = validateCorporateEmail('user@talma.com'); // true
- * const isValid = validateCorporateEmail('user@gmail.com'); // false
- * ```
- */
-export function validateCorporateEmail(email: string): boolean {
-  // Implementation...
-}
-````
-
-### Regla 3: NO Comentar Código Obvio
-
-```typescript
+```csharp
 ❌ Evitar comentarios redundantes:
 
 // Obtener usuario por ID
-const user = await getUserById(userId);
+var user = await GetUserByIdAsync(userId);
 
 // Incrementar contador
 counter++;
@@ -81,7 +56,7 @@ counter++;
 return true;
 ```
 
-### Regla 4: Explicar Decisiones de Negocio o Complejidad
+### Regla 3: Explicar Decisiones de Negocio o Complejidad
 
 ```csharp
 ✅ Comentarios útiles:
@@ -97,21 +72,21 @@ if (customer.IsVIP && customer.OrderCount > 10)
 // dado que este método se llama 10,000+ veces por request
 var userCache = new Dictionary<int, User>();
 ```
-
+## 3. Documentación XML Completa
 ### Regla 5: Marcar TODOs y FIXMEs con Contexto
 
 - **Formato**: `// TODO(autor): descripción [JIRA-123]`
 - **Ejemplo correcto**:
 
-```typescript
+```csharp
 // TODO(jperez): Migrar a Redis cuando el caché supere 10GB [ARCH-456]
-const cache = new InMemoryCache();
+var cache = new InMemoryCache();
 
 // FIXME(mrodriguez): Este endpoint falla con >1000 items [BUG-789]
-async function fetchAllUsers() {}
+public async Task<List<User>> FetchAllUsersAsync() { }
 
-// DEPRECATED: Usar getUserV2() en su lugar - Remover en v3.0
-function getUserV1() {}
+// DEPRECATED: Usar GetUserV2Async() en su lugar - Remover en v3.0
+public User GetUserV1(int id) { }
 ```
 
 ### Regla 6: Comentar Workarounds Temporales
@@ -126,7 +101,7 @@ if (DateTime.UtcNow.Hour == 0)
 }
 ```
 
-### Regla 7: Secciones de Código con Regions (C# - Usar con Moderación)
+### Regla 4: Secciones de Código con Regions (C# - Usar con Moderación)
 
 ```csharp
 ✅ Correcto (agrupa lógica relacionada):
@@ -177,59 +152,24 @@ public async Task<PaymentConfirmation> ProcessPaymentAsync(
 }
 ```
 
-### TypeScript JSDoc Completo
-
-````typescript
-/**
- * Sincroniza inventario con sistema externo SAP.
- *
- * @param productIds - Lista de IDs de productos a sincronizar
- * @param options - Configuración de la sincronización
- * @param options.batchSize - Cantidad de productos por lote (default: 100)
- * @param options.retryAttempts - Reintentos ante falla (default: 3)
- *
- * @returns Resultado con productos sincronizados y fallidos
- *
- * @throws {SapConnectionError} Si no se puede conectar a SAP
- * @throws {ValidationError} Si algún productId es inválido
- *
- * @see {@link https://wiki.talma.com/sap-integration} para detalles
- *
- * @example
- * ```typescript
- * const result = await syncInventory([1, 2, 3], {
- *   batchSize: 50,
- *   retryAttempts: 5
- * });
- * console.log(`Sincronizados: ${result.success.length}`);
- * ```
- */
-export async function syncInventory(
-  productIds: number[],
-  options: SyncOptions = {},
-): Promise<SyncResult> {
-  // Implementation...
-}
-````
-
 ## 4. Comentarios que DEBEN Evitarse
 
-```typescript
+```csharp
 ❌ Comentarios malos:
 
 // Esta función hace cosas
-function doStuff() { }
+public void DoStuff() { }
 
 // Loop
-for (let i = 0; i < items.length; i++) { }
+for (int i = 0; i < items.Length; i++) { }
 
 // Código comentado (usar control de versiones)
-// const oldImplementation = () => { ... };
-// return oldImplementation();
+// var oldImplementation = OldMethod();
+// return oldImplementation;
 
 // Comentario desactualizado
 // Retorna el usuario (MENTIRA: ahora retorna null si no existe)
-function getUser() { return null; }
+public User GetUser() { return null; }
 ```
 
 ## 5. Herramientas de Validación
@@ -250,58 +190,30 @@ dotnet_diagnostic.SA1633.severity = none
 dotnet_diagnostic.SA1652.severity = warning
 ```
 
-### TSDoc (TypeScript)
+### SonarQube
 
-```json
-// tsdoc.json
-{
-  "extends": ["@microsoft/tsdoc/tsdoc.json"],
-  "noStandardTags": false,
-  "tagDefinitions": [
-    {
-      "tagName": "@internal",
-      "syntaxKind": "modifier"
-    }
-  ]
-}
-```
-
-### ESLint
-
-```json
-{
-  "plugins": ["jsdoc"],
-  "rules": {
-    "jsdoc/require-jsdoc": [
-      "warn",
-      {
-        "require": {
-          "FunctionDeclaration": true,
-          "ClassDeclaration": true,
-          "MethodDefinition": true
-        }
-      }
-    ],
-    "jsdoc/require-param": "warn",
-    "jsdoc/require-returns": "warn",
-    "jsdoc/check-types": "warn"
-  }
-}
+```xml
+<!-- Análisis de calidad de comentarios -->
+<RuleSet Name="Documentation Rules">
+  <Rule Id="S1135" Action="Warning" /> <!-- TODO sin asignar
+  <Rule Id="S1186" Action="Warning" /> <!-- Métodos vacíos sin doc
+  <Rule Id="S1133" Action="Info" />    <!-- Deprecated sin doc
+</RuleSet>
 ```
 
 ## 6. Tabla de Referencia Rápida
 
-| Escenario        | C#                                      | TypeScript                   |
-| ---------------- | --------------------------------------- | ---------------------------- |
-| Clase pública    | `/// <summary>`                         | `/** */`                     |
-| Método público   | `/// <summary>`, `<param>`, `<returns>` | `@param`, `@returns`         |
-| Excepción        | `/// <exception>`                       | `@throws`                    |
-| Ejemplo          | `/// <example>`                         | `@example`                   |
-| Enlace externo   | `/// <see cref>`                        | `@see`                       |
-| Deprecado        | `[Obsolete("mensaje")]` + `///`         | `@deprecated`                |
-| TODO             | `// TODO(autor): [JIRA-123]`            | `// TODO(autor): [JIRA-123]` |
-| Decisión negocio | `// Razón: ...`                         | `// Razón: ...`              |
-| Workaround       | `// WORKAROUND: ...`                    | `// WORKAROUND: ...`         |
+| Escenario        | C# XMLDoc                               | Ejemplo                                           |
+| ---------------- | --------------------------------------- | ------------------------------------------------- |
+| Clase pública    | `/// <summary>`                         | `/// <summary>Gestiona usuarios</summary>`        |
+| Método público   | `/// <summary>`, `<param>`, `<returns>` | `/// <returns>Usuario encontrado</returns>`       |
+| Excepción        | `/// <exception>`                       | `/// <exception cref="NotFoundException">`        |
+| Ejemplo          | `/// <example>`                         | `/// <example><code>var x = 1;</code></example>` |
+| Enlace externo   | `/// <see cref>`                        | `/// <see cref="IUserRepository"/>`              |
+| Deprecado        | `[Obsolete("mensaje")]` + `///`         | `[Obsolete("Usar GetUserV2")]`                    |
+| TODO             | `// TODO(autor): [JIRA-123]`            | `// TODO(jperez): [JIRA-456] Optimizar`           |
+| Decisión negocio | `// Razón: política comercial`          | `// Razón: JIRA-789 - descuento VIP`              |
+| Workaround       | `// WORKAROUND: bug .NET 8`             | `// WORKAROUND: EF Core issue #12345`             |
 
 ## 7. Niveles de Documentación
 
@@ -316,18 +228,18 @@ dotnet_diagnostic.SA1652.severity = warning
 ### Estándares relacionados
 
 - [C# y .NET](/docs/fundamentos-corporativos/estandares/codigo/csharp-dotnet)
-- [TypeScript](/docs/fundamentos-corporativos/estandares/codigo/typescript)
+- [Código Limpio](/docs/fundamentos-corporativos/lineamientos/desarrollo/01-codigo-limpio)
 
 ### Convenciones relacionadas
 
 - [Naming C#](./01-naming-csharp.md)
-- [Naming TypeScript](./02-naming-typescript.md)
+- [Estructura de Proyectos](./04-estructura-proyectos.md)
 
 ### Recursos externos
 
 - [C# XML Documentation Comments](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/)
-- [TSDoc](https://tsdoc.org/)
-- [JSDoc](https://jsdoc.app/)
+- [StyleCop Documentation Rules](https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/DocumentationRules.md)
+- [SonarQube C# Rules](https://rules.sonarsource.com/csharp/)
 
 ---
 

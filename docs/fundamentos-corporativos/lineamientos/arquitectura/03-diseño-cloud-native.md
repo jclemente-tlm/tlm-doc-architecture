@@ -57,7 +57,7 @@ No aplica a:
 **Configuración y secretos:**
 
 - Nunca hardcodear configuraciones
-- Gestionar secretos en servicios dedicados (AWS Secrets Manager, Vault, Azure Key Vault)
+- Gestionar secretos en AWS Secrets Manager con rotación automática
 - Configuración inyectada en runtime, no en build time
 
 ---

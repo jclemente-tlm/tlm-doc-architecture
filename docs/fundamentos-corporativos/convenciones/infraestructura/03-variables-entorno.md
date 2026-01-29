@@ -148,37 +148,7 @@ public class EnvironmentValidator
 EnvironmentValidator.ValidateRequiredVariables();
 ```
 
-### TypeScript/Node.js
-
-```typescript
-import { config } from "dotenv";
-import { z } from "zod";
-
-// Cargar .env
-config();
-
-// Schema de validación
-const envSchema = z.object({
-  TLM_ENVIRONMENT: z.enum(["dev", "qa", "stg", "prod"]),
-  TLM_APP_NAME: z.string(),
-  TLM_APP_PORT: z.coerce.number().default(8080),
-  TLM_DB_HOST: z.string(),
-  TLM_DB_PORT: z.coerce.number().default(5432),
-  TLM_DB_NAME: z.string(),
-  TLM_DB_USER: z.string(),
-  TLM_DB_PASSWORD: z.string(),
-  TLM_LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
-  TLM_CACHE_REDIS_URL: z.string().optional(),
-});
-
-// Validar y exportar
-export const env = envSchema.parse(process.env);
-
-// Uso tipado
-console.log(`Conectando a ${env.TLM_DB_HOST}:${env.TLM_DB_PORT}`);
-```
-
-## 6. Secretos vs Configuración
+## 4. Secretos vs Configuración
 
 ### ✅ Variables de Configuración (OK en .env)
 
@@ -202,40 +172,12 @@ TLM_AWS_ACCESS_KEY_ID=<FROM_VAULT>
 TLM_AWS_SECRET_ACCESS_KEY=<FROM_VAULT>
 ```
 
-## 7. Carga desde AWS Secrets Manager
-
-```typescript
-import {
-  SecretsManagerClient,
-  GetSecretValueCommand,
-} from "@aws-sdk/client-secrets-manager";
-
-export async function loadSecrets() {
-  const client = new SecretsManagerClient({ region: "us-east-1" });
-
-  const secretName = `tlm/${process.env.TLM_ENVIRONMENT}/users-api`;
-
-  const response = await client.send(
-    new GetSecretValueCommand({ SecretId: secretName }),
-  );
-
-  const secrets = JSON.parse(response.SecretString!);
-
-  // Inyectar en process.env
-  process.env.TLM_DB_PASSWORD = secrets.dbPassword;
-  process.env.TLM_API_KEY = secrets.apiKey;
-}
-
-// En main.ts
-await loadSecrets();
-```
-
-## 8. Docker y Kubernetes
+## 5. Docker y AWS ECS
 
 ### Dockerfile
 
 ```dockerfile
-FROM node:20-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
 # Variables de build (no sensibles)
 ARG TLM_APP_VERSION
@@ -244,64 +186,47 @@ ENV TLM_APP_VERSION=${TLM_APP_VERSION}
 WORKDIR /app
 COPY . .
 
-RUN npm ci --only=production
-
 # Puerto desde variable (con default)
-ENV TLM_APP_PORT=8080
-EXPOSE ${TLM_APP_PORT}
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
 
-CMD ["node", "dist/main.js"]
+ENTRYPOINT ["dotnet", "TalmaApp.Api.dll"]
 ```
 
-### Kubernetes ConfigMap
+### AWS ECS Task Definition
 
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: users-api-config
-data:
-  TLM_ENVIRONMENT: "prod"
-  TLM_APP_NAME: "users-api"
-  TLM_APP_PORT: "8080"
-  TLM_LOG_LEVEL: "info"
-  TLM_CACHE_TTL_SECONDS: "3600"
+### AWS ECS Task Definition
+
+```json
+{
+  "family": "users-api",
+  "taskRoleArn": "arn:aws:iam::123456789:role/users-api-task-role",
+  "containerDefinitions": [
+    {
+      "name": "users-api",
+      "image": "ghcr.io/talma/users-api:1.2.3",
+      "environment": [
+        {"name": "TLM_ENVIRONMENT", "value": "prod"},
+        {"name": "TLM_APP_NAME", "value": "users-api"},
+        {"name": "TLM_APP_PORT", "value": "8080"},
+        {"name": "TLM_LOG_LEVEL", "value": "info"}
+      ],
+      "secrets": [
+        {
+          "name": "TLM_DB_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:123:secret:tlm/prod/users-api:dbPassword::"
+        },
+        {
+          "name": "TLM_API_KEY",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:123:secret:tlm/prod/users-api:apiKey::"
+        }
+      ]
+    }
+  ]
+}
 ```
 
-### Kubernetes Secret
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: users-api-secrets
-type: Opaque
-stringData:
-  TLM_DB_PASSWORD: <base64-encoded>
-  TLM_API_KEY: <base64-encoded>
-```
-
-### Deployment con Envs
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: users-api
-spec:
-  template:
-    spec:
-      containers:
-        - name: api
-          image: users-api:1.2.3
-          envFrom:
-            - configMapRef:
-                name: users-api-config
-            - secretRef:
-                name: users-api-secrets
-```
-
-## 9. Herramientas de Validación
+## 6. Herramientas de Validación
 
 ### Git Pre-commit Hook
 

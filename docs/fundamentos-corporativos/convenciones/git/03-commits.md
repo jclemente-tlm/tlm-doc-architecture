@@ -29,9 +29,9 @@ Los mensajes de commits deben ser claros, consistentes y semánticos para facili
 | `refactor` | Refactor sin cambiar API    | -              | `refactor(service): simplify logic`       |
 | `perf`     | Mejora de performance       | PATCH          | `perf(db): add index to users table`      |
 | `test`     | Agregar/modificar tests     | -              | `test(user): add unit tests`              |
-| `build`    | Build system, deps          | -              | `build(npm): update dependencies`         |
+| `build`    | Build system, deps          | -              | `build(deps): update NuGet packages`      |
 | `ci`       | CI/CD changes               | -              | `ci(github): add deploy workflow`         |
-| `chore`    | Mantenimiento               | -              | `chore(deps): update eslint`              |
+| `chore`    | Mantenimiento               | -              | `chore(deps): update StyleCop`            |
 
 ### Regla 3: Breaking Changes
 
@@ -86,40 +86,53 @@ Refs #456
 | Actualizar README       | `docs`     | `docs: update deployment instructions`      |
 | Refactor sin cambio API | `refactor` | `refactor(service): extract helper methods` |
 | Breaking change         | `feat!`    | `feat(api)!: change response format`        |
-| Actualizar dependencia  | `chore`    | `chore(deps): upgrade dotnet to 8.0`        |
+| Actualizar dependencia  | `chore`    | `chore(deps): upgrade EF Core to 8.0`       |
 
 ## 4. Herramientas de Validación
 
-### Commitlint (.NET/Node.js)
+### Git Hooks (Bash script)
 
 ```bash
-# Instalar commitlint
-npm install --save-dev @commitlint/cli @commitlint/config-conventional
+#!/bin/bash
+# .git/hooks/commit-msg
 
-# .commitlintrc.json
-{
-  "extends": ["@commitlint/config-conventional"],
-  "rules": {
-    "type-enum": [2, "always", [
-      "feat", "fix", "docs", "style", "refactor",
-      "perf", "test", "build", "ci", "chore"
-    ]],
-    "subject-case": [2, "always", "lower-case"]
-  }
-}
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# Validar formato Conventional Commits
+if ! echo "$COMMIT_MSG" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: .+"; then
+  echo "❌ Commit message inválido"
+  echo "Formato requerido: <type>(<scope>): <subject>"
+  echo "Ejemplo: feat(users): add user registration"
+  exit 1
+fi
+
+echo "✅ Commit message válido"
 ```
 
-### Husky Pre-commit Hook
+### Husky.Net (.NET)
 
-```json
-// package.json
-{
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  }
-}
+```bash
+# Instalar Husky.Net
+dotnet tool install --global Husky
+
+# Inicializar
+cd /path/to/repo
+husky install
+
+# Crear hook commit-msg
+cat > .husky/commit-msg << 'EOF'
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Validar Conventional Commits
+commit_msg=$(cat "$1")
+if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: .+"; then
+  echo "❌ Commit inválido. Usar: type(scope): message"
+  exit 1
+fi
+EOF
+chmod +x .husky/commit-msg
 ```
 
 ## 5. Excepciones
@@ -138,8 +151,8 @@ npm install --save-dev @commitlint/cli @commitlint/config-conventional
 ### Recursos externos
 
 - [Conventional Commits](https://www.conventionalcommits.org/)
-- [Commitlint](https://commitlint.js.org/)
-- [Semantic Release](https://semantic-release.gitbook.io/)
+- [Husky.Net](https://github.com/alirezanet/Husky.Net)
+- [Git Hooks Documentation](https://git-scm.com/docs/githooks)
 
 ---
 

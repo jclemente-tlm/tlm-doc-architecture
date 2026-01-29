@@ -88,8 +88,7 @@ Alternativas evaluadas:
 
 ```yaml
 Consideraciones Microservicios:
-  Orquestación: `Kubernetes` vs US$50K/año managed
-  Service Mesh: `Istio` (OSS) vs US$30K/año comercial
+  Orquestación: AWS ECS/Fargate managed - US$18K/año
   Observabilidad: Stack OSS (`Prometheus`, `Grafana`, `Loki`, `Jaeger`, `Serilog`, `OpenTelemetry`) vs US$100K/año SaaS
   API Gateway: `YARP` (OSS) vs US$25K/año comercial
   Migración: US$0 entre clouds vs US$200K monolito

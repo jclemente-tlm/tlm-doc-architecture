@@ -215,7 +215,6 @@ Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
 ## 8. Referencias
 
-- [Queues](02-queues.md)
 - [Mensajería Asíncrona - ADR](../../decisiones-de-arquitectura/adr-012-mensajeria-asincrona.md)
 - [Apache Kafka Documentation](https://kafka.apache.org/documentation/)
 - [Confluent Platform](https://docs.confluent.io/)

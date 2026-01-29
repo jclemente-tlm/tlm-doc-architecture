@@ -40,9 +40,8 @@ Convenciones para control de versiones y colaboración:
 Convenciones de nomenclatura por lenguaje:
 
 1. **[Naming - C#](./codigo/01-naming-csharp.md)** - PascalCase clases, camelCase vars, `_private`, `IInterface`
-2. **[Naming - TypeScript](./codigo/02-naming-typescript.md)** - camelCase, PascalCase types, kebab-case files
-3. **Comentarios Código** ⏭️ - JSDoc, XMLDoc, TODO/FIXME format
-4. **Estructura de Proyectos** ⏭️ - Folder organization, layers, modules
+2. **[Comentarios Código](./codigo/03-comentarios-codigo.md)** - XMLDoc, TODO/FIXME format
+3. **[Estructura de Proyectos](./codigo/04-estructura-proyectos.md)** - Folder organization, layers, modules
 
 ### [APIs](./apis/) - REST Naming y Formatos
 
@@ -85,12 +84,12 @@ Convenciones de seguridad:
 
 ## 🎯 Estado de Implementación
 
-**Convenciones Completadas**: 21/21 (100%) ✅
+**Convenciones Completadas**: 20/20 (100%) ✅
 
 ### ✅ Completadas (MVP Fase 1)
 
 - [x] **Git** (5/5): Repositorios, Ramas, Commits, Tags, Pull Requests
-- [x] **Código** (4/4): Naming C#, Naming TypeScript, Comentarios, Estructura proyectos
+- [x] **Código** (3/3): Naming C#, Comentarios, Estructura proyectos
 - [x] **APIs** (4/4): Endpoints, Headers HTTP, Respuestas, Fechas y Moneda
 - [x] **Infraestructura** (3/3): Naming AWS, Tags y Metadatos, Variables de Entorno
 - [x] **Base de Datos** (2/2): Naming PostgreSQL, Naming Migraciones
@@ -100,7 +99,7 @@ Convenciones de seguridad:
 ### ⏭️ Próximos Pasos (Fase 2 - Opcional)
 
 - [ ] Testing: Naming tests, Coverage, Test data
-- [ ] Mensajería: Kafka topics, SQS queues, Event schemas
+- [ ] Mensajería: Kafka topics, Event schemas
 - [ ] Documentación: README, CHANGELOG, ADRs
 - [ ] CI/CD: Pipeline naming, Artifacts, Environments
 
@@ -116,7 +115,7 @@ Usa la tabla de referencia en cada convención para consultas rápidas.
 
 Cada convención incluye sección de "Herramientas de Validación" con:
 
-- Configuración de linters (ESLint, StyleCop, Terraform fmt)
+- Configuración de linters (StyleCop, Terraform fmt)
 - Pre-commit hooks
 - CI/CD checks
 
@@ -124,7 +123,7 @@ Cada convención incluye sección de "Herramientas de Validación" con:
 
 Nuevos desarrolladores deben leer convenciones de:
 
-- Su lenguaje principal (C# o TypeScript)
+- C# y .NET (lenguaje principal)
 - Git (commits, branches, PRs)
 - Base de datos (si trabaja con BD)
 
@@ -134,12 +133,11 @@ Nuevos desarrolladores deben leer convenciones de:
 
 | Categoría  | Herramienta        | Propósito                   |
 | ---------- | ------------------ | --------------------------- |
-| Git        | Commitlint         | Validar mensajes de commits |
+| Git        | Husky.Net / Git Hooks | Validar mensajes de commits |
 | Git        | Husky              | Pre-commit hooks            |
 | C#         | StyleCop Analyzers | Naming conventions          |
 | C#         | .editorconfig      | Formato código              |
-| TypeScript | ESLint             | Naming y código             |
-| TypeScript | Prettier           | Formato automático          |
+| C#         | SonarQube          | Calidad y seguridad         |
 | General    | EditorConfig       | Consistencia entre IDEs     |
 
 ---
@@ -184,7 +182,6 @@ Sí, mediante:
 ### Estándares Relacionados
 
 - [C# Clean Code](/docs/fundamentos-corporativos/estandares/codigo/csharp-dotnet)
-- [TypeScript Clean Code](/docs/fundamentos-corporativos/estandares/codigo/typescript)
 - [APIs REST](/docs/fundamentos-corporativos/estandares/apis/)
 
 ---

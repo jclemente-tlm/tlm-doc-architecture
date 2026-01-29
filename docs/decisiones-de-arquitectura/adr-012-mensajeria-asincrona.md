@@ -14,58 +14,56 @@ Aceptada – Agosto 2025
 Los servicios corporativos requieren una solución de mensajería asíncrona que permita:
 
 - **Comunicación desacoplada y resiliente** entre microservicios
-- **Despliegue multi-cloud y on-premises** para evitar lock-in
+- **Portabilidad multi-cloud** para evitar lock-in
 - **Soporte de event sourcing y patrones dirigidos por eventos**
-- **Escalabilidad automática para cargas variables**
+- **Escalabilidad masiva para cargas variables**
 - **Garantías de entrega y durabilidad**
-- **Integración nativa con .NET y ecosistema cloud**
+- **Integración nativa con .NET**
 - **Observabilidad y monitoreo centralizado**
-- **Costos controlados y operación gestionada**
+- **Capacidad de streaming y procesamiento de eventos históricos**
 
 Alternativas evaluadas:
 
-- **AWS SNS + SQS** (gestionado, integración nativa, escalabilidad, lock-in AWS)
-- **Apache Kafka** (open source, alta escalabilidad, agnóstico)
-- **RabbitMQ** (open source, flexible, fácil operación)
+- **Apache Kafka (AWS MSK)** (open source, alta escalabilidad, agnóstico, streaming)
+- **AWS SNS + SQS** (gestionado, integración nativa AWS, lock-in)
+- **RabbitMQ** (open source, flexible, limitada escalabilidad)
 - **Azure Service Bus** (gestionado, lock-in Azure)
-- **Google Pub/Sub** (gestionado, lock-in GCP)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio              | SNS+SQS | Kafka | RabbitMQ | Azure SB | Google PS |
-|----------------------|---------|-------|----------|----------|-----------|
-| **Agnosticidad**     | ❌ Lock-in AWS | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ❌ Lock-in Azure | ❌ Lock-in GCP |
-| **Escalabilidad**    | ✅ Automática | ✅ Masiva | 🟡 Limitada | ✅ Muy buena | ✅ Muy buena |
-| **Operación**        | ✅ Gestionada | 🟡 Compleja | ✅ Simple | ✅ Gestionada | ✅ Gestionada |
-| **Rendimiento**      | ✅ Muy alto | ✅ Máximo | 🟡 Moderado | ✅ Muy alto | ✅ Muy alto |
-| **Ecosistema .NET**  | ✅ AWS SDK | ✅ Confluent.Kafka | ✅ RabbitMQ.Client | ✅ Azure SDK | 🟡 Google SDK |
-| **Persistencia**     | ✅ SQS persistente | ✅ Log distribuido | ✅ Durable queues | ✅ Persistencia nativa | ✅ Persistencia nativa |
-| **Patrones**         | ✅ Pub/sub + queues | ✅ Streaming + messaging | ✅ Messaging tradicional | ✅ Messaging completo | ✅ Pub/sub puro |
-| **Costos**           | 🟡 Pago por uso | ✅ OSS | ✅ OSS | 🟡 Pago por uso | 🟡 Pago por uso |
+| Criterio              | Kafka (MSK) | SNS+SQS | RabbitMQ | Azure SB |
+|----------------------|-------------|---------|----------|----------|
+| **Agnosticidad**     | ✅ OSS, multi-cloud | ❌ Lock-in AWS | ✅ OSS, multi-cloud | ❌ Lock-in Azure |
+| **Escalabilidad**    | ✅ Masiva | ✅ Automática | 🟡 Limitada | ✅ Muy buena |
+| **Operación**        | 🟡 Gestionada (MSK) | ✅ Gestionada | 🟡 Compleja | ✅ Gestionada |
+| **Rendimiento**      | ✅ Máximo | ✅ Muy alto | 🟡 Moderado | ✅ Muy alto |
+| **Ecosistema .NET**  | ✅ Confluent.Kafka | ✅ AWS SDK | ✅ RabbitMQ.Client | ✅ Azure SDK |
+| **Persistencia**     | ✅ Log distribuido inmutable | ✅ Persistente | ✅ Durable queues | ✅ Persistencia nativa |
+| **Streaming**        | ✅ Nativo (replay, windowing) | ❌ No soportado | ❌ No soportado | ❌ Limitado |
+| **Event Sourcing**   | ✅ Ideal (log inmutable) | 🟡 Parcial | ❌ No recomendado | 🟡 Parcial |
+| **Costos**           | 🟡 Infraestructura managed | ✅ Pago por uso bajo | ✅ OSS | 🟡 Pago por uso |
 
 ### Matriz de Decisión
 
-| Solución         | Agnosticidad | Escalabilidad | Operación | Rendimiento | Recomendación         |
-|------------------|--------------|--------------|-----------|-------------|-----------------------|
-| **AWS SNS + SQS**| Mala         | Excelente    | Excelente | Excelente   | ✅ **Seleccionada**    |
-| **Apache Kafka** | Excelente    | Excelente    | Compleja  | Excelente   | 🟡 Alternativa         |
-| **RabbitMQ**     | Excelente    | Limitada     | Simple    | Moderado    | 🟡 Considerada         |
-| **Azure SB**     | Mala         | Muy buena    | Gestionada| Muy alto    | ❌ Descartada          |
-| **Google PS**    | Mala         | Muy buena    | Gestionada| Muy alto    | ❌ Descartada          |
+| Solución            | Agnosticidad | Escalabilidad | Streaming | Event Sourcing | Recomendación         |
+|--------------------|--------------|--------------|-----------|----------------|-----------------------|
+| **Apache Kafka (MSK)** | Excelente    | Excelente    | Excelente | Excelente      | ✅ **Seleccionada**    |
+| **AWS SNS + SQS**  | Mala         | Excelente    | No        | Parcial        | ❌ Descartada          |
+| **RabbitMQ**       | Excelente    | Limitada     | No        | No recomendado | ❌ Descartada          |
+| **Azure SB**       | Mala         | Muy buena    | Limitado  | Parcial        | ❌ Descartada          |
 
 ## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
 
-> **Metodología y supuestos:** Se asume un uso promedio de 1M mensajes/mes, 3 instancias, multi-región. El TCO (Total Cost of Ownership) se calcula para un horizonte de 3 años, incluyendo costos directos y estimaciones de operación. Los valores pueden variar según volumen y proveedor.
+> **Metodología y supuestos:** Se asume AWS MSK con 3 brokers t3.small, 5 topics, 1M mensajes/mes, retención 7 días. TCO incluye infraestructura managed y transferencia de datos.
 
 | Solución         | Licenciamiento | Infraestructura | Operación      | TCO 3 años   |
 |------------------|---------------|----------------|---------------|--------------|
-| SNS+SQS          | Pago por uso  | US$0           | US$0          | US$1,080/año |
-| Kafka            | OSS           | US$2,160/año   | US$36,000/año | US$114,480   |
+| Kafka (AWS MSK)  | Incluido      | US$18,000      | US$0          | US$18,000    |
+| SNS+SQS          | Pago por uso  | US$0           | US$0          | US$1,080     |
 | RabbitMQ         | OSS           | US$1,800/año   | US$24,000/año | US$77,400    |
-| Azure SB         | Pago por uso  | US$0           | US$0          | US$1,440/año |
-| Google PS        | Pago por uso  | US$0           | US$0          | US$1,200/año |
+| Azure SB         | Pago por uso  | US$0           | US$0          | US$1,440     |
 
 ---
 
@@ -73,55 +71,61 @@ Alternativas evaluadas:
 
 ### Límites clave
 
-- **SNS+SQS:** escalabilidad automática, sin límite práctico de colas o tópicos
-- **Kafka:** requiere gestión de particiones, tuning y monitoreo
-- **RabbitMQ:** escalabilidad limitada, requiere clustering manual
-- **Azure SB/Google PS:** límites por suscripción y throughput
+- **Kafka (MSK):** Retención configurable (7-90 días), throughput según tamaño de cluster
+- **SNS+SQS:** Retención máxima 14 días, no soporta replay de eventos
+- **RabbitMQ:** Escalabilidad limitada, requiere clustering manual complejo
+- **Azure SB:** Lock-in Azure, límites por suscripción
 
 ### Riesgos y mitigación
 
-- **Lock-in AWS:** mitigado con interfaces y adaptadores desacoplados
-- **Complejidad operativa Kafka/RabbitMQ:** mitigada con automatización y monitoreo
-- **Costos variables cloud:** monitoreo y revisión anual
+- **Complejidad operativa Kafka:** mitigada con AWS MSK managed, monitoreo con Prometheus
+- **Costos infraestructura:** optimizado con autoescalado y políticas de retención
+- **Curva de aprendizaje:** mitigada con Confluent.Kafka SDK y capacitación del equipo
 
 ---
 
 ## ✔️ DECISIÓN
 
-Se selecciona **AWS SNS + SQS** como solución estándar de mensajería asíncrona para todos los servicios y microservicios corporativos.
+Se selecciona **Apache Kafka (AWS MSK)** como solución estándar de mensajería asíncrona y event streaming para todos los servicios corporativos.
 
 ## Justificación
 
-- Operación gestionada, sin infraestructura propia
-- Escalabilidad automática y alta disponibilidad
-- Integración nativa con AWS y .NET
-- Costos bajos y pago por uso
-- Garantías de entrega y durabilidad
-- Observabilidad y monitoreo integrados
+- Portabilidad multi-cloud (OSS estándar de la industria)
+- Escalabilidad masiva y alto throughput
+- Soporte nativo de event sourcing y streaming (replay, windowing)
+- Log distribuido inmutable ideal para auditoría
+- Integración nativa con .NET mediante Confluent.Kafka
+- Operación gestionada con AWS MSK (sin administrar brokers)
+- Flexibilidad para migrar entre clouds manteniendo mismo stack
+- Ecosistema maduro con tooling de monitoreo y observabilidad
 
 ## Alternativas descartadas
 
-- **Apache Kafka:** mayor complejidad operativa y costos
-- **RabbitMQ:** escalabilidad limitada y operación manual
+- **AWS SNS+SQS:** lock-in AWS, no soporta replay de eventos ni event sourcing robusto
+- **RabbitMQ:** escalabilidad limitada, no diseñado para streaming de eventos
 - **Azure Service Bus:** lock-in Azure, menor portabilidad
-- **Google Pub/Sub:** lock-in GCP, menor portabilidad
 
 ---
 
 ## ⚠️ CONSECUENCIAS
 
-- Todos los servicios nuevos deben usar SNS+SQS salvo justificación técnica documentada
-- Se debe estandarizar la gestión de colas, tópicos y monitoreo
-- El equipo debe mantener adaptadores desacoplados para facilitar migración futura
+- Todos los servicios nuevos deben usar Kafka (AWS MSK) para mensajería asíncrona
+- Se debe usar Confluent.Kafka SDK para integración con .NET
+- Topics deben seguir naming convention: `{domain}.{entity}.{event}` (ej: `orders.order.created`)
+- Dead Letter Topics (DLT) obligatorios para manejo de errores: `{topic-name}.dlt`
+- Retención de topics: 7 días default, configurable según requisitos de auditoría
+- Particionamiento por tenant (país) para aislamiento multi-tenant
 
 ---
 
 ## 🏗️ ARQUITECTURA DE DESPLIEGUE
 
-- SNS: tópicos por dominio de eventos
-- SQS: colas por microservicio consumidor
-- Integración con AWS SDK y librerías .NET
-- Monitoreo con CloudWatch y Prometheus
+- AWS MSK cluster: 3 brokers mínimo, multi-AZ
+- Topics por dominio de eventos: `orders`, `notifications`, `payments`, etc.
+- Particionamiento por clave de tenant (país)
+- Replicación: factor 3 para alta disponibilidad
+- Integración con Confluent.Kafka SDK y librerías .NET
+- Monitoreo con Prometheus + Grafana + AWS CloudWatch
 
 ---
 
@@ -130,27 +134,28 @@ Se selecciona **AWS SNS + SQS** como solución estándar de mensajería asíncro
 ### KPIs Clave
 
 - **Mensajes procesados**: > 99.99% entregados
-- **Latencia promedio**: < 100ms
-- **Throughput**: > 10K mensajes/minuto
-- **Errores de entrega**: < 0.01%
+- **Latencia promedio**: < 50ms
+- **Throughput**: > 100K mensajes/minuto
+- **Consumer lag**: < 1000 mensajes
+- **Disponibilidad brokers**: > 99.9%
 
 ### Alertas Críticas
 
-- Mensajes en cola > umbral
-- Latencia > 500ms
-- Fallos de entrega repetidos
-- Errores de integración SDK
+- Consumer lag > 10,000 mensajes
+- Latencia > 200ms
+- Errores de producción > 1%
+- Broker offline
+- Disco > 80% en brokers
 
 ---
 
 ## 📚 REFERENCIAS
 
-- [AWS SNS](https://aws.amazon.com/sns/)
-- [AWS SQS](https://aws.amazon.com/sqs/)
 - [Apache Kafka](https://kafka.apache.org/)
-- [RabbitMQ](https://www.rabbitmq.com/)
-- [Azure Service Bus](https://azure.microsoft.com/en-us/services/service-bus/)
-- [Google Pub/Sub](https://cloud.google.com/pubsub/)
+- [AWS MSK](https://aws.amazon.com/msk/)
+- [Confluent.Kafka .NET Client](https://docs.confluent.io/kafka-clients/dotnet/current/overview.html)
+- [Event Sourcing with Kafka](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
+- [ADR-015: Manejo de Errores en Mensajería](./adr-015-manejo-errores-cola.md)
 
 ---
 

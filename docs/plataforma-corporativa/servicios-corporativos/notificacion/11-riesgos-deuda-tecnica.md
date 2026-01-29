@@ -7,7 +7,7 @@
 | Falla de `Redis`              | Media        | Alto    | Clustering, backup automatizado, monitoreo con `Prometheus`, failover              |
 | Corrupción de plantillas      | Baja         | Medio   | Versionado, validación, backups, pruebas automatizadas                             |
 | Límites de proveedores        | Media        | Medio   | Multi-proveedor, failover automático, alertas, desacoplamiento vía interfaces      |
-| Overflow en colas             | Media        | Alto    | Autoescalado, monitoreo de profundidad, alertas críticas, DLQ                      |
+| Lag en procesamiento Kafka    | Media        | Alto    | Autoescalado de consumidores, monitoreo lag, alertas críticas, DLT                 |
 | Exposición de datos sensibles | Baja         | Crítico | Cifrado (`AES-256`), sanitización de logs, controles de acceso (`Keycloak`)        |
 | Cambios regulatorios          | Baja         | Alto    | Arquitectura flexible, revisiones legales periódicas, automatización de compliance  |
 | Abuso del sistema             | Baja         | Medio   | `Rate limiting` por `tenant (realm)`, monitoreo de patrones anómalos               |
@@ -36,7 +36,7 @@
 ## 11.4 Gestión de riesgos
 
 - Proveedores: fallo simultáneo mitigado con multi-proveedor, failover automático y monitoreo de SLA (`Prometheus`).
-- Infraestructura: saturación de colas en `Redis` o base de datos mitigada con autoescalado, alertas y DLQ.
+- Infraestructura: lag de consumidores Kafka mitigado con autoescalado, alertas y Dead Letter Topics (DLT).
 - Seguridad: exposición de datos personales mitigada con cifrado, sanitización de logs (`Serilog`), controles de acceso (`Keycloak`).
 - Cumplimiento: cambios regulatorios (`GDPR`, `CAN-SPAM`, `TCPA`) mitigados con arquitectura flexible y automatización de compliance.
 - Operacional: abuso del sistema mitigado con `rate limiting` por `tenant (realm)`, monitoreo de patrones anómalos y alertas automáticas.

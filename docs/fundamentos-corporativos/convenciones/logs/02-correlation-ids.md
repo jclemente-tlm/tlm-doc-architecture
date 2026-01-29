@@ -14,14 +14,27 @@ Cada request debe tener un ID único (Correlation ID) que se propague a través 
 ### Regla 1: Generar en API Gateway o Cliente
 
 - **Generado por**: API Gateway o primer servicio que recibe el request
-- **Formato**: UUID v4
+- **Formato**: UUID v4 (Guid en .NET)
 - **Header**: `X-Correlation-ID`
 - **Propagación**: A TODOS los servicios downstream
 
-```typescript
-// API Gateway
-const correlationId = req.headers["x-correlation-id"] || uuidv4();
-req.headers["x-correlation-id"] = correlationId;
+```csharp
+// Middleware ASP.NET Core
+public class CorrelationIdMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var correlationId = context.Request.Headers["X-Correlation-ID"].FirstOrDefault()
+            ?? Guid.NewGuid().ToString();
+
+        context.Request.Headers["X-Correlation-ID"] = correlationId;
+        context.Response.Headers["X-Correlation-ID"] = correlationId;
+
+        await _next(context);
+    }
+}
 ```
 
 ### Regla 2: Request ID por Servicio
@@ -52,16 +65,10 @@ Frontend Request
 _logger.LogInformation(
     "User created. UserId={UserId}, CorrelationId={CorrelationId}",
     userId, correlationId);
-```
 
-```typescript
-// TypeScript
-logger.info("Order placed", {
-  orderId,
-  correlationId,
-  requestId,
-  userId,
-});
+_logger.LogInformation(
+    "Order placed. OrderId={OrderId}, CorrelationId={CorrelationId}, RequestId={RequestId}",
+    orderId, correlationId, requestId);
 ```
 
 **Output JSON:**
@@ -113,83 +120,47 @@ services.AddHttpClient<IUserService, UserService>()
     .AddHttpMessageHandler<CorrelationIdDelegatingHandler>();
 ```
 
-#### TypeScript Axios
-
-```typescript
-import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
-import { AsyncLocalStorage } from "async_hooks";
-
-const asyncLocalStorage = new AsyncLocalStorage<{ correlationId: string }>();
-
-// Interceptor para agregar headers
-axios.interceptors.request.use((config) => {
-  const context = asyncLocalStorage.getStore();
-
-  if (context?.correlationId) {
-    config.headers["X-Correlation-ID"] = context.correlationId;
-  }
-
-  // Nuevo Request-ID por cada llamada
-  config.headers["X-Request-ID"] = uuidv4();
-
-  return config;
-});
-
-// Middleware Express para capturar Correlation-ID
-export const correlationMiddleware: RequestHandler = (req, res, next) => {
-  const correlationId = (req.headers["x-correlation-id"] as string) || uuidv4();
-  const requestId = uuidv4();
-
-  req.headers["x-correlation-id"] = correlationId;
-  req.headers["x-request-id"] = requestId;
-
-  // Almacenar en contexto async
-  asyncLocalStorage.run({ correlationId }, () => {
-    next();
-  });
-};
-```
-
 ### Regla 5: Incluir en Respuestas
 
 Retornar el Correlation ID en headers de respuesta:
 
-```typescript
-res.setHeader('X-Correlation-ID', req.headers['x-correlation-id']);
-res.setHeader('X-Request-ID', req.headers['x-request-id']);
-res.json({ ... });
+```csharp
+// ASP.NET Core
+Response.Headers["X-Correlation-ID"] = correlationId;
+Response.Headers["X-Request-ID"] = requestId;
+
+return Ok(new { data = result });
 ```
 
 ### Regla 6: Propagación en Mensajería
 
-#### Kafka
+#### Kafka (.NET)
 
-```typescript
+```csharp
 // Producer
-await producer.send({
-  topic: "order-created",
-  messages: [
+var message = new Message<string, string>
+{
+    Key = orderId.ToString(),
+    Value = JsonSerializer.Serialize(orderData),
+    Headers = new Headers
     {
-      key: orderId.toString(),
-      value: JSON.stringify(orderData),
-      headers: {
-        "X-Correlation-ID": Buffer.from(correlationId),
-        "X-Request-ID": Buffer.from(requestId),
-      },
-    },
-  ],
-});
+        { "X-Correlation-ID", Encoding.UTF8.GetBytes(correlationId) },
+        { "X-Request-ID", Encoding.UTF8.GetBytes(requestId) }
+    }
+};
+
+await producer.ProduceAsync("order-created", message);
 
 // Consumer
-consumer.on("message", async (message) => {
-  const correlationId = message.headers["X-Correlation-ID"]?.toString();
+var consumeResult = consumer.Consume();
+var correlationIdBytes = consumeResult.Message.Headers
+    .FirstOrDefault(h => h.Key == "X-Correlation-ID")?.GetValueBytes();
+var correlationId = correlationIdBytes != null
+    ? Encoding.UTF8.GetString(correlationIdBytes)
+    : Guid.NewGuid().ToString();
 
-  logger.info("Processing order event", {
-    correlationId,
-    orderId: message.key,
-  });
-});
+_logger.LogInformation("Processing order event. CorrelationId={CorrelationId}, OrderId={OrderId}",
+    correlationId, consumeResult.Message.Key);
 ```
 
 #### SQS

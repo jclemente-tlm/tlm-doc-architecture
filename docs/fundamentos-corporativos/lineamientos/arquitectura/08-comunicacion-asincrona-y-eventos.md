@@ -37,11 +37,11 @@ Aplica a:
 
 ## 4. Decisiones de Diseño Esperadas
 
-- Plataforma de mensajería (Kafka, RabbitMQ, SNS/SQS, EventBridge)
-- Estrategia de naming de topics/queues
-- Formato de mensajes y versionado
+- Plataforma de mensajería (Apache Kafka con Confluent.Kafka)
+- Estrategia de naming de topics
+- Formato de mensajes y versionado (Avro con Schema Registry)
 - Garantías de entrega (at-least-once, exactly-once)
-- Estrategia de dead letter queues (DLQ)
+- Estrategia de dead letter topics (DLT)
 
 ---
 

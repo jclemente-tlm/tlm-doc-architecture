@@ -52,7 +52,7 @@ No aplica a:
 
 - Estrategia de testing (niveles, herramientas, frameworks)
 - Cobertura mínima de código por tipo de componente
-- Herramientas de análisis estático (SonarQube, ESLint, StyleCop)
+- Herramientas de análisis estático (SonarQube, StyleCop, SQL Lint)
 - Proceso de code review (aprobadores, criterios)
 - Estrategia de test data y fixtures
 - Políticas de quality gates en CI/CD

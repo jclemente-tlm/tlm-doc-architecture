@@ -264,37 +264,6 @@ public class DateTimeConverter : JsonConverter<DateTime>
 }
 ```
 
-### Serialización TypeScript
-
-```typescript
-export class Money {
-  constructor(
-    public amount: number,
-    public currency: string,
-  ) {
-    if (!this.isValidCurrency(currency)) {
-      throw new Error(`Invalid currency code: ${currency}`);
-    }
-  }
-
-  private isValidCurrency(code: string): boolean {
-    return ["PEN", "USD", "EUR", "COP", "CLP"].includes(code);
-  }
-
-  toJSON() {
-    return {
-      amount: Number(this.amount.toFixed(2)),
-      currency: this.currency,
-    };
-  }
-}
-
-// Fechas siempre en UTC
-export const serializeDate = (date: Date): string => {
-  return date.toISOString(); // "2024-01-15T10:30:00.000Z"
-};
-```
-
 ### Validación de Schema (JSON Schema)
 
 ```json

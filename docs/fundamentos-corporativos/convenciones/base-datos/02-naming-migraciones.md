@@ -226,18 +226,6 @@ dotnet ef database update
 
 El nombre generado será: `20240115103000_CreateUserTable.cs`
 
-### TypeORM (TypeScript)
-
-```bash
-# Generar migración
-npm run typeorm migration:generate -- -n CreateUserTable
-
-# Ejecutar migraciones
-npm run typeorm migration:run
-```
-
-Genera: `1705315800000-CreateUserTable.ts`
-
 ## 6. Validación de Migraciones
 
 ### Pre-commit Hook

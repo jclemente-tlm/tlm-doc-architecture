@@ -6,7 +6,7 @@
 |------------|----------------------------------|-----------|-------------------------|
 | ADR-001    | Persistencia de eventos en PostgreSQL | Aceptado  | Simplicidad, robustez   |
 | ADR-002    | Multi-tenant por esquema         | Aceptado  | Aislamiento de datos    |
-| ADR-003    | Procesamiento asíncrono con SQS  | Aceptado  | Escalabilidad, desacople|
+| ADR-003    | Procesamiento asíncrono con Kafka | Aceptado  | Escalabilidad, desacople|
 | ADR-004    | Integración con SITA Messaging   | Aceptado  | Interoperabilidad       |
 | ADR-005    | Observabilidad con OpenTelemetry y Prometheus | Aceptado | Trazabilidad y métricas |
 
@@ -17,7 +17,7 @@
 | Persistencia    | EventStoreDB, PostgreSQL, DynamoDB  | PostgreSQL     | Experiencia, ACID, soporte JSONB |
 | API             | REST, GraphQL, gRPC                 | REST           | Simplicidad, interoperabilidad  |
 | Multi-tenancy   | Esquema por tenant, columna por tenant | Esquema por tenant | Aislamiento, compliance |
-| Mensajería      | SQS, Kafka, RabbitMQ                | SQS            | Integración nativa AWS, simplicidad |
+| Mensajería      | Kafka, RabbitMQ, SQS                | Kafka (AWS MSK)| Portabilidad, event sourcing, streaming |
 
 ## 9.3 Decisiones clave
 
@@ -33,11 +33,11 @@
 - **Decisión**: Separación de datos por esquema en PostgreSQL.
 - **Consecuencias**: Aislamiento fuerte, gestión de recursos por tenant.
 
-### ADR-003: Procesamiento asíncrono con SQS
+### ADR-003: Procesamiento asíncrono con Kafka
 
 - **Contexto**: Desacoplar la ingesta y el procesamiento de eventos.
-- **Decisión**: Uso de AWS SQS como cola de eventos.
-- **Consecuencias**: Escalabilidad, tolerancia a fallos, desacople.
+- **Decisión**: Uso de Apache Kafka (AWS MSK) como plataforma de eventos.
+- **Consecuencias**: Escalabilidad masiva, event sourcing, portabilidad multi-cloud.
 
 ### ADR-004: Integración con SITA Messaging
 

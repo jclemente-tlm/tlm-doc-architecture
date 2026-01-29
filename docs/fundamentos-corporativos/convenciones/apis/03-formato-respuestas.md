@@ -315,84 +315,7 @@ public async Task<ActionResult<ApiResponse<UserDto>>> GetUser(string id)
 }
 ```
 
-## 8. Implementación TypeScript
-
-### Tipos de Respuesta
-
-```typescript
-export interface ApiResponse<T> {
-  status: "success" | "error";
-  data: T | null;
-  errors: ErrorInfo[];
-  meta: MetaData;
-}
-
-export interface MetaData {
-  traceId: string;
-  timestamp: string;
-  tenant?: string;
-  pagination?: PaginationMeta;
-  links?: Record<string, string>;
-  extra?: any;
-}
-
-export interface ErrorInfo {
-  code: string;
-  message: string;
-  details: ErrorDetail[];
-}
-
-export interface ErrorDetail {
-  field: string;
-  issue: string;
-}
-
-export interface PaginationMeta {
-  page: number;
-  size: number;
-  total: number;
-  totalPages: number;
-}
-```
-
-### Ejemplo de Handler
-
-```typescript
-export const getUser = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const user = await userService.getUserById(id);
-
-  if (!user) {
-    return res.status(404).json({
-      status: "error",
-      data: null,
-      errors: [
-        {
-          code: "USER_NOT_FOUND",
-          message: "El usuario no existe",
-          details: [{ field: "id", issue: `No se encontró usuario '${id}'` }],
-        },
-      ],
-      meta: {
-        traceId: req.headers["x-trace-id"] || uuidv4(),
-        timestamp: new Date().toISOString(),
-      },
-    });
-  }
-
-  return res.status(200).json({
-    status: "success",
-    data: user,
-    errors: [],
-    meta: {
-      traceId: req.headers["x-trace-id"] || uuidv4(),
-      timestamp: new Date().toISOString(),
-    },
-  });
-};
-```
-
-## 6. Headers HTTP Importantes
+## 7. HATEOAS (Opcional)
 
 ```http
 HTTP/1.1 201 Created
@@ -475,25 +398,7 @@ app.UseExceptionHandler(builder =>
 });
 ```
 
-### Middleware TypeScript
-
-```typescript
-export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  const problemDetails = {
-    type: "https://api.talma.com/errors/internal-server-error",
-    title: "Internal Server Error",
-    status: 500,
-    detail: err.message,
-    instance: req.path,
-    correlationId: req.headers["x-correlation-id"],
-    timestamp: new Date().toISOString(),
-  };
-
-  res.status(500).json(problemDetails);
-};
-```
-
-## 7. Checklist
+## 8. Checklist
 
 - [ ] Respuestas exitosas usan estructura envelope con `status`, `data`, `errors`, `meta`
 - [ ] Errores siguen RFC 7807 Problem Details
@@ -506,7 +411,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 - [ ] `traceId` presente en todas las respuestas
 - [ ] Documentación actualizada en OpenAPI/Swagger
 
-## 8. Referencias
+## 9. Referencias
 
 ### Estándares Relacionados
 

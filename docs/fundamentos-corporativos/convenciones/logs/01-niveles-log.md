@@ -38,14 +38,15 @@ logger.LogTrace("Resultado: {Result}", result);
 
 **NO usar en producción**. Solo ambientes dev/qa.
 
-```typescript
+```csharp
 // ✅ Útil en desarrollo
-logger.debug("Fetching user from cache", { userId, cacheKey });
-logger.debug("Cache miss, querying database");
-logger.debug("User found", { user });
+_logger.LogDebug("Fetching user from cache. UserId={UserId}, CacheKey={CacheKey}",
+    userId, cacheKey);
+_logger.LogDebug("Cache miss, querying database");
+_logger.LogDebug("User found. User={User}", user);
 
 // ❌ NO en producción (ruido, posible leak de datos sensibles)
-logger.debug("Password hash", { hash }); // ⚠️ Seguridad
+_logger.LogDebug("Password hash: {Hash}", hash); // ⚠️ Seguridad
 ```
 
 ### Regla 4: INFO - Eventos de Negocio Normales
@@ -75,29 +76,19 @@ logger.LogInformation("Email sent. RecipientId={RecipientId}, Type={EmailType}",
 
 **SÍ usar en producción**. Degradación del servicio, fallbacks.
 
-```typescript
+```csharp
 // ✅ Problemas que NO detienen el flujo
-logger.warn("External API timeout, using cached data", {
-  api: "payment-gateway",
-  timeout: 5000,
-});
+_logger.LogWarning("External API timeout, using cached data. Api={Api}, Timeout={Timeout}",
+    "payment-gateway", 5000);
 
-logger.warn("Database query slow", {
-  query: "GetUserOrders",
-  durationMs: 3500,
-  threshold: 2000,
-});
+_logger.LogWarning("Database query slow. Query={Query}, DurationMs={DurationMs}, Threshold={Threshold}",
+    "GetUserOrders", 3500, 2000);
 
-logger.warn("Feature flag disabled for tenant", {
-  feature: "new-checkout",
-  tenantId: "tlm-pe",
-});
+_logger.LogWarning("Feature flag disabled for tenant. Feature={Feature}, TenantId={TenantId}",
+    "new-checkout", "tlm-pe");
 
-logger.warn("Retry attempt", {
-  operation: "SendEmail",
-  attempt: 2,
-  maxAttempts: 3,
-});
+_logger.LogWarning("Retry attempt. Operation={Operation}, Attempt={Attempt}, MaxAttempts={MaxAttempts}",
+    "SendEmail", 2, 3);
 ```
 
 **Cuándo usar WARN:**
@@ -271,36 +262,6 @@ public static class LoggerExtensions
 // Uso
 _logger.LogBusinessEvent("OrderPlaced", new { orderId, totalAmount });
 _logger.LogPerformanceWarning("GetUserOrders", 3500, 2000);
-```
-
-### Logger Wrapper (TypeScript)
-
-```typescript
-export class AppLogger {
-  constructor(private logger: Logger) {}
-
-  businessEvent(eventName: string, data: Record<string, any>) {
-    // Siempre INFO
-    this.logger.info(`BusinessEvent: ${eventName}`, data);
-  }
-
-  degradedService(service: string, reason: string, fallback: string) {
-    // Siempre WARN
-    this.logger.warn("Service degraded", { service, reason, fallback });
-  }
-
-  criticalError(error: Error, context: Record<string, any>) {
-    // ERROR o FATAL según contexto
-    const level = this.isCritical(error) ? "fatal" : "error";
-    this.logger[level](error.message, { ...context, stack: error.stack });
-  }
-
-  private isCritical(error: Error): boolean {
-    return (
-      error instanceof DatabaseConnectionError ||
-      error instanceof OutOfMemoryError
-    );
-  }
 }
 ```
 
@@ -317,17 +278,6 @@ export class AppLogger {
 | ERROR | Notificar si >10/min  | Slack #errors + Email       |
 | FATAL | Alerta inmediata      | PagerDuty + Slack #critical |
 
-```typescript
-// Ejemplo Datadog Monitor
-{
-  "name": "High error rate",
-  "type": "metric alert",
-  "query": "sum(last_5m):sum:app.logs.error{env:prod} > 50",
-  "message": "@slack-errors ERROR rate exceeded threshold",
-  "priority": 2
-}
-```
-
 ## 📖 Referencias
 
 ### Estándares relacionados
@@ -341,7 +291,7 @@ export class AppLogger {
 ### Recursos externos
 
 - [Serilog Levels](https://github.com/serilog/serilog/wiki/Configuration-Basics#minimum-level)
-- [Winston Logging Levels](https://github.com/winstonjs/winston#logging-levels)
+- [Microsoft Logging Guidelines](https://learn.microsoft.com/en-us/dotnet/core/extensions/logging)
 
 ---
 

@@ -29,37 +29,48 @@
 
 - `Notification API`: expuesto vía `YARP` y `ALB`, escalable, acceso a base de datos y colas de mensajes.
 
-#### Ejemplo de despliegue (kubernetes)
+#### Ejemplo de despliegue (AWS ECS Fargate)
 
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: notification-api
-spec:
-  replicas: 3
-  template:
-    spec:
-      containers:
-      - name: notification-api
-        image: corporativo/notification-api:latest
-        ports:
-        - containerPort: 8080
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: url
-        - name: KAFKA_BROKERS
-          value: "eventbus-cluster:9092"
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
+```json
+{
+  "family": "notification-api",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "notification-api",
+      "image": "ghcr.io/corporativo/notification-api:latest",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:123456789012:secret:tlm-prod-db-url"
+        }
+      ],
+      "environment": [
+        {
+          "name": "KAFKA_BROKERS",
+          "value": "kafka-cluster.msk.us-east-1.amazonaws.com:9092"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/notification-api",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
 ```
 
 ### Mensajería y almacenamiento
@@ -70,9 +81,9 @@ spec:
 
 ## 7.4 Entornos de despliegue
 
-- **Desarrollo:** `minikube`, `PostgreSQL` local, `Kafka` y `Redis` single instance, `Mailhog`, logs locales.
-- **Staging:** `AWS EKS`, `RDS`, `MSK`, `ElastiCache`, `SendGrid`/`Twilio` test, `Prometheus`, `Grafana`, `Loki`, `Jaeger`, `CloudWatch`.
-- **Producción:** `AWS EKS` multi-AZ, `RDS` multi-AZ, `MSK`, `ElastiCache` cluster, `CloudFront`, `SendGrid+SES+Mailgun`, `Twilio+SNS+360dialog`, `FCM+APNS`, `WhatsApp Business API`.
+- **Desarrollo:** Docker Compose local, `PostgreSQL` local, `Kafka` y `Redis` single instance, `Mailhog`, logs locales.
+- **Staging:** `AWS ECS Fargate`, `RDS`, `MSK`, `ElastiCache`, `SendGrid`/`Twilio` test, `Prometheus`, `Grafana`, `Loki`, `Jaeger`, `CloudWatch`.
+- **Producción:** `AWS ECS Fargate` multi-AZ, `RDS` multi-AZ, `MSK`, `ElastiCache` cluster, `CloudFront`, `SendGrid+SES+Mailgun`, `Twilio+SNS+360dialog`, `FCM+APNS`, `WhatsApp Business API`.
 
 ## 7.5 Integración con proveedores
 
@@ -122,16 +133,16 @@ public class EmailProviderFactory
 
 ## 7.8 CI/CD pipeline
 
-- Build: `GitHub Actions`, `.NET 8`, tests, cobertura, `SonarQube`, `Docker`, `Trivy`, push a registry.
-- Deploy: validación de manifiestos, despliegue a staging, pruebas de integración, carga y seguridad, aprobación manual, blue-green, smoke tests.
-- Configuración: `ConfigMap` y `Secrets` por entorno.
+- Build: `GitHub Actions`, `.NET 8`, tests, cobertura, `SonarQube`, `Docker`, `Trivy`, push a `ghcr.io`.
+- Deploy: validación de task definitions, despliegue a staging, pruebas de integración, carga y seguridad, aprobación manual, blue-green, smoke tests.
+- Configuración: `AWS Parameter Store` y `AWS Secrets Manager` por entorno.
 - Infraestructura como código: `Terraform`.
 - Migraciones: `Liquibase`, cambios compatibles, rollback, pipeline validado y automatizado.
 
 ## 7.9 Estrategia de escalado
 
-- Autoescalado horizontal por canal y tipo de notificación (`Kubernetes HPA`, `AWS ASG`).
-- Umbrales de CPU, profundidad de cola y latencia para disparar escalado.
+- Autoescalado horizontal por canal y tipo de notificación (`AWS ECS Service Auto Scaling`, `Application Auto Scaling`).
+- Umbrales de CPU, profundidad de cola Kafka y latencia para disparar escalado.
 - Estrategia blue-green y zero-downtime para despliegues críticos.
 
 ---
@@ -143,7 +154,7 @@ public class EmailProviderFactory
 
 ## Referencias
 
-- [Kubernetes Mejores Prácticas](https://kubernetes.io/docs/concepts/configuration/overview/)
+- [AWS ECS Best Practices](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/intro.html)
 - [Microservices Deployment Patterns](https://microservices.io/patterns/deployment/)
-- [Event Bus agnóstico Operations](https://kafka.apache.org/documentation/#operations)
+- [Kafka Operations](https://kafka.apache.org/documentation/#operations)
 - [Arc42 Deployment View](https://docs.arc42.org/section-7/)

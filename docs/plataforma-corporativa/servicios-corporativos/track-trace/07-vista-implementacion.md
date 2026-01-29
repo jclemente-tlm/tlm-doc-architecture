@@ -47,5 +47,5 @@
 
 ## 7.5 Infraestructura como código
 
-- `Terraform` para provisión de `AWS RDS`, `Event Bus` y recursos de red
-- `Helm Charts` para despliegue en Kubernetes
+- `Terraform` para provisión de `AWS RDS`, `MSK` (Kafka), redes y `ECS` task definitions
+- Configuración de servicios ECS con autoescalado

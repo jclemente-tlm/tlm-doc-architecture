@@ -106,8 +106,8 @@ Cada estándar debe implementar uno o más lineamientos:
 
 ### En desarrollo
 
-- Linters configurados según estándares (ESLint, StyleCop, etc.)
-- Pre-commit hooks para validación automática
+- Linters configurados según estándares (StyleCop, SQL Lint)
+- Pre-commit hooks para validación automática (Husky.Net)
 - SonarQube para análisis estático
 
 ### En CI/CD

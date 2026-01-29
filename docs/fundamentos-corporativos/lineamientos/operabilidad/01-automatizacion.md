@@ -37,7 +37,7 @@ Aplica a:
 
 ## 4. Decisiones de Diseño Esperadas
 
-- Plataforma de CI/CD (GitHub Actions, GitLab CI, Jenkins)
+- Plataforma de CI/CD (GitHub Actions)
 - Estrategia de pipelines (por proyecto, compartidos)
 - Herramientas de automatización de infraestructura
 - Niveles de pruebas automatizadas

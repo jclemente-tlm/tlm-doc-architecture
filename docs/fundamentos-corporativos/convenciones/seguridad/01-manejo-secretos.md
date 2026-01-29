@@ -132,75 +132,33 @@ var connectionString = builder.Configuration["ConnectionStrings:DefaultConnectio
 var jwtSecret = builder.Configuration["JwtSecret"];
 ```
 
-### TypeScript/Node.js - AWS Secrets Manager
+### AWS ECS Task Definition - Secrets Injection
 
-```typescript
-import {
-  SecretsManagerClient,
-  GetSecretValueCommand,
-} from "@aws-sdk/client-secrets-manager";
-
-export interface AppSecrets {
-  dbPassword: string;
-  jwtSecret: string;
-  stripeApiKey: string;
-}
-
-export async function loadSecrets(): Promise<AppSecrets> {
-  const client = new SecretsManagerClient({ region: "us-east-1" });
-
-  const secretName = `tlm/${process.env.NODE_ENV}/users-api`;
-
-  try {
-    const response = await client.send(
-      new GetSecretValueCommand({ SecretId: secretName }),
-    );
-
-    if (!response.SecretString) {
-      throw new Error("Secret is empty");
+```json
+{
+  "family": "users-api",
+  "taskRoleArn": "arn:aws:iam::123456789:role/users-api-task-role",
+  "executionRoleArn": "arn:aws:iam::123456789:role/ecs-task-execution-role",
+  "containerDefinitions": [
+    {
+      "name": "users-api",
+      "image": "ghcr.io/talma/users-api:latest",
+      "secrets": [
+        {
+          "name": "DB_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:123456789:secret:tlm/prod/users-api:dbPassword::"
+        },
+        {
+          "name": "JWT_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:123456789:secret:tlm/prod/users-api:jwtSecret::"
+        }
+      ]
     }
-
-    return JSON.parse(response.SecretString) as AppSecrets;
-  } catch (error) {
-    console.error("Failed to load secrets:", error);
-    throw error;
-  }
+  ]
 }
-
-// En main.ts
-const secrets = await loadSecrets();
-
-// Inyectar en process.env o config
-process.env.DB_PASSWORD = secrets.dbPassword;
-process.env.JWT_SECRET = secrets.jwtSecret;
 ```
 
-### Kubernetes - External Secrets Operator
-
-```yaml
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: users-api-secrets
-spec:
-  secretStoreRef:
-    name: aws-secrets-manager
-    kind: SecretStore
-  target:
-    name: users-api-secrets
-    creationPolicy: Owner
-  data:
-    - secretKey: DB_PASSWORD
-      remoteRef:
-        key: tlm/prod/users-api
-        property: dbPassword
-    - secretKey: JWT_SECRET
-      remoteRef:
-        key: tlm/prod/users-api
-        property: jwtSecret
-```
-
-### Docker Compose - Secrets
+### Docker Compose - Secrets (Local Development)
 
 ```yaml
 version: "3.8"

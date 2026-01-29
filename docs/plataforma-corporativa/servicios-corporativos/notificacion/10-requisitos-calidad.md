@@ -69,7 +69,7 @@ Este capítulo define los atributos de calidad del Sistema de Notificaciones, es
 ## 10.6 Testabilidad y gates de calidad
 
 - Pirámide de pruebas: unitarias (`>90%` cobertura), integración (`DB`, `APIs`), E2E (flujos completos)
-- Herramientas: `xUnit`, `Moq`, `TestContainers`, `NBomber`, `Pact`, `Playwright`
+- Herramientas: `xUnit`, `Moq`, `FluentAssertions`, `TestContainers`, `NBomber`, `Pact`
 - Quality Gates: `SonarQube`, cobertura, seguridad, performance, startup
 
 ## 10.7 Escalabilidad e interoperabilidad

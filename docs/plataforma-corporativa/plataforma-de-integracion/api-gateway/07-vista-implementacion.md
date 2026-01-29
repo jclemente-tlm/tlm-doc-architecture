@@ -409,15 +409,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: Update kubeconfig
-      run: aws eks update-kubeconfig --name corporate-services-cluster
-
-    - name: Deploy to EKS
+    - name: Deploy to ECS
       run: |
-        helm upgrade --install api-gateway ./helm/api-gateway \
-          --namespace corporate-services \
-          --create-namespace \
-          --set image.tag=${{ github.sha }} \
+        aws ecs update-service \
+          --cluster corporate-services-cluster \
+          --service api-gateway \
+          --force-new-deployment \
+          --task-definition api-gateway:${{ github.sha }}
           --set environment=production \
           --wait
 
