@@ -1,5 +1,5 @@
 ---
-title: "ADR-009: Pipelines CI/CD"
+title: "ADR-009: GitHub Actions CI/CD"
 sidebar_position: 9
 ---
 

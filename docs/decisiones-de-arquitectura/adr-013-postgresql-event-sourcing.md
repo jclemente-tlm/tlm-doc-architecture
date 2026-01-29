@@ -1,5 +1,5 @@
 ---
-title: "ADR-013: Event Sourcing"
+title: "ADR-013: PostgreSQL Event Sourcing"
 sidebar_position: 13
 ---
 

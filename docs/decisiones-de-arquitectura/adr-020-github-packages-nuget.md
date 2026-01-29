@@ -1,5 +1,5 @@
 ---
-title: "ADR-020: Alojamiento de NuGets Internos"
+title: "ADR-020: GitHub Packages NuGet"
 sidebar_position: 20
 ---
 

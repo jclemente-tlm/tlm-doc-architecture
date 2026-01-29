@@ -1,5 +1,5 @@
 ---
-title: "ADR-003: Gestión de Secretos"
+title: "ADR-003: AWS Secrets Manager"
 sidebar_position: 3
 ---
 

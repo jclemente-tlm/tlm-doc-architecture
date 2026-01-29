@@ -1,5 +1,5 @@
 ---
-title: "ADR-023: Security Scanning Automatizado"
+title: "ADR-023: Trivy + Checkov Security Scanning"
 sidebar_position: 23
 ---
 
@@ -319,8 +319,8 @@ quiet: false
 - [GitHub Security Features](https://docs.github.com/en/code-security)
 - [OWASP Dependency Check](https://owasp.org/www-project-dependency-check/)
 - [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/)
-- [ADR-009: Pipelines CI/CD](./adr-009-cicd-pipelines.md)
-- [ADR-022: Container Registry](./adr-022-container-registry.md)
+- [ADR-009: GitHub Actions CI/CD](./adr-009-github-actions-cicd.md)
+- [ADR-022: GitHub Container Registry](./adr-022-github-container-registry.md)
 
 ---
 

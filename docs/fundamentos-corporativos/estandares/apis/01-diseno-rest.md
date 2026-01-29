@@ -168,8 +168,7 @@ Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
 ## 8. Referencias
 
-- [ADR-002: Estándar APIs REST](../../../decisiones-de-arquitectura/adr-002-estandard-apis-rest.md)
-- [ADR-004: Autenticación SSO](../../../decisiones-de-arquitectura/adr-004-autenticacion-sso.md)
+- [ADR-004: Autenticación SSO](../../../decisiones-de-arquitectura/adr-004-keycloak-sso-autenticacion.md)
 - [Seguridad de APIs](./02-seguridad-apis.md)
 - [Versionado de APIs](./04-versionado.md)
 - [OpenAPI/Swagger](../../documentacion/03-openapi-swagger.md)

@@ -1,5 +1,5 @@
 ---
-title: "ADR-007: Contenedores en AWS"
+title: "ADR-007: AWS ECS Fargate Contenedores"
 sidebar_position: 7
 ---
 

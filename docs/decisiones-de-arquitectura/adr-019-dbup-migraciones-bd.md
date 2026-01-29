@@ -1,5 +1,5 @@
 ---
-title: "ADR-019: Configuraciones por Scripts en BD"
+title: "ADR-019: DbUp Migraciones BD"
 sidebar_position: 19
 ---
 
@@ -95,7 +95,7 @@ Se selecciona **DbUp** como herramienta principal para la ejecución de configur
 
 - [DbUp Documentation](https://dbup.readthedocs.io/en/latest/)
 - [Estándar: Migraciones de Base de Datos](../../fundamentos-corporativos/estandares/datos/02-migrations.md)
-- [ADR-010: Base de Datos Estándar](./adr-010-standard-base-datos.md)
+- [ADR-010: PostgreSQL Base de Datos](./adr-010-postgresql-base-datos.md)
 - [RoundhousE GitHub](https://github.com/chucknorris/roundhouse)
 - [Flyway Documentation](https://documentation.red-gate.com/fd)
 - [Liquibase Documentation](https://www.liquibase.org/)

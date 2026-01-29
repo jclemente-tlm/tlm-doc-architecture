@@ -28,28 +28,24 @@ Cada ADR sigue la estructura:
 | ADR | Título | Estado | Fecha Aprobación | Dependencia de Aprobación | Descripción |
 |-----|--------|--------|------------------|--------------------------|-------------|
 | [ADR-001](/docs/adrs/adr-001-multi-tenancy-paises) | Multi-tenancy por país | Aceptada | Agosto 2025 | Arquitectura + Equipos País | Estrategia de aislamiento y operación multipaís en todos los servicios. |
-| [ADR-002](/docs/adrs/adr-002-estandard-apis-rest) | APIs REST estándar | Aceptada | Agosto 2025 | Arquitectura | Definición de contratos, convenciones y versionado para APIs REST. |
-| [ADR-003](/docs/adrs/adr-003-gestion-secretos) | Gestión de secretos | Aceptada | Agosto 2025 | Arquitectura + Seguridad | Solución para almacenamiento seguro y rotación de secretos. |
-| [ADR-004](/docs/adrs/adr-004-autenticacion-sso) | Autenticación SSO | Aceptada | Agosto 2025 | Arquitectura + Seguridad | Gestión centralizada de identidades y autenticación multi-tenant. |
-| [ADR-005](/docs/adrs/adr-005-gestion-configuraciones) | Gestión de configuraciones | Aceptada | Agosto 2025 | Arquitectura + DevOps | Estrategia para versionado, segregación y automatización de configuraciones. |
-| [ADR-006](/docs/adrs/adr-006-infraestructura-iac) | Infraestructura como código | Aceptada | Agosto 2025 | Arquitectura + DevOps | Uso de IaC para provisión y gestión de infraestructura multi-cloud. |
-| [ADR-007](/docs/adrs/adr-007-contenedores-aws) | Contenedores en AWS | Aceptada | Agosto 2025 | Arquitectura + DevOps | Orquestación y despliegue de microservicios en contenedores. |
-| [ADR-008](/docs/adrs/adr-008-gateway-apis) | Gateway de APIs | Aceptada | Agosto 2025 | Arquitectura | Estandarización de entrada/salida y seguridad en el acceso a APIs. |
-| [ADR-009](/docs/adrs/adr-009-cicd-pipelines) | CI/CD Pipelines | Aceptada | Agosto 2025 | Arquitectura + DevOps | Automatización de integración y despliegue continuo. |
-| [ADR-010](/docs/adrs/adr-010-standard-base-datos) | Base de datos estándar | Aceptada | Agosto 2025 | Arquitectura | Selección y lineamientos para bases de datos relacionales. |
-| [ADR-011](/docs/adrs/adr-011-cache-distribuido) | Cache distribuido | Aceptada | Agosto 2025 | Arquitectura | Estrategia de caching y consistencia para servicios críticos. |
-| [ADR-012](/docs/adrs/adr-012-mensajeria-asincrona) | Mensajería asíncrona | Aceptada | Agosto 2025 | Arquitectura | Patrones y tecnologías para comunicación asíncrona y desacoplada. |
-| [ADR-013](/docs/adrs/adr-013-event-sourcing) | Event sourcing | Aceptada | Agosto 2025 | Arquitectura | Modelo de persistencia basado en eventos para trazabilidad y auditoría. |
-| [ADR-014](/docs/adrs/adr-014-almacenamiento-objetos) | Almacenamiento de objetos | Aceptada | Agosto 2025 | Arquitectura | Solución para almacenamiento masivo y seguro de archivos y documentos. |
-| [ADR-015](/docs/adrs/adr-015-manejo-errores-cola) | Manejo de errores en colas | Aceptada | Agosto 2025 | Arquitectura + DevOps | Estrategia para resiliencia y reprocesamiento de mensajes fallidos. |
-| [ADR-016](/docs/adrs/adr-016-logging-estructurado) | Logging estructurado | Aceptada | Agosto 2025 | Arquitectura | Estandarización de logs estructurados y observabilidad. |
-| [ADR-017](/docs/adrs/adr-017-versionado-apis) | Versionado de APIs | Aceptada | Agosto 2025 | Arquitectura | Estrategia de versionado y ciclo de vida de APIs. |
-| [ADR-018](/docs/adrs/adr-018-arquitectura-microservicios) | Arquitectura de microservicios | Aceptada | Agosto 2025 | Arquitectura | Modelo de descomposición, comunicación y despliegue basado en microservicios para escalabilidad y resiliencia. |
-| [ADR-019](/docs/adrs/adr-019-configuraciones-scripts-bd) | Configuraciones por scripts en BD | Aceptada | Agosto 2025 | Arquitectura + DevOps | Ejecución controlada y versionada de scripts SQL para configuraciones iniciales o puntuales en base de datos multi-motor. |
-| [ADR-020](/docs/adrs/adr-020-alojamiento-nugets) | Alojamiento de NuGets Internos | Aceptada | Agosto 2025 | Arquitectura + DevOps | Solución para gestión y distribución de paquetes NuGet internos para microservicios y librerías compartidas. |
-| [ADR-021](/docs/adrs/adr-021-observabilidad) | Stack de Observabilidad Unificado | Aceptada | Enero 2026 | Arquitectura + SRE | Stack completo de observabilidad (logs, métricas, trazas) con Prometheus, Grafana, Loki, Jaeger y OpenTelemetry. |
-| [ADR-022](/docs/adrs/adr-022-container-registry) | Container Registry Corporativo | Aceptada | Enero 2026 | Arquitectura + DevOps | Registry centralizado para imágenes Docker con GitHub Container Registry (ghcr.io). |
-| [ADR-023](/docs/adrs/adr-023-security-scanning) | Security Scanning Automatizado | Aceptada | Enero 2026 | Arquitectura + Security | Escaneo de vulnerabilidades con Trivy (containers) y Checkov (IaC) integrado en CI/CD. |
+| [ADR-003](/docs/adrs/adr-003-aws-secrets-manager) | AWS Secrets Manager | Aceptada | Agosto 2025 | Arquitectura + Seguridad | Solución para almacenamiento seguro y rotación automática de secretos. |
+| [ADR-004](/docs/adrs/adr-004-keycloak-sso-autenticacion) | Keycloak SSO Autenticación | Aceptada | Agosto 2025 | Arquitectura + Seguridad | Gestión centralizada de identidades y autenticación multi-tenant con Keycloak. |
+| [ADR-005](/docs/adrs/adr-005-aws-parameter-store-configs) | AWS Parameter Store Configs | Aceptada | Agosto 2025 | Arquitectura + DevOps | Gestión centralizada de configuraciones multi-tenant con AWS Parameter Store. |
+| [ADR-006](/docs/adrs/adr-006-terraform-iac) | Terraform IaC | Aceptada | Agosto 2025 | Arquitectura + DevOps | Infraestructura como código multi-cloud con Terraform para portabilidad. |
+| [ADR-007](/docs/adrs/adr-007-aws-ecs-fargate-contenedores) | AWS ECS Fargate Contenedores | Aceptada | Agosto 2025 | Arquitectura + DevOps | Orquestación y despliegue serverless de microservicios con AWS ECS Fargate. |
+| [ADR-008](/docs/adrs/adr-008-yarp-api-gateway) | YARP API Gateway | Aceptada | Agosto 2025 | Arquitectura | API Gateway .NET nativo con YARP para enrutamiento y políticas centralizadas. |
+| [ADR-009](/docs/adrs/adr-009-github-actions-cicd) | GitHub Actions CI/CD | Aceptada | Agosto 2025 | Arquitectura + DevOps | Automatización de integración y despliegue continuo con GitHub Actions. |
+| [ADR-010](/docs/adrs/adr-010-postgresql-base-datos) | PostgreSQL Base de Datos | Aceptada | Agosto 2025 | Arquitectura | PostgreSQL como base de datos relacional estándar para todos los servicios. |
+| [ADR-011](/docs/adrs/adr-011-redis-cache-distribuido) | Redis Cache Distribuido | Aceptada | Agosto 2025 | Arquitectura | Cache distribuido de alto rendimiento con Redis para servicios críticos. |
+| [ADR-012](/docs/adrs/adr-012-kafka-mensajeria-asincrona) | Kafka Mensajería Asíncrona | Aceptada | Agosto 2025 | Arquitectura | Apache Kafka (AWS MSK) para mensajería asíncrona y event streaming. |
+| [ADR-013](/docs/adrs/adr-013-postgresql-event-sourcing) | PostgreSQL Event Sourcing | Aceptada | Agosto 2025 | Arquitectura | Event sourcing con PostgreSQL para trazabilidad completa y auditoría. |
+| [ADR-014](/docs/adrs/adr-014-s3-almacenamiento-objetos) | S3 Almacenamiento Objetos | Aceptada | Agosto 2025 | Arquitectura | AWS S3 para almacenamiento masivo de objetos, documentos y backups. |
+| [ADR-016](/docs/adrs/adr-016-serilog-logging-estructurado) | Serilog Logging Estructurado | Aceptada | Agosto 2025 | Arquitectura | Serilog para logging estructurado JSON con correlación distribuida. |
+| [ADR-019](/docs/adrs/adr-019-dbup-migraciones-bd) | DbUp Migraciones BD | Aceptada | Agosto 2025 | Arquitectura + DevOps | DbUp para migraciones de base de datos versionadas e idempotentes. |
+| [ADR-020](/docs/adrs/adr-020-github-packages-nuget) | GitHub Packages NuGet | Aceptada | Agosto 2025 | Arquitectura + DevOps | GitHub Packages como registry de paquetes NuGet internos corporativos. |
+| [ADR-021](/docs/adrs/adr-021-prometheus-grafana-observabilidad) | Prometheus + Grafana Observabilidad | Aceptada | Enero 2026 | Arquitectura + SRE | Stack OSS completo: Prometheus, Grafana, Loki, Jaeger y OpenTelemetry. |
+| [ADR-022](/docs/adrs/adr-022-github-container-registry) | GitHub Container Registry | Aceptada | Enero 2026 | Arquitectura + DevOps | GitHub Container Registry (ghcr.io) para imágenes Docker corporativas. |
+| [ADR-023](/docs/adrs/adr-023-trivy-checkov-security-scanning) | Trivy + Checkov Security Scanning | Aceptada | Enero 2026 | Arquitectura + Security | Escaneo automatizado de vulnerabilidades con Trivy (containers) y Checkov (IaC). |
 
 ### ADRs ESPECÍFICOS DE SERVICIO
 
@@ -61,7 +57,10 @@ Cada ADR sigue la estructura:
 
 | ADR | Título | Estado | Acción Completada |
 |-----|--------|--------|------------------|
-| ADR-XXX | Ejemplo de ADR eliminado o consolidado | ❌ Eliminada | Motivo o referencia |
+| ADR-002 | REST + OpenAPI Standard | ❌ Eliminada | Estándar universal de industria. Ver `estandares/apis/01-diseno-rest.md` |
+| ADR-015 | Kafka DLT Manejo Errores | ❌ Eliminada | Patrón estándar de mensajería. Documentado en estándar de Kafka |
+| ADR-017 | Path Versioning APIs | ❌ Eliminada | Best practice estándar. Ver `estandares/apis/04-versionado.md` |
+| ADR-018 | Arquitectura Microservicios | ❌ Eliminada | Patrón genérico dependiente del contexto del proyecto. Ver `lineamientos.md` |
 
 ## Principios de Decisión
 
@@ -85,8 +84,9 @@ Cada ADR sigue la estructura:
 
 ## Métricas de ADRs
 
-- **Total ADRs activos**: 23 globales
-- **ADRs Aceptados**: 23
+- **Total ADRs activos**: 19 globales
+- **ADRs Aceptados**: 19
 - **ADRs en Propuesta**: 0
+- **ADRs eliminados** (estándares de industria / patrones genéricos): 4
 - **Cobertura de decisiones críticas**: 100%
 - **Última actualización**: Enero 2026

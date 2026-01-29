@@ -1,5 +1,5 @@
 ---
-title: "ADR-021: Stack de Observabilidad Unificado"
+title: "ADR-021: Prometheus + Grafana Observabilidad"
 sidebar_position: 21
 ---
 

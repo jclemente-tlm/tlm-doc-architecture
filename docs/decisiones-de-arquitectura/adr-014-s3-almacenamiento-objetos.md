@@ -1,5 +1,5 @@
 ---
-title: "ADR-014: Almacenamiento de Objetos Empresarial"
+title: "ADR-014: S3 Almacenamiento Objetos"
 sidebar_position: 14
 ---
 

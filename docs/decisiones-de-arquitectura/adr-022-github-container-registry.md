@@ -1,5 +1,5 @@
 ---
-title: "ADR-022: Container Registry Corporativo"
+title: "ADR-022: GitHub Container Registry"
 sidebar_position: 22
 ---
 
@@ -265,9 +265,9 @@ jobs:
 
 - [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 - [Docker Registry API v2](https://docs.docker.com/registry/spec/api/)
-- [ADR-007: Contenedores en AWS](./adr-007-contenedores-aws.md)
-- [ADR-009: Pipelines CI/CD](./adr-009-cicd-pipelines.md)
-- [ADR-023: Security Scanning](./adr-023-security-scanning.md)
+- [ADR-007: AWS ECS Fargate Contenedores](./adr-007-aws-ecs-fargate-contenedores.md)
+- [ADR-009: GitHub Actions CI/CD](./adr-009-github-actions-cicd.md)
+- [ADR-023: Trivy + Checkov Security Scanning](./adr-023-trivy-checkov-security-scanning.md)
 
 ---
 

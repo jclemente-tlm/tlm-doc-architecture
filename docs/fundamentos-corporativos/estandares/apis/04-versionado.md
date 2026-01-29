@@ -165,7 +165,6 @@ Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
 ## 8. Referencias
 
-- [ADR-017: Versionado de APIs](../../../decisiones-de-arquitectura/adr-017-versionado-apis.md)
 - [Diseño REST](./01-diseno-rest.md)
 - [ASP.NET Core API Versioning](https://github.com/dotnet/aspnet-api-versioning)
 - [Semantic Versioning](https://semver.org/)

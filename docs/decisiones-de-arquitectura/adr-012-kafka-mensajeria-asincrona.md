@@ -1,5 +1,5 @@
 ---
-title: "ADR-012: Mensajería Asíncrona Empresarial"
+title: "ADR-012: Kafka Mensajería Asíncrona"
 sidebar_position: 12
 ---
 
@@ -155,7 +155,7 @@ Se selecciona **Apache Kafka (AWS MSK)** como solución estándar de mensajería
 - [AWS MSK](https://aws.amazon.com/msk/)
 - [Confluent.Kafka .NET Client](https://docs.confluent.io/kafka-clients/dotnet/current/overview.html)
 - [Event Sourcing with Kafka](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
-- [ADR-015: Manejo de Errores en Mensajería](./adr-015-manejo-errores-cola.md)
+- [Dead Letter Queue Pattern](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html#dead-letter-queue)
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "ADR-005: Gestión de Configuraciones"
+title: "ADR-005: AWS Parameter Store Configs"
 sidebar_position: 5
 ---
 

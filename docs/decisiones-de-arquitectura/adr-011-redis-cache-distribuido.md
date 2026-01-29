@@ -1,5 +1,5 @@
 ---
-title: "ADR-011: Cache Distribuido Empresarial"
+title: "ADR-011: Redis Cache Distribuido"
 sidebar_position: 11
 ---
 

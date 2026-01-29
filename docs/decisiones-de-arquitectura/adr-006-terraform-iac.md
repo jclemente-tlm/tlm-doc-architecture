@@ -1,5 +1,5 @@
 ---
-title: "ADR-006: Infraestructura como Código (IaC)"
+title: "ADR-006: Terraform IaC"
 sidebar_position: 6
 ---
 

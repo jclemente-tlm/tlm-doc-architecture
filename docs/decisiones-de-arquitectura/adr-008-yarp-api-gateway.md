@@ -1,5 +1,5 @@
 ---
-title: "ADR-008: API Gateway"
+title: "ADR-008: YARP API Gateway"
 sidebar_position: 8
 ---
 
