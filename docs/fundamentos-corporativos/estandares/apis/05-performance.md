@@ -38,7 +38,7 @@ Garantizar SLA ≤1200ms p95 mediante paginación con límites (max 100 items), 
 | **Compresión** | Brotli (prioridad), Gzip | Nativo | Reduce tamaño 70-80% |
 | **Async** | async/await, Task, ValueTask | C# 12+ | No bloquea threads |
 | **Rate Limiting** | AspNetCoreRateLimit | 5.0+ | Protección anti-abuso |
-| **Monitoreo** | OpenTelemetry, Prometheus | 1.6+ | Métricas latencia/throughput |
+| **Monitoreo** | OpenTelemetry + Grafana Mimir | 1.6+ | Métricas latencia/throughput |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -172,7 +172,7 @@ dotnet test --filter Category=Performance
 
 | Métrica | Target | Verificación |
 |---------|--------|--------------|  
-| Latencia p95 | < 200ms | Prometheus `http_request_duration_seconds` |
+| Latencia p95 | < 200ms | Grafana Mimir: `http_request_duration_seconds{quantile="0.95"}` |
 | Compresión habilitada | 100% | Header `Content-Encoding: br` |
 | Colecciones con paginación | 100% | Verificar parámetros `page`/`limit` |
 | Cache hit rate | > 70% | Redis MONITOR |

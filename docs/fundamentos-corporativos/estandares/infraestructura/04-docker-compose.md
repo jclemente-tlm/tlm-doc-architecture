@@ -22,7 +22,7 @@ Garantizar entornos de desarrollo idénticos entre equipos mediante Docker Compo
 - Hot reload de código durante desarrollo
 
 **No aplica a:**
-- Producción (usar ECS/Fargate, Kubernetes)
+- Producción (usar AWS ECS/Fargate)
 - Staging/Pre-producción (usar orquestadores cloud)
 - Contenedores standalone simples (usar `docker run`)
 

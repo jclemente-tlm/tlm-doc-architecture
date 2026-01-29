@@ -2,7 +2,7 @@
 id: logging
 sidebar_position: 1
 title: Logging Estructurado
-description: Estándares para logging estructurado con Serilog 3.1+, Winston 3.11+ y correlation IDs
+description: Estándares para logging estructurado con Serilog 3.1+ y correlation IDs
 ---
 
 # Estándar Técnico — Logging Estructurado
@@ -21,7 +21,7 @@ Garantizar trazabilidad y debugging en entornos distribuidos mediante logging es
 - Workers, background jobs, Lambdas AWS
 
 **No aplica a:**
-- Logs de infraestructura (Docker, Kubernetes) - usar CloudWatch/Datadog
+- Logs de infraestructura (Docker, AWS ECS) - usar Loki directamente
 - Desarrollo local (puede usar formato simple/colorizado)
 - Métricas de performance (ver [Monitoreo y Métricas](./02-monitoreo-metricas.md))
 
@@ -81,7 +81,9 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.WithMachineName()
     .Enrich.WithProperty("Application", "TalmaAPI")
     .WriteTo.Console(new JsonFormatter())
-    .WriteTo.AmazonCloudWatch("/talma/api/production")
+    .WriteTo.OpenTelemetry(options => {
+        options.Endpoint = "http://grafana-alloy:4317";
+    })
     .CreateLogger();
 
 builder.Host.UseSerilog();
@@ -125,7 +127,7 @@ dotnet test --filter Category=Logging
 | Logs en JSON | 100% | `jq` parse exitoso |
 | Correlation ID presente | 100% | `grep CorrelationId` |
 | Passwords enmascarados | 100% | `grep -i password` retorna 0 |
-| Nivel Debug/Trace en prod | 0% | CloudWatch Insights query |
+| Nivel Debug/Trace en prod | 0% | Grafana Loki query: `{app="talma"} |= "Debug" or "Trace"` |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
@@ -136,4 +138,4 @@ Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 - [ADR-016: Logging Estructurado](../../../decisiones-de-arquitectura/adr-016-logging-estructurado.md)
 - [Monitoreo y Métricas](./02-monitoreo-metricas.md)
 - [Serilog Documentation](https://serilog.net/)
-- [Winston Documentation](https://github.com/winstonjs/winston)
+- [OpenTelemetry Documentation](https://opentelemetry.io/)

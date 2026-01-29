@@ -128,7 +128,7 @@ grep -r "password" --exclude-dir=node_modules --exclude-dir=.git | grep -v "Secr
 | Secretos en código fuente | 0 | `git secrets --scan` |
 | Rotación habilitada | 100% | `describe-secret \| jq .RotationEnabled` |
 | Encryption KMS | 100% | `describe-secret \| jq .KmsKeyId` |
-| CloudTrail habilitado | 100% | Verificar logs en CloudWatch |
+| CloudTrail habilitado | 100% | Verificar logs de acceso a secretos |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 

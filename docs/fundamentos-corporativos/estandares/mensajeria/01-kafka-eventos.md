@@ -55,7 +55,7 @@ Implementar event-driven architecture con Apache Kafka 3.6+, Confluent.Kafka 2.3
 - [ ] Dead Letter Queue (DLQ) para errores
 - [ ] Consumer groups: `{service-name}.{topic-name}`
 - [ ] Partitioning por aggregateId (orden garantizado)
-- [ ] Monitoring con Kafka Exporter + Prometheus
+- [ ] Monitoring con Kafka Exporter + Grafana Mimir
 - [ ] Retention: 7 días (eventos), 30 días (event sourcing)
 - [ ] Cleanup policy: delete (eventos), compact (snapshots)
 

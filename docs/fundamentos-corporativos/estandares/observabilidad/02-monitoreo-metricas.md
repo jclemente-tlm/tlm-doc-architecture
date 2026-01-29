@@ -22,9 +22,9 @@ Garantizar disponibilidad y detectar anomalías mediante health checks (/health/
 - Sistemas distribuidos (distributed tracing obligatorio)
 
 **No aplica a:**
-- Aplicaciones frontend (usar Datadog RUM / CloudWatch RUM)
+- Aplicaciones frontend (usar Grafana Faro o similar)
 - Scripts batch sin estado (solo logs inicio/fin)
-- Lambdas AWS (CloudWatch Metrics automático)
+- Lambdas AWS (usar OpenTelemetry)
 
 ---
 
@@ -47,15 +47,15 @@ Garantizar disponibilidad y detectar anomalías mediante health checks (/health/
 
 ## 4. Requisitos Obligatorios 🔴
 
-- [ ] Endpoint `/health/live` (liveness probe K8s) - responde 200 si app está viva
-- [ ] Endpoint `/health/ready` (readiness probe K8s) - valida DB, cache, APIs externas
+- [ ] Endpoint `/health/live` (liveness check) - responde 200 si app está viva
+- [ ] Endpoint `/health/ready` (readiness check) - valida DB, cache, APIs externas
 - [ ] Health checks con timeout 3s (evitar bloqueo prolongado)
 - [ ] Métricas HTTP: latencia p50/p95/p99, throughput, error rate
 - [ ] Métricas de infraestructura: CPU, memoria, threads, GC (.NET)
 - [ ] Distributed tracing con trace ID único por request
 - [ ] Correlation ID propagado entre servicios (header `X-Correlation-ID`)
-- [ ] Exportación formato Prometheus en endpoint `/metrics`
-- [ ] Alarmas CloudWatch para: error rate > 1%, latencia p95 > 500ms, uptime < 99.9%
+- [ ] Exportación OpenTelemetry a Grafana Mimir (métricas) y Tempo (traces)
+- [ ] Alertas en Grafana para: error rate > 1%, latencia p95 > 500ms, uptime < 99.9%
 - [ ] Golden Signals monitoreados: Latency, Traffic, Errors, Saturation
 
 ---
@@ -91,13 +91,14 @@ builder.Services.AddOpenTelemetry()
     .WithMetrics(m => m
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
-        .AddPrometheusExporter());
+        .AddOtlpExporter(options => {
+            options.Endpoint = new Uri("http://grafana-alloy:4317");
+        }));
 
 var app = builder.Build();
 
 app.MapHealthChecks("/health/live", new() { Predicate = c => c.Tags.Contains("live") });
 app.MapHealthChecks("/health/ready", new() { Predicate = c => c.Tags.Contains("ready") });
-app.MapPrometheusScrapingEndpoint("/metrics");
 
 app.Run();
 ```
@@ -113,7 +114,7 @@ app.Run();
 curl http://localhost:8080/health/live
 curl http://localhost:8080/health/ready
 
-# Métricas Prometheus
+# Métricas (exportadas a Grafana Alloy)
 curl http://localhost:8080/metrics | grep http_request_duration
 
 # Distributed tracing (verificar trace ID en logs)
@@ -128,13 +129,11 @@ dotnet test --filter Category=HealthChecks
 
 | Métrica | Target | Verificación |
 |---------|--------|--------------|
-| Uptime | ≥ 99.9% | CloudWatch Metric `ServiceAvailability` |
-| Latencia p95 | < 200ms | Prometheus `http_request_duration_seconds{quantile="0.95"}` |
+| Uptime | ≥ 99.9% | Grafana Mimir: `up{job="talma-api"}` |
+| Latencia p95 | < 200ms | Grafana Mimir: `http_request_duration_seconds{quantile="0.95"}` |
 | Error rate | < 1% | `http_requests_total{status=~"5.."} / http_requests_total` |
 | Health check timeout | ≤ 3s | Código: `timeout: TimeSpan.FromSeconds(3)` |
-| Traces con correlation ID | 100% | CloudWatch Insights: `fields @timestamp | filter correlationId exists` |
-
-Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
+| Traces con correlation ID | 100% | Grafana Loki: `{app="talma"} | json | correlationId != ""` |
 
 ---
 

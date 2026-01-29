@@ -10,7 +10,7 @@ description: Estándar para pruebas de integración con TestContainers, WebAppli
 ---
 
 ## 1. Propósito
-Validar interacción entre componentes reales (APIs, PostgreSQL, Redis, RabbitMQ) usando WebApplicationFactory, Testcontainers (PostgreSQL 16, Redis 7) y fixtures compartidos con IClassFixture.
+Validar interacción entre componentes reales (APIs, PostgreSQL, Redis, Kafka) usando WebApplicationFactory, Testcontainers (PostgreSQL 16, Redis 7, Kafka) y fixtures compartidos con IClassFixture.
 
 ---
 
@@ -18,13 +18,13 @@ Validar interacción entre componentes reales (APIs, PostgreSQL, Redis, RabbitMQ
 
 **Aplica a:**
 - APIs REST (Controllers + Services + Repository + BD)
-- Integración con PostgreSQL, SQL Server, Redis
-- Integración con RabbitMQ, Kafka, S3
+- Integración con PostgreSQL, Oracle, Redis
+- Integración con Kafka, S3
 - Tests de infraestructura (Docker)
 
 **No aplica a:**
 - Lógica aislada (usar unit tests)
-- Tests E2E con navegador (usar Playwright)
+- Tests con dependencias mock (NO es integración)
 - Tests de performance (usar benchmarks)
 
 ---
