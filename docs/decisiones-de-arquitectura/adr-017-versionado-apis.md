@@ -112,6 +112,31 @@ Se adopta el versionado en `path` (por ejemplo, `/v1/`) como estrategia estánda
 
 ## Alternativas descartadas
 
+- **Header Versioning:** menos visible, mayor complejidad en proxies/gateways
+- **Query Parameter:** considerado anti-pattern, cache problems
+- **Content Negotiation:** complejidad innecesaria para versioning simple
+- **Subdomain Versioning:** gestión DNS compleja, mayor costo operativo
+- **Sin versionado:** breaking changes directos - mala práctica evitable
+
+---
+
+## ⚠️ CONSECUENCIAS
+
+- Todas las APIs públicas deben usar path versioning: `/api/v{version}/`
+- Configuración estándar con `AspNetCore.Mvc.Versioning` (ver [Estándar de Versionado](../../fundamentos-corporativos/estandares/apis/04-versionado.md))
+- Periodo de deprecación mínimo: 6 meses
+- Swagger multi-version obligatorio
+- Headers `api-supported-versions` y `api-deprecated-versions` en responses
+
+---
+
+## 📚 REFERENCIAS
+
+- [REST API Versioning Best Practices](https://restfulapi.net/versioning/)
+- [Estándar: Versionado de APIs](../../fundamentos-corporativos/estandares/apis/04-versionado.md)
+- [ADR-002: APIs REST Estándar](./adr-002-estandard-apis-rest.md)
+- [Microsoft API Versioning](https://github.com/dotnet/aspnet-api-versioning)
+
 - **Header Versioning:** menos visible y menos soportado por herramientas, requiere gestión de la versión en el `header` de la petición.
 - **Query Parameter:** poco común y menos claro, la versión se pasa como parámetro en la `query string`.
 - **Sin versionado:** no permite evolución controlada ni coexistencia de versiones, dificulta la gestión de cambios en los contratos de `API`.

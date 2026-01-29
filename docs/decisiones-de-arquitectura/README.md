@@ -46,8 +46,10 @@ Cada ADR sigue la estructura:
 | [ADR-017](/docs/adrs/adr-017-versionado-apis) | Versionado de APIs | Aceptada | Agosto 2025 | Arquitectura | Estrategia de versionado y ciclo de vida de APIs. |
 | [ADR-018](/docs/adrs/adr-018-arquitectura-microservicios) | Arquitectura de microservicios | Aceptada | Agosto 2025 | Arquitectura | Modelo de descomposición, comunicación y despliegue basado en microservicios para escalabilidad y resiliencia. |
 | [ADR-019](/docs/adrs/adr-019-configuraciones-scripts-bd) | Configuraciones por scripts en BD | Aceptada | Agosto 2025 | Arquitectura + DevOps | Ejecución controlada y versionada de scripts SQL para configuraciones iniciales o puntuales en base de datos multi-motor. |
-| [ADR-020](/docs/adrs/adr-020-alojamiento-nugets) | ADR-020: Alojamiento de NuGets Internos | Aceptada | Agosto 2025 | Arquitectura + DevOps | Solución para gestión y distribución de paquetes NuGet internos para microservicios y librerías compartidas. |
-| [ADR-021](/docs/adrs/adr-021-observabilidad) | ADR-021: Observabilidad | Propuesto | Agosto 2025 | Arquitectura | Estrategia y herramientas para monitoreo, métricas y logs integrados en la plataforma corporativa. |
+| [ADR-020](/docs/adrs/adr-020-alojamiento-nugets) | Alojamiento de NuGets Internos | Aceptada | Agosto 2025 | Arquitectura + DevOps | Solución para gestión y distribución de paquetes NuGet internos para microservicios y librerías compartidas. |
+| [ADR-021](/docs/adrs/adr-021-observabilidad) | Stack de Observabilidad Unificado | Aceptada | Enero 2026 | Arquitectura + SRE | Stack completo de observabilidad (logs, métricas, trazas) con Prometheus, Grafana, Loki, Jaeger y OpenTelemetry. |
+| [ADR-022](/docs/adrs/adr-022-container-registry) | Container Registry Corporativo | Aceptada | Enero 2026 | Arquitectura + DevOps | Registry centralizado para imágenes Docker con GitHub Container Registry (ghcr.io). |
+| [ADR-023](/docs/adrs/adr-023-security-scanning) | Security Scanning Automatizado | Aceptada | Enero 2026 | Arquitectura + Security | Escaneo de vulnerabilidades con Trivy (containers) y Checkov (IaC) integrado en CI/CD. |
 
 ### ADRs ESPECÍFICOS DE SERVICIO
 
@@ -83,7 +85,8 @@ Cada ADR sigue la estructura:
 
 ## Métricas de ADRs
 
-- **Total ADRs activos**: 17 globales + 4 específicos = 21
-- **ADRs por consolidar**: 4
-- **Cobertura de decisiones críticas**: 95%
-- **Última actualización**: Agosto 2025
+- **Total ADRs activos**: 23 globales
+- **ADRs Aceptados**: 23
+- **ADRs en Propuesta**: 0
+- **Cobertura de decisiones críticas**: 100%
+- **Última actualización**: Enero 2026

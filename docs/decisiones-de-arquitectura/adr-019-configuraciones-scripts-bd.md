@@ -84,15 +84,18 @@ Se selecciona **DbUp** como herramienta principal para la ejecución de configur
 ## ⚠️ CONSECUENCIAS
 
 - Los scripts deben ser **idempotentes** para evitar errores en re-ejecuciones.
-- La nomenclatura de archivos (`yyyy.MM.dd__descripcion.sql`) debe ser consistente para asegurar orden y trazabilidad.
+- La nomenclatura de archivos (`Script{Version}__{Description}.sql`) debe ser consistente para asegurar orden y trazabilidad.
 - La responsabilidad de escribir y validar los scripts recae en el equipo técnico, no en usuarios finales.
 - No se implementará UI ni API dedicada para este tipo de configuraciones.
+- Ver configuración detallada en [Estándar de Migraciones](../../fundamentos-corporativos/estandares/datos/02-migrations.md)
 
 ---
 
 ## 📚 REFERENCIAS
 
 - [DbUp Documentation](https://dbup.readthedocs.io/en/latest/)
+- [Estándar: Migraciones de Base de Datos](../../fundamentos-corporativos/estandares/datos/02-migrations.md)
+- [ADR-010: Base de Datos Estándar](./adr-010-standard-base-datos.md)
 - [RoundhousE GitHub](https://github.com/chucknorris/roundhouse)
 - [Flyway Documentation](https://documentation.red-gate.com/fd)
 - [Liquibase Documentation](https://www.liquibase.org/)

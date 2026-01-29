@@ -99,6 +99,29 @@ Se selecciona **Serilog** como librería estándar de logging estructurado para 
 
 ## Alternativas descartadas
 
+- **OpenTelemetry Logging:** emergente, integración aún en maduración
+- **NLog:** alternativa válida, pero menor ecosistema de sinks
+- **MS.Extensions.Logging:** demasiado básico para logging estructurado avanzado
+
+---
+
+## ⚠️ CONSECUENCIAS
+
+- Todos los servicios nuevos `.NET` deben usar `Serilog` para logging
+- Configuración estándar: JSON estructurado, enrichers obligatorios (ver [Estándar de Logging](../../fundamentos-corporativos/estandares/observabilidad/01-logging.md))
+- Sinks recomendados: consola (local), Loki (producción)
+- Correlación obligatoria: `X-Correlation-ID` en headers HTTP
+- Integración con OpenTelemetry para traces (ADR-021)
+
+---
+
+## 📚 REFERENCIAS
+
+- [Serilog Documentation](https://serilog.net/)
+- [Estándar: Logging Estructurado](../../fundamentos-corporativos/estandares/observabilidad/01-logging.md)
+- [ADR-021: Stack de Observabilidad](./adr-021-observabilidad.md)
+- [OpenTelemetry .NET](https://opentelemetry.io/docs/instrumentation/net/)
+
 - **NLog/log4net:** menor soporte para logging estructurado y sinks modernos
 - **MS.Extensions.Logging:** funcionalidad básica, no estructurado por defecto
 
