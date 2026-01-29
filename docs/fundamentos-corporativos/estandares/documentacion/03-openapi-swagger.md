@@ -5,49 +5,78 @@ title: Documentación de APIs con OpenAPI
 description: Estándares para documentar APIs REST usando OpenAPI 3.1+, Swagger UI 5.0+ y Spectral
 ---
 
+# Estándar Técnico — Documentación de APIs con OpenAPI
+
+---
+
 ## 1. Propósito
+Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada automáticamente con Swashbuckle.AspNetCore 6.5+ (C#) o ts-openapi 2.0+ (TypeScript), validada con Spectral y publicada en Swagger UI 5.0+.
 
-Este estándar define cómo documentar APIs REST con OpenAPI Specification (OAS) para garantizar documentación precisa, interactiva y siempre actualizada. Establece:
-- **OpenAPI 3.1+** como especificación estándar para APIs REST
-- **Swagger UI** para interfaz interactiva de pruebas
-- **Generación automática** desde código (.NET, TypeScript)
-- **Validación con Spectral** para cumplir reglas de estilo
-- **Versionado** sincronizado con API
-
-Permite onboarding rápido de consumidores, testing interactivo y contratos API como código.
-
-**Versión**: 1.0  
-**Última actualización**: 2025-08-08
+---
 
 ## 2. Alcance
 
-### Aplica a:
-- APIs REST públicas (para clientes externos)
-- APIs REST internas (entre microservicios)
-- APIs gateway (Kong, API Gateway AWS)
-- SDKs generados automáticamente desde OpenAPI
+**Aplica a:**
+- APIs REST públicas (clientes externos)
+- APIs REST internas (microservicios)
+- APIs gateway (Kong, AWS API Gateway)
+- SDKs generados desde OpenAPI
 
-### No aplica a:
+**No aplica a:**
 - APIs gRPC (usar Protocol Buffers .proto)
 - APIs GraphQL (usar Schema Definition Language)
 - WebSockets/SignalR (documentar en arc42)
-- APIs legacy sin documentación (requieren plan de migración)
 
-## 3. Tecnologías Obligatorias
+---
 
-| Tecnología | Versión Mínima | Propósito |
-|------------|----------------|-----------|
-| **OpenAPI Specification** | 3.1+ | Especificación estándar de APIs REST (YAML/JSON) |
-| **Swagger UI** | 5.0+ | Interfaz web interactiva para probar APIs |
-| **Swashbuckle.AspNetCore** | 6.5+ | Generación automática de OpenAPI desde ASP.NET Core |
-| **NSwag** | 14.0+ | Generación de clientes TypeScript/C# desde OpenAPI |
-| **Spectral** | 6.11+ | Linter para validar especificaciones OpenAPI |
-| **Redoc** | 2.1+ | Documentación estática elegante (alternativa a Swagger UI) |
+## 3. Tecnologías Aprobadas
 
-## 4. Especificaciones Técnicas
+| Componente | Tecnología | Versión mínima | Observaciones |
+|-----------|------------|----------------|---------------|
+| **Spec** | OpenAPI Specification | 3.1+ | YAML/JSON |
+| **UI** | Swagger UI | 5.0+ | Interfaz interactiva |
+| **C# Generator** | Swashbuckle.AspNetCore | 6.5+ | ASP.NET Core |
+| **TS Generator** | ts-openapi | 2.0+ | NestJS/Express |
+| **Linter** | Spectral | 6.11+ | Validación reglas |
+| **Client Gen** | NSwag | 14.0+ | Clientes TypeScript/C# |
+| **Alternativa** | Redoc | 2.1+ | Documentación estática |
 
-### 4.1 Generación Automática con Swashbuckle (.NET)
+> El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
+---
+
+## 4. Requisitos Obligatorios 🔴
+
+- [ ] OpenAPI 3.1+ generado automáticamente
+- [ ] Swashbuckle (C#) o ts-openapi (TypeScript)
+- [ ] Swagger UI habilitado en `/api-docs`
+- [ ] Información de contacto y licencia
+- [ ] XML comments (C#) para descripciones
+- [ ] ProducesResponseType para cada endpoint
+- [ ] Esquemas de seguridad (Bearer JWT)
+- [ ] Versionado en URL (`/api/v1/users`)
+- [ ] Ejemplos de request/response
+- [ ] Validación con Spectral (CI/CD)
+- [ ] Generación de clientes con NSwag
+- [ ] Publicación en portal de desarrolladores
+
+---
+
+## 5. Prohibiciones
+
+- ❌ Documentación manual desactualizada
+- ❌ OpenAPI <3.0 (usar 3.1+)
+- ❌ Endpoints sin ejemplos de response
+- ❌ Schemas genéricos sin propiedades
+- ❌ Swagger UI deshabilitado en producción
+- ❌ Secrets/tokens en ejemplos
+- ❌ Descripciones vacías
+
+---
+
+## 6. Configuración Mínima
+
+### C# con Swashbuckle
 ```csharp
 // Program.cs
 var builder = WebApplication.CreateBuilder(args);
@@ -59,437 +88,119 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "Talma Users API",
         Version = "v1",
-        Description = "API para gestión de usuarios, autenticación y autorización",
+        Description = "Gestión de usuarios, autenticación y autorización",
         Contact = new OpenApiContact
         {
-            Name = "Equipo de Arquitectura",
-            Email = "arquitectura@talma.com",
-            Url = new Uri("https://docs.talma.com")
-        },
-        License = new OpenApiLicense
-        {
-            Name = "Propietario - Uso interno Talma",
-            Url = new Uri("https://talma.com/license")
+            Name = "Arquitectura",
+            Email = "arquitectura@talma.com"
         }
     });
 
-    // Incluir comentarios XML
+    // XML comments
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
 
-    // Soporte para autenticación JWT
+    // JWT Security
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header using Bearer scheme. Example: 'Bearer {token}'",
+        Description = "JWT Authorization: Bearer {token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT"
     });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
-
-    // Usar convenciones de naming
-    options.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
 });
 
 var app = builder.Build();
 
-// Habilitar Swagger en todos los ambientes (desarrollo y producción)
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Talma Users API v1");
-    options.RoutePrefix = "api-docs"; // Accesible en /api-docs
-    options.DisplayRequestDuration();
-    options.EnableDeepLinking();
-    options.EnableFilter();
+    options.RoutePrefix = "api-docs";
 });
 
 app.Run();
 ```
 
-### 4.2 Documentar Endpoints con XML Comments
+```xml
+<!-- .csproj -->
+<PropertyGroup>
+  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  <NoWarn>$(NoWarn);1591</NoWarn>
+</PropertyGroup>
+```
 
 ```csharp
 /// <summary>
 /// Obtiene un usuario por su ID
 /// </summary>
 /// <param name="userId">ID único del usuario (UUID)</param>
-/// <param name="cancellationToken">Token de cancelación</param>
-/// <returns>Datos del usuario</returns>
 /// <response code="200">Usuario encontrado</response>
 /// <response code="404">Usuario no encontrado</response>
-/// <response code="401">No autenticado</response>
 [HttpGet("{userId:guid}")]
 [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
 [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-public async Task<ActionResult<UserDto>> GetUser(
-    Guid userId,
-    CancellationToken cancellationToken)
-{
-    var user = await _userService.GetUserAsync(userId, cancellationToken);
-    
-    if (user == null)
-        return NotFound(new ProblemDetails
-        {
-            Title = "Usuario no encontrado",
-            Status = StatusCodes.Status404NotFound,
-            Detail = $"No existe usuario con ID {userId}"
-        });
-
-    return Ok(user);
-}
-```
-
-### 4.3 Schemas Reutilizables
-
-```csharp
-/// <summary>
-/// Datos de un usuario
-/// </summary>
-public class UserDto
-{
-    /// <summary>
-    /// ID único del usuario
-    /// </summary>
-    /// <example>3fa85f64-5717-4562-b3fc-2c963f66afa6</example>
-    public Guid UserId { get; set; }
-
-    /// <summary>
-    /// Nombre completo del usuario
-    /// </summary>
-    /// <example>Juan Pérez</example>
-    [Required]
-    [MaxLength(200)]
-    public string FullName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Email corporativo
-    /// </summary>
-    /// <example>juan.perez@talma.com</example>
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Indica si el usuario está activo
-    /// </summary>
-    public bool IsActive { get; set; }
-
-    /// <summary>
-    /// Fecha de creación (UTC)
-    /// </summary>
-    public DateTime CreatedAt { get; set; }
-}
-```
-
-### 4.4 Especificación OpenAPI Resultante (YAML)
-
-```yaml
-openapi: 3.1.0
-info:
-  title: Talma Users API
-  version: v1
-  description: API para gestión de usuarios, autenticación y autorización
-  contact:
-    name: Equipo de Arquitectura
-    email: arquitectura@talma.com
-servers:
-  - url: https://api.talma.com/v1
-    description: Producción
-  - url: https://api-dev.talma.com/v1
-    description: Desarrollo
-
-paths:
-  /users/{userId}:
-    get:
-      summary: Obtiene un usuario por su ID
-      operationId: getUser
-      tags:
-        - Users
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: ID único del usuario (UUID)
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Usuario encontrado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDto'
-        '404':
-          description: Usuario no encontrado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-        '401':
-          description: No autenticado
-      security:
-        - Bearer: []
-
-components:
-  schemas:
-    UserDto:
-      type: object
-      required:
-        - fullName
-        - email
-      properties:
-        userId:
-          type: string
-          format: uuid
-          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-        fullName:
-          type: string
-          maxLength: 200
-          example: Juan Pérez
-        email:
-          type: string
-          format: email
-          example: juan.perez@talma.com
-        isActive:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-
-  securitySchemes:
-    Bearer:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-```
-
-## 5. Buenas Prácticas
-
-### 5.1 Versionado en URL
-
-```csharp
-// ✅ Versionado explícito en URL
-[ApiController]
-[Route("api/v{version:apiVersion}/users")]
-[ApiVersion("1.0")]
-public class UsersV1Controller : ControllerBase { }
-
-[ApiController]
-[Route("api/v{version:apiVersion}/users")]
-[ApiVersion("2.0")]
-public class UsersV2Controller : ControllerBase { }
-```
-
-### 5.2 Ejemplos Completos
-
-```csharp
-options.SwaggerDoc("v1", new OpenApiInfo
+public async Task<ActionResult<UserDto>> GetUser(Guid userId)
 {
     // ...
-});
-
-// Agregar ejemplos de requests/responses
-options.SchemaFilter<ExampleSchemaFilter>();
-
-public class ExampleSchemaFilter : ISchemaFilter
-{
-    public void Apply(OpenApiSchema schema, SchemaFilterContext context)
-    {
-        if (context.Type == typeof(CreateUserRequest))
-        {
-            schema.Example = new OpenApiObject
-            {
-                ["fullName"] = new OpenApiString("Ana García"),
-                ["email"] = new OpenApiString("ana.garcia@talma.com"),
-                ["roleId"] = new OpenApiString("admin")
-            };
-        }
-    }
 }
 ```
 
-### 5.3 Validación con Spectral
-
+### Validación con Spectral
 ```yaml
-# .spectral.yml
-extends: spectral:oas
+# .spectral.yaml
+extends: [["spectral:oas", "all"]]
 rules:
   operation-description: error
-  operation-tags: error
   operation-operationId: error
+  operation-tags: error
   no-$ref-siblings: error
-  path-params: error
-  oas3-valid-media-example: warn
 ```
 
 ```bash
-# Validar especificación
-spectral lint openapi.yaml
+# Validar OpenAPI spec
+spectral lint swagger.json
 ```
 
-## 6. Antipatrones
+---
 
-### 6.1 ❌ Sin Documentar Códigos de Error
-
-**Problema**:
-```csharp
-// ❌ Solo documenta caso exitoso
-[HttpGet("{id}")]
-[ProducesResponseType(typeof(UserDto), 200)]
-public async Task<ActionResult<UserDto>> GetUser(int id) { }
-```
-
-**Solución**:
-```csharp
-// ✅ Documenta todos los casos
-[HttpGet("{id}")]
-[ProducesResponseType(typeof(UserDto), 200)]
-[ProducesResponseType(typeof(ProblemDetails), 404)]
-[ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-[ProducesResponseType(401)]
-public async Task<ActionResult<UserDto>> GetUser(int id) { }
-```
-
-### 6.2 ❌ Sin Ejemplos
-
-**Problema**:
-```yaml
-# ❌ Schema sin ejemplos
-UserDto:
-  type: object
-  properties:
-    fullName:
-      type: string
-```
-
-**Solución**:
-```yaml
-# ✅ Schema con ejemplos
-UserDto:
-  type: object
-  properties:
-    fullName:
-      type: string
-      example: Juan Pérez
-```
-
-### 6.3 ❌ Documentación Desactualizada
-
-**Problema**:
-```csharp
-// ❌ XML comments desactualizados
-/// <summary>
-/// Obtiene todos los usuarios (obsoleto: ahora usa paginación)
-/// </summary>
-[HttpGet]
-public async Task<ActionResult<PagedResult<UserDto>>> GetUsers() { }
-```
-
-**Solución**:
-```csharp
-// ✅ Documentación actualizada
-/// <summary>
-/// Obtiene usuarios con paginación
-/// </summary>
-/// <param name="pageNumber">Número de página (base 1)</param>
-/// <param name="pageSize">Tamaño de página (máximo 100)</param>
-[HttpGet]
-public async Task<ActionResult<PagedResult<UserDto>>> GetUsers(
-    [FromQuery] int pageNumber = 1,
-    [FromQuery] int pageSize = 20) { }
-```
-
-### 6.4 ❌ Sin Seguridad Documentada
-
-**Problema**:
-```yaml
-# ❌ Endpoint sin seguridad documentada
-paths:
-  /users:
-    get:
-      # No indica que requiere autenticación
-```
-
-**Solución**:
-```yaml
-# ✅ Seguridad explícita
-paths:
-  /users:
-    get:
-      security:
-        - Bearer: []
-```
-
-## 7. Validación y Testing
-
-### 7.1 Tests de Especificación OpenAPI
-
-```csharp
-[Fact]
-public async Task OpenApiSpec_IsValid()
-{
-    var response = await _client.GetAsync("/swagger/v1/swagger.json");
-    response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-    var spec = await response.Content.ReadAsStringAsync();
-    var document = JsonDocument.Parse(spec);
-
-    document.RootElement.GetProperty("openapi").GetString()
-        .Should().StartWith("3.");
-}
-```
-
-### 7.2 Generación de Clientes
+## 7. Validación
 
 ```bash
-# Generar cliente TypeScript desde OpenAPI
-nswag openapi2tsclient /input:openapi.json /output:clients/UsersApiClient.ts
+# Generar OpenAPI desde app
+curl http://localhost:5000/swagger/v1/swagger.json > swagger.json
 
-# Generar cliente C# desde OpenAPI
-nswag openapi2csclient /input:openapi.json /output:clients/UsersApiClient.cs
+# Validar con Spectral
+spectral lint swagger.json
+
+# Generar cliente TypeScript
+nswag openapi2tsclient /input:swagger.json /output:clients/users-client.ts
+
+# Generar cliente C#
+nswag openapi2csclient /input:swagger.json /output:clients/UsersClient.cs
 ```
+
+**Métricas de cumplimiento:**
+
+| Métrica | Target | Verificación |
+|---------|--------|--------------|  
+| OpenAPI 3.1+ | 100% | `"openapi": "3.1.0"` |
+| Endpoints documentados | 100% | Swagger UI |
+| XML comments | 100% | C# controllers |
+| Spectral validation | 0 errors | CI/CD pipeline |
+
+Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
+
+---
 
 ## 8. Referencias
 
-### Lineamientos Relacionados
-- [Diseño de APIs](/docs/fundamentos-corporativos/lineamientos/arquitectura/diseno-de-apis)
-
-### Estándares Relacionados
+- [arc42](01-arc42.md)
+- [C4 Model](02-c4-model.md)
 - [Diseño REST](../apis/01-diseno-rest.md)
-- [Versionado de APIs](../apis/04-versionado.md)
-- [arc42](./01-arc42.md)
-
-### ADRs Relacionados
-- [ADR-002: Estándar de APIs REST](/docs/decisiones-de-arquitectura/adr-002-estandard-apis-rest)
-- [ADR-017: Versionado de APIs](/docs/decisiones-de-arquitectura/adr-017-versionado-apis)
-
-### Recursos Externos
 - [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Swagger Documentation](https://swagger.io/docs/)
-- [Spectral Rulesets](https://meta.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules)
-
-## 9. Changelog
-
-| Versión | Fecha | Autor | Cambios |
-|---------|-------|-------|---------|
-| 1.0 | 2025-08-08 | Equipo de Arquitectura | Versión inicial con template de 9 secciones |
+- [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
+- [Spectral](https://stoplight.io/open-source/spectral)

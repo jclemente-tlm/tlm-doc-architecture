@@ -5,651 +5,167 @@ title: Versionado de APIs
 description: Estándar de versionado de APIs REST con URL versioning, semantic versioning, estrategias de deprecación y compatibilidad hacia atrás
 ---
 
-# Estándar: Versionado de APIs
+# Estándar Técnico — Versionado de APIs
+
+---
 
 ## 1. Propósito
+Garantizar evolución controlada mediante URL versioning (`/api/v1/users`), semantic versioning adaptado, políticas de deprecación (6 meses mínimo) y compatibilidad hacia atrás sin romper clientes.
 
-Definir la estrategia técnica obligatoria de **versionado de APIs REST** en Talma usando URL versioning, semantic versioning adaptado, políticas de deprecación y compatibilidad hacia atrás para garantizar evolución controlada sin romper clientes existentes.
+---
 
 ## 2. Alcance
 
-### Aplica a
+**Aplica a:**
+- Todas las APIs REST públicas
+- APIs de integración con sistemas externos
+- Microservicios con contratos públicos
 
-- ✅ Todas las APIs REST públicas
-- ✅ APIs de integración con sistemas externos
-- ✅ Microservicios con contratos públicos
-- ✅ APIs con múltiples consumidores
+**No aplica a:**
+- APIs internas temporales (POCs)
+- Endpoints administrativos internos sin SLA
 
-### NO aplica a
+---
 
-- ❌ APIs internas temporales (POCs)
-- ❌ Endpoints administrativos internos sin SLA
+## 3. Tecnologías Aprobadas
 
-## 3. Tecnologías Obligatorias
+| Componente | Tecnología | Versión mínima | Observaciones |
+|-----------|------------|----------------|---------------|
+| **Versionado** | AspNetCore.Mvc.Versioning | 5.0+ | URL segment versioning |
+| **Explorer** | Asp.Versioning.Mvc.ApiExplorer | 6.0+ | Multi-version Swagger |
+| **Documentación** | Swashbuckle.AspNetCore | 6.5+ | Docs por versión |
+| **Estrategia** | URL Segment (recomendado) | - | `/api/v1/users` |
 
-### Stack de Versionado
+> El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
-| Tecnología                               | Versión Mínima | Propósito                       |
-| ---------------------------------------- | -------------- | ------------------------------- |
-| **Microsoft.AspNetCore.Mvc.Versioning** | 5.0+           | Versionado de APIs en ASP.NET   |
-| **Asp.Versioning.Mvc.ApiExplorer**       | 6.0+           | Exploración de versiones        |
-| **Swashbuckle.AspNetCore**               | 6.5+           | Documentación multi-versión     |
+---
 
-### Estrategias de Versionado (Recomendación)
+## 4. Requisitos Obligatorios 🔴
 
-| Estrategia           | Formato                              | Recomendación | Uso                     |
-| -------------------- | ------------------------------------ | ------------- | ----------------------- |
-| **URL Segment**      | `/api/v1/users`, `/api/v2/users`     | ✅ Recomendado | APIs públicas estándar  |
-| Query String         | `/api/users?version=1`               | ⚠️ Alternativo | APIs con cache complejo |
-| Header               | `X-API-Version: 1`                   | ⚠️ Alternativo | APIs con muchas versiones|
-| Media Type           | `Accept: application/vnd.api.v1+json`| ❌ No usar     | Complejo y poco claro   |
+- [ ] URL versioning: `/api/v1/resource`, `/api/v2/resource`
+- [ ] Semantic versioning: MAJOR.MINOR (ejemplo: v1.0, v2.1)
+- [ ] Header `api-supported-versions` en todas las responses
+- [ ] Header `api-deprecated-versions` cuando aplique
+- [ ] Periodo de deprecación mínimo: 6 meses
+- [ ] Documentación Swagger por versión (v1, v2)
+- [ ] Breaking changes requieren nueva versión MAJOR
+- [ ] Non-breaking changes pueden ir en versión actual
+- [ ] Cambios compatibles hacia atrás: nuevos campos opcionales OK
+- [ ] Versionado en controllers con `[ApiVersion("1.0")]`
+- [ ] Default version configurada (v1.0)
+- [ ] Notificación a clientes 3 meses antes de deprecación
 
-| Media Type           | `Accept: application/vnd.api.v1+json`| ❌ No usar     | Complejo y poco claro   |
+---
 
-## 4. Configuración Técnica Obligatoria
+## 5. Prohibiciones
 
-### 4.1 Configuración ASP.NET Core con URL Versioning
+- ❌ Query string versioning (`?version=1`)
+- ❌ Header versioning (`X-API-Version: 1`)
+- ❌ Media type versioning (`application/vnd.api.v1+json`)
+- ❌ Breaking changes sin incrementar MAJOR
+- ❌ Deprecar versiones sin periodo de gracia (mínimo 6 meses)
+- ❌ Eliminar campos existentes en versión actual
+
+---
+
+## 6. Configuración Mínima
 
 ```csharp
 // Program.cs
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
-
-// ✅ Configuración de versionado
 builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.AssumeDefaultVersionWhenUnspecified = true; // Si no especifica, usa v1.0
-    options.ReportApiVersions = true; // Header: api-supported-versions, api-deprecated-versions
-    
-    // ✅ URL Segment (recomendado)
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true; // Headers: api-supported-versions
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
-    
-    // Alternativas (comentadas):
-    // options.ApiVersionReader = new QueryStringApiVersionReader("version");
-    // options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
-    
-    // Combinar múltiples estrategias:
-    // options.ApiVersionReader = ApiVersionReader.Combine(
-    //     new UrlSegmentApiVersionReader(),
-    //     new QueryStringApiVersionReader("version"),
-    //     new HeaderApiVersionReader("X-API-Version")
-    // );
 });
 
-// ✅ API Explorer para Swagger
 builder.Services.AddVersionedApiExplorer(options =>
 {
-    options.GroupNameFormat = "'v'VVV"; // Formato: v1, v2, v2.1
+    options.GroupNameFormat = "'v'VVV"; // v1, v2
     options.SubstituteApiVersionInUrl = true;
 });
-
-var app = builder.Build();
-
-// Middleware
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
 ```
 
-### 4.2 Controller con Múltiples Versiones
-
 ```csharp
-using Microsoft.AspNetCore.Mvc;
-
+// Controller v1
 [ApiController]
-[Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
-[ApiVersion("2.0")]
-public class UsersController : ControllerBase
+[Route("api/v{version:apiVersion}/users")]
+public class UsersV1Controller : ControllerBase
 {
-    private readonly IUserService _userService;
-    private readonly IMapper _mapper;
-
-    public UsersController(IUserService userService, IMapper mapper)
-    {
-        _userService = userService;
-        _mapper = mapper;
-    }
-
-    /// <summary>
-    /// Obtiene lista de usuarios - Versión 1.0
-    /// </summary>
     [HttpGet]
-    [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(List<UserV1Dto>), 200)]
-    public async Task<ActionResult<List<UserV1Dto>>> GetUsersV1()
-    {
-        var users = await _userService.GetAllUsersAsync();
-        var dtos = _mapper.Map<List<UserV1Dto>>(users);
-        return Ok(dtos);
-    }
-
-    /// <summary>
-    /// Obtiene lista de usuarios - Versión 2.0 (con campos adicionales)
-    /// </summary>
-    [HttpGet]
-    [MapToApiVersion("2.0")]
-    [ProducesResponseType(typeof(List<UserV2Dto>), 200)]
-    public async Task<ActionResult<List<UserV2Dto>>> GetUsersV2()
-    {
-        var users = await _userService.GetAllUsersAsync();
-        var dtos = _mapper.Map<List<UserV2Dto>>(users);
-        return Ok(dtos);
-    }
-
-    /// <summary>
-    /// Crea un usuario - Disponible en v1 y v2
-    /// </summary>
-    [HttpPost]
-    [MapToApiVersion("1.0")]
-    [MapToApiVersion("2.0")]
-    [ProducesResponseType(typeof(UserDto), 201)]
-    public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserRequest request)
-    {
-        var user = await _userService.CreateUserAsync(request);
-        return CreatedAtAction(nameof(GetUserV2), new { id = user.Id }, user);
-    }
-}
-```
-
-### 4.3 DTOs Versionados
-
-```csharp
-// V1 - DTO original
-public class UserV1Dto
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public bool Active { get; set; }
+    public IActionResult GetUsers() => Ok(new { version = "v1" });
 }
 
-// V2 - DTO con campos adicionales
-public class UserV2Dto
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public bool Active { get; set; }
-    
-    // ✅ Nuevos campos en v2
-    public string Department { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public List<string> Permissions { get; set; }
-}
-```
-
-### 4.4 Swagger Multi-Versión
-
-```csharp
-using Microsoft.OpenApi.Models;
-
-builder.Services.AddSwaggerGen(options =>
-{
-    // ✅ Documento para v1
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v1.0",
-        Title = "Talma API v1",
-        Description = "API REST para gestión de usuarios - Versión 1 (Stable)",
-        Contact = new OpenApiContact
-        {
-            Name = "Equipo de Arquitectura",
-            Email = "arquitectura@talma.com"
-        }
-    });
-
-    // ✅ Documento para v2
-    options.SwaggerDoc("v2", new OpenApiInfo
-    {
-        Version = "v2.0",
-        Title = "Talma API v2",
-        Description = "API REST para gestión de usuarios - Versión 2 (Latest)",
-        Contact = new OpenApiContact
-        {
-            Name = "Equipo de Arquitectura",
-            Email = "arquitectura@talma.com"
-        }
-    });
-
-    // XML Comments
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    options.IncludeXmlComments(xmlPath);
-
-    // Operación filtrada por versión
-    options.DocInclusionPredicate((version, apiDesc) =>
-    {
-        var versions = apiDesc.ActionDescriptor
-            .GetApiVersionModel(ApiVersionMapping.Explicit | ApiVersionMapping.Implicit);
-        
-        return versions.DeclaredApiVersions.Any(v => $"v{v}" == version);
-    });
-});
-
-// Configurar UI de Swagger
-app.UseSwagger();
-app.UseSwaggerUI(options =>
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
-    options.SwaggerEndpoint("/swagger/v2/swagger.json", "API v2");
-});
-```
-
-## 5. Ejemplos de Implementación
-
-### 5.1 Semantic Versioning Adaptado
-
-```
-MAJOR.MINOR.PATCH
-
-MAJOR (v1 → v2): Breaking Changes
-  - ❌ Eliminar endpoints
-  - ❌ Renombrar campos existentes
-  - ❌ Cambiar tipos de datos (string → int)
-  - ❌ Cambiar semántica de operaciones
-  - ❌ Hacer obligatorio un campo opcional
-
-MINOR (v1.0 → v1.1): Cambios compatibles
-  - ✅ Nuevos endpoints
-  - ✅ Nuevos campos opcionales en respuestas
-  - ✅ Nuevos parámetros opcionales en requests
-  
-PATCH (v1.1.0 → v1.1.1): Bug fixes
-  - ✅ Correcciones de bugs
-  - ✅ Mejoras de performance
-  - ✅ Actualizaciones de documentación
-```
-
-### 5.2 Estrategia de Deprecación
-
-```csharp
-// Marcar versión como deprecated
+// Controller v2
 [ApiController]
-[Route("api/v{version:apiVersion}/[controller]")]
-[ApiVersion("1.0", Deprecated = true)] // ✅ Marcar como deprecated
 [ApiVersion("2.0")]
-public class UsersController : ControllerBase
+[Route("api/v{version:apiVersion}/users")]
+public class UsersV2Controller : ControllerBase
+{
+    [HttpGet]
+    public IActionResult GetUsers() => Ok(new { version = "v2", newField = "added" });
+}
+
+// Controller con múltiples versiones
+[ApiController]
+[ApiVersion("1.0")]
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/orders")]
+public class OrdersController : ControllerBase
 {
     [HttpGet]
     [MapToApiVersion("1.0")]
-    public async Task<ActionResult<List<UserV1Dto>>> GetUsersV1()
-    {
-        // ✅ Agregar headers de deprecación
-        Response.Headers.Append("Sunset", "2026-12-31T23:59:59Z"); // RFC 8594
-        Response.Headers.Append("Deprecation", "true"); // RFC 8594
-        Response.Headers.Append("Link", "</api/v2/users>; rel=\"successor-version\"");
-        
-        _logger.LogWarning(
-            "API v1 deprecated endpoint accessed: {Endpoint}. Client: {UserAgent}",
-            HttpContext.Request.Path,
-            HttpContext.Request.Headers.UserAgent
-        );
-
-        var users = await _userService.GetAllUsersAsync();
-        return Ok(_mapper.Map<List<UserV1Dto>>(users));
-    }
-
+    public IActionResult GetOrdersV1() => Ok(new { version = "v1" });
+    
     [HttpGet]
     [MapToApiVersion("2.0")]
-    public async Task<ActionResult<List<UserV2Dto>>> GetUsersV2()
-    {
-        var users = await _userService.GetAllUsersAsync();
-        return Ok(_mapper.Map<List<UserV2Dto>>(users));
-    }
+    public IActionResult GetOrdersV2() => Ok(new { version = "v2" });
 }
 ```
-
-**Response headers de v1 (deprecated)**:
-
-```http
-HTTP/1.1 200 OK
-Sunset: 2026-12-31T23:59:59Z
-Deprecation: true
-Link: </api/v2/users>; rel="successor-version"
-api-supported-versions: 1.0, 2.0
-api-deprecated-versions: 1.0
-```
-
-### 5.3 Changelog y Migration Guide
-
-**CHANGELOG.md**:
-
-```markdown
-# Changelog
-
-## [2.0.0] - 2026-01-27
-
-### Breaking Changes
-
-- `GET /api/v1/users` ahora requiere paginación obligatoria
-- Campo `user.created_date` renombrado a `user.created_at`
-- Eliminado endpoint deprecado `POST /api/v1/login`
-
-### New Features
-
-- Nuevo endpoint `GET /api/v2/users/{id}/permissions`
-- Agregado soporte para filtrado por múltiples campos
-- Nuevo campo `user.department` en respuestas
-
-### Bug Fixes
-
-- Corregida validación de email para dominios internacionales
-
-## Migration Guide v1 → v2
-
-### Required Changes
-
-1. **Paginación**: Agregar parámetros `page` y `limit`
-2. **Campo renamed**: `created_date` → `created_at`
-3. **Endpoint**: Migrar de `/login` a `/auth/token`
-
-### Code Examples
-
-```javascript
-// v1
-fetch('/api/v1/users');
-
-// v2
-fetch('/api/v2/users?page=1&limit=20');
-```
-```
-
-## 6. Mejores Prácticas
-
-### 6.1 Compatibilidad Hacia Atrás
-
-```csharp
-// ✅ BIEN - Mantener ambas versiones funcionando
-public class UserService
-{
-    public async Task<UserV1Dto> GetUserV1Async(Guid id)
-    {
-        var user = await _repository.GetUserAsync(id);
-        
-        // Mapear solo campos compatibles con v1
-        return new UserV1Dto
-        {
-            Id = user.Id,
-            Name = user.Name,
-            Email = user.Email,
-            Active = user.Active
-        };
-    }
-
-    public async Task<UserV2Dto> GetUserV2Async(Guid id)
-    {
-        var user = await _repository.GetUserAsync(id);
-        
-        // Incluir todos los campos de v2
-        return new UserV2Dto
-        {
-            Id = user.Id,
-            Name = user.Name,
-            Email = user.Email,
-            Active = user.Active,
-            Department = user.Department,
-            CreatedAt = user.CreatedAt,
-            Permissions = user.Permissions
-        };
-    }
-}
-```
-
-### 6.2 Política de Soporte de Versiones
-
-```
-Versión Actual (v2):   Soporte completo (bugs + features)
-Versión Anterior (v1): Soporte de bugs críticos (6 meses)
-Versión -2 (v0):       Deprecated (3 meses de gracia)
-Versión -3:            Eliminada
-
-Timeline:
-  t0: v2 release
-  t+6m: v1 deprecated (solo bugs críticos)
-  t+9m: v1 sunset (eliminada)
-```
-
-### 6.3 Testing de Compatibilidad
-
-```csharp
-public class VersioningIntegrationTests : IClassFixture<IntegrationTestFactory>
-{
-    private readonly HttpClient _client;
-
-    public VersioningIntegrationTests(IntegrationTestFactory factory)
-    {
-        _client = factory.CreateClient();
-    }
-
-    [Fact]
-    public async Task GetUsers_V1_ReturnsOnlyV1Fields()
-    {
-        // Act
-        var response = await _client.GetAsync("/api/v1/users");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        
-        var users = await response.Content.ReadFromJsonAsync<List<UserV1Dto>>();
-        users.Should().NotBeNull();
-        
-        // Verificar que v1 NO incluye campos de v2
-        var firstUser = users.First();
-        firstUser.Should().NotHaveProperty(nameof(UserV2Dto.Department));
-        firstUser.Should().NotHaveProperty(nameof(UserV2Dto.Permissions));
-    }
-
-    [Fact]
-    public async Task GetUsers_V2_ReturnsAllFields()
-    {
-        // Act
-        var response = await _client.GetAsync("/api/v2/users");
-
-        // Assert
-        var users = await response.Content.ReadFromJsonAsync<List<UserV2Dto>>();
-        
-        var firstUser = users.First();
-        firstUser.Department.Should().NotBeNullOrEmpty();
-        firstUser.Permissions.Should().NotBeNull();
-    }
-
-    [Fact]
-    public async Task GetUsers_V1Deprecated_ReturnsDeprecationHeaders()
-    {
-        // Act
-        var response = await _client.GetAsync("/api/v1/users");
-
-        // Assert
-        response.Headers.Should().ContainKey("Sunset");
-        response.Headers.Should().ContainKey("Deprecation");
-        response.Headers.GetValues("Deprecation").Should().Contain("true");
-    }
-}
-```
-
-## 7. Antipatrones (NO Hacer)
-
-### ❌ Antipatrón 1: Modificar Endpoints Existentes Sin Versionar
-
-```csharp
-// ❌ MAL - Cambiar respuesta de v1 existente (rompe clientes)
-[HttpGet]
-public async Task<ActionResult<UserDto>> GetUsers()
-{
-    var users = await _userService.GetAllUsersAsync();
-    
-    // ❌ Agregamos campo nuevo directamente a v1
-    return Ok(users.Select(u => new {
-        u.Id,
-        u.Name,
-        u.Email,
-        u.Department // ❌ Breaking change en v1
-    }));
-}
-
-// ✅ BIEN - Crear nueva versión
-[ApiVersion("1.0")]
-[ApiVersion("2.0")]
-[HttpGet]
-[MapToApiVersion("1.0")]
-public async Task<ActionResult<UserV1Dto>> GetUsersV1()
-{
-    // v1 sin cambios
-    return Ok(_mapper.Map<List<UserV1Dto>>(users));
-}
-
-[HttpGet]
-[MapToApiVersion("2.0")]
-public async Task<ActionResult<UserV2Dto>> GetUsersV2()
-{
-    // v2 con campo nuevo
-    return Ok(_mapper.Map<List<UserV2Dto>>(users));
-}
-```
-
-**Problema**: Clientes de v1 reciben campos inesperados, parseo falla.  
-**Solución**: Crear v2, mantener v1 sin cambios.
-
-### ❌ Antipatrón 2: No Documentar Breaking Changes
-
-```csharp
-// ❌ MAL - Hacer breaking change sin avisar
-[ApiVersion("2.0")] // Sin deprecar v1, sin changelog, sin migration guide
-public class UsersController : ControllerBase
-{
-    [HttpGet]
-    public async Task<ActionResult> GetUsers()
-    {
-        // Campo "created_date" ahora se llama "created_at"
-        // ❌ No hay documentación del cambio
-    }
-}
-
-// ✅ BIEN - Documentar cambios + periodo de transición
-[ApiVersion("1.0", Deprecated = true)] // Marcar deprecated
-[ApiVersion("2.0")]
-public class UsersController : ControllerBase
-{
-    // Crear CHANGELOG.md y MIGRATION_GUIDE.md
-    // Agregar headers Sunset, Deprecation
-    // Logging de uso de v1 para análisis
-}
-```
-
-**Problema**: Clientes se rompen sin aviso previo.  
-**Solución**: CHANGELOG.md + headers de deprecación + 6 meses de gracia.
-
-### ❌ Antipatrón 3: Mantener Demasiadas Versiones Simultáneas
-
-```csharp
-// ❌ MAL - Mantener v1, v2, v3, v4, v5 simultáneamente
-[ApiVersion("1.0")]
-[ApiVersion("2.0")]
-[ApiVersion("3.0")]
-[ApiVersion("4.0")]
-[ApiVersion("5.0")] // ❌ Costo de mantenimiento insostenible
-public class UsersController : ControllerBase { }
-
-// ✅ BIEN - Máximo 2-3 versiones activas
-[ApiVersion("3.0", Deprecated = true)] // Deprecated
-[ApiVersion("4.0")] // Estable
-[ApiVersion("5.0")] // Latest
-public class UsersController : ControllerBase
-{
-    // v1 y v2 ya eliminadas
-}
-```
-
-**Problema**: Costo de mantenimiento, testing y debugging crece exponencialmente.  
-**Solución**: Política estricta: máximo 2-3 versiones activas, eliminar deprecated después de 6 meses.
-
-### ❌ Antipatrón 4: Usar Query String o Headers para APIs Públicas
-
-```csharp
-// ❌ MAL - Query string (no cacheable, complejo)
-options.ApiVersionReader = new QueryStringApiVersionReader("version");
-// URL: /api/users?version=2 ❌
-
-// ❌ MAL - Header (invisible, difícil de debuggear)
-options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
-// Header: X-API-Version: 2 ❌
-
-// ✅ BIEN - URL Segment (claro, cacheable, RESTful)
-options.ApiVersionReader = new UrlSegmentApiVersionReader();
-// URL: /api/v2/users ✅
-```
-
-**Problema**: Query string y headers dificultan cache, debugging y descubrimiento de API.  
-**Solución**: URL Segment para APIs públicas (simple, claro, cacheable).
-
-## 8. Validación y Cumplimiento
-
-### 8.1 Checklist de Implementación
-
-- [ ] **ApiVersioning** configurado con URL Segment
-- [ ] **Swagger** con documentación multi-versión
-- [ ] **DTOs versionados** (V1Dto, V2Dto) separados
-- [ ] **MapToApiVersion** en cada endpoint
-- [ ] **Deprecated** marcado en versiones antiguas
-- [ ] **Headers de deprecación** (Sunset, Deprecation, Link)
-- [ ] **CHANGELOG.md** actualizado con breaking changes
-- [ ] **MIGRATION_GUIDE.md** para cada major version
-- [ ] **Tests de compatibilidad** para cada versión
-- [ ] **Logging** de uso de versiones deprecated
-
-### 8.2 Métricas de Cumplimiento
-
-| Métrica                                | Target | Verificación                         |
-| -------------------------------------- | ------ | ------------------------------------ |
-| APIs con versionado implementado       | 100%   | Configuración de ApiVersioning       |
-| Versiones activas simultáneas          | ≤ 3    | Conteo de ApiVersion attributes      |
-| Tiempo de soporte de versiones deprecated | 6 meses | Política documentada               |
-| Breaking changes documentados          | 100%   | CHANGELOG.md actualizado             |
-| Endpoints con MapToApiVersion          | 100%   | Code review                          |
-
-## 9. Referencias
-
-### Estándares Relacionados
-
-- [Diseño REST](./01-diseno-rest.md) - Implementación técnica de APIs
-- [Seguridad APIs](./02-seguridad-apis.md) - Seguridad en múltiples versiones
-
-### Convenciones Relacionadas
-
-- [Naming Endpoints](../../convenciones/apis/01-naming-endpoints.md) - Nomenclatura con versiones
-- [Formato Respuestas](../../convenciones/apis/03-formato-respuestas.md) - Estructura de respuestas
-
-### Lineamientos Relacionados
-
-- [Desarrollo de APIs](../../lineamientos/desarrollo/desarrollo-de-apis.md) - Lineamientos de APIs
-- [Evolución y Cambios Controlados](../../lineamientos/arquitectura/03-evolucion-y-cambios-controlados.md) - Gestión de cambios
-
-### Principios Relacionados
-
-- [Contratos de Comunicación](../../principios/arquitectura/06-contratos-de-comunicacion.md) - Fundamento de versionado
-- [Evolución Controlada](../../principios/arquitectura/04-evolucion-controlada.md) - Cambios sin romper clientes
-
-### ADRs Relacionados
-
-- [ADR-002: Estándar para APIs REST](../../../decisiones-de-arquitectura/adr-002-estandard-apis-rest.md)
-- [ADR-017: Versionado de APIs](../../../decisiones-de-arquitectura/adr-017-versionado-apis.md)
-
-### Documentación Externa
-
-- [Microsoft API Versioning](https://github.com/microsoft/aspnet-api-versioning) - Librería oficial
-- [Semantic Versioning](https://semver.org/) - SemVer specification
-- [RFC 8594 - Sunset Header](https://www.rfc-editor.org/rfc/rfc8594) - Deprecación estándar
-- [API Evolution Best Practices](https://www.postman.com/api-platform/api-versioning/) - Postman Guide
 
 ---
 
-**Última actualización**: 27 de enero 2026  
-**Responsable**: Equipo de Arquitectura
+## 7. Validación
+
+```bash
+# Verificar versiones soportadas
+curl -I https://api.talma.com/api/v1/users
+# Header: api-supported-versions: 1.0, 2.0
+
+# Acceder a v1
+curl https://api.talma.com/api/v1/users
+
+# Acceder a v2
+curl https://api.talma.com/api/v2/users
+
+# Verificar Swagger por versión
+curl https://api.talma.com/swagger/v1/swagger.json
+curl https://api.talma.com/swagger/v2/swagger.json
+
+# Tests de versionado
+dotnet test --filter Category=Versioning
+```
+
+**Métricas de cumplimiento:**
+
+| Métrica | Target | Verificación |
+|---------|--------|--------------|  
+| URL versioning | 100% | `/api/v1/` en todas las rutas |
+| Header `api-supported-versions` | 100% | `curl -I` muestra header |
+| Swagger por versión | 100% | `/swagger/v1`, `/swagger/v2` |
+| Periodo deprecación | ≥ 6 meses | Verificar changelog |
+
+Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
+
+---
+
+## 8. Referencias
+
+- [ADR-017: Versionado de APIs](../../../decisiones-de-arquitectura/adr-017-versionado-apis.md)
+- [Diseño REST](./01-diseno-rest.md)
+- [ASP.NET Core API Versioning](https://github.com/dotnet/aspnet-api-versioning)
+- [Semantic Versioning](https://semver.org/)
