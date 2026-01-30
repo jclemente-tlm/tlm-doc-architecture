@@ -36,57 +36,15 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio              | ECS Fargate | EKS | Azure ACI | Google Cloud Run | Docker Swarm | Nomad |
-|----------------------|-------------|-----|-----------|------------------|--------------|-------|
-| **Agnosticidad**     | ❌ Lock-in AWS | ✅ Estándar K8s | ❌ Lock-in Azure | ❌ Lock-in GCP | ✅ Docker estándar | ✅ Agnóstico |
-| **Operación**        | ✅ Serverless, sin gestión | 🟡 Requiere gestión cluster | ✅ Serverless | ✅ Serverless | 🟡 Manual | 🟡 Manual |
-| **Seguridad**        | ✅ IAM, VPC, Secrets | ✅ IAM, RBAC | ✅ Azure RBAC | ✅ GCP IAM | 🟡 Limitada | 🟡 Limitada |
-| **Ecosistema .NET**  | ✅ Excelente | ✅ Excelente | ✅ Nativo Microsoft | ✅ Excelente | ✅ Excelente | ✅ Excelente |
-| **Escalabilidad**    | ✅ Automática | ✅ Flexible | ✅ Automática | ✅ Automática | 🟡 Manual | 🟡 Manual |
-| **Complejidad**      | ✅ Muy simple | ❌ Complejo (K8s) | ✅ Simple | ✅ Simple | ✅ Simple | ✅ Simple |
-| **Costos**           | 🟡 Premium serverless | 🟡 Nodos + gestión | 🟡 Pago por uso | 🟡 Pago por uso | ✅ Solo infraestructura | ✅ Solo infraestructura |
-
-### Matriz de Decisión
-
-| Solución                | Agnosticidad | Operación | Seguridad | Escalabilidad | Recomendación         |
-|------------------------|--------------|-----------|-----------|---------------|-----------------------|
-| **ECS Fargate**        | Mala         | Excelente | Excelente | Excelente     | ✅ **Seleccionada**    |
-| **EKS**                | Excelente    | Buena     | Excelente | Excelente     | 🟡 Alternativa         |
-| **Azure ACI**          | Mala         | Excelente | Excelente | Excelente     | ❌ Descartada          |
-| **Google Cloud Run**   | Mala         | Excelente | Excelente | Excelente     | ❌ Descartada          |
-| **Docker Swarm**       | Excelente    | Limitada  | Limitada  | Limitada      | ❌ Descartada          |
-| **Nomad**              | Excelente    | Limitada  | Limitada  | Limitada      | ❌ Descartada          |
-
-## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
-
-> **Metodología y supuestos:** Se asume un uso promedio de 5 servicios, 2 vCPU/4GB cada uno, 4 países. El TCO (Total Cost of Ownership) se calcula para un horizonte de 3 años, incluyendo costos directos y estimaciones de operación. Los valores pueden variar según volumen y proveedor.
-
-| Solución                | Licenciamiento     | Infraestructura | Operación         | TCO 3 años         |
-|------------------------|-------------------|----------------|-------------------|--------------------|
-| ECS Fargate            | Incluido          | Pago por uso   | US$0              | US$129,600         |
-| Kubernetes (EKS)       | US$2,160/año      | US$21,600/año  | US$60,000/año     | US$251,280         |
-| Azure ACI              | Incluido          | Pago por uso   | US$0              | US$155,520         |
-| Google Cloud Run       | Incluido          | Pago por uso   | US$0              | US$138,240         |
-| Docker Swarm           | OSS               | US$14,400/año  | US$36,000/año     | US$151,200         |
-| Nomad                  | OSS               | US$10,800/año  | US$24,000/año     | US$104,400         |
-
----
-
-## Consideraciones técnicas y riesgos
-
-### Límites clave
-
-- **ECS Fargate:** hasta 120 tareas por servicio, 50 servicios por cluster, 30,000 tareas por cuenta.
-- **EKS:** límite de nodos y pods por cluster, depende de configuración.
-- **Azure ACI:** límite de instancias y recursos por región.
-- **Google Cloud Run:** límite de instancias y concurrencia por servicio.
-- **Docker Swarm/Nomad:** sin límite, depende de infraestructura propia.
-
-### Riesgos y mitigación
-
-- **Lock-in AWS:** mitigado con uso de contenedores estándar y pipelines portables.
-- **Complejidad operativa K8s:** mitigada con automatización y capacitación.
-- **Costos serverless:** monitoreo y revisión anual de uso y dimensionamiento.
+| Criterio            | ECS Fargate                | EKS                         | Azure ACI           | Google Cloud Run | Docker Swarm            | Nomad                   |
+| ------------------- | -------------------------- | --------------------------- | ------------------- | ---------------- | ----------------------- | ----------------------- |
+| **Agnosticidad**    | ❌ Lock-in AWS             | ✅ Estándar K8s             | ❌ Lock-in Azure    | ❌ Lock-in GCP   | ✅ Docker estándar      | ✅ Agnóstico            |
+| **Operación**       | ✅ Serverless, sin gestión | 🟡 Requiere gestión cluster | ✅ Serverless       | ✅ Serverless    | 🟡 Manual               | 🟡 Manual               |
+| **Seguridad**       | ✅ IAM, VPC, Secrets       | ✅ IAM, RBAC                | ✅ Azure RBAC       | ✅ GCP IAM       | 🟡 Limitada             | 🟡 Limitada             |
+| **Ecosistema .NET** | ✅ Excelente               | ✅ Excelente                | ✅ Nativo Microsoft | ✅ Excelente     | ✅ Excelente            | ✅ Excelente            |
+| **Escalabilidad**   | ✅ Automática              | ✅ Flexible                 | ✅ Automática       | ✅ Automática    | 🟡 Manual               | 🟡 Manual               |
+| **Complejidad**     | ✅ Muy simple              | ❌ Complejo (K8s)           | ✅ Simple           | ✅ Simple        | ✅ Simple               | ✅ Simple               |
+| **Costos**          | 🟡 Premium serverless      | 🟡 Nodos + gestión          | 🟡 Pago por uso     | 🟡 Pago por uso  | ✅ Solo infraestructura | ✅ Solo infraestructura |
 
 ---
 
@@ -115,8 +73,19 @@ Se selecciona **ECS Fargate** como solución estándar para el despliegue de mic
 
 ## ⚠️ CONSECUENCIAS
 
-- Todos los microservicios y sistemas se despliegan como tareas Fargate en ECS
-- El equipo se enfoca en desarrollo y operación de servicios, no en infraestructura
+### Positivas
+
+- Modelo serverless: sin gestión de servidores ni parches
+- Despliegue y escalado automático según demanda
+- Integración nativa con IAM, VPC, CloudWatch, Secrets Manager
+- Seguridad mejorada: aislamiento de tareas y control granular
+- Reducción de complejidad operativa
+
+### Negativas (Riesgos y Mitigaciones)
+
+- **Lock-in AWS:** mitigado con contenedores estándar Docker y pipelines portables
+- **Costos serverless premium:** mitigados con monitoreo, dimensionamiento adecuado y Savings Plans
+- **Límites por cuenta:** mitigados con planificación de cuotas y multi-account strategy
 
 ---
 

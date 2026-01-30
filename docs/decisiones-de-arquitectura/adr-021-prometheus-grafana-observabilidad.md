@@ -33,40 +33,16 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio              | Prometheus + Grafana + Loki + Jaeger | ELK Stack | SaaS (Datadog) | AWS CloudWatch + X-Ray |
-|----------------------|--------------------------------------|-----------|----------------|----------------------|
-| **Agnosticidad**     | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ❌ Lock-in vendor | ❌ Lock-in AWS |
-| **Operación**        | 🟡 Self-managed | 🟡 Self-managed | ✅ Gestionado | ✅ Gestionado |
-| **Correlación**      | ✅ OpenTelemetry | 🟡 Manual | ✅ Nativa | ✅ Nativa |
-| **Ecosistema .NET**  | ✅ OpenTelemetry SDK | ✅ Serilog/Elastic | ✅ APM integrado | ✅ AWS SDK |
-| **Costos**           | ✅ Solo infraestructura | ✅ Solo infraestructura | ❌ Alto por host/métrica | 🟡 Pago por uso |
-| **Visualización**    | ✅ Grafana excelente | ✅ Kibana maduro | ✅ Dashboards avanzados | 🟡 CloudWatch básico |
-| **Performance**      | ✅ Alta escala | 🟡 Requiere tuning | ✅ Optimizado | ✅ Bueno |
-| **Alertas**          | ✅ AlertManager flexible | ✅ Watcher/Alerting | ✅ Alertas avanzadas | ✅ CloudWatch Alarms |
-
-### Matriz de Decisión
-
-| Solución                  | Agnosticidad | Correlación | Costos | Visualización | Recomendación         |
-|--------------------------|--------------|-------------|--------|---------------|-----------------------|
-| **Prometheus + Grafana + Loki + Jaeger** | Excelente    | Excelente   | Excelente | Excelente     | ✅ **Seleccionada**    |
-| **ELK Stack**            | Excelente    | Buena       | Excelente | Muy buena     | 🟡 Alternativa         |
-| **Datadog/New Relic**    | Mala         | Excelente   | Mala   | Excelente     | ❌ Descartada          |
-| **AWS CloudWatch**       | Mala         | Buena       | Media  | Básica        | ❌ Descartada          |
-
----
-
-## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
-
-> **Supuesto:** 10 microservicios, 100M métricas/mes, 500GB logs/mes, retención 30 días
-
-| Solución         | Licenciamiento | Infraestructura | Operación      | TCO 3 años   |
-|------------------|---------------|----------------|---------------|--------------|
-| Prometheus Stack | OSS           | US$12,000      | US$24,000     | US$36,000    |
-| ELK Stack        | OSS           | US$18,000      | US$36,000     | US$54,000    |
-| Datadog          | US$180K       | US$0           | US$0          | US$180,000   |
-| CloudWatch       | Pago por uso  | US$0           | US$0          | US$72,000    |
-
----
+| Criterio            | Prometheus + Grafana + Loki + Jaeger | ELK Stack               | SaaS (Datadog)           | AWS CloudWatch + X-Ray |
+| ------------------- | ------------------------------------ | ----------------------- | ------------------------ | ---------------------- |
+| **Agnosticidad**    | ✅ OSS, multi-cloud                  | ✅ OSS, multi-cloud     | ❌ Lock-in vendor        | ❌ Lock-in AWS         |
+| **Operación**       | 🟡 Self-managed                      | 🟡 Self-managed         | ✅ Gestionado            | ✅ Gestionado          |
+| **Correlación**     | ✅ OpenTelemetry                     | 🟡 Manual               | ✅ Nativa                | ✅ Nativa              |
+| **Ecosistema .NET** | ✅ OpenTelemetry SDK                 | ✅ Serilog/Elastic      | ✅ APM integrado         | ✅ AWS SDK             |
+| **Costos**          | ✅ Solo infraestructura              | ✅ Solo infraestructura | ❌ Alto por host/métrica | 🟡 Pago por uso        |
+| **Visualización**   | ✅ Grafana excelente                 | ✅ Kibana maduro        | ✅ Dashboards avanzados  | 🟡 CloudWatch básico   |
+| **Performance**     | ✅ Alta escala                       | 🟡 Requiere tuning      | ✅ Optimizado            | ✅ Bueno               |
+| **Alertas**         | ✅ AlertManager flexible             | ✅ Watcher/Alerting     | ✅ Alertas avanzadas     | ✅ CloudWatch Alarms   |
 
 ## ✔️ DECISIÓN
 
@@ -99,68 +75,17 @@ Se selecciona el **Stack OSS Unificado** con:
 ## ⚠️ CONSECUENCIAS
 
 ### Positivas
+
 - Visibilidad completa del stack con correlación logs-métricas-trazas
 - Costos predecibles (solo infraestructura)
 - Flexibilidad para migrar entre clouds manteniendo observabilidad
 - Grafana como única herramienta de visualización
 
 ### Negativas
+
 - Operación self-managed (requiere equipo SRE)
 - Curva de aprendizaje Prometheus/Loki/Jaeger
 - Requiere automatización con Terraform para alta disponibilidad
-
-### Implementación requerida
-- Todos los servicios .NET deben instrumentar con OpenTelemetry SDK
-- Serilog configurado con sink a Loki (JSON estructurado)
-- Métricas custom exportadas a Prometheus
-- Trace IDs propagados en headers HTTP
-- Dashboards Grafana por servicio y por SLO
-- Alertas en AlertManager para SLIs críticos
-
----
-
-## 🏗️ ARQUITECTURA DE DESPLIEGUE
-
-```yaml
-Observabilidad Stack:
-  Métricas:
-    - Prometheus: scraping, TSDB, retention 30d
-    - Grafana: visualización, dashboards, alertas
-  
-  Logs:
-    - Serilog: structured logging (.NET)
-    - Loki: log aggregation, indexing
-    - Grafana: queries, visualización
-  
-  Trazas:
-    - OpenTelemetry SDK: instrumentación .NET
-    - Jaeger: distributed tracing, UI
-    - Grafana: visualización integrada
-  
-  Correlación:
-    - TraceID/SpanID en logs vía Serilog enrichers
-    - Exemplars en Prometheus vinculan métricas → trazas
-    - Grafana Explore: navegación unificada
-```
-
----
-
-## 📊 MÉTRICAS Y MONITOREO
-
-### KPIs del Stack de Observabilidad
-
-- **Disponibilidad Prometheus:** > 99.9%
-- **Latencia de ingesta Loki:** < 500ms p95
-- **Retención métricas:** 30 días
-- **Retención logs:** 30 días (hot), 90 días (cold)
-- **Retención trazas:** 7 días (sampling 10%)
-
-### SLOs de Servicios
-
-- **Error rate:** < 1%
-- **Latency p95:** < 200ms
-- **Saturation:** CPU < 70%, Memory < 80%
-- **Availability:** > 99.5%
 
 ---
 

@@ -36,56 +36,17 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio              | PostgreSQL | MySQL | SQL Server | Oracle | Aurora |
-|----------------------|------------|-------|------------|--------|--------|
-| **Agnosticidad**     | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle | ❌ Lock-in AWS |
-| **Operación**        | ✅ Simple, automatizable | ✅ Simple | 🟡 Compleja | 🟡 Compleja | ✅ Gestionado |
-| **Seguridad**        | ✅ Avanzada, RLS, cifrado | 🟡 Básica | ✅ Enterprise | ✅ Enterprise | ✅ Enterprise |
-| **Ecosistema .NET**  | ✅ Excelente (Npgsql) | ✅ Muy bueno | ✅ Nativo | ✅ Bueno | ✅ Compatible |
-| **Escalabilidad**    | ✅ Particionamiento, sharding | 🟡 Limitada | 🟡 Always On | 🟡 RAC | ✅ Automática |
-| **Extensibilidad**   | ✅ Plugins, JSONB, PostGIS | 🟡 Limitada | 🟡 Limitada | ✅ Máxima | 🟡 Limitada |
-| **Costos**           | ✅ Gratuito | ✅ Gratuito | ❌ Muy caro | ❌ Muy caro | 🟡 Pago por uso |
-| **Comunidad**        | ✅ Muy activa | ✅ Muy activa | ✅ Soporte Microsoft | ✅ Soporte enterprise | 🟡 Limitada AWS |
-| **Portabilidad**     | ✅ Multi-plataforma | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada | ❌ AWS |
-
-### Matriz de Decisión
-
-| Solución        | Agnosticidad | Operación | Seguridad | Ecosistema .NET | Recomendación         |
-|-----------------|--------------|-----------|-----------|-----------------|-----------------------|
-| **PostgreSQL**  | Excelente    | Excelente | Excelente | Excelente       | ✅ **Seleccionada**    |
-| **MySQL**       | Excelente    | Excelente | Buena     | Muy buena       | 🟡 Considerada         |
-| **SQL Server**  | Mala         | Buena     | Excelente | Nativo          | 🟡 Alternativa         |
-| **Oracle**      | Mala         | Buena     | Excelente | Buena           | ❌ Descartada          |
-| **Aurora**      | Mala         | Excelente | Excelente | Compatible      | ❌ Descartada          |
-
-## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
-
-> **Metodología y supuestos:** Se asume un uso promedio de 5 bases de datos, 4 países, alta disponibilidad y replicación. El TCO (Total Cost of Ownership) se calcula para un horizonte de 3 años, incluyendo costos directos y estimaciones de operación. Los valores pueden variar según volumen y proveedor.
-
-| Solución                | Licenciamiento     | Infraestructura | Operación         | TCO 3 años         |
-|------------------------|-------------------|----------------|-------------------|--------------------|
-| PostgreSQL             | OSS               | US$7,200/año   | US$18,000/año     | US$75,600          |
-| MySQL/MariaDB          | OSS               | US$6,000/año   | US$15,000/año     | US$63,000          |
-| SQL Server             | US$60,000/año     | US$7,200/año   | US$24,000/año     | US$273,600         |
-| Oracle                 | US$120,000/año    | US$10,800/año  | US$36,000/año     | US$500,400         |
-| Aurora PostgreSQL      | Pago por uso      | US$0           | US$0              | US$108,000         |
-
----
-
-## Consideraciones técnicas y riesgos
-
-### Límites clave
-
-- **PostgreSQL:** sin límite práctico, escalabilidad horizontal con Citus/sharding
-- **MySQL/MariaDB:** sin límite práctico, escalabilidad limitada
-- **SQL Server/Oracle:** límites por licencia y plataforma
-- **Aurora:** límites AWS, escalabilidad automática
-
-### Riesgos y mitigación
-
-- **Lock-in propietario:** mitigado usando solo tecnologías OSS y modelos portables
-- **Complejidad tuning:** mitigada con automatización y monitoreo
-- **Costos variables cloud:** monitoreo y revisión anual
+| Criterio            | PostgreSQL                    | MySQL               | SQL Server           | Oracle                | Aurora          |
+| ------------------- | ----------------------------- | ------------------- | -------------------- | --------------------- | --------------- |
+| **Agnosticidad**    | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle     | ❌ Lock-in AWS  |
+| **Operación**       | ✅ Simple, automatizable      | ✅ Simple           | 🟡 Compleja          | 🟡 Compleja           | ✅ Gestionado   |
+| **Seguridad**       | ✅ Avanzada, RLS, cifrado     | 🟡 Básica           | ✅ Enterprise        | ✅ Enterprise         | ✅ Enterprise   |
+| **Ecosistema .NET** | ✅ Excelente (Npgsql)         | ✅ Muy bueno        | ✅ Nativo            | ✅ Bueno              | ✅ Compatible   |
+| **Escalabilidad**   | ✅ Particionamiento, sharding | 🟡 Limitada         | 🟡 Always On         | 🟡 RAC                | ✅ Automática   |
+| **Extensibilidad**  | ✅ Plugins, JSONB, PostGIS    | 🟡 Limitada         | 🟡 Limitada          | ✅ Máxima             | 🟡 Limitada     |
+| **Costos**          | ✅ Gratuito                   | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro           | 🟡 Pago por uso |
+| **Comunidad**       | ✅ Muy activa                 | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise | 🟡 Limitada AWS |
+| **Portabilidad**    | ✅ Multi-plataforma           | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada           | ❌ AWS          |
 
 ---
 
@@ -116,8 +77,20 @@ Se selecciona **PostgreSQL** como base de datos relacional estándar para todos 
 
 ## ⚠️ CONSECUENCIAS
 
-- Todos los servicios nuevos deben usar PostgreSQL salvo justificación técnica documentada
-- Se debe estandarizar la gestión de migraciones, backups y automatización
+### Positivas
+
+- Transacciones ACID y consistencia fuerte para datos críticos
+- Multi-tenancy avanzado con schemas, RLS y particionamiento
+- Extensibilidad: JSONB, PostGIS, TimescaleDB, custom extensions
+- Portabilidad total entre clouds y on-premises
+- Replicación y alta disponibilidad nativas
+- Comunidad activa y ecosistema maduro
+
+### Negativas (Riesgos y Mitigaciones)
+
+- **Complejidad tuning:** mitigada con automatización, monitoreo Prometheus y buenas prácticas documentadas
+- **Escalabilidad horizontal:** limitada vs NoSQL - mitigada con particionamiento, Citus y sharding
+- **Operación self-managed:** mitigada con automatización Terraform y managed services (RDS)
 
 ---
 

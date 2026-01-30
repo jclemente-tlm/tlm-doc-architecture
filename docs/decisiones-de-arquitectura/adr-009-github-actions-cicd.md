@@ -37,56 +37,14 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio              | GitHub Actions | GitLab CI/CD | Jenkins | Azure DevOps | AWS CodePipeline | CircleCI |
-|----------------------|----------------|--------------|---------|--------------|------------------|----------|
-| **Agnosticidad**     | 🟡 Vinculado a GitHub | ✅ Muy agnóstico | ✅ Totalmente agnóstico | 🟡 Ecosistema Microsoft | ❌ Lock-in AWS | 🟡 Agnóstico |
-| **Operación**        | ✅ Gestionado | ✅ SaaS/self-hosted | 🟡 Manual | ✅ Gestionado | ✅ Gestionado | ✅ Gestionado |
-| **Seguridad**        | ✅ Integrada | ✅ Integrada | 🟡 Limitada | ✅ Integrada | ✅ Integrada | ✅ Integrada |
-| **Ecosistema .NET**  | ✅ Excelente | ✅ Muy bueno | ✅ Bueno | ✅ Nativo | ✅ Bueno | ✅ Bueno |
-| **Extensibilidad**   | ✅ Marketplace | 🟡 Bueno | ✅ Plugins | 🟡 Limitado | 🟡 Básico | 🟡 Limitado |
-| **Costos**           | ✅ Plan gratuito | ✅ Plan gratuito | 🟡 Infraestructura | ✅ Plan gratuito | 🟡 Por uso | 🟡 Por uso |
-
-### Matriz de Decisión
-
-| Solución                | Agnosticidad | Operación | Seguridad | Ecosistema .NET | Recomendación         |
-|------------------------|--------------|-----------|-----------|-----------------|-----------------------|
-| **GitHub Actions**     | Buena        | Excelente | Excelente | Excelente       | ✅ **Seleccionada**    |
-| **GitLab CI/CD**       | Excelente    | Excelente | Excelente | Muy buena       | 🟡 Alternativa         |
-| **Azure DevOps**       | Buena        | Excelente | Excelente | Excelente       | 🟡 Considerada         |
-| **Jenkins**            | Excelente    | Manual    | Limitada  | Buena           | ❌ Descartada          |
-| **AWS CodePipeline**   | Mala         | Excelente | Excelente | Buena           | ❌ Descartada          |
-| **CircleCI**           | Buena        | Excelente | Excelente | Buena           | ❌ Descartada          |
-
-## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
-
-> **Metodología y supuestos:** Se asume un uso promedio de 5 servicios, 200 builds/mes, 4 entornos. El TCO (Total Cost of Ownership) se calcula para un horizonte de 3 años, incluyendo costos directos y estimaciones de operación. Los valores pueden variar según volumen y proveedor.
-
-| Solución                | Licenciamiento     | Infraestructura | Operación         | TCO 3 años         |
-|------------------------|-------------------|----------------|-------------------|--------------------|
-| GitHub Actions         | Incluido          | US$0           | US$3,600/año      | US$10,800          |
-| GitLab CI/CD           | US$4,800/año      | US$0           | US$2,400/año      | US$21,600          |
-| Azure DevOps           | Incluido          | US$0           | US$4,800/año      | US$14,400          |
-| CircleCI               | US$9,000/año      | US$0           | US$1,800/año      | US$32,400          |
-| Jenkins                | OSS               | US$7,200/año   | US$18,000/año     | US$75,600          |
-| AWS CodePipeline       | US$3,600/año      | US$0           | US$6,000/año      | US$28,800          |
-
----
-
-## Consideraciones técnicas y riesgos
-
-### Límites clave
-
-- **GitHub Actions:** límites de minutos y almacenamiento según plan
-- **GitLab CI/CD:** límites por runners y almacenamiento
-- **Jenkins:** depende de infraestructura propia
-- **Azure DevOps:** límites por organización y agentes
-- **AWS CodePipeline/CircleCI:** límites por cuenta y uso
-
-### Riesgos y mitigación
-
-- **Lock-in plataforma:** mitigado con pipelines como código y contenedores
-- **Complejidad Jenkins:** mitigada con automatización y documentación
-- **Costos variables:** monitoreo y revisión anual
+| Criterio            | GitHub Actions        | GitLab CI/CD        | Jenkins                 | Azure DevOps            | AWS CodePipeline | CircleCI      |
+| ------------------- | --------------------- | ------------------- | ----------------------- | ----------------------- | ---------------- | ------------- |
+| **Agnosticidad**    | 🟡 Vinculado a GitHub | ✅ Muy agnóstico    | ✅ Totalmente agnóstico | 🟡 Ecosistema Microsoft | ❌ Lock-in AWS   | 🟡 Agnóstico  |
+| **Operación**       | ✅ Gestionado         | ✅ SaaS/self-hosted | 🟡 Manual               | ✅ Gestionado           | ✅ Gestionado    | ✅ Gestionado |
+| **Seguridad**       | ✅ Integrada          | ✅ Integrada        | 🟡 Limitada             | ✅ Integrada            | ✅ Integrada     | ✅ Integrada  |
+| **Ecosistema .NET** | ✅ Excelente          | ✅ Muy bueno        | ✅ Bueno                | ✅ Nativo               | ✅ Bueno         | ✅ Bueno      |
+| **Extensibilidad**  | ✅ Marketplace        | 🟡 Bueno            | ✅ Plugins              | 🟡 Limitado             | 🟡 Básico        | 🟡 Limitado   |
+| **Costos**          | ✅ Plan gratuito      | ✅ Plan gratuito    | 🟡 Infraestructura      | ✅ Plan gratuito        | 🟡 Por uso       | 🟡 Por uso    |
 
 ---
 
@@ -115,8 +73,19 @@ Se selecciona **GitHub Actions** como plataforma estándar de CI/CD para todos l
 
 ## ⚠️ CONSECUENCIAS
 
-- Todos los servicios deben definir pipelines en GitHub Actions
-- Se recomienda estandarizar workflows y plantillas
+### Positivas
+
+- Integración nativa con GitHub y repositorios existentes
+- Workflows reutilizables y plantillas para distintos stacks
+- Marketplace de acciones y comunidad activa
+- Seguridad, auditoría y control de permisos granular
+- Costos optimizados y escalabilidad gestionada
+
+### Negativas (Riesgos y Mitigaciones)
+
+- **Lock-in GitHub:** mitigado con pipelines como código (YAML) y contenedores estándar
+- **Límites de minutos:** mitigados con plan optimizado y monitoreo de uso
+- **Complejidad workflows:** mitigada con plantillas corporativas y documentación
 
 ---
 

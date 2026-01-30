@@ -35,52 +35,24 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio                | Serilog                  | OpenTelemetry Logging | NLog                  | MS.Extensions.Logging |
-|------------------------|--------------------------|----------------------|-----------------------|----------------------|
-| **Logging estructurado**| ✅ Nativo, JSON          | ✅ Estándar CNCF      | 🟡 Configurable       | 🟡 Básico            |
-| **Ecosistema .NET**    | ✅ Excelente             | ✅ Oficial            | ✅ Muy maduro         | ✅ Nativo            |
-| **Sinks/Destinos**     | ✅ 200+ sinks            | ✅ Exporters extensos | ✅ Muchos targets      | 🟡 Providers básicos |
-| **Rendimiento**        | ✅ Muy optimizado        | ✅ Bueno              | ✅ Excelente          | ✅ Bueno             |
-| **Multi-tenancy**      | ✅ Contexto enriquecido  | ✅ Contexto avanzado  | 🟡 Manual             | 🟡 Scopes básicos    |
-| **Agnosticidad**       | ✅ Totalmente agnóstico  | ✅ Estándar abierto   | ✅ Totalmente agnóstico| ✅ Agnóstico         |
-| **Madurez**            | ✅ Muy maduro, activo    | 🟡 Emergente          | ✅ Muy maduro         | ✅ Oficial           |
+| Criterio                 | Serilog                 | OpenTelemetry Logging | NLog                    | MS.Extensions.Logging |
+| ------------------------ | ----------------------- | --------------------- | ----------------------- | --------------------- |
+| **Logging estructurado** | ✅ Nativo, JSON         | ✅ Estándar CNCF      | 🟡 Configurable         | 🟡 Básico             |
+| **Ecosistema .NET**      | ✅ Excelente            | ✅ Oficial            | ✅ Muy maduro           | ✅ Nativo             |
+| **Sinks/Destinos**       | ✅ 200+ sinks           | ✅ Exporters extensos | ✅ Muchos targets       | 🟡 Providers básicos  |
+| **Rendimiento**          | ✅ Muy optimizado       | ✅ Bueno              | ✅ Excelente            | ✅ Bueno              |
+| **Multi-tenancy**        | ✅ Contexto enriquecido | ✅ Contexto avanzado  | 🟡 Manual               | 🟡 Scopes básicos     |
+| **Agnosticidad**         | ✅ Totalmente agnóstico | ✅ Estándar abierto   | ✅ Totalmente agnóstico | ✅ Agnóstico          |
+| **Madurez**              | ✅ Muy maduro, activo   | 🟡 Emergente          | ✅ Muy maduro           | ✅ Oficial            |
 
 ### Matriz de Decisión
 
-| Solución                  | Estructurado | Ecosistema .NET | Sinks      | Rendimiento | Recomendación         |
-|--------------------------|--------------|-----------------|------------|-------------|-----------------------|
-| **Serilog**              | Excelente    | Excelente       | Excelente  | Excelente   | ✅ **Seleccionada**    |
-| **OpenTelemetry Logging**| Excelente    | Bueno           | Extensos   | Bueno       | 🟡 Alternativa         |
-| **NLog**                 | Configurable | Muy maduro      | Muchos     | Excelente   | 🟡 Considerada         |
-| **MS.Extensions.Logging**| Básico       | Nativo          | Básicos    | Bueno       | 🟡 Considerada         |
-
----
-
-## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
-
-> **Supuesto:** 5 servicios, 100GB logs/mes, retención 90 días. Costos estimados para almacenamiento, operación y monitoreo.
-
-| Solución                | Licenciamiento | Infraestructura | Operación      | TCO 3 años   |
-|-------------------------|---------------|----------------|---------------|--------------|
-| Serilog + Loki          | OSS           | US$4,800/año   | US$15,000/año | US$59,400    |
-| Serilog + ELK Stack     | OSS           | US$7,200/año   | US$18,000/año | US$75,600    |
-| Serilog + Seq           | US$3,600/año  | US$3,600/año   | US$12,000/año | US$57,600    |
-| OpenTelemetry + Jaeger  | OSS           | US$6,000/año   | US$24,000/año | US$90,000    |
-
----
-
-## Consideraciones técnicas y riesgos
-
-### Límites clave
-
-- **Loki/ELK/Seq:** límites por volumen, retención y escalabilidad
-- **OpenTelemetry:** integración emergente, requiere validación
-
-### Riesgos y mitigación
-
-- **Lock-in de sinks propietarios:** mitigado usando sinks OSS y configuración desacoplada
-- **Complejidad operativa ELK:** mitigada con automatización y monitoreo
-- **Costos variables cloud:** monitoreo y revisión anual
+| Solución                  | Estructurado | Ecosistema .NET | Sinks     | Rendimiento | Recomendación       |
+| ------------------------- | ------------ | --------------- | --------- | ----------- | ------------------- |
+| **Serilog**               | Excelente    | Excelente       | Excelente | Excelente   | ✅ **Seleccionada** |
+| **OpenTelemetry Logging** | Excelente    | Bueno           | Extensos  | Bueno       | 🟡 Alternativa      |
+| **NLog**                  | Configurable | Muy maduro      | Muchos    | Excelente   | 🟡 Considerada      |
+| **MS.Extensions.Logging** | Básico       | Nativo          | Básicos   | Bueno       | 🟡 Considerada      |
 
 ---
 
@@ -107,37 +79,31 @@ Se selecciona **Serilog** como librería estándar de logging estructurado para 
 
 ## ⚠️ CONSECUENCIAS
 
-- Todos los servicios nuevos `.NET` deben usar `Serilog` para logging
-- Configuración estándar: JSON estructurado, enrichers obligatorios (ver [Estándar de Logging](../../fundamentos-corporativos/estandares/observabilidad/01-logging.md))
-- Sinks recomendados: consola (local), Loki (producción)
-- Correlación obligatoria: `X-Correlation-ID` en headers HTTP
-- Integración con OpenTelemetry para traces (ADR-021)
+### Positivas
+
+- Logging estructurado JSON con enriquecimiento automático de contexto
+- Más de 200 sinks disponibles para diferentes destinos
+- Integración nativa con ASP.NET Core y OpenTelemetry
+- Soporte multi-tenancy con enrichers personalizados
+- Rendimiento optimizado para alta carga
+
+### Negativas (Riesgos y Mitigaciones)
+
+- **Lock-in de sinks propietarios:** mitigado usando sinks OSS (Loki, Seq OSS) y configuración desacoplada
+- **Complejidad configuración:** mitigada con plantillas estándar corporativas
+- **Costos almacenamiento logs:** mitigados con políticas de retención y agregación
 
 ---
 
 ## 📚 REFERENCIAS
 
 - [Serilog Documentation](https://serilog.net/)
-- [Estándar: Logging Estructurado](../../fundamentos-corporativos/estandares/observabilidad/01-logging.md)
-- [ADR-021: Stack de Observabilidad](./adr-021-observabilidad.md)
-- [OpenTelemetry .NET](https://opentelemetry.io/docs/instrumentation/net/)
-
-- **NLog/log4net:** menor soporte para logging estructurado y sinks modernos
-- **MS.Extensions.Logging:** funcionalidad básica, no estructurado por defecto
-
----
-
-## ⚠️ CONSECUENCIAS
-
-- Todos los servicios `.NET` deben implementar `Serilog` para logging estructurado
-- Se debe estandarizar el formato y la gestión de logs (`JSON`)
-- El código debe desacoplarse de sinks propietarios mediante configuración
-
----
-
-## 📚 REFERENCIAS
-
-- [Serilog Docs](https://serilog.net/)
 - [Serilog Sinks](https://github.com/serilog/serilog/wiki/Provided-Sinks)
 - [OpenTelemetry Logging](https://opentelemetry.io/docs/instrumentation/net/logging/)
-- [arc42: Decisiones de arquitectura](https://arc42.org/decision/)
+- [ADR-021: Stack de Observabilidad](./adr-021-observabilidad.md)
+
+---
+
+**Decisión tomada por:** Equipo de Arquitectura
+**Fecha:** Agosto 2025
+**Próxima revisión:** Agosto 2026

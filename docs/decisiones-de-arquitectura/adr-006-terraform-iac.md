@@ -37,57 +37,15 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio              | Terraform | Pulumi | AWS CloudFormation | ARM Templates | GCP Deployment Manager |
-|----------------------|-----------|--------|-------------------|---------------|-----------------------|
-| **Agnosticidad**     | ✅ Multi-cloud | ✅ Multi-cloud | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP |
-| **Operación**        | ✅ Declarativo | 🟡 Imperativo | ✅ Declarativo | ✅ Declarativo | ✅ Declarativo |
-| **Seguridad**        | ✅ Enterprise grade | ✅ Enterprise grade | ✅ AWS IAM | ✅ Azure RBAC | ✅ GCP IAM |
-| **Ecosistema .NET**  | ✅ Muy buena | ✅ Muy buena | 🟡 Solo AWS | 🟡 Solo Azure | 🟡 Solo GCP |
-| **Versionado**       | ✅ Automática | ✅ Automática | ✅ Nativo | ✅ Nativo | ✅ Nativo |
-| **Módulos**          | ✅ Reutilizables | ✅ Reutilizables | 🟡 Solo AWS | 🟡 Solo Azure | 🟡 Solo GCP |
-| **Costos**           | 🟡 Por uso | 🟡 Por uso | ✅ Incluido | ✅ Incluido | ✅ Incluido |
-
-### Matriz de Decisión
-
-| Solución                | Agnosticidad | Operación | Seguridad | Ecosistema .NET | Recomendación         |
-|------------------------|--------------|-----------|-----------|-----------------|-----------------------|
-| **Terraform**          | Excelente    | Excelente | Excelente | Muy buena       | ✅ **Seleccionada**    |
-| **Pulumi**             | Excelente    | Buena     | Excelente | Muy buena       | 🟡 Alternativa         |
-| **AWS CloudFormation** | Mala         | Excelente | Excelente | Solo AWS        | ❌ Descartada          |
-| **ARM Templates**      | Mala         | Excelente | Excelente | Solo Azure      | ❌ Descartada          |
-| **GCP Deployment Manager** | Mala     | Excelente | Excelente | Solo GCP        | ❌ Descartada          |
-
-## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
-
-> **Metodología y supuestos:** Se asume un uso promedio de 5 servicios, 3 entornos, multi-cloud. El TCO (Total Cost of Ownership) se calcula para un horizonte de 3 años, incluyendo costos directos y estimaciones de operación. Los valores pueden variar según volumen y proveedor.
-
-| Solución                | Licenciamiento     | Infraestructura | Operación         | TCO 3 años         |
-|------------------------|-------------------|----------------|-------------------|--------------------|
-| Terraform              | OSS               | US$0           | US$18,000/año     | US$54,000          |
-| Pulumi                 | OSS               | US$0           | US$24,000/año     | US$72,000          |
-| AWS CloudFormation     | Incluido          | US$0           | US$15,000/año     | US$45,000          |
-| ARM Templates          | Incluido          | US$0           | US$15,000/año     | US$45,000          |
-| GCP Deployment Manager | Incluido          | US$0           | US$18,000/año     | US$54,000          |
-
----
-
-## Consideraciones técnicas y riesgos
-
-### Límites clave
-
-- **Terraform:** sin límite práctico, depende de proveedor y recursos.
-- **Pulumi:** sin límite práctico, depende de proveedor y recursos.
-- **AWS CloudFormation:** límite de recursos por stack, solo AWS.
-- **ARM Templates:** límite de recursos por deployment, solo Azure.
-- **GCP Deployment Manager:** límite de recursos por deployment, solo GCP.
-
-### Riesgos y mitigación
-
-- **Vendor lock-in cloud:** mitigado con IaC agnóstica y módulos reutilizables.
-- **Gestión de estado:** mitigada con backends distribuidos y seguros.
-- **Curva de aprendizaje HCL:** mitigada con capacitación y documentación.
-
----
+| Criterio            | Terraform           | Pulumi              | AWS CloudFormation | ARM Templates    | GCP Deployment Manager |
+| ------------------- | ------------------- | ------------------- | ------------------ | ---------------- | ---------------------- |
+| **Agnosticidad**    | ✅ Multi-cloud      | ✅ Multi-cloud      | ❌ Lock-in AWS     | ❌ Lock-in Azure | ❌ Lock-in GCP         |
+| **Operación**       | ✅ Declarativo      | 🟡 Imperativo       | ✅ Declarativo     | ✅ Declarativo   | ✅ Declarativo         |
+| **Seguridad**       | ✅ Enterprise grade | ✅ Enterprise grade | ✅ AWS IAM         | ✅ Azure RBAC    | ✅ GCP IAM             |
+| **Ecosistema .NET** | ✅ Muy buena        | ✅ Muy buena        | 🟡 Solo AWS        | 🟡 Solo Azure    | 🟡 Solo GCP            |
+| **Versionado**      | ✅ Automática       | ✅ Automática       | ✅ Nativo          | ✅ Nativo        | ✅ Nativo              |
+| **Módulos**         | ✅ Reutilizables    | ✅ Reutilizables    | 🟡 Solo AWS        | 🟡 Solo Azure    | 🟡 Solo GCP            |
+| **Costos**          | 🟡 Por uso          | 🟡 Por uso          | ✅ Incluido        | ✅ Incluido      | ✅ Incluido            |
 
 ## ✔️ DECISIÓN
 

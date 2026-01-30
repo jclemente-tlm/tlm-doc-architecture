@@ -33,56 +33,17 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio              | Kafka (MSK) | SNS+SQS | RabbitMQ | Azure SB |
-|----------------------|-------------|---------|----------|----------|
-| **Agnosticidad**     | ✅ OSS, multi-cloud | ❌ Lock-in AWS | ✅ OSS, multi-cloud | ❌ Lock-in Azure |
-| **Escalabilidad**    | ✅ Masiva | ✅ Automática | 🟡 Limitada | ✅ Muy buena |
-| **Operación**        | 🟡 Gestionada (MSK) | ✅ Gestionada | 🟡 Compleja | ✅ Gestionada |
-| **Rendimiento**      | ✅ Máximo | ✅ Muy alto | 🟡 Moderado | ✅ Muy alto |
-| **Ecosistema .NET**  | ✅ Confluent.Kafka | ✅ AWS SDK | ✅ RabbitMQ.Client | ✅ Azure SDK |
-| **Persistencia**     | ✅ Log distribuido inmutable | ✅ Persistente | ✅ Durable queues | ✅ Persistencia nativa |
-| **Streaming**        | ✅ Nativo (replay, windowing) | ❌ No soportado | ❌ No soportado | ❌ Limitado |
-| **Event Sourcing**   | ✅ Ideal (log inmutable) | 🟡 Parcial | ❌ No recomendado | 🟡 Parcial |
-| **Costos**           | 🟡 Infraestructura managed | ✅ Pago por uso bajo | ✅ OSS | 🟡 Pago por uso |
-
-### Matriz de Decisión
-
-| Solución            | Agnosticidad | Escalabilidad | Streaming | Event Sourcing | Recomendación         |
-|--------------------|--------------|--------------|-----------|----------------|-----------------------|
-| **Apache Kafka (MSK)** | Excelente    | Excelente    | Excelente | Excelente      | ✅ **Seleccionada**    |
-| **AWS SNS + SQS**  | Mala         | Excelente    | No        | Parcial        | ❌ Descartada          |
-| **RabbitMQ**       | Excelente    | Limitada     | No        | No recomendado | ❌ Descartada          |
-| **Azure SB**       | Mala         | Muy buena    | Limitado  | Parcial        | ❌ Descartada          |
-
-## 💰 ANÁLISIS DE COSTOS (TCO 3 años)
-
-> **Metodología y supuestos:** Se asume AWS MSK con 3 brokers t3.small, 5 topics, 1M mensajes/mes, retención 7 días. TCO incluye infraestructura managed y transferencia de datos.
-
-| Solución         | Licenciamiento | Infraestructura | Operación      | TCO 3 años   |
-|------------------|---------------|----------------|---------------|--------------|
-| Kafka (AWS MSK)  | Incluido      | US$18,000      | US$0          | US$18,000    |
-| SNS+SQS          | Pago por uso  | US$0           | US$0          | US$1,080     |
-| RabbitMQ         | OSS           | US$1,800/año   | US$24,000/año | US$77,400    |
-| Azure SB         | Pago por uso  | US$0           | US$0          | US$1,440     |
-
----
-
-## Consideraciones técnicas y riesgos
-
-### Límites clave
-
-- **Kafka (MSK):** Retención configurable (7-90 días), throughput según tamaño de cluster
-- **SNS+SQS:** Retención máxima 14 días, no soporta replay de eventos
-- **RabbitMQ:** Escalabilidad limitada, requiere clustering manual complejo
-- **Azure SB:** Lock-in Azure, límites por suscripción
-
-### Riesgos y mitigación
-
-- **Complejidad operativa Kafka:** mitigada con AWS MSK managed, monitoreo con Prometheus
-- **Costos infraestructura:** optimizado con autoescalado y políticas de retención
-- **Curva de aprendizaje:** mitigada con Confluent.Kafka SDK y capacitación del equipo
-
----
+| Criterio            | Kafka (MSK)                   | SNS+SQS              | RabbitMQ            | Azure SB               |
+| ------------------- | ----------------------------- | -------------------- | ------------------- | ---------------------- |
+| **Agnosticidad**    | ✅ OSS, multi-cloud           | ❌ Lock-in AWS       | ✅ OSS, multi-cloud | ❌ Lock-in Azure       |
+| **Escalabilidad**   | ✅ Masiva                     | ✅ Automática        | 🟡 Limitada         | ✅ Muy buena           |
+| **Operación**       | 🟡 Gestionada (MSK)           | ✅ Gestionada        | 🟡 Compleja         | ✅ Gestionada          |
+| **Rendimiento**     | ✅ Máximo                     | ✅ Muy alto          | 🟡 Moderado         | ✅ Muy alto            |
+| **Ecosistema .NET** | ✅ Confluent.Kafka            | ✅ AWS SDK           | ✅ RabbitMQ.Client  | ✅ Azure SDK           |
+| **Persistencia**    | ✅ Log distribuido inmutable  | ✅ Persistente       | ✅ Durable queues   | ✅ Persistencia nativa |
+| **Streaming**       | ✅ Nativo (replay, windowing) | ❌ No soportado      | ❌ No soportado     | ❌ Limitado            |
+| **Event Sourcing**  | ✅ Ideal (log inmutable)      | 🟡 Parcial           | ❌ No recomendado   | 🟡 Parcial             |
+| **Costos**          | 🟡 Infraestructura managed    | ✅ Pago por uso bajo | ✅ OSS              | 🟡 Pago por uso        |
 
 ## ✔️ DECISIÓN
 
@@ -109,43 +70,19 @@ Se selecciona **Apache Kafka (AWS MSK)** como solución estándar de mensajería
 
 ## ⚠️ CONSECUENCIAS
 
-- Todos los servicios nuevos deben usar Kafka (AWS MSK) para mensajería asíncrona
-- Se debe usar Confluent.Kafka SDK para integración con .NET
-- Topics deben seguir naming convention: `{domain}.{entity}.{event}` (ej: `orders.order.created`)
-- Dead Letter Topics (DLT) obligatorios para manejo de errores: `{topic-name}.dlt`
-- Retención de topics: 7 días default, configurable según requisitos de auditoría
-- Particionamiento por tenant (país) para aislamiento multi-tenant
+### Positivas
 
----
+- Log distribuido inmutable ideal para event sourcing y auditoría
+- Replay de eventos para reconstrucción de estado
+- Escalabilidad masiva y alto throughput (millones msg/seg)
+- Portabilidad multi-cloud (OSS estándar)
+- Integración nativa .NET con Confluent.Kafka SDK
 
-## 🏗️ ARQUITECTURA DE DESPLIEGUE
+### Negativas (Riesgos y Mitigaciones)
 
-- AWS MSK cluster: 3 brokers mínimo, multi-AZ
-- Topics por dominio de eventos: `orders`, `notifications`, `payments`, etc.
-- Particionamiento por clave de tenant (país)
-- Replicación: factor 3 para alta disponibilidad
-- Integración con Confluent.Kafka SDK y librerías .NET
-- Monitoreo con Prometheus + Grafana + AWS CloudWatch
-
----
-
-## 📊 MÉTRICAS Y MONITOREO
-
-### KPIs Clave
-
-- **Mensajes procesados**: > 99.99% entregados
-- **Latencia promedio**: < 50ms
-- **Throughput**: > 100K mensajes/minuto
-- **Consumer lag**: < 1000 mensajes
-- **Disponibilidad brokers**: > 99.9%
-
-### Alertas Críticas
-
-- Consumer lag > 10,000 mensajes
-- Latencia > 200ms
-- Errores de producción > 1%
-- Broker offline
-- Disco > 80% en brokers
+- **Complejidad operativa:** mitigada con AWS MSK managed y automatización Terraform
+- **Curva de aprendizaje:** mitigada con capacitación y documentación corporativa
+- **Costos infraestructura:** optimizados con políticas retención y dimensionamiento adecuado
 
 ---
 
