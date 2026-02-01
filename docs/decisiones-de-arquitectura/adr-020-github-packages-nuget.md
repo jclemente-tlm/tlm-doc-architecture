@@ -31,23 +31,13 @@ Se requiere una solución que permita:
 
 ### Comparativa Cualitativa
 
-| Criterio | GitHub Packages | AWS CodeArtifact | Azure Artifacts | Artifactory/Nexus | Feed privado NuGet.org |
-|----------|----------------|------------------|----------------|------------------|-----------------------|
-| **Agnosticidad** | 🟡 Parcialmente agnóstico (compatible con cualquier nube, depende de GitHub) | ❌ No agnóstico (dependencia de AWS) | ❌ No agnóstico (dependencia de Azure) | ✅ Agnóstico (on-prem/cloud, sin lock-in) | 🟡 Parcial (depende de internet) |
-| **Operación** | 🟡 A cargo del usuario (self-service, administración propia) | 🟢 A cargo de AWS (servicio gestionado) | 🟢 A cargo de Azure (servicio gestionado) | 🟡 A cargo del usuario (administración propia) | 🟡 A cargo del usuario (manual) |
-| **Control de acceso** | ✅ Roles por repositorio y PAT | ✅ IAM y políticas AWS | ✅ Roles por proyecto | ✅ Control completo | ❌ Limitado |
-| **Costo** | ✅ Sin costo adicional (incluido en GitHub) | 🟡 Tarifa variable (pago por uso) | 🟡 Tarifa fija mensual (por feed) | 🟡 Tarifa variable (licencia, infraestructura y mantenimiento) | ✅ Gratis (si es on-premise, puede tener costo de hosting) |
-| **Ecosistema .NET** | ✅ Excelente soporte | ✅ Soporte oficial | ✅ Soporte oficial | ✅ Soporte oficial | 🟡 Limitado |
-
-### Matriz de Decisión
-
-| Solución | Agnosticidad | Operación | Control de acceso | Costo | Ecosistema .NET | Recomendación |
-|----------|--------------|-----------|-------------------|-------|-----------------|---------------|
-| **GitHub Packages** | Parcial | Excelente | Excelente | Excelente | Excelente | ✅ Seleccionada |
-| AWS CodeArtifact | No | Excelente | Excelente | Media | Excelente | 🟡 Alternativa |
-| Azure Artifacts | No | Buena | Buena | Media | Excelente | 🟡 Alternativa |
-| Artifactory / Nexus | Sí | Media | Excelente | Media | Excelente | 🟡 Considerada |
-| Feed privado NuGet.org | Parcial | Baja | Limitado | Alta | Limitado | ❌ Descartada |
+| Criterio              | GitHub Packages                                                              | AWS CodeArtifact                        | Azure Artifacts                           | Artifactory/Nexus                                              | Feed privado NuGet.org                                     |
+| --------------------- | ---------------------------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------- |
+| **Agnosticidad**      | 🟡 Parcialmente agnóstico (compatible con cualquier nube, depende de GitHub) | ❌ No agnóstico (dependencia de AWS)    | ❌ No agnóstico (dependencia de Azure)    | ✅ Agnóstico (on-prem/cloud, sin lock-in)                      | 🟡 Parcial (depende de internet)                           |
+| **Operación**         | 🟡 A cargo del usuario (self-service, administración propia)                 | 🟢 A cargo de AWS (servicio gestionado) | 🟢 A cargo de Azure (servicio gestionado) | 🟡 A cargo del usuario (administración propia)                 | 🟡 A cargo del usuario (manual)                            |
+| **Control de acceso** | ✅ Roles por repositorio y PAT                                               | ✅ IAM y políticas AWS                  | ✅ Roles por proyecto                     | ✅ Control completo                                            | ❌ Limitado                                                |
+| **Costo**             | ✅ Sin costo adicional (incluido en GitHub)                                  | 🟡 Tarifa variable (pago por uso)       | 🟡 Tarifa fija mensual (por feed)         | 🟡 Tarifa variable (licencia, infraestructura y mantenimiento) | ✅ Gratis (si es on-premise, puede tener costo de hosting) |
+| **Ecosistema .NET**   | ✅ Excelente soporte                                                         | ✅ Soporte oficial                      | ✅ Soporte oficial                        | ✅ Soporte oficial                                             | 🟡 Limitado                                                |
 
 ---
 

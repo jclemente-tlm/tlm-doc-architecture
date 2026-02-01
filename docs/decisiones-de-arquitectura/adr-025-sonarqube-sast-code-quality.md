@@ -54,8 +54,6 @@ Alternativas evaluadas:
 | **Integración CI/CD** | ✅ Plugins múltiples | ✅ Plugins múltiples | ✅ GitHub Actions  | ✅ Native         | ✅ Native         | ✅ CLI           |
 | **Histórico**         | ✅ Base de datos     | ✅ Base de datos     | ✅ Cloud storage   | ✅ Cloud          | ✅ Cloud          | 🟡 Limitado      |
 
-
-
 ## ✔️ DECISIÓN
 
 Se selecciona **SonarQube Community Edition (self-hosted)** como solución de análisis estático de código corporativo.
@@ -72,15 +70,6 @@ Se selecciona **SonarQube Community Edition (self-hosted)** como solución de an
 - **Control total** - Self-hosted en AWS ECS, sin límites de análisis ni LoC
 - **Extensibilidad** - Custom rules vía plugins Java/XML
 - **Path to upgrade** - Migración fácil a Developer/Enterprise si se requiere branch analysis
-
-## Trade-offs aceptados
-
-- **Sin branch analysis** - Community solo analiza rama main (no PRs individuales)
-  - **Mitigación:** Ejecutar SonarScanner en PRs y comparar contra main manualmente
-- **Sin PR decoration** - No comentarios inline automáticos en GitHub
-  - **Mitigación:** Revisar dashboard SonarQube + GitHub Actions logs
-- **Infraestructura requerida** - Requiere hosting en AWS ECS + PostgreSQL
-  - **Mitigación:** Containerizado con ADR-007, IaC con ADR-006
 
 ## Alternativas descartadas
 
@@ -128,7 +117,6 @@ Se selecciona **SonarQube Community Edition (self-hosted)** como solución de an
 - [CWE Top 25](https://cwe.mitre.org/top25/)
 - [ADR-009: GitHub Actions CI/CD](./adr-009-github-actions-cicd.md)
 - [ADR-016: Serilog Logging Estructurado](./adr-016-serilog-logging-estructurado.md)
-
 
 ---
 

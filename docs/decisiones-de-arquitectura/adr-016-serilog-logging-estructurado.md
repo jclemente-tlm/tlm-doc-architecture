@@ -45,15 +45,6 @@ Alternativas evaluadas:
 | **Agnosticidad**         | ✅ Totalmente agnóstico | ✅ Estándar abierto   | ✅ Totalmente agnóstico | ✅ Agnóstico          |
 | **Madurez**              | ✅ Muy maduro, activo   | 🟡 Emergente          | ✅ Muy maduro           | ✅ Oficial            |
 
-### Matriz de Decisión
-
-| Solución                  | Estructurado | Ecosistema .NET | Sinks     | Rendimiento | Recomendación       |
-| ------------------------- | ------------ | --------------- | --------- | ----------- | ------------------- |
-| **Serilog**               | Excelente    | Excelente       | Excelente | Excelente   | ✅ **Seleccionada** |
-| **OpenTelemetry Logging** | Excelente    | Bueno           | Extensos  | Bueno       | 🟡 Alternativa      |
-| **NLog**                  | Configurable | Muy maduro      | Muchos    | Excelente   | 🟡 Considerada      |
-| **MS.Extensions.Logging** | Básico       | Nativo          | Básicos   | Bueno       | 🟡 Considerada      |
-
 ---
 
 ## ✔️ DECISIÓN

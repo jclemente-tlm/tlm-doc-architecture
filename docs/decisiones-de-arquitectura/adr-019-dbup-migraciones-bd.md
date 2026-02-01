@@ -33,26 +33,14 @@ La intención estratégica es **permitir la ejecución controlada y trazable de 
 
 ### Comparativa Cualitativa
 
-| Criterio | DbUp (.NET) | RoundhousE (.NET) | Flyway (CLI/Java) | Liquibase (CLI/Java) | EF Core Migrations |
-|----------|-------------|-------------------|-------------------|----------------------|--------------------|
-| **Agnosticidad** | ✅ Multi-motor | ✅ Multi-motor | ✅ Multi-motor | ✅ Multi-motor | 🟡 Depende del provider |
-| **Integración .NET** | ✅ Nativo C# | ✅ Nativo C# | 🟡 Indirecta | 🟡 Indirecta | ✅ Nativo C# |
-| **Versionado de scripts** | ✅ Por convención | ✅ Por convención | ✅ Estricto | ✅ Estricto | ✅ Automático |
-| **Complejidad operativa** | ✅ Baja | ✅ Baja | 🟡 Media | ❌ Alta | ✅ Baja |
-| **Rollbacks** | ❌ Manuales | ❌ Manuales | 🟡 Básicos | ✅ Avanzados | 🟡 Limitados |
-| **Idempotencia** | 🟡 Depende del script | 🟡 Depende del script | 🟡 Depende del script | 🟡 Depende del script | 🟡 Depende del script |
-
----
-
-### Matriz de Decisión
-
-| Solución | Agnosticidad | Integración .NET | Operación | Recomendación |
-|----------|--------------|------------------|-----------|---------------|
-| **DbUp** | Excelente | Excelente | Excelente | ✅ **Seleccionada** |
-| **RoundhousE** | Excelente | Excelente | Excelente | 🟡 Alternativa |
-| **Flyway** | Excelente | Media | Media | 🟡 Alternativa |
-| **Liquibase** | Excelente | Media | Baja | ❌ Descartada |
-| **EF Core Migrations** | Media | Excelente | Excelente | 🟡 Uso parcial |
+| Criterio                  | DbUp (.NET)           | RoundhousE (.NET)     | Flyway (CLI/Java)     | Liquibase (CLI/Java)  | EF Core Migrations      |
+| ------------------------- | --------------------- | --------------------- | --------------------- | --------------------- | ----------------------- |
+| **Agnosticidad**          | ✅ Multi-motor        | ✅ Multi-motor        | ✅ Multi-motor        | ✅ Multi-motor        | 🟡 Depende del provider |
+| **Integración .NET**      | ✅ Nativo C#          | ✅ Nativo C#          | 🟡 Indirecta          | 🟡 Indirecta          | ✅ Nativo C#            |
+| **Versionado de scripts** | ✅ Por convención     | ✅ Por convención     | ✅ Estricto           | ✅ Estricto           | ✅ Automático           |
+| **Complejidad operativa** | ✅ Baja               | ✅ Baja               | 🟡 Media              | ❌ Alta               | ✅ Baja                 |
+| **Rollbacks**             | ❌ Manuales           | ❌ Manuales           | 🟡 Básicos            | ✅ Avanzados          | 🟡 Limitados            |
+| **Idempotencia**          | 🟡 Depende del script | 🟡 Depende del script | 🟡 Depende del script | 🟡 Depende del script | 🟡 Depende del script   |
 
 ---
 

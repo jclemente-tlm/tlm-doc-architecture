@@ -49,43 +49,21 @@ Las alternativas de multi-tenancy evaluadas fueron:
 
 #### Nivel 1: Database per Tenant (Datos Críticos)
 
-```yaml
-Servicios con DB separada:
-  - Servicio Identidad: Usuarios, roles, permisos
-  - Datos Financieros: Transacciones, facturación
-  - Datos Personales: PII, información sensible
-
-Configuración: talma_identity_peru
-  talma_identity_ecuador
-  talma_identity_colombia
-  talma_identity_mexico
-```
+- Servicio Identidad: Usuarios, roles, permisos
+- Datos Financieros: Transacciones, facturación
+- Datos Personales: PII, información sensible
 
 #### Nivel 2: Schema per Tenant (Datos Operacionales)
 
-```yaml
-Servicios con schema separado:
-  - Servicio Notificación: Templates, configuraciones
-  - Track & Trace: Estados, eventos de negocio
-  - Configuraciones: Parámetros por país
-
-Configuración:
-  Database: talma_operations
-  Schemas: peru, ecuador, colombia, mexico
-```
+- Servicio Notificación: Templates, configuraciones
+- Track & Trace: Estados, eventos de negocio
+- Configuraciones: Parámetros por país
 
 #### Nivel 3: Row-Level Security (Datos Compartidos)
 
-```yaml
-Servicios con RLS:
-  - Logs y auditoría
-  - Métricas y monitoreo
-  - Datos de referencia comunes
-
-Configuración:
-  Database: talma_shared
-  RLS Policy: tenant_id = current_setting('app.tenant_id')
-```
+- Logs y auditoría
+- Métricas y monitoreo
+- Datos de referencia comunes
 
 ### Ventajas del Modelo Híbrido
 
