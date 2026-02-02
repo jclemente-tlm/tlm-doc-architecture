@@ -10,19 +10,22 @@ description: Estándar para pruebas unitarias con xUnit, Moq, cobertura de códi
 ---
 
 ## 1. Propósito
-Garantizar código confiable mediante tests unitarios con xUnit + Moq + FluentAssertions, cobertura >80%, patrón AAA (Arrange-Act-Assert) y ejecución <500ms.
+
+Garantizar código confiable mediante tests unitarios con xUnit + Moq + FluentAssertions, cobertura >80%, patrón AAA (Arrange-Act-Assert) y ejecución `<500ms`.
 
 ---
 
 ## 2. Alcance
 
 **Aplica a:**
+
 - Lógica de negocio (Services, Use Cases)
 - Funciones puras (Utilities, Helpers)
 - Validadores, Mappers, Builders
 - Componentes UI aislados (React, Angular)
 
 **No aplica a:**
+
 - Integración con BD real (usar integration tests)
 - Tests E2E con navegador
 - Configuración de infraestructura
@@ -31,13 +34,13 @@ Garantizar código confiable mediante tests unitarios con xUnit + Moq + FluentAs
 
 ## 3. Tecnologías Aprobadas
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-| **Framework** | xUnit | 2.6+ | Testing .NET |
-| **Mocking** | Moq | 4.20+ | Mocks/stubs |
-| **Assertions** | FluentAssertions | 6.12+ | Expresividad |
-| **Coverage** | Coverlet | 6.0+ | Cobertura de código |
-| **Análisis** | SonarQube | 10.0+ | Calidad y cobertura |
+| Componente     | Tecnología       | Versión mínima | Observaciones       |
+| -------------- | ---------------- | -------------- | ------------------- |
+| **Framework**  | xUnit            | 2.6+           | Testing .NET        |
+| **Mocking**    | Moq              | 4.20+          | Mocks/stubs         |
+| **Assertions** | FluentAssertions | 6.12+          | Expresividad        |
+| **Coverage**   | Coverlet         | 6.0+           | Cobertura de código |
+| **Análisis**   | SonarQube        | 10.0+          | Calidad y cobertura |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -50,7 +53,7 @@ Garantizar código confiable mediante tests unitarios con xUnit + Moq + FluentAs
 - [ ] Mocks con Moq 4.20+ (NO dependencias reales)
 - [ ] Tests aislados (NO compartir estado entre tests)
 - [ ] Naming: `MethodName_Scenario_ExpectedResult`
-- [ ] Ejecución <500ms para suite completa de unit tests
+- [ ] Ejecución `<500ms` para suite completa de unit tests
 - [ ] Code coverage >80% en Services/Repositories
 - [ ] Integración en CI/CD (tests fallan → build falla)
 - [ ] `[Theory]` para casos múltiples (evitar duplicación)
@@ -75,6 +78,7 @@ Garantizar código confiable mediante tests unitarios con xUnit + Moq + FluentAs
 ## 6. Configuración Mínima
 
 ### C# con xUnit y Moq
+
 ```xml
 <!-- Tests.csproj -->
 <ItemGroup>
@@ -148,12 +152,12 @@ grep -A 5 "TOTAL" coverage/coverage-summary.json
 
 **Métricas de cumplimiento:**
 
-| Métrica | Target | Verificación |
-|---------|--------|--------------|  
-| Code coverage Services | >80% | Coverlet report |
-| Tests ejecutados | 100% pass | CI/CD pipeline |
-| Ejecución suite completa | <500ms | `dotnet test` output |
-| Tests con patrón AAA | 100% | Code review |
+| Métrica                  | Target    | Verificación         |
+| ------------------------ | --------- | -------------------- |
+| Code coverage Services   | >80%      | Coverlet report      |
+| Tests ejecutados         | 100% pass | CI/CD pipeline       |
+| Ejecución suite completa | `<500ms`  | `dotnet test` output |
+| Tests con patrón AAA     | 100%      | Code review          |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 

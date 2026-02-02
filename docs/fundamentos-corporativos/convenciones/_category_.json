@@ -1,0 +1,10 @@
+{
+    "label": "Convenciones",
+    "position": 4,
+    "link": {
+        "type": "generated-index",
+        "title": "Convenciones",
+        "slug": "/fundamentos/convenciones",
+        "description": "Convenciones de naming, estilo y estructura para código, bases de datos, APIs y más."
+    }
+}

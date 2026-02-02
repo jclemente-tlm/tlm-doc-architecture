@@ -10,6 +10,7 @@ description: Estándares para documentar APIs REST usando OpenAPI 3.1+, Swagger 
 ---
 
 ## 1. Propósito
+
 Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada automáticamente con Swashbuckle.AspNetCore 6.5+, validada con Spectral y publicada en Swagger UI 5.0+.
 
 ---
@@ -17,12 +18,14 @@ Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada
 ## 2. Alcance
 
 **Aplica a:**
+
 - APIs REST públicas (clientes externos)
 - APIs REST internas (microservicios)
 - APIs gateway (Kong, AWS API Gateway)
 - SDKs generados desde OpenAPI
 
 **No aplica a:**
+
 - APIs gRPC (usar Protocol Buffers .proto)
 - APIs GraphQL (usar Schema Definition Language)
 - WebSockets/SignalR (documentar en arc42)
@@ -31,14 +34,14 @@ Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada
 
 ## 3. Tecnologías Aprobadas
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-| **Spec** | OpenAPI Specification | 3.1+ | YAML/JSON |
-| **UI** | Swagger UI | 5.0+ | Interfaz interactiva |
-| **Generator** | Swashbuckle.AspNetCore | 6.5+ | ASP.NET Core |
-| **Linter** | Spectral | 6.11+ | Validación reglas |
-| **Client Gen** | NSwag | 14.0+ | Clientes C# |
-| **Alternativa** | Redoc | 2.1+ | Documentación estática |
+| Componente      | Tecnología             | Versión mínima | Observaciones          |
+| --------------- | ---------------------- | -------------- | ---------------------- |
+| **Spec**        | OpenAPI Specification  | 3.1+           | YAML/JSON              |
+| **UI**          | Swagger UI             | 5.0+           | Interfaz interactiva   |
+| **Generator**   | Swashbuckle.AspNetCore | 6.5+           | ASP.NET Core           |
+| **Linter**      | Spectral               | 6.11+          | Validación reglas      |
+| **Client Gen**  | NSwag                  | 14.0+          | Clientes C#            |
+| **Alternativa** | Redoc                  | 2.1+           | Documentación estática |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -64,7 +67,7 @@ Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada
 ## 5. Prohibiciones
 
 - ❌ Documentación manual desactualizada
-- ❌ OpenAPI <3.0 (usar 3.1+)
+- ❌ OpenAPI `<3.0` (usar 3.1+)
 - ❌ Endpoints sin ejemplos de response
 - ❌ Schemas genéricos sin propiedades
 - ❌ Swagger UI deshabilitado en producción
@@ -76,6 +79,7 @@ Garantizar documentación interactiva de APIs REST usando OpenAPI 3.1+, generada
 ## 6. Configuración Mínima
 
 ### C# con Swashbuckle
+
 ```csharp
 // Program.cs
 var builder = WebApplication.CreateBuilder(args);
@@ -149,6 +153,7 @@ public async Task<ActionResult<UserDto>> GetUser(Guid userId)
 ```
 
 ### Validación con Spectral
+
 ```yaml
 # .spectral.yaml
 extends: [["spectral:oas", "all"]]
@@ -181,12 +186,12 @@ nswag openapi2csclient /input:swagger.json /output:clients/UsersClient.cs
 
 **Métricas de cumplimiento:**
 
-| Métrica | Target | Verificación |
-|---------|--------|--------------|  
-| OpenAPI 3.1+ | 100% | `"openapi": "3.1.0"` |
-| Endpoints documentados | 100% | Swagger UI |
-| XML comments | 100% | C# controllers |
-| Spectral validation | 0 errors | CI/CD pipeline |
+| Métrica                | Target   | Verificación         |
+| ---------------------- | -------- | -------------------- |
+| OpenAPI 3.1+           | 100%     | `"openapi": "3.1.0"` |
+| Endpoints documentados | 100%     | Swagger UI           |
+| XML comments           | 100%     | C# controllers       |
+| Spectral validation    | 0 errors | CI/CD pipeline       |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 

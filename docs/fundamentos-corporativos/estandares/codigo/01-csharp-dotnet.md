@@ -10,6 +10,7 @@ description: Estándares de Clean Code, principios SOLID y buenas prácticas par
 ---
 
 ## 1. Propósito
+
 Garantizar código C# legible, mantenible y testeable mediante Clean Code, SOLID, async/await, inyección de dependencias, StyleCop/SonarAnalyzer y nullable reference types habilitados.
 
 ---
@@ -17,28 +18,30 @@ Garantizar código C# legible, mantenible y testeable mediante Clean Code, SOLID
 ## 2. Alcance
 
 **Aplica a:**
+
 - Proyectos .NET 8.0+ (backend, APIs, servicios)
 - Librerías y componentes reutilizables
 - Microservicios cloud-native
 
 **No aplica a:**
-- Proyectos legacy .NET Framework <4.8 sin planes de migración
+
+- Proyectos legacy .NET Framework `<4.8` sin planes de migración
 - Scripts de automatización simples
 
 ---
 
 ## 3. Tecnologías Aprobadas
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-| **Framework** | .NET | 8.0+ | LTS recomendado |
-| **Lenguaje** | C# | 12+ | Nullable reference types |
-| **Mapeo** | Mapster | 7.4+ | Object mapping (NO AutoMapper) |
-| **Análisis** | StyleCop.Analyzers | 1.2+ | Reglas de estilo |
-| **Análisis** | SonarAnalyzer.CSharp | 9.16+ | Detección bugs/vulnerabilidades |
-| **Análisis** | SonarQube | 10.0+ | Análisis continuo código |
-| **Testing** | xUnit | 2.6+ | Framework de pruebas |
-| **Mocking** | Moq | 4.20+ | Mocks para tests |
+| Componente    | Tecnología           | Versión mínima | Observaciones                   |
+| ------------- | -------------------- | -------------- | ------------------------------- |
+| **Framework** | .NET                 | 8.0+           | LTS recomendado                 |
+| **Lenguaje**  | C#                   | 12+            | Nullable reference types        |
+| **Mapeo**     | Mapster              | 7.4+           | Object mapping (NO AutoMapper)  |
+| **Análisis**  | StyleCop.Analyzers   | 1.2+           | Reglas de estilo                |
+| **Análisis**  | SonarAnalyzer.CSharp | 9.16+          | Detección bugs/vulnerabilidades |
+| **Análisis**  | SonarQube            | 10.0+          | Análisis continuo código        |
+| **Testing**   | xUnit                | 2.6+           | Framework de pruebas            |
+| **Mocking**   | Moq                  | 4.20+          | Mocks para tests                |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -53,8 +56,8 @@ Garantizar código C# legible, mantenible y testeable mediante Clean Code, SOLID
 - [ ] Inyección de dependencias (NO `new` en lógica de negocio)
 - [ ] Async/await para operaciones I/O (NO síncronas)
 - [ ] SOLID principles aplicados (SRP, OCP, LSP, ISP, DIP)
-- [ ] Métodos con responsabilidad única (<20 líneas)
-- [ ] Clases cohesivas (<300 líneas, <10 métodos)
+- [ ] Métodos con responsabilidad única (`<20` líneas)
+- [ ] Clases cohesivas (`<300` líneas, `<10` métodos)
 - [ ] Excepciones específicas (NO `catch (Exception)`)
 - [ ] ConfigureAwait(false) en librerías
 - [ ] Interfaces para abstracciones (NO clases concretas en constructores)
@@ -124,24 +127,24 @@ public class OrderService : IOrderService
 {
     private readonly IOrderRepository _repository;
     private readonly ILogger<OrderService> _logger;
-    
+
     public OrderService(IOrderRepository repository, ILogger<OrderService> logger)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
-    
+
     public async Task<Order?> GetOrderAsync(Guid orderId, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Retrieving order {OrderId}", orderId);
-        
+
         var order = await _repository.GetByIdAsync(orderId, cancellationToken).ConfigureAwait(false);
-        
+
         if (order == null)
         {
             _logger.LogWarning("Order {OrderId} not found", orderId);
         }
-        
+
         return order;
     }
 }
@@ -170,12 +173,12 @@ dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
 **Métricas de cumplimiento:**
 
-| Métrica | Target | Verificación |
-|---------|--------|--------------|  
-| Nullable habilitado | 100% | `grep Nullable *.csproj` |
-| Warnings como errores | 100% | `TreatWarningsAsErrors=true` |
-| Métodos <20 líneas | >90% | SonarQube analysis |
-| Code coverage | >80% | Coverlet report |
+| Métrica               | Target | Verificación                 |
+| --------------------- | ------ | ---------------------------- |
+| Nullable habilitado   | 100%   | `grep Nullable *.csproj`     |
+| Warnings como errores | 100%   | `TreatWarningsAsErrors=true` |
+| Métodos `<20` líneas  | >90%   | SonarQube analysis           |
+| Code coverage         | >80%   | Coverlet report              |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 

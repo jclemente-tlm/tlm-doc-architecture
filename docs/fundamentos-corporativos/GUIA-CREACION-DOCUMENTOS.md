@@ -8,12 +8,12 @@
 
 ### Regla de Oro
 
-| Pregunta | Tipo de Documento |
-|----------|-------------------|
-| ¿Por qué hacemos esto? | **Principio** |
-| ¿Qué debemos lograr? (arquitectónico) | **Lineamiento** |
-| ¿Con qué tecnología/framework? | **Estándar** |
-| ¿Cómo nombrar/formatear? | **Convención** |
+| Pregunta                              | Tipo de Documento |
+| ------------------------------------- | ----------------- |
+| ¿Por qué hacemos esto?                | **Principio**     |
+| ¿Qué debemos lograr? (arquitectónico) | **Lineamiento**   |
+| ¿Con qué tecnología/framework?        | **Estándar**      |
+| ¿Cómo nombrar/formatear?              | **Convención**    |
 
 ---
 
@@ -24,12 +24,14 @@
 ✅ **Defines un valor fundamental de arquitectura**
 
 **Características:**
+
 - Filosófico y conceptual
 - Independiente de tecnología
 - Duradero (no cambia frecuentemente)
 - Fundamento para decisiones
 
 **Ejemplos:**
+
 - "Seguridad desde el Diseño"
 - "Observabilidad desde el Diseño"
 - "Calidad desde el Diseño"
@@ -43,17 +45,20 @@
 ✅ **Defines una directiva arquitectónica que implementa principios**
 
 **Características:**
+
 - Describe "CÓMO" a nivel conceptual
 - Independiente de tecnología específica
 - Guía decisiones arquitectónicas
 - Evaluable en proyectos
 
 **Ejemplos:**
+
 - "Diseñar APIs REST coherentes"
 - "Aplicar Seguridad desde el Diseño"
 - "Implementar Testing en múltiples niveles"
 
 **NO crear si:**
+
 - Prescribes tecnología específica → Es un Estándar
 - Defines naming/formato → Es una Convención
 
@@ -64,18 +69,21 @@
 ✅ **Prescribes una tecnología, framework o herramienta específica**
 
 **Características:**
+
 - Define "QUÉ" tecnología usar
 - Define "CÓMO" configurar
 - Incluye código ejecutable
 - Versionado técnico
 
 **Ejemplos:**
+
 - "Usar xUnit 2.4+ para testing en C#"
 - "Usar JWT con RS256 para autenticación"
 - "Usar Terraform para IaC"
 - "Usar ASP.NET Core 8.0+ para APIs"
 
 **NO crear si:**
+
 - Solo defines naming → Es una Convención
 - Es directiva conceptual → Es un Lineamiento
 
@@ -86,18 +94,21 @@
 ✅ **Defines reglas de nomenclatura, formato o sintaxis**
 
 **Características:**
+
 - Define "CÓMO" escribir código/nombres
 - Reglas verificables objetivamente
 - Independiente de tecnología
 - Puede usar linters/herramientas
 
 **Ejemplos:**
+
 - "Clases en PascalCase en C#"
 - "Endpoints en kebab-case: /api/v1/user-profiles"
 - "Variables de entorno en UPPER_SNAKE_CASE"
 - "Commits en formato Conventional Commits"
 
 **NO crear si:**
+
 - Prescribes tecnología → Es un Estándar
 - Es conceptual → Es un Lineamiento
 
@@ -105,14 +116,14 @@
 
 ## 📝 Tabla Comparativa
 
-| Aspecto | Principio | Lineamiento | Estándar | Convención |
-|---------|-----------|-------------|----------|------------|
-| **Nivel** | Filosófico | Arquitectónico | Técnico | Sintáctico |
-| **Pregunta** | ¿Por qué? | ¿Qué lograr? | ¿Con qué? | ¿Cómo escribir? |
-| **Tecnología** | No | No | **Sí** | No |
-| **Ejemplos código** | No | Conceptual | **Ejecutable** | Sintaxis |
-| **Cambia** | Raramente | Poco | Con tech | Poco |
-| **Verificable** | Subjetivo | Checklist | Tests/CI | Linter |
+| Aspecto             | Principio  | Lineamiento    | Estándar       | Convención      |
+| ------------------- | ---------- | -------------- | -------------- | --------------- |
+| **Nivel**           | Filosófico | Arquitectónico | Técnico        | Sintáctico      |
+| **Pregunta**        | ¿Por qué?  | ¿Qué lograr?   | ¿Con qué?      | ¿Cómo escribir? |
+| **Tecnología**      | No         | No             | **Sí**         | No              |
+| **Ejemplos código** | No         | Conceptual     | **Ejecutable** | Sintaxis        |
+| **Cambia**          | Raramente  | Poco           | Con tech       | Poco            |
+| **Verificable**     | Subjetivo  | Checklist      | Tests/CI       | Linter          |
 
 ---
 
@@ -120,39 +131,39 @@
 
 ### Tema: APIs REST
 
-| Documento | Tipo | Contenido |
-|-----------|------|-----------|
-| "Contratos de Integración" | Principio | Por qué tener contratos estables |
-| "Diseño de APIs" | Lineamiento | Cómo diseñar APIs coherentes |
-| "Diseño REST" | Estándar | ASP.NET Core 8+, configuración |
-| "Naming Endpoints" | Convención | `/api/v1/users` kebab-case |
+| Documento                  | Tipo        | Contenido                        |
+| -------------------------- | ----------- | -------------------------------- |
+| "Contratos de Integración" | Principio   | Por qué tener contratos estables |
+| "Diseño de APIs"           | Lineamiento | Cómo diseñar APIs coherentes     |
+| "Diseño REST"              | Estándar    | ASP.NET Core 8+, configuración   |
+| "Naming Endpoints"         | Convención  | `/api/v1/users` kebab-case       |
 
 ### Tema: Seguridad
 
-| Documento | Tipo | Contenido |
-|-----------|------|-----------|
-| "Seguridad desde el Diseño" | Principio | Por qué security-first |
-| "Seguridad desde el Diseño" | Lineamiento | Aplicar OWASP Top 10 |
-| "Secrets Management" | Estándar | AWS Secrets Manager, rotación |
-| "Manejo Secretos" | Convención | Never commit, `.env` patterns |
+| Documento                   | Tipo        | Contenido                     |
+| --------------------------- | ----------- | ----------------------------- |
+| "Seguridad desde el Diseño" | Principio   | Por qué security-first        |
+| "Seguridad desde el Diseño" | Lineamiento | Aplicar OWASP Top 10          |
+| "Secrets Management"        | Estándar    | AWS Secrets Manager, rotación |
+| "Manejo Secretos"           | Convención  | Never commit, `.env` patterns |
 
 ### Tema: Testing
 
-| Documento | Tipo | Contenido |
-|-----------|------|-----------|
-| "Calidad desde el Diseño" | Principio | Por qué calidad importa |
-| "Testing y Calidad" | Lineamiento | Pirámide de testing |
-| "Testing Unitario" | Estándar | xUnit, Jest, AAA pattern |
-| (No aplica) | Convención | - |
+| Documento                 | Tipo        | Contenido                |
+| ------------------------- | ----------- | ------------------------ |
+| "Calidad desde el Diseño" | Principio   | Por qué calidad importa  |
+| "Testing y Calidad"       | Lineamiento | Pirámide de testing      |
+| "Testing Unitario"        | Estándar    | xUnit, Jest, AAA pattern |
+| (No aplica)               | Convención  | -                        |
 
 ### Tema: Código
 
-| Documento | Tipo | Contenido |
-|-----------|------|-----------|
-| "Calidad desde el Diseño" | Principio | Por qué Clean Code |
-| "Testing y Calidad" | Lineamiento | Aplicar SOLID, DRY |
-| "C# y .NET" | Estándar | .NET 8, SOLID, async/await |
-| "Naming C#" | Convención | PascalCase, camelCase, _private |
+| Documento                 | Tipo        | Contenido                        |
+| ------------------------- | ----------- | -------------------------------- |
+| "Calidad desde el Diseño" | Principio   | Por qué Clean Code               |
+| "Testing y Calidad"       | Lineamiento | Aplicar SOLID, DRY               |
+| "C# y .NET"               | Estándar    | .NET 8, SOLID, async/await       |
+| "Naming C#"               | Convención  | PascalCase, camelCase, \_private |
 
 ---
 
@@ -160,7 +171,7 @@
 
 ### Template: Lineamiento
 
-```markdown
+```text
 ---
 id: {id}
 sidebar_position: {n}
@@ -207,7 +218,7 @@ Qué se busca lograr con este lineamiento (directiva arquitectónica).
 
 ### Template: Estándar
 
-```markdown
+````text
 ---
 id: {id}
 sidebar_position: {n}
@@ -235,7 +246,7 @@ Qué problema técnico resuelve este estándar.
 **Instalación:**
 ```bash
 comando install
-```
+````
 
 ## 4. Configuración Estándar
 
@@ -245,7 +256,7 @@ comando install
 
 ## 5. Ejemplos Prácticos
 
-### Ejemplo 1: {Caso de Uso}
+### Ejemplo 1: \{Caso de Uso\}
 
 ```code
 // Código ejecutable
@@ -268,21 +279,26 @@ comando install
 ## 9. Referencias
 
 ### Lineamientos Relacionados
+
 - [Link]
 
 ### Principios Relacionados
+
 - [Link]
 
 ### Convenciones Relacionadas
+
 - [Link]
 
 ### Documentación Externa
+
 - [Link oficial]
-```
+
+````
 
 ### Template: Convención
 
-```markdown
+```text
 ---
 id: {id}
 sidebar_position: {n}
@@ -296,7 +312,7 @@ Por qué esta convención es importante.
 
 ## 2. Reglas
 
-### Regla 1: {Nombre}
+### Regla 1: \{Nombre\}
 
 - **Formato:** `formato`
 - **Ejemplo correcto:** `ejemplo`
@@ -309,12 +325,12 @@ ejemplo
 
 ❌ Incorrecto:
 ejemplo
-```
+````
 
 ## 3. Tabla de Referencia Rápida
 
 | Tipo | Formato | Ejemplo |
-|------|---------|---------|
+| ---- | ------- | ------- |
 | X    | Y       | Z       |
 
 ## 4. Herramientas
@@ -330,10 +346,13 @@ ejemplo
 ## 6. Referencias
 
 ### Estándares Relacionados
+
 - [Link]
 
 ### Lineamientos Relacionados
+
 - [Link]
+
 ```
 
 ---
@@ -357,39 +376,51 @@ Antes de crear un nuevo documento, pregúntate:
 
 **Incorrecto:**
 ```
+
 Estándar C# → Incluye naming (PascalCase, camelCase)
+
 ```
 
 **Correcto:**
 ```
+
 Estándar C# → Solo Clean Code, SOLID, async/await
 Convención C# → Solo naming (PascalCase, camelCase)
+
 ```
 
 ### ❌ Error 2: Lineamiento demasiado técnico
 
 **Incorrecto:**
 ```
+
 Lineamiento → "Usar xUnit con FluentAssertions"
+
 ```
 
 **Correcto:**
 ```
+
 Lineamiento → "Aplicar pirámide de testing"
 Estándar → "Usar xUnit con FluentAssertions"
+
 ```
 
 ### ❌ Error 3: Convención con tecnología
 
 **Incorrecto:**
 ```
+
 Convención → "Usar AWS Secrets Manager para secretos"
+
 ```
 
 **Correcto:**
 ```
+
 Convención → "Never commit secrets, usar .env"
 Estándar → "Usar AWS Secrets Manager con rotación"
+
 ```
 
 ---
@@ -411,3 +442,4 @@ Estándar → "Usar AWS Secrets Manager con rotación"
 ---
 
 _Esta guía asegura coherencia y evita duplicación en la documentación de fundamentos corporativos._
+```

@@ -1,0 +1,8 @@
+{
+    "label": "Datos",
+    "position": 4,
+    "link": {
+        "type": "generated-index",
+        "description": "Estándares para gestión de datos, migraciones y gobernanza."
+    }
+}

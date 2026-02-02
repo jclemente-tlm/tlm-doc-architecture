@@ -1,10 +1,10 @@
 {
-    "label": "Principios de Arquitectura",
-    "position": 6,
+    "label": "Arquitectura",
+    "position": 1,
     "link": {
         "type": "generated-index",
         "title": "Principios de Arquitectura",
-        "slug": "/lineamientos/principios-de-arquitectura",
-        "description": "Lineamientos y buenas prácticas de arquitectura para Talma."
+        "slug": "/fundamentos/principios/arquitectura",
+        "description": "Principios fundamentales para el diseño e implementación de arquitecturas de software en Talma."
     }
 }

@@ -10,18 +10,21 @@ description: Estándar técnico obligatorio para construcción, optimización y 
 ---
 
 ## 1. Propósito
-Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos) y reproducibles mediante multi-stage builds, Alpine/Slim, usuario no-root, tags semánticos y BuildKit.
+
+Garantizar imágenes de contenedores ligeras (`<200MB`), seguras (0 CVEs críticos) y reproducibles mediante multi-stage builds, Alpine/Slim, usuario no-root, tags semánticos y BuildKit.
 
 ---
 
 ## 2. Alcance
 
 **Aplica a:**
+
 - Aplicaciones backend (.NET) desplegadas en contenedores
 - APIs REST, microservicios, workers, jobs en GitHub Container Registry
 - Entornos Dev, Staging, Production
 
 **No aplica a:**
+
 - Scripts one-time locales sin despliegue
 - Contenedores de testing efímeros sin publicación
 - Imágenes de terceros consumidas as-is
@@ -30,14 +33,14 @@ Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos
 
 ## 3. Tecnologías Aprobadas
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-| **Docker Engine** | Docker Engine | 24.0+ | BuildKit nativo, multi-platform builds |
-| **BuildKit** | Habilitado por defecto | 0.12+ | Cache eficiente, builds paralelos |
-| **Imágenes Base** | Alpine (preferida), Slim | Latest LTS | Tamaño reducido 70-80% |
-| **Scanner** | Trivy | Latest | Detecta CVEs antes de publicar |
-| **Registry** | GitHub Container Registry (ghcr.io) | - | Registry privado integrado con GitHub |
-| **.NET** | `dotnet/aspnet:8.0-alpine` | 8.0 | ~110MB |
+| Componente        | Tecnología                          | Versión mínima | Observaciones                          |
+| ----------------- | ----------------------------------- | -------------- | -------------------------------------- |
+| **Docker Engine** | Docker Engine                       | 24.0+          | BuildKit nativo, multi-platform builds |
+| **BuildKit**      | Habilitado por defecto              | 0.12+          | Cache eficiente, builds paralelos      |
+| **Imágenes Base** | Alpine (preferida), Slim            | Latest LTS     | Tamaño reducido 70-80%                 |
+| **Scanner**       | Trivy                               | Latest         | Detecta CVEs antes de publicar         |
+| **Registry**      | GitHub Container Registry (ghcr.io) | -              | Registry privado integrado con GitHub  |
+| **.NET**          | `dotnet/aspnet:8.0-alpine`          | 8.0            | ~110MB                                 |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -49,7 +52,7 @@ Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos
 - [ ] Imagen base Alpine o Slim
 - [ ] Usuario no-root creado (UID 1001)
 - [ ] Health check configurado (interval 30s, timeout 5s)
-- [ ] Tags semánticos v<MAJOR>.<MINOR>.<PATCH> (NO `latest` en prod)
+- [ ] Tags semánticos `v<MAJOR>.<MINOR>.<PATCH>` (NO `latest` en prod)
 - [ ] Secretos NO hardcodeados (usar Secrets Manager)
 - [ ] Escaneo vulnerabilidades ejecutado (Trivy)
 - [ ] CVEs críticos resueltos antes de push
@@ -75,6 +78,7 @@ Garantizar imágenes de contenedores ligeras (<200MB), seguras (0 CVEs críticos
 ## 6. Configuración Mínima
 
 ### .NET
+
 ```dockerfile
 # syntax=docker/dockerfile:1.4
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
@@ -117,12 +121,12 @@ git log -1 --format=%B | grep DOCKER_BUILDKIT
 
 **Métricas de cumplimiento:**
 
-| Métrica | Target | Verificación |
-|---------|--------|--------------|  
-| Tamaño imagen | ≤ 200MB | `docker images` output |
-| CVEs críticos | 0 | `trivy --severity CRITICAL` |
-| Usuario no-root | 100% | `docker inspect \| grep User` |
-| Tags `latest` en prod | 0% | ghcr.io registry inspection |
+| Métrica               | Target  | Verificación                  |
+| --------------------- | ------- | ----------------------------- |
+| Tamaño imagen         | ≤ 200MB | `docker images` output        |
+| CVEs críticos         | 0       | `trivy --severity CRITICAL`   |
+| Usuario no-root       | 100%    | `docker inspect \| grep User` |
+| Tags `latest` en prod | 0%      | ghcr.io registry inspection   |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 

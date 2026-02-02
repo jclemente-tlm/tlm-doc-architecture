@@ -10,6 +10,7 @@ description: Estándares para desarrollo SQL, Entity Framework, PostgreSQL 14+ y
 ---
 
 ## 1. Propósito
+
 Garantizar código SQL seguro contra SQL Injection mediante parametrización, optimizado con índices y EXPLAIN ANALYZE, usando Entity Framework Core 8.0+ con LINQ preferido sobre raw SQL.
 
 ---
@@ -17,12 +18,14 @@ Garantizar código SQL seguro contra SQL Injection mediante parametrización, op
 ## 2. Alcance
 
 **Aplica a:**
+
 - Consultas SQL con Entity Framework Core 8.0+
 - Raw SQL con Npgsql 8.0+ (PostgreSQL) y Oracle.EntityFrameworkCore 8.0+
 - Repositories con acceso a datos
 - Scripts de migración (EF Migrations / Flyway 10.0+)
 
 **No aplica a:**
+
 - Queries de herramientas BI/reportería
 - Scripts de administración DBA
 - Consultas ad-hoc de análisis
@@ -31,15 +34,15 @@ Garantizar código SQL seguro contra SQL Injection mediante parametrización, op
 
 ## 3. Tecnologías Aprobadas
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-| **BD Principal** | PostgreSQL | 14.0+ | Transaccional OLTP |
-| **BD Corporativa** | Oracle Database | 19c+ | Sistemas corporativos |
-| **ORM Principal** | Entity Framework Core | 8.0+ | ORM completo .NET |
-| **Micro-ORM** | Dapper | 2.1+ | Queries optimizados |
-| **Provider PG** | Npgsql | 8.0+ | JSON/JSONB support |
-| **Provider Oracle** | Oracle.EntityFrameworkCore | 8.0+ | Soporte Oracle |
-| **Migrations** | EF Migrations | - | Versionado esquemas |
+| Componente          | Tecnología                 | Versión mínima | Observaciones         |
+| ------------------- | -------------------------- | -------------- | --------------------- |
+| **BD Principal**    | PostgreSQL                 | 14.0+          | Transaccional OLTP    |
+| **BD Corporativa**  | Oracle Database            | 19c+           | Sistemas corporativos |
+| **ORM Principal**   | Entity Framework Core      | 8.0+           | ORM completo .NET     |
+| **Micro-ORM**       | Dapper                     | 2.1+           | Queries optimizados   |
+| **Provider PG**     | Npgsql                     | 8.0+           | JSON/JSONB support    |
+| **Provider Oracle** | Oracle.EntityFrameworkCore | 8.0+           | Soporte Oracle        |
+| **Migrations**      | EF Migrations              | -              | Versionado esquemas   |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -77,6 +80,7 @@ Garantizar código SQL seguro contra SQL Injection mediante parametrización, op
 ## 6. Configuración Mínima
 
 ### PostgreSQL
+
 ```csharp
 // Program.cs
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -92,13 +96,13 @@ public class AppDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Order> Orders { get; set; }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Naming snake_case
         modelBuilder.Entity<User>().ToTable("users");
         modelBuilder.Entity<User>().Property(u => u.FullName).HasColumnName("full_name");
-        
+
         // Índice
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
     }
@@ -106,15 +110,16 @@ public class AppDbContext : DbContext
 ```
 
 ### LINQ (Preferido)
+
 ```csharp
 // ✅ Correcto: LINQ con proyección
 var users = await _dbContext.Users
     .Where(u => u.IsActive)
-    .Select(u => new UserDto 
-    { 
+    .Select(u => new UserDto
+    {
         UserId = u.UserId,
         FullName = u.FullName,
-        Email = u.Email 
+        Email = u.Email
     })
     .ToListAsync(cancellationToken);
 
@@ -126,6 +131,7 @@ var order = await _dbContext.Orders
 ```
 
 ### Raw SQL Parametrizado
+
 ```csharp
 // ✅ Correcto: Parámetros
 var users = await _dbContext.Users
@@ -155,29 +161,29 @@ dotnet ef migrations script --output migration.sql
 
 ```sql
 -- PostgreSQL: Verificar índices
-SELECT tablename, indexname, indexdef 
-FROM pg_indexes 
+SELECT tablename, indexname, indexdef
+FROM pg_indexes
 WHERE schemaname = 'public';
 
 -- Analizar query
-EXPLAIN ANALYZE 
+EXPLAIN ANALYZE
 SELECT * FROM users WHERE email = 'test@talma.com';
 
 -- Verificar queries lentas (>100ms)
-SELECT query, mean_exec_time 
-FROM pg_stat_statements 
+SELECT query, mean_exec_time
+FROM pg_stat_statements
 WHERE mean_exec_time > 100
 ORDER BY mean_exec_time DESC;
 ```
 
 **Métricas de cumplimiento:**
 
-| Métrica | Target | Verificación |
-|---------|--------|--------------|  
-| Queries parametrizadas | 100% | Code review: NO concatenación |
-| Queries con índices | 100% | EXPLAIN ANALYZE sin Seq Scan |
-| Queries <100ms | >95% | pg_stat_statements |
-| Migraciones versionadas | 100% | EF Migrations historial |
+| Métrica                 | Target | Verificación                  |
+| ----------------------- | ------ | ----------------------------- |
+| Queries parametrizadas  | 100%   | Code review: NO concatenación |
+| Queries con índices     | 100%   | EXPLAIN ANALYZE sin Seq Scan  |
+| Queries `<100ms`        | >95%   | pg_stat_statements            |
+| Migraciones versionadas | 100%   | EF Migrations historial       |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 

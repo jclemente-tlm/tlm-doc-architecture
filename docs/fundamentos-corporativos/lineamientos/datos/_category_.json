@@ -1,0 +1,8 @@
+{
+    "label": "Datos",
+    "position": 2,
+    "link": {
+        "type": "generated-index",
+        "description": "Lineamientos para responsabilidad del dominio, esquemas y consistencia de datos."
+    }
+}

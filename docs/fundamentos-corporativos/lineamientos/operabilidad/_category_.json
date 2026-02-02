@@ -1,0 +1,8 @@
+{
+    "label": "Operabilidad",
+    "position": 3,
+    "link": {
+        "type": "generated-index",
+        "description": "Lineamientos para automatización, IaC, consistencia entre entornos y calidad."
+    }
+}

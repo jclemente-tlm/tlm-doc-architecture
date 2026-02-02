@@ -10,18 +10,21 @@ description: Estándar técnico obligatorio para orquestación multi-contenedor 
 ---
 
 ## 1. Propósito
-Garantizar entornos de desarrollo idénticos entre equipos mediante Docker Compose v2.20+ (formato v3.9), separación de entornos con override files, health checks, volúmenes nombrados y onboarding <10 min.
+
+Garantizar entornos de desarrollo idénticos entre equipos mediante Docker Compose v2.20+ (formato v3.9), separación de entornos con override files, health checks, volúmenes nombrados y onboarding `<10` min.
 
 ---
 
 ## 2. Alcance
 
 **Aplica a:**
+
 - Desarrollo local multi-contenedor (API + DB + Cache + Broker)
 - CI/CD pipelines para testing automatizado
 - Hot reload de código durante desarrollo
 
 **No aplica a:**
+
 - Producción (usar AWS ECS/Fargate)
 - Staging/Pre-producción (usar orquestadores cloud)
 - Contenedores standalone simples (usar `docker run`)
@@ -30,14 +33,14 @@ Garantizar entornos de desarrollo idénticos entre equipos mediante Docker Compo
 
 ## 3. Tecnologías Aprobadas
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-| **Compose** | Docker Compose | 2.20+ | Orquestación declarativa multi-contenedor |
-| **Formato** | Compose file format | 3.9 | Compatible Docker Engine 19.03+ |
-| **Variables** | .env files + ${VAR} | - | Configuración por entorno |
-| **Networks** | Bridge driver | - | Aislamiento de servicios |
-| **Volúmenes** | Named volumes, bind mounts | - | Persistencia y hot reload |
-| **Health Checks** | healthcheck directive | - | Dependencias confiables |
+| Componente        | Tecnología                 | Versión mínima | Observaciones                             |
+| ----------------- | -------------------------- | -------------- | ----------------------------------------- |
+| **Compose**       | Docker Compose             | 2.20+          | Orquestación declarativa multi-contenedor |
+| **Formato**       | Compose file format        | 3.9            | Compatible Docker Engine 19.03+           |
+| **Variables**     | .env files + ${VAR}        | -              | Configuración por entorno                 |
+| **Networks**      | Bridge driver              | -              | Aislamiento de servicios                  |
+| **Volúmenes**     | Named volumes, bind mounts | -              | Persistencia y hot reload                 |
+| **Health Checks** | healthcheck directive      | -              | Dependencias confiables                   |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -169,12 +172,12 @@ docker-compose down -v
 
 **Métricas de cumplimiento:**
 
-| Métrica | Target | Verificación |
-|---------|--------|--------------|  
-| Tiempo onboarding | < 10 min | `time docker-compose up -d` < 2min |
-| Health checks pasando | 100% | `docker-compose ps` all healthy |
-| Secrets en repo | 0 | `.env` en .gitignore |
-| Services con resource limits | 100% | `docker-compose config \| grep -c limits` |
+| Métrica                      | Target   | Verificación                              |
+| ---------------------------- | -------- | ----------------------------------------- |
+| Tiempo onboarding            | < 10 min | `time docker-compose up -d` < 2min        |
+| Health checks pasando        | 100%     | `docker-compose ps` all healthy           |
+| Secrets en repo              | 0        | `.env` en .gitignore                      |
+| Services con resource limits | 100%     | `docker-compose config \| grep -c limits` |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 

@@ -1,0 +1,8 @@
+{
+    "label": "Gobierno",
+    "position": 5,
+    "link": {
+        "type": "generated-index",
+        "description": "Lineamientos para decisiones arquitectónicas, evaluación y cumplimiento."
+    }
+}

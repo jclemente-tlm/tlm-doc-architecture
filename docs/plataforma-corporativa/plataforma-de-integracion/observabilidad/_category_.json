@@ -3,8 +3,8 @@
   "position": 5,
   "link": {
     "type": "generated-index",
-    "title": "Observabilidad Corporativa",
-    "slug": "/plataforma/observabilidad",
-    "description": "Stack de observabilidad corporativa (logs, métricas, trazas)."
+    "title": "Observabilidad",
+    "slug": "/plataforma/integracion/observabilidad",
+    "description": "Stack de observabilidad con Grafana: logs (Loki), métricas (Mimir), trazas (Tempo)."
   }
 }

@@ -10,6 +10,7 @@ description: Estándar técnico obligatorio para definir, provisionar y gestiona
 ---
 
 ## 1. Propósito
+
 Garantizar infraestructura reproducible, auditable y versionada mediante Terraform 1.6+, state remoto en S3+DynamoDB, módulos reutilizables y GitOps workflow (PR review → plan → apply manual).
 
 ---
@@ -17,11 +18,13 @@ Garantizar infraestructura reproducible, auditable y versionada mediante Terrafo
 ## 2. Alcance
 
 **Aplica a:**
+
 - Toda infraestructura AWS (VPC, ECS, RDS, S3, IAM, etc.)
 - Recursos cloud en dev, staging, production
 - Networking, compute, storage, databases, seguridad
 
 **No aplica a:**
+
 - Configuraciones dentro de contenedores (usar env vars)
 - Código de aplicación (deployment vía CI/CD)
 - Secretos (usar AWS Secrets Manager, NO Terraform state)
@@ -31,15 +34,15 @@ Garantizar infraestructura reproducible, auditable y versionada mediante Terrafo
 
 ## 3. Tecnologías Aprobadas
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-| **IaC Tool** | Terraform | 1.6+ | Agnóstico cloud, state management robusto |
-| **State Backend** | S3 + DynamoDB | - | State remoto con locking colaborativo |
-| **Módulos** | Terraform Registry | - | Versionado semántico (v1.2.3) |
-| **Validation** | terraform fmt/validate | Built-in | Sintaxis y formato consistente |
-| **Linting** | tflint | 0.50+ | Detecta errores y malas prácticas |
-| **Security Scan** | Checkov | Latest | Detecta vulnerabilidades de seguridad |
-| **CI/CD** | GitHub Actions | - | Automatización de plan/apply |
+| Componente        | Tecnología             | Versión mínima | Observaciones                             |
+| ----------------- | ---------------------- | -------------- | ----------------------------------------- |
+| **IaC Tool**      | Terraform              | 1.6+           | Agnóstico cloud, state management robusto |
+| **State Backend** | S3 + DynamoDB          | -              | State remoto con locking colaborativo     |
+| **Módulos**       | Terraform Registry     | -              | Versionado semántico (v1.2.3)             |
+| **Validation**    | terraform fmt/validate | Built-in       | Sintaxis y formato consistente            |
+| **Linting**       | tflint                 | 0.50+          | Detecta errores y malas prácticas         |
+| **Security Scan** | Checkov                | Latest         | Detecta vulnerabilidades de seguridad     |
+| **CI/CD**         | GitHub Actions         | -              | Automatización de plan/apply              |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -113,14 +116,14 @@ provider "aws" {
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.1.2"
-  
+
   name = "${var.project_name}-${var.environment}"
   cidr = var.vpc_cidr
-  
+
   azs             = data.aws_availability_zones.available.names
   private_subnets = var.private_subnet_cidrs
   public_subnets  = var.public_subnet_cidrs
-  
+
   enable_nat_gateway = true
   single_nat_gateway = var.environment != "prod"
 }
@@ -152,12 +155,12 @@ aws dynamodb get-item --table-name terraform-state-lock --key '{"LockID":{"S":"t
 
 **Métricas de cumplimiento:**
 
-| Métrica | Target | Verificación |
-|---------|--------|--------------|  
-| State remoto habilitado | 100% | Verificar backend.tf en todos los entornos |
-| Modules con versionado | 100% | `grep 'version =' *.tf` |
-| Checkov pasando | 100% | CI/CD pipeline status |
-| Secrets en state | 0 | `terraform show \| grep -i password` |
+| Métrica                 | Target | Verificación                               |
+| ----------------------- | ------ | ------------------------------------------ |
+| State remoto habilitado | 100%   | Verificar backend.tf en todos los entornos |
+| Modules con versionado  | 100%   | `grep 'version =' *.tf`                    |
+| Checkov pasando         | 100%   | CI/CD pipeline status                      |
+| Secrets en state        | 0      | `terraform show \| grep -i password`       |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
