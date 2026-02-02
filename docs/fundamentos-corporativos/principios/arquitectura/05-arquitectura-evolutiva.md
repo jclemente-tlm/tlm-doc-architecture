@@ -1,6 +1,6 @@
 ---
 id: arquitectura-evolutiva
-sidebar_position: 4
+sidebar_position: 5
 title: Arquitectura Evolutiva
 description: Diseño preparado para adaptarse al cambio de forma controlada
 ---

@@ -1,6 +1,6 @@
 ---
 id: minimo-privilegio
-sidebar_position: 6
+sidebar_position: 4
 title: Mínimo Privilegio
 description: Operar con el nivel mínimo de privilegios necesario para cada función
 ---
