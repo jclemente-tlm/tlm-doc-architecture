@@ -7,67 +7,15 @@ description: Lineamientos para mensajería asíncrona y arquitectura orientada a
 
 # Comunicación Asíncrona y Eventos
 
-## 1. Propósito
+Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo resiliencia ante indisponibilidades temporales y escalabilidad independiente. Eventos mal diseñados (imperativos, sin esquema, sin idempotencia) generan acoplamiento oculto y procesamiento duplicado. Adoptar AsyncAPI, eventos inmutables e idempotencia garantiza consistencia eventual y evolución controlada de integraciones.
 
-Establecer cómo diseñar e implementar comunicación asíncrona mediante mensajes y eventos, garantizando desacoplamiento y resiliencia.
+**Este lineamiento aplica a:** mensajería entre servicios, arquitectura orientada a eventos, event sourcing, CQRS e integraciones asíncronas.
 
----
+## Prácticas Recomendadas
 
-## 2. Alcance
-
-Aplica a:
-
-- Mensajería entre servicios (queues, topics)
-- Arquitectura orientada a eventos (event-driven)
-- Event sourcing y CQRS
-- Integraciones asíncronas
-- Notificaciones y webhooks
-
----
-
-## 3. Lineamientos Obligatorios
-
-- Definir esquemas de eventos (AsyncAPI, JSON Schema, Avro)
-- Usar eventos para comunicar hechos del dominio, no comandos
-- Implementar idempotencia en consumidores
-- Garantizar at-least-once o exactly-once delivery según criticidad
-- Documentar topología de eventos (productores, consumidores, topics)
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Plataforma de mensajería (Apache Kafka con Confluent.Kafka)
-- Estrategia de naming de topics
-- Formato de mensajes y versionado (Avro con Schema Registry)
-- Garantías de entrega (at-least-once, exactly-once)
-- Estrategia de dead letter topics (DLT)
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Eventos sin esquema definido
-- Eventos como comandos (imperativos)
-- Consumidores sin idempotencia
-- Ausencia de DLQ para mensajes fallidos
-- Eventos con datos sensibles sin cifrar
-
----
-
-## 6. Principios Relacionados
-
-- [Arquitectura Orientada a Eventos](../../estilos-arquitectonicos/eventos.md)
-- Desacoplamiento y Autonomía
-- Resiliencia y Tolerancia a Fallos
-- Contratos de Datos
-
----
-
-## 7. Validación y Cumplimiento
-
-- Validación de esquemas de eventos
-- Pruebas de idempotencia de consumidores
-- Monitoreo de DLQ y mensajes no procesados
-- Documentación de eventos en AsyncAPI
-- Auditoría de flujos de eventos end-to-end
+- [Definir esquemas de eventos con AsyncAPI o Avro](../../estandares/mensajeria/schemas-eventos.md)
+- [Usar eventos para comunicar hechos del dominio, no comandos](../../estandares/mensajeria/eventos-vs-comandos.md)
+- [Implementar idempotencia en consumidores](../../estandares/mensajeria/idempotencia.md)
+- [Garantizar entrega at-least-once o exactly-once](../../estandares/mensajeria/garantias-entrega.md)
+- [Configurar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dlq.md)
+- [Documentar topología de eventos y consumidores](../../estandares/mensajeria/topologia-eventos.md)

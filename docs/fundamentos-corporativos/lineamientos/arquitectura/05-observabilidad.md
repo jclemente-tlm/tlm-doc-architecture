@@ -7,66 +7,14 @@ description: Observabilidad como requisito arquitectónico desde el diseño
 
 # Observabilidad
 
-## 1. Propósito
+En sistemas distribuidos, las fallas pueden propagarse silenciosamente afectando la experiencia del usuario sin síntomas evidentes. La observabilidad integrada desde el diseño reduce el MTTR hasta 10x comparado con implementaciones reactivas, facilitando la identificación de cuellos de botella, degradación de performance y la correlación de eventos a través de múltiples servicios.
 
-Definir la observabilidad como un requisito arquitectónico obligatorio desde el diseño, no como una preocupación operativa posterior.
+**Este lineamiento aplica a:** servicios backend, APIs REST, microservicios, workers, procesos batch y funciones serverless.
 
----
+## Prácticas Recomendadas
 
-## 2. Alcance
-
-Aplica a:
-
-- Todos los servicios y aplicaciones
-- Flujos de integración end-to-end
-- Procesos batch y asíncronos
-- Infraestructura y plataforma
-
----
-
-## 3. Lineamientos Obligatorios
-
-- Generar logs estructurados con contexto relevante
-- Emitir métricas de negocio y técnicas
-- Implementar trazas distribuidas (distributed tracing)
-- Usar identificadores de correlación en todas las interacciones
-- Configurar health checks y readiness probes
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Estrategia de logging (niveles, formato, destino)
-- Métricas clave por servicio (latencia, errores, tráfico, saturación)
-- Implementación de tracing distribuido
-- Esquema de correlación de requests
-- Dashboards y alertas definidos
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Logs sin estructura ni contexto
-- Ausencia de métricas de negocio
-- Trazas incompletas o sin correlación
-- Health checks que no reflejan el estado real
-- Observabilidad como añadido posterior
-
----
-
-## 6. Principios Relacionados
-
-- Observabilidad desde el Diseño
-- Calidad desde el Diseño
-- Resiliencia y Tolerancia a Fallos
-- Automatización como Principio
-
----
-
-## 7. Validación y Cumplimiento
-
-- Verificación de logs estructurados en code reviews
-- Validación de métricas y dashboards antes de producción
-- Pruebas de correlación end-to-end
-- Auditoría de alertas configuradas
-- Documentación de estrategia en ADRs
+- [Generar logs estructurados en formato JSON](../../estandares/observabilidad/01-logging.md)
+- [Emitir métricas siguiendo metodología RED/USE](../../estandares/observabilidad/02-monitoreo-metricas.md)
+- [Implementar trazas distribuidas con W3C Trace Context](../../estandares/observabilidad/03-tracing-distribuido.md)
+- [Usar identificadores de correlación entre servicios](../../estandares/observabilidad/04-correlation-ids.md)
+- [Configurar health checks para orquestadores](../../estandares/observabilidad/05-health-checks.md)

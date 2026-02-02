@@ -7,67 +7,16 @@ description: Protección de datos sensibles a lo largo de su ciclo de vida
 
 # Protección de Datos
 
-## 1. Propósito
+La exposición de datos sensibles genera incidentes de seguridad, incumplimientos regulatorios y pérdida de confianza que afectan continuidad del negocio. Datos sin clasificar, transmitidos sin cifrar, almacenados en claro o filtrados en logs representan vectores de fuga críticos. Implementar clasificación de datos, cifrado end-to-end, gestión segura de claves, enmascaramiento y políticas de minimización protege información sensible en todo su ciclo de vida, desde creación hasta eliminación, garantizando cumplimiento normativo y resiliencia ante amenazas.
 
-Establecer cómo proteger datos sensibles durante todo su ciclo de vida: creación, procesamiento, transmisión, almacenamiento y eliminación.
+**Este lineamiento aplica a:** Datos personales (PII), datos financieros y de pago, datos de salud (PHI), secretos y credenciales, y datos confidenciales de negocio.
 
----
+## Prácticas Recomendadas
 
-## 2. Alcance
-
-Aplica a:
-
-- Datos personales (PII)
-- Datos financieros y de pago
-- Datos de salud (PHI)
-- Secretos y credenciales
-- Datos confidenciales de negocio
-
----
-
-## 3. Lineamientos Obligatorios
-
-- Clasificar datos según sensibilidad (público, interno, sensible, regulado)
-- Cifrar datos sensibles en tránsito (TLS 1.2+)
-- Cifrar datos sensibles en reposo según clasificación
-- Aplicar enmascaramiento/tokenización donde corresponda
-- Gestionar claves de cifrado con servicios dedicados (KMS)
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Clasificación de datos por tipo y sensibilidad
-- Estrategia de cifrado (algoritmos, gestión de claves)
-- Métodos de enmascaramiento o tokenización
-- Políticas de retención y eliminación segura
-- Controles de acceso a datos sensibles
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Almacenar datos sensibles sin cifrar
-- Transmitir datos sensibles sin TLS
-- Logs o trazas con datos sensibles
-- Claves de cifrado en código o configuración
-- Ausencia de clasificación de datos
-
----
-
-## 6. Principios Relacionados
-
-- Protección de Datos Sensibles
-- Seguridad desde el Diseño
-- Mínimo Privilegio
-- Defensa en Profundidad
-
----
-
-## 7. Validación y Cumplimiento
-
-- Revisión de clasificación de datos
-- Escaneo de secretos en código y logs
-- Auditoría de configuración de cifrado
-- Verificación de uso de TLS en todas las comunicaciones
-- Pruebas de acceso no autorizado a datos sensibles
+- [Clasificar datos según sensibilidad (público, interno, sensible, regulado)](../../estandares/seguridad/clasificacion-datos.md)
+- [Cifrar datos sensibles en tránsito con TLS 1.2 o superior](../../estandares/seguridad/cifrado-transito.md)
+- [Cifrar datos sensibles en reposo según clasificación](../../estandares/seguridad/cifrado-reposo.md)
+- [Aplicar enmascaramiento y tokenización donde corresponda](../../estandares/seguridad/enmascaramiento-datos.md)
+- [Gestionar claves de cifrado con servicios dedicados (KMS)](../../estandares/seguridad/gestion-claves-kms.md)
+- [Recopilar únicamente datos estrictamente necesarios (minimización)](../../estandares/seguridad/minimizacion-datos.md)
+- [Implementar políticas de retención y eliminación automática](../../estandares/seguridad/retencion-eliminacion.md)

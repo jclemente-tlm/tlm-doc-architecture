@@ -7,67 +7,14 @@ description: Gestión de identidades, autenticación y autorización
 
 # Identidad y Accesos
 
-## 1. Propósito
+La gestión fragmentada de identidades genera credenciales dispersas, permisos excesivos y ausencia de trazabilidad que facilitan accesos no autorizados y dificultan auditorías de seguridad. Esta fragmentación multiplica vectores de ataque y debilita controles de cumplimiento. Centralizar identidades mediante federación SSO, aplicar mínimo privilegio y autenticación multifactor, junto con gestión segura de identidades de servicios, establece controles consistentes, reduce superficie de ataque y permite auditoría completa de accesos en toda la plataforma.
 
-Establecer cómo gestionar identidades, autenticación y autorización de manera centralizada, segura y auditable.
+**Este lineamiento aplica a:** Aplicaciones web y móviles, APIs internas y externas, servicios backend, acceso a infraestructura y plataforma, e integraciones entre sistemas.
 
----
+## Prácticas Recomendadas
 
-## 2. Alcance
-
-Aplica a:
-
-- Aplicaciones web y móviles
-- APIs internas y externas
-- Servicios backend
-- Acceso a infraestructura y plataforma
-- Integraciones entre sistemas
-
----
-
-## 3. Lineamientos Obligatorios
-
-- Usar identidad federada y SSO corporativo para usuarios
-- Implementar autenticación multifactor (MFA) para accesos críticos
-- Aplicar mínimo privilegio en autorizaciones
-- Gestionar identidades de servicios con service accounts/managed identities
-- No almacenar credenciales en código o configuración
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Proveedor de identidad y protocolo de autenticación (OAuth2, OIDC, SAML)
-- Estrategia de autorización (RBAC, ABAC, claims-based)
-- Gestión de tokens y sesiones
-- Políticas de rotación de credenciales
-- Estrategia de MFA para diferentes tipos de usuarios
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Autenticación custom en lugar de estándares (OAuth2/OIDC)
-- Credenciales hardcodeadas en código
-- Tokens o secretos compartidos entre servicios
-- Autorización solo en cliente (sin validación en servidor)
-- Ausencia de MFA en accesos administrativos
-
----
-
-## 6. Principios Relacionados
-
-- Gestión de Identidades y Accesos
-- Mínimo Privilegio
-- Zero Trust
-- Seguridad desde el Diseño
-
----
-
-## 7. Validación y Cumplimiento
-
-- Revisión de flujos de autenticación y autorización
-- Auditoría de permisos y roles asignados
-- Escaneo de secretos en repositorios de código
-- Pruebas de seguridad de autenticación (pentest)
-- Documentación en ADRs de estrategia de identidad
+- [Usar identidad federada y SSO corporativo para usuarios](../../estandares/seguridad/sso-federado.md)
+- [Implementar autenticación multifactor (MFA) para accesos críticos](../../estandares/seguridad/mfa-configuracion.md)
+- [Aplicar mínimo privilegio en autorizaciones](../../estandares/seguridad/minimo-privilegio.md)
+- [Gestionar identidades de servicios con service accounts y managed identities](../../estandares/seguridad/identidades-servicios.md)
+- [No almacenar credenciales en código o configuración](../../estandares/seguridad/gestion-secretos.md)

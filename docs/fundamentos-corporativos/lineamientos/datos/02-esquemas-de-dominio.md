@@ -7,77 +7,14 @@ description: Definición explícita de esquemas de dominio versionados y documen
 
 # Esquemas de Dominio
 
-## 1. Propósito
+Esquemas implícitos o sin versionar generan errores en runtime, incompatibilidades entre servicios y dificultad para evolucionar modelos. Migraciones versionadas (Flyway, Liquibase) y esquemas documentados (JSON Schema, Avro) actúan como contratos explícitos que permiten validación automática y evolución controlada sin romper consumidores existentes.
 
-Garantizar que los datos del dominio (bases de datos, eventos de negocio, modelos) tengan esquemas explícitos, versionados y documentados que faciliten evolución y compatibilidad.
+**Este lineamiento aplica a:** esquemas de bases de datos, eventos de dominio, modelos persistidos, mensajes asíncronos y archivos de intercambio.
 
-> **Nota:** Para contratos de APIs REST/GraphQL ver [Contratos de Integración](../integracion/02-contratos-de-integracion.md).
+## Prácticas Recomendadas
 
----
-
-## 2. Alcance
-
-Aplica a:
-
-- Esquemas de bases de datos (tablas, columnas, tipos)
-- Eventos de dominio (estructura de eventos de negocio)
-- Modelos de dominio persistidos
-- Mensajes de dominio asíncronos
-- Archivos de intercambio de datos (CSV, JSON, XML)
-
-No aplica a:
-
-- Contratos de APIs REST/GraphQL (ver Integración/02)
-- DTOs o payloads de API (ver Integración/02)
-
----
-
-## 3. Lineamientos Obligatorios
-
-- Definir esquemas explícitos para estructuras de datos de dominio
-- Versionar esquemas de BD mediante migraciones versionadas (Flyway, Liquibase)
-- Documentar esquemas de eventos con formato estándar (JSON Schema, Avro)
-- Validar datos contra esquemas antes de persistir o publicar
-- Gestionar cambios de esquema mediante estrategias de evolución (expand-contract)
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Herramientas de migración de BD (Flyway, Liquibase, EF Migrations)
-- Formato de esquemas de eventos (JSON Schema, Avro, Protobuf)
-- Estrategia de evolución de esquemas (expand-contract, parallel change)
-- Política de cambios breaking en modelos de dominio
-- Registro de esquemas de eventos (Schema Registry, Event Catalog)
-- Documentación de modelos de dominio (ERD, DDD aggregates)
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Cambios de esquema de BD sin migraciones versionadas
-- Eventos de dominio sin esquema definido
-- Modificaciones de BD directas (no mediante migraciones)
-- Esquemas de eventos no documentados
-- Breaking changes en modelos sin estrategia de compatibilidad
-- Uso de SELECT \* en lugar de columnas explícitas
-
----
-
-## 6. Principios Relacionados
-
-- Contratos de Datos
-- Datos como Responsabilidad del Dominio
-- Arquitectura Evolutiva
-- Diseño Orientado al Dominio
-
----
-
-## 7. Validación y Cumplimiento
-
-- Revisión de migraciones de BD en PRs
-- Validación automática de migraciones en CI/CD
-- Pruebas de backward compatibility de eventos
-- Documentación de esquemas en repositorio de código
-- Auditoría de cambios de esquema sin migración
-- Verificación de validación de eventos contra esquemas
+- [Versionar esquemas de BD con migraciones automatizadas](../../estandares/datos/database-migrations.md)
+- [Documentar esquemas de eventos con JSON Schema o Avro](../../estandares/mensajeria/schemas-eventos.md)
+- [Validar datos contra esquemas antes de persistir](../../estandares/datos/schema-validation.md)
+- [Gestionar cambios con estrategias expand-contract](../../estandares/datos/schema-evolution.md)
+- [Publicar esquemas en registro centralizado](../../estandares/datos/schema-registry.md)

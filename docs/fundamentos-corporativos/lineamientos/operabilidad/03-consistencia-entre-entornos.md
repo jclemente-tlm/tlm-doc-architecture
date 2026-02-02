@@ -7,66 +7,14 @@ description: Paridad entre entornos para reducir "funciona en mi máquina"
 
 # Consistencia entre Entornos
 
-## 1. Propósito
+La divergencia entre entornos de desarrollo, QA y producción genera el síndrome "funciona en mi máquina", donde código validado localmente falla en producción por diferencias en versiones de dependencias, configuraciones o variables de entorno. Estas inconsistencias dificultan diagnóstico de problemas, invalidan pruebas y generan incidentes evitables. Contenedorizar aplicaciones, gestionar configuración externamente y validar paridad entre ambientes garantiza comportamiento predecible, reduce riesgos de despliegue y permite debugging efectivo al reproducir condiciones de producción.
 
-Garantizar que los entornos de desarrollo, QA y producción sean lo más similares posible, reduciendo problemas de "funciona en mi máquina" y facilitando diagnóstico.
+**Este lineamiento aplica a:** Entornos locales de desarrollo, entornos de integración y QA, staging y pre-producción, producción, contenedores y orquestación.
 
----
+## Prácticas Recomendadas
 
-## 2. Alcance
-
-Aplica a:
-
-- Entornos locales de desarrollo
-- Entornos de integración y QA
-- Staging y pre-producción
-- Producción
-- Contenedores y orquestación
-
----
-
-## 3. Lineamientos Obligatorios
-
-- Usar mismas versiones de dependencias en todos los entornos
-- Contenedorizar aplicaciones para consistencia
-- Gestionar configuración externamente (variables de entorno)
-- Documentar diferencias inevitables entre entornos
-- Validar paridad de entornos regularmente
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Estrategia de contenedorización
-- Gestión de configuración por entorno
-- Herramientas de paridad (Docker, Dev Containers)
-- Diferencias aceptables entre entornos (ej: recursos)
-- Proceso de sincronización de versiones
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Versiones diferentes de runtime entre entornos
-- Configuración específica de entorno en código
-- "Funciona en mi máquina" sin reproducibilidad
-- Dependencias globales no documentadas
-- Tests que solo pasan en un entorno específico
-
----
-
-## 6. Principios Relacionados
-
-- Consistencia entre Entornos
-- [Automatización como Principio](../../principios/operabilidad/01-automatizacion-como-principio.md)
-- [Arquitectura Cloud Native](../../estilos-arquitectonicos/cloud-native.md)
-
----
-
-## 7. Validación y Cumplimiento
-
-- Comparación de versiones entre entornos
-- Tests de humo en todos los entornos
-- Documentación de configuración por entorno
-- Auditoría de diferencias no justificadas
-- Métricas de problemas "solo en prod"
+- [Usar mismas versiones de dependencias en todos los entornos](../../estandares/operabilidad/paridad-versiones.md)
+- [Contenedorizar aplicaciones para garantizar consistencia](../../estandares/operabilidad/contenedorizacion.md)
+- [Gestionar configuración externamente mediante variables de entorno](../../estandares/operabilidad/configuracion-externa.md)
+- [Documentar diferencias inevitables entre entornos](../../estandares/operabilidad/diferencias-entornos.md)
+- [Validar paridad de entornos regularmente](../../estandares/operabilidad/validacion-paridad.md)

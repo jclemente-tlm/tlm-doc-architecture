@@ -7,66 +7,14 @@ description: Seguridad como propiedad inherente del sistema desde el diseño
 
 # Seguridad desde el Diseño
 
-## 1. Propósito
+Las vulnerabilidades incorporadas durante el diseño arquitectónico generan exposiciones críticas que se multiplican en cada capa del sistema. Agregar controles de seguridad como remediación posterior resulta costoso, ineficaz y deja brechas sistémicas. Integrar seguridad desde las primeras decisiones arquitectónicas reduce la superficie de ataque, establece límites de confianza claros y permite implementar defensa en profundidad desde la base, protegiendo activos críticos mediante diseño intencional en lugar de parches reactivos.
 
-Establecer que se recomienda que la seguridad sea una propiedad inherente del sistema, considerada desde las primeras decisiones de diseño y no como un agregado posterior.
+**Este lineamiento aplica a:** Todos los sistemas, servicios, componentes e integraciones diseñados o modificados, incluyendo arquitecturas nuevas, evolución de sistemas existentes e infraestructura de plataforma.
 
----
+## Prácticas Recomendadas
 
-## 2. Alcance
-
-Aplica a:
-
-- Todos los sistemas, servicios y componentes diseñados o modificados
-- Arquitecturas nuevas y evolución de sistemas existentes
-- Integraciones internas y externas
-- Infraestructura y plataforma
-
----
-
-## 3. Lineamientos Obligatorios
-
-- Aplicar Security by Design en todas las decisiones arquitectónicas
-- Realizar modelado de amenazas para nuevos sistemas o cambios significativos
-- Definir explícitamente los límites de confianza (trust boundaries)
-- Reducir la superficie de ataque mediante exposición controlada
-- Aplicar defensa en profundidad (múltiples capas de seguridad)
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Identificación de activos críticos y amenazas
-- Definición de trust boundaries y controles en cada límite
-- Estrategia de autenticación y autorización
-- Mecanismos de protección de datos sensibles
-- Controles de seguridad por capa arquitectónica
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Asumir que entornos internos o redes privadas son confiables por defecto
-- Delegar completamente la seguridad a la infraestructura
-- Incorporar controles de seguridad solo en etapas finales
-- Reutilizar credenciales o identidades entre componentes
-- Configuraciones inseguras por defecto
-
----
-
-## 6. Principios Relacionados
-
-- Seguridad desde el Diseño
-- Zero Trust
-- Defensa en Profundidad
-- Mínimo Privilegio
-
----
-
-## 7. Validación y Cumplimiento
-
-- Modelado de amenazas documentado en ADRs
-- Revisiones de seguridad en architecture reviews
-- Pruebas de penetración en sistemas críticos
-- Auditoría de controles de seguridad implementados
-- Escaneo de vulnerabilidades automatizado en CI/CD
+- [Aplicar Security by Design en todas las decisiones arquitectónicas](../../estandares/seguridad/security-by-design.md)
+- [Realizar modelado de amenazas para nuevos sistemas o cambios significativos](../../estandares/seguridad/modelado-amenazas.md)
+- [Definir explícitamente los límites de confianza (trust boundaries)](../../estandares/seguridad/trust-boundaries.md)
+- [Reducir la superficie de ataque mediante exposición controlada](../../estandares/seguridad/reduccion-superficie-ataque.md)
+- [Aplicar defensa en profundidad con múltiples capas de seguridad](../../estandares/seguridad/defensa-en-profundidad.md)

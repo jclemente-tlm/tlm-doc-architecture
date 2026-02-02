@@ -7,100 +7,15 @@ description: Principios de diseño para sistemas que operan en entornos cloud di
 
 # Diseño Cloud Native
 
-## 1. Propósito
+Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo mediante arquitecturas stateless, configuración externalizada y resiliencia ante fallos. Aplicaciones que no siguen estos principios pierden beneficios de escalabilidad automática, recuperación rápida y optimización de costos. Adoptar 12-Factor App y patrones cloud-native desde el diseño reduce complejidad operativa y facilita despliegues automatizados.
 
-Definir cómo diseñar sistemas que aprovechen las capacidades cloud (elasticidad, resiliencia, dinamismo) mediante principios arquitectónicos fundamentales.
+**Este lineamiento aplica a:** aplicaciones en cloud público/privado/híbrido, servicios containerizados, plataformas multi-tenant y migraciones a cloud.
 
-> **Nota:** Para automatización de despliegues (CI/CD) ver [Automatización](../operabilidad/01-automatizacion.md). Para gestión de infraestructura ver [IaC](../operabilidad/02-infraestructura-como-codigo.md).
+## Prácticas Recomendadas
 
----
-
-## 2. Alcance
-
-Aplica a:
-
-- Aplicaciones diseñadas para cloud (públicas, privadas, híbridas)
-- Migración de aplicaciones a cloud
-- Servicios distribuidos y containerizados
-- Plataformas multi-tenant
-
-No aplica a:
-
-- Aplicaciones on-premise sin planes de migración
-- Sistemas legacy sin evolución cloud
-
----
-
-## 3. Lineamientos Obligatorios
-
-**Principios 12-Factor App:**
-
-- Externalizar toda la configuración (variables de entorno)
-- Tratar logs como streams de eventos
-- Procesos stateless (estado en servicios externos)
-- Servicios backing como recursos adjuntos
-
-**Diseño para resiliencia:**
-
-- Asumir que componentes fallarán (design for failure)
-- Implementar health checks (liveness, readiness)
-- Preparar para terminación abrupta (graceful shutdown)
-- Tolerar reemplazos de instancias sin pérdida de funcionalidad
-
-**Escalabilidad horizontal:**
-
-- Diseñar servicios para escalar horizontalmente (agregar instancias)
-- Sin afinidad de sesión (session affinity)
-- Sin estado local persistente
-- Idempotencia en operaciones críticas
-
-**Configuración y secretos:**
-
-- Nunca hardcodear configuraciones
-- Gestionar secretos en AWS Secrets Manager con rotación automática
-- Configuración inyectada en runtime, no en build time
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Estrategia de externalización de configuración
-- Gestión de secretos (herramienta, rotación, acceso)
-- Diseño de health checks (qué verifican, timeouts)
-- Estrategia de manejo de estado (BD, cache, storage)
-- Políticas de auto-scaling (métricas trigger, límites)
-- Topología de despliegue multi-región (si aplica)
-- Manejo de graceful shutdown
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Estado persistido en filesystem del contenedor
-- Configuración hardcodeada por entorno
-- Secretos en código, variables de entorno o repositorio
-- Servicios que requieren instancias específicas (sticky sessions)
-- Dependencias de IP o nombres de host estáticos
-- Lógica que asume persistencia local
-- Health checks que siempre retornan 200 sin validar dependencias
-
----
-
-## 6. Principios Relacionados
-
-- [Arquitectura Cloud Native](../../estilos-arquitectonicos/cloud-native.md)
-- Resiliencia y Tolerancia a Fallos
-- Consistencia entre Entornos
-- Desacoplamiento y Autonomía
-
----
-
-## 7. Validación y Cumplimiento
-
-- Auditoría de configuración externalizada (no hardcodeada)
-- Escaneo de secretos en código y configuración
-- Pruebas de escalado horizontal (agregar/quitar instancias)
-- Validación de health checks (liveness y readiness)
-- Pruebas de chaos engineering (terminación de instancias)
-- Verificación de graceful shutdown
-- Documentación en ADR de decisiones cloud native
+- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/configuracion-externalizada.md)
+- [Diseñar servicios stateless con estado en backing services](../../estandares/arquitectura/stateless-services.md)
+- [Implementar health checks liveness y readiness](../../estandares/observabilidad/05-health-checks.md)
+- [Preparar servicios para escalabilidad horizontal](../../estandares/arquitectura/horizontal-scaling.md)
+- [Gestionar secretos en AWS Secrets Manager](../../../decisiones-de-arquitectura/adr-003-gestion-secretos.md)
+- [Aplicar graceful shutdown para terminación ordenada](../../estandares/arquitectura/graceful-shutdown.md)

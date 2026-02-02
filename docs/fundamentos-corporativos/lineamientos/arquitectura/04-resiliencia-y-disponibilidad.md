@@ -7,68 +7,15 @@ description: Lineamientos para diseñar sistemas tolerantes a fallos y altamente
 
 # Resiliencia y Disponibilidad
 
-## 1. Propósito
+Sistemas distribuidos enfrentan fallos inevitables: dependencias caídas, latencias inesperadas, picos de carga. Diseñar sin estrategias de resiliencia genera cascading failures, pérdida de datos y experiencias degradadas para usuarios. Implementar circuit breakers, timeouts, retries y degradación graceful mantiene la funcionalidad esencial y reduce MTTR, garantizando disponibilidad incluso ante condiciones adversas.
 
-Definir cómo diseñar sistemas que mantengan su funcionamiento ante fallos, degradaciones o picos de carga, garantizando disponibilidad y recuperación oportuna.
+**Este lineamiento aplica a:** servicios críticos, APIs públicas/privadas, sistemas distribuidos e integraciones con terceros.
 
----
+## Prácticas Recomendadas
 
-## 2. Alcance
-
-Aplica a:
-
-- Servicios críticos de negocio
-- APIs públicas y privadas
-- Sistemas distribuidos y cloud native
-- Integraciones con terceros
-
----
-
-## 3. Lineamientos Obligatorios
-
-- Implementar circuit breakers y timeouts en llamadas externas
-- Diseñar para degradación graceful ante fallos de dependencias
-- Aplicar retry con backoff exponencial cuando corresponda
-- Documentar estrategias de failover y recuperación
-- Definir SLOs (Service Level Objectives) claros
-- Implementar Dead Letter Queue (DLQ) para mensajes no procesables
-- Definir estrategias de compensación para transacciones distribuidas
-
----
-
-## 4. Decisiones de Diseño Esperadas
-
-- Estrategia de manejo de fallos de dependencias
-- Definición de SLOs y SLAs del servicio
-- Mecanismos de retry, timeout y circuit breaking
-- Plan de contingencia y recuperación ante desastres
-- Estrategia de health checks y readiness probes
-
----
-
-## 5. Antipatrones y Prácticas Prohibidas
-
-- Llamadas sin timeout a servicios externos
-- Dependencias críticas sin circuit breaker
-- Retry infinito sin backoff
-- Fallos silenciosos sin alertas
-- Ausencia de degradación graceful
-
----
-
-## 6. Principios Relacionados
-
-- Resiliencia y Tolerancia a Fallos
-- [Arquitectura Cloud Native](../../estilos-arquitectonicos/cloud-native.md)
-- Observabilidad desde el Diseño
-- Desacoplamiento y Autonomía
-
----
-
-## 7. Validación y Cumplimiento
-
-- Pruebas de caos (chaos engineering) en entornos no productivos
-- Simulación de fallos de dependencias
-- Monitoreo de SLOs y alertas configuradas
-- Documentación de estrategias en ADRs
-- Revisión de resiliencia en architecture reviews
+- [Implementar circuit breakers para dependencias externas](../../estandares/arquitectura/circuit-breakers.md)
+- [Aplicar timeouts apropiados en llamadas remotas](../../estandares/arquitectura/timeouts.md)
+- [Configurar retry con backoff exponencial](../../estandares/arquitectura/retry-patterns.md)
+- [Diseñar degradación graceful ante fallos](../../estandares/arquitectura/graceful-degradation.md)
+- [Definir SLOs y SLAs documentados](../../estandares/operabilidad/slos-slas.md)
+- [Implementar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dlq.md)
