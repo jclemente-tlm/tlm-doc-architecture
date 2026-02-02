@@ -1,11 +1,11 @@
 ---
-id: ownership-de-datos
+id: propiedad-de-datos
 sidebar_position: 1
-title: Ownership de Datos por Dominio
+title: Propiedad de Datos
 description: Cada dominio es responsable exclusivo de sus datos sin compartir almacenamiento
 ---
 
-# Ownership de Datos por Dominio
+# Propiedad de Datos
 
 ## 1. Declaración
 
