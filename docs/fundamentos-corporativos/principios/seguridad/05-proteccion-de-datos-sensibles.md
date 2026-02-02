@@ -7,15 +7,13 @@ description: Identificación, clasificación y protección explícita de datos s
 
 # Protección de Datos Sensibles
 
-## 1. Declaración del Principio
+## 1. Declaración
 
 La arquitectura debe identificar, clasificar y proteger explícitamente los datos sensibles, asegurando que su almacenamiento, procesamiento y exposición estén alineados con su nivel de criticidad y riesgo.
 
-## 2. Propósito
+## 2. Justificación
 
-Reducir el riesgo de exposición, uso indebido o pérdida de información crítica, garantizando que los datos sensibles reciban un tratamiento diferenciado y coherente desde el diseño del sistema.
-
-## 3. Justificación
+Este principio busca reducir el riesgo de exposición, uso indebido o pérdida de información crítica, garantizando que los datos sensibles reciban un tratamiento diferenciado y coherente desde el diseño del sistema.
 
 No todos los datos tienen el mismo valor ni el mismo impacto ante una brecha de seguridad.
 Cuando los sistemas tratan toda la información de forma uniforme:
@@ -26,7 +24,7 @@ Cuando los sistemas tratan toda la información de forma uniforme:
 
 La protección efectiva de datos sensibles comienza identificándolos y estableciendo decisiones arquitectónicas acordes a su nivel de riesgo, no solo aplicando controles técnicos posteriores.
 
-## 4. Alcance Conceptual
+## 3. Alcance y Contexto
 
 Este principio aplica a:
 
@@ -37,7 +35,7 @@ Este principio aplica a:
 
 Cubre todo el ciclo de vida del dato: generación, transporte, almacenamiento, acceso, uso y eliminación.
 
-## 5. Implicaciones Arquitectónicas
+## 4. Implicaciones
 
 - Los datos sensibles deben identificarse y clasificarse explícitamente.
 - El acceso a datos sensibles debe estar estrictamente controlado y justificado.
@@ -46,16 +44,6 @@ Cubre todo el ciclo de vida del dato: generación, transporte, almacenamiento, a
 - Los flujos de datos sensibles deben ser visibles y trazables.
 - La persistencia y transporte de datos sensibles requieren medidas adicionales desde el diseño.
 
-## 6. Compensaciones (Trade-offs)
+**Compensaciones (Trade-offs):**
 
 Introduce mayor complejidad en diseño, operación y gobierno de datos, a cambio de reducir significativamente el impacto de incidentes de seguridad, facilitar el cumplimiento normativo y proteger activos críticos del negocio.
-
-## 7. Relación con Decisiones Arquitectónicas (ADRs)
-
-Este principio se refleja en ADRs relacionados con:
-
-- Clasificación y manejo de datos
-- Estrategias de almacenamiento y segregación
-- Políticas de acceso y exposición de información
-- Manejo de secretos y credenciales
-- Retención y eliminación de datos

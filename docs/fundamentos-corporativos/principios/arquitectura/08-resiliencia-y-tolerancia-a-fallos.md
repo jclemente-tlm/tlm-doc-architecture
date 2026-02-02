@@ -7,15 +7,13 @@ description: Sistemas diseñados para degradarse, recuperarse y operar ante fall
 
 # Resiliencia y Tolerancia a Fallos
 
-## 1. Declaración del Principio
+## 1. Declaración
 
 Los sistemas deben diseñarse asumiendo que los fallos ocurrirán y deben ser capaces de degradarse, recuperarse y continuar operando de forma controlada.
 
-## 2. Propósito
+## 2. Justificación
 
-Reducir el impacto de fallos técnicos, errores humanos o dependencias externas, manteniendo niveles aceptables de servicio y continuidad del negocio.
-
-## 3. Justificación
+Este principio busca reducir el impacto de fallos técnicos, errores humanos o dependencias externas, manteniendo niveles aceptables de servicio y continuidad del negocio.
 
 En sistemas modernos, distribuidos e integrados, los fallos no son excepciones, sino eventos esperables:
 
@@ -26,7 +24,7 @@ En sistemas modernos, distribuidos e integrados, los fallos no son excepciones, 
 Diseñar asumiendo disponibilidad total genera arquitecturas frágiles.
 La resiliencia debe ser una **propiedad estructural del sistema**, no una reacción operativa.
 
-## 4. Alcance Conceptual
+## 3. Alcance y Contexto
 
 Este principio aplica a:
 
@@ -38,7 +36,7 @@ Este principio aplica a:
 
 Aplica independientemente del estilo arquitectónico adoptado.
 
-## 5. Implicaciones Arquitectónicas
+## 4. Implicaciones
 
 - La arquitectura debe asumir fallos parciales como escenario normal.
 - Los componentes deben fallar de forma controlada y predecible.
@@ -46,15 +44,6 @@ Aplica independientemente del estilo arquitectónico adoptado.
 - Se deben priorizar funcionalidades críticas frente a fallos.
 - Las expectativas de disponibilidad deben estar alineadas con el diseño del sistema.
 
-## 6. Compensaciones (Trade-offs)
+**Compensaciones (Trade-offs):**
 
 Puede incrementar el esfuerzo de diseño y el costo inicial de implementación, a cambio de mayor estabilidad, menor impacto operativo y mejor continuidad del servicio.
-
-## 7. Relación con Decisiones Arquitectónicas (ADRs)
-
-Este principio se refleja en ADRs relacionados con:
-
-- Manejo de dependencias entre componentes
-- Estrategias de degradación funcional
-- Definición de expectativas de disponibilidad
-- Decisiones de recuperación y continuidad

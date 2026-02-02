@@ -7,15 +7,13 @@ description: Operar con el nivel mínimo de privilegios necesario para cada func
 
 # Mínimo Privilegio
 
-## 1. Declaración del Principio
+## 1. Declaración
 
 Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegios necesario para cumplir su función, y solo durante el tiempo requerido.
 
-## 2. Propósito
+## 2. Justificación
 
-Reducir el impacto de errores, fallos de seguridad o usos indebidos, limitando el alcance de las acciones que cada actor puede realizar dentro del sistema.
-
-## 3. Justificación
+Este principio busca reducir el impacto de errores, fallos de seguridad o usos indebidos, limitando el alcance de las acciones que cada actor puede realizar dentro del sistema.
 
 Los privilegios excesivos amplifican el impacto de cualquier incidente:
 
@@ -27,7 +25,7 @@ Los privilegios excesivos amplifican el impacto de cualquier incidente:
 Cuando los sistemas otorgan más permisos de los necesarios, un fallo localizado puede convertirse en un incidente sistémico.
 El principio de mínimo privilegio reduce el radio de impacto y facilita el control, la auditoría y la corrección de incidentes.
 
-## 4. Alcance Conceptual
+## 3. Alcance y Contexto
 
 Este principio aplica a:
 
@@ -38,7 +36,7 @@ Este principio aplica a:
 
 Incluye privilegios funcionales, operativos y de administración.
 
-## 5. Implicaciones Arquitectónicas
+## 4. Implicaciones
 
 - Los permisos deben definirse de forma explícita y granular.
 - Los accesos deben otorgarse por necesidad, no por conveniencia.
@@ -46,16 +44,6 @@ Incluye privilegios funcionales, operativos y de administración.
 - La arquitectura debe evitar componentes con acceso excesivo o transversal.
 - Las capacidades críticas deben estar claramente segregadas.
 
-## 6. Compensaciones (Trade-offs)
+**Compensaciones (Trade-offs):**
 
 Requiere mayor esfuerzo inicial de diseño, definición de roles y gestión de accesos, a cambio de una reducción significativa del riesgo, mayor control operativo y mejor trazabilidad de acciones.
-
-## 7. Relación con Decisiones Arquitectónicas (ADRs)
-
-Este principio suele reflejarse en ADRs relacionados con:
-
-- Modelos de autorización y roles
-- Acceso entre componentes y servicios
-- Separación de responsabilidades
-- Gestión de credenciales y secretos
-- Auditoría y control de accesos

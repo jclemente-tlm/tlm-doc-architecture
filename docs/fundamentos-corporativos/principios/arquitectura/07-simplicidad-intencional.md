@@ -7,15 +7,13 @@ description: Priorizar soluciones simples y comprensibles evitando sobreingenier
 
 # Simplicidad Intencional
 
-## 1. Declaración del Principio
+## 1. Declaración
 
 La arquitectura debe priorizar soluciones simples y comprensibles, incorporando complejidad únicamente cuando exista una necesidad clara y justificada.
 
-## 2. Propósito
+## 2. Justificación
 
-Evitar la sobreingeniería y construir sistemas sostenibles, mantenibles y entendibles a lo largo del tiempo, alineados con las capacidades reales del equipo y del negocio.
-
-## 3. Justificación
+Este principio busca evitar la sobreengeniería y construir sistemas sostenibles, mantenibles y entendibles a lo largo del tiempo, alineados con las capacidades reales del equipo y del negocio.
 
 La complejidad innecesaria es una de las principales fuentes de:
 
@@ -28,7 +26,7 @@ Una arquitectura “elegante” pero difícil de operar o evolucionar termina si
 
 La simplicidad no significa falta de diseño, sino **elección consciente de lo esencial**.
 
-## 4. Alcance Conceptual
+## 3. Alcance y Contexto
 
 Este principio aplica a decisiones como:
 
@@ -40,7 +38,7 @@ Este principio aplica a decisiones como:
 
 No promueve soluciones simplistas, sino **complejidad proporcional al problema**.
 
-## 5. Implicaciones Arquitectónicas
+## 4. Implicaciones
 
 - La complejidad debe introducirse solo cuando exista un beneficio claro y medible.
 - Las decisiones arquitectónicas deben poder explicarse de forma comprensible a distintos roles.
@@ -48,15 +46,6 @@ No promueve soluciones simplistas, sino **complejidad proporcional al problema**
 - La arquitectura debe minimizar dependencias innecesarias entre componentes.
 - El diseño debe facilitar la operación, el monitoreo y la evolución del sistema.
 
-## 6. Compensaciones (Trade-offs)
+**Compensaciones (Trade-offs):**
 
-Puede limitar soluciones altamente sofisticadas o “óptimas” desde un punto de vista técnico, a cambio de mayor claridad, menor riesgo operativo y mayor sostenibilidad a largo plazo.
-
-## 7. Relación con Decisiones Arquitectónicas (ADRs)
-
-Este principio suele reflejarse en ADRs relacionados con:
-
-- Elección de estilos arquitectónicos
-- Nivel de distribución del sistema
-- Introducción (o no) de nuevas tecnologías
-- Decisiones de escalabilidad y resiliencia
+Puede limitar soluciones altamente sofisticadas o "óptimas" desde un punto de vista técnico, a cambio de mayor claridad, menor riesgo operativo y mayor sostenibilidad a largo plazo.

@@ -7,15 +7,13 @@ description: Observabilidad como propiedad arquitectónica desde las primeras de
 
 # Observabilidad desde el Diseño
 
-## 1. Declaración del Principio
+## 1. Declaración
 
 La observabilidad debe considerarse una propiedad arquitectónica del sistema y definirse desde las primeras decisiones de diseño, no añadirse posteriormente como una preocupación operativa.
 
-## 2. Propósito
+## 2. Justificación
 
-Permitir comprender el comportamiento del sistema, diagnosticar problemas y evaluar su estado real en producción de forma oportuna y confiable.
-
-## 3. Justificación
+Este principio busca permitir comprender el comportamiento del sistema, diagnosticar problemas y evaluar su estado real en producción de forma oportuna y confiable.
 
 En sistemas modernos, distribuidos y dinámicos, los fallos no siempre son evidentes ni reproducibles en entornos de prueba.
 
@@ -30,7 +28,7 @@ Diseñar la observabilidad desde el inicio permite:
 
 Un sistema que no puede observarse adecuadamente no puede operarse ni evolucionar de forma segura.
 
-## 4. Alcance Conceptual
+## 3. Alcance y Contexto
 
 Aplica a:
 
@@ -41,7 +39,7 @@ Aplica a:
 
 No prescribe herramientas específicas, sino capacidades mínimas de observación.
 
-## 5. Implicaciones Arquitectónicas
+## 4. Implicaciones
 
 - Los componentes deben exponer información relevante sobre su estado y comportamiento.
 - Las interacciones entre sistemas deben ser rastreables de extremo a extremo.
@@ -49,15 +47,6 @@ No prescribe herramientas específicas, sino capacidades mínimas de observació
 - La arquitectura debe permitir diferenciar comportamientos normales de anomalías.
 - El diseño debe facilitar la correlación entre eventos, métricas y flujos.
 
-## 6. Compensaciones (Trade-offs)
+**Compensaciones (Trade-offs):**
 
 Introduce esfuerzo adicional en diseño y desarrollo, a cambio de mayor confiabilidad operativa, menor tiempo de resolución de incidentes y mejor capacidad de evolución del sistema.
-
-## 7. Relación con Decisiones Arquitectónicas (ADRs)
-
-Este principio se refleja en ADRs relacionados con:
-
-- Estrategias de logging, métricas y trazabilidad
-- Diseño de flujos y correlación entre componentes
-- Manejo de errores y eventos
-- Exposición de información operativa

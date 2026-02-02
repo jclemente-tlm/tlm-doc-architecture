@@ -7,15 +7,13 @@ description: Diseño preparado para adaptarse al cambio de forma controlada
 
 # Arquitectura Evolutiva
 
-## 1. Declaración del Principio
+## 1. Declaración
 
 La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, aceptando que los requisitos, el negocio y la tecnología evolucionarán con el tiempo.
 
-## 2. Propósito
+## 2. Justificación
 
-Permitir que el sistema incorpore cambios sin necesidad de rediseños completos, reduciendo el costo y el riesgo de la evolución.
-
-## 3. Justificación
+Este principio busca permitir que el sistema incorpore cambios sin necesidad de rediseños completos, reduciendo el costo y el riesgo de la evolución.
 
 Las arquitecturas que asumen estabilidad permanente tienden a volverse rígidas, costosas de modificar y desconectadas de las necesidades reales del negocio.
 
@@ -23,7 +21,7 @@ Diseñar para la evolución no significa anticipar todo, sino crear estructuras 
 
 El cambio no es una excepción, es una condición normal del sistema.
 
-## 4. Alcance Conceptual
+## 3. Alcance y Contexto
 
 Aplica a:
 
@@ -34,22 +32,13 @@ Aplica a:
 
 No implica ausencia de decisiones, sino decisiones conscientes sobre qué debe ser estable y qué puede cambiar.
 
-## 5. Implicaciones Arquitectónicas
+## 4. Implicaciones
 
 - Las decisiones arquitectónicas se revisan y ajustan en el tiempo.
 - Se prioriza la reversibilidad de decisiones cuando es posible.
 - Los límites y contratos ayudan a contener el impacto del cambio.
 - La arquitectura admite refactorización y mejora continua.
 
-## 6. Compensaciones (Trade-offs)
+**Compensaciones (Trade-offs):**
 
 Puede implicar mayor disciplina en el diseño y gobierno arquitectónico, a cambio de menor rigidez, menor deuda estructural y mayor alineación con el negocio.
-
-## 7. Relación con Decisiones Arquitectónicas (ADRs)
-
-Este principio se refleja en ADRs relacionados con:
-
-- Elección y reemplazo de tecnologías
-- Definición de contratos y versionado
-- Estrategias de transición y migración
-- Evaluación periódica de decisiones arquitectónicas

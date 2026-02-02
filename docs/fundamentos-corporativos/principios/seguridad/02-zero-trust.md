@@ -7,15 +7,13 @@ description: Ningún componente es confiable por defecto, toda interacción se e
 
 # Zero Trust
 
-## 1. Declaración del Principio
+## 1. Declaración
 
 Ningún componente, usuario o sistema es confiable por defecto; toda interacción debe evaluarse explícitamente, independientemente de su origen o ubicación.
 
-## 2. Propósito
+## 2. Justificación
 
-Eliminar supuestos implícitos de confianza y reducir el riesgo de accesos indebidos, movimientos laterales y propagación de incidentes dentro de la arquitectura.
-
-## 3. Justificación
+Este principio busca eliminar supuestos implícitos de confianza y reducir el riesgo de accesos indebidos, movimientos laterales y propagación de incidentes dentro de la arquitectura.
 
 Las arquitecturas modernas están compuestas por múltiples servicios, componentes, usuarios e integraciones que interactúan de forma continua y distribuida.
 
@@ -23,7 +21,7 @@ Asumir confianza implícita —por pertenecer a una red, entorno o sistema— am
 
 El enfoque Zero Trust establece que la confianza no se presume: se define, se valida y se limita según el contexto de cada interacción.
 
-## 4. Alcance Conceptual
+## 3. Alcance y Contexto
 
 Este principio aplica a:
 
@@ -34,7 +32,7 @@ Este principio aplica a:
 
 Zero Trust no depende de un mecanismo específico, sino de un modelo coherente de control y verificación.
 
-## 5. Implicaciones Arquitectónicas
+## 4. Implicaciones
 
 - Toda interacción debe estar sujeta a verificación explícita.
 - La confianza es contextual, limitada y no permanente.
@@ -42,15 +40,6 @@ Zero Trust no depende de un mecanismo específico, sino de un modelo coherente d
 - La arquitectura no debe basarse en redes, zonas o entornos considerados implícitamente confiables.
 - El acceso debe evaluarse según identidad, contexto y propósito.
 
-## 6. Compensaciones (Trade-offs)
+**Compensaciones (Trade-offs):**
 
 Incrementa la necesidad de controles, validaciones y diseño explícito de accesos, a cambio de una reducción significativa del impacto de incidentes y una mayor trazabilidad y control.
-
-## 7. Relación con Decisiones Arquitectónicas (ADRs)
-
-Este principio se refleja comúnmente en ADRs relacionados con:
-
-- Definición de límites de confianza
-- Modelos de autenticación y autorización
-- Estrategias de acceso entre servicios y dominios
-- Segmentación lógica y control de identidades

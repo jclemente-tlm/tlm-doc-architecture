@@ -7,15 +7,13 @@ description: Cada dominio es responsable exclusivo de sus datos sin compartir al
 
 # Ownership de Datos por Dominio
 
-## 1. Declaración del Principio
+## 1. Declaración
 
 Cada dominio de negocio es responsable exclusivo de sus propios datos: su definición, calidad, integridad y evolución, sin compartir almacenamiento ni permitir acceso directo desde otros dominios.
 
-## 2. Propósito
+## 2. Justificación
 
-Garantizar autonomía de dominios, evitar acoplamiento implícito vía bases de datos compartidas y permitir evolución independiente de datos y esquemas.
-
-## 3. Justificación
+Este principio busca garantizar autonomía de dominios, evitar acoplamiento implícito vía bases de datos compartidas y permitir evolución independiente de datos y esquemas.
 
 Cuando múltiples dominios acceden directamente a una misma base de datos:
 
@@ -28,7 +26,7 @@ El ownership claro de datos establece límites arquitectónicos fundamentales y 
 
 Cada dominio debe ser dueño de sus datos, no compartirlos directamente, y exponer información mediante APIs o eventos.
 
-## 4. Alcance Conceptual
+## 3. Alcance y Contexto
 
 Aplica a:
 
@@ -39,7 +37,7 @@ Aplica a:
 
 No implica duplicación descontrolada de datos, sino ownership claro y acceso mediante interfaces definidas.
 
-## 5. Implicaciones Arquitectónicas
+## 4. Implicaciones
 
 - Cada dominio/servicio tiene su propia base de datos.
 - No se permite acceso directo a bases de datos de otros dominios.
@@ -47,14 +45,6 @@ No implica duplicación descontrolada de datos, sino ownership claro y acceso me
 - El ownership de cada conjunto de datos debe estar documentado.
 - Los cambios de esquema son responsabilidad exclusiva del dominio dueño.
 
-## 6. Compensaciones (Trade-offs)
+**Compensaciones (Trade-offs):**
 
 Puede generar duplicación controlada de datos, a cambio de mayor autonomía, claridad semántica y capacidad de evolución.
-
-## 7. Relación con Decisiones Arquitectónicas (ADRs)
-
-Este principio se refleja en ADRs relacionados con:
-
-- Separación de dominios
-- Estrategias de integración de datos
-- Ownership y límites de responsabilidad
