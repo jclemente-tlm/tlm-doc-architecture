@@ -7,15 +7,15 @@ description: Ningún componente es confiable por defecto, toda interacción se e
 
 # Zero Trust
 
-## Declaración del Principio
+## 1. Declaración del Principio
 
 Ningún componente, usuario o sistema es confiable por defecto; toda interacción debe evaluarse explícitamente, independientemente de su origen o ubicación.
 
-## Propósito
+## 2. Propósito
 
 Eliminar supuestos implícitos de confianza y reducir el riesgo de accesos indebidos, movimientos laterales y propagación de incidentes dentro de la arquitectura.
 
-## Justificación
+## 3. Justificación
 
 Las arquitecturas modernas están compuestas por múltiples servicios, componentes, usuarios e integraciones que interactúan de forma continua y distribuida.
 
@@ -23,7 +23,7 @@ Asumir confianza implícita —por pertenecer a una red, entorno o sistema— am
 
 El enfoque Zero Trust establece que la confianza no se presume: se define, se valida y se limita según el contexto de cada interacción.
 
-## Alcance Conceptual
+## 4. Alcance Conceptual
 
 Este principio aplica a:
 
@@ -34,7 +34,7 @@ Este principio aplica a:
 
 Zero Trust no depende de un mecanismo específico, sino de un modelo coherente de control y verificación.
 
-## Implicaciones Arquitectónicas
+## 5. Implicaciones Arquitectónicas
 
 - Toda interacción debe estar sujeta a verificación explícita.
 - La confianza es contextual, limitada y no permanente.
@@ -42,11 +42,11 @@ Zero Trust no depende de un mecanismo específico, sino de un modelo coherente d
 - La arquitectura no debe basarse en redes, zonas o entornos considerados implícitamente confiables.
 - El acceso debe evaluarse según identidad, contexto y propósito.
 
-## Compensaciones (Trade-offs)
+## 6. Compensaciones (Trade-offs)
 
 Incrementa la necesidad de controles, validaciones y diseño explícito de accesos, a cambio de una reducción significativa del impacto de incidentes y una mayor trazabilidad y control.
 
-## Relación con Decisiones Arquitectónicas (ADRs)
+## 7. Relación con Decisiones Arquitectónicas (ADRs)
 
 Este principio se refleja comúnmente en ADRs relacionados con:
 

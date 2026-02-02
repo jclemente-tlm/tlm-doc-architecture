@@ -7,15 +7,15 @@ description: Automatizar toda actividad repetible de construcción, despliegue y
 
 # Automatización como Principio
 
-## Declaración del Principio
+## 1. Declaración del Principio
 
 Toda actividad repetible relacionada con la construcción, despliegue, configuración y operación de sistemas debe ser automatizada de forma consistente, reproducible y confiable.
 
-## Propósito
+## 2. Propósito
 
 Reducir errores humanos, aumentar la repetibilidad de los procesos, garantizar consistencia entre entornos y permitir que los equipos se enfoquen en tareas de mayor valor.
 
-## Justificación
+## 3. Justificación
 
 Los procesos manuales introducen variabilidad, dependencia de conocimiento individual y riesgos operativos.
 A medida que los sistemas crecen, la operación manual se vuelve insostenible.
@@ -30,7 +30,7 @@ La automatización no es solo una práctica técnica, sino una **capacidad arqui
 
 **La infraestructura como código (IaC)** es una materialización fundamental de este principio: tratar la infraestructura con las mismas prácticas que el código (versionado, revisión, automatización).
 
-## Alcance Conceptual
+## 4. Alcance Conceptual
 
 Este principio aplica a:
 
@@ -43,7 +43,7 @@ Este principio aplica a:
 
 No prescribe herramientas específicas, sino la intención de eliminar dependencias manuales innecesarias.
 
-## Implicaciones Arquitectónicas
+## 5. Implicaciones Arquitectónicas
 
 - **Pipelines CI/CD:** Los procesos de build, test y deploy deben ser completamente automatizados
 - **Infraestructura como Código (IaC):** Los entornos deben definirse mediante código versionado (Terraform, CloudFormation, Pulumi, Bicep)
@@ -55,11 +55,11 @@ No prescribe herramientas específicas, sino la intención de eliminar dependenc
 
 La arquitectura debe diseñarse para soportar estos mecanismos de automatización sin requerir intervención manual en producción.
 
-## Compensaciones (Trade-offs)
+## 6. Compensaciones (Trade-offs)
 
 Requiere mayor inversión inicial en diseño y estandarización, a cambio de menor riesgo operativo, mayor velocidad y mejor control a largo plazo.
 
-## Relación con Decisiones Arquitectónicas (ADRs)
+## 7. Relación con Decisiones Arquitectónicas (ADRs)
 
 Este principio se refleja en ADRs relacionados con:
 

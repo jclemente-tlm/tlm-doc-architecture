@@ -7,15 +7,15 @@ description: Observabilidad como propiedad arquitectónica desde las primeras de
 
 # Observabilidad desde el Diseño
 
-## Declaración del Principio
+## 1. Declaración del Principio
 
 La observabilidad debe considerarse una propiedad arquitectónica del sistema y definirse desde las primeras decisiones de diseño, no añadirse posteriormente como una preocupación operativa.
 
-## Propósito
+## 2. Propósito
 
 Permitir comprender el comportamiento del sistema, diagnosticar problemas y evaluar su estado real en producción de forma oportuna y confiable.
 
-## Justificación
+## 3. Justificación
 
 En sistemas modernos, distribuidos y dinámicos, los fallos no siempre son evidentes ni reproducibles en entornos de prueba.
 
@@ -30,7 +30,7 @@ Diseñar la observabilidad desde el inicio permite:
 
 Un sistema que no puede observarse adecuadamente no puede operarse ni evolucionar de forma segura.
 
-## Alcance Conceptual
+## 4. Alcance Conceptual
 
 Aplica a:
 
@@ -41,7 +41,7 @@ Aplica a:
 
 No prescribe herramientas específicas, sino capacidades mínimas de observación.
 
-## Implicaciones Arquitectónicas
+## 5. Implicaciones Arquitectónicas
 
 - Los componentes deben exponer información relevante sobre su estado y comportamiento.
 - Las interacciones entre sistemas deben ser rastreables de extremo a extremo.
@@ -49,11 +49,11 @@ No prescribe herramientas específicas, sino capacidades mínimas de observació
 - La arquitectura debe permitir diferenciar comportamientos normales de anomalías.
 - El diseño debe facilitar la correlación entre eventos, métricas y flujos.
 
-## Compensaciones (Trade-offs)
+## 6. Compensaciones (Trade-offs)
 
 Introduce esfuerzo adicional en diseño y desarrollo, a cambio de mayor confiabilidad operativa, menor tiempo de resolución de incidentes y mejor capacidad de evolución del sistema.
 
-## Relación con Decisiones Arquitectónicas (ADRs)
+## 7. Relación con Decisiones Arquitectónicas (ADRs)
 
 Este principio se refleja en ADRs relacionados con:
 

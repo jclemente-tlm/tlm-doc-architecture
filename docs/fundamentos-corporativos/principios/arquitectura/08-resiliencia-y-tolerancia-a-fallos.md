@@ -7,15 +7,15 @@ description: Sistemas diseñados para degradarse, recuperarse y operar ante fall
 
 # Resiliencia y Tolerancia a Fallos
 
-## Declaración del Principio
+## 1. Declaración del Principio
 
 Los sistemas deben diseñarse asumiendo que los fallos ocurrirán y deben ser capaces de degradarse, recuperarse y continuar operando de forma controlada.
 
-## Propósito
+## 2. Propósito
 
 Reducir el impacto de fallos técnicos, errores humanos o dependencias externas, manteniendo niveles aceptables de servicio y continuidad del negocio.
 
-## Justificación
+## 3. Justificación
 
 En sistemas modernos, distribuidos e integrados, los fallos no son excepciones, sino eventos esperables:
 
@@ -26,7 +26,7 @@ En sistemas modernos, distribuidos e integrados, los fallos no son excepciones, 
 Diseñar asumiendo disponibilidad total genera arquitecturas frágiles.
 La resiliencia debe ser una **propiedad estructural del sistema**, no una reacción operativa.
 
-## Alcance Conceptual
+## 4. Alcance Conceptual
 
 Este principio aplica a:
 
@@ -38,7 +38,7 @@ Este principio aplica a:
 
 Aplica independientemente del estilo arquitectónico adoptado.
 
-## Implicaciones Arquitectónicas
+## 5. Implicaciones Arquitectónicas
 
 - La arquitectura debe asumir fallos parciales como escenario normal.
 - Los componentes deben fallar de forma controlada y predecible.
@@ -46,11 +46,11 @@ Aplica independientemente del estilo arquitectónico adoptado.
 - Se deben priorizar funcionalidades críticas frente a fallos.
 - Las expectativas de disponibilidad deben estar alineadas con el diseño del sistema.
 
-## Compensaciones (Trade-offs)
+## 6. Compensaciones (Trade-offs)
 
 Puede incrementar el esfuerzo de diseño y el costo inicial de implementación, a cambio de mayor estabilidad, menor impacto operativo y mejor continuidad del servicio.
 
-## Relación con Decisiones Arquitectónicas (ADRs)
+## 7. Relación con Decisiones Arquitectónicas (ADRs)
 
 Este principio se refleja en ADRs relacionados con:
 

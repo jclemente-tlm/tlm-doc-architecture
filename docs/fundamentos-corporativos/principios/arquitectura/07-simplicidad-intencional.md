@@ -7,15 +7,15 @@ description: Priorizar soluciones simples y comprensibles evitando sobreingenier
 
 # Simplicidad Intencional
 
-## Declaración del Principio
+## 1. Declaración del Principio
 
 La arquitectura debe priorizar soluciones simples y comprensibles, incorporando complejidad únicamente cuando exista una necesidad clara y justificada.
 
-## Propósito
+## 2. Propósito
 
 Evitar la sobreingeniería y construir sistemas sostenibles, mantenibles y entendibles a lo largo del tiempo, alineados con las capacidades reales del equipo y del negocio.
 
-## Justificación
+## 3. Justificación
 
 La complejidad innecesaria es una de las principales fuentes de:
 
@@ -28,7 +28,7 @@ Una arquitectura “elegante” pero difícil de operar o evolucionar termina si
 
 La simplicidad no significa falta de diseño, sino **elección consciente de lo esencial**.
 
-## Alcance Conceptual
+## 4. Alcance Conceptual
 
 Este principio aplica a decisiones como:
 
@@ -40,7 +40,7 @@ Este principio aplica a decisiones como:
 
 No promueve soluciones simplistas, sino **complejidad proporcional al problema**.
 
-## Implicaciones Arquitectónicas
+## 5. Implicaciones Arquitectónicas
 
 - La complejidad debe introducirse solo cuando exista un beneficio claro y medible.
 - Las decisiones arquitectónicas deben poder explicarse de forma comprensible a distintos roles.
@@ -48,11 +48,11 @@ No promueve soluciones simplistas, sino **complejidad proporcional al problema**
 - La arquitectura debe minimizar dependencias innecesarias entre componentes.
 - El diseño debe facilitar la operación, el monitoreo y la evolución del sistema.
 
-## Compensaciones (Trade-offs)
+## 6. Compensaciones (Trade-offs)
 
 Puede limitar soluciones altamente sofisticadas o “óptimas” desde un punto de vista técnico, a cambio de mayor claridad, menor riesgo operativo y mayor sostenibilidad a largo plazo.
 
-## Relación con Decisiones Arquitectónicas (ADRs)
+## 7. Relación con Decisiones Arquitectónicas (ADRs)
 
 Este principio suele reflejarse en ADRs relacionados con:
 

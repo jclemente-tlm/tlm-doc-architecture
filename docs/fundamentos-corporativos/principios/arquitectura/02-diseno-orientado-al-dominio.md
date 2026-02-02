@@ -7,15 +7,15 @@ description: Arquitectura estructurada en torno al dominio del negocio
 
 # Diseño Orientado al Dominio (DDD)
 
-## Declaración del Principio
+## 1. Declaración del Principio
 
 La arquitectura debe estructurarse en torno al dominio del negocio, reflejando sus conceptos, reglas y límites, y no únicamente consideraciones técnicas.
 
-## Propósito
+## 2. Propósito
 
 Alinear el diseño del sistema con el negocio, facilitando la comprensión, evolución y sostenibilidad de la solución en el tiempo.
 
-## Justificación
+## 3. Justificación
 
 Cuando la arquitectura se define principalmente desde lo técnico, el sistema pierde significado para el negocio, se vuelve difícil de mantener y costoso de cambiar.
 
@@ -23,7 +23,7 @@ El Diseño Orientado al Dominio promueve que el software modele explícitamente 
 
 El dominio es la fuente principal de decisiones arquitectónicas, no una consecuencia de ellas.
 
-## Alcance Conceptual
+## 4. Alcance Conceptual
 
 Aplica a:
 
@@ -34,18 +34,18 @@ Aplica a:
 
 No implica el uso obligatorio de patrones o tácticas específicas de DDD, sino una orientación conceptual al dominio.
 
-## Implicaciones Arquitectónicas
+## 5. Implicaciones Arquitectónicas
 
 - Los límites del sistema reflejan contextos del dominio.
 - El lenguaje utilizado en el diseño y la comunicación es consistente con el negocio.
 - Las responsabilidades se asignan según capacidades del dominio.
 - La arquitectura evita mezclar lógicas de dominios distintos.
 
-## Compensaciones (Trade-offs)
+## 6. Compensaciones (Trade-offs)
 
 Requiere mayor esfuerzo inicial de análisis y colaboración con el negocio, a cambio de mayor claridad, menor deuda conceptual y una arquitectura más adaptable al cambio.
 
-## Relación con Decisiones Arquitectónicas (ADRs)
+## 7. Relación con Decisiones Arquitectónicas (ADRs)
 
 Este principio se refleja en ADRs relacionados con:
 

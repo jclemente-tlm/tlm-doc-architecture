@@ -7,15 +7,15 @@ description: Operar con el nivel mínimo de privilegios necesario para cada func
 
 # Mínimo Privilegio
 
-## Declaración del Principio
+## 1. Declaración del Principio
 
 Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegios necesario para cumplir su función, y solo durante el tiempo requerido.
 
-## Propósito
+## 2. Propósito
 
 Reducir el impacto de errores, fallos de seguridad o usos indebidos, limitando el alcance de las acciones que cada actor puede realizar dentro del sistema.
 
-## Justificación
+## 3. Justificación
 
 Los privilegios excesivos amplifican el impacto de cualquier incidente:
 
@@ -27,7 +27,7 @@ Los privilegios excesivos amplifican el impacto de cualquier incidente:
 Cuando los sistemas otorgan más permisos de los necesarios, un fallo localizado puede convertirse en un incidente sistémico.
 El principio de mínimo privilegio reduce el radio de impacto y facilita el control, la auditoría y la corrección de incidentes.
 
-## Alcance Conceptual
+## 4. Alcance Conceptual
 
 Este principio aplica a:
 
@@ -38,7 +38,7 @@ Este principio aplica a:
 
 Incluye privilegios funcionales, operativos y de administración.
 
-## Implicaciones Arquitectónicas
+## 5. Implicaciones Arquitectónicas
 
 - Los permisos deben definirse de forma explícita y granular.
 - Los accesos deben otorgarse por necesidad, no por conveniencia.
@@ -46,11 +46,11 @@ Incluye privilegios funcionales, operativos y de administración.
 - La arquitectura debe evitar componentes con acceso excesivo o transversal.
 - Las capacidades críticas deben estar claramente segregadas.
 
-## Compensaciones (Trade-offs)
+## 6. Compensaciones (Trade-offs)
 
 Requiere mayor esfuerzo inicial de diseño, definición de roles y gestión de accesos, a cambio de una reducción significativa del riesgo, mayor control operativo y mejor trazabilidad de acciones.
 
-## Relación con Decisiones Arquitectónicas (ADRs)
+## 7. Relación con Decisiones Arquitectónicas (ADRs)
 
 Este principio suele reflejarse en ADRs relacionados con:
 
