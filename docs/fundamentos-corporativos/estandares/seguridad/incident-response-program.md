@@ -206,7 +206,7 @@ Deployment v1.2.3 incluyó cambio en query SQL sin índice, generando timeout en
 | Componente              | Tecnología                      | Observaciones                          |
 | ----------------------- | ------------------------------- | -------------------------------------- |
 | **Incident Management** | PagerDuty                       | Alerting, escalation, on-call rotation |
-| **Logging**             | CloudWatch Logs + ElasticSearch | Centralizado para análisis             |
+| **Logging**             | CloudWatch Logs + Loki | Centralizado para análisis             |
 | **Threat Detection**    | AWS GuardDuty                   | Machine learning para anomalías        |
 | **Audit Trail**         | AWS CloudTrail                  | Todas las API calls AWS                |
 | **WAF**                 | AWS WAF                         | Protección OWASP Top 10                |

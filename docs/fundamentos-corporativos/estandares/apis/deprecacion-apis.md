@@ -21,7 +21,7 @@ Implementar API Deprecation siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Stripe API Versioning, Google API Design Guide
+API Sunset Header (RFC 8594), OpenAPI 3.x
 
 ## Validación de Cumplimiento
 

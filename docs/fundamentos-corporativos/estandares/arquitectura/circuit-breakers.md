@@ -21,7 +21,7 @@ Implementar Circuit Breaker Pattern siguiendo las mejores prácticas de la indus
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Release It! (Michael Nygard), Netflix Hystrix, Resilience4j
+Release It! (Michael Nygard), Kong API Gateway, Microservices Patterns (Chris Richardson)
 
 ## Validación de Cumplimiento
 

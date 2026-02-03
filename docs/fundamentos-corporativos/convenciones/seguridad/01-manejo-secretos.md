@@ -80,12 +80,12 @@ appsettings.Local.json
 
 ### Regla 3: Variables de Entorno vs Secrets Manager
 
-| Tipo de Dato                  | Método                      | Ejemplo             |
-| ----------------------------- | --------------------------- | ------------------- |
-| **Configuración NO sensible** | Variables de entorno        | `TLM_APP_PORT=8080` |
-| **Secretos**                  | AWS Secrets Manager / Vault | `TLM_DB_PASSWORD`   |
-| **Certificados**              | AWS Certificate Manager     | SSL/TLS certs       |
-| **API Keys de terceros**      | Secrets Manager             | Stripe, SendGrid    |
+| Tipo de Dato                  | Método                  | Ejemplo             |
+| ----------------------------- | ----------------------- | ------------------- |
+| **Configuración NO sensible** | Variables de entorno    | `TLM_APP_PORT=8080` |
+| **Secretos**                  | AWS Secrets Manager     | `TLM_DB_PASSWORD`   |
+| **Certificados**              | AWS Certificate Manager | SSL/TLS certs       |
+| **API Keys de terceros**      | Secrets Manager         | Stripe, SendGrid    |
 
 ### Regla 4: Formato de Secretos en Secrets Manager
 

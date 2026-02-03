@@ -10,13 +10,15 @@ description: Estándares para event-driven architecture con Apache Kafka 3.6+, C
 ---
 
 ## 1. Propósito
-Implementar event-driven architecture con Apache Kafka 3.6+, Confluent.Kafka 2.3+, Schema Registry 7.5+ para Avro, at-least-once delivery, consumidores idempotentes y Dead Letter Queue (DLQ) para errores.
+
+Implementar event-driven architecture con Apache Kafka 3.6+ (modo KRaft), Confluent.Kafka 2.3+ (.NET client), at-least-once delivery, consumidores idempotentes y Dead Letter Queue (DLQ) para errores. Schema management mediante JSON Schema.
 
 ---
 
 ## 2. Alcance
 
 **Aplica a:**
+
 - Microservicios con comunicación asíncrona
 - Event sourcing (log de eventos)
 - Procesamiento en tiempo real (analytics, auditoría)
@@ -24,6 +26,7 @@ Implementar event-driven architecture con Apache Kafka 3.6+, Confluent.Kafka 2.3
 - Notificaciones cross-service
 
 **No aplica a:**
+
 - Comunicación síncrona (usar APIs REST)
 - Transacciones ACID entre servicios (usar Saga pattern)
 - Transferencia archivos (usar S3 + event notification)
@@ -32,13 +35,13 @@ Implementar event-driven architecture con Apache Kafka 3.6+, Confluent.Kafka 2.3
 
 ## 3. Tecnologías Aprobadas
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-| **Broker** | Apache Kafka | 3.6+ | Message broker distribuido |
-| **Cliente** | Confluent.Kafka | 2.3+ | Producer/Consumer .NET |
-| **Schema Registry** | Confluent Schema Registry | 7.5+ | Registro schemas Avro |
-| **Serialization** | Apache Avro | 1.11+ | Schema evolution |
-| **AWS Managed** | AWS MSK | 3.6+ | Kafka managed service |
+| Componente          | Tecnología                | Versión mínima | Observaciones              |
+| ------------------- | ------------------------- | -------------- | -------------------------- |
+| **Broker**          | Apache Kafka              | 3.6+           | Message broker distribuido |
+| **Cliente**         | Confluent.Kafka           | 2.3+           | Producer/Consumer .NET     |
+| **Schema Registry** | Confluent Schema Registry | 7.5+           | Registro schemas Avro      |
+| **Serialization**   | Apache Avro               | 1.11+          | Schema evolution           |
+| **AWS Managed**     | AWS MSK                   | 3.6+           | Kafka managed service      |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
@@ -49,7 +52,7 @@ Implementar event-driven architecture con Apache Kafka 3.6+, Confluent.Kafka 2.3
 - [ ] Kafka 3.6+ con replicación (factor ≥ 3)
 - [ ] Topics naming: `{domain}.{entity}.{event-type}`
 - [ ] Event schema: eventId, eventType, timestamp, correlationId, payload
-- [ ] Avro con Schema Registry (schema evolution)
+- [ ] JSON Schema para validación de mensajes
 - [ ] At-least-once delivery con consumidores idempotentes
 - [ ] Acks=All para productores (todas las réplicas)
 - [ ] Dead Letter Queue (DLQ) para errores
@@ -76,6 +79,7 @@ Implementar event-driven architecture con Apache Kafka 3.6+, Confluent.Kafka 2.3
 ## 6. Configuración Mínima
 
 ### Producer (C#)
+
 ```csharp
 // Producer configuration
 var producerConfig = new ProducerConfig
@@ -113,6 +117,7 @@ await producer.ProduceAsync(
 ```
 
 ### Consumer (C#)
+
 ```csharp
 // Consumer configuration
 var consumerConfig = new ConsumerConfig
@@ -134,19 +139,19 @@ consumer.Subscribe("orders.order.created");
 while (true)
 {
     var result = consumer.Consume(cancellationToken);
-    
+
     try
     {
         // Procesamiento idempotente
         await ProcessEventAsync(result.Message.Value);
-        
+
         // Commit manual
         consumer.Commit(result);
     }
     catch (Exception ex)
     {
         _logger.LogError(ex, "Error processing event {EventId}", result.Message.Value.EventId);
-        
+
         // Enviar a DLQ
         await SendToDLQ(result.Message);
     }
@@ -154,6 +159,7 @@ while (true)
 ```
 
 ### Event Schema (Avro)
+
 ```json
 {
   "type": "record",
@@ -163,17 +169,23 @@ while (true)
     { "name": "eventId", "type": "string" },
     { "name": "eventType", "type": "string" },
     { "name": "eventVersion", "type": "string" },
-    { "name": "timestamp", "type": { "type": "long", "logicalType": "timestamp-millis" } },
+    {
+      "name": "timestamp",
+      "type": { "type": "long", "logicalType": "timestamp-millis" }
+    },
     { "name": "correlationId", "type": "string" },
-    { "name": "payload", "type": {
-      "type": "record",
-      "name": "OrderPayload",
-      "fields": [
-        { "name": "orderId", "type": "string" },
-        { "name": "customerId", "type": "string" },
-        { "name": "totalAmount", "type": "double" }
-      ]
-    }}
+    {
+      "name": "payload",
+      "type": {
+        "type": "record",
+        "name": "OrderPayload",
+        "fields": [
+          { "name": "orderId", "type": "string" },
+          { "name": "customerId", "type": "string" },
+          { "name": "totalAmount", "type": "double" }
+        ]
+      }
+    }
   ]
 }
 ```
@@ -202,12 +214,12 @@ kafka-consumer-groups --describe --group notification-service.orders.order.creat
 
 **Métricas de cumplimiento:**
 
-| Métrica | Target | Verificación |
-|---------|--------|--------------|  
-| Replication factor | ≥3 | `kafka-topics --describe` |
-| At-least-once delivery | 100% | Manual commit habilitado |
-| DLQ configurada | 100% | Todos los consumers |
-| Schema Registry | 100% | Avro serialization |
+| Métrica                | Target | Verificación              |
+| ---------------------- | ------ | ------------------------- |
+| Replication factor     | ≥3     | `kafka-topics --describe` |
+| At-least-once delivery | 100%   | Manual commit habilitado  |
+| DLQ configurada        | 100%   | Todos los consumers       |
+| JSON Schema validación | 100%   | Mensajes validados        |
 
 Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
@@ -217,5 +229,5 @@ Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
 - [Mensajería Asíncrona - ADR](../../decisiones-de-arquitectura/adr-012-mensajeria-asincrona.md)
 - [Apache Kafka Documentation](https://kafka.apache.org/documentation/)
-- [Confluent Platform](https://docs.confluent.io/)
+- [Apache Kafka Documentation](https://kafka.apache.org/documentation/)
 - [Avro Specification](https://avro.apache.org/docs/)

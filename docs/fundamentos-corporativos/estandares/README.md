@@ -48,7 +48,7 @@ Estándares para logging, monitoreo y trazabilidad:
 
 Estándares para mensajería asíncrona:
 
-1. **Kafka y Eventos**: Event-driven architecture, event schemas, Kafka producers/consumers (Confluent.Kafka)
+1. **Kafka y Eventos**: Event-driven architecture, event schemas, Kafka producers/consumers (Apache Kafka con Confluent.Kafka client .NET)
 
 ### [Documentación](./documentacion/)
 

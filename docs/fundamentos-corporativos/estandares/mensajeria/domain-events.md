@@ -143,7 +143,7 @@ public record OrderCreatedEventV2
 
 - [ ] **Outbox pattern** para garantizar consistencia transaccional:
   1. Guardar evento en tabla `outbox` en misma transacción que cambio de BD
-  2. Background job publica eventos a SNS/EventBridge
+  2. Background job publica eventos a Apache Kafka
   3. Marcar evento como publicado
 - [ ] **At-least-once delivery**: Eventos pueden duplicarse (idempotencia obligatoria)
 - [ ] **Asíncrono**: NO bloquear transacción esperando publicación
@@ -234,7 +234,7 @@ public class OutboxPublisherJob : BackgroundService
             {
                 try
                 {
-                    // Publicar a SNS/EventBridge
+                    // Publicar a Apache Kafka
                     await _eventBus.PublishAsync(message.EventType, message.Payload, ct);
 
                     // Marcar como publicado

@@ -21,7 +21,7 @@ Implementar API Portal siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-DeveloperExperience.io, Stoplight, Swagger UI
+Swagger UI, OpenAPI 3.x
 
 ## Validación de Cumplimiento
 

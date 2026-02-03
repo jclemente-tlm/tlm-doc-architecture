@@ -204,4 +204,4 @@ Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 - [Diseño REST](../apis/01-diseno-rest.md)
 - [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
 - [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
-- [Spectral](https://stoplight.io/open-source/spectral)
+- [Spectral](https://Swagger UI.io/open-source/spectral)

@@ -21,7 +21,7 @@ Implementar Schema Evolution siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Confluent Schema Registry, Avro Evolution
+Apache Kafka, Avro Evolution
 
 ## Validación de Cumplimiento
 

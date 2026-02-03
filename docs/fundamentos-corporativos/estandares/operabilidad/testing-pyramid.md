@@ -19,9 +19,9 @@ Implementar estrategia de testing según **Testing Pyramid** de Mike Cohn, prior
 
 **Aplica a:**
 
-- Aplicaciones backend (.NET, Node.js, Python)
-- Aplicaciones frontend (React, Angular, Vue)
-- APIs REST/GraphQL
+- Aplicaciones backend (.NET)
+- APIs REST
+- Servicios de mensajería (Apache Kafka)
 - Microservicios
 - Librerías compartidas
 
@@ -61,7 +61,7 @@ Implementar estrategia de testing según **Testing Pyramid** de Mike Cohn, prior
 - [ ] Ejecución **<500ms** para suite completa
 - [ ] **Mocks/stubs** para dependencias externas (BD, HTTP, filesystem)
 - [ ] Tests **aislados** (NO compartir estado entre tests)
-- [ ] Framework: xUnit (.NET), Jest (Node.js), pytest (Python)
+- [ ] Framework: xUnit (.NET)
 - [ ] Ejecutados en **cada commit** (pre-commit hook + CI)
 
 **Qué testear:**
@@ -200,22 +200,26 @@ dotnet test --filter "Category=Integration" # <5min
 
 ### 5.3 E2E Tests (Playwright)
 
-```typescript
-// checkout.spec.ts
-import { test, expect } from "@playwright/test";
+```csharp
+// CheckoutTests.cs - Ejemplo con Playwright .NET
+using Microsoft.Playwright;
+using Xunit;
 
-test("complete checkout flow", async ({ page }) => {
-  // Login
-  await page.goto("https://staging.talma.com/login");
-  await page.fill("#email", "test@example.com");
-  await page.fill("#password", "test123");
-  await page.click('button[type="submit"]');
-  await expect(page).toHaveURL("/dashboard");
+public class CheckoutE2ETests
+{
+    [Fact]
+    public async Task CompleteCheckoutFlow()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await playwright.Chromium.LaunchAsync();
+        var page = await browser.NewPageAsync();
 
-  // Add product to cart
-  await page.goto("/products/123");
-  await page.click('button:has-text("Add to Cart")');
-  await expect(page.locator(".cart-count")).toHaveText("1");
+        // Login
+        await page.GotoAsync("https://staging.talma.com/login");
+        await page.FillAsync("#email", "test@example.com");
+        await page.FillAsync("#password", "test123");
+        await page.ClickAsync("button[type='submit']");
+        await Expect(page).ToHaveURLAsync("/dashboard");
 
   // Checkout
   await page.click('a:has-text("Cart")');
@@ -275,7 +279,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - run: npm ci
+      - run: dotnet restore
       - run: npx playwright install
       - run: npx playwright test
         env:

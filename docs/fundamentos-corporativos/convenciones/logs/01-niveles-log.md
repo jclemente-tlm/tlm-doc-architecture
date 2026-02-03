@@ -137,17 +137,13 @@ if (order.Status == OrderStatus.Cancelled)
 
 **SÍ usar en producción**. Errores que detienen la aplicación.
 
-```typescript
+```csharp
 // ✅ Errores críticos que requieren intervención inmediata
-logger.fatal("Cannot connect to database", {
-  error: err.message,
-  host: dbHost,
-  retryCount: 5,
-});
+_logger.LogCritical("Cannot connect to database. Host={Host}, RetryCount={RetryCount}",
+    dbHost, retryCount);
 
-logger.fatal("Out of memory", {
-  memoryUsageMB: process.memoryUsage().heapUsed / 1024 / 1024,
-  threshold: 512,
+_logger.LogCritical("Out of memory. MemoryUsageMB={MemoryMB}, Threshold={Threshold}",
+    GC.GetTotalMemory(false) / 1024 / 1024, 512);
 });
 
 logger.fatal("Critical configuration missing", {

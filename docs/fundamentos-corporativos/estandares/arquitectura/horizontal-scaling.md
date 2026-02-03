@@ -21,7 +21,7 @@ Implementar Horizontal Scaling siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Scalability Rules (Abbott & Fisher), AWS Best Practices
+Scalability Rules (Abbott & Fisher), AWS Well-Architected
 
 ## Validación de Cumplimiento
 

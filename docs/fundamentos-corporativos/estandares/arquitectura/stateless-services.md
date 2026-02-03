@@ -21,7 +21,7 @@ Implementar Stateless Services siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-12-Factor App (Factor VI), Cloud Native Patterns
+12-Factor App (Factor VI), AWS Cloud Patterns
 
 ## Validación de Cumplimiento
 

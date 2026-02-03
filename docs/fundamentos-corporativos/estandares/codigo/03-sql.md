@@ -22,7 +22,7 @@ Garantizar código SQL seguro contra SQL Injection mediante parametrización, op
 - Consultas SQL con Entity Framework Core 8.0+
 - Raw SQL con Npgsql 8.0+ (PostgreSQL) y Oracle.EntityFrameworkCore 8.0+
 - Repositories con acceso a datos
-- Scripts de migración (EF Migrations / Flyway 10.0+)
+- Scripts de migración (EF Migrations / Entity Framework Migrations 10.0+)
 
 **No aplica a:**
 
@@ -59,7 +59,7 @@ Garantizar código SQL seguro contra SQL Injection mediante parametrización, op
 - [ ] Lógica de negocio en aplicación (NO stored procedures)
 - [ ] Transacciones explícitas con `using` scope
 - [ ] Naming: snake_case (PostgreSQL), UPPER_SNAKE_CASE (Oracle)
-- [ ] Migraciones versionadas (EF Migrations / Flyway)
+- [ ] Migraciones versionadas (EF Migrations / Entity Framework Migrations)
 - [ ] NO queries N+1 (usar `Include()/ThenInclude()`)
 - [ ] Paginación con `Skip().Take()` en colecciones grandes
 

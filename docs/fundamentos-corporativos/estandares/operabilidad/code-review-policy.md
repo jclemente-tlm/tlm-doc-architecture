@@ -19,8 +19,8 @@ Garantizar calidad, seguridad y mantenibilidad mediante **code review obligatori
 
 **Aplica a:**
 
-- Código de aplicación (.NET, TypeScript, Python, etc.)
-- Infrastructure as Code (Terraform, CloudFormation)
+- Código de aplicación (.NET, C#)
+- Infrastructure as Code (Terraform)
 - Scripts de BD (migrations, stored procedures)
 - Configuraciones críticas (CI/CD pipelines, security policies)
 - Documentación técnica (ADRs, estándares)

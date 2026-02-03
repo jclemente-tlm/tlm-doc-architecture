@@ -52,7 +52,7 @@ TLM_DB_HOST=postgres.talma.internal
 TLM_DB_PORT=5432
 TLM_DB_NAME=users_db
 TLM_DB_USER=app_user
-TLM_DB_PASSWORD=<SECRET>  # Desde vault/secrets manager
+TLM_DB_PASSWORD=<SECRET>  # Desde AWS Secrets Manager
 TLM_DB_SSL_MODE=require
 TLM_DB_POOL_SIZE=20
 
@@ -160,7 +160,7 @@ TLM_CACHE_TTL_SECONDS=3600
 TLM_FEATURE_NEW_UI_ENABLED=true
 ```
 
-### ❌ Secretos (NUNCA en .env, usar Vault/Secrets Manager)
+### ❌ Secretos (NUNCA en .env, usar AWS Secrets Manager)
 
 ```bash
 # ❌ NUNCA commitear estas variables con valores reales
@@ -206,10 +206,10 @@ ENTRYPOINT ["dotnet", "TalmaApp.Api.dll"]
       "name": "users-api",
       "image": "ghcr.io/talma/users-api:1.2.3",
       "environment": [
-        {"name": "TLM_ENVIRONMENT", "value": "prod"},
-        {"name": "TLM_APP_NAME", "value": "users-api"},
-        {"name": "TLM_APP_PORT", "value": "8080"},
-        {"name": "TLM_LOG_LEVEL", "value": "info"}
+        { "name": "TLM_ENVIRONMENT", "value": "prod" },
+        { "name": "TLM_APP_NAME", "value": "users-api" },
+        { "name": "TLM_APP_PORT", "value": "8080" },
+        { "name": "TLM_LOG_LEVEL", "value": "info" }
       ],
       "secrets": [
         {

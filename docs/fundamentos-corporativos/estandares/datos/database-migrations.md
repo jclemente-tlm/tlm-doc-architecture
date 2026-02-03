@@ -21,7 +21,7 @@ Implementar Database Migrations siguiendo las mejores prácticas de la industria
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Refactoring Databases (Ambler & Sadalage), Flyway, Liquibase
+Refactoring Databases (Ambler & Sadalage), Entity Framework Migrations
 
 ## Validación de Cumplimiento
 

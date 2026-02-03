@@ -59,7 +59,7 @@ Se validó la coherencia de los 22 estándares técnicos contra:
 - Correlation IDs obligatorios ✓
 - Niveles de log correctos ✓
 - No loggear datos sensibles ✓
-- Serilog (C#) y Winston (TypeScript) ✓
+- Serilog (C#) ✓
 
 ✅ **[Observabilidad/Monitoreo](./observabilidad/02-monitoreo-metricas.md)**:
 
@@ -85,7 +85,7 @@ Se validó la coherencia de los 22 estándares técnicos contra:
 - Principios FIRST (Fast, Isolated, Repeatable, Self-validating, Timely) ✓
 - AAA Pattern (Arrange-Act-Assert) ✓
 - Cobertura mínima 80% ✓
-- xUnit (C#) y Jest (TypeScript) ✓
+- xUnit (C#) ✓
 - FluentAssertions para assertions legibles ✓
 
 ✅ **[Testing/Integration Tests](./testing/02-integration-tests.md)**:
@@ -277,13 +277,12 @@ Ver: [Estándar C4 Model](./02-c4-model.md) para ejemplos completos.
 
 ---
 
-### Código (3 estándares)
+### Código (2 estándares)
 
-| Estándar   | Principios Alineados    | Lineamientos Alineados | Coherencia |
-| ---------- | ----------------------- | ---------------------- | ---------- |
-| C# / .NET  | Calidad desde Diseño    | Testing y Calidad      | ✅ Alta    |
-| TypeScript | Calidad desde Diseño    | Testing y Calidad      | ✅ Alta    |
-| SQL        | Simplicidad Intencional | (Implícito)            | ✅ Media   |
+| Estándar  | Principios Alineados    | Lineamientos Alineados | Coherencia |
+| --------- | ----------------------- | ---------------------- | ---------- |
+| C# / .NET | Calidad desde Diseño    | Testing y Calidad      | ✅ Alta    |
+| SQL       | Simplicidad Intencional | (Implícito)            | ✅ Media   |
 
 **Observación**: SQL podría referenciar lineamiento de datos (si existe).
 
@@ -442,7 +441,7 @@ Estándares:
     - Testing/Integration Tests (TestContainers)
     - Testing/E2E Tests (Playwright)
     - Código/C# (.NET Clean Code)
-    - Código/TypeScript (Clean Code)
+    - Código/C# (Clean Code)
 ```
 
 **Trazabilidad**: ✅ **COMPLETA**
@@ -454,9 +453,9 @@ Estándares:
 ### Fortalezas
 
 1. ✅ **Coherencia global**: Los 22 estándares están alineados con principios y lineamientos
-2. ✅ **Ejemplos prácticos**: Código real en C#, TypeScript, Terraform, Docker
+2. ✅ **Ejemplos prácticos**: Código real en C#, Terraform, Docker
 3. ✅ **Estructura consistente**: Todos siguen formato similar (Propósito, Alcance, Ejemplos, Referencias)
-4. ✅ **Tecnologías específicas**: No abstracto, sino prescriptivo (xUnit, Jest, Playwright, Terraform)
+4. ✅ **Tecnologías específicas**: No abstracto, sino prescriptivo (xUnit, Playwright, Terraform)
 5. ✅ **Cobertura completa**: No hay gaps importantes entre lineamientos y estándares
 
 ### Áreas de Mejora (Prioridad BAJA)
@@ -464,7 +463,7 @@ Estándares:
 1. ✅ **IMPLEMENTADO - Trazabilidad explícita**: Agregada sección "Lineamientos relacionados" en todos los estándares (APIs, Código, Mensajería)
 2. ✅ **IMPLEMENTADO - Consistencia "NO Hacer"**: Se revisó formato existente con ❌ en estándares de testing y código
 3. ✅ **IMPLEMENTADO - Enlaces cruzados**: Mejoradas referencias bidireccionales entre arc42 ↔ C4 Model con tips de integración
-4. ✅ **IMPLEMENTADO - Mensajería**: Agregada referencia explícita al principio de Desacoplamiento en Kafka y RabbitMQ/SQS
+4. ✅ **IMPLEMENTADO - Mensajería**: Agregada referencia explícita al principio de Desacoplamiento con Apache Kafka
 
 ---
 

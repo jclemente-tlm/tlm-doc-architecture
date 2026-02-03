@@ -16,7 +16,7 @@ Rastrear un request de usuario a través de múltiples servicios, logs y eventos
 **Aplica a:**
 
 - Todas las APIs REST y microservicios
-- Procesamiento de mensajes (SQS, SNS, eventos)
+- Procesamiento de mensajes (Apache Kafka, eventos)
 - Integraciones síncronas y asíncronas
 
 ## 3. Estándar de Implementación
@@ -51,7 +51,7 @@ X-Correlation-ID: <UUID v4>
 
 - Incluir `X-Correlation-ID` en **todos** los logs estructurados
 - Propagar en headers HTTP de llamadas downstream
-- Incluir en metadata de mensajes asíncronos (SQS, SNS, EventBridge)
+- Incluir en headers de mensajes Apache Kafka
 - Retornar en response headers para debugging
 - Validar formato UUID v4, rechazar si inválido
 

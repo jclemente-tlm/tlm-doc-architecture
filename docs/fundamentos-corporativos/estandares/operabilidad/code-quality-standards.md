@@ -14,10 +14,7 @@ Implementar control de calidad automatizado en CI/CD combinando análisis estát
 
 **Herramientas por lenguaje:**
 
-- **.NET:** Roslyn Analyzers, SonarQube, StyleCop
-- **JavaScript/TypeScript:** ESLint, TypeScript Compiler, SonarQube
-- **Python:** Pylint, Flake8, Bandit, mypy
-- **Java:** SonarQube, SpotBugs, Checkstyle
+- **.NET:** Roslyn Analyzers, SonarQube Community, StyleCop
 
 **Quality Gates mínimos:**
 
@@ -66,9 +63,6 @@ sonarqube:
 **Herramientas:**
 
 - **.NET:** Coverlet, dotCover, OpenCover
-- **JavaScript:** Istanbul/nyc, Jest coverage
-- **Python:** Coverage.py, pytest-cov
-- **Java:** JaCoCo, Cobertura
 
 **Configuración de reporte:**
 

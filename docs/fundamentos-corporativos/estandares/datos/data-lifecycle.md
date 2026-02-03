@@ -21,7 +21,7 @@ Implementar Data Lifecycle siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-GDPR Data Retention, AWS S3 Lifecycle, Azure Blob Lifecycle
+GDPR Data Retention, AWS S3 Lifecycle, AWS Blob Lifecycle
 
 ## Validación de Cumplimiento
 

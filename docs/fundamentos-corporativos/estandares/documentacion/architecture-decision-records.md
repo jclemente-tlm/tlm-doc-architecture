@@ -211,7 +211,7 @@ Implementar **AWS API Gateway** como punto de entrada único para todas las APIs
 | Alternativa               | Pros                    | Contras                              | Razón de descarte           |
 | ------------------------- | ----------------------- | ------------------------------------ | --------------------------- |
 | Kong (self-hosted)        | Flexibilidad, plugins   | Operación compleja, costos EC2       | Overhead operacional        |
-| NGINX Ingress (K8s)       | Nativo Kubernetes       | Solo funciona en EKS                 | Usamos ECS mayoritariamente |
+| NGINX Ingress (AWS ECS Fargate)       | Nativo AWS ECS Fargate       | Solo funciona en AWS ECS Fargate                 | Usamos ECS mayoritariamente |
 | Application Load Balancer | Integración AWS, simple | Sin autenticación, sin rate limiting | Funcionalidad limitada      |
 
 ## Consecuencias

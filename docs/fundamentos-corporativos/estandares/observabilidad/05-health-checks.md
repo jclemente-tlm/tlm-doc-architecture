@@ -9,13 +9,13 @@ description: Implementación de liveness y readiness probes para orquestadores
 
 ## 1. Propósito
 
-Proporcionar endpoints de diagnóstico para que orquestadores (Kubernetes, ECS, ALB) detecten automáticamente servicios degradados o no disponibles y gestionen restarts/traffic routing.
+Proporcionar endpoints de diagnóstico para que orquestadores (AWS ECS Fargate, ECS, ALB) detecten automáticamente servicios degradados o no disponibles y gestionen restarts/traffic routing.
 
 ## 2. Alcance
 
 **Aplica a:**
 
-- Servicios containerizados (Kubernetes, ECS, Docker)
+- Servicios containerizados (AWS ECS Fargate, ECS, Docker)
 - APIs REST detrás de load balancers
 - Workers procesando mensajes
 
@@ -94,7 +94,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
 });
 ```
 
-### Kubernetes Probes
+### AWS ECS Fargate Probes
 
 ```yaml
 apiVersion: v1
@@ -161,5 +161,5 @@ spec:
 ## 8. Referencias
 
 - [Microsoft Docs - Health Checks](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks)
-- [Kubernetes Liveness/Readiness Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+- [AWS ECS Fargate Liveness/Readiness Probes](https://AWS ECS Fargate.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 - [Lineamiento de Observabilidad](../../lineamientos/arquitectura/05-observabilidad.md)

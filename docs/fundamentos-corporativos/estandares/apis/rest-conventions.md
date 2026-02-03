@@ -21,7 +21,7 @@ Implementar RESTful API Design siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Roy Fielding REST, Microsoft API Guidelines
+Roy Fielding REST, OpenAPI 3.x
 
 ## Validación de Cumplimiento
 

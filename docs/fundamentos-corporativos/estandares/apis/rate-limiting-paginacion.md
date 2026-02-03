@@ -21,7 +21,7 @@ Implementar Rate Limiting & Pagination siguiendo las mejores prácticas de la in
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-RFC 6585, GitHub API, JSON:API
+RFC 6585, OpenAPI 3.x, JSON:API
 
 ## Validación de Cumplimiento
 

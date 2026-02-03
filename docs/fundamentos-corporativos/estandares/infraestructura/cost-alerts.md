@@ -21,7 +21,7 @@ Implementar Cost Alerting siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-AWS Budgets, Azure Cost Management
+AWS Budgets, AWS Cost Management
 
 ## Validación de Cumplimiento
 

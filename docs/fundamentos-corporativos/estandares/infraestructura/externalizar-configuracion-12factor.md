@@ -21,7 +21,7 @@ Externalizar toda configuración en variables de entorno según **12-Factor App 
 
 - Microservicios, aplicaciones serverless, APIs
 - Configuración de BD, endpoints externos, secrets
-- Despliegues en AWS, Azure, Kubernetes
+- Despliegues en AWS, AWS, AWS ECS Fargate
 - Entornos dev, staging, producción
 
 **No aplica a:**
@@ -39,7 +39,7 @@ Externalizar toda configuración en variables de entorno según **12-Factor App 
 | **Secrets Management** | AWS Secrets Manager     | N/A            | Para secrets sensibles  |
 | **Secrets Management** | AWS SSM Parameter Store | N/A            | Para config no sensible |
 | **App Config**         | .NET IConfiguration     | .NET 6+        | Con providers AWS       |
-| **Container Env Vars** | Docker/ECS/EKS          | N/A            | Inyección en runtime    |
+| **Container Env Vars** | Docker/ECS/AWS ECS Fargate          | N/A            | Inyección en runtime    |
 | **Local Development**  | dotnet user-secrets     | .NET 6+        | Desarrollo local        |
 
 > Prohibido hardcodear secrets o config específica de entorno en código.
@@ -59,7 +59,7 @@ Externalizar toda configuración en variables de entorno según **12-Factor App 
 - [ ] Separación clara: secrets vs config vs constantes de dominio
 - [ ] NO commits de `.env`, `appsettings.Production.json` con secrets
 - [ ] Local dev: `dotnet user-secrets` o `.env.local` (gitignored)
-- [ ] Despliegue: env vars inyectadas por ECS/EKS/Lambda
+- [ ] Despliegue: env vars inyectadas por ECS/AWS ECS Fargate/Lambda
 
 ---
 

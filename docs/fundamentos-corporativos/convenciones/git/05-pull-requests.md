@@ -161,23 +161,27 @@ Crear `.github/pull_request_template.md`:
 - [ ] Documentación actualizada
 ```
 
-### Danger.js (Automatización de Reviews)
+### Automatización de Reviews con GitHub Actions
 
-```javascript
-// dangerfile.js
-import { danger, warn, fail } from "danger";
+```yaml
+# .github/workflows/pr-validation.yml
+name: PR Validation
 
-// PR muy grande
-if (danger.github.pr.additions + danger.github.pr.deletions > 800) {
-  warn("PR muy grande. Considerar dividir en PRs más pequeños.");
-}
+on: pull_request
 
-// Falta descripción
-if (danger.github.pr.body.length < 50) {
-  fail("Por favor agrega una descripción detallada del PR.");
-}
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-// CHANGELOG no actualizado (para features)
+      # PR muy grande
+      - name: Check PR size
+        run: |
+          CHANGES=$(git diff --stat origin/${{ github.base_ref }}...HEAD | tail -1 | awk '{print $4+$6}')
+          if [ $CHANGES -gt 800 ]; then
+            echo "::warning::PR muy grande ($CHANGES líneas). Considerar dividir en PRs más pequeños."
+          fi
 const hasChangelog = danger.git.modified_files.includes("CHANGELOG.md");
 const isFeature = danger.github.pr.title.startsWith("feat");
 if (isFeature && !hasChangelog) {

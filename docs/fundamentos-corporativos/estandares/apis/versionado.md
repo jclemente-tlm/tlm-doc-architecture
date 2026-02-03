@@ -21,7 +21,7 @@ Implementar API Versioning siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-RESTful Web APIs (Richardson & Ruby), Stripe API
+RESTful Web APIs (Richardson & Ruby), OpenAPI 3.x
 
 ## Validación de Cumplimiento
 

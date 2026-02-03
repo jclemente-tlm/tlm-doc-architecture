@@ -21,7 +21,7 @@ Implementar Dead Letter Queue siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Enterprise Integration Patterns, AWS SQS DLQ
+Enterprise Integration Patterns, Apache Kafka DLQ
 
 ## Validación de Cumplimiento
 

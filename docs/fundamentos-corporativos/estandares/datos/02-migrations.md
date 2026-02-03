@@ -2,7 +2,7 @@
 id: migrations
 sidebar_position: 2
 title: Migraciones y Scripts de Base de Datos
-description: Estándar para ejecutar migraciones de esquema y scripts de configuración con DbUp en PostgreSQL multi-tenant
+description: Estándar para ejecutar migraciones de esquema y scripts de configuración con Entity Framework Migrations en PostgreSQL multi-tenant
 ---
 
 # Estándar Técnico — Migraciones de Base de Datos
@@ -10,7 +10,7 @@ description: Estándar para ejecutar migraciones de esquema y scripts de configu
 ---
 
 ## 1. Propósito
-Garantizar evolución controlada del esquema de base de datos mediante migraciones versionadas con DbUp para cambios de estructura (DDL) y scripts SQL para configuraciones puntuales (DML), con trazabilidad y rollback.
+Garantizar evolución controlada del esquema de base de datos mediante migraciones versionadas con Entity Framework Migrations para cambios de estructura (DDL) y scripts SQL para configuraciones puntuales (DML), con trazabilidad y rollback.
 
 ---
 
@@ -33,13 +33,13 @@ Garantizar evolución controlada del esquema de base de datos mediante migracion
 
 | Componente | Tecnología | Versión mínima | Observaciones |
 |-----------|------------|----------------|---------------|
-| **Migration Tool** | DbUp | 5.0+ | Migraciones versionadas .NET |
+| **Migration Tool** | Entity Framework Migrations | 5.0+ | Migraciones versionadas .NET |
 | **Base de Datos** | PostgreSQL | 14+ | Ver [ADR-010](../../../decisiones-de-arquitectura/adr-010-standard-base-datos.md) |
 | **Lenguaje Scripts** | SQL puro | ANSI SQL | Evitar extensiones propietarias cuando posible |
 | **Versionado** | Git | - | Scripts en `src/Database/Scripts/` |
 | **CI/CD** | GitHub Actions | - | Ejecución automática en despliegue |
 
-> El uso de tecnologías no listadas requiere aprobación de Arquitectura. Ver [ADR-019](../../../decisiones-de-arquitectura/adr-019-configuraciones-scripts-bd.md) para justificación de DbUp.
+> El uso de tecnologías no listadas requiere aprobación de Arquitectura. Ver [ADR-019](../../../decisiones-de-arquitectura/adr-019-configuraciones-scripts-bd.md) para justificación de Entity Framework Migrations.
 
 ---
 
@@ -55,8 +55,8 @@ Garantizar evolución controlada del esquema de base de datos mediante migracion
 - [ ] Transacciones explícitas con `BEGIN`/`COMMIT`/`ROLLBACK`
 - [ ] Testing en ambiente dev/staging antes de producción
 - [ ] Rollback scripts para cambios críticos (opcional pero recomendado)
-- [ ] DbUp ejecutado automáticamente en CI/CD
-- [ ] Tabla de historial: `SchemaVersions` creada por DbUp
+- [ ] Entity Framework Migrations ejecutado automáticamente en CI/CD
+- [ ] Tabla de historial: `SchemaVersions` creada por Entity Framework Migrations
 
 ---
 
@@ -83,8 +83,8 @@ src/
 │   │   ├── Script0003__AddIndexToUsersEmail.sql
 │   │   ├── Script0004__SeedInitialRoles.sql
 │   │   └── Script0005__AddAuditColumnsToOrders.sql
-│   └── DbUpMigrator/
-│       ├── DbUpMigrator.csproj
+│   └── Entity Framework MigrationsMigrator/
+│       ├── Entity Framework MigrationsMigrator.csproj
 │       └── Program.cs
 └── YourService.Api/
     └── appsettings.json
@@ -94,7 +94,7 @@ src/
 
 ## 7. Configuración Mínima
 
-### DbUp Project (DbUpMigrator.csproj)
+### Entity Framework Migrations Project (Entity Framework MigrationsMigrator.csproj)
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -104,7 +104,7 @@ src/
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DbUp-PostgreSQL" Version="5.0.37" />
+    <PackageReference Include="Entity Framework Migrations-PostgreSQL" Version="5.0.37" />
     <PackageReference Include="Npgsql" Version="8.0.1" />
   </ItemGroup>
 
@@ -114,15 +114,15 @@ src/
 </Project>
 ```
 
-### DbUp Configuration (Program.cs)
+### Entity Framework Migrations Configuration (Program.cs)
 
 ```csharp
 using System;
 using System.Reflection;
-using DbUp;
-using DbUp.Engine;
+using Entity Framework Migrations;
+using Entity Framework Migrations.Engine;
 
-namespace DbUpMigrator;
+namespace Entity Framework MigrationsMigrator;
 
 class Program
 {
@@ -254,8 +254,8 @@ jobs:
         with:
           dotnet-version: '8.0.x'
       
-      - name: Run DbUp Migration
-        working-directory: src/Database/DbUpMigrator
+      - name: Run Entity Framework Migrations Migration
+        working-directory: src/Database/Entity Framework MigrationsMigrator
         env:
           DATABASE_URL: ${{ secrets.DATABASE_CONNECTION_STRING }}
         run: |
@@ -280,7 +280,7 @@ services:
   
   migrator:
     build:
-      context: ./src/Database/DbUpMigrator
+      context: ./src/Database/Entity Framework MigrationsMigrator
     depends_on:
       - postgres
     environment:
@@ -315,7 +315,7 @@ COMMIT;
 pg_dump -h localhost -U postgres -d myapp_prod > backup_before_migration.sql
 
 # Run migration
-dotnet run --project src/Database/DbUpMigrator
+dotnet run --project src/Database/Entity Framework MigrationsMigrator
 
 # Rollback if needed
 psql -h localhost -U postgres -d myapp_prod < backup_before_migration.sql
@@ -332,7 +332,7 @@ psql -h localhost -U postgres -d myapp_prod < backup_before_migration.sql
 psql -h localhost -U dev -d myapp_dev -f Script0001__CreateUsersTable.sql --dry-run
 
 # 2. Ejecutar en dev
-dotnet run --project src/Database/DbUpMigrator
+dotnet run --project src/Database/Entity Framework MigrationsMigrator
 
 # 3. Verificar SchemaVersions table
 psql -h localhost -U dev -d myapp_dev -c "SELECT * FROM SchemaVersions ORDER BY ScriptName;"
@@ -364,7 +364,7 @@ Error: Syntax error in SQL script at line 15
 ```
 Error: relation "SchemaVersions" does not exist
 ```
-**Solución:** DbUp crea la tabla automáticamente en primera ejecución, verificar permisos de usuario
+**Solución:** Entity Framework Migrations crea la tabla automáticamente en primera ejecución, verificar permisos de usuario
 
 ---
 
@@ -401,7 +401,7 @@ Error: relation "SchemaVersions" does not exist
 ### Logging
 
 ```csharp
-// DbUp logs automáticos en consola
+// Entity Framework Migrations logs automáticos en consola
 Console.WriteLine($"Executing {script.Name}...");
 Console.WriteLine($"Migration completed in {elapsed}ms");
 ```
@@ -410,7 +410,7 @@ Console.WriteLine($"Migration completed in {elapsed}ms");
 
 ## 14. Referencias
 
-- [DbUp Documentation](https://dbup.readthedocs.io/)
+- [Entity Framework Migrations Documentation](https://Entity Framework Migrations.readthedocs.io/)
 - [ADR-019: Configuraciones por Scripts en BD](../../../decisiones-de-arquitectura/adr-019-configuraciones-scripts-bd.md)
 - [ADR-010: Base de Datos Estándar](../../../decisiones-de-arquitectura/adr-010-standard-base-datos.md)
 - [PostgreSQL Best Practices](https://wiki.postgresql.org/wiki/Don%27t_Do_This)

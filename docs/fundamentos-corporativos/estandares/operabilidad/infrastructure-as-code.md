@@ -23,7 +23,7 @@ Gestionar infraestructura cloud mediante **Infrastructure as Code (IaC)** con Te
 - Configuración de networking (security groups, NACLs, routing)
 - Políticas de seguridad (IAM roles, KMS keys)
 - Configuración de monitoreo (CloudWatch alarms, dashboards)
-- Kubernetes manifests (si aplica)
+- AWS ECS Fargate manifests (si aplica)
 
 **No aplica a:**
 
@@ -367,6 +367,6 @@ Incumplimientos detectados en audits trimestrales.
 
 - [Terraform Best Practices](https://www.terraform-best-practices.com/)
 - [AWS Well-Architected — IaC](https://docs.aws.amazon.com/wellarchitected/latest/framework/sus_sus_dev_a3.html)
-- [HashiCorp Learn — Terraform](https://learn.hashicorp.com/terraform)
+- [Terraform Learn — Terraform](https://learn.hashicorp.com/terraform)
 - [Estándar: Code Review Policy](code-review-policy.md)
 - [ADR-006: Infraestructura como Código](../../../decisiones-de-arquitectura/adr-006-infraestructura-iac.md)

@@ -21,7 +21,7 @@ Implementar Key Management siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-NIST SP 800-57, AWS KMS, Azure Key Vault
+NIST SP 800-57, AWS KMS
 
 ## Validación de Cumplimiento
 

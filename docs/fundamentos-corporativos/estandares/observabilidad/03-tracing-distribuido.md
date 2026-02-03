@@ -16,7 +16,7 @@ Rastrear requests a través de múltiples servicios en arquitecturas distribuida
 **Aplica a:**
 
 - Microservicios REST/gRPC
-- Procesamiento de mensajes asíncronos (SQS, SNS, RabbitMQ)
+- Procesamiento de mensajes asíncronos (Apache Kafka)
 - Funciones serverless (AWS Lambda)
 - Integraciones con APIs externas
 

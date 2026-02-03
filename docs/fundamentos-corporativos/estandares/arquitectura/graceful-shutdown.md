@@ -21,7 +21,7 @@ Implementar Graceful Shutdown siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Kubernetes Best Practices, 12-Factor App
+AWS ECS Auto Scaling, 12-Factor App
 
 ## Validación de Cumplimiento
 

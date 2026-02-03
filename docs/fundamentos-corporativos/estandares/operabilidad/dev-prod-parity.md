@@ -19,9 +19,9 @@ Garantizar **paridad máxima** entre entornos de desarrollo, staging y producci�
 
 **Aplica a:**
 
-- Versiones de frameworks (.NET, Node.js, Python)
-- Bases de datos (PostgreSQL, MySQL, Redis)
-- Servicios de mensajería (RabbitMQ, Kafka, SQS)
+- Versiones de frameworks (.NET)
+- Bases de datos (PostgreSQL, Oracle, SQL Server, Redis)
+- Servicios de mensajería (Apache Kafka)
 - Configuración de infraestructura (networking, security groups)
 - Imágenes Docker y dependencias de contenedores
 
@@ -39,16 +39,14 @@ Garantizar **paridad máxima** entre entornos de desarrollo, staging y producci�
 
 - [ ] **Misma versión** de runtime en todos los entornos:
   - .NET SDK: `8.0.x` (mismo minor version)
-  - Node.js: `20.x.x` (mismo major version)
-  - Python: `3.11.x`
 - [ ] **Misma versión** de BD:
   - PostgreSQL: `15.x` en dev/staging/prod
+  - Oracle: `19c` en dev/staging/prod
+  - SQL Server: `2022` en dev/staging/prod
   - Redis: `7.2.x` en dev/staging/prod
-- [ ] **Misma versión** de librerías críticas (Entity Framework, NestJS, FastAPI)
+- [ ] **Misma versión** de librerías críticas (Entity Framework Core, Serilog, OpenTelemetry)
 - [ ] Uso de **lock files** para dependencias:
   - .NET: `packages.lock.json`
-  - Node.js: `package-lock.json`
-  - Python: `requirements.lock` (pipenv/poetry)
 
 ### 3.2 Contenedorización
 
@@ -164,12 +162,6 @@ services:
 ```bash
 # .NET: packages.lock.json
 dotnet restore --locked-mode # Falla si lock file desactualizado
-
-# Node.js: package-lock.json
-npm ci # Instala EXACTAS versiones del lock file
-
-# Python: requirements.lock (pipenv)
-pipenv install --deploy # Falla si mismatch con Pipfile.lock
 ```
 
 ### 4.4 CI/CD Validation
@@ -200,8 +192,8 @@ jobs:
           - 6379:6379
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x" # Misma versión que producción
 
@@ -219,7 +211,6 @@ jobs:
 - ❌ Lógica condicional por entorno en código de aplicación
 - ❌ Imágenes Docker con tag `latest` (NO reproducible)
 - ❌ `Dockerfile.dev` separado de `Dockerfile` (debe ser mismo build)
-- ❌ Instalar dependencias globales (npm install -g) sin version pinning
 - ❌ Configuración hardcodeada en código (NO `if (env == "prod") ...`)
 
 ---
@@ -245,7 +236,7 @@ jobs:
 - [ ] `docker inspect <image>` muestra misma base image version en dev/staging/prod
 - [ ] `SELECT version()` en PostgreSQL dev/staging/prod → mismo minor version
 - [ ] `dotnet --version` en dev/CI/prod → mismo SDK version
-- [ ] Lock files (`packages.lock.json`, `package-lock.json`) committed en git
+- [ ] Lock file `packages.lock.json` committed en git
 - [ ] Docker Compose en dev simula servicios de producción (PostgreSQL, Redis)
 - [ ] CI ejecuta tests contra mismas versiones de servicios que producción
 - [ ] NO condicionales `if (Environment == "Production")` en código de aplicación

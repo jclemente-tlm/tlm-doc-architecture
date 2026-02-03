@@ -267,17 +267,21 @@ Ejemplo de logs con mismo Correlation ID:
 
 ### OpenTelemetry
 
-```typescript
-import { trace, SpanStatusCode } from "@opentelemetry/api";
+```csharp
+using System.Diagnostics;
+using OpenTelemetry.Trace;
 
-const tracer = trace.getTracer("order-service");
+public class OrderService
+{
+    private static readonly ActivitySource ActivitySource = new("order-service");
 
-export async function createOrder(orderData: OrderDto) {
-  const span = tracer.startSpan("createOrder");
-  const correlationId = asyncLocalStorage.getStore()?.correlationId;
+    public async Task CreateOrder(OrderDto orderData)
+    {
+        using var activity = ActivitySource.StartActivity("CreateOrder");
+        var correlationId = CorrelationContext.Current;
 
-  span.setAttribute("correlationId", correlationId);
-  span.setAttribute("userId", orderData.userId);
+        activity?.SetTag("correlationId", correlationId);
+        activity?.SetTag("userId", orderData.UserId);
 
   try {
     const order = await orderRepository.create(orderData);

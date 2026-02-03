@@ -21,7 +21,7 @@ Implementar Reserved Capacity siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-AWS Reserved Instances, Azure Reserved VM Instances
+AWS Reserved Instances, AWS Savings Plans
 
 ## Validación de Cumplimiento
 

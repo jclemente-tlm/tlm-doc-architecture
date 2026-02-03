@@ -21,7 +21,7 @@ Implementar Secrets Management siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-HashiCorp Vault, AWS Secrets Manager, Azure Key Vault
+AWS Secrets Manager, OWASP Secrets Management Cheat Sheet
 
 ## Validación de Cumplimiento
 

@@ -21,7 +21,7 @@ Implementar Retry Pattern siguiendo las mejores prácticas de la industria.
 ## Alineación con Industria
 
 **Frameworks de referencia:**
-Azure Architecture Patterns, AWS Well-Architected
+AWS Well-Architected - Reliability Pillar, Polly (.NET Resilience Library)
 
 ## Validación de Cumplimiento
 

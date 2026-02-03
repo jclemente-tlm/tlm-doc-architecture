@@ -149,12 +149,12 @@
 
 ### Tema: Testing
 
-| Documento                 | Tipo        | Contenido                |
-| ------------------------- | ----------- | ------------------------ |
-| "Calidad desde el Diseño" | Principio   | Por qué calidad importa  |
-| "Testing y Calidad"       | Lineamiento | Pirámide de testing      |
-| "Testing Unitario"        | Estándar    | xUnit, Jest, AAA pattern |
-| (No aplica)               | Convención  | -                        |
+| Documento                 | Tipo        | Contenido               |
+| ------------------------- | ----------- | ----------------------- |
+| "Calidad desde el Diseño" | Principio   | Por qué calidad importa |
+| "Testing y Calidad"       | Lineamiento | Pirámide de testing     |
+| "Testing Unitario"        | Estándar    | xUnit, AAA pattern      |
+| (No aplica)               | Convención  | -                       |
 
 ### Tema: Código
 
