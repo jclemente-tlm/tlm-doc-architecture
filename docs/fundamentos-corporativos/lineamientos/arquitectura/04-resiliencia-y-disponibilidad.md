@@ -18,4 +18,4 @@ Sistemas distribuidos enfrentan fallos inevitables: dependencias caídas, latenc
 - [Configurar retry con backoff exponencial](../../estandares/arquitectura/retry-patterns.md)
 - [Diseñar degradación graceful ante fallos](../../estandares/arquitectura/graceful-degradation.md)
 - [Definir SLOs y SLAs documentados](../../estandares/operabilidad/slos-slas.md)
-- [Implementar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dlq.md)
+- [Implementar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dead-letter-queue.md)

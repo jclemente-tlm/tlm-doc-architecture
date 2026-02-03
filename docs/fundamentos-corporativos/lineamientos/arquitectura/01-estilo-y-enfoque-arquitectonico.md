@@ -14,7 +14,7 @@ La selección del estilo arquitectónico es una decisión estructural que impact
 ## Estándares Obligatorios
 
 - [Documentar estilo seleccionado en ADR](../../estandares/documentacion/architecture-decision-records.md)
-- [Validar coherencia entre estilo declarado y decisiones técnicas](../../estandares/documentacion/architecture-review.md)
+- [Validar coherencia entre estilo declarado y decisiones técnicas](../../estandares/gobierno/architecture-review.md)
 
 ## Referencias Relacionadas
 

@@ -13,9 +13,9 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 
 ## Estándares Obligatorios
 
-- [Definir esquemas de eventos con AsyncAPI o Avro](../../estandares/mensajeria/schemas-eventos.md)
+- [Definir esquemas de eventos con AsyncAPI o Avro](../../estandares/mensajeria/event-schemas.md)
 - [Usar eventos para comunicar hechos del dominio, no comandos](../../estandares/mensajeria/domain-events.md)
-- [Implementar idempotencia en consumidores](../../estandares/mensajeria/idempotencia.md)
-- [Garantizar entrega at-least-once o exactly-once](../../estandares/mensajeria/garantias-entrega.md)
-- [Configurar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dlq.md)
-- [Documentar topología de eventos y consumidores](../../estandares/mensajeria/topologia-eventos.md)
+- [Implementar idempotencia en consumidores](../../estandares/mensajeria/idempotency.md)
+- [Garantizar entrega at-least-once o exactly-once](../../estandares/mensajeria/delivery-guarantees.md)
+- [Configurar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dead-letter-queue.md)
+- [Documentar topología de eventos y consumidores](../../estandares/mensajeria/event-topology.md)

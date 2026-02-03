@@ -14,4 +14,4 @@ Sin plan de respuesta a incidentes, el tiempo promedio de contención es 280 dí
 ## Estándares Obligatorios
 
 - [Establecer programa de respuesta a incidentes](../../estandares/seguridad/incident-response-program.md)
-- [Configurar logging y retención para análisis forense](../../estandares/observabilidad/01-logging.md)
+- [Configurar logging y retención para análisis forense](../../estandares/observabilidad/logging.md)

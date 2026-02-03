@@ -13,9 +13,9 @@ La exposición de datos sensibles genera incidentes de seguridad, incumplimiento
 
 ## Estándares Obligatorios
 
-- [Clasificar datos según sensibilidad (público, interno, sensible, regulado)](../../estandares/seguridad/clasificacion-datos.md)
+- [Clasificar datos según sensibilidad (público, interno, sensible, regulado)](../../estandares/seguridad/data-classification.md)
 - [Cifrar datos sensibles en tránsito y reposo](../../estandares/seguridad/data-encryption.md)
-- [Aplicar enmascaramiento y tokenización donde corresponda](../../estandares/seguridad/enmascaramiento-datos.md)
-- [Gestionar claves de cifrado con servicios dedicados (KMS)](../../estandares/seguridad/gestion-claves-kms.md)
-- [Recopilar únicamente datos estrictamente necesarios (minimización)](../../estandares/seguridad/minimizacion-datos.md)
-- [Implementar políticas de retención y eliminación automática](../../estandares/seguridad/retencion-eliminacion.md)
+- [Aplicar enmascaramiento y tokenización donde corresponda](../../estandares/seguridad/data-masking.md)
+- [Gestionar claves de cifrado con servicios dedicados (KMS)](../../estandares/seguridad/key-management.md)
+- [Recopilar únicamente datos estrictamente necesarios (minimización)](../../estandares/seguridad/data-minimization.md)
+- [Implementar políticas de retención y eliminación automática](../../estandares/seguridad/data-retention.md)

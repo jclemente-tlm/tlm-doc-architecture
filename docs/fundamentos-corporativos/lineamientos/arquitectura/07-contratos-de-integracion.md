@@ -14,8 +14,8 @@ Contratos mal definidos o desactualizados generan incompatibilidades, errores en
 ## Estándares Obligatorios
 
 - [Definir contratos con especificaciones estándar OpenAPI/AsyncAPI](../../estandares/apis/openapi-swagger.md)
-- [Versionar contratos semánticamente en URL o header](../../estandares/apis/versionado.md)
+- [Versionar contratos semánticamente en URL o header](../../estandares/apis/versioning.md)
 - [Validar requests/responses contra contratos en runtime](../../estandares/apis/contract-validation.md)
-- [Mantener retrocompatibilidad durante deprecación](../../estandares/apis/deprecacion-apis.md)
+- [Mantener retrocompatibilidad durante deprecación](../../estandares/apis/api-deprecation.md)
 - [Publicar contratos en API Portal accesible](../../estandares/apis/api-portal.md)
 - [Implementar contract testing automatizado](../../estandares/testing/contract-testing.md)

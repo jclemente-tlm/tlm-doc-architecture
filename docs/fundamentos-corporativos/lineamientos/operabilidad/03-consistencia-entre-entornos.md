@@ -14,4 +14,4 @@ La divergencia entre entornos de desarrollo, QA y producción genera el síndrom
 ## Estándares Obligatorios
 
 - [Garantizar paridad entre dev y producción](../../estandares/operabilidad/dev-prod-parity.md)
-- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalizar-configuracion-12factor.md)
+- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalize-configuration.md)

@@ -13,9 +13,9 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 
 ## Estándares Obligatorios
 
-- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalizar-configuracion-12factor.md)
+- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalize-configuration.md)
 - [Diseñar servicios stateless con estado en backing services](../../estandares/arquitectura/stateless-services.md)
-- [Implementar health checks liveness y readiness](../../estandares/observabilidad/05-health-checks.md)
+- [Implementar health checks liveness y readiness](../../estandares/observabilidad/health-checks.md)
 - [Preparar servicios para escalabilidad horizontal](../../estandares/arquitectura/horizontal-scaling.md)
 - [Aplicar graceful shutdown para terminación ordenada](../../estandares/arquitectura/graceful-shutdown.md)
 

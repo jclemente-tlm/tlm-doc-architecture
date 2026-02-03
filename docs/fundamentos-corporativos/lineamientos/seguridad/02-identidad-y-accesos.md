@@ -13,8 +13,8 @@ La gestión fragmentada de identidades genera credenciales dispersas, permisos e
 
 ## Estándares Obligatorios
 
-- [Usar identidad federada y SSO corporativo para usuarios](../../estandares/seguridad/sso-federado.md)
-- [Implementar autenticación multifactor (MFA) para accesos críticos](../../estandares/seguridad/mfa-configuracion.md)
-- [Aplicar mínimo privilegio en autorizaciones](../../estandares/seguridad/minimo-privilegio.md)
+- [Usar identidad federada y SSO corporativo para usuarios](../../estandares/seguridad/sso-federation.md)
+- [Implementar autenticación multifactor (MFA) para accesos críticos](../../estandares/seguridad/mfa-configuration.md)
+- [Aplicar mínimo privilegio en autorizaciones](../../estandares/seguridad/least-privilege.md)
 - [Gestionar identidades de servicios](../../estandares/seguridad/service-identities.md)
-- [No almacenar credenciales en código o configuración](../../estandares/seguridad/gestion-secretos.md)
+- [No almacenar credenciales en código o configuración](../../estandares/seguridad/secrets-management.md)
