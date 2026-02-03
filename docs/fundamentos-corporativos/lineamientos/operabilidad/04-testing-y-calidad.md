@@ -18,10 +18,8 @@ La ausencia de testing automatizado y controles de calidad genera código frági
 ## Estándares Obligatorios
 
 - [Implementar pruebas automatizadas en múltiples niveles (unitarias, integración, e2e)](../../estandares/operabilidad/testing-pyramid.md)
-- [Mantener cobertura de código mínima del 80% en lógica de negocio crítica](../../estandares/operabilidad/cobertura-codigo.md)
-- [Ejecutar análisis estático de código en pipeline CI/CD](../../estandares/operabilidad/analisis-estatico.md)
+- [Aplicar estándares de calidad de código: análisis estático y cobertura mínima](../../estandares/operabilidad/code-quality-standards.md)
 - [Realizar code review obligatorio antes de merge a ramas principales](../../estandares/operabilidad/code-review-policy.md)
-- [Aplicar estrategia de testing según pirámide de tests](../../estandares/operabilidad/estrategia-testing.md)
 
 ## Referencias Relacionadas
 

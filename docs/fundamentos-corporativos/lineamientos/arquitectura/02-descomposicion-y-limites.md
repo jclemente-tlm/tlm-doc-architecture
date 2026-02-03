@@ -16,7 +16,6 @@ Dividir sistemas en componentes con límites claros facilita el mantenimiento, l
 - [Identificar límites por capacidad de negocio, no por tecnología](../../estandares/arquitectura/bounded-contexts.md)
 - [Definir responsabilidad única y clara por componente](../../estandares/arquitectura/single-responsibility.md)
 - [Evitar dependencias cíclicas entre componentes](../../estandares/arquitectura/dependency-management.md)
-- [Documentar propiedad clara de cada componente](../../estandares/documentacion/component-ownership.md)
 
 ## Referencias Relacionadas
 
