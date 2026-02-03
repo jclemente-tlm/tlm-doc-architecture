@@ -13,6 +13,7 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 
 ## Estándares Obligatorios
 
+- [Implementar mensajería con Apache Kafka](../../estandares/mensajeria/kafka-events.md)
 - [Definir esquemas de eventos con AsyncAPI o Avro](../../estandares/mensajeria/event-schemas.md)
 - [Usar eventos para comunicar hechos del dominio, no comandos](../../estandares/mensajeria/domain-events.md)
 - [Implementar idempotencia en consumidores](../../estandares/mensajeria/idempotency.md)

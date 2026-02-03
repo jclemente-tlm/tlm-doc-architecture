@@ -1,0 +1,8 @@
+{
+    "label": "Desarrollo",
+    "position": 5,
+    "link": {
+        "type": "generated-index",
+        "description": "Lineamientos para ingeniería de software: calidad de código, testing y prácticas de desarrollo."
+    }
+}

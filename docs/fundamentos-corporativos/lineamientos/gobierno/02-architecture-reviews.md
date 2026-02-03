@@ -1,0 +1,23 @@
+---
+id: architecture-reviews
+sidebar_position: 2
+title: Revisiones Arquitectónicas
+description: Proceso de evaluación y validación de decisiones arquitectónicas
+---
+
+# Revisiones Arquitectónicas
+
+Implementar sin revisión arquitectónica genera deuda técnica, decisiones inconsistentes y soluciones que violan lineamientos corporativos sin retroalimentación temprana. Architecture reviews previenen errores costosos, validan alineación con estándares técnicos, facilitan transferencia de conocimiento entre equipos y detectan riesgos antes de materializar inversión significativa. Evaluación sistemática desde diseño hasta retrospectivas post-implementación garantiza calidad arquitectónica sostenible y evolución coherente del ecosistema tecnológico.
+
+**Este lineamiento aplica a:** Architecture reviews de nuevos sistemas, cambios arquitectónicos significativos en sistemas existentes, validación de ADRs, evaluación de prototipos y POCs, retrospectivas post-implementación.
+
+## Estándares Obligatorios
+
+- [Realizar architecture review antes de implementaciones significativas](../../estandares/gobierno/architecture-review.md)
+- [Documentar resultados, decisiones y acciones de reviews](../../estandares/gobierno/review-documentation.md)
+- [Realizar retrospectivas arquitectónicas post-implementación](../../estandares/gobierno/architecture-retrospectives.md)
+
+## Referencias Relacionadas
+
+- [Decisiones Arquitectónicas](./01-decisiones-arquitectonicas.md) (ADRs)
+- [Cumplimiento y Excepciones](./03-cumplimiento-y-excepciones.md) (validación de estándares)

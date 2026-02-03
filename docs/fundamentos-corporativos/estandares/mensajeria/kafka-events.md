@@ -1,8 +1,8 @@
 ---
-id: kafka-eventos
+id: kafka-events
 sidebar_position: 1
 title: Mensajería con Kafka
-description: Estándares para event-driven architecture con Apache Kafka 3.6+, Confluent Platform y Avro
+description: Estándares para event-driven architecture con Apache Kafka 3.6+ (KRaft), Confluent.Kafka .NET client y JSON Schema
 ---
 
 # Estándar Técnico — Mensajería con Kafka
@@ -37,11 +37,14 @@ Implementar event-driven architecture con Apache Kafka 3.6+ (modo KRaft), Conflu
 
 | Componente          | Tecnología                | Versión mínima | Observaciones              |
 | ------------------- | ------------------------- | -------------- | -------------------------- |
-| **Broker**          | Apache Kafka              | 3.6+           | Message broker distribuido |
-| **Cliente**         | Confluent.Kafka           | 2.3+           | Producer/Consumer .NET     |
-| **Schema Registry** | Confluent Schema Registry | 7.5+           | Registro schemas Avro      |
-| **Serialization**   | Apache Avro               | 1.11+          | Schema evolution           |
-| **AWS Managed**     | AWS MSK                   | 3.6+           | Kafka managed service      |
+| **Broker**          | Apache Kafka (KRaft mode) | 3.6+           | Message broker distribuido |
+| **Cliente .NET**    | Confluent.Kafka           | 2.3+           | Producer/Consumer .NET     |
+| **Schema**          | JSON Schema               | Draft 2020-12  | Validación de mensajes     |
+| **Serialización**   | System.Text.Json          | 8.0+           | JSON serialization         |
+| **Infraestructura** | Docker, Docker Compose    | -              | Deployment local/dev       |
+| **Monitoring**      | Kafka Exporter + Grafana  | -              | Métricas y alertas         |
+
+> **IMPORTANTE:** NO usar Confluent Platform, Schema Registry, AWS MSK, ni Apache Avro. Usar implementación propia con JSON Schema.
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
