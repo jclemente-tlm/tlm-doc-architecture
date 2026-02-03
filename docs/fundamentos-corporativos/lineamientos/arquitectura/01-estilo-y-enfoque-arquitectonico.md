@@ -11,11 +11,14 @@ La selección del estilo arquitectónico es una decisión estructural que impact
 
 **Este lineamiento aplica a:** nuevas aplicaciones, evolución de sistemas existentes, integraciones entre sistemas y plataformas compartidas.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
+
+- [Documentar estilo seleccionado en ADR](../../estandares/documentacion/architecture-decision-records.md)
+- [Validar coherencia entre estilo declarado y decisiones técnicas](../../estandares/documentacion/architecture-review.md)
+
+## Referencias Relacionadas
 
 - [Seleccionar estilo basado en contexto de negocio](../../estilos-arquitectonicos/criterios-seleccion.md)
-- [Documentar estilo seleccionado en ADR](../../estandares/documentacion/adrs.md)
 - [Diseñar monolitos modulares para dominios acotados](../../estilos-arquitectonicos/monolito-modular.md)
 - [Adoptar microservicios para dominios independientes](../../estilos-arquitectonicos/microservicios.md)
 - [Implementar arquitectura orientada a eventos para desacoplamiento temporal](../../estilos-arquitectonicos/eventos.md)
-- [Validar coherencia entre estilo declarado y decisiones técnicas](../../estandares/documentacion/architecture-review.md)

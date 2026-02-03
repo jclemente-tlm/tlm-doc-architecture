@@ -11,7 +11,7 @@ En sistemas distribuidos, las fallas pueden propagarse silenciosamente afectando
 
 **Este lineamiento aplica a:** servicios backend, APIs REST, microservicios, workers, procesos batch y funciones serverless.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Generar logs estructurados en formato JSON](../../estandares/observabilidad/01-logging.md)
 - [Emitir métricas siguiendo metodología RED/USE](../../estandares/observabilidad/02-monitoreo-metricas.md)

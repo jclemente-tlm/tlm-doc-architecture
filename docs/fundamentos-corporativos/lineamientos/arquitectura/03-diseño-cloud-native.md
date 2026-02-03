@@ -11,11 +11,14 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 
 **Este lineamiento aplica a:** aplicaciones en cloud público/privado/híbrido, servicios containerizados, plataformas multi-tenant y migraciones a cloud.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
-- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/configuracion-externalizada.md)
+- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalizar-configuracion-12factor.md)
 - [Diseñar servicios stateless con estado en backing services](../../estandares/arquitectura/stateless-services.md)
 - [Implementar health checks liveness y readiness](../../estandares/observabilidad/05-health-checks.md)
 - [Preparar servicios para escalabilidad horizontal](../../estandares/arquitectura/horizontal-scaling.md)
-- [Gestionar secretos en AWS Secrets Manager](../../../decisiones-de-arquitectura/adr-003-gestion-secretos.md)
 - [Aplicar graceful shutdown para terminación ordenada](../../estandares/arquitectura/graceful-shutdown.md)
+
+## Referencias Relacionadas
+
+- [Gestionar secretos en AWS Secrets Manager](../../../decisiones-de-arquitectura/adr-003-gestion-secretos.md)

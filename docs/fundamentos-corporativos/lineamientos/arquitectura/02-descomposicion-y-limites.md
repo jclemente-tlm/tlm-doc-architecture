@@ -11,10 +11,13 @@ Dividir sistemas en componentes con límites claros facilita el mantenimiento, l
 
 **Este lineamiento aplica a:** monolitos modulares, arquitecturas de microservicios, arquitecturas orientadas a eventos y sistemas legacy en evolución.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Identificar límites por capacidad de negocio, no por tecnología](../../estandares/arquitectura/bounded-contexts.md)
 - [Definir responsabilidad única y clara por componente](../../estandares/arquitectura/single-responsibility.md)
 - [Evitar dependencias cíclicas entre componentes](../../estandares/arquitectura/dependency-management.md)
 - [Documentar propiedad clara de cada componente](../../estandares/documentacion/component-ownership.md)
+
+## Referencias Relacionadas
+
 - [Establecer contratos explícitos en los límites](../07-contratos-de-integracion.md)

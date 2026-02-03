@@ -11,7 +11,7 @@ Esquemas implícitos o sin versionar generan errores en runtime, incompatibilida
 
 **Este lineamiento aplica a:** esquemas de bases de datos, eventos de dominio, modelos persistidos, mensajes asíncronos y archivos de intercambio.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Versionar esquemas de BD con migraciones automatizadas](../../estandares/datos/database-migrations.md)
 - [Documentar esquemas de eventos con JSON Schema o Avro](../../estandares/mensajeria/schemas-eventos.md)

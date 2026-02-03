@@ -11,10 +11,10 @@ Las vulnerabilidades incorporadas durante el diseño arquitectónico generan exp
 
 **Este lineamiento aplica a:** Todos los sistemas, servicios, componentes e integraciones diseñados o modificados, incluyendo arquitecturas nuevas, evolución de sistemas existentes e infraestructura de plataforma.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
-- [Aplicar Security by Design en todas las decisiones arquitectónicas](../../estandares/seguridad/security-by-design.md)
-- [Realizar modelado de amenazas para nuevos sistemas o cambios significativos](../../estandares/seguridad/modelado-amenazas.md)
+- [Aplicar Security by Design en decisiones arquitectónicas](../../estandares/seguridad/security-by-design.md)
+- [Realizar modelado de amenazas para nuevos sistemas](../../estandares/seguridad/threat-modeling.md)
 - [Definir explícitamente los límites de confianza (trust boundaries)](../../estandares/seguridad/trust-boundaries.md)
 - [Reducir la superficie de ataque mediante exposición controlada](../../estandares/seguridad/reduccion-superficie-ataque.md)
-- [Aplicar defensa en profundidad con múltiples capas de seguridad](../../estandares/seguridad/defensa-en-profundidad.md)
+- [Aplicar defensa en profundidad con múltiples capas](../../estandares/seguridad/defense-in-depth.md)

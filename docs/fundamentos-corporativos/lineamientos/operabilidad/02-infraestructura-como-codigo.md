@@ -11,10 +11,9 @@ La gestión manual de infraestructura mediante consolas genera configuraciones n
 
 **Este lineamiento aplica a:** Recursos cloud (compute, storage, networking), configuración de plataforma, políticas y permisos, networking y seguridad, bases de datos y servicios gestionados.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
-- [Definir infraestructura mediante IaC (Terraform, CloudFormation, Bicep)](../../estandares/operabilidad/iac-herramientas.md)
+- [Definir infraestructura mediante código](../../estandares/operabilidad/infrastructure-as-code.md)
 - [Versionar código de infraestructura en repositorios](../../estandares/operabilidad/iac-versionado.md)
-- [Aplicar revisión de código (PR) a cambios de infraestructura](../../estandares/operabilidad/iac-code-review.md)
-- [Separar configuración por entorno mediante variables](../../estandares/operabilidad/iac-parametrizacion.md)
+- [Aplicar revisión de código a infraestructura](../../estandares/operabilidad/code-review-policy.md)
 - [Documentar dependencias y orden de aprovisionamiento](../../estandares/operabilidad/iac-dependencias.md)

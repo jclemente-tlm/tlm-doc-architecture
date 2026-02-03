@@ -519,6 +519,7 @@ Agregar sección final **"9. Referencias y Recursos"**
 4. Implications ⬅️ **FALTA** (parcial en "Decisiones Esperadas")
 
 **Comparación:**
+
 | Sección TOGAF | Equivalente Actual | Match |
 |---------------|-------------------|--------|
 | Name | Título | ✅ 100% |
@@ -543,6 +544,7 @@ Agregar sección final **"9. Referencias y Recursos"**
 4. Rationale for decisions ⬅️ **FALTA**
 
 **Comparación:**
+
 | Elemento ISO 42010 | Equivalente Actual | Match |
 |--------------------|-------------------|--------|
 | Concerns | Propósito + Alcance | ✅ 80% |
@@ -569,6 +571,7 @@ Agregar sección final **"9. Referencias y Recursos"**
 6. Resources ⬅️ **FALTA**
 
 **Comparación:**
+
 | Elemento AWS | Equivalente Actual | Match |
 |--------------|-------------------|--------|
 | Why it matters | Propósito | ⚠️ 60% |
@@ -580,7 +583,7 @@ Agregar sección final **"9. Referencias y Recursos"**
 **Referencia:**
 
 > AWS Well-Architected Framework (2023 revision)
-> https://docs.aws.amazon.com/wellarchitected/latest/framework/
+> <https://docs.aws.amazon.com/wellarchitected/latest/framework/>
 
 ---
 
@@ -600,7 +603,7 @@ Similar a AWS, con fuerte énfasis en trade-offs que actualmente falta.
 **Referencia:**
 
 > Azure Well-Architected Framework
-> https://learn.microsoft.com/en-us/azure/architecture/framework/
+> <https://learn.microsoft.com/en-us/azure/architecture/framework/>
 
 ---
 
@@ -620,7 +623,7 @@ Muy similar a la estructura actual, pero con más énfasis en ejemplos concretos
 **Referencia:**
 
 > Google Cloud Architecture Framework
-> https://cloud.google.com/architecture/framework
+> <https://cloud.google.com/architecture/framework>
 
 ---
 
@@ -641,7 +644,7 @@ Pero sus principios de claridad, ejemplos y justificación aplican.
 **Referencia:**
 
 > arc42 - The Template for Software Architecture Documentation
-> https://arc42.org/
+> <https://arc42.org/>
 
 ---
 
@@ -656,7 +659,7 @@ Sin embargo, promueve:
 **Referencia:**
 
 > C4 Model for visualising software architecture
-> https://c4model.com/
+> <https://c4model.com/>
 
 ---
 
@@ -677,7 +680,7 @@ Deberían incluir los mismos elementos que ADRs individuales.
 **Referencia:**
 
 > Michael Nygard, "Documenting Architecture Decisions"
-> https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions
+> <https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions>
 
 ---
 
@@ -700,7 +703,7 @@ Deberían incluir los mismos elementos que ADRs individuales.
 **Referencia:**
 
 > Netflix TechBlog
-> https://netflixtechblog.com/
+> <https://netflixtechblog.com/>
 
 ---
 
@@ -720,7 +723,7 @@ Deberían incluir los mismos elementos que ADRs individuales.
 **Referencia:**
 
 > Google SRE Books (Site Reliability Engineering)
-> https://sre.google/books/
+> <https://sre.google/books/>
 
 ---
 
@@ -739,7 +742,7 @@ Deberían incluir los mismos elementos que ADRs individuales.
 **Referencia:**
 
 > Airbnb Engineering Blog
-> https://medium.com/airbnb-engineering
+> <https://medium.com/airbnb-engineering>
 
 ---
 

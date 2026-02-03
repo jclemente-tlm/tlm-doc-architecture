@@ -11,10 +11,10 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 
 **Este lineamiento aplica a:** mensajería entre servicios, arquitectura orientada a eventos, event sourcing, CQRS e integraciones asíncronas.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Definir esquemas de eventos con AsyncAPI o Avro](../../estandares/mensajeria/schemas-eventos.md)
-- [Usar eventos para comunicar hechos del dominio, no comandos](../../estandares/mensajeria/eventos-vs-comandos.md)
+- [Usar eventos para comunicar hechos del dominio, no comandos](../../estandares/mensajeria/domain-events.md)
 - [Implementar idempotencia en consumidores](../../estandares/mensajeria/idempotencia.md)
 - [Garantizar entrega at-least-once o exactly-once](../../estandares/mensajeria/garantias-entrega.md)
 - [Configurar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dlq.md)

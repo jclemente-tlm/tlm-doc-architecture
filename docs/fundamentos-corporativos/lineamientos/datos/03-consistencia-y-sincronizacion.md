@@ -11,7 +11,7 @@ Sistemas distribuidos requieren trade-offs entre consistencia, disponibilidad y 
 
 **Este lineamiento aplica a:** sistemas distribuidos, datos replicados, eventos asíncronos, integraciones y cachés.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Definir modelo de consistencia explícito por caso de uso](../../estandares/datos/consistency-models.md)
 - [Implementar reconciliación para consistencia eventual](../../estandares/datos/reconciliation.md)

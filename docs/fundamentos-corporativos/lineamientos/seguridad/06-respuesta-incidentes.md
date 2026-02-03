@@ -11,12 +11,7 @@ Sin plan de respuesta a incidentes, el tiempo promedio de contención es 280 dí
 
 **Este lineamiento aplica a:** equipos de seguridad, operaciones, desarrollo, todos los sistemas críticos de negocio e integraciones con terceros.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
-- [Establecer plan de respuesta a incidentes documentado](../../estandares/seguridad/incident-response-plan.md)
-- [Definir roles y responsabilidades del equipo de respuesta](../../estandares/seguridad/incident-response-roles.md)
-- [Crear playbooks para tipos comunes de incidentes](../../estandares/seguridad/incident-playbooks.md)
-- [Implementar detección automatizada de amenazas y anomalías](../../estandares/seguridad/threat-detection.md)
+- [Establecer programa de respuesta a incidentes](../../estandares/seguridad/incident-response-program.md)
 - [Configurar logging y retención para análisis forense](../../estandares/observabilidad/01-logging.md)
-- [Realizar simulacros de incidentes trimestralmente](../../estandares/seguridad/incident-drills.md)
-- [Documentar post-mortems con acciones correctivas](../../estandares/seguridad/incident-postmortems.md)

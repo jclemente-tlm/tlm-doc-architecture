@@ -11,10 +11,7 @@ Decisiones arquitectónicas no documentadas se pierden con rotación de personal
 
 **Este lineamiento aplica a:** decisiones arquitectónicas significativas, selección de tecnologías core, cambios en estilos y definición de estándares.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
-- [Documentar decisiones significativas en ADRs](../../estandares/documentacion/adrs.md)
-- [Versionar ADRs en repositorio junto al código](../../estandares/documentacion/adr-location.md)
-- [Incluir contexto, alternativas, decisión y consecuencias](../../estandares/documentacion/adr-format.md)
+- [Documentar decisiones significativas en ADRs](../../estandares/documentacion/architecture-decision-records.md)
 - [Revisar ADRs en architecture reviews](../../estandares/gobierno/architecture-review.md)
-- [Actualizar ADRs cuando se superseden](../../estandares/documentacion/adr-lifecycle.md)

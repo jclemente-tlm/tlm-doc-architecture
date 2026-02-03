@@ -11,10 +11,9 @@ La divergencia entre entornos de desarrollo, QA y producción genera el síndrom
 
 **Este lineamiento aplica a:** Entornos locales de desarrollo, entornos de integración y QA, staging y pre-producción, producción, contenedores y orquestación.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
-- [Usar mismas versiones de dependencias en todos los entornos](../../estandares/operabilidad/paridad-versiones.md)
-- [Contenedorizar aplicaciones para garantizar consistencia](../../estandares/operabilidad/contenedorizacion.md)
-- [Gestionar configuración externamente mediante variables de entorno](../../estandares/operabilidad/configuracion-externa.md)
+- [Garantizar paridad entre dev y producción](../../estandares/operabilidad/dev-prod-parity.md)
+- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalizar-configuracion-12factor.md)
 - [Documentar diferencias inevitables entre entornos](../../estandares/operabilidad/diferencias-entornos.md)
 - [Validar paridad de entornos regularmente](../../estandares/operabilidad/validacion-paridad.md)

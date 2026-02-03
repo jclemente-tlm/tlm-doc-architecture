@@ -11,7 +11,7 @@ Las arquitecturas de red plana permiten que compromisos localizados se propaguen
 
 **Este lineamiento aplica a:** Segmentación de redes y subredes, aislamiento de tenants multi-tenant, separación de entornos (dev/qa/prod), contenedores y orquestación, bases de datos y almacenamiento.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Segmentar redes por niveles de confianza (DMZ, interna, datos)](../../estandares/seguridad/segmentacion-redes.md)
 - [Aislar recursos por entorno en cuentas/subscripciones separadas](../../estandares/seguridad/separacion-entornos.md)

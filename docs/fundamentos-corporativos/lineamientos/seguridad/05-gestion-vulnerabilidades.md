@@ -11,7 +11,7 @@ El 60% de brechas de seguridad explotan vulnerabilidades conocidas sin parchear 
 
 **Este lineamiento aplica a:** código fuente, dependencias de aplicaciones, imágenes de contenedores, sistemas operativos, infraestructura cloud y APIs de terceros.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Implementar scanning automatizado de vulnerabilidades en CI/CD](../../estandares/seguridad/vulnerability-scanning.md)
 - [Establecer SLAs de remediación según severidad de CVE](../../estandares/seguridad/vulnerability-slas.md)

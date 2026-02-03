@@ -11,7 +11,7 @@ Implementar sin revisión arquitectónica genera deuda técnica, decisiones inco
 
 **Este lineamiento aplica a:** architecture reviews de nuevos sistemas, cambios arquitectónicos significativos, auditorías de cumplimiento y evaluación de excepciones.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Realizar architecture review antes de implementaciones significativas](../../estandares/gobierno/architecture-review.md)
 - [Documentar resultados y acciones de reviews](../../estandares/gobierno/review-documentation.md)

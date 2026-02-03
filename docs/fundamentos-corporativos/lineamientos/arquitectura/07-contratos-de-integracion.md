@@ -11,7 +11,7 @@ Contratos mal definidos o desactualizados generan incompatibilidades, errores en
 
 **Este lineamiento aplica a:** APIs REST/GraphQL, mensajes asíncronos, servicios gRPC, SOAP legacy e interfaces con terceros.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Definir contratos con especificaciones estándar OpenAPI/AsyncAPI](../../estandares/apis/openapi-swagger.md)
 - [Versionar contratos semánticamente en URL o header](../../estandares/apis/versionado.md)

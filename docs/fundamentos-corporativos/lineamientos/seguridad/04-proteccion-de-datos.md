@@ -11,11 +11,10 @@ La exposición de datos sensibles genera incidentes de seguridad, incumplimiento
 
 **Este lineamiento aplica a:** Datos personales (PII), datos financieros y de pago, datos de salud (PHI), secretos y credenciales, y datos confidenciales de negocio.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Clasificar datos según sensibilidad (público, interno, sensible, regulado)](../../estandares/seguridad/clasificacion-datos.md)
-- [Cifrar datos sensibles en tránsito con TLS 1.2 o superior](../../estandares/seguridad/cifrado-transito.md)
-- [Cifrar datos sensibles en reposo según clasificación](../../estandares/seguridad/cifrado-reposo.md)
+- [Cifrar datos sensibles en tránsito y reposo](../../estandares/seguridad/data-encryption.md)
 - [Aplicar enmascaramiento y tokenización donde corresponda](../../estandares/seguridad/enmascaramiento-datos.md)
 - [Gestionar claves de cifrado con servicios dedicados (KMS)](../../estandares/seguridad/gestion-claves-kms.md)
 - [Recopilar únicamente datos estrictamente necesarios (minimización)](../../estandares/seguridad/minimizacion-datos.md)

@@ -11,10 +11,10 @@ Los procesos manuales repetitivos generan inconsistencias, errores humanos y cue
 
 **Este lineamiento aplica a:** Despliegues y releases, pruebas (unitarias, integración, e2e), aprovisionamiento de infraestructura, configuración de entornos, y validaciones de calidad y seguridad.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Automatizar despliegues mediante pipelines CI/CD](../../estandares/operabilidad/cicd-pipelines.md)
 - [Automatizar pruebas y ejecución en cada cambio](../../estandares/operabilidad/testing-automatizado.md)
-- [Automatizar aprovisionamiento de infraestructura (IaC)](../../estandares/operabilidad/iac-automatizacion.md)
+- [Automatizar aprovisionamiento de infraestructura (IaC)](../../estandares/operabilidad/infrastructure-as-code.md)
 - [Automatizar validaciones de seguridad y calidad](../../estandares/operabilidad/quality-security-gates.md)
 - [Documentar y versionar scripts de automatización](../../estandares/operabilidad/scripts-versionados.md)

@@ -11,10 +11,10 @@ Bases de datos compartidas generan acoplamiento implícito, dependencias cíclic
 
 **Este lineamiento aplica a:** microservicios, módulos en monolitos modulares, sistemas con datos compartidos e integraciones entre aplicaciones.
 
-## Prácticas Recomendadas
+## Estándares Obligatorios
 
 - [Asignar propiedad exclusiva de datos por dominio](../../estandares/datos/data-ownership.md)
 - [Evitar bases de datos compartidas entre servicios](../../estandares/datos/database-per-service.md)
-- [Exponer datos mediante APIs o eventos, no acceso directo](../../estandares/datos/api-driven-data-access.md)
+- [Exponer datos mediante APIs o eventos, no acceso directo](../../estandares/datos/data-access-via-apis.md)
 - [Documentar esquema y propiedad de datos por dominio](../../estandares/datos/schema-documentation.md)
 - [Aplicar principio de menor conocimiento en datos](../../estandares/datos/least-knowledge-principle.md)
