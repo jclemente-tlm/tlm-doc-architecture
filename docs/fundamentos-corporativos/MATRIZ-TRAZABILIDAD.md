@@ -42,14 +42,14 @@ graph LR
 
 ### Referencias
 
-| Nivel           | Documento                 | Ubicación                                                                                                        |
-| --------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Principio**   | Seguridad desde el Diseño | [principios/seguridad/01-seguridad-desde-el-diseno.md](principios/seguridad/01-seguridad-desde-el-diseno.md)     |
-| **Lineamiento** | Seguridad desde el Diseño | [lineamientos/seguridad/01-seguridad-desde-el-diseno.md](lineamientos/seguridad/01-seguridad-desde-el-diseno.md) |
-| **Estándar**    | APIs - Seguridad          | [estandares/apis/02-seguridad-apis.md](estandares/apis/02-seguridad-apis.md)                                     |
-| **Estándar**    | Secrets Management        | [estandares/infraestructura/03-secrets-management.md](estandares/infraestructura/03-secrets-management.md)       |
-| **Convención**  | Headers HTTP              | [convenciones/apis/02-headers-http.md](convenciones/apis/02-headers-http.md)                                     |
-| **Convención**  | Manejo Secretos           | [convenciones/seguridad/01-manejo-secretos.md](convenciones/seguridad/01-manejo-secretos.md)                     |
+| Nivel           | Documento                 | Ubicación                                                                                                          |
+| --------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Principio**   | Seguridad desde el Diseño | [principios/seguridad/01-seguridad-desde-el-diseno.md](principios/seguridad/01-seguridad-desde-el-diseno.md)       |
+| **Lineamiento** | Seguridad desde el Diseño | [lineamientos/seguridad/01-seguridad-desde-el-diseno.md](lineamientos/seguridad/01-seguridad-desde-el-diseno.md)   |
+| **Estándar**    | APIs - Seguridad          | [estandares/apis/02-seguridad-apis.md](estandares/apis/02-seguridad-apis.md)                                       |
+| **Estándar**    | Secrets Management        | [estandares/infraestructura/03-secrets-management.md](estandares/infraestructura/03-secrets-management.md)         |
+| **Estándar**    | REST Conventions          | [estandares/apis/rest-conventions.md](estandares/apis/rest-conventions.md) (incluye headers HTTP)                  |
+| **Estándar**    | Secrets Management        | [estandares/seguridad/secrets-management.md](estandares/seguridad/secrets-management.md) (incluye manejo secretos) |
 
 ---
 
@@ -81,8 +81,7 @@ graph LR
 | **Lineamiento** | Observabilidad                 | [lineamientos/arquitectura/05-observabilidad.md](lineamientos/arquitectura/05-observabilidad.md)                             |
 | **Estándar**    | Logging Estructurado           | [estandares/observabilidad/01-logging.md](estandares/observabilidad/01-logging.md)                                           |
 | **Estándar**    | Monitoreo y Métricas           | [estandares/observabilidad/02-monitoreo-metricas.md](estandares/observabilidad/02-monitoreo-metricas.md)                     |
-| **Convención**  | Niveles de Log                 | [convenciones/logs/01-niveles-log.md](convenciones/logs/01-niveles-log.md)                                                   |
-| **Convención**  | Correlation IDs                | [convenciones/logs/02-correlation-ids.md](convenciones/logs/02-correlation-ids.md)                                           |
+| **Estándar**    | Logging Estructurado           | [estandares/operabilidad/logging.md](estandares/operabilidad/logging.md) (incluye niveles y correlation IDs)                 |
 
 ---
 
@@ -110,15 +109,15 @@ graph LR
 
 ### Referencias
 
-| Nivel           | Documento               | Ubicación                                                                                                      |
-| --------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------- |
-| **Principio**   | Calidad desde el Diseño | [principios/operabilidad/03-calidad-desde-el-diseno.md](principios/operabilidad/03-calidad-desde-el-diseno.md) |
-| **Lineamiento** | Testing y Calidad       | [lineamientos/operabilidad/04-testing-y-calidad.md](lineamientos/operabilidad/04-testing-y-calidad.md)         |
-| **Estándar**    | Testing Unitario        | [estandares/testing/01-unit-tests.md](estandares/testing/01-unit-tests.md)                                     |
-| **Estándar**    | Testing Integración     | [estandares/testing/02-integration-tests.md](estandares/testing/02-integration-tests.md)                       |
-| **Estándar**    | Testing E2E             | [estandares/testing/03-e2e-tests.md](estandares/testing/03-e2e-tests.md)                                       |
-| **Estándar**    | C# y .NET               | [estandares/codigo/01-csharp-dotnet.md](estandares/codigo/01-csharp-dotnet.md)                                 |
-| **Convención**  | Naming C#               | [convenciones/codigo/01-naming-csharp.md](convenciones/codigo/01-naming-csharp.md)                             |
+| Nivel           | Documento               | Ubicación                                                                                                       |
+| --------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Principio**   | Calidad desde el Diseño | [principios/operabilidad/03-calidad-desde-el-diseno.md](principios/operabilidad/03-calidad-desde-el-diseno.md)  |
+| **Lineamiento** | Testing y Calidad       | [lineamientos/operabilidad/04-testing-y-calidad.md](lineamientos/operabilidad/04-testing-y-calidad.md)          |
+| **Estándar**    | Testing Unitario        | [estandares/testing/01-unit-tests.md](estandares/testing/01-unit-tests.md)                                      |
+| **Estándar**    | Testing Integración     | [estandares/testing/02-integration-tests.md](estandares/testing/02-integration-tests.md)                        |
+| **Estándar**    | Testing E2E             | [estandares/testing/03-e2e-tests.md](estandares/testing/03-e2e-tests.md)                                        |
+| **Estándar**    | C# y .NET               | [estandares/codigo/01-csharp-dotnet.md](estandares/codigo/01-csharp-dotnet.md)                                  |
+| **Estándar**    | C# y .NET               | [estandares/codigo/csharp-dotnet.md](estandares/codigo/csharp-dotnet.md) (incluye convenciones de nomenclatura) |
 
 ---
 
@@ -146,15 +145,14 @@ graph LR
 
 ### Referencias
 
-| Nivel           | Documento                     | Ubicación                                                                                                                    |
-| --------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| **Principio**   | Automatización como Principio | [principios/operabilidad/01-automatizacion-como-principio.md](principios/operabilidad/01-automatizacion-como-principio.md)   |
-| **Lineamiento** | Automatización                | [lineamientos/operabilidad/01-automatizacion.md](lineamientos/operabilidad/01-automatizacion.md)                             |
-| **Lineamiento** | Infraestructura como Código   | [lineamientos/operabilidad/02-infraestructura-como-codigo.md](lineamientos/operabilidad/02-infraestructura-como-codigo.md)   |
-| **Estándar**    | Docker                        | [estandares/infraestructura/01-docker.md](estandares/infraestructura/01-docker.md)                                           |
-| **Estándar**    | IaC                           | [estandares/infraestructura/02-infraestructura-como-codigo.md](estandares/infraestructura/02-infraestructura-como-codigo.md) |
-| **Convención**  | Naming AWS                    | [convenciones/infraestructura/01-naming-aws.md](convenciones/infraestructura/01-naming-aws.md)                               |
-| **Convención**  | Tags y Metadatos              | [convenciones/infraestructura/02-tags-metadatos.md](convenciones/infraestructura/02-tags-metadatos.md)                       |
+| Nivel           | Documento                     | Ubicación                                                                                                                                |
+| --------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Principio**   | Automatización como Principio | [principios/operabilidad/01-automatizacion-como-principio.md](principios/operabilidad/01-automatizacion-como-principio.md)               |
+| **Lineamiento** | Automatización                | [lineamientos/operabilidad/01-automatizacion.md](lineamientos/operabilidad/01-automatizacion.md)                                         |
+| **Lineamiento** | Infraestructura como Código   | [lineamientos/operabilidad/02-infraestructura-como-codigo.md](lineamientos/operabilidad/02-infraestructura-como-codigo.md)               |
+| **Estándar**    | Docker                        | [estandares/infraestructura/01-docker.md](estandares/infraestructura/01-docker.md)                                                       |
+| **Estándar**    | IaC                           | [estandares/infraestructura/02-infraestructura-como-codigo.md](estandares/infraestructura/02-infraestructura-como-codigo.md)             |
+| **Estándar**    | Infraestructura como Código   | [estandares/infraestructura/infrastructure-as-code.md](estandares/infraestructura/infrastructure-as-code.md) (incluye naming AWS y tags) |
 
 ---
 
@@ -182,15 +180,14 @@ graph LR
 
 ### Referencias
 
-| Nivel           | Documento                 | Ubicación                                                                                                          |
-| --------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **Principio**   | Contratos de Comunicación | [principios/arquitectura/06-contratos-de-comunicacion.md](principios/arquitectura/06-contratos-de-comunicacion.md) |
-| **Lineamiento** | Diseño de APIs            | [lineamientos/arquitectura/06-diseno-de-apis.md](lineamientos/arquitectura/06-diseno-de-apis.md)                   |
-| **Estándar**    | Diseño REST               | [estandares/apis/01-diseno-rest.md](estandares/apis/01-diseno-rest.md)                                             |
-| **Estándar**    | Versionado APIs           | [estandares/apis/04-versionado.md](estandares/apis/04-versionado.md)                                               |
-| **Estándar**    | OpenAPI/Swagger           | [estandares/documentacion/03-openapi-swagger.md](estandares/documentacion/03-openapi-swagger.md)                   |
-| **Convención**  | Naming Endpoints          | [convenciones/apis/01-naming-endpoints.md](convenciones/apis/01-naming-endpoints.md)                               |
-| **Convención**  | Formato Respuestas        | [convenciones/apis/03-formato-respuestas.md](convenciones/apis/03-formato-respuestas.md)                           |
+| Nivel           | Documento                 | Ubicación                                                                                                                  |
+| --------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Principio**   | Contratos de Comunicación | [principios/arquitectura/06-contratos-de-comunicacion.md](principios/arquitectura/06-contratos-de-comunicacion.md)         |
+| **Lineamiento** | Diseño de APIs            | [lineamientos/arquitectura/06-diseno-de-apis.md](lineamientos/arquitectura/06-diseno-de-apis.md)                           |
+| **Estándar**    | Diseño REST               | [estandares/apis/01-diseno-rest.md](estandares/apis/01-diseno-rest.md)                                                     |
+| **Estándar**    | Versionado APIs           | [estandares/apis/04-versionado.md](estandares/apis/04-versionado.md)                                                       |
+| **Estándar**    | OpenAPI/Swagger           | [estandares/documentacion/03-openapi-swagger.md](estandares/documentacion/03-openapi-swagger.md)                           |
+| **Estándar**    | REST Conventions          | [estandares/apis/rest-conventions.md](estandares/apis/rest-conventions.md) (incluye naming endpoints y formato respuestas) |
 
 ---
 

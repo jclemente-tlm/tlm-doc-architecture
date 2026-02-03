@@ -1,8 +1,0 @@
-{
-    "label": "Infraestructura",
-    "position": 4,
-    "link": {
-        "type": "generated-index",
-        "description": "Convenciones para recursos cloud, tags y configuración."
-    }
-}

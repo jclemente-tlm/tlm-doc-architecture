@@ -248,11 +248,263 @@ dotnet test --filter Category=REST
 
 ---
 
-## 8. Referencias
+## 8. Convenciones de Nomenclatura de Endpoints
+
+### 8.1. Estructura Base
+
+- **Formato**: `/api/v{version}/{recurso}[/{id}][/{sub-recurso}]`
+- **Ejemplo**: `/api/v1/users`, `/api/v1/users/123`, `/api/v1/users/123/orders`
+
+### 8.2. Nombres de Recursos en Plural
+
+- **Formato**: Sustantivos en plural, kebab-case
+- **Ejemplo**: `/api/v1/users`, `/api/v1/order-items`, `/api/v1/payment-methods`
+
+### 8.3. Kebab-Case para Recursos Compuestos
+
+- **Formato**: `kebab-case` (palabras separadas por guiones)
+- **Ejemplo**: `/api/v1/order-items`, `/api/v1/payment-methods`, `/api/v1/user-profiles`
+
+### 8.4. Sub-recursos y Relaciones
+
+- **Formato**: `/{recurso}/{id}/{sub-recurso}`
+- **Ejemplo**: `/api/v1/users/123/orders`, `/api/v1/orders/456/items`
+
+### 8.5. Acciones No-CRUD (Excepciones)
+
+- **Formato**: `POST /{recurso}/{id}/{accion}`
+- **Ejemplo**: `POST /api/v1/orders/123/cancel`, `POST /api/v1/users/456/activate`
+
+### 8.6. Filtrado, Ordenamiento y Búsqueda
+
+Usar query parameters, **no** incluir en path:
+
+- **Formato**: `GET /{recurso}?{filter}&{sort}`
+- **Ejemplo**: `/api/v1/users?status=active&sort=createdAt`
+
+### 8.7. Mapeo HTTP Methods
+
+| Operación           | Method | Endpoint            | Respuesta           |
+| ------------------- | ------ | ------------------- | ------------------- |
+| Listar todos        | GET    | `/api/v1/users`     | 200 + array         |
+| Obtener uno         | GET    | `/api/v1/users/123` | 200 + objeto        |
+| Crear               | POST   | `/api/v1/users`     | 201 + objeto creado |
+| Actualizar completo | PUT    | `/api/v1/users/123` | 200 + objeto        |
+| Actualizar parcial  | PATCH  | `/api/v1/users/123` | 200 + objeto        |
+| Eliminar            | DELETE | `/api/v1/users/123` | 204 sin body        |
+
+---
+
+## 9. Convenciones de Headers HTTP
+
+### 9.1. Headers Obligatorios de Trazabilidad
+
+| Header             | Propósito                               | Formato | Generado por          |
+| ------------------ | --------------------------------------- | ------- | --------------------- |
+| `X-Correlation-ID` | Tracking end-to-end de request          | UUID v4 | API Gateway o Cliente |
+| `X-Request-ID`     | ID único del request individual         | UUID v4 | API Gateway           |
+| `X-Tenant-ID`      | Identificador de tenant (multi-tenancy) | String  | Cliente autenticado   |
+
+```http
+GET /api/v1/users HTTP/1.1
+Host: api.talma.com
+X-Correlation-ID: 550e8400-e29b-41d4-a716-446655440000
+X-Request-ID: 7f3d6b2a-8c1e-4d5f-9a2b-3c4d5e6f7890
+X-Tenant-ID: tlm-pe
+Authorization: Bearer eyJhbGc...
+```
+
+### 9.2. Headers de Autenticación
+
+- **Formato**: `Authorization: Bearer {token}`
+- **Ejemplo**: `Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5...`
+
+### 9.3. Headers de Content Negotiation
+
+| Header            | Uso                        | Valores                               |
+| ----------------- | -------------------------- | ------------------------------------- |
+| `Content-Type`    | Tipo de contenido enviado  | `application/json`, `application/xml` |
+| `Accept`          | Tipo de contenido esperado | `application/json`, `application/xml` |
+| `Accept-Language` | Idioma preferido           | `es-ES`, `en-US`                      |
+| `Accept-Encoding` | Compresión aceptada        | `gzip`, `deflate`, `br`               |
+
+### 9.4. Headers de Rate Limiting
+
+| Header                  | Propósito                | Ejemplo      |
+| ----------------------- | ------------------------ | ------------ |
+| `X-RateLimit-Limit`     | Límite total de requests | `1000`       |
+| `X-RateLimit-Remaining` | Requests restantes       | `243`        |
+| `X-RateLimit-Reset`     | Timestamp de reset       | `1672531200` |
+| `Retry-After`           | Segundos para reintentar | `3600`       |
+
+### 9.5. Headers de Seguridad
+
+| Header                      | Propósito              | Valor                                 |
+| --------------------------- | ---------------------- | ------------------------------------- |
+| `Strict-Transport-Security` | HSTS                   | `max-age=31536000; includeSubDomains` |
+| `X-Content-Type-Options`    | Prevenir MIME sniffing | `nosniff`                             |
+| `X-Frame-Options`           | Prevenir clickjacking  | `DENY` o `SAMEORIGIN`                 |
+| `X-XSS-Protection`          | XSS protection         | `1; mode=block`                       |
+
+---
+
+## 10. Convenciones de Formato de Respuestas
+
+### 10.1. Estructura Base Envelope
+
+Toda respuesta **debe** incluir:
+
+- **`status`**: `"success"` o `"error"`
+- **`data`**: Objeto o array con los datos; `null` en caso de error
+- **`errors`**: Array de errores; `[]` vacío en caso de éxito
+- **`meta`**: Objeto con `traceId` y `timestamp`
+
+### 10.2. Respuesta Exitosa - Objeto Único
+
+```json
+{
+  "status": "success",
+  "data": {
+    "id": "123",
+    "name": "Juan Pérez",
+    "email": "juan.perez@talma.pe",
+    "active": true,
+    "createdAt": "2024-01-15T10:30:00Z"
+  },
+  "errors": [],
+  "meta": {
+    "traceId": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
+    "timestamp": "2024-01-15T10:30:01Z"
+  }
+}
+```
+
+### 10.3. Respuesta Exitosa - Colección con Paginación
+
+```json
+{
+  "status": "success",
+  "data": [
+    { "id": "123", "name": "Juan Pérez" },
+    { "id": "124", "name": "Ana Gómez" }
+  ],
+  "errors": [],
+  "meta": {
+    "traceId": "a9b8c7d6-5432-10fe-dcba-0987654321ff",
+    "timestamp": "2024-01-15T10:30:01Z",
+    "pagination": {
+      "page": 1,
+      "size": 20,
+      "total": 150,
+      "totalPages": 8
+    },
+    "links": {
+      "self": "/api/v1/users?page=1",
+      "next": "/api/v1/users?page=2",
+      "last": "/api/v1/users?page=8"
+    },
+    "tenant": "tlm-pe"
+  }
+}
+```
+
+### 10.4. Respuesta de Error - Validación
+
+```json
+{
+  "status": "error",
+  "data": null,
+  "errors": [
+    {
+      "code": "VALIDATION_FAILED",
+      "message": "La solicitud contiene errores de validación",
+      "details": [
+        { "field": "email", "issue": "El formato no es válido" },
+        { "field": "name", "issue": "Es un campo requerido" }
+      ]
+    }
+  ],
+  "meta": {
+    "traceId": "de9f8c7b-6543-21fe-cdba-123456789abc",
+    "timestamp": "2024-01-15T10:30:01Z"
+  }
+}
+```
+
+---
+
+## 11. Convenciones de Fechas y Moneda
+
+### 11.1. Fechas y Horas en ISO 8601 UTC
+
+- **Formato**: `YYYY-MM-DDTHH:mm:ss.sssZ`
+- **Ejemplo**: `"2024-01-15T10:30:00.000Z"`
+- **Zona Horaria**: Siempre UTC (terminar en `Z`)
+
+```json
+{
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T14:45:30.123Z"
+}
+```
+
+### 11.2. Solo Fecha (sin hora)
+
+- **Formato**: `YYYY-MM-DD`
+- **Ejemplo**: `"2024-01-15"`
+
+```json
+{
+  "birthDate": "1985-03-20",
+  "expirationDate": "2024-12-31"
+}
+```
+
+### 11.3. Moneda con Código ISO 4217
+
+- **Formato**: Objeto con `amount` (decimal) + `currency` (código ISO)
+
+```json
+{
+  "price": {
+    "amount": 1234.56,
+    "currency": "PEN"
+  }
+}
+```
+
+### 11.4. Porcentajes como Decimal
+
+- **Formato**: Número decimal (1.00 = 100%)
+- **Ejemplo**: `0.15` para 15%, `1.00` para 100%
+
+```json
+{
+  "taxRate": 0.18, // 18% IGV
+  "discountRate": 0.1 // 10% descuento
+}
+```
+
+### 11.5. Tabla de Formatos de Datos
+
+| Tipo de Dato | Formato                    | Ejemplo                                    |
+| ------------ | -------------------------- | ------------------------------------------ |
+| Fecha y hora | `YYYY-MM-DDTHH:mm:ss.sssZ` | `"2024-01-15T10:30:00.000Z"`               |
+| Solo fecha   | `YYYY-MM-DD`               | `"2024-01-15"`                             |
+| Moneda       | `{ amount, currency }`     | `{ "amount": 1234.56, "currency": "PEN" }` |
+| Porcentaje   | Decimal                    | `0.18` (= 18%)                             |
+| Booleano     | `true`/`false`             | `true`                                     |
+
+---
+
+## 12. Referencias
 
 - [API Security](./api-security.md) - Autenticación y autorización
 - [Versioning](./versioning.md) - Versionado de APIs
 - [Error Handling](./error-handling.md) - Validación y errores
+- [C# y .NET](../codigo/csharp-dotnet.md) - DTOs y mapeo
 - [ASP.NET Core Web API](https://learn.microsoft.com/aspnet/core/web-api/)
 - [REST API Guidelines](https://github.com/microsoft/api-guidelines)
 - [Richardson Maturity Model](https://martinfowler.com/articles/richardsonMaturityModel.html)
+- [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+- [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html)

@@ -1,8 +1,0 @@
-{
-    "label": "Seguridad",
-    "position": 7,
-    "link": {
-        "type": "generated-index",
-        "description": "Convenciones de seguridad para manejo de secretos y datos sensibles."
-    }
-}
