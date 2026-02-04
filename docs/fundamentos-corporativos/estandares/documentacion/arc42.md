@@ -11,7 +11,7 @@ description: Estándar para documentar arquitecturas de software usando la plant
 
 ## 1. Propósito
 
-Establecer arc42 como plantilla estándar para documentar arquitecturas con 12 secciones (Introducción, Restricciones, Contexto, Estrategia, Bloques, Runtime, Despliegue, Conceptos, ADRs, Calidad, Riesgos, Glosario) en Markdown versionado con Git.
+Establecer arc42 como plantilla estándar para documentar arquitecturas de sistemas críticos en Markdown versionado con Git.
 
 ---
 

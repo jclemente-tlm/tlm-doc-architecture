@@ -11,7 +11,7 @@ description: Estándar completo para optimización de costos AWS mediante taggin
 
 ## 1. Propósito
 
-Optimizar costos AWS mediante: (1) Tagging obligatorio para atribución precisa, (2) Alertas proactivas con AWS Budgets, (3) Rightsizing trimestral basado en métricas, (4) Savings Plans para cargas predecibles, logrando reducción 30-40% de costos sin impactar performance.
+Optimizar costos AWS mediante tagging obligatorio, alertas proactivas, rightsizing trimestral y Savings Plans para cargas predecibles.
 
 ---
 
@@ -554,19 +554,16 @@ echo "✅ Validación de optimización de costos completada"
 
 **AWS Docs:**
 
-
 - [AWS Cost Optimization](https://aws.amazon.com/aws-cost-management/aws-cost-optimization/)
 - [AWS Budgets](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html)
 - [AWS Compute Optimizer](https://docs.aws.amazon.com/compute-optimizer/)
 - [AWS Savings Plans](https://aws.amazon.com/savingsplans/)
 - [Tagging Best Practices](https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/)
 
-
 **FinOps Foundation:**
 
 - [FinOps Principles](https://www.finops.org/framework/principles/)
 - [Cloud Cost Optimization Best Practices](https://www.finops.org/framework/capabilities/)
-
 
 **Talma ADRs:**
 

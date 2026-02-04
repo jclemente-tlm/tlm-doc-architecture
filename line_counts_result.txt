@@ -1,0 +1,31 @@
+975 ./seguridad/security-architecture.md
+946 ./seguridad/secrets-key-management.md
+809 ./apis/api-rest-standards.md
+771 ./seguridad/identity-access-management.md
+722 ./seguridad/vulnerability-management.md
+662 ./infraestructura/contenedores.md
+661 ./arquitectura/resilience-patterns.md
+599 ./desarrollo/code-quality-review.md
+573 ./infraestructura/aws-cost-optimization.md
+550 ./desarrollo/cicd-pipelines.md
+523 ./observabilidad/observability.md
+488 ./arquitectura/bounded-contexts.md
+456 ./seguridad/tenant-isolation.md
+452 ./arquitectura/saga-pattern.md
+449 ./arquitectura/dependency-management.md
+432 ./desarrollo/csharp-dotnet.md
+403 ./testing/testing-standards.md
+368 ./desarrollo/sql.md
+363 ./desarrollo/git.md
+358 ./seguridad/threat-modeling.md
+286 ./documentacion/architecture-decision-records.md
+216 ./documentacion/c4-model.md
+198 ./documentacion/arc42.md
+194 ./seguridad/network-security.md
+188 ./infraestructura/infrastructure-as-code.md
+183 ./infraestructura/externalize-configuration.md
+182 ./datos/database-standards.md
+156 ./datos/data-protection.md
+150 ./mensajeria/kafka-messaging.md
+
+Total: 29 archivos

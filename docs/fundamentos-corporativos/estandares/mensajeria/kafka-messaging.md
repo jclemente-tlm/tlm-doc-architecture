@@ -2,7 +2,7 @@
 
 ## 1. Propósito
 
-Definir los estándares obligatorios para mensajería asíncrona con Apache Kafka: modelado de eventos, topología de topics, garantías de entrega, idempotencia, esquemas, DLQ y monitoreo, alineado a event-driven architecture y DDD.
+Estándares para mensajería asíncrona con Apache Kafka: modelado de eventos, topología, idempotencia, DLQ y monitoreo.
 
 ## 2. Alcance
 

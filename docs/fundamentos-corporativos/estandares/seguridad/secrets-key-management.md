@@ -47,8 +47,6 @@ Garantizar almacenamiento seguro, acceso controlado y rotación automática de s
 | **Auditoría**        | AWS CloudTrail              | -              | Logs de acceso inmutables              |
 | **IaC**              | Terraform                   | 1.6+           | aws_kms_key, aws_secretsmanager_secret |
 
-> El uso de tecnologías no listadas (ej: HashiCorp Vault) requiere aprobación de Arquitectura.
-
 ## 4. Requisitos Obligatorios 🔴
 
 ### Gestión de Secretos

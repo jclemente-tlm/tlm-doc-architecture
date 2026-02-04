@@ -11,7 +11,7 @@ description: Estándar técnico completo para construcción, optimización, orqu
 
 ## 1. Propósito
 
-Garantizar imágenes de contenedores ligeras (`<200MB`), seguras (0 CVEs críticos) y reproducibles mediante multi-stage builds, Alpine/Slim, usuario no-root, tags semánticos, BuildKit y orquestación local con Docker Compose para desarrollo.
+Garantizar imágenes de contenedores ligeras, seguras y reproducibles mediante multi-stage builds, Alpine/Slim, usuario no-root y Docker Compose para desarrollo local.
 
 ---
 
