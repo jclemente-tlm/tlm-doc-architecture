@@ -166,7 +166,21 @@ Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
 
 ---
 
-## 8. Referencias
+## 8. Paridad Dev/Prod
+
+Usar **mismas versiones** de .NET, PostgreSQL, Redis en todos los ambientes. Mismo Dockerfile para dev/staging/prod, solo cambiar valores de env vars. Docker Compose en dev debe simular arquitectura de producción. NO lógica condicional `if (Environment.IsProduction())` en código.
+
+**Referencia:** [12-Factor App - Dev/prod parity](https://12factor.net/dev-prod-parity)
+
+---
+
+## 9. Separación de Ambientes
+
+Usar **cuentas AWS separadas** para Dev/Staging/Production vía AWS Organizations. VPCs con CIDRs no solapados (Dev: 10.2.0.0/16, Staging: 10.1.0.0/16, Prod: 10.0.0/16). NO VPC Peering entre Dev y Prod. Secrets independientes por cuenta. IAM separado, devs sin acceso a producción.
+
+---
+
+## 10. Referencias
 
 - [ADR-006: Infraestructura como Código](../../../decisiones-de-arquitectura/adr-006-infraestructura-iac.md)
 - [Gestión de Secretos](./03-secrets-management.md)

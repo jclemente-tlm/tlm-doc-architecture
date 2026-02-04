@@ -504,7 +504,15 @@ dotnet test --filter Category=HealthChecks
 - ❌ Nivel Trace/Debug en producción
 - ❌ Alarmas sin umbrales definidos
 
-## 11. Referencias
+## 10. SLOs y SLAs
+
+Definir **SLOs** (Service Level Objectives) por servicio: Availability ≥99.9%, Latency p95 <500ms, Error rate <1%. Implementar **error budgets** (1-SLO) para balancear reliability y velocidad de desarrollo. Alertas basadas en **burn rate** de error budget, no métricas absolutas.
+
+**Referencia:** [Google SRE - SLO](https://sre.google/sre-book/service-level-objectives/)
+
+---
+
+## 11. Prohibiciones Generales
 
 - [ADR-016: Logging Estructurado](../../decisiones-de-arquitectura/adr-016-logging-estructurado.md)
 - [ADR-021: Observabilidad](../../decisiones-de-arquitectura/adr-021-observabilidad.md)

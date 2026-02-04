@@ -163,7 +163,15 @@ WHERE id = $id AND updated_at < $now;
 - Monitorear métricas de SLOs y replication lag
 - Auditar logs de conflictos y merges
 
-## 8. Referencias
+## 8. Schema Evolution y Documentación
+
+**Migrations:** EF Core Migrations con expand-contract pattern para zero-downtime deploys. Añadir columna nueva (expand), migrar datos, eliminar vieja (contract). Rollback plan obligatorio.
+
+**Documentación:** SQL COMMENT ON para tablas/columnas. Diagramas ER en dbdiagram.io/PlantUML versionados en repo. SchemaSpy para HTML docs autogenerados.
+
+---
+
+## 9. Referencias
 
 - [ADR-010 Standard Base de Datos](../../../decisiones-de-arquitectura/adr-010-standard-base-datos.md)
 - [ADR-019 Configuración Scripts BD](../../../decisiones-de-arquitectura/adr-019-configuraciones-scripts-bd.md)

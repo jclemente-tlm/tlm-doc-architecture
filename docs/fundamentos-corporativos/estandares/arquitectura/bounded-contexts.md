@@ -485,7 +485,15 @@ test -f docs/architecture/context-map.md && echo "✅ Context Map documented" ||
 
 ---
 
-## 12. Referencias
+## 12. Diseño Stateless
+
+Los servicios dentro de cada bounded context deben ser **stateless**: externalizar sesiones en Redis, archivos en S3, no usar static mutable state, implementar idempotencia con idempotency keys. Esto permite escalado horizontal sin sticky sessions.
+
+**Referencia:** [12-Factor App - Processes](https://12factor.net/processes)
+
+---
+
+## 13. Referencias
 
 **DDD:**
 

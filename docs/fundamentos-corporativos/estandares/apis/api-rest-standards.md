@@ -846,7 +846,13 @@ curl -I "https://api.talma.com/api/v1/users?page=1&pageSize=20"
 
 ---
 
-## 15. Referencias
+## 15. Validación de Schemas
+
+Validar requests/responses con **FluentValidation** o Data Annotations. DTOs con Required/Range/MaxLength. Responses 400 con detalles de validación. Para Kafka events, JSON Schema embebido en mensaje (NO Schema Registry). OpenAPI schemas completos en Swagger.
+
+---
+
+## 16. Referencias
 
 - [ADR-004: Autenticación SSO](../../decisiones-de-arquitectura/adr-004-autenticacion-sso.md)
 - [ADR-008: Gateway de APIs](../../decisiones-de-arquitectura/adr-008-gateway-apis.md)
