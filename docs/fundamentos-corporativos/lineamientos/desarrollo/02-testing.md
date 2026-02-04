@@ -13,14 +13,14 @@ La ausencia de testing automatizado genera código frágil, regresiones frecuent
 
 **Este lineamiento aplica a:** Pruebas automatizadas (unitarias, integración, e2e), testing de contratos entre servicios, cobertura de código, continuous testing en CI/CD, frameworks de testing (xUnit, Moq).
 
-**No aplica a:** Monitoreo y alertas en producción, gestión de incidentes operativos, estándares de calidad de código (ver [Calidad de Código](./05-calidad-codigo.md)).
+**No aplica a:** Monitoreo y alertas en producción, gestión de incidentes operativos, estándares de calidad de código (ver [Calidad de Código](./01-calidad-codigo.md)).
 
 ## Estándares Obligatorios
 
-- [Implementar pruebas automatizadas en múltiples niveles (unitarias, integración, e2e)](../../estandares/desarrollo/testing-pyramid.md)
-- [Escribir pruebas unitarias con cobertura mínima del 80%](../../estandares/testing/unit-tests.md)
-- [Implementar pruebas de integración para validar interacciones entre componentes](../../estandares/testing/integration-tests.md)
-- [Usar contract testing para validar contratos entre servicios](../../estandares/testing/contract-testing.md)
+- [Implementar pruebas automatizadas en múltiples niveles (unitarias, integración, e2e)](../../estandares/desarrollo/testing-standards.md)
+- [Escribir pruebas unitarias con cobertura mínima del 80%](../../estandares/desarrollo/testing-standards.md#unit-tests)
+- [Implementar pruebas de integración para validar interacciones entre componentes](../../estandares/desarrollo/testing-standards.md#integration-tests)
+- [Usar contract testing para validar contratos entre servicios](../../estandares/desarrollo/testing-standards.md#contract-tests)
 
 ## Referencias Relacionadas
 

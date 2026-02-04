@@ -13,7 +13,7 @@ El 60% de brechas de seguridad explotan vulnerabilidades conocidas sin parchear 
 
 ## Estándares Obligatorios
 
-- [Implementar programa integral de gestión de vulnerabilidades](../../estandares/seguridad/vulnerability-management-program.md)
-- [Implementar scanning automatizado de vulnerabilidades en CI/CD](../../estandares/seguridad/vulnerability-scanning.md)
-- [Mantener inventario actualizado de componentes y versiones](../../estandares/seguridad/software-bill-of-materials.md)
+- [Implementar programa integral de gestión de vulnerabilidades](../../estandares/seguridad/vulnerability-management.md)
+- [Implementar scanning automatizado de vulnerabilidades en CI/CD](../../estandares/seguridad/vulnerability-management.md#3-scanning-automatizado)
+- [Mantener inventario actualizado de componentes y versiones](../../estandares/seguridad/vulnerability-management.md)
 - [Validar imágenes de contenedores antes de deployment](../../estandares/seguridad/container-image-scanning.md)

@@ -13,8 +13,8 @@ Cloud sin gestión de costos genera desperdicio del 30-50% del presupuesto segú
 
 ## Estándares Obligatorios
 
-- [Implementar estrategia de tagging para atribución de costos](../../estandares/infraestructura/cost-tagging-strategy.md)
-- [Aplicar rightsizing basado en métricas de utilización](../../estandares/infraestructura/rightsizing.md)
-- [Implementar alertas de presupuesto y anomalías de costos](../../estandares/infraestructura/cost-alerts.md)
-- [Utilizar reserved instances y savings plans](../../estandares/infraestructura/reserved-capacity.md)
+- [Implementar estrategia de tagging para atribución de costos](../../estandares/infraestructura/aws-cost-optimization.md#4-tagging-obligatorio)
+- [Aplicar rightsizing basado en métricas de utilización](../../estandares/infraestructura/aws-cost-optimization.md#5-rightsizing)
+- [Implementar alertas de presupuesto y anomalías de costos](../../estandares/infraestructura/aws-cost-optimization.md#6-alertas-de-costos)
+- [Utilizar reserved instances y savings plans](../../estandares/infraestructura/aws-cost-optimization.md#7-savings-plans)
 - [Establecer políticas de retención y lifecycle para datos](../../estandares/datos/data-lifecycle.md)

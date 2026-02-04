@@ -13,8 +13,8 @@ Esquemas implícitos o sin versionar generan errores en runtime, incompatibilida
 
 ## Estándares Obligatorios
 
-- [Versionar esquemas de BD con migraciones automatizadas](../../estandares/datos/migrations.md)
-- [Documentar esquemas de eventos con JSON Schema o Avro](../../estandares/mensajeria/event-schemas.md)
+- [Versionar esquemas de BD con migraciones automatizadas](../../estandares/datos/database-standards.md#migrations)
+- [Documentar esquemas de eventos con JSON Schema o Avro](../../estandares/mensajeria/kafka-messaging.md)
 - [Validar datos contra esquemas antes de persistir](../../estandares/datos/schema-validation.md)
 - [Gestionar cambios con estrategias expand-contract](../../estandares/datos/schema-evolution.md)
 - [Publicar esquemas en registro centralizado](../../estandares/datos/schema-registry.md)

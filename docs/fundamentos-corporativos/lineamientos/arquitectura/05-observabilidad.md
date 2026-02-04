@@ -13,8 +13,8 @@ En sistemas distribuidos, las fallas pueden propagarse silenciosamente afectando
 
 ## Estándares Obligatorios
 
-- [Generar logs estructurados en formato JSON](../../estandares/observabilidad/logging.md)
-- [Emitir métricas siguiendo metodología RED/USE](../../estandares/observabilidad/metrics-monitoring.md)
-- [Implementar trazas distribuidas con W3C Trace Context](../../estandares/observabilidad/distributed-tracing.md)
-- [Usar identificadores de correlación entre servicios](../../estandares/observabilidad/correlation-ids.md)
-- [Configurar health checks para orquestadores](../../estandares/observabilidad/health-checks.md)
+- [Generar logs estructurados en formato JSON](../../estandares/observabilidad/observability.md#2-logging)
+- [Emitir métricas siguiendo metodología RED/USE](../../estandares/observabilidad/observability.md#3-métricas)
+- [Implementar trazas distribuidas con W3C Trace Context](../../estandares/observabilidad/observability.md#4-trazas-distribuidas)
+- [Usar identificadores de correlación entre servicios](../../estandares/observabilidad/observability.md)
+- [Configurar health checks para orquestadores](../../estandares/observabilidad/observability.md)

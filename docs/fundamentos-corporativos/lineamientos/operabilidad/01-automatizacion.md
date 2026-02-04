@@ -14,5 +14,5 @@ Los procesos manuales repetitivos generan inconsistencias, errores humanos y cue
 ## Estándares Obligatorios
 
 - [Automatizar despliegues mediante pipelines CI/CD](../../estandares/desarrollo/cicd-pipelines.md)
-- [Automatizar aprovisionamiento de infraestructura (IaC)](../../estandares/operabilidad/infrastructure-as-code.md)
+- [Automatizar aprovisionamiento de infraestructura (IaC)](../../estandares/infraestructura/infrastructure-as-code.md)
 - [Automatizar validaciones de seguridad y calidad](../../estandares/gobierno/quality-security-gates.md)

@@ -13,9 +13,9 @@ APIs inconsistentes o mal documentadas generan fricción en consumidores, errore
 
 ## Estándares Obligatorios
 
-- [Seguir convenciones RESTful para recursos y verbos HTTP](../../estandares/apis/api-rest.md)
-- [Implementar versionado explícito de APIs](../../estandares/apis/versioning.md)
-- [Documentar APIs con especificación OpenAPI](../../estandares/apis/openapi-swagger.md)
+- [Seguir convenciones RESTful para recursos y verbos HTTP](../../estandares/apis/api-rest-standards.md)
+- [Implementar versionado explícito de APIs](../../estandares/apis/api-rest-standards.md#6-versionado-de-apis)
+- [Documentar APIs con especificación OpenAPI](../../estandares/apis/api-rest-standards.md#11-documentación-openapiswagger)
 - [Aplicar rate limiting y paginación en colecciones](../../estandares/apis/rate-limiting-pagination.md)
 - [Estandarizar manejo de errores con estructura consistente](../../estandares/apis/error-handling.md)
 

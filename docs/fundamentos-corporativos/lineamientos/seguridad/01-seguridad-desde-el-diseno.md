@@ -17,4 +17,4 @@ Las vulnerabilidades incorporadas durante el diseño arquitectónico generan exp
 - [Realizar modelado de amenazas para nuevos sistemas](../../estandares/seguridad/threat-modeling.md)
 - [Definir explícitamente los límites de confianza (trust boundaries)](../../estandares/seguridad/trust-boundaries.md)
 - [Reducir la superficie de ataque mediante exposición controlada](../../estandares/seguridad/attack-surface-reduction.md)
-- [Aplicar defensa en profundidad con múltiples capas](../../estandares/seguridad/defense-in-depth.md)
+- [Aplicar defensa en profundidad con múltiples capas](../../estandares/seguridad/security-architecture.md#4-defense-in-depth)

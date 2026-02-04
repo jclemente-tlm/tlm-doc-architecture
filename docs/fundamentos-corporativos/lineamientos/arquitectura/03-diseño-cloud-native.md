@@ -17,8 +17,8 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 - [Diseñar servicios stateless con estado en backing services](../../estandares/arquitectura/stateless-services.md)
 - [Implementar health checks liveness y readiness](../../estandares/observabilidad/health-checks.md)
 - [Preparar servicios para escalabilidad horizontal](../../estandares/arquitectura/horizontal-scaling.md)
-- [Aplicar graceful shutdown para terminación ordenada](../../estandares/arquitectura/graceful-shutdown.md)
+- [Aplicar graceful shutdown para terminación ordenada](../../estandares/arquitectura/resilience-patterns.md#8-graceful-shutdown)
 
 ## Referencias Relacionadas
 
-- [Gestionar secretos en AWS Secrets Manager](../../../decisiones-de-arquitectura/adr-003-gestion-secretos.md)
+- [Gestionar secretos en AWS Secrets Manager](../../../decisiones-de-arquitectura/adr-003-aws-secrets-manager.md)

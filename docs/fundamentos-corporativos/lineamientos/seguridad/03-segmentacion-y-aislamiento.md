@@ -13,8 +13,8 @@ Las arquitecturas de red plana permiten que compromisos localizados se propaguen
 
 ## Estándares Obligatorios
 
-- [Segmentar redes por niveles de confianza (DMZ, interna, datos)](../../estandares/seguridad/network-segmentation.md)
+- [Segmentar redes por niveles de confianza (DMZ, interna, datos)](../../estandares/seguridad/network-security.md#segmentación)
 - [Aislar recursos por entorno en cuentas/subscripciones separadas](../../estandares/seguridad/environment-separation.md)
 - [Implementar aislamiento de tenants en soluciones multi-tenant](../../estandares/seguridad/tenant-isolation.md)
-- [Aplicar principio de menor exposición de red (zero trust networking)](../../estandares/seguridad/zero-trust-network.md)
+- [Aplicar principio de menor exposición de red (zero trust networking)](../../estandares/seguridad/security-architecture.md#zero-trust)
 - [Documentar zonas de seguridad y controles entre ellas](../../estandares/seguridad/security-zones.md)
