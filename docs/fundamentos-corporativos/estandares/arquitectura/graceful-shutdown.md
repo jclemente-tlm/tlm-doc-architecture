@@ -29,7 +29,7 @@ Garantizar zero-downtime deployments y prevenir pérdida de datos mediante shutd
 **No aplica a:**
 
 - Lambda functions (serverless)
-- Batch jobs de corta duración (<5s)
+- Batch jobs de corta duración (`<5s`)
 - Servicios sin estado externo
 
 ---

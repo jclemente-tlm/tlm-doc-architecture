@@ -351,12 +351,12 @@ curl http://localhost:5000/metrics | grep degradation_mode
 
 **Métricas de cumplimiento:**
 
-| Métrica                            | Umbral       | Verificación  |
-| ---------------------------------- | ------------ | ------------- |
-| Servicios no-críticos con fallback | 100%         | Code review   |
-| Feature toggles implementados      | 100%         | Config review |
-| Tiempo en modo degradado           | <1 hora/día  | Metrics       |
-| Degradation rate                   | <5% requests | Metrics       |
+| Métrica                            | Umbral         | Verificación  |
+| ---------------------------------- | -------------- | ------------- |
+| Servicios no-críticos con fallback | 100%           | Code review   |
+| Feature toggles implementados      | 100%           | Config review |
+| Tiempo en modo degradado           | `<1 hora/día`  | Metrics       |
+| Degradation rate                   | `<5% requests` | Metrics       |
 
 **Checklist de auditoría:**
 
