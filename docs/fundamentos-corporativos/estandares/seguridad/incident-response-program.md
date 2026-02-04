@@ -203,15 +203,15 @@ Deployment v1.2.3 incluyó cambio en query SQL sin índice, generando timeout en
 
 ## 5. Herramientas Aprobadas
 
-| Componente              | Tecnología                      | Observaciones                          |
-| ----------------------- | ------------------------------- | -------------------------------------- |
-| **Incident Management** | PagerDuty                       | Alerting, escalation, on-call rotation |
+| Componente              | Tecnología             | Observaciones                          |
+| ----------------------- | ---------------------- | -------------------------------------- |
+| **Incident Management** | PagerDuty              | Alerting, escalation, on-call rotation |
 | **Logging**             | CloudWatch Logs + Loki | Centralizado para análisis             |
-| **Threat Detection**    | AWS GuardDuty                   | Machine learning para anomalías        |
-| **Audit Trail**         | AWS CloudTrail                  | Todas las API calls AWS                |
-| **WAF**                 | AWS WAF                         | Protección OWASP Top 10                |
-| **Status Page**         | Statuspage.io                   | Comunicación con usuarios              |
-| **Postmortems**         | Confluence                      | Documentación estructurada             |
+| **Threat Detection**    | AWS GuardDuty          | Machine learning para anomalías        |
+| **Audit Trail**         | AWS CloudTrail         | Todas las API calls AWS                |
+| **WAF**                 | AWS WAF                | Protección OWASP Top 10                |
+| **Status Page**         | Statuspage.io          | Comunicación con usuarios              |
+| **Postmortems**         | Confluence             | Documentación estructurada             |
 
 ---
 

@@ -96,8 +96,27 @@ Establecer estándares completos para APIs REST con ASP.NET Core 8.0+: diseño R
 - NO exponer entidades de dominio directamente
 - Validación en DTOs de entrada
 - Mapeo explícito DTO ↔ Entidad
+- Proyecciones SQL con `Select()` para evitar over-fetching
+- DTOs específicos por endpoint (summary vs details)
 
-### 4.6. Configuración Mínima
+### 4.6. Database per Service
+
+**Principio fundamental:** Cada microservicio accede SOLO a su propia base de datos. El acceso a datos de otros servicios debe ocurrir EXCLUSIVAMENTE mediante sus APIs.
+
+**Prohibiciones:**
+
+- ❌ Connection strings a BD de otros servicios
+- ❌ Queries SQL cross-service
+- ❌ Shared databases entre bounded contexts
+- ❌ Foreign keys entre bases de datos de servicios diferentes
+
+**Cumplimiento:**
+
+- Network policies bloquean acceso cross-service a DBs
+- Detectar violaciones en code review
+- Ver [Bounded Contexts](../arquitectura/bounded-contexts.md) para más detalles
+
+### 4.7. Configuración Mínima
 
 ```csharp
 // Program.cs
