@@ -17,7 +17,7 @@ La ausencia de testing automatizado genera código frágil, regresiones frecuent
 
 ## Estándares Obligatorios
 
-- [Implementar pruebas automatizadas en múltiples niveles (unitarias, integración, e2e)](../../estandares/operabilidad/testing-pyramid.md)
+- [Implementar pruebas automatizadas en múltiples niveles (unitarias, integración, e2e)](../../estandares/desarrollo/testing-pyramid.md)
 - [Escribir pruebas unitarias con cobertura mínima del 80%](../../estandares/testing/unit-tests.md)
 - [Implementar pruebas de integración para validar interacciones entre componentes](../../estandares/testing/integration-tests.md)
 - [Usar contract testing para validar contratos entre servicios](../../estandares/testing/contract-testing.md)

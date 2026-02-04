@@ -1,6 +1,6 @@
 ---
 id: calidad-codigo
-sidebar_position: 1
+sidebar_position: 4
 title: Calidad de Código
 description: Estándares de calidad de código, convenciones y revisiones
 ---
@@ -22,5 +22,5 @@ Código sin estándares consistentes, análisis estático ni revisiones genera d
 
 ## Referencias Relacionadas
 
-- [Estrategia de Pruebas](./02-testing.md) (testing automatizado)
+- [Estrategia de Pruebas](../operabilidad/04-testing.md) (testing automatizado)
 - [CI/CD](../operabilidad/01-automatizacion.md) (quality gates en pipelines)

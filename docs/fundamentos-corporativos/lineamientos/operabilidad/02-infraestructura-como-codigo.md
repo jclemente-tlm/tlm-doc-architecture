@@ -14,4 +14,4 @@ La gestión manual de infraestructura mediante consolas genera configuraciones n
 ## Estándares Obligatorios
 
 - [Definir infraestructura mediante código](../../estandares/operabilidad/infrastructure-as-code.md)
-- [Aplicar revisión de código a infraestructura](../../estandares/operabilidad/code-review-policy.md)
+- [Aplicar revisión de código a infraestructura](../../estandares/desarrollo/code-review-policy.md)

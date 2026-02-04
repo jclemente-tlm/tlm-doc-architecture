@@ -57,7 +57,6 @@ Garantizar **confidencialidad** e **integridad** de datos sensibles mediante cif
 | ----------------------- | ----------- | ---------------- | ------------------------------ |
 | **RDS (PostgreSQL)**    | AES-256     | AWS KMS          | Encryption at rest obligatorio |
 | **S3**                  | AES-256-GCM | AWS KMS + SSE-S3 | Server-side encryption         |
-| **DynamoDB**            | AES-256     | AWS managed keys | Encryption at rest default     |
 | **EBS Volumes**         | AES-256-XTS | AWS KMS          | Para datos sensibles           |
 | **ElastiCache (Redis)** | AES-256     | AWS managed      | At-rest + in-transit           |
 | **Secrets Manager**     | AES-256-GCM | AWS KMS          | Rotación automática            |

@@ -253,7 +253,7 @@ public class OutboxPublisherJob : BackgroundService
 }
 ```
 
-### 5.2 Consumer con Idempotencia (SQS)
+### 5.2 Consumer con Idempotencia (Kafka)
 
 ```csharp
 public class OrderCreatedEventHandler
@@ -280,41 +280,10 @@ public class OrderCreatedEventHandler
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to process event {EventId}", @event.EventId);
-            throw; // SQS retry
+            throw; // Kafka retry con consumer config
         }
     }
 }
-```
-
-### 5.3 AWS SNS/SQS
-
-```yaml
-# CloudFormation
-OrderCreatedTopic:
-  Type: AWS::SNS::Topic
-  Properties:
-    TopicName: order-created-events
-
-NotificationServiceQueue:
-  Type: AWS::SQS::Queue
-  Properties:
-    QueueName: notification-service-queue
-    VisibilityTimeout: 300
-    RedrivePolicy:
-      deadLetterTargetArn: !GetAtt NotificationServiceDLQ.Arn
-      maxReceiveCount: 3 # Después de 3 retries → DLQ
-
-NotificationServiceDLQ:
-  Type: AWS::SQS::Queue
-  Properties:
-    QueueName: notification-service-dlq
-
-NotificationServiceSubscription:
-  Type: AWS::SNS::Subscription
-  Properties:
-    Protocol: sqs
-    TopicArn: !Ref OrderCreatedTopic
-    Endpoint: !GetAtt NotificationServiceQueue.Arn
 ```
 
 ---

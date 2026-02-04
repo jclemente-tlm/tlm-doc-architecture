@@ -48,7 +48,7 @@ graph LR
 | **Lineamiento** | Seguridad desde el Diseño | [lineamientos/seguridad/01-seguridad-desde-el-diseno.md](lineamientos/seguridad/01-seguridad-desde-el-diseno.md)   |
 | **Estándar**    | APIs - Seguridad          | [estandares/apis/02-seguridad-apis.md](estandares/apis/02-seguridad-apis.md)                                       |
 | **Estándar**    | Secrets Management        | [estandares/infraestructura/03-secrets-management.md](estandares/infraestructura/03-secrets-management.md)         |
-| **Estándar**    | REST Conventions          | [estandares/apis/rest-conventions.md](estandares/apis/rest-conventions.md) (incluye headers HTTP)                  |
+| **Estándar**    | APIs REST                 | [estandares/apis/api-rest.md](estandares/apis/api-rest.md) (incluye headers HTTP)                                  |
 | **Estándar**    | Secrets Management        | [estandares/seguridad/secrets-management.md](estandares/seguridad/secrets-management.md) (incluye manejo secretos) |
 
 ---
@@ -109,15 +109,15 @@ graph LR
 
 ### Referencias
 
-| Nivel           | Documento               | Ubicación                                                                                                       |
-| --------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- |
-| **Principio**   | Calidad desde el Diseño | [principios/operabilidad/03-calidad-desde-el-diseno.md](principios/operabilidad/03-calidad-desde-el-diseno.md)  |
-| **Lineamiento** | Testing y Calidad       | [lineamientos/operabilidad/04-testing-y-calidad.md](lineamientos/operabilidad/04-testing-y-calidad.md)          |
-| **Estándar**    | Testing Unitario        | [estandares/testing/01-unit-tests.md](estandares/testing/01-unit-tests.md)                                      |
-| **Estándar**    | Testing Integración     | [estandares/testing/02-integration-tests.md](estandares/testing/02-integration-tests.md)                        |
-| **Estándar**    | Testing E2E             | [estandares/testing/03-e2e-tests.md](estandares/testing/03-e2e-tests.md)                                        |
-| **Estándar**    | C# y .NET               | [estandares/codigo/01-csharp-dotnet.md](estandares/codigo/01-csharp-dotnet.md)                                  |
-| **Estándar**    | C# y .NET               | [estandares/codigo/csharp-dotnet.md](estandares/codigo/csharp-dotnet.md) (incluye convenciones de nomenclatura) |
+| Nivel           | Documento               | Ubicación                                                                                                               |
+| --------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Principio**   | Calidad desde el Diseño | [principios/operabilidad/03-calidad-desde-el-diseno.md](principios/operabilidad/03-calidad-desde-el-diseno.md)          |
+| **Lineamiento** | Testing y Calidad       | [lineamientos/operabilidad/04-testing-y-calidad.md](lineamientos/operabilidad/04-testing-y-calidad.md)                  |
+| **Estándar**    | Testing Unitario        | [estandares/testing/01-unit-tests.md](estandares/testing/01-unit-tests.md)                                              |
+| **Estándar**    | Testing Integración     | [estandares/testing/02-integration-tests.md](estandares/testing/02-integration-tests.md)                                |
+| **Estándar**    | Testing E2E             | [estandares/testing/03-e2e-tests.md](estandares/testing/03-e2e-tests.md)                                                |
+| **Estándar**    | C# y .NET               | [estandares/desarrollo/csharp-dotnet.md](estandares/desarrollo/csharp-dotnet.md)                                        |
+| **Estándar**    | C# y .NET               | [estandares/desarrollo/csharp-dotnet.md](estandares/desarrollo/csharp-dotnet.md) (incluye convenciones de nomenclatura) |
 
 ---
 
@@ -180,14 +180,14 @@ graph LR
 
 ### Referencias
 
-| Nivel           | Documento                 | Ubicación                                                                                                                  |
-| --------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **Principio**   | Contratos de Comunicación | [principios/arquitectura/06-contratos-de-comunicacion.md](principios/arquitectura/06-contratos-de-comunicacion.md)         |
-| **Lineamiento** | Diseño de APIs            | [lineamientos/arquitectura/06-diseno-de-apis.md](lineamientos/arquitectura/06-diseno-de-apis.md)                           |
-| **Estándar**    | Diseño REST               | [estandares/apis/01-diseno-rest.md](estandares/apis/01-diseno-rest.md)                                                     |
-| **Estándar**    | Versionado APIs           | [estandares/apis/04-versionado.md](estandares/apis/04-versionado.md)                                                       |
-| **Estándar**    | OpenAPI/Swagger           | [estandares/documentacion/03-openapi-swagger.md](estandares/documentacion/03-openapi-swagger.md)                           |
-| **Estándar**    | REST Conventions          | [estandares/apis/rest-conventions.md](estandares/apis/rest-conventions.md) (incluye naming endpoints y formato respuestas) |
+| Nivel           | Documento                 | Ubicación                                                                                                          |
+| --------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Principio**   | Contratos de Comunicación | [principios/arquitectura/06-contratos-de-comunicacion.md](principios/arquitectura/06-contratos-de-comunicacion.md) |
+| **Lineamiento** | Diseño de APIs            | [lineamientos/arquitectura/06-diseno-de-apis.md](lineamientos/arquitectura/06-diseno-de-apis.md)                   |
+| **Estándar**    | Diseño REST               | [estandares/apis/01-diseno-rest.md](estandares/apis/01-diseno-rest.md)                                             |
+| **Estándar**    | Versionado APIs           | [estandares/apis/04-versionado.md](estandares/apis/04-versionado.md)                                               |
+| **Estándar**    | OpenAPI/Swagger           | [estandares/documentacion/03-openapi-swagger.md](estandares/documentacion/03-openapi-swagger.md)                   |
+| **Estándar**    | APIs REST                 | [estandares/apis/api-rest.md](estandares/apis/api-rest.md) (incluye naming endpoints y formato respuestas)         |
 
 ---
 

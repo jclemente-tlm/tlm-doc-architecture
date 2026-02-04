@@ -424,7 +424,7 @@ src/services/
 ## 11. Referencias
 
 - [Unit Tests](../testing/unit-tests.md)
-- [REST Conventions](../apis/rest-conventions.md) - DTOs y APIs
+- [APIs REST](../apis/api-rest.md) - DTOs y APIs
 - [.NET Coding Conventions](https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/coding-conventions)
 - [Clean Code .NET](https://github.com/thangchung/clean-code-dotnet)
 - [SOLID Principles](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)

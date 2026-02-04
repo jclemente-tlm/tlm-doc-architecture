@@ -27,7 +27,7 @@ Mensajería:
 Apache Kafka (implementación propia, modo Kraft)
 API Gateway:
 
-Kong
+Kong Api Gateway
 Observabilidad:
 
 Grafana Stack: Loki + Mimir + Tempo + Grafana + Alloy

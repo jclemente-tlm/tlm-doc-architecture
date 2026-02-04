@@ -167,13 +167,11 @@ HOTFIX-123
 
 **Breaking Changes**:
 
-
 ```bash
 feat(api)!: remove deprecated endpoints
 
 BREAKING CHANGE: Removed /v1/users endpoint, use /v2/users
 ```
-
 
 **Estructura Completa**:
 
@@ -184,7 +182,6 @@ BREAKING CHANGE: Removed /v1/users endpoint, use /v2/users
 
 [footer opcional: referencias a issues, breaking changes]
 ```
-
 
 **Ejemplo completo**:
 

@@ -1,7 +1,7 @@
 ---
-id: rest-conventions
+id: api-rest
 sidebar_position: 1
-title: Convenciones REST
+title: APIs REST
 description: Estándar de convenciones REST para diseño de APIs con ASP.NET Core, URIs, verbos HTTP, JSON y DTOs
 ---
 
