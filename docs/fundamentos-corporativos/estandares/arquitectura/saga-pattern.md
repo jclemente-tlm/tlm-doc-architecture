@@ -11,7 +11,7 @@ description: Estándar para implementación de Sagas con MassTransit usando orch
 
 ## 1. Propósito
 
-Garantizar consistencia eventual en transacciones distribuidas mediante Saga Pattern con compensating transactions, state management y orquestación de flujos multi-servicio, evitando 2PC (Two-Phase Commit) distribuido.
+Garantizar consistencia eventual en transacciones distribuidas mediante Saga Pattern con compensating transactions, state management y orquestación de flujos multi-servicio.
 
 ---
 
@@ -121,22 +121,13 @@ builder.Services.AddMassTransit(x =>
             });
         });
 
-    // Configurar Kafka
+    // Configurar con Kafka
     x.UsingInMemory((context, cfg) =>
     {
         cfg.ConfigureEndpoints(context);
     });
-
-    // O RabbitMQ
-    x.UsingRabbitMq((context, cfg) =>
-    {
-        cfg.Host("rabbitmq://localhost", h =>
-        {
-            h.Username("guest");
-            h.Password("guest");
-        });
-        cfg.ConfigureEndpoints(context);
-    });
+    // Nota: Para producción configurar con Kafka transport
+    // Ver documentación: https://masstransit.io/documentation/transports/kafka
 });
 
 var app = builder.Build();

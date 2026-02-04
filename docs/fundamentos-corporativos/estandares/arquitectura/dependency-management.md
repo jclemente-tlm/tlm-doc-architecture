@@ -40,10 +40,8 @@ Minimizar acoplamiento entre servicios mediante gestión explícita de dependenc
 | ----------------------- | ---------------------------------------- | -------------- | -------------------- |
 | **DI Container**        | Microsoft.Extensions.DependencyInjection | .NET 8+        | Built-in DI          |
 | **API Contracts**       | OpenAPI 3.1                              | -              | REST contracts       |
-| **gRPC Contracts**      | Protobuf                                 | 3.0+           | gRPC services        |
-| **Event Schema**        | Apache Avro / JSON Schema                | -              | Event contracts      |
+| **Event Schema**        | JSON Schema                              | -              | Event contracts      |
 | **Versioning**          | Semantic Versioning                      | 2.0+           | API/library versions |
-| **Service Mesh**        | Istio / Linkerd                          | -              | Service dependencies |
 | **Dependency Analysis** | NDepend / dotnet-depends                 | -              | Análisis estático    |
 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.

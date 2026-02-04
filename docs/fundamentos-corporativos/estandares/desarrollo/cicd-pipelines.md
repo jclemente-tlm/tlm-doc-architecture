@@ -64,7 +64,7 @@ Establecer prácticas estándar para diseñar, implementar y operar pipelines de
 ### Build Stage
 
 - [ ] **Reproducible builds:** versión de herramientas pinned
-- [ ] **Cache dependencies:** npm, maven, nuget, pip
+- [ ] **Cache dependencies:** nuget (.NET)
 - [ ] **Semantic versioning:** usar GitVersion o similar
 - [ ] **Build artifacts:** almacenar con retention policy
 - [ ] **Multi-arch builds:** si aplica (amd64, arm64)
@@ -483,11 +483,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build Web
-        run: |
-          cd apps/web
-          npm ci
-          npm run build
 ```
 
 ---
@@ -497,7 +492,7 @@ jobs:
 ### Checklist
 
 - [ ] Pipeline YAML versionado en repositorio
-- [ ] Secrets almacenados en vault (no en código)
+- [ ] Secrets almacenados en AWS Secrets Manager (no en código)
 - [ ] Quality gates configurados y funcionando
 - [ ] Branch protection rules habilitadas
 - [ ] Deployment approvals configurados

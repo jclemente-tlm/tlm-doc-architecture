@@ -20,15 +20,13 @@ Definir los estándares obligatorios para gestión de bases de datos, migracione
 
 ## 3. Tecnologías Aprobadas
 
-| Componente         | Tecnología     | Versión mínima | Observaciones               |
-| ------------------ | -------------- | -------------- | --------------------------- |
-| Relacional         | PostgreSQL     | 14+            | Default para datos críticos |
-| Migrations         | EF Core        | 8.0+           | .NET native migrations      |
-| Versionado scripts | Git            | -              | Scripts en src/Database     |
-| Ownership catalog  | Backstage      | 1.20+          | Service catalog             |
-| Schema registry    | Confluent      | 7.5+           | Eventos y contratos         |
-| Monitoring         | Grafana Mimir  | 2.10+          | Replication lag, SLOs       |
-| CRDT/Conflictos    | Automerge, Yjs | 2.0+           | Datos colaborativos         |
+| Componente         | Tecnología    | Versión mínima | Observaciones               |
+| ------------------ | ------------- | -------------- | --------------------------- |
+| Relacional         | PostgreSQL    | 14+            | Default para datos críticos |
+| Migrations         | EF Core       | 8.0+           | .NET native migrations      |
+| Versionado scripts | Git           | -              | Scripts en src/Database     |
+| Ownership catalog  | Backstage     | 1.20+          | Service catalog             |
+| Monitoring         | Grafana Mimir | 2.10+          | Replication lag, SLOs       |
 
 ## 4. Requisitos Obligatorios 🔴
 

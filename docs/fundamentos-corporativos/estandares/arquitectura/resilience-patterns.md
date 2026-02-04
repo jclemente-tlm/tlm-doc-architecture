@@ -502,7 +502,7 @@ app.Run();
 ```
 
 ```yaml
-# AWS ECS / Kubernetes
+# AWS ECS Task Definition
 spec:
   containers:
     - name: payment-service
@@ -684,4 +684,4 @@ docker logs payment-service | grep "graceful shutdown"
 - [12-Factor App - Disposability](https://12factor.net/disposability)
 - [Exponential Backoff And Jitter](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/)
 - [ASP.NET Core Request Timeouts](https://learn.microsoft.com/en-us/aspnet/core/performance/timeouts)
-- [Kubernetes Pod Lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)
+- [AWS ECS Task Lifecycle](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-lifecycle.html)
