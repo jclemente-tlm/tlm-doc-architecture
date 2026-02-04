@@ -9,7 +9,7 @@ description: Estándar consolidado para control de calidad automatizado con Sona
 
 ## 1. Propósito
 
-Establecer línea base de calidad de código objetiva mediante análisis estático (SonarQube, Roslyn Analyzers), métricas de cobertura (Coverlet), quality gates bloqueantes en CI/CD y revisión de código obligatoria con aprobación técnica antes de merge a ramas protegidas.
+Quality gates automatizados (SonarQube, Coverlet) y code review obligatorio con aprobación técnica en PRs.
 
 ## 2. Alcance
 
@@ -467,18 +467,8 @@ Closes #[TICKET-ID]
 
 ## 12. Excepciones
 
-### 12.1 Hotfixes SEV-1
-
-- **Merge sin review permitido** para restaurar servicio crítico
-- **Post-merge review obligatorio** dentro de 24 horas
-- **Postmortem** debe incluir análisis de por qué falló prevención
-- **Tests agregados post-merge** para evitar regresión
-
-### 12.2 Cambios Cosméticos
-
-- Typos en comentarios, formateo automático (linters)
-- **1 approval suficiente**, reviewer puede aprobar rápidamente
-- **NO requiere tests adicionales** si no cambia lógica
+**Hotfixes SEV-1**: Merge sin review permitido, post-merge review dentro de 24h.
+**Cambios cosméticos** (typos, formateo): 1 approval suficiente.
 
 ## 13. Validación de Cumplimiento
 

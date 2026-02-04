@@ -11,7 +11,7 @@ description: Estándar completo de APIs REST con ASP.NET Core - diseño, segurid
 
 ## 1. Propósito
 
-Establecer estándares completos para APIs REST con ASP.NET Core 8.0+: diseño RESTful, seguridad JWT/OAuth2, documentación OpenAPI, versionado, validación de contratos, manejo de errores, performance, rate limiting, paginación y deprecación.
+Garantizar APIs REST seguras, documentadas y consistentes con ASP.NET Core 8.0+.
 
 ---
 
@@ -137,7 +137,7 @@ app.MapControllers();
 app.Run();
 ```
 
-### 4.7. Ejemplo Controller RESTful
+### 4.8. Ejemplo Controller RESTful
 
 ```csharp
 [ApiController]
@@ -342,52 +342,16 @@ public class UsersV2Controller : ControllerBase
 
 ## 7. Deprecación de APIs
 
-### 7.1. Headers de Deprecación
+### 7.1. Headers y Respuesta
 
 ```http
+# Headers de deprecación
 Deprecation: true
 Sunset: Tue, 31 Dec 2024 23:59:59 GMT
 Link: <https://docs.talma.com/migration/v1-to-v2>; rel="deprecation"
 ```
 
-### 7.2. Middleware de Deprecación
-
-```csharp
-public class DeprecationMiddleware
-{
-    private readonly RequestDelegate _next;
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        var endpoint = context.GetEndpoint();
-        var deprecation = endpoint?.Metadata.GetMetadata<DeprecatedAttribute>();
-
-        if (deprecation != null)
-        {
-            context.Response.Headers["Deprecation"] = "true";
-            context.Response.Headers["Sunset"] = deprecation.SunsetDate.ToString("r");
-            context.Response.Headers["Link"] = $"<{deprecation.MigrationGuideUrl}>; rel=\"deprecation\"";
-        }
-
-        await _next(context);
-    }
-}
-
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class DeprecatedAttribute : Attribute
-{
-    public DateTime SunsetDate { get; }
-    public string MigrationGuideUrl { get; }
-
-    public DeprecatedAttribute(string sunsetDate, string migrationGuideUrl)
-    {
-        SunsetDate = DateTime.Parse(sunsetDate);
-        MigrationGuideUrl = migrationGuideUrl;
-    }
-}
-```
-
-### 7.3. API Desactivada (410 Gone)
+### 7.2. API Desactivada (410 Gone)
 
 ```csharp
 [HttpGet]
@@ -526,43 +490,6 @@ Link: <https://api.talma.com/users?page=1>; rel="first",
       <https://api.talma.com/users?page=2>; rel="prev",
       <https://api.talma.com/users?page=4>; rel="next",
       <https://api.talma.com/users?page=10>; rel="last"
-```
-
-### 9.3. Cursor-based Pagination
-
-```csharp
-public record CursorRequest
-{
-    public string? Cursor { get; init; }
-    [Range(1, 100)]
-    public int Limit { get; init; } = 20;
-}
-
-public record CursorResult<T>
-{
-    public IEnumerable<T> Items { get; init; }
-    public string? NextCursor { get; init; }
-    public bool HasMore { get; init; }
-}
-
-[HttpGet("cursor")]
-public async Task<IActionResult> GetUsersCursor([FromQuery] CursorRequest request)
-{
-    var decodedCursor = request.Cursor != null ? DecodeCursor(request.Cursor) : DateTime.MinValue;
-    var users = await _service.GetByCursorAsync(decodedCursor, request.Limit + 1);
-
-    var hasMore = users.Count() > request.Limit;
-    var items = users.Take(request.Limit).ToList();
-
-    var result = new CursorResult<UserDto>
-    {
-        Items = items,
-        NextCursor = hasMore ? EncodeCursor(items.Last().CreatedAt) : null,
-        HasMore = hasMore
-    };
-
-    return Ok(result);
-}
 ```
 
 ---
@@ -865,13 +792,7 @@ curl -I "https://api.talma.com/api/v1/users?page=1&pageSize=20"
 
 ---
 
-## 15. Validación de Schemas
-
-Validar requests/responses con **FluentValidation** o Data Annotations. DTOs con Required/Range/MaxLength. Responses 400 con detalles de validación. Para Kafka events, JSON Schema embebido en mensaje (NO Schema Registry). OpenAPI schemas completos en Swagger.
-
----
-
-## 16. Referencias
+## 15. Referencias
 
 - [ADR-004: Autenticación SSO](../../decisiones-de-arquitectura/adr-004-autenticacion-sso.md)
 - [ADR-008: Gateway de APIs](../../decisiones-de-arquitectura/adr-008-gateway-apis.md)

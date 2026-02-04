@@ -81,26 +81,7 @@ Definir bounded contexts por capacidades de negocio (no por tecnología), donde 
 
 ### Criterios de Delimitación
 
-```text
-PREGUNTAS CLAVE:
-
-1. ¿Esta capacidad tiene lenguaje específico?
-   - "Payment" en contexto Billing vs "Payment" en contexto Accounting
-   - "Customer" en Sales vs "Patient" en Healthcare
-
-2. ¿Cambia independientemente?
-   - Billing puede cambiar sin afectar Inventory
-   - Shipping puede evolucionar sin tocar Orders
-
-3. ¿Tiene equipo responsable?
-   - Team Payments dueño de Billing Context
-   - Team Logistics dueño de Shipping Context
-
-4. ¿Tiene modelo de datos cohesivo?
-   - Billing: invoices, payments, taxes
-   - Inventory: products, stock, warehouses
-```
-
+````text
 ### Ejemplo: Talma Contexts
 
 ```text
@@ -127,7 +108,7 @@ PREGUNTAS CLAVE:
 │  - BD: notification_db (PostgreSQL)                             │
 │  - Team: Team Communications                                    │
 └─────────────────────────────────────────────────────────────────┘
-```
+````
 
 ---
 

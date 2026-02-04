@@ -9,7 +9,7 @@ description: Estándares consolidados para circuit breakers, retry patterns, gra
 
 ## 1. Propósito
 
-Garantizar la resiliencia y disponibilidad de sistemas distribuidos mediante la implementación de patrones probados: circuit breakers para prevenir cascadas de fallos, retries con backoff exponencial para errores transitorios, degradación elegante para mantener funcionalidad parcial, timeouts para evitar bloqueos indefinidos y graceful shutdown para zero-downtime deployments.
+Garantizar resiliencia en sistemas distribuidos mediante circuit breakers, retries, timeouts y graceful shutdown.
 
 ## 2. Alcance
 
@@ -46,16 +46,6 @@ Garantizar la resiliencia y disponibilidad de sistemas distribuidos mediante la 
 > El uso de tecnologías no listadas requiere aprobación de Arquitectura.
 
 ## 4. Circuit Breaker Pattern
-
-### Propósito
-
-Prevenir cascadas de fallos detectando servicios degradados, abriendo el circuito automáticamente y permitiendo recuperación gradual.
-
-### Estados del Circuit Breaker
-
-- **Closed:** estado normal, permite requests
-- **Open:** circuito abierto, rechaza requests inmediatamente (fail-fast)
-- **Half-Open:** prueba de recuperación, permite requests limitados
 
 ### Requisitos Obligatorios 🔴
 
@@ -160,10 +150,6 @@ app.Run();
 
 ## 5. Retry Pattern con Exponential Backoff
 
-### Propósito
-
-Manejar fallos transitorios mediante reintentos automáticos con exponential backoff, jitter y límites configurables, evitando sobrecarga de servicios degradados.
-
 ### Requisitos Obligatorios 🔴
 
 #### Estrategia de Backoff
@@ -236,10 +222,6 @@ builder.Services.AddHttpClient("PaymentService")
 ```
 
 ## 6. Graceful Degradation
-
-### Propósito
-
-Mantener funcionalidad parcial durante fallos de dependencias mediante degradación elegante con fallbacks, cached responses, feature toggles y modos reducidos.
 
 ### Requisitos Obligatorios 🔴
 
@@ -320,10 +302,6 @@ builder.Services.AddHttpClient("RecommendationService")
 ```
 
 ## 7. Timeouts
-
-### Propósito
-
-Evitar bloqueos indefinidos y liberar recursos rápidamente mediante timeouts configurados en cada capa.
 
 ### Requisitos Obligatorios 🔴
 
@@ -424,10 +402,6 @@ public class OrdersController : ControllerBase
 ```
 
 ## 8. Graceful Shutdown
-
-### Propósito
-
-Garantizar zero-downtime deployments y prevenir pérdida de datos mediante shutdown elegante que completa requests en proceso y cierra conexiones limpiamente.
 
 ### Requisitos Obligatorios 🔴
 
