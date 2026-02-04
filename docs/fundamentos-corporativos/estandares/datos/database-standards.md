@@ -68,9 +68,9 @@ Definir los estándares obligatorios para gestión de bases de datos, migracione
 
 ### SLOs y Monitoreo
 
-- Replication lag <5s (warning 2.5s, crítico 5s)
-- Staleness cache <2min
-- Convergence time <30s
+- Replication lag `<5s` (warning 2.5s, crítico 5s)
+- Staleness cache `<2min`
+- Convergence time `<30s`
 - Métricas: replication_lag_seconds, cache_staleness_seconds, event_propagation_duration
 - Dashboards y alertas en Grafana
 

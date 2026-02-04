@@ -734,9 +734,9 @@ kcadm.sh get users/{user-id} -r talma-internal \
 | **Service accounts con IAM Roles** | 100%        | CloudTrail          |
 | **Tokens lifetime**                | ≤15 minutos | Keycloak config     |
 | **Permisos revisados**             | Trimestral  | IAM Access Analyzer |
-| **Usuarios inactivos removidos**   | <90 días    | Keycloak audit      |
+| **Usuarios inactivos removidos**   | `<90 días`  | Keycloak audit      |
 | **Policies sin wildcards**         | >90%        | Terraform scan      |
-| **Secrets rotados**                | <90 días    | Secrets Manager     |
+| **Secrets rotados**                | `<90 días`  | Secrets Manager     |
 
 ## 13. Prohibiciones
 

@@ -935,7 +935,7 @@ docker images | grep payment-api
 | **Non-root containers**        | 100%                         | Docker inspect  |
 | **Encryption at-rest**         | 100%                         | Terraform state |
 | **TLS 1.3**                    | 100%                         | SSL Labs scan   |
-| **GuardDuty findings**         | <5 MEDIUM/mes                | AWS Console     |
+| **GuardDuty findings**         | `<5 MEDIUM/mes`              | AWS Console     |
 
 ## 12. Prohibiciones
 

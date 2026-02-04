@@ -422,13 +422,13 @@ curl http://localhost:5000/metrics | grep saga
 
 **Métricas de cumplimiento:**
 
-| Métrica                        | Umbral     | Verificación |
-| ------------------------------ | ---------- | ------------ |
-| Sagas con compensating actions | 100%       | Code review  |
-| Handlers idempotentes          | 100%       | Unit tests   |
-| Saga completion rate           | >95%       | Metrics      |
-| Average saga duration          | <5 minutos | Metrics      |
-| Stuck sagas                    | <1%        | Monitoring   |
+| Métrica                        | Umbral       | Verificación |
+| ------------------------------ | ------------ | ------------ |
+| Sagas con compensating actions | 100%         | Code review  |
+| Handlers idempotentes          | 100%         | Unit tests   |
+| Saga completion rate           | >95%         | Metrics      |
+| Average saga duration          | `<5 minutos` | Metrics      |
+| Stuck sagas                    | `<1%`        | Monitoring   |
 
 **Checklist de auditoría:**
 

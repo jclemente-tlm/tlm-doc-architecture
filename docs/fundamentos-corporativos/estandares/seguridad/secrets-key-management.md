@@ -911,16 +911,16 @@ done
 
 ## 12. Métricas de Cumplimiento
 
-| Métrica                          | Target         | Verificación                            |
-| -------------------------------- | -------------- | --------------------------------------- |
-| **Secretos con rotación**        | 100%           | `list-secrets` + filtro LastRotatedDate |
-| **Secretos con CMK**             | 100%           | `describe-secret` → KmsKeyId            |
-| **Keys con rotación automática** | 100% CMK       | `get-key-rotation-status`               |
-| **Secretos sin tags**            | 0%             | `list-secrets` + query Tags             |
-| **IAM policies con wildcards**   | <10%           | Terraform state scan                    |
-| **Secrets sin acceso >6 meses**  | 0% (eliminar)  | CloudTrail analysis                     |
-| **KMS errors**                   | <5 errores/día | CloudWatch metric                       |
-| **Access denied alerts**         | <3/día         | CloudWatch alarm                        |
+| Métrica                          | Target           | Verificación                            |
+| -------------------------------- | ---------------- | --------------------------------------- |
+| **Secretos con rotación**        | 100%             | `list-secrets` + filtro LastRotatedDate |
+| **Secretos con CMK**             | 100%             | `describe-secret` → KmsKeyId            |
+| **Keys con rotación automática** | 100% CMK         | `get-key-rotation-status`               |
+| **Secretos sin tags**            | 0%               | `list-secrets` + query Tags             |
+| **IAM policies con wildcards**   | `<10%`           | Terraform state scan                    |
+| **Secrets sin acceso >6 meses**  | 0% (eliminar)    | CloudTrail analysis                     |
+| **KMS errors**                   | `<5 errores/día` | CloudWatch metric                       |
+| **Access denied alerts**         | <3/día           | CloudWatch alarm                        |
 
 ## 13. Referencias
 

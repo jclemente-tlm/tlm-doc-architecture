@@ -506,7 +506,7 @@ dotnet test --filter Category=HealthChecks
 
 ## 10. SLOs y SLAs
 
-Definir **SLOs** (Service Level Objectives) por servicio: Availability ≥99.9%, Latency p95 <500ms, Error rate <1%. Implementar **error budgets** (1-SLO) para balancear reliability y velocidad de desarrollo. Alertas basadas en **burn rate** de error budget, no métricas absolutas.
+Definir **SLOs** (Service Level Objectives) por servicio: Availability ≥99.9%, Latency p95 `<500ms`, Error rate `<1%`. Implementar **error budgets** (1-SLO) para balancear reliability y velocidad de desarrollo. Alertas basadas en **burn rate** de error budget, no métricas absolutas.
 
 **Referencia:** [Google SRE - SLO](https://sre.google/sre-book/service-level-objectives/)
 

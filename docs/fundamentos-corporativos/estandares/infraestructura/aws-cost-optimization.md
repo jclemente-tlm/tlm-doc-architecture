@@ -27,7 +27,7 @@ Optimizar costos AWS mediante tagging obligatorio, alertas proactivas, rightsizi
 
 **No aplica a:**
 
-- Cuentas sandbox personales (<30 días)
+- Cuentas sandbox personales (`<30 días`)
 - Recursos sin soporte de tags
 - Recursos experimentales temporales
 

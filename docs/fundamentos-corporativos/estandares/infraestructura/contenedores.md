@@ -623,18 +623,18 @@ echo "✅ Validación Docker completada exitosamente"
 
 ### Métricas de Cumplimiento
 
-| Métrica                      | Target  | Verificación                              |
-| ---------------------------- | ------- | ----------------------------------------- |
-| Tamaño imagen                | ≤ 200MB | `docker images --format "{{.Size}}"`      |
-| CVEs críticos                | 0       | `trivy --severity CRITICAL`               |
-| Usuario no-root              | 100%    | `docker inspect \| jq .Config.User`       |
-| Tags `latest` en prod        | 0%      | ghcr.io registry inspection               |
-| Health checks configurados   | 100%    | `docker inspect \| jq .Config.Healthcheck |
-| Secrets en imagen            | 0       | `trivy --scanners secret`                 |
-| BuildKit habilitado          | 100%    | Check DOCKER_BUILDKIT env var             |
-| Docker Compose onboarding    | <10 min | `time docker-compose up -d`               |
-| .env versionado              | 0%      | `git ls-files .env`                       |
-| Services con resource limits | 100%    | `docker-compose config \| grep limits`    |
+| Métrica                      | Target    | Verificación                              |
+| ---------------------------- | --------- | ----------------------------------------- |
+| Tamaño imagen                | ≤ 200MB   | `docker images --format "{{.Size}}"`      |
+| CVEs críticos                | 0         | `trivy --severity CRITICAL`               |
+| Usuario no-root              | 100%      | `docker inspect \| jq .Config.User`       |
+| Tags `latest` en prod        | 0%        | ghcr.io registry inspection               |
+| Health checks configurados   | 100%      | `docker inspect \| jq .Config.Healthcheck |
+| Secrets en imagen            | 0         | `trivy --scanners secret`                 |
+| BuildKit habilitado          | 100%      | Check DOCKER_BUILDKIT env var             |
+| Docker Compose onboarding    | `<10 min` | `time docker-compose up -d`               |
+| .env versionado              | 0%        | `git ls-files .env`                       |
+| Services con resource limits | 100%      | `docker-compose config \| grep limits`    |
 
 ---
 

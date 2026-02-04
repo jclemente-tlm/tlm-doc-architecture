@@ -46,13 +46,13 @@ Verificar después del despliegue:
 
 ## Métricas de Cumplimiento
 
-| Métrica                                    | Objetivo     | Criticidad |
-| ------------------------------------------ | ------------ | ---------- |
-| Logs en formato estructurado (JSON)        | >95%         | Alta       |
-| Servicios con health checks funcionales    | 100%         | Crítica    |
-| MTTR - Identificación de servicio causante | <5 min (P95) | Alta       |
-| Servicios con tracing distribuido          | 100%         | Alta       |
-| Cobertura de métricas RED/USE              | >90%         | Media      |
+| Métrica                                    | Objetivo       | Criticidad |
+| ------------------------------------------ | -------------- | ---------- |
+| Logs en formato estructurado (JSON)        | >95%           | Alta       |
+| Servicios con health checks funcionales    | 100%           | Crítica    |
+| MTTR - Identificación de servicio causante | `<5 min (P95)` | Alta       |
+| Servicios con tracing distribuido          | 100%           | Alta       |
+| Cobertura de métricas RED/USE              | >90%           | Media      |
 
 ---
 

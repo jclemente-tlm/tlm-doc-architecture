@@ -80,7 +80,7 @@ Quality gates automatizados (SonarQube, Coverlet) y code review obligatorio con 
 - [ ] **CI/CD passing:** tests, linters, security scans OK
 - [ ] **NO self-approval** (autor ≠ reviewer)
 - [ ] **Max 48 horas** para primera revisión (SLA)
-- [ ] **Cambios menores** (<50 líneas): 1 reviewer
+- [ ] **Cambios menores** (`<50 líneas`): 1 reviewer
 - [ ] **Cambios mayores** (>200 líneas): 2 reviewers O arquitecto
 - [ ] **IaC changes:** Reviewer con experiencia AWS/Terraform
 

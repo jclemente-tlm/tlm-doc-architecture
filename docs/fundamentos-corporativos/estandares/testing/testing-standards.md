@@ -56,12 +56,12 @@ Garantizar código confiable mediante Testing Pyramid: unit tests (70%), integra
    /--------------\
 ```
 
-| Tipo                  | % Cobertura     | Velocidad    | Fragilidad | Costo | Scope                       |
-| --------------------- | --------------- | ------------ | ---------- | ----- | --------------------------- |
-| **Unit Tests**        | 70%             | <500ms suite | Baja       | Bajo  | Función/método aislado      |
-| **Integration Tests** | 20%             | <5min suite  | Media      | Medio | API + BD real               |
-| **Contract Tests**    | 10% (adicional) | <1min suite  | Baja       | Bajo  | Consumer-provider contracts |
-| **E2E Tests**         | 10%             | <30min suite | Alta       | Alto  | User journey completo       |
+| Tipo                  | % Cobertura     | Velocidad      | Fragilidad | Costo | Scope                       |
+| --------------------- | --------------- | -------------- | ---------- | ----- | --------------------------- |
+| **Unit Tests**        | 70%             | `<500ms suite` | Baja       | Bajo  | Función/método aislado      |
+| **Integration Tests** | 20%             | `<5min suite`  | Media      | Medio | API + BD real               |
+| **Contract Tests**    | 10% (adicional) | `<1min suite`  | Baja       | Bajo  | Consumer-provider contracts |
+| **E2E Tests**         | 10%             | <30min suite   | Alta       | Alto  | User journey completo       |
 
 ## 5. Requisitos Obligatorios 🔴
 
