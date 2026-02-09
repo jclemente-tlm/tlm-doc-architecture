@@ -23,4 +23,4 @@ Código sin estándares consistentes, análisis estático ni revisiones genera d
 ## Referencias Relacionadas
 
 - [Estrategia de Pruebas](./02-testing.md) (testing automatizado)
-- [CI/CD](../operabilidad/01-automatizacion.md) (quality gates en pipelines)
+- [CI/CD](../operabilidad/01-automatizacion-iac.md) (quality gates en pipelines)
