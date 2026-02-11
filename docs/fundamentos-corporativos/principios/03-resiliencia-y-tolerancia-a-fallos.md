@@ -1,6 +1,6 @@
 ---
 id: resiliencia-y-tolerancia-a-fallos
-sidebar_position: 8
+sidebar_position: 3
 title: Resiliencia y Tolerancia a Fallos
 description: Sistemas diseñados para degradarse, recuperarse y operar ante fallos
 ---

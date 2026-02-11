@@ -18,9 +18,9 @@ Un sistema puede comunicarse y coordinarse mediante eventos que representan hech
 
 Este estilo arquitectónico implementa los siguientes principios corporativos:
 
-- ✅ [Desacoplamiento y Autonomía](../principios/arquitectura/06-desacoplamiento-y-autonomia.md)
-- ✅ [Resiliencia y Tolerancia a Fallos](../principios/arquitectura/11-resiliencia-y-tolerancia-a-fallos.md)
-- ✅ [Arquitectura Evolutiva](../principios/arquitectura/07-arquitectura-evolutiva.md)
+- ✅ [Modularidad y Bajo Acoplamiento](../principios/02-modularidad-y-bajo-acoplamiento.md)
+- ✅ [Resiliencia y Tolerancia a Fallos](../principios/03-resiliencia-y-tolerancia-a-fallos.md)
+- ✅ [Arquitectura Evolutiva](../lineamientos/arquitectura/11-arquitectura-evolutiva.md)
 - ✅ [Consistencia Contextual](../principios/datos/03-consistencia-contextual.md)
 
 ## Propósito

@@ -1,11 +1,16 @@
 ---
 id: arquitectura-limpia
-sidebar_position: 1
+sidebar_position: 10
 title: Arquitectura Limpia
-description: Separación clara entre decisiones de negocio y detalles técnicos
+description: Patrón arquitectónico que separa las decisiones de negocio de los detalles técnicos, manteniendo el dominio independiente de frameworks e infraestructura.
+tags: [lineamiento, arquitectura, clean-architecture, mantenibilidad]
 ---
 
 # Arquitectura Limpia
+
+## Tipo de Lineamiento
+
+**Lineamiento de Arquitectura** - Implementa el principio de [Mantenibilidad y Extensibilidad](../../principios/01-mantenibilidad-y-extensibilidad.md)
 
 ## 1. Declaración
 

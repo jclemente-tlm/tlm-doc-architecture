@@ -1,6 +1,6 @@
 ---
 id: propiedad-de-datos
-sidebar_position: 1
+sidebar_position: 3
 title: Propiedad de Datos
 description: Cada dominio es responsable exclusivo de sus datos sin compartir almacenamiento
 ---

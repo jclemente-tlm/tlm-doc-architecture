@@ -1,6 +1,6 @@
 ---
 id: autonomia-de-servicios
-sidebar_position: 4
+sidebar_position: 9
 title: Autonomía de Servicios
 description: Servicios capaces de evolucionar, desplegarse y operar de forma independiente
 ---
@@ -39,7 +39,7 @@ La autonomía se evalúa en múltiples dimensiones: despliegue, datos, decisione
 
 ## 4. Implicaciones
 
-- Cada servicio debe tener ownership completo sobre sus datos (ver [Propiedad de Datos](../../datos/01-propiedad-de-datos.md)).
+- Cada servicio debe tener ownership completo sobre sus datos (ver [Propiedad de Datos](../../datos/03-propiedad-de-datos.md)).
 - Los servicios deben poder desplegarse independientemente sin coordinar con otros.
 - Los equipos deben tener autoridad para tomar decisiones técnicas dentro de su ámbito.
 - La comunicación entre servicios debe ser asíncrona cuando sea posible.

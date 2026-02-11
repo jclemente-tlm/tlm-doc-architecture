@@ -18,10 +18,10 @@ Un sistema puede estructurarse como una aplicación única (monolito) internamen
 
 Este estilo arquitectónico implementa los siguientes principios corporativos:
 
-- ✅ [Arquitectura Limpia](../principios/arquitectura/01-arquitectura-limpia.md)
-- ✅ [Diseño Orientado al Dominio](../principios/arquitectura/05-diseno-orientado-al-dominio.md)
-- ✅ [Simplicidad Intencional](../principios/arquitectura/10-simplicidad-intencional.md)
-- ✅ [Desacoplamiento y Autonomía](../principios/arquitectura/06-desacoplamiento-y-autonomia.md) (a nivel de módulos)
+- ✅ [Arquitectura Limpia](../lineamientos/arquitectura/10-arquitectura-limpia.md)
+- ✅ [Diseño Orientado al Dominio](../lineamientos/arquitectura/08-diseno-orientado-al-dominio.md)
+- ✅ [Simplicidad Intencional](../lineamientos/arquitectura/12-simplicidad-intencional.md)
+- ✅ [Modularidad y Bajo Acoplamiento](../principios/02-modularidad-y-bajo-acoplamiento.md) (a nivel de módulos)
 
 ## Propósito
 
@@ -199,8 +199,8 @@ Este estilo se materializa en ADRs relacionados con:
 
 ## Referencias
 
-- [Arquitectura Limpia](../principios/arquitectura/01-arquitectura-limpia.md)
-- [Diseño Orientado al Dominio](../principios/arquitectura/05-diseno-orientado-al-dominio.md)
-- [Simplicidad Intencional](../principios/arquitectura/10-simplicidad-intencional.md)
+- [Arquitectura Limpia](../lineamientos/arquitectura/10-arquitectura-limpia.md)
+- [Diseño Orientado al Dominio](../lineamientos/arquitectura/08-diseno-orientado-al-dominio.md)
+- [Simplicidad Intencional](../lineamientos/arquitectura/12-simplicidad-intencional.md)
 - [Arquitectura de Microservicios](microservicios.md) (para evolución futura)
 - [Lineamiento: Descomposición y Límites](../lineamientos/arquitectura/02-descomposicion-y-limites.md)

@@ -18,11 +18,10 @@ Un sistema puede diseñarse siguiendo principios cloud-native cuando se espera q
 
 Este estilo arquitectónico implementa los siguientes principios corporativos:
 
-- ✅ [Resiliencia y Tolerancia a Fallos](../principios/arquitectura/11-resiliencia-y-tolerancia-a-fallos.md)
-- ✅ [Automatización como Principio](../principios/operabilidad/01-automatizacion-como-principio.md)
-- ✅ [Observabilidad desde el Diseño](../principios/arquitectura/08-observabilidad-desde-el-diseno.md)
-- ✅ [Consistencia entre Entornos](../principios/operabilidad/03-consistencia-entre-entornos.md)
-- ✅ [Arquitectura Evolutiva](../principios/arquitectura/07-arquitectura-evolutiva.md)
+- ✅ [Resiliencia y Tolerancia a Fallos](../principios/03-resiliencia-y-tolerancia-a-fallos.md)
+- ✅ [Arquitectura Evolutiva](../lineamientos/arquitectura/11-arquitectura-evolutiva.md)
+- ✅ [Diseño Cloud Native](../lineamientos/arquitectura/03-diseno-cloud-native.md)
+- ✅ [Observabilidad](../lineamientos/arquitectura/05-observabilidad.md)
 
 ## Propósito
 

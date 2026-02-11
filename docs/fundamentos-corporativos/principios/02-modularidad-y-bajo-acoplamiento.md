@@ -1,15 +1,15 @@
 ---
-id: bajo-acoplamiento
-sidebar_position: 3
-title: Bajo Acoplamiento
-description: Minimizar dependencias entre componentes para reducir impacto de cambios
+id: modularidad-y-bajo-acoplamiento
+sidebar_position: 2
+title: Modularidad y Bajo Acoplamiento
+description: Dividir sistemas en componentes independientes con dependencias mínimas y explícitas
 ---
 
-# Bajo Acoplamiento
+# Modularidad y Bajo Acoplamiento
 
 ## 1. Declaración
 
-Los componentes del sistema deben minimizar las dependencias entre sí, haciéndolas explícitas, estables y gestionables.
+Los sistemas deben dividirse en componentes modulares e independientes, minimizando las dependencias entre ellos y haciéndolas explícitas, estables y gestionables.
 
 ## 2. Justificación
 

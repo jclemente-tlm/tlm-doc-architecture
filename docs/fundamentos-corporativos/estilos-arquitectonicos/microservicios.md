@@ -18,11 +18,12 @@ Un sistema puede descomponerse en servicios autónomos, alineados a capacidades 
 
 Este estilo arquitectónico implementa los siguientes principios corporativos:
 
-- ✅ [Desacoplamiento y Autonomía](../principios/arquitectura/06-desacoplamiento-y-autonomia.md)
-- ✅ [Ownership de Datos por Dominio](../principios/datos/01-ownership-de-datos.md)
-- ✅ [Arquitectura Evolutiva](../principios/arquitectura/07-arquitectura-evolutiva.md)
-- ✅ [Resiliencia y Tolerancia a Fallos](../principios/arquitectura/11-resiliencia-y-tolerancia-a-fallos.md)
-- ✅ [Diseño Orientado al Dominio](../principios/arquitectura/05-diseno-orientado-al-dominio.md)
+- ✅ [Modularidad y Bajo Acoplamiento](../principios/02-modularidad-y-bajo-acoplamiento.md)
+- ✅ [Autonomía de Servicios](../lineamientos/arquitectura/09-autonomia-de-servicios.md)
+- ✅ [Propiedad de Datos](../lineamientos/datos/03-propiedad-de-datos.md)
+- ✅ [Arquitectura Evolutiva](../lineamientos/arquitectura/11-arquitectura-evolutiva.md)
+- ✅ [Resiliencia y Tolerancia a Fallos](../principios/03-resiliencia-y-tolerancia-a-fallos.md)
+- ✅ [Diseño Orientado al Dominio](../lineamientos/arquitectura/08-diseno-orientado-al-dominio.md)
 
 ## Propósito
 

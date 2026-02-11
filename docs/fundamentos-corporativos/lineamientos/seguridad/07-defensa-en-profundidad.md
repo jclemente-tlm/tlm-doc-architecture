@@ -1,6 +1,6 @@
 ---
 id: defensa-en-profundidad
-sidebar_position: 3
+sidebar_position: 7
 title: Defensa en Profundidad
 description: Múltiples capas de protección independientes en la arquitectura
 ---

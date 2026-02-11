@@ -1,11 +1,16 @@
 ---
 id: simplicidad-intencional
-sidebar_position: 7
+sidebar_position: 12
 title: Simplicidad Intencional
-description: Priorizar soluciones simples y comprensibles evitando sobreingeniería
+description: Práctica arquitectónica que evita sobreingeniería y complejidad innecesaria, manteniendo soluciones proporcionales al problema real.
+tags: [lineamiento, arquitectura, simplicidad, YAGNI, KISS, mantenibilidad]
 ---
 
 # Simplicidad Intencional
+
+## Tipo de Lineamiento
+
+**Lineamiento de Arquitectura** - Implementa el principio de [Mantenibilidad y Extensibilidad](../../principios/01-mantenibilidad-y-extensibilidad.md)
 
 ## 1. Declaración
 
