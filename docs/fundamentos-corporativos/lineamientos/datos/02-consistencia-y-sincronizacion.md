@@ -1,6 +1,6 @@
 ---
 id: consistencia-y-sincronizacion
-sidebar_position: 3
+sidebar_position: 2
 title: Consistencia y Sincronización
 description: Estrategias para mantener consistencia de datos en sistemas distribuidos
 ---
@@ -13,8 +13,7 @@ Sistemas distribuidos requieren trade-offs entre consistencia, disponibilidad y 
 
 ## Estándares Obligatorios
 
-- [Definir modelo de consistencia explícito por caso de uso](../../estandares/datos/consistency-models.md)
-- [Implementar reconciliación para consistencia eventual](../../estandares/datos/reconciliation.md)
-- [Gestionar conflictos con estrategias definidas](../../estandares/datos/conflict-resolution.md)
+- [Definir modelo de consistencia explícito por caso de uso](../../estandares/datos/database-standards.md)
 - [Preferir sagas o compensaciones sobre transacciones distribuidas](../../estandares/arquitectura/saga-pattern.md)
-- [Definir SLOs de convergencia de datos](../../estandares/datos/consistency-slos.md)
+- [Implementar idempotencia para garantizar convergencia](../../estandares/mensajeria/kafka-messaging.md)
+- [Usar eventos de dominio para sincronización eventual](../../estandares/mensajeria/kafka-messaging.md)

@@ -1,6 +1,6 @@
 ---
 id: comunicacion-asincrona-y-eventos
-sidebar_position: 8
+sidebar_position: 7
 title: Comunicación Asíncrona y Eventos
 description: Lineamientos para mensajería asíncrona y arquitectura orientada a eventos
 ---
@@ -14,7 +14,7 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 ## Estándares Obligatorios
 
 - [Implementar mensajería con Apache Kafka](../../estandares/mensajeria/kafka-messaging.md)
-- [Definir esquemas de eventos con AsyncAPI o Avro](../../estandares/mensajeria/kafka-messaging.md)
+- [Definir esquemas de eventos con AsyncAPI o JSON Schema](../../estandares/mensajeria/kafka-messaging.md)
 - [Usar eventos para comunicar hechos del dominio, no comandos](../../estandares/mensajeria/kafka-messaging.md)
 - [Implementar idempotencia en consumidores](../../estandares/mensajeria/kafka-messaging.md)
 - [Garantizar entrega at-least-once o exactly-once](../../estandares/mensajeria/kafka-messaging.md)
