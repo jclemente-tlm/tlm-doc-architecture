@@ -27,24 +27,25 @@ La intención estratégica es **balancear simplicidad y flexibilidad** para auto
 Alternativas evaluadas:
 
 - **GitHub Actions** (SaaS, integración GitHub, marketplace)
-- **GitLab CI/CD** (SaaS/Self-hosted, DevSecOps)
+- **GitLab CI/CD** (SaaS/self-hosted, integración GitLab)
 - **Jenkins** (Self-hosted, plugins extensos)
 - **Azure DevOps** (SaaS Microsoft, integración .NET)
 - **AWS CodePipeline** (SaaS AWS, integración nativa)
 - **CircleCI** (SaaS, Docker-first)
+- **TeamCity** (JetBrains, .NET-friendly)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio            | GitHub Actions        | GitLab CI/CD        | Jenkins                 | Azure DevOps            | AWS CodePipeline | CircleCI      |
-| ------------------- | --------------------- | ------------------- | ----------------------- | ----------------------- | ---------------- | ------------- |
-| **Agnosticidad**    | ⚠️ Vinculado a GitHub | ✅ Muy agnóstico    | ✅ Totalmente agnóstico | ⚠️ Ecosistema Microsoft | ❌ Lock-in AWS   | ⚠️ Agnóstico  |
-| **Operación**       | ✅ Gestionado         | ✅ SaaS/self-hosted | ⚠️ Manual               | ✅ Gestionado           | ✅ Gestionado    | ✅ Gestionado |
-| **Seguridad**       | ✅ Integrada          | ✅ Integrada        | ⚠️ Limitada             | ✅ Integrada            | ✅ Integrada     | ✅ Integrada  |
-| **Ecosistema .NET** | ✅ Excelente          | ✅ Muy bueno        | ✅ Bueno                | ✅ Nativo               | ✅ Bueno         | ✅ Bueno      |
-| **Extensibilidad**  | ✅ Marketplace        | ⚠️ Bueno            | ✅ Plugins              | ⚠️ Limitado             | ⚠️ Básico        | ⚠️ Limitado   |
-| **Costos**          | ✅ Plan gratuito      | ✅ Plan gratuito    | ⚠️ Infraestructura      | ✅ Plan gratuito        | ⚠️ Por uso       | ⚠️ Por uso    |
+| Criterio            | GitHub Actions        | GitLab CI/CD          | Jenkins                 | Azure DevOps            | AWS CodePipeline | CircleCI      | TeamCity       |
+| ------------------- | --------------------- | --------------------- | ----------------------- | ----------------------- | ---------------- | ------------- | -------------- |
+| **Agnosticidad**    | ⚠️ Vinculado a GitHub | ⚠️ Vinculado a GitLab | ✅ Totalmente agnóstico | ⚠️ Ecosistema Microsoft | ❌ Lock-in AWS   | ⚠️ Agnóstico  | ⚠️ Agnóstico   |
+| **Operación**       | ✅ Gestionado         | ✅ Gestionado/Híbrido | ⚠️ Manual               | ✅ Gestionado           | ✅ Gestionado    | ✅ Gestionado | ⚠️ Self-hosted |
+| **Seguridad**       | ✅ Integrada          | ✅ Integrada          | ⚠️ Limitada             | ✅ Integrada            | ✅ Integrada     | ✅ Integrada  | ✅ Buena       |
+| **Ecosistema .NET** | ✅ Excelente          | ✅ Bueno              | ✅ Bueno                | ✅ Nativo               | ✅ Bueno         | ✅ Bueno      | ✅ Excelente   |
+| **Extensibilidad**  | ✅ Marketplace        | ✅ Extenso            | ✅ Plugins              | ⚠️ Limitado             | ⚠️ Básico        | ⚠️ Limitado   | ✅ Plugins     |
+| **Costos**          | ✅ Plan gratuito      | ✅ Plan gratuito/OSS  | ⚠️ Infraestructura      | ✅ Plan gratuito        | ⚠️ Por uso       | ⚠️ Por uso    | ⚠️ Licencias   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -65,11 +66,12 @@ Se selecciona **GitHub Actions** como plataforma estándar de CI/CD para todos l
 
 ## Alternativas descartadas
 
-- **GitLab CI/CD:** menor integración con GitHub y AWS
-- **Azure DevOps:** menos adoptado en ecosistemas AWS puros
-- **Jenkins:** mayor complejidad operativa y mantenimiento
-- **AWS CodePipeline:** lock-in y menor flexibilidad
-- **CircleCI:** lock-in y menor flexibilidad
+- **GitLab CI/CD:** requiere migración de repositorios GitHub, ecosistema menos integrado con GitHub Packages/Container Registry (ADR-020, ADR-022), menor adopción en equipo
+- **Jenkins:** complejidad operativa alta (gestión infraestructura, plugins, seguridad), requiere expertise DevOps dedicado, costos ocultos de mantenimiento
+- **Azure DevOps:** menor adopción en arquitecturas AWS-first, integración menos fluida con servicios AWS vs GitHub Actions
+- **AWS CodePipeline:** lock-in AWS fuerte, configuración más compleja (JSON/YAML + consola), menor flexibilidad para CI/CD multi-cloud
+- **CircleCI:** costos crecientes con escala (US$15-60/usuario/mes para equipos), menor integración con GitHub vs Actions nativo
+- **TeamCity:** costos de licencias (US$1,999+ para 100 build configs), self-hosted requiere gestión, menor comunidad vs GitHub Actions
 
 ---
 
@@ -94,8 +96,12 @@ Se selecciona **GitHub Actions** como plataforma estándar de CI/CD para todos l
 ## 📚 REFERENCIAS
 
 - [GitHub Actions](https://github.com/features/actions)
-- [GitLab CI/CD](https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/)
+- [GitLab CI/CD](https://docs.gitlab.com/ee/ci/)
+- [Jenkins](https://www.jenkins.io/)
 - [Azure DevOps Pipelines](https://azure.microsoft.com/en-us/services/devops/pipelines/)
+- [AWS CodePipeline](https://aws.amazon.com/codepipeline/)
+- [CircleCI](https://circleci.com/)
+- [TeamCity](https://www.jetbrains.com/teamcity/)
 - [Jenkins](https://www.jenkins.io/)
 - [AWS CodePipeline](https://aws.amazon.com/codepipeline/)
 - [CircleCI](https://circleci.com/)

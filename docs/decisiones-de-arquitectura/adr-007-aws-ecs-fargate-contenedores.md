@@ -27,24 +27,25 @@ Alternativas evaluadas:
 
 - **AWS ECS Fargate** (Serverless containers, gestionado AWS)
 - **Kubernetes (EKS)** (Orquestador agnóstico, gestionado AWS)
+- **Azure Kubernetes Service (AKS)** (K8s gestionado Azure)
+- **Google Kubernetes Engine (GKE)** (K8s gestionado GCP)
 - **Azure Container Instances** (Serverless containers, gestionado Azure)
 - **Google Cloud Run** (Serverless containers, gestionado GCP)
 - **Docker Swarm** (Self-hosted, agnóstico)
-- **Nomad** (HashiCorp, agnóstico)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio            | ECS Fargate                | EKS                         | Azure ACI           | Google Cloud Run | Docker Swarm            | Nomad                   |
-| ------------------- | -------------------------- | --------------------------- | ------------------- | ---------------- | ----------------------- | ----------------------- |
-| **Agnosticidad**    | ❌ Lock-in AWS             | ✅ Estándar K8s             | ❌ Lock-in Azure    | ❌ Lock-in GCP   | ✅ Docker estándar      | ✅ Agnóstico            |
-| **Operación**       | ✅ Serverless, sin gestión | ⚠️ Requiere gestión cluster | ✅ Serverless       | ✅ Serverless    | ⚠️ Manual               | ⚠️ Manual               |
-| **Seguridad**       | ✅ IAM, VPC, Secrets       | ✅ IAM, RBAC                | ✅ Azure RBAC       | ✅ GCP IAM       | ⚠️ Limitada             | ⚠️ Limitada             |
-| **Ecosistema .NET** | ✅ Excelente               | ✅ Excelente                | ✅ Nativo Microsoft | ✅ Excelente     | ✅ Excelente            | ✅ Excelente            |
-| **Escalabilidad**   | ✅ Automática              | ✅ Flexible                 | ✅ Automática       | ✅ Automática    | ⚠️ Manual               | ⚠️ Manual               |
-| **Complejidad**     | ✅ Muy simple              | ❌ Complejo (K8s)           | ✅ Simple           | ✅ Simple        | ✅ Simple               | ✅ Simple               |
-| **Costos**          | ⚠️ Premium serverless      | ⚠️ Nodos + gestión          | ⚠️ Pago por uso     | ⚠️ Pago por uso  | ✅ Solo infraestructura | ✅ Solo infraestructura |
+| Criterio            | ECS Fargate                | EKS                         | AKS                 | GKE                      | Azure ACI           | Google Cloud Run | Docker Swarm            |
+| ------------------- | -------------------------- | --------------------------- | ------------------- | ------------------------ | ------------------- | ---------------- | ----------------------- |
+| **Agnosticidad**    | ❌ Lock-in AWS             | ✅ Estándar K8s             | ✅ Estándar K8s     | ✅ Estándar K8s          | ❌ Lock-in Azure    | ❌ Lock-in GCP   | ✅ Docker estándar      |
+| **Operación**       | ✅ Serverless, sin gestión | ⚠️ Requiere gestión cluster | ⚠️ Requiere gestión | ⚠️ Requiere gestión      | ✅ Serverless       | ✅ Serverless    | ⚠️ Manual               |
+| **Seguridad**       | ✅ IAM, VPC, Secrets       | ✅ IAM, RBAC                | ✅ Azure AD, RBAC   | ✅ GCP IAM, Workload     | ✅ Azure RBAC       | ✅ GCP IAM       | ⚠️ Limitada             |
+| **Ecosistema .NET** | ✅ Excelente               | ✅ Excelente                | ✅ Nativo Microsoft | ✅ Excelente             | ✅ Nativo Microsoft | ✅ Excelente     | ✅ Excelente            |
+| **Escalabilidad**   | ✅ Automática              | ✅ Flexible                 | ✅ Flexible         | ✅ Flexible (Autopilot)  | ✅ Automática       | ✅ Automática    | ⚠️ Manual               |
+| **Complejidad**     | ✅ Muy simple              | ❌ Complejo (K8s)           | ❌ Complejo (K8s)   | ❌ Complejo (K8s)        | ✅ Simple           | ✅ Simple        | ✅ Simple               |
+| **Costos**          | ⚠️ Premium serverless      | ⚠️ Nodos + gestión          | ⚠️ Nodos + gestión  | ⚠️ Autopilot competitivo | ⚠️ Pago por uso     | ⚠️ Pago por uso  | ✅ Solo infraestructura |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -65,11 +66,10 @@ Se selecciona **ECS Fargate** como solución estándar para el despliegue de mic
 
 ### Alternativas descartadas
 
-- **EKS:** mayor complejidad operativa y costos
-- **Azure ACI:** lock-in cloud, menor integración
-- **Google Cloud Run:** lock-in cloud, menor integración
-- **Docker Swarm:** operación manual, menor integración y soporte
-- **Nomad:** operación manual, menor integración y soporte
+- **EKS/AKS/GKE (Kubernetes):** complejidad operativa alta (YAML, Helm, operators), curva de aprendizaje pronunciada, sobrede-dimensionado para necesidades actuales, costos de gestión cluster (US$0.10/hora = US$876/año), requiere expertise especializado
+- **Azure ACI:** lock-in Azure, infraestructura AWS ya establecida (ADR-003, ADR-005), menor integración con servicios corporativos existentes
+- **Google Cloud Run:** lock-in GCP, infraestructura AWS ya establecida, menor integración
+- **Docker Swarm:** operación manual, menor adopción enterprise, ecosistema limitado vs Kubernetes, soporte comunitario decreciente
 
 ---
 
@@ -95,7 +95,9 @@ Se selecciona **ECS Fargate** como solución estándar para el despliegue de mic
 
 - [AWS ECS Fargate](https://aws.amazon.com/ecs/fargate/)
 - [Kubernetes](https://kubernetes.io/)
+- [Amazon EKS](https://aws.amazon.com/eks/)
+- [Azure Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/)
+- [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/)
 - [Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/)
 - [Google Cloud Run](https://cloud.google.com/run/)
 - [Docker Swarm](https://docs.docker.com/engine/swarm/)
-- [Nomad](https://www.nomadproject.io/)

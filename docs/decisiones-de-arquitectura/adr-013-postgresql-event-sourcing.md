@@ -27,6 +27,7 @@ Los servicios corporativos requieren una solución de Event Store que permita:
 Alternativas evaluadas:
 
 - **PostgreSQL + Event Table** (RDBMS, JSON events, triggers)
+- **Marten** (biblioteca .NET para Event Sourcing sobre PostgreSQL)
 - **EventStoreDB** (nativo, especializado)
 - **Apache Kafka** (event log, streaming)
 - **MongoDB** (collections de eventos)
@@ -37,16 +38,16 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | PostgreSQL                | EventStoreDB        | Apache Kafka        | MongoDB             | DynamoDB Streams | CosmosDB         |
-| ------------------- | ------------------------- | ------------------- | ------------------- | ------------------- | ---------------- | ---------------- |
-| **Agnosticidad**    | ✅ OSS, multi-cloud       | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ❌ Lock-in AWS   | ❌ Lock-in Azure |
-| **Event Sourcing**  | ⚠️ Manual con JSON        | ✅ Nativo           | ⚠️ Log como eventos | ⚠️ Collections      | ⚠️ Streams       | ⚠️ Change feed   |
-| **Escalabilidad**   | ⚠️ Limitada               | ✅ Horizontal       | ✅ Masiva           | ✅ Horizontal       | ✅ Automática    | ✅ Global        |
-| **Ecosistema .NET** | ✅ Excelente (Npgsql)     | ✅ Cliente oficial  | ✅ Confluent.Kafka  | ✅ MongoDB.Driver   | ✅ AWS SDK       | ✅ Azure SDK     |
-| **Snapshots**       | ⚠️ Manual                 | ✅ Nativo           | ⚠️ Compactación     | ⚠️ Manual           | ⚠️ Manual        | ⚠️ Manual        |
-| **Consistencia**    | ✅ ACID fuerte            | ✅ Fuerte           | ⚠️ Eventual         | ⚠️ Eventual         | ⚠️ Eventual      | ⚠️ Configurable  |
-| **Operación**       | ✅ Conocimiento existente | ⚠️ Especializada    | ⚠️ Compleja         | ✅ Simple           | ✅ Gestionada    | ✅ Gestionada    |
-| **Costos**          | ✅ Gratuito OSS           | ✅ OSS + comercial  | ✅ Gratuito OSS     | ✅ Gratuito OSS     | ⚠️ Por uso       | ⚠️ Por uso       |
+| Criterio            | PostgreSQL                | Marten                     | EventStoreDB        | Apache Kafka        | MongoDB             | DynamoDB Streams | CosmosDB         |
+| ------------------- | ------------------------- | -------------------------- | ------------------- | ------------------- | ------------------- | ---------------- | ---------------- |
+| **Agnosticidad**    | ✅ OSS, multi-cloud       | ✅ OSS, PostgreSQL-based   | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ❌ Lock-in AWS   | ❌ Lock-in Azure |
+| **Event Sourcing**  | ⚠️ Manual con JSON        | ✅ Nativo .NET             | ✅ Nativo           | ⚠️ Log como eventos | ⚠️ Collections      | ⚠️ Streams       | ⚠️ Change feed   |
+| **Escalabilidad**   | ⚠️ Limitada               | ⚠️ Depende PostgreSQL      | ✅ Horizontal       | ✅ Masiva           | ✅ Horizontal       | ✅ Automática    | ✅ Global        |
+| **Ecosistema .NET** | ✅ Excelente (Npgsql)     | ✅ Diseñado para .NET      | ✅ Cliente oficial  | ✅ Confluent.Kafka  | ✅ MongoDB.Driver   | ✅ AWS SDK       | ✅ Azure SDK     |
+| **Snapshots**       | ⚠️ Manual                 | ✅ Automático              | ✅ Nativo           | ⚠️ Compactación     | ⚠️ Manual           | ⚠️ Manual        | ⚠️ Manual        |
+| **Consistencia**    | ✅ ACID fuerte            | ✅ ACID PostgreSQL         | ✅ Fuerte           | ⚠️ Eventual         | ⚠️ Eventual         | ⚠️ Eventual      | ⚠️ Configurable  |
+| **Operación**       | ✅ Conocimiento existente | ✅ .NET libraries familiar | ⚠️ Especializada    | ⚠️ Compleja         | ✅ Simple           | ✅ Gestionada    | ✅ Gestionada    |
+| **Costos**          | ✅ Gratuito OSS           | ✅ Gratuito OSS            | ✅ OSS + comercial  | ✅ Gratuito OSS     | ✅ Gratuito OSS     | ⚠️ Por uso       | ⚠️ Por uso       |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -64,8 +65,12 @@ Se selecciona **PostgreSQL + Event Table** como solución estándar de Event Sto
 
 ## Alternativas descartadas
 
-- **DynamoDB Streams:** lock-in AWS, consistencia eventual, menor portabilidad
-- **CosmosDB Change Feed:** lock-in Azure, consistencia eventual, menor portabilidad
+- **Marten:** excelente para .NET pero menor madurez vs PostgreSQL manual (2015 vs tradición), comunidad más pequeña, abstracción adicional innecesaria con conocimiento PostgreSQL existente
+- **EventStoreDB:** especializado pero requiere infraestructura adicional, complejidad operativa mayor, costo licencias comerciales, sobrede-dimensionado para necesidades actuales
+- **Apache Kafka:** diseñado para streaming no event sourcing puro, complejidad operativa alta, costos infraestructura, overhead innecesario para event store
+- **MongoDB:** consistencia eventual, modelo documento no ideal para event log append-only, menor garantías ACID vs PostgreSQL
+- **DynamoDB Streams:** lock-in AWS, consistencia eventual, modelo streams no event store completo, menor portabilidad
+- **CosmosDB Change Feed:** lock-in Azure, consistencia eventual configurable pero compleja, infraestructura AWS ya establecida
 
 ---
 
@@ -89,6 +94,8 @@ Se selecciona **PostgreSQL + Event Table** como solución estándar de Event Sto
 
 ## 📚 REFERENCIAS
 
+- [PostgreSQL Event Sourcing](https://www.postgresql.org/docs/current/indexes.html)
+- [Marten Event Store](https://martendb.io/)
 - [EventStoreDB](https://eventstore.com/)
 - [Event Sourcing en PostgreSQL](https://eventstore.org/docs/)
 - [Apache Kafka](https://kafka.apache.org/)
