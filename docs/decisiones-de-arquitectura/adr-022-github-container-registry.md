@@ -39,13 +39,15 @@ Alternativas evaluadas:
 | Criterio                | GitHub Container Registry           | Amazon ECR            | Azure ACR                  | Docker Hub           | Harbor (Self-hosted)    |
 | ----------------------- | ----------------------------------- | --------------------- | -------------------------- | -------------------- | ----------------------- |
 | **Agnosticidad**        | ✅ Multi-cloud                      | ❌ Lock-in AWS        | ❌ Lock-in Azure           | ✅ Agnóstico         | ✅ OSS, agnóstico       |
-| **Integración CI/CD**   | ✅ Nativa GitHub Actions            | ✅ AWS SDK            | 🟡 Azure DevOps            | 🟡 Manual            | 🟡 Manual               |
-| **Autenticación**       | ✅ GitHub tokens (PAT, OIDC)        | ✅ IAM roles          | ✅ Azure AD                | 🟡 Docker login      | 🟡 Usuarios locales     |
-| **Seguridad**           | ✅ GitHub Advanced Security         | ✅ ECR Image Scanning | ✅ Defender for Containers | 🟡 Básico            | ✅ Trivy integrado      |
-| **Costos**              | ✅ Gratis (públicos), bajo privados | 🟡 US$0.10/GB storage | 🟡 US$5/mes + storage      | ❌ US$7/mes por repo | ✅ Solo infraestructura |
-| **Alta disponibilidad** | ✅ Global, gestionado               | ✅ Multi-AZ           | ✅ Geo-replicación         | ✅ Gestionado        | 🟡 Manual               |
-| **Performance**         | ✅ CDN global                       | ✅ VPC Endpoints      | ✅ Muy bueno               | 🟡 Rate limits       | 🟡 Depende infra        |
+| **Integración CI/CD**   | ✅ Nativa GitHub Actions            | ✅ AWS SDK            | ⚠️ Azure DevOps            | ⚠️ Manual            | ⚠️ Manual               |
+| **Autenticación**       | ✅ GitHub tokens (PAT, OIDC)        | ✅ IAM roles          | ✅ Azure AD                | ⚠️ Docker login      | ⚠️ Usuarios locales     |
+| **Seguridad**           | ✅ GitHub Advanced Security         | ✅ ECR Image Scanning | ✅ Defender for Containers | ⚠️ Básico            | ✅ Trivy integrado      |
+| **Costos**              | ✅ Gratis (públicos), bajo privados | ⚠️ US$0.10/GB storage | ⚠️ US$5/mes + storage      | ❌ US$7/mes por repo | ✅ Solo infraestructura |
+| **Alta disponibilidad** | ✅ Global, gestionado               | ✅ Multi-AZ           | ✅ Geo-replicación         | ✅ Gestionado        | ⚠️ Manual               |
+| **Performance**         | ✅ CDN global                       | ✅ VPC Endpoints      | ✅ Muy bueno               | ⚠️ Rate limits       | ⚠️ Depende infra        |
 | **Ecosistema .NET**     | ✅ Excelente                        | ✅ Excelente          | ✅ Nativo Microsoft        | ✅ Excelente         | ✅ Excelente            |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

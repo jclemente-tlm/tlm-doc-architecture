@@ -39,12 +39,14 @@ Alternativas evaluadas:
 | Criterio            | AWS S3              | Wasabi                         | Azure Blob          | GCS                 | MinIO                   |
 | ------------------- | ------------------- | ------------------------------ | ------------------- | ------------------- | ----------------------- |
 | **Agnosticidad**    | ❌ Lock-in AWS      | ✅ S3 compatible, multi-cloud  | ❌ Lock-in Azure    | ❌ Lock-in GCP      | ✅ OSS, multi-cloud     |
-| **API S3**          | ✅ Nativa           | ✅ 100% compatible             | 🟡 Parcial          | 🟡 Parcial          | ✅ 100% compatible      |
-| **Operación**       | ✅ Gestionada       | ✅ Gestionada                  | ✅ Gestionada       | ✅ Gestionada       | 🟡 Self-hosted          |
+| **API S3**          | ✅ Nativa           | ✅ 100% compatible             | ⚠️ Parcial          | ⚠️ Parcial          | ✅ 100% compatible      |
+| **Operación**       | ✅ Gestionada       | ✅ Gestionada                  | ✅ Gestionada       | ✅ Gestionada       | ⚠️ Self-hosted          |
 | **Escalabilidad**   | ✅ Ilimitada        | ✅ Ilimitada                   | ✅ Ilimitada        | ✅ Ilimitada        | ✅ Horizontal           |
 | **Seguridad**       | ✅ Enterprise grade | ✅ Encriptación, IAM           | ✅ Enterprise grade | ✅ Enterprise grade | ✅ IAM, encriptación    |
 | **Ecosistema .NET** | ✅ AWS SDK nativo   | ✅ AWS SDK compatible          | ✅ Azure SDK nativo | ✅ Google SDK       | ✅ AWS SDK compatible   |
-| **Costos**          | 🟡 Pago por uso     | ✅ Bajo costo, sin egress fees | 🟡 Pago por uso     | 🟡 Pago por uso     | ✅ Solo infraestructura |
+| **Costos**          | ⚠️ Pago por uso     | ✅ Bajo costo, sin egress fees | ⚠️ Pago por uso     | ⚠️ Pago por uso     | ✅ Solo infraestructura |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

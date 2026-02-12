@@ -37,13 +37,15 @@ Alternativas evaluadas:
 
 | Criterio                 | Serilog                 | OpenTelemetry Logging | NLog                    | MS.Extensions.Logging |
 | ------------------------ | ----------------------- | --------------------- | ----------------------- | --------------------- |
-| **Logging estructurado** | ✅ Nativo, JSON         | ✅ Estándar CNCF      | 🟡 Configurable         | 🟡 Básico             |
+| **Logging estructurado** | ✅ Nativo, JSON         | ✅ Estándar CNCF      | ⚠️ Configurable         | ⚠️ Básico             |
 | **Ecosistema .NET**      | ✅ Excelente            | ✅ Oficial            | ✅ Muy maduro           | ✅ Nativo             |
-| **Sinks/Destinos**       | ✅ 200+ sinks           | ✅ Exporters extensos | ✅ Muchos targets       | 🟡 Providers básicos  |
+| **Sinks/Destinos**       | ✅ 200+ sinks           | ✅ Exporters extensos | ✅ Muchos targets       | ⚠️ Providers básicos  |
 | **Rendimiento**          | ✅ Muy optimizado       | ✅ Bueno              | ✅ Excelente            | ✅ Bueno              |
-| **Multi-tenancy**        | ✅ Contexto enriquecido | ✅ Contexto avanzado  | 🟡 Manual               | 🟡 Scopes básicos     |
+| **Multi-tenancy**        | ✅ Contexto enriquecido | ✅ Contexto avanzado  | ⚠️ Manual               | ⚠️ Scopes básicos     |
 | **Agnosticidad**         | ✅ Totalmente agnóstico | ✅ Estándar abierto   | ✅ Totalmente agnóstico | ✅ Agnóstico          |
-| **Madurez**              | ✅ Muy maduro, activo   | 🟡 Emergente          | ✅ Muy maduro           | ✅ Oficial            |
+| **Madurez**              | ✅ Muy maduro, activo   | ⚠️ Emergente          | ✅ Muy maduro           | ✅ Oficial            |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ---
 

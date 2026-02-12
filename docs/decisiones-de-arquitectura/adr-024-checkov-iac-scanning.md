@@ -37,16 +37,18 @@ Alternativas evaluadas:
 
 | Criterio              | Checkov                   | tfsec                 | Terraform Sentinel | Snyk IaC             | AWS Config            |
 | --------------------- | ------------------------- | --------------------- | ------------------ | -------------------- | --------------------- |
-| **Agnosticidad**      | ✅ Multi-IaC, multi-cloud | ✅ Terraform focus    | 🟡 Terraform only  | 🟡 Multi-IaC, SaaS   | ❌ Lock-in AWS        |
-| **Cobertura**         | ✅ 1000+ checks           | ✅ 400+ checks        | ✅ Custom policies | ✅ Muy completa      | 🟡 AWS resources only |
-| **Frameworks**        | ✅ TF, CFN, K8s, Docker   | 🟡 Terraform only     | 🟡 Terraform only  | ✅ Multi-framework   | 🟡 CFN focus          |
-| **Integración CI/CD** | ✅ GitHub Actions nativo  | ✅ GitHub Actions     | 🟡 TF Enterprise   | ✅ Plugins múltiples | ❌ Runtime only       |
-| **Performance**       | ✅ Rápido (< 20s)         | ✅ Muy rápido (< 10s) | 🟡 Medio           | 🟡 Medio             | ✅ Runtime            |
-| **Costos**            | ✅ Gratis OSS             | ✅ Gratis OSS         | ❌ Enterprise only | ❌ US$98/dev/mes     | 🟡 Pago por uso       |
-| **Custom Policies**   | ✅ Python-based           | 🟡 Go-based           | ✅ Policy language | ✅ Rego-based        | ✅ Python Lambda      |
-| **Reportes**          | ✅ SARIF, JSON, JUnit     | ✅ JSON, Checkstyle   | 🟡 TF output       | ✅ Dashboard SaaS    | ✅ AWS Console        |
-| **Suppressions**      | ✅ Inline comments        | ✅ Inline comments    | ✅ Policy-based    | ✅ Annotations       | 🟡 Manual             |
+| **Agnosticidad**      | ✅ Multi-IaC, multi-cloud | ✅ Terraform focus    | ⚠️ Terraform only  | ⚠️ Multi-IaC, SaaS   | ❌ Lock-in AWS        |
+| **Cobertura**         | ✅ 1000+ checks           | ✅ 400+ checks        | ✅ Custom policies | ✅ Muy completa      | ⚠️ AWS resources only |
+| **Frameworks**        | ✅ TF, CFN, K8s, Docker   | ⚠️ Terraform only     | ⚠️ Terraform only  | ✅ Multi-framework   | ⚠️ CFN focus          |
+| **Integración CI/CD** | ✅ GitHub Actions nativo  | ✅ GitHub Actions     | ⚠️ TF Enterprise   | ✅ Plugins múltiples | ❌ Runtime only       |
+| **Performance**       | ✅ Rápido (< 20s)         | ✅ Muy rápido (< 10s) | ⚠️ Medio           | ⚠️ Medio             | ✅ Runtime            |
+| **Costos**            | ✅ Gratis OSS             | ✅ Gratis OSS         | ❌ Enterprise only | ❌ US$98/dev/mes     | ⚠️ Pago por uso       |
+| **Custom Policies**   | ✅ Python-based           | ⚠️ Go-based           | ✅ Policy language | ✅ Rego-based        | ✅ Python Lambda      |
+| **Reportes**          | ✅ SARIF, JSON, JUnit     | ✅ JSON, Checkstyle   | ⚠️ TF output       | ✅ Dashboard SaaS    | ✅ AWS Console        |
+| **Suppressions**      | ✅ Inline comments        | ✅ Inline comments    | ✅ Policy-based    | ✅ Annotations       | ⚠️ Manual             |
 | **Compliance**        | ✅ CIS, NIST, PCI, HIPAA  | ✅ CIS, custom        | ✅ Custom only     | ✅ Frameworks        | ✅ AWS frameworks     |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ---
 

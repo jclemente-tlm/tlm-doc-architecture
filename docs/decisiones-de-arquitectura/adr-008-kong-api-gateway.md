@@ -39,14 +39,16 @@ Alternativas evaluadas:
 
 | Criterio               | Kong                  | YARP             | Traefik           | NGINX Plus    | Ocelot           |
 | ---------------------- | --------------------- | ---------------- | ----------------- | ------------- | ---------------- |
-| **Agnosticidad**       | ✅ Agnóstico          | 🟡 .NET nativo   | ✅ Agnóstico      | ✅ Agnóstico  | 🟡 .NET nativo   |
-| **Madurez**            | ✅ Muy alta           | 🟡 Media         | ✅ Alta           | ✅ Muy alta   | 🟡 Baja          |
-| **Ecosistema Plugins** | ✅ Extenso            | 🟡 Limitado      | 🟡 Medio          | 🟡 Medio      | ❌ Limitado      |
-| **Seguridad**          | ✅ Completa           | ✅ OAuth2/JWT    | ✅ Completa       | ✅ Completa   | 🟡 Limitada      |
-| **Escalabilidad**      | ✅ Clustering nativo  | 🟡 Manual con LB | ✅ K8s/Clustering | ✅ Clustering | 🟡 Manual con LB |
-| **Observabilidad**     | ✅ Completa           | ✅ Nativa .NET   | ✅ Completa       | ✅ Completa   | 🟡 Básica        |
-| **Comunidad**          | ✅ Muy activa         | 🟡 Creciente     | ✅ Activa         | ✅ Activa     | 🟡 Pequeña       |
-| **Costos**             | ✅ OSS (+ Enterprise) | ✅ OSS           | ✅ OSS            | 🟡 Comercial  | ✅ OSS           |
+| **Agnosticidad**       | ✅ Agnóstico          | ⚠️ .NET nativo   | ✅ Agnóstico      | ✅ Agnóstico  | ⚠️ .NET nativo   |
+| **Madurez**            | ✅ Muy alta           | ⚠️ Media         | ✅ Alta           | ✅ Muy alta   | ⚠️ Baja          |
+| **Ecosistema Plugins** | ✅ Extenso            | ⚠️ Limitado      | ⚠️ Medio          | ⚠️ Medio      | ❌ Limitado      |
+| **Seguridad**          | ✅ Completa           | ✅ OAuth2/JWT    | ✅ Completa       | ✅ Completa   | ⚠️ Limitada      |
+| **Escalabilidad**      | ✅ Clustering nativo  | ⚠️ Manual con LB | ✅ K8s/Clustering | ✅ Clustering | ⚠️ Manual con LB |
+| **Observabilidad**     | ✅ Completa           | ✅ Nativa .NET   | ✅ Completa       | ✅ Completa   | ⚠️ Básica        |
+| **Comunidad**          | ✅ Muy activa         | ⚠️ Creciente     | ✅ Activa         | ✅ Activa     | ⚠️ Pequeña       |
+| **Costos**             | ✅ OSS (+ Enterprise) | ✅ OSS           | ✅ OSS            | ⚠️ Comercial  | ✅ OSS           |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ---
 

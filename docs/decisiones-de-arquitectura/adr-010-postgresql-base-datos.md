@@ -39,14 +39,16 @@ Alternativas evaluadas:
 | Criterio            | PostgreSQL                    | MySQL               | SQL Server           | Oracle                | Aurora          |
 | ------------------- | ----------------------------- | ------------------- | -------------------- | --------------------- | --------------- |
 | **Agnosticidad**    | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle     | ❌ Lock-in AWS  |
-| **Operación**       | ✅ Simple, automatizable      | ✅ Simple           | 🟡 Compleja          | 🟡 Compleja           | ✅ Gestionado   |
-| **Seguridad**       | ✅ Avanzada, RLS, cifrado     | 🟡 Básica           | ✅ Enterprise        | ✅ Enterprise         | ✅ Enterprise   |
+| **Operación**       | ✅ Simple, automatizable      | ✅ Simple           | ⚠️ Compleja          | ⚠️ Compleja           | ✅ Gestionado   |
+| **Seguridad**       | ✅ Avanzada, RLS, cifrado     | ⚠️ Básica           | ✅ Enterprise        | ✅ Enterprise         | ✅ Enterprise   |
 | **Ecosistema .NET** | ✅ Excelente (Npgsql)         | ✅ Muy bueno        | ✅ Nativo            | ✅ Bueno              | ✅ Compatible   |
-| **Escalabilidad**   | ✅ Particionamiento, sharding | 🟡 Limitada         | 🟡 Always On         | 🟡 RAC                | ✅ Automática   |
-| **Extensibilidad**  | ✅ Plugins, JSONB, PostGIS    | 🟡 Limitada         | 🟡 Limitada          | ✅ Máxima             | 🟡 Limitada     |
-| **Costos**          | ✅ Gratuito                   | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro           | 🟡 Pago por uso |
-| **Comunidad**       | ✅ Muy activa                 | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise | 🟡 Limitada AWS |
+| **Escalabilidad**   | ✅ Particionamiento, sharding | ⚠️ Limitada         | ⚠️ Always On         | ⚠️ RAC                | ✅ Automática   |
+| **Extensibilidad**  | ✅ Plugins, JSONB, PostGIS    | ⚠️ Limitada         | ⚠️ Limitada          | ✅ Máxima             | ⚠️ Limitada     |
+| **Costos**          | ✅ Gratuito                   | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro           | ⚠️ Pago por uso |
+| **Comunidad**       | ✅ Muy activa                 | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise | ⚠️ Limitada AWS |
 | **Portabilidad**    | ✅ Multi-plataforma           | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada           | ❌ AWS          |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ---
 

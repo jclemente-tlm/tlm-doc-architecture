@@ -36,13 +36,15 @@ Las alternativas evaluadas fueron:
 
 | Criterio            | Keycloak                    | Auth0                    | AWS Cognito              | Azure AD B2C             | Google IdP               |
 | ------------------- | --------------------------- | ------------------------ | ------------------------ | ------------------------ | ------------------------ |
-| **Agnosticidad**    | ❌ Lock-in OSS              | 🟡 SaaS independiente    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           |
-| **Operación**       | 🟡 Requiere gestión         | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado |
+| **Agnosticidad**    | ❌ Lock-in OSS              | ⚠️ SaaS independiente    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           |
+| **Operación**       | ⚠️ Requiere gestión         | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado |
 | **Seguridad**       | ✅ Enterprise grade         | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      |
-| **Multi-tenancy**   | ✅ Nativo y flexible        | ✅ Excelente soporte     | 🟡 Básico                | ✅ Muy bueno             | 🟡 Básico                |
-| **Protocolos**      | ✅ Todos los estándares     | ✅ Completo              | 🟡 Limitado              | ✅ Completo              | 🟡 Limitado              |
-| **Personalización** | ✅ Altamente personalizable | 🟡 Limitada              | 🟡 Muy limitada          | 🟡 Limitada              | 🟡 Muy limitada          |
-| **Costos**          | ✅ Solo infraestructura     | 🟡 Por usuario activo    | 🟡 Por usuario activo    | 🟡 Por usuario activo    | 🟡 Por usuario activo    |
+| **Multi-tenancy**   | ✅ Nativo y flexible        | ✅ Excelente soporte     | ⚠️ Básico                | ✅ Muy bueno             | ⚠️ Básico                |
+| **Protocolos**      | ✅ Todos los estándares     | ✅ Completo              | ⚠️ Limitado              | ✅ Completo              | ⚠️ Limitado              |
+| **Personalización** | ✅ Altamente personalizable | ⚠️ Limitada              | ⚠️ Muy limitada          | ⚠️ Limitada              | ⚠️ Muy limitada          |
+| **Costos**          | ✅ Solo infraestructura     | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

@@ -40,13 +40,15 @@ Alternativas evaluadas:
 | Criterio            | PostgreSQL                | EventStoreDB        | Apache Kafka        | MongoDB             | DynamoDB Streams | CosmosDB         |
 | ------------------- | ------------------------- | ------------------- | ------------------- | ------------------- | ---------------- | ---------------- |
 | **Agnosticidad**    | ✅ OSS, multi-cloud       | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ✅ OSS, multi-cloud | ❌ Lock-in AWS   | ❌ Lock-in Azure |
-| **Event Sourcing**  | 🟡 Manual con JSON        | ✅ Nativo           | 🟡 Log como eventos | 🟡 Collections      | 🟡 Streams       | 🟡 Change feed   |
-| **Escalabilidad**   | 🟡 Limitada               | ✅ Horizontal       | ✅ Masiva           | ✅ Horizontal       | ✅ Automática    | ✅ Global        |
+| **Event Sourcing**  | ⚠️ Manual con JSON        | ✅ Nativo           | ⚠️ Log como eventos | ⚠️ Collections      | ⚠️ Streams       | ⚠️ Change feed   |
+| **Escalabilidad**   | ⚠️ Limitada               | ✅ Horizontal       | ✅ Masiva           | ✅ Horizontal       | ✅ Automática    | ✅ Global        |
 | **Ecosistema .NET** | ✅ Excelente (Npgsql)     | ✅ Cliente oficial  | ✅ Confluent.Kafka  | ✅ MongoDB.Driver   | ✅ AWS SDK       | ✅ Azure SDK     |
-| **Snapshots**       | 🟡 Manual                 | ✅ Nativo           | 🟡 Compactación     | 🟡 Manual           | 🟡 Manual        | 🟡 Manual        |
-| **Consistencia**    | ✅ ACID fuerte            | ✅ Fuerte           | 🟡 Eventual         | 🟡 Eventual         | 🟡 Eventual      | 🟡 Configurable  |
-| **Operación**       | ✅ Conocimiento existente | 🟡 Especializada    | 🟡 Compleja         | ✅ Simple           | ✅ Gestionada    | ✅ Gestionada    |
-| **Costos**          | ✅ Gratuito OSS           | ✅ OSS + comercial  | ✅ Gratuito OSS     | ✅ Gratuito OSS     | 🟡 Por uso       | 🟡 Por uso       |
+| **Snapshots**       | ⚠️ Manual                 | ✅ Nativo           | ⚠️ Compactación     | ⚠️ Manual           | ⚠️ Manual        | ⚠️ Manual        |
+| **Consistencia**    | ✅ ACID fuerte            | ✅ Fuerte           | ⚠️ Eventual         | ⚠️ Eventual         | ⚠️ Eventual      | ⚠️ Configurable  |
+| **Operación**       | ✅ Conocimiento existente | ⚠️ Especializada    | ⚠️ Compleja         | ✅ Simple           | ✅ Gestionada    | ✅ Gestionada    |
+| **Costos**          | ✅ Gratuito OSS           | ✅ OSS + comercial  | ✅ Gratuito OSS     | ✅ Gratuito OSS     | ⚠️ Por uso       | ⚠️ Por uso       |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

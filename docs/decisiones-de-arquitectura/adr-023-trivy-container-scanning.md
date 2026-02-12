@@ -37,15 +37,17 @@ Alternativas evaluadas:
 
 | Criterio              | Trivy                    | Grype               | Snyk Container       | AWS ECR Scanning    | Docker Scout        |
 | --------------------- | ------------------------ | ------------------- | -------------------- | ------------------- | ------------------- |
-| **Agnosticidad**      | ✅ OSS, multi-cloud      | ✅ OSS, multi-cloud | 🟡 SaaS, agnóstico   | ❌ Lock-in AWS      | 🟡 Docker Hub focus |
-| **Cobertura**         | ✅ OS + deps + libs      | ✅ OS + deps        | ✅ Completa          | 🟡 OS + basic deps  | 🟡 Basic            |
-| **Integración CI/CD** | ✅ GitHub Actions nativo | ✅ GitHub Actions   | ✅ Plugins múltiples | 🟡 AWS CodePipeline | 🟡 Docker CLI       |
-| **Performance**       | ✅ Muy rápido (< 30s)    | ✅ Rápido (< 45s)   | 🟡 Medio (2-3 min)   | ✅ Rápido           | 🟡 Variable         |
-| **Costos**            | ✅ Gratis OSS            | ✅ Gratis OSS       | ❌ US$98/dev/mes     | 🟡 Enhanced: pago   | ✅ Free tier        |
-| **Ecosistema .NET**   | ✅ NuGet scanning        | ✅ NuGet scanning   | ✅ Excelente         | 🟡 Básico           | 🟡 Básico           |
-| **Reportes**          | ✅ SARIF, JSON, HTML     | ✅ JSON, table      | ✅ Dashboard SaaS    | ✅ AWS Console      | 🟡 CLI output       |
-| **Remediación**       | 🟡 Sugerencias           | 🟡 Sugerencias      | ✅ Auto-fix PRs      | 🟡 Sugerencias      | ❌ No               |
-| **Madurez**           | ✅ Muy maduro (2019)     | ✅ Maduro (2020)    | ✅ Muy maduro        | ✅ AWS managed      | 🟡 Reciente (2023)  |
+| **Agnosticidad**      | ✅ OSS, multi-cloud      | ✅ OSS, multi-cloud | ⚠️ SaaS, agnóstico   | ❌ Lock-in AWS      | ⚠️ Docker Hub focus |
+| **Cobertura**         | ✅ OS + deps + libs      | ✅ OS + deps        | ✅ Completa          | ⚠️ OS + basic deps  | ⚠️ Basic            |
+| **Integración CI/CD** | ✅ GitHub Actions nativo | ✅ GitHub Actions   | ✅ Plugins múltiples | ⚠️ AWS CodePipeline | ⚠️ Docker CLI       |
+| **Performance**       | ✅ Muy rápido (< 30s)    | ✅ Rápido (< 45s)   | ⚠️ Medio (2-3 min)   | ✅ Rápido           | ⚠️ Variable         |
+| **Costos**            | ✅ Gratis OSS            | ✅ Gratis OSS       | ❌ US$98/dev/mes     | ⚠️ Enhanced: pago   | ✅ Free tier        |
+| **Ecosistema .NET**   | ✅ NuGet scanning        | ✅ NuGet scanning   | ✅ Excelente         | ⚠️ Básico           | ⚠️ Básico           |
+| **Reportes**          | ✅ SARIF, JSON, HTML     | ✅ JSON, table      | ✅ Dashboard SaaS    | ✅ AWS Console      | ⚠️ CLI output       |
+| **Remediación**       | ⚠️ Sugerencias           | ⚠️ Sugerencias      | ✅ Auto-fix PRs      | ⚠️ Sugerencias      | ❌ No               |
+| **Madurez**           | ✅ Muy maduro (2019)     | ✅ Maduro (2020)    | ✅ Muy maduro        | ✅ AWS managed      | ⚠️ Reciente (2023)  |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

@@ -40,19 +40,21 @@ Alternativas evaluadas:
 
 | Criterio              | SonarQube Community  | SonarQube Developer  | SonarCloud         | Codacy            | Snyk Code         | Semgrep          |
 | --------------------- | -------------------- | -------------------- | ------------------ | ----------------- | ----------------- | ---------------- |
-| **Deployment**        | ✅ Self-hosted       | ✅ Self-hosted       | 🟡 SaaS only       | 🟡 SaaS only      | 🟡 SaaS/Hybrid    | ✅ Self-hosted   |
+| **Deployment**        | ✅ Self-hosted       | ✅ Self-hosted       | ⚠️ SaaS only       | ⚠️ SaaS only      | ⚠️ SaaS/Hybrid    | ✅ Self-hosted   |
 | **Lenguajes**         | ✅ 29+ lenguajes     | ✅ 29+ lenguajes     | ✅ 29+ lenguajes   | ✅ 40+ lenguajes  | ✅ 10+ lenguajes  | ✅ 30+ lenguajes |
 | **Branch Analysis**   | ❌ Main only         | ✅ PRs + branches    | ✅ PRs + branches  | ✅ PRs + branches | ✅ PRs + branches | ✅ Todas         |
 | **PR Decoration**     | ❌ No                | ✅ Inline comments   | ✅ Inline comments | ✅ AI suggestions | ✅ Inline         | ✅ Inline        |
 | **Vulnerabilidades**  | ✅ OWASP, CWE        | ✅ OWASP, CWE        | ✅ OWASP, CWE      | ✅ OWASP          | ✅ Deep SAST      | ✅ OWASP         |
-| **Code Smells**       | ✅ Completo          | ✅ Completo          | ✅ Completo        | ✅ Muy completo   | 🟡 Básico         | 🟡 Básico        |
-| **Cobertura Tests**   | ✅ Coverage report   | ✅ Coverage report   | ✅ Coverage report | ✅ Coverage       | 🟡 No nativo      | 🟡 No nativo     |
+| **Code Smells**       | ✅ Completo          | ✅ Completo          | ✅ Completo        | ✅ Muy completo   | ⚠️ Básico         | ⚠️ Básico        |
+| **Cobertura Tests**   | ✅ Coverage report   | ✅ Coverage report   | ✅ Coverage report | ✅ Coverage       | ⚠️ No nativo      | ⚠️ No nativo     |
 | **Quality Gates**     | ✅ Configurables     | ✅ Configurables     | ✅ Configurables   | ✅ Gates          | ✅ Policies       | ✅ Policies      |
 | **Costos**            | ✅ Gratis OSS        | ❌ ~US$150/dev/año   | ❌ US$10/100 LoC   | ❌ US$15/dev/mes  | ❌ US$25/dev/mes  | ✅ Gratis OSS    |
-| **Infraestructura**   | 🟡 Requiere hosting  | 🟡 Requiere hosting  | ✅ Managed         | ✅ Managed        | ✅ Managed        | 🟡 Self-hosted   |
-| **Custom Rules**      | ✅ Java/XML plugins  | ✅ Java/XML plugins  | 🟡 Limited         | 🟡 Limited        | 🟡 Limited        | ✅ YAML rules    |
+| **Infraestructura**   | ⚠️ Requiere hosting  | ⚠️ Requiere hosting  | ✅ Managed         | ✅ Managed        | ✅ Managed        | ⚠️ Self-hosted   |
+| **Custom Rules**      | ✅ Java/XML plugins  | ✅ Java/XML plugins  | ⚠️ Limited         | ⚠️ Limited        | ⚠️ Limited        | ✅ YAML rules    |
 | **Integración CI/CD** | ✅ Plugins múltiples | ✅ Plugins múltiples | ✅ GitHub Actions  | ✅ Native         | ✅ Native         | ✅ CLI           |
-| **Histórico**         | ✅ Base de datos     | ✅ Base de datos     | ✅ Cloud storage   | ✅ Cloud          | ✅ Cloud          | 🟡 Limitado      |
+| **Histórico**         | ✅ Base de datos     | ✅ Base de datos     | ✅ Cloud storage   | ✅ Cloud          | ✅ Cloud          | ⚠️ Limitado      |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

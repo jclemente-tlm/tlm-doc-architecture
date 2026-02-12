@@ -33,13 +33,15 @@ Las alternativas de multi-tenancy evaluadas fueron:
 
 | Criterio           | Single-Tenant         | Multi-Tenant DB       | Multi-Tenant Schema | Híbrido                   |
 | ------------------ | --------------------- | --------------------- | ------------------- | ------------------------- |
-| **Aislamiento**    | ✅ Total por cliente  | 🟡 A nivel aplicación | 🟡 Por esquema      | ✅ Flexible según cliente |
+| **Aislamiento**    | ✅ Total por cliente  | ⚠️ A nivel aplicación | ⚠️ Por esquema      | ✅ Flexible según cliente |
 | **Escalabilidad**  | ❌ Muy limitada       | ✅ Excelente          | ✅ Muy buena        | ✅ Buena                  |
-| **Operación**      | ❌ Compleja gestión   | ✅ Centralizada       | 🟡 Moderada         | 🟡 Compleja pero flexible |
-| **Costos**         | ❌ Muy altos          | ✅ Muy eficiente      | ✅ Eficiente        | 🟡 Moderados              |
-| **Flexibilidad**   | ✅ Máxima por cliente | ❌ Muy limitada       | 🟡 Limitada         | ✅ Alta                   |
-| **Compliance**     | ✅ Máximo control     | 🟡 Requiere cuidado   | 🟡 Bueno            | ✅ Excelente              |
-| **Implementación** | ✅ Rápida             | ✅ Rápida             | 🟡 Moderada         | 🟡 Compleja               |
+| **Operación**      | ❌ Compleja gestión   | ✅ Centralizada       | ⚠️ Moderada         | ⚠️ Compleja pero flexible |
+| **Costos**         | ❌ Muy altos          | ✅ Muy eficiente      | ✅ Eficiente        | ⚠️ Moderados              |
+| **Flexibilidad**   | ✅ Máxima por cliente | ❌ Muy limitada       | ⚠️ Limitada         | ✅ Alta                   |
+| **Compliance**     | ✅ Máximo control     | ⚠️ Requiere cuidado   | ⚠️ Bueno            | ✅ Excelente              |
+| **Implementación** | ✅ Rápida             | ✅ Rápida             | ⚠️ Moderada         | ⚠️ Compleja               |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ⚖️ DECISIÓN
 

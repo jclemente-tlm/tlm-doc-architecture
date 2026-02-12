@@ -36,13 +36,15 @@ Alternativas evaluadas:
 | Criterio            | Grafana Stack (Loki+Mimir+Tempo) | ELK Stack               | SaaS (Datadog)           | AWS CloudWatch + X-Ray |
 | ------------------- | -------------------------------- | ----------------------- | ------------------------ | ---------------------- |
 | **Agnosticidad**    | ✅ OSS, multi-cloud              | ✅ OSS, multi-cloud     | ❌ Lock-in vendor        | ❌ Lock-in AWS         |
-| **Operación**       | 🟡 Self-managed                  | 🟡 Self-managed         | ✅ Gestionado            | ✅ Gestionado          |
-| **Correlación**     | ✅ OpenTelemetry nativo          | 🟡 Manual               | ✅ Nativa                | ✅ Nativa              |
+| **Operación**       | ⚠️ Self-managed                  | ⚠️ Self-managed         | ✅ Gestionado            | ✅ Gestionado          |
+| **Correlación**     | ✅ OpenTelemetry nativo          | ⚠️ Manual               | ✅ Nativa                | ✅ Nativa              |
 | **Ecosistema .NET** | ✅ OpenTelemetry SDK             | ✅ Serilog/Elastic      | ✅ APM integrado         | ✅ AWS SDK             |
-| **Costos**          | ✅ Solo infraestructura          | ✅ Solo infraestructura | ❌ Alto por host/métrica | 🟡 Pago por uso        |
-| **Visualización**   | ✅ Grafana unificado             | ✅ Kibana maduro        | ✅ Dashboards avanzados  | 🟡 CloudWatch básico   |
-| **Performance**     | ✅ Alta escala, optimizado       | 🟡 Requiere tuning      | ✅ Optimizado            | ✅ Bueno               |
+| **Costos**          | ✅ Solo infraestructura          | ✅ Solo infraestructura | ❌ Alto por host/métrica | ⚠️ Pago por uso        |
+| **Visualización**   | ✅ Grafana unificado             | ✅ Kibana maduro        | ✅ Dashboards avanzados  | ⚠️ CloudWatch básico   |
+| **Performance**     | ✅ Alta escala, optimizado       | ⚠️ Requiere tuning      | ✅ Optimizado            | ✅ Bueno               |
 | **Alertas**         | ✅ Grafana Alerting integrado    | ✅ Watcher/Alerting     | ✅ Alertas avanzadas     | ✅ CloudWatch Alarms   |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

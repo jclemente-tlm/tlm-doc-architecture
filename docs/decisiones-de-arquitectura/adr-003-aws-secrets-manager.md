@@ -36,11 +36,13 @@ Las alternativas evaluadas fueron:
 | Criterio            | AWS Secrets Manager      | Azure Key Vault          | Google Secret Manager    | HashiCorp Vault         |
 | ------------------- | ------------------------ | ------------------------ | ------------------------ | ----------------------- |
 | **Agnosticidad**    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           | ✅ Totalmente agnóstico |
-| **Operación**       | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | 🟡 Requiere gestión     |
+| **Operación**       | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ⚠️ Requiere gestión     |
 | **Seguridad**       | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Máxima seguridad     |
-| **Ecosistema .NET** | ✅ Muy buena             | ✅ Excelente             | 🟡 Limitada              | ✅ Buena                |
+| **Ecosistema .NET** | ✅ Muy buena             | ✅ Excelente             | ⚠️ Limitada              | ✅ Buena                |
 | **Rotación**        | ✅ Automática            | ✅ Automática            | ✅ Automática            | ✅ Muy flexible         |
-| **Costos**          | 🟡 Por uso               | ✅ Muy económico         | ✅ Muy económico         | 🟡 Infraestructura      |
+| **Costos**          | ⚠️ Por uso               | ✅ Muy económico         | ✅ Muy económico         | ⚠️ Infraestructura      |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

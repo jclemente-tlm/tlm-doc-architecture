@@ -36,14 +36,16 @@ Alternativas evaluadas:
 | Criterio            | Kafka (MSK)                   | SNS+SQS              | RabbitMQ            | Azure SB               |
 | ------------------- | ----------------------------- | -------------------- | ------------------- | ---------------------- |
 | **Agnosticidad**    | ✅ OSS, multi-cloud           | ❌ Lock-in AWS       | ✅ OSS, multi-cloud | ❌ Lock-in Azure       |
-| **Escalabilidad**   | ✅ Masiva                     | ✅ Automática        | 🟡 Limitada         | ✅ Muy buena           |
-| **Operación**       | 🟡 Gestionada (MSK)           | ✅ Gestionada        | 🟡 Compleja         | ✅ Gestionada          |
-| **Rendimiento**     | ✅ Máximo                     | ✅ Muy alto          | 🟡 Moderado         | ✅ Muy alto            |
+| **Escalabilidad**   | ✅ Masiva                     | ✅ Automática        | ⚠️ Limitada         | ✅ Muy buena           |
+| **Operación**       | ⚠️ Gestionada (MSK)           | ✅ Gestionada        | ⚠️ Compleja         | ✅ Gestionada          |
+| **Rendimiento**     | ✅ Máximo                     | ✅ Muy alto          | ⚠️ Moderado         | ✅ Muy alto            |
 | **Ecosistema .NET** | ✅ Confluent.Kafka            | ✅ AWS SDK           | ✅ RabbitMQ.Client  | ✅ Azure SDK           |
 | **Persistencia**    | ✅ Log distribuido inmutable  | ✅ Persistente       | ✅ Durable queues   | ✅ Persistencia nativa |
 | **Streaming**       | ✅ Nativo (replay, windowing) | ❌ No soportado      | ❌ No soportado     | ❌ Limitado            |
-| **Event Sourcing**  | ✅ Ideal (log inmutable)      | 🟡 Parcial           | ❌ No recomendado   | 🟡 Parcial             |
-| **Costos**          | 🟡 Infraestructura managed    | ✅ Pago por uso bajo | ✅ OSS              | 🟡 Pago por uso        |
+| **Event Sourcing**  | ✅ Ideal (log inmutable)      | ⚠️ Parcial           | ❌ No recomendado   | ⚠️ Parcial             |
+| **Costos**          | ⚠️ Infraestructura managed    | ✅ Pago por uso bajo | ✅ OSS              | ⚠️ Pago por uso        |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

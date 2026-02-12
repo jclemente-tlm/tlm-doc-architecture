@@ -39,12 +39,14 @@ Alternativas evaluadas:
 | Criterio            | ECS Fargate                | EKS                         | Azure ACI           | Google Cloud Run | Docker Swarm            | Nomad                   |
 | ------------------- | -------------------------- | --------------------------- | ------------------- | ---------------- | ----------------------- | ----------------------- |
 | **Agnosticidad**    | ❌ Lock-in AWS             | ✅ Estándar K8s             | ❌ Lock-in Azure    | ❌ Lock-in GCP   | ✅ Docker estándar      | ✅ Agnóstico            |
-| **Operación**       | ✅ Serverless, sin gestión | 🟡 Requiere gestión cluster | ✅ Serverless       | ✅ Serverless    | 🟡 Manual               | 🟡 Manual               |
-| **Seguridad**       | ✅ IAM, VPC, Secrets       | ✅ IAM, RBAC                | ✅ Azure RBAC       | ✅ GCP IAM       | 🟡 Limitada             | 🟡 Limitada             |
+| **Operación**       | ✅ Serverless, sin gestión | ⚠️ Requiere gestión cluster | ✅ Serverless       | ✅ Serverless    | ⚠️ Manual               | ⚠️ Manual               |
+| **Seguridad**       | ✅ IAM, VPC, Secrets       | ✅ IAM, RBAC                | ✅ Azure RBAC       | ✅ GCP IAM       | ⚠️ Limitada             | ⚠️ Limitada             |
 | **Ecosistema .NET** | ✅ Excelente               | ✅ Excelente                | ✅ Nativo Microsoft | ✅ Excelente     | ✅ Excelente            | ✅ Excelente            |
-| **Escalabilidad**   | ✅ Automática              | ✅ Flexible                 | ✅ Automática       | ✅ Automática    | 🟡 Manual               | 🟡 Manual               |
+| **Escalabilidad**   | ✅ Automática              | ✅ Flexible                 | ✅ Automática       | ✅ Automática    | ⚠️ Manual               | ⚠️ Manual               |
 | **Complejidad**     | ✅ Muy simple              | ❌ Complejo (K8s)           | ✅ Simple           | ✅ Simple        | ✅ Simple               | ✅ Simple               |
-| **Costos**          | 🟡 Premium serverless      | 🟡 Nodos + gestión          | 🟡 Pago por uso     | 🟡 Pago por uso  | ✅ Solo infraestructura | ✅ Solo infraestructura |
+| **Costos**          | ⚠️ Premium serverless      | ⚠️ Nodos + gestión          | ⚠️ Pago por uso     | ⚠️ Pago por uso  | ✅ Solo infraestructura | ✅ Solo infraestructura |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ---
 

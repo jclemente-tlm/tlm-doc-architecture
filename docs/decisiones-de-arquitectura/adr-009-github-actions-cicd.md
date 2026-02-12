@@ -39,12 +39,14 @@ Alternativas evaluadas:
 
 | Criterio            | GitHub Actions        | GitLab CI/CD        | Jenkins                 | Azure DevOps            | AWS CodePipeline | CircleCI      |
 | ------------------- | --------------------- | ------------------- | ----------------------- | ----------------------- | ---------------- | ------------- |
-| **Agnosticidad**    | 🟡 Vinculado a GitHub | ✅ Muy agnóstico    | ✅ Totalmente agnóstico | 🟡 Ecosistema Microsoft | ❌ Lock-in AWS   | 🟡 Agnóstico  |
-| **Operación**       | ✅ Gestionado         | ✅ SaaS/self-hosted | 🟡 Manual               | ✅ Gestionado           | ✅ Gestionado    | ✅ Gestionado |
-| **Seguridad**       | ✅ Integrada          | ✅ Integrada        | 🟡 Limitada             | ✅ Integrada            | ✅ Integrada     | ✅ Integrada  |
+| **Agnosticidad**    | ⚠️ Vinculado a GitHub | ✅ Muy agnóstico    | ✅ Totalmente agnóstico | ⚠️ Ecosistema Microsoft | ❌ Lock-in AWS   | ⚠️ Agnóstico  |
+| **Operación**       | ✅ Gestionado         | ✅ SaaS/self-hosted | ⚠️ Manual               | ✅ Gestionado           | ✅ Gestionado    | ✅ Gestionado |
+| **Seguridad**       | ✅ Integrada          | ✅ Integrada        | ⚠️ Limitada             | ✅ Integrada            | ✅ Integrada     | ✅ Integrada  |
 | **Ecosistema .NET** | ✅ Excelente          | ✅ Muy bueno        | ✅ Bueno                | ✅ Nativo               | ✅ Bueno         | ✅ Bueno      |
-| **Extensibilidad**  | ✅ Marketplace        | 🟡 Bueno            | ✅ Plugins              | 🟡 Limitado             | 🟡 Básico        | 🟡 Limitado   |
-| **Costos**          | ✅ Plan gratuito      | ✅ Plan gratuito    | 🟡 Infraestructura      | ✅ Plan gratuito        | 🟡 Por uso       | 🟡 Por uso    |
+| **Extensibilidad**  | ✅ Marketplace        | ⚠️ Bueno            | ✅ Plugins              | ⚠️ Limitado             | ⚠️ Básico        | ⚠️ Limitado   |
+| **Costos**          | ✅ Plan gratuito      | ✅ Plan gratuito    | ⚠️ Infraestructura      | ✅ Plan gratuito        | ⚠️ Por uso       | ⚠️ Por uso    |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ---
 

@@ -36,15 +36,17 @@ Alternativas evaluadas:
 
 | Criterio            | Redis                 | Memcached           | In-Memory .NET         | Hazelcast       | Ignite          |
 | ------------------- | --------------------- | ------------------- | ---------------------- | --------------- | --------------- |
-| **Agnosticidad**    | ✅ OSS, multi-cloud   | ✅ OSS, multi-cloud | ✅ Nativo              | 🟡 Java         | 🟡 Java         |
-| **Operación**       | ✅ Simple, clustering | ✅ Simple           | ✅ Muy simple          | 🟡 Complejo     | 🟡 Complejo     |
+| **Agnosticidad**    | ✅ OSS, multi-cloud   | ✅ OSS, multi-cloud | ✅ Nativo              | ⚠️ Java         | ⚠️ Java         |
+| **Operación**       | ✅ Simple, clustering | ✅ Simple           | ✅ Muy simple          | ⚠️ Complejo     | ⚠️ Complejo     |
 | **Persistencia**    | ✅ Opcional (RDB/AOF) | ❌ No               | ❌ No                  | ✅ Opcional     | ✅ Opcional     |
-| **Multi-tenancy**   | ✅ Namespaces         | 🟡 Limitado         | 🟡 Limitado            | 🟡 Limitado     | 🟡 Limitado     |
-| **Escalabilidad**   | ✅ Clustering         | 🟡 Manual           | ❌ No                  | ✅ Nativo       | ✅ Nativo       |
-| **Ecosistema .NET** | ✅ Excelente          | 🟡 Limitado         | ✅ Nativo              | 🟡 Java         | 🟡 Java         |
+| **Multi-tenancy**   | ✅ Namespaces         | ⚠️ Limitado         | ⚠️ Limitado            | ⚠️ Limitado     | ⚠️ Limitado     |
+| **Escalabilidad**   | ✅ Clustering         | ⚠️ Manual           | ❌ No                  | ✅ Nativo       | ✅ Nativo       |
+| **Ecosistema .NET** | ✅ Excelente          | ⚠️ Limitado         | ✅ Nativo              | ⚠️ Java         | ⚠️ Java         |
 | **Costos**          | ✅ Gratuito OSS       | ✅ Gratuito OSS     | ✅ Sin costos externos | ✅ Gratuito OSS | ✅ Gratuito OSS |
-| **Comunidad**       | ✅ Muy activa         | ✅ Activa           | ✅ Microsoft           | 🟡 Nicho        | 🟡 Nicho        |
-| **Portabilidad**    | ✅ Multi-plataforma   | ✅ Multi-plataforma | ❌ Solo .NET           | 🟡 Java         | 🟡 Java         |
+| **Comunidad**       | ✅ Muy activa         | ✅ Activa           | ✅ Microsoft           | ⚠️ Nicho        | ⚠️ Nicho        |
+| **Portabilidad**    | ✅ Multi-plataforma   | ✅ Multi-plataforma | ❌ Solo .NET           | ⚠️ Java         | ⚠️ Java         |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

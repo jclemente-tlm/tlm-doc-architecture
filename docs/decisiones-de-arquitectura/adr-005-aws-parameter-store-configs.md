@@ -40,13 +40,15 @@ Alternativas evaluadas:
 | Criterio            | AWS Parameter Store      | Azure App Configuration  | Google Runtime Config    | HashiCorp Consul        |
 | ------------------- | ------------------------ | ------------------------ | ------------------------ | ----------------------- |
 | **Agnosticidad**    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           | ✅ Totalmente agnóstico |
-| **Operación**       | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | 🟡 Requiere gestión     |
+| **Operación**       | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ⚠️ Requiere gestión     |
 | **Seguridad**       | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Máxima seguridad     |
-| **Ecosistema .NET** | ✅ Muy buena             | ✅ Excelente             | 🟡 Limitada              | ✅ Buena                |
+| **Ecosistema .NET** | ✅ Muy buena             | ✅ Excelente             | ⚠️ Limitada              | ✅ Buena                |
 | **Versionado**      | ✅ Automática            | ✅ Automática            | ✅ Automática            | ✅ Muy flexible         |
-| **Feature Flags**   | 🟡 Básico                | ✅ Nativo, completo      | 🟡 Básico                | ✅ Flexible             |
-| **Multi-tenancy**   | 🟡 Por parámetros        | ✅ Labels y filtros      | 🟡 Por proyectos         | ✅ Namespaces           |
-| **Costos**          | 🟡 Por uso               | ✅ Muy económico         | ✅ Muy económico         | 🟡 Infraestructura      |
+| **Feature Flags**   | ⚠️ Básico                | ✅ Nativo, completo      | ⚠️ Básico                | ✅ Flexible             |
+| **Multi-tenancy**   | ⚠️ Por parámetros        | ✅ Labels y filtros      | ⚠️ Por proyectos         | ✅ Namespaces           |
+| **Costos**          | ⚠️ Por uso               | ✅ Muy económico         | ✅ Muy económico         | ⚠️ Infraestructura      |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 

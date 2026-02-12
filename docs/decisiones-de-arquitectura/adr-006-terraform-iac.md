@@ -40,12 +40,14 @@ Alternativas evaluadas:
 | Criterio            | Terraform           | Pulumi              | AWS CloudFormation | ARM Templates    | GCP Deployment Manager |
 | ------------------- | ------------------- | ------------------- | ------------------ | ---------------- | ---------------------- |
 | **Agnosticidad**    | ✅ Multi-cloud      | ✅ Multi-cloud      | ❌ Lock-in AWS     | ❌ Lock-in Azure | ❌ Lock-in GCP         |
-| **Operación**       | ✅ Declarativo      | 🟡 Imperativo       | ✅ Declarativo     | ✅ Declarativo   | ✅ Declarativo         |
+| **Operación**       | ✅ Declarativo      | ⚠️ Imperativo       | ✅ Declarativo     | ✅ Declarativo   | ✅ Declarativo         |
 | **Seguridad**       | ✅ Enterprise grade | ✅ Enterprise grade | ✅ AWS IAM         | ✅ Azure RBAC    | ✅ GCP IAM             |
-| **Ecosistema .NET** | ✅ Muy buena        | ✅ Muy buena        | 🟡 Solo AWS        | 🟡 Solo Azure    | 🟡 Solo GCP            |
+| **Ecosistema .NET** | ✅ Muy buena        | ✅ Muy buena        | ⚠️ Solo AWS        | ⚠️ Solo Azure    | ⚠️ Solo GCP            |
 | **Versionado**      | ✅ Automática       | ✅ Automática       | ✅ Nativo          | ✅ Nativo        | ✅ Nativo              |
-| **Módulos**         | ✅ Reutilizables    | ✅ Reutilizables    | 🟡 Solo AWS        | 🟡 Solo Azure    | 🟡 Solo GCP            |
-| **Costos**          | 🟡 Por uso          | 🟡 Por uso          | ✅ Incluido        | ✅ Incluido      | ✅ Incluido            |
+| **Módulos**         | ✅ Reutilizables    | ✅ Reutilizables    | ⚠️ Solo AWS        | ⚠️ Solo Azure    | ⚠️ Solo GCP            |
+| **Costos**          | ⚠️ Por uso          | ⚠️ Por uso          | ✅ Incluido        | ✅ Incluido      | ✅ Incluido            |
+
+**Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 
