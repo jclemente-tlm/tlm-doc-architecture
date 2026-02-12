@@ -29,6 +29,8 @@ Alternativas evaluadas:
 - **SonarQube Community** (OSS, self-hosted, sin branch analysis)
 - **SonarQube Developer** (comercial, branch analysis, PR decoration)
 - **SonarCloud** (SaaS oficial, sin infraestructura)
+- **CodeQL** (GitHub native, semantic analysis, OSS engine)
+- **Veracode** (Enterprise SAST líder, completo, costoso)
 - **Codacy** (SaaS, AI-powered, análisis automático)
 - **Snyk Code** (SAST de Snyk, integrado con vulnerabilidades)
 - **Semgrep** (OSS, policy-as-code, rápido)
@@ -38,21 +40,21 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio              | SonarQube Community  | SonarQube Developer  | SonarCloud         | Codacy            | Snyk Code         | Semgrep          |
-| --------------------- | -------------------- | -------------------- | ------------------ | ----------------- | ----------------- | ---------------- |
-| **Deployment**        | ✅ Self-hosted       | ✅ Self-hosted       | ⚠️ SaaS only       | ⚠️ SaaS only      | ⚠️ SaaS/Hybrid    | ✅ Self-hosted   |
-| **Lenguajes**         | ✅ 29+ lenguajes     | ✅ 29+ lenguajes     | ✅ 29+ lenguajes   | ✅ 40+ lenguajes  | ✅ 10+ lenguajes  | ✅ 30+ lenguajes |
-| **Branch Analysis**   | ❌ Main only         | ✅ PRs + branches    | ✅ PRs + branches  | ✅ PRs + branches | ✅ PRs + branches | ✅ Todas         |
-| **PR Decoration**     | ❌ No                | ✅ Inline comments   | ✅ Inline comments | ✅ AI suggestions | ✅ Inline         | ✅ Inline        |
-| **Vulnerabilidades**  | ✅ OWASP, CWE        | ✅ OWASP, CWE        | ✅ OWASP, CWE      | ✅ OWASP          | ✅ Deep SAST      | ✅ OWASP         |
-| **Code Smells**       | ✅ Completo          | ✅ Completo          | ✅ Completo        | ✅ Muy completo   | ⚠️ Básico         | ⚠️ Básico        |
-| **Cobertura Tests**   | ✅ Coverage report   | ✅ Coverage report   | ✅ Coverage report | ✅ Coverage       | ⚠️ No nativo      | ⚠️ No nativo     |
-| **Quality Gates**     | ✅ Configurables     | ✅ Configurables     | ✅ Configurables   | ✅ Gates          | ✅ Policies       | ✅ Policies      |
-| **Costos**            | ✅ Gratis OSS        | ❌ ~US$150/dev/año   | ❌ US$10/100 LoC   | ❌ US$15/dev/mes  | ❌ US$25/dev/mes  | ✅ Gratis OSS    |
-| **Infraestructura**   | ⚠️ Requiere hosting  | ⚠️ Requiere hosting  | ✅ Managed         | ✅ Managed        | ✅ Managed        | ⚠️ Self-hosted   |
-| **Custom Rules**      | ✅ Java/XML plugins  | ✅ Java/XML plugins  | ⚠️ Limited         | ⚠️ Limited        | ⚠️ Limited        | ✅ YAML rules    |
-| **Integración CI/CD** | ✅ Plugins múltiples | ✅ Plugins múltiples | ✅ GitHub Actions  | ✅ Native         | ✅ Native         | ✅ CLI           |
-| **Histórico**         | ✅ Base de datos     | ✅ Base de datos     | ✅ Cloud storage   | ✅ Cloud          | ✅ Cloud          | ⚠️ Limitado      |
+| Criterio              | SonarQube CE     | SonarQube Dev    | SonarCloud       | CodeQL           | Veracode            | Codacy            | Snyk Code        | Semgrep          |
+| --------------------- | ---------------- | ---------------- | ---------------- | ---------------- | ------------------- | ----------------- | ---------------- | ---------------- |
+| **Deployment**        | ✅ Self-hosted   | ✅ Self-hosted   | ⚠️ SaaS only     | ✅ Self/SaaS     | ⚠️ SaaS only        | ⚠️ SaaS only      | ⚠️ SaaS/Hybrid   | ✅ Self-hosted   |
+| **Lenguajes**         | ✅ 29+ lenguajes | ✅ 29+ lenguajes | ✅ 29+ lenguajes | ✅ 20+ lenguajes | ✅ 130+ lenguajes   | ✅ 40+ lenguajes  | ✅ 10+ lenguajes | ✅ 30+ lenguajes |
+| **Branch Analysis**   | ❌ Main only     | ✅ PRs+branches  | ✅ PRs+branches  | ✅ PRs+branches  | ✅ PRs+branches     | ✅ PRs+branches   | ✅ PRs+branches  | ✅ Todas         |
+| **PR Decoration**     | ❌ No            | ✅ Inline        | ✅ Inline        | ✅ Native GitHub | ✅ Inline           | ✅ AI suggestions | ✅ Inline        | ✅ Inline        |
+| **Vulnerabilidades**  | ✅ OWASP, CWE    | ✅ OWASP, CWE    | ✅ OWASP, CWE    | ✅ CWE deep      | ✅ OWASP enterprise | ✅ OWASP          | ✅ Deep SAST     | ✅ OWASP         |
+| **Code Smells**       | ✅ Completo      | ✅ Completo      | ✅ Completo      | ⚠️ Básico        | ✅ Completo         | ✅ Muy completo   | ⚠️ Básico        | ⚠️ Básico        |
+| **Cobertura Tests**   | ✅ Coverage      | ✅ Coverage      | ✅ Coverage      | ⚠️ No nativo     | ✅ Coverage         | ✅ Coverage       | ⚠️ No nativo     | ⚠️ No nativo     |
+| **Quality Gates**     | ✅ Config        | ✅ Config        | ✅ Config        | ✅ Policies      | ✅ Policies         | ✅ Gates          | ✅ Policies      | ✅ Policies      |
+| **Costos**            | ✅ Gratis OSS    | ❌ ~US$150/dev   | ❌ US$10/100 LoC | ✅ Gratis OSS    | ❌ US$50K+ setup    | ❌ US$15/dev/mes  | ❌ US$25/dev/mes | ✅ Gratis OSS    |
+| **Infraestructura**   | ⚠️ Hosting       | ⚠️ Hosting       | ✅ Managed       | ⚠️ Hosting       | ✅ Managed          | ✅ Managed        | ✅ Managed       | ⚠️ Self-hosted   |
+| **Custom Rules**      | ✅ Plugins       | ✅ Plugins       | ⚠️ Limited       | ✅ QL queries    | ⚠️ Limited          | ⚠️ Limited        | ⚠️ Limited       | ✅ YAML rules    |
+| **Integración CI/CD** | ✅ Plugins       | ✅ Plugins       | ✅ GitHub        | ✅ Native GitHub | ✅ Plugins          | ✅ Native         | ✅ Native        | ✅ CLI           |
+| **Histórico**         | ✅ BD            | ✅ BD            | ✅ Cloud         | ✅ GitHub        | ✅ Cloud            | ✅ Cloud          | ✅ Cloud         | ⚠️ Limitado      |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -75,9 +77,11 @@ Se selecciona **SonarQube Community Edition (self-hosted)** como solución de an
 
 ## Alternativas descartadas
 
-- **SonarQube Developer:** US$150/dev/año = US$6.75K - branch analysis no justifica 6× el costo
-- **SonarCloud:** US$10/100K LoC = US$3.6K - conveniente pero lock-in SaaS y costos crecientes
-- **Codacy:** US$15/dev/mes = US$8.1K - caro para capacidades similares
+- **CodeQL:** excelente para GitHub pero limitado a vulnerabilidades/security (no code smells, duplicación, cobertura), enfoque semántico profundo pero análisis más lento, menor soporte para métricas de calidad vs SonarQube
+- **Veracode:** líder enterprise SAST pero costos prohibitivos (US$50K+ setup + US$25K+/año), orientado a compliance y grandes corporaciones, sobrede-dimensionado para escala actual
+- **SonarQube Developer:** US$150/dev/año = US$6.75K - branch analysis no justifica 6× el costo vs Community
+- **SonarCloud:** US$10/100K LoC = US$3.6K - conveniente pero lock-in SaaS y costos crecientes con codebase
+- **Codacy:** US$15/dev/mes = US$8.1K - caro para capacidades similares, AI features no esenciales
 - **Snyk Code:** US$25/dev/mes = US$13.5K - mejor para vulnerabilidades (ya tenemos Trivy)
 - **Semgrep:** Excelente OSS pero menos maduro para code quality (complementario, no reemplazo)
 

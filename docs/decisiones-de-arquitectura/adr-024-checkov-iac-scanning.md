@@ -26,6 +26,8 @@ La estrategia prioriza **shift-left security** para IaC con herramientas OSS int
 Alternativas evaluadas:
 
 - **Checkov** (OSS, Bridgecrew/Palo Alto, 1000+ checks, multi-IaC)
+- **KICS** (OSS, Checkmarx, 2000+ queries, multi-IaC)
+- **Terrascan** (OSS, Tenable/Accurics, 500+ policies)
 - **tfsec** (OSS, Aqua Security, especializado Terraform)
 - **Terraform Sentinel** (HashiCorp Enterprise, policy-as-code)
 - **Snyk IaC** (comercial SaaS, completo, costoso)
@@ -35,18 +37,18 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio              | Checkov                   | tfsec                 | Terraform Sentinel | Snyk IaC             | AWS Config            |
-| --------------------- | ------------------------- | --------------------- | ------------------ | -------------------- | --------------------- |
-| **Agnosticidad**      | ✅ Multi-IaC, multi-cloud | ✅ Terraform focus    | ⚠️ Terraform only  | ⚠️ Multi-IaC, SaaS   | ❌ Lock-in AWS        |
-| **Cobertura**         | ✅ 1000+ checks           | ✅ 400+ checks        | ✅ Custom policies | ✅ Muy completa      | ⚠️ AWS resources only |
-| **Frameworks**        | ✅ TF, CFN, K8s, Docker   | ⚠️ Terraform only     | ⚠️ Terraform only  | ✅ Multi-framework   | ⚠️ CFN focus          |
-| **Integración CI/CD** | ✅ GitHub Actions nativo  | ✅ GitHub Actions     | ⚠️ TF Enterprise   | ✅ Plugins múltiples | ❌ Runtime only       |
-| **Performance**       | ✅ Rápido (< 20s)         | ✅ Muy rápido (< 10s) | ⚠️ Medio           | ⚠️ Medio             | ✅ Runtime            |
-| **Costos**            | ✅ Gratis OSS             | ✅ Gratis OSS         | ❌ Enterprise only | ❌ US$98/dev/mes     | ⚠️ Pago por uso       |
-| **Custom Policies**   | ✅ Python-based           | ⚠️ Go-based           | ✅ Policy language | ✅ Rego-based        | ✅ Python Lambda      |
-| **Reportes**          | ✅ SARIF, JSON, JUnit     | ✅ JSON, Checkstyle   | ⚠️ TF output       | ✅ Dashboard SaaS    | ✅ AWS Console        |
-| **Suppressions**      | ✅ Inline comments        | ✅ Inline comments    | ✅ Policy-based    | ✅ Annotations       | ⚠️ Manual             |
-| **Compliance**        | ✅ CIS, NIST, PCI, HIPAA  | ✅ CIS, custom        | ✅ Custom only     | ✅ Frameworks        | ✅ AWS frameworks     |
+| Criterio              | Checkov                   | KICS                   | Terrascan              | tfsec                 | Sentinel         | Snyk IaC           | AWS Config        |
+| --------------------- | ------------------------- | ---------------------- | ---------------------- | --------------------- | ---------------- | ------------------ | ----------------- |
+| **Agnosticidad**      | ✅ Multi-IaC, multi-cloud | ✅ Multi-IaC           | ✅ Multi-IaC           | ✅ Terraform focus    | ⚠️ TF only       | ⚠️ Multi-IaC SaaS  | ❌ Lock-in AWS    |
+| **Cobertura**         | ✅ 1000+ checks           | ✅ 2000+ queries       | ✅ 500+ policies       | ✅ 400+ checks        | ✅ Custom        | ✅ Completa        | ⚠️ AWS only       |
+| **Frameworks**        | ✅ TF, CFN, K8s, Docker   | ✅ TF, K8s, Docker, CF | ✅ TF, K8s, Docker, CF | ⚠️ Terraform only     | ⚠️ TF only       | ✅ Multi-framework | ⚠️ CFN focus      |
+| **Integración CI/CD** | ✅ GitHub Actions nativo  | ✅ GitHub Actions      | ✅ GitHub Actions      | ✅ GitHub Actions     | ⚠️ TF Enterprise | ✅ Plugins         | ❌ Runtime only   |
+| **Performance**       | ✅ Rápido (< 20s)         | ✅ Rápido (< 15s)      | ✅ Rápido (< 25s)      | ✅ Muy rápido (< 10s) | ⚠️ Medio         | ⚠️ Medio           | ✅ Runtime        |
+| **Costos**            | ✅ Gratis OSS             | ✅ Gratis OSS          | ✅ Gratis OSS          | ✅ Gratis OSS         | ❌ Enterprise    | ❌ US$98/dev/mes   | ⚠️ Pago por uso   |
+| **Custom Policies**   | ✅ Python-based           | ✅ JSON queries        | ✅ Rego policies       | ⚠️ Go-based           | ✅ Policy lang   | ✅ Rego-based      | ✅ Python Lambda  |
+| **Reportes**          | ✅ SARIF, JSON, JUnit     | ✅ SARIF, JSON, HTML   | ✅ JSON, SARIF, JUnit  | ✅ JSON, Checkstyle   | ⚠️ TF output     | ✅ Dashboard SaaS  | ✅ AWS Console    |
+| **Suppressions**      | ✅ Inline comments        | ✅ Inline annotations  | ✅ Inline comments     | ✅ Inline comments    | ✅ Policy-based  | ✅ Annotations     | ⚠️ Manual         |
+| **Compliance**        | ✅ CIS, NIST, PCI, HIPAA  | ✅ CIS, OWASP, GDPR    | ✅ CIS, NIST, PCI      | ✅ CIS, custom        | ✅ Custom only   | ✅ Frameworks      | ✅ AWS frameworks |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -71,10 +73,12 @@ Se selecciona **Checkov** como solución de IaC security scanning corporativa.
 
 ## Alternativas descartadas
 
-- **tfsec:** Excelente para Terraform puro, pero limitado a TF (no soporta K8s, Dockerfiles)
-- **Terraform Sentinel:** Requiere Terraform Enterprise (US$30K+), demasiado costoso
-- **Snyk IaC:** US$98/dev/mes = US$52K/3 años - costo prohibitivo para capacidades similares
-- **AWS Config:** Runtime only (no shift-left), lock-in AWS, solo evalúa recursos deployados
+- **KICS:** 2000+ queries impresionantes pero salida JSON compleja, menor adopción vs Checkov (4.5K stars vs 6K), documentación menos madura
+- **Terrascan:** buena cobertura 500+ policies pero menor ecosistema vs Checkov/KICS, OPA/Rego learning curve más pronunciada
+- **tfsec:** excelente para Terraform puro pero limitado a TF (no soporta K8s, Dockerfiles), menor cobertura multi-IaC
+- **Terraform Sentinel:** requiere Terraform Enterprise (US$30K+), policy language propietario, costos prohibitivos
+- **Snyk IaC:** US$98/dev/mes = US$52K/3 años para capacidades similares OSS, lock-in SaaS
+- **AWS Config:** runtime only (no shift-left), lock-in AWS, solo evalúa recursos deployados, no previene misconfigurations
 
 ---
 

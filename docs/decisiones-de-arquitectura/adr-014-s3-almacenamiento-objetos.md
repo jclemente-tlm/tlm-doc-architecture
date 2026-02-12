@@ -30,21 +30,22 @@ Alternativas evaluadas:
 - **Azure Blob Storage** (fuerte en entornos Microsoft, buena integración)
 - **Google Cloud Storage (GCS)** (muy rápido, buen manejo de clases de almacenamiento)
 - **Wasabi** (administrado, muy bajo costo, S3 compatible, sin egress fees)
+- **Backblaze B2** (low-cost, S3-compatible, sin egress fees primeros 3x storage)
 - **MinIO** (auto-hosteado, open source, 100% S3 compatible, portable a cualquier infraestructura)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio            | AWS S3              | Wasabi                         | Azure Blob          | GCS                 | MinIO                   |
-| ------------------- | ------------------- | ------------------------------ | ------------------- | ------------------- | ----------------------- |
-| **Agnosticidad**    | ❌ Lock-in AWS      | ✅ S3 compatible, multi-cloud  | ❌ Lock-in Azure    | ❌ Lock-in GCP      | ✅ OSS, multi-cloud     |
-| **API S3**          | ✅ Nativa           | ✅ 100% compatible             | ⚠️ Parcial          | ⚠️ Parcial          | ✅ 100% compatible      |
-| **Operación**       | ✅ Gestionada       | ✅ Gestionada                  | ✅ Gestionada       | ✅ Gestionada       | ⚠️ Self-hosted          |
-| **Escalabilidad**   | ✅ Ilimitada        | ✅ Ilimitada                   | ✅ Ilimitada        | ✅ Ilimitada        | ✅ Horizontal           |
-| **Seguridad**       | ✅ Enterprise grade | ✅ Encriptación, IAM           | ✅ Enterprise grade | ✅ Enterprise grade | ✅ IAM, encriptación    |
-| **Ecosistema .NET** | ✅ AWS SDK nativo   | ✅ AWS SDK compatible          | ✅ Azure SDK nativo | ✅ Google SDK       | ✅ AWS SDK compatible   |
-| **Costos**          | ⚠️ Pago por uso     | ✅ Bajo costo, sin egress fees | ⚠️ Pago por uso     | ⚠️ Pago por uso     | ✅ Solo infraestructura |
+| Criterio            | AWS S3              | Wasabi                        | Backblaze B2                | Azure Blob          | GCS                 | MinIO                   |
+| ------------------- | ------------------- | ----------------------------- | --------------------------- | ------------------- | ------------------- | ----------------------- |
+| **Agnosticidad**    | ❌ Lock-in AWS      | ✅ S3 compatible, multi-cloud | ✅ S3-compatible            | ❌ Lock-in Azure    | ❌ Lock-in GCP      | ✅ OSS, multi-cloud     |
+| **API S3**          | ✅ Nativa           | ✅ 100% compatible            | ✅ S3-compatible API        | ⚠️ Parcial          | ⚠️ Parcial          | ✅ 100% compatible      |
+| **Operación**       | ✅ Gestionada       | ✅ Gestionada                 | ✅ Gestionada               | ✅ Gestionada       | ✅ Gestionada       | ⚠️ Self-hosted          |
+| **Escalabilidad**   | ✅ Ilimitada        | ✅ Ilimitada                  | ✅ Ilimitada                | ✅ Ilimitada        | ✅ Ilimitada        | ✅ Horizontal           |
+| **Seguridad**       | ✅ Enterprise grade | ✅ Encriptación, IAM          | ✅ Encriptación, 2FA        | ✅ Enterprise grade | ✅ Enterprise grade | ✅ IAM, encriptación    |
+| **Ecosistema .NET** | ✅ AWS SDK nativo   | ✅ AWS SDK compatible         | ✅ AWS SDK compatible       | ✅ Azure SDK nativo | ✅ Google SDK       | ✅ AWS SDK compatible   |
+| **Costos**          | ⚠️ Pago por uso     | ✅ Bajo, sin egress fees      | ✅ Muy bajo, egress 3x free | ⚠️ Pago por uso     | ⚠️ Pago por uso     | ✅ Solo infraestructura |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -63,10 +64,11 @@ Se selecciona **AWS S3** como solución estándar de almacenamiento de objetos p
 
 ## Alternativas descartadas
 
-- **MinIO:** mayor complejidad operativa y costos de infraestructura
-- **Azure Blob Storage:** lock-in Azure, menor portabilidad
-- **Google Cloud Storage:** lock-in GCP, menor portabilidad
-- **Wasabi:** aunque es una alternativa viable, se prefiere una solución con mayor integración nativa como AWS S3
+- **Wasabi:** bajo costo (US$5.99/TB vs S3 US$23/TB) pero integración AWS menos madura, egress gratis requiere ratio 1:1 storage/transfer, menor ecosistema herramientas vs S3, vendor más pequeño (riesgo estabilidad)
+- **Backblaze B2:** muy bajo costo (US$5/TB storage), egress gratis primeros 3x storage, pero integración AWS limitada, menor performance vs S3 (no CloudFront nativo), ecosistema reducido
+- **MinIO:** portabilidad máxima pero mayor complejidad operativa (clustering, HA, backups, monitoreo), costos infraestructura ocultos, overhead vs solución gestionada, requiere expertise DevOps
+- **Azure Blob Storage:** lock-in Azure, infraestructura AWS ya establecida (ADR-003, ADR-005, ADR-007), API no 100% S3-compatible (migración código)
+- **Google Cloud Storage:** lock-in GCP, menor integración ecosistema AWS, API no 100% S3-compatible
 
 ---
 

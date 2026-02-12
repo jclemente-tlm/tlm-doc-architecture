@@ -27,6 +27,7 @@ La intención estratégica es **maximizar agnosticidad** y robustez empresarial,
 Alternativas evaluadas:
 
 - **PostgreSQL** (Open source, extensible, multi-tenant avanzado)
+- **CockroachDB** (Distributed SQL, PostgreSQL-compatible, cloud-native)
 - **MySQL/MariaDB** (Open source, popular, funcionalidad básica)
 - **SQL Server** (Microsoft, propietario, integración .NET)
 - **Oracle Database** (Propietario, enterprise, alto costo)
@@ -36,17 +37,17 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | PostgreSQL                    | MySQL               | SQL Server           | Oracle                | Aurora          |
-| ------------------- | ----------------------------- | ------------------- | -------------------- | --------------------- | --------------- |
-| **Agnosticidad**    | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle     | ❌ Lock-in AWS  |
-| **Operación**       | ✅ Simple, automatizable      | ✅ Simple           | ⚠️ Compleja          | ⚠️ Compleja           | ✅ Gestionado   |
-| **Seguridad**       | ✅ Avanzada, RLS, cifrado     | ⚠️ Básica           | ✅ Enterprise        | ✅ Enterprise         | ✅ Enterprise   |
-| **Ecosistema .NET** | ✅ Excelente (Npgsql)         | ✅ Muy bueno        | ✅ Nativo            | ✅ Bueno              | ✅ Compatible   |
-| **Escalabilidad**   | ✅ Particionamiento, sharding | ⚠️ Limitada         | ⚠️ Always On         | ⚠️ RAC                | ✅ Automática   |
-| **Extensibilidad**  | ✅ Plugins, JSONB, PostGIS    | ⚠️ Limitada         | ⚠️ Limitada          | ✅ Máxima             | ⚠️ Limitada     |
-| **Costos**          | ✅ Gratuito                   | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro           | ⚠️ Pago por uso |
-| **Comunidad**       | ✅ Muy activa                 | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise | ⚠️ Limitada AWS |
-| **Portabilidad**    | ✅ Multi-plataforma           | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada           | ❌ AWS          |
+| Criterio            | PostgreSQL                    | CockroachDB            | MySQL               | SQL Server           | Oracle                | Aurora          |
+| ------------------- | ----------------------------- | ---------------------- | ------------------- | -------------------- | --------------------- | --------------- |
+| **Agnosticidad**    | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud    | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle     | ❌ Lock-in AWS  |
+| **Operación**       | ✅ Simple, automatizable      | ⚠️ Clustering complejo | ✅ Simple           | ⚠️ Compleja          | ⚠️ Compleja           | ✅ Gestionado   |
+| **Seguridad**       | ✅ Avanzada, RLS, cifrado     | ✅ Enterprise grade    | ⚠️ Básica           | ✅ Enterprise        | ✅ Enterprise         | ✅ Enterprise   |
+| **Ecosistema .NET** | ✅ Excelente (Npgsql)         | ✅ PostgreSQL driver   | ✅ Muy bueno        | ✅ Nativo            | ✅ Bueno              | ✅ Compatible   |
+| **Escalabilidad**   | ✅ Particionamiento, sharding | ✅ Horizontal nativa   | ⚠️ Limitada         | ⚠️ Always On         | ⚠️ RAC                | ✅ Automática   |
+| **Extensibilidad**  | ✅ Plugins, JSONB, PostGIS    | ⚠️ PostgreSQL subset   | ⚠️ Limitada         | ⚠️ Limitada          | ✅ Máxima             | ⚠️ Limitada     |
+| **Costos**          | ✅ Gratuito                   | ⚠️ Free/Enterprise     | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro           | ⚠️ Pago por uso |
+| **Comunidad**       | ✅ Muy activa                 | ⚠️ Creciendo           | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise | ⚠️ Limitada AWS |
+| **Portabilidad**    | ✅ Multi-plataforma           | ✅ Cloud-native        | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada           | ❌ AWS          |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -70,10 +71,11 @@ Se selecciona **PostgreSQL** como base de datos relacional estándar para todos 
 
 ## Alternativas descartadas
 
-- **MySQL/MariaDB:** menor soporte para extensiones avanzadas y modelos multi-tenant complejos
-- **SQL Server:** costos de licenciamiento, lock-in y menor flexibilidad multi-cloud
-- **Oracle:** costos muy altos, lock-in, complejidad operativa y menor portabilidad
-- **Aurora:** lock-in AWS, menor portabilidad
+- **CockroachDB:** distributed SQL innovador pero complejidad operativa alta (clustering, consensus protocol), menor madurez vs PostgreSQL (2015 vs 1996), costos enterprise (US$3K+/mes para soporte), extensibilidad limitada (no todas las extensiones PostgreSQL)
+- **MySQL/MariaDB:** menor soporte para extensiones avanzadas, multi-tenant más limitado (no RLS nativo), JSONB menos optimizado
+- **SQL Server:** costos de licenciamiento prohibitivos (US$14K+ Standard, US$55K+ Enterprise), lock-in Microsoft, menor flexibilidad multi-cloud
+- **Oracle:** costos muy altos (US$47.5K/processor + soporte 22%), lock-in vendor, complejidad operativa excesiva, menor portabilidad
+- **Aurora:** lock-in AWS, menor portabilidad multi-cloud, costos crecientes vs PostgreSQL self-hosted
 
 ---
 

@@ -29,21 +29,22 @@ Alternativas evaluadas:
 - **Serilog** (estructurado, .NET, ecosistema extenso)
 - **OpenTelemetry Logging** (estándar CNCF, emergente)
 - **NLog** (tradicional, .NET)
+- **log4net** (legacy, Apache, .NET Framework)
 - **Microsoft.Extensions.Logging** (nativo .NET, básico)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio                 | Serilog                 | OpenTelemetry Logging | NLog                    | MS.Extensions.Logging |
-| ------------------------ | ----------------------- | --------------------- | ----------------------- | --------------------- |
-| **Logging estructurado** | ✅ Nativo, JSON         | ✅ Estándar CNCF      | ⚠️ Configurable         | ⚠️ Básico             |
-| **Ecosistema .NET**      | ✅ Excelente            | ✅ Oficial            | ✅ Muy maduro           | ✅ Nativo             |
-| **Sinks/Destinos**       | ✅ 200+ sinks           | ✅ Exporters extensos | ✅ Muchos targets       | ⚠️ Providers básicos  |
-| **Rendimiento**          | ✅ Muy optimizado       | ✅ Bueno              | ✅ Excelente            | ✅ Bueno              |
-| **Multi-tenancy**        | ✅ Contexto enriquecido | ✅ Contexto avanzado  | ⚠️ Manual               | ⚠️ Scopes básicos     |
-| **Agnosticidad**         | ✅ Totalmente agnóstico | ✅ Estándar abierto   | ✅ Totalmente agnóstico | ✅ Agnóstico          |
-| **Madurez**              | ✅ Muy maduro, activo   | ⚠️ Emergente          | ✅ Muy maduro           | ✅ Oficial            |
+| Criterio                 | Serilog                 | OpenTelemetry    | NLog              | log4net             | MS.Extensions |
+| ------------------------ | ----------------------- | ---------------- | ----------------- | ------------------- | ------------- |
+| **Logging estructurado** | ✅ Nativo, JSON         | ✅ Estándar CNCF | ⚠️ Configurable   | ⚠️ XML-based        | ⚠️ Básico     |
+| **Ecosistema .NET**      | ✅ Excelente            | ✅ Oficial       | ✅ Muy maduro     | ⚠️ Legacy .NET Fx   | ✅ Nativo     |
+| **Sinks/Destinos**       | ✅ 200+ sinks           | ✅ Exporters     | ✅ Muchos targets | ⚠️ Appenders legacy | ⚠️ Providers  |
+| **Rendimiento**          | ✅ Muy optimizado       | ✅ Bueno         | ✅ Excelente      | ⚠️ Moderado         | ✅ Bueno      |
+| **Multi-tenancy**        | ✅ Contexto enriquecido | ✅ Contexto      | ⚠️ Manual         | ⚠️ Manual           | ⚠️ Scopes     |
+| **Agnosticidad**         | ✅ Agnóstico            | ✅ Estándar      | ✅ Agnóstico      | ✅ Agnóstico        | ✅ Agnóstico  |
+| **Madurez**              | ✅ Muy maduro           | ⚠️ Emergente     | ✅ Muy maduro     | ⚠️ Legacy/estable   | ✅ Oficial    |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -64,9 +65,10 @@ Se selecciona **Serilog** como librería estándar de logging estructurado para 
 
 ## Alternativas descartadas
 
-- **OpenTelemetry Logging:** emergente, integración aún en maduración
-- **NLog:** alternativa válida, pero menor ecosistema de sinks
-- **MS.Extensions.Logging:** demasiado básico para logging estructurado avanzado
+- **log4net:** legacy Apache logging (.NET Framework era), mantenimiento limitado, configuración XML compleja, logging estructurado no nativo, ecosistema appenders obsoleto vs Serilog sinks modernos
+- **OpenTelemetry Logging:** emergente, integración aún en maduración, menor ecosistema vs Serilog 200+ sinks, mejor para tracing que logging puro
+- **NLog:** alternativa válida pero menor ecosistema de targets vs Serilog, logging estructurado menos natural (JSON via layouts)
+- **MS.Extensions.Logging:** demasiado básico para logging estructurado avanzado, providers limitados, mejor como abstracción que implementación directa
 
 ---
 

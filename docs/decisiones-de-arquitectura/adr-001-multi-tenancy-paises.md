@@ -25,21 +25,22 @@ Las alternativas de multi-tenancy evaluadas fueron:
 - **Database per Tenant** (Aislamiento completo)
 - **Schema per Tenant** (Aislamiento intermedio)
 - **Row-Level Security** (Aislamiento lógico)
+- **Compartmented Architecture** (Sidecar pattern, isolation via services)
 - **Hybrid Approach** (Combinación según criticidad): Consiste en aplicar diferentes patrones de multi-tenancy según el tipo de servicio o dato. Por ejemplo, servicios críticos o regulados (como Identidad o Finanzas) se implementan como single-tenant (una base de datos dedicada por país o cliente), mientras que servicios operacionales o de soporte (como Track & Trace o Notificación) pueden usar modelos multi-tenant (por ejemplo, un esquema por país en una misma base de datos). Así, se logra un balance entre cumplimiento, seguridad, costos y eficiencia operativa.
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio           | Single-Tenant         | Multi-Tenant DB       | Multi-Tenant Schema | Híbrido                   |
-| ------------------ | --------------------- | --------------------- | ------------------- | ------------------------- |
-| **Aislamiento**    | ✅ Total por cliente  | ⚠️ A nivel aplicación | ⚠️ Por esquema      | ✅ Flexible según cliente |
-| **Escalabilidad**  | ❌ Muy limitada       | ✅ Excelente          | ✅ Muy buena        | ✅ Buena                  |
-| **Operación**      | ❌ Compleja gestión   | ✅ Centralizada       | ⚠️ Moderada         | ⚠️ Compleja pero flexible |
-| **Costos**         | ❌ Muy altos          | ✅ Muy eficiente      | ✅ Eficiente        | ⚠️ Moderados              |
-| **Flexibilidad**   | ✅ Máxima por cliente | ❌ Muy limitada       | ⚠️ Limitada         | ✅ Alta                   |
-| **Compliance**     | ✅ Máximo control     | ⚠️ Requiere cuidado   | ⚠️ Bueno            | ✅ Excelente              |
-| **Implementación** | ✅ Rápida             | ✅ Rápida             | ⚠️ Moderada         | ⚠️ Compleja               |
+| Criterio           | Single-Tenant     | Multi-Tenant DB     | Schema/Tenant  | Compartmented      | Híbrido              |
+| ------------------ | ----------------- | ------------------- | -------------- | ------------------ | -------------------- |
+| **Aislamiento**    | ✅ Total          | ⚠️ A nivel app      | ⚠️ Por esquema | ✅ Vía sidecars    | ✅ Flexible          |
+| **Escalabilidad**  | ❌ Muy limitada   | ✅ Excelente        | ✅ Muy buena   | ✅ Horizontal      | ✅ Buena             |
+| **Operación**      | ❌ Compleja       | ✅ Centralizada     | ⚠️ Moderada    | ⚠️ Infra adicional | ⚠️ Compleja flexible |
+| **Costos**         | ❌ Muy altos      | ✅ Eficiente        | ✅ Eficiente   | ⚠️ Infraestructura | ⚠️ Moderados         |
+| **Flexibilidad**   | ✅ Máxima         | ❌ Muy limitada     | ⚠️ Limitada    | ✅ Alta            | ✅ Alta              |
+| **Compliance**     | ✅ Máximo control | ⚠️ Requiere cuidado | ⚠️ Bueno       | ✅ Excelente       | ✅ Excelente         |
+| **Implementación** | ✅ Rápida         | ✅ Rápida           | ⚠️ Moderada    | ❌ Compleja        | ⚠️ Compleja          |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

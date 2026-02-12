@@ -32,21 +32,22 @@ Alternativas evaluadas:
 - **Azure App Configuration** (Gestionado Azure, integración nativa)
 - **Google Runtime Config** (Gestionado GCP, integración nativa)
 - **HashiCorp Consul** (Open source/Enterprise, agnóstico)
+- **etcd** (Distributed key-value, Kubernetes ecosystem, CNCF)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 ### Comparativa Cualitativa
 
-| Criterio            | AWS Parameter Store      | Azure App Configuration  | Google Runtime Config    | HashiCorp Consul        |
-| ------------------- | ------------------------ | ------------------------ | ------------------------ | ----------------------- |
-| **Agnosticidad**    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           | ✅ Totalmente agnóstico |
-| **Operación**       | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ⚠️ Requiere gestión     |
-| **Seguridad**       | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Máxima seguridad     |
-| **Ecosistema .NET** | ✅ Muy buena             | ✅ Excelente             | ⚠️ Limitada              | ✅ Buena                |
-| **Versionado**      | ✅ Automática            | ✅ Automática            | ✅ Automática            | ✅ Muy flexible         |
-| **Feature Flags**   | ⚠️ Básico                | ✅ Nativo, completo      | ⚠️ Básico                | ✅ Flexible             |
-| **Multi-tenancy**   | ⚠️ Por parámetros        | ✅ Labels y filtros      | ⚠️ Por proyectos         | ✅ Namespaces           |
-| **Costos**          | ⚠️ Por uso               | ✅ Muy económico         | ✅ Muy económico         | ⚠️ Infraestructura      |
+| Criterio            | Parameter Store   | Azure App Config | Google Runtime   | Consul              | etcd              |
+| ------------------- | ----------------- | ---------------- | ---------------- | ------------------- | ----------------- |
+| **Agnosticidad**    | ❌ Lock-in AWS    | ❌ Lock-in Azure | ❌ Lock-in GCP   | ✅ Agnóstico        | ✅ OSS, agnóstico |
+| **Operación**       | ✅ Gestionado     | ✅ Gestionado    | ✅ Gestionado    | ⚠️ Requiere gestión | ⚠️ Self-hosted    |
+| **Seguridad**       | ✅ Enterprise     | ✅ Enterprise    | ✅ Enterprise    | ✅ Máxima           | ✅ TLS, RBAC      |
+| **Ecosistema .NET** | ✅ Muy buena      | ✅ Excelente     | ⚠️ Limitada      | ✅ Buena            | ⚠️ Limitada       |
+| **Versionado**      | ✅ Automática     | ✅ Automática    | ✅ Automática    | ✅ Muy flexible     | ✅ Revisions      |
+| **Feature Flags**   | ⚠️ Básico         | ✅ Nativo        | ⚠️ Básico        | ✅ Flexible         | ⚠️ Manual         |
+| **Multi-tenancy**   | ⚠️ Por parámetros | ✅ Labels        | ⚠️ Por proyectos | ✅ Namespaces       | ⚠️ Prefixes       |
+| **Costos**          | ⚠️ Por uso        | ✅ Económico     | ✅ Económico     | ⚠️ Infraestructura  | ✅ Gratis OSS     |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -64,9 +65,10 @@ Se selecciona **AWS Parameter Store** como solución principal para la gestión 
 
 ## Alternativas descartadas
 
-- **Azure App Configuration:** lock-in cloud, menor portabilidad
-- **Google Runtime Config:** lock-in cloud, menor portabilidad
-- **HashiCorp Consul:** mayor complejidad operativa y mantenimiento
+- **etcd:** distributed key-value store robusto pero orientado a Kubernetes ecosystem, complejidad operativa alta (clustering, quorum, backups), menor integración .NET vs Parameter Store, overhead para uso simple config
+- **Azure App Configuration:** lock-in Azure, infraestructura AWS ya establecida, menor portabilidad
+- **Google Runtime Config:** lock-in GCP, SDK .NET limitado, menor madurez vs otros
+- **HashiCorp Consul:** mayor complejidad operativa y mantenimiento, requiere expertise, costos infraestructura
 
 ---
 

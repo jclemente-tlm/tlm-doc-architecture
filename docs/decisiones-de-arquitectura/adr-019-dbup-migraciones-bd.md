@@ -33,14 +33,14 @@ La intención estratégica es **permitir la ejecución controlada y trazable de 
 
 ### Comparativa Cualitativa
 
-| Criterio                  | DbUp (.NET)           | RoundhousE (.NET)     | Flyway (CLI/Java)     | Liquibase (CLI/Java)  | EF Core Migrations      |
-| ------------------------- | --------------------- | --------------------- | --------------------- | --------------------- | ----------------------- |
-| **Agnosticidad**          | ✅ Multi-motor        | ✅ Multi-motor        | ✅ Multi-motor        | ✅ Multi-motor        | ⚠️ Depende del provider |
-| **Integración .NET**      | ✅ Nativo C#          | ✅ Nativo C#          | ⚠️ Indirecta          | ⚠️ Indirecta          | ✅ Nativo C#            |
-| **Versionado de scripts** | ✅ Por convención     | ✅ Por convención     | ✅ Estricto           | ✅ Estricto           | ✅ Automático           |
-| **Complejidad operativa** | ✅ Baja               | ✅ Baja               | ⚠️ Media              | ❌ Alta               | ✅ Baja                 |
-| **Rollbacks**             | ❌ Manuales           | ❌ Manuales           | ⚠️ Básicos            | ✅ Avanzados          | ⚠️ Limitados            |
-| **Idempotencia**          | ⚠️ Depende del script | ⚠️ Depende del script | ⚠️ Depende del script | ⚠️ Depende del script | ⚠️ Depende del script   |
+| Criterio                  | DbUp (.NET)           | RoundhousE (.NET)     | sqitch (Perl)         | golang-migrate (Go)   | Flyway (CLI/Java)     | Liquibase (CLI/Java)  | EF Core Migrations      |
+| ------------------------- | --------------------- | --------------------- | --------------------- | --------------------- | --------------------- | --------------------- | ----------------------- |
+| **Agnosticidad**          | ✅ Multi-motor        | ✅ Multi-motor        | ✅ Multi-motor        | ✅ Multi-motor        | ✅ Multi-motor        | ✅ Multi-motor        | ⚠️ Depende del provider |
+| **Integración .NET**      | ✅ Nativo C#          | ✅ Nativo C#          | ⚠️ CLI externo        | ⚠️ CLI/embedding      | ⚠️ Indirecta          | ⚠️ Indirecta          | ✅ Nativo C#            |
+| **Versionado de scripts** | ✅ Por convención     | ✅ Por convención     | ✅ Git-like (DAG)     | ✅ Secuencial         | ✅ Estricto           | ✅ Estricto           | ✅ Automático           |
+| **Complejidad operativa** | ✅ Baja               | ✅ Baja               | ❌ Alta (Perl)        | ⚠️ Media              | ⚠️ Media              | ❌ Alta               | ✅ Baja                 |
+| **Rollbacks**             | ❌ Manuales           | ❌ Manuales           | ✅ Avanzados (DAG)    | ⚠️ Manuales           | ⚠️ Básicos            | ✅ Avanzados          | ⚠️ Limitados            |
+| **Idempotencia**          | ⚠️ Depende del script | ⚠️ Depende del script | ⚠️ Depende del script | ⚠️ Depende del script | ⚠️ Depende del script | ⚠️ Depende del script | ⚠️ Depende del script   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -64,10 +64,12 @@ Se selecciona **DbUp** como herramienta principal para la ejecución de configur
 
 ## Alternativas descartadas
 
-- **RoundhousE**: buena opción, pero menos activo y con menor comunidad que DbUp.
-- **Flyway**: más maduro en entornos mixtos, pero introduce dependencia Java y mayor complejidad para este escenario puntual.
-- **Liquibase**: potente pero sobre-dimensionado para cambios ocasionales.
-- **EF Core Migrations**: útil para cambios de esquema ligados al modelo de datos, pero no ideal para configuraciones iniciales que puedan ejecutarse en múltiples motores.
+- **sqitch**: database change management robusto con sistema DAG (git-like), rollbacks potentes, pero requiere Perl runtime, learning curve steep, complejidad operativa alta para escenario puntual
+- **golang-migrate**: CLI ligero en Go, soporte multi-motor, embeddable en apps Go, pero menor integración .NET (CLI externo), rollbacks manuales, menor features vs Liquibase
+- **RoundhousE**: buena opción .NET, pero menos activo y con menor comunidad que DbUp (150 vs 1.8K stars GitHub)
+- **Flyway**: más maduro en entornos mixtos, pero introduce dependencia Java y mayor complejidad para este escenario puntual
+- **Liquibase**: potente pero sobre-dimensionado para cambios ocasionales, XML/JSON/YAML verbose
+- **EF Core Migrations**: útil para cambios de esquema ligados al modelo de datos, pero no ideal para configuraciones iniciales que puedan ejecutarse en múltiples motores
 
 ---
 

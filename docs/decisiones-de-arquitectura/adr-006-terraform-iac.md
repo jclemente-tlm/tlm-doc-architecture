@@ -29,6 +29,7 @@ Alternativas evaluadas:
 
 - **Terraform** (Gestionado por HashiCorp, HCL, multi-cloud)
 - **Pulumi** (Multi-lenguaje, programático)
+- **Ansible** (Config management, YAML, agentless)
 - **AWS CloudFormation** (AWS nativo)
 - **ARM Templates** (Azure nativo)
 - **GCP Deployment Manager** (GCP nativo)
@@ -37,15 +38,15 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | Terraform           | Pulumi              | AWS CloudFormation | ARM Templates    | GCP Deployment Manager |
-| ------------------- | ------------------- | ------------------- | ------------------ | ---------------- | ---------------------- |
-| **Agnosticidad**    | ✅ Multi-cloud      | ✅ Multi-cloud      | ❌ Lock-in AWS     | ❌ Lock-in Azure | ❌ Lock-in GCP         |
-| **Operación**       | ✅ Declarativo      | ⚠️ Imperativo       | ✅ Declarativo     | ✅ Declarativo   | ✅ Declarativo         |
-| **Seguridad**       | ✅ Enterprise grade | ✅ Enterprise grade | ✅ AWS IAM         | ✅ Azure RBAC    | ✅ GCP IAM             |
-| **Ecosistema .NET** | ✅ Muy buena        | ✅ Muy buena        | ⚠️ Solo AWS        | ⚠️ Solo Azure    | ⚠️ Solo GCP            |
-| **Versionado**      | ✅ Automática       | ✅ Automática       | ✅ Nativo          | ✅ Nativo        | ✅ Nativo              |
-| **Módulos**         | ✅ Reutilizables    | ✅ Reutilizables    | ⚠️ Solo AWS        | ⚠️ Solo Azure    | ⚠️ Solo GCP            |
-| **Costos**          | ⚠️ Por uso          | ⚠️ Por uso          | ✅ Incluido        | ✅ Incluido      | ✅ Incluido            |
+| Criterio            | Terraform           | Pulumi              | Ansible                   | CloudFormation | ARM Templates    | GCP DM         |
+| ------------------- | ------------------- | ------------------- | ------------------------- | -------------- | ---------------- | -------------- |
+| **Agnosticidad**    | ✅ Multi-cloud      | ✅ Multi-cloud      | ✅ Multi-cloud            | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP |
+| **Operación**       | ✅ Declarativo      | ⚠️ Imperativo       | ⚠️ Imperativo/Declarativo | ✅ Declarativo | ✅ Declarativo   | ✅ Declarativo |
+| **Seguridad**       | ✅ Enterprise grade | ✅ Enterprise grade | ✅ SSH/Enterprise         | ✅ AWS IAM     | ✅ Azure RBAC    | ✅ GCP IAM     |
+| **Ecosistema .NET** | ✅ Muy buena        | ✅ Muy buena        | ⚠️ Config mgmt focus      | ⚠️ Solo AWS    | ⚠️ Solo Azure    | ⚠️ Solo GCP    |
+| **Versionado**      | ✅ Automática       | ✅ Automática       | ✅ Git-based              | ✅ Nativo      | ✅ Nativo        | ✅ Nativo      |
+| **Módulos**         | ✅ Reutilizables    | ✅ Reutilizables    | ✅ Roles/Collections      | ⚠️ Solo AWS    | ⚠️ Solo Azure    | ⚠️ Solo GCP    |
+| **Costos**          | ⚠️ Por uso          | ⚠️ Por uso          | ✅ Gratis OSS             | ✅ Incluido    | ✅ Incluido      | ✅ Incluido    |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -64,8 +65,9 @@ Se selecciona **Terraform** como solución estándar de infraestructura como có
 
 ### Alternativas descartadas
 
-- Pulumi: menor adopción y ecosistema vs Terraform
-- AWS CloudFormation, ARM Templates, GCP Deployment Manager: lock-in cloud, menor portabilidad
+- **Ansible:** excelente para configuration management pero enfoque imperativo/procedural, estado no declarativo (no state file), menor idempotencia vs Terraform, mejor para config servers que infraestructura
+- **Pulumi:** menor adopción enterprise vs Terraform (3K vs 40K stars GitHub), ecosistema módulos menos maduro, learning curve programación vs HCL declarativo
+- **CloudFormation, ARM, GCP DM:** lock-in cloud específico, menor portabilidad multi-cloud, requiere reescritura completa para migraciones
 
 ---
 
