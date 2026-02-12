@@ -37,15 +37,16 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | AWS S3              | Wasabi                        | Backblaze B2                | Azure Blob          | GCS                 | MinIO                   |
-| ------------------- | ------------------- | ----------------------------- | --------------------------- | ------------------- | ------------------- | ----------------------- |
-| **Agnosticidad**    | ❌ Lock-in AWS      | ✅ S3 compatible, multi-cloud | ✅ S3-compatible            | ❌ Lock-in Azure    | ❌ Lock-in GCP      | ✅ OSS, multi-cloud     |
-| **API S3**          | ✅ Nativa           | ✅ 100% compatible            | ✅ S3-compatible API        | ⚠️ Parcial          | ⚠️ Parcial          | ✅ 100% compatible      |
-| **Operación**       | ✅ Gestionada       | ✅ Gestionada                 | ✅ Gestionada               | ✅ Gestionada       | ✅ Gestionada       | ⚠️ Self-hosted          |
-| **Escalabilidad**   | ✅ Ilimitada        | ✅ Ilimitada                  | ✅ Ilimitada                | ✅ Ilimitada        | ✅ Ilimitada        | ✅ Horizontal           |
-| **Seguridad**       | ✅ Enterprise grade | ✅ Encriptación, IAM          | ✅ Encriptación, 2FA        | ✅ Enterprise grade | ✅ Enterprise grade | ✅ IAM, encriptación    |
-| **Ecosistema .NET** | ✅ AWS SDK nativo   | ✅ AWS SDK compatible         | ✅ AWS SDK compatible       | ✅ Azure SDK nativo | ✅ Google SDK       | ✅ AWS SDK compatible   |
-| **Costos**          | ⚠️ Pago por uso     | ✅ Bajo, sin egress fees      | ✅ Muy bajo, egress 3x free | ⚠️ Pago por uso     | ⚠️ Pago por uso     | ✅ Solo infraestructura |
+| Criterio                | AWS S3                   | Wasabi                        | Backblaze B2                | Azure Blob          | GCS                 | MinIO                   |
+| ----------------------- | ------------------------ | ----------------------------- | --------------------------- | ------------------- | ------------------- | ----------------------- |
+| **Agnosticidad**        | ❌ Lock-in AWS           | ✅ S3 compatible, multi-cloud | ✅ S3-compatible            | ❌ Lock-in Azure    | ❌ Lock-in GCP      | ✅ OSS, multi-cloud     |
+| **API S3**              | ✅ 100% nativa           | ✅ 100% compatible            | ✅ 100% compatible          | ⚠️ Parcial          | ⚠️ Parcial          | ✅ 100% compatible      |
+| **Operación**           | ✅ Gestionada            | ✅ Gestionada                 | ✅ Gestionada               | ✅ Gestionada       | ✅ Gestionada       | ⚠️ Self-hosted          |
+| **Escalabilidad**       | ✅ Ilimitada             | ✅ Ilimitada                  | ✅ Ilimitada                | ✅ Ilimitada        | ✅ Ilimitada        | ✅ Horizontal           |
+| **Seguridad**           | ✅ Enterprise grade      | ✅ Encriptación, IAM          | ✅ Encriptación, 2FA        | ✅ Enterprise grade | ✅ Enterprise grade | ✅ IAM, encriptación    |
+| **Ecosistema .NET**     | ✅ AWS SDK nativo        | ✅ AWS SDK compatible         | ✅ AWS SDK compatible       | ✅ Azure SDK nativo | ✅ Google SDK       | ✅ AWS SDK compatible   |
+| **Alta disponibilidad** | ✅ 99.99% SLA (Multi-AZ) | ✅ 11 nines durability        | ✅ 99.9% uptime             | ✅ Geo-redundante   | ✅ Multi-regional   | ⚠️ Manual (HA setup)    |
+| **Costos**              | ⚠️ Pago por uso          | ✅ Bajo, sin egress fees      | ✅ Muy bajo, egress 3x free | ⚠️ Pago por uso     | ⚠️ Pago por uso     | ✅ Solo infraestructura |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

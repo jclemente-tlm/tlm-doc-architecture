@@ -39,9 +39,10 @@ Las alternativas evaluadas fueron:
 | ------------------- | ------------------------ | ------------------------ | ------------------------ | ----------------------- | ----------------------- | ------------------- |
 | **Agnosticidad**    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           | ✅ Totalmente agnóstico | ✅ Agnóstico            | ✅ Multi-cloud SaaS |
 | **Operación**       | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ⚠️ Requiere gestión     | ⚠️ Requiere gestión     | ✅ SaaS gestionado  |
-| **Seguridad**       | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Máxima seguridad     | ✅ Nivel corporativo    | ✅ Enterprise grade |
+| **Seguridad**       | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade     | ✅ Enterprise grade     | ✅ Enterprise grade |
 | **Ecosistema .NET** | ✅ Muy buena             | ✅ Excelente             | ⚠️ Limitada              | ✅ Buena                | ✅ Buena                | ✅ Excelente SDK    |
 | **Rotación**        | ✅ Automática            | ✅ Automática            | ✅ Automática            | ✅ Muy flexible         | ✅ Políticas avanzadas  | ✅ Integraciones    |
+| **Comunidad**       | ✅ Soporte AWS           | ✅ Soporte Microsoft     | ✅ Soporte Google        | ✅ Muy activa (30K⭐)   | ✅ Enterprise           | ⚠️ Startup (5K⭐)   |
 | **Costos**          | ⚠️ Por uso               | ✅ Muy económico         | ✅ Muy económico         | ⚠️ Infraestructura      | ❌ Licencias enterprise | ⚠️ US$24-120/mes    |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple

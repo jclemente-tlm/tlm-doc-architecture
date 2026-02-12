@@ -37,15 +37,16 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | ECS Fargate                | EKS                         | AKS                 | GKE                      | Azure ACI           | Google Cloud Run | Docker Swarm            |
-| ------------------- | -------------------------- | --------------------------- | ------------------- | ------------------------ | ------------------- | ---------------- | ----------------------- |
-| **Agnosticidad**    | ❌ Lock-in AWS             | ✅ Estándar K8s             | ✅ Estándar K8s     | ✅ Estándar K8s          | ❌ Lock-in Azure    | ❌ Lock-in GCP   | ✅ Docker estándar      |
-| **Operación**       | ✅ Serverless, sin gestión | ⚠️ Requiere gestión cluster | ⚠️ Requiere gestión | ⚠️ Requiere gestión      | ✅ Serverless       | ✅ Serverless    | ⚠️ Manual               |
-| **Seguridad**       | ✅ IAM, VPC, Secrets       | ✅ IAM, RBAC                | ✅ Azure AD, RBAC   | ✅ GCP IAM, Workload     | ✅ Azure RBAC       | ✅ GCP IAM       | ⚠️ Limitada             |
-| **Ecosistema .NET** | ✅ Excelente               | ✅ Excelente                | ✅ Nativo Microsoft | ✅ Excelente             | ✅ Nativo Microsoft | ✅ Excelente     | ✅ Excelente            |
-| **Escalabilidad**   | ✅ Automática              | ✅ Flexible                 | ✅ Flexible         | ✅ Flexible (Autopilot)  | ✅ Automática       | ✅ Automática    | ⚠️ Manual               |
-| **Complejidad**     | ✅ Muy simple              | ❌ Complejo (K8s)           | ❌ Complejo (K8s)   | ❌ Complejo (K8s)        | ✅ Simple           | ✅ Simple        | ✅ Simple               |
-| **Costos**          | ⚠️ Premium serverless      | ⚠️ Nodos + gestión          | ⚠️ Nodos + gestión  | ⚠️ Autopilot competitivo | ⚠️ Pago por uso     | ⚠️ Pago por uso  | ✅ Solo infraestructura |
+| Criterio                | ECS Fargate                | EKS                         | AKS                 | GKE                      | Azure ACI            | Google Cloud Run | Docker Swarm            |
+| ----------------------- | -------------------------- | --------------------------- | ------------------- | ------------------------ | -------------------- | ---------------- | ----------------------- |
+| **Agnosticidad**        | ❌ Lock-in AWS             | ✅ Estándar K8s             | ✅ Estándar K8s     | ✅ Estándar K8s          | ❌ Lock-in Azure     | ❌ Lock-in GCP   | ✅ Docker estándar      |
+| **Operación**           | ✅ Serverless, sin gestión | ⚠️ Requiere gestión cluster | ⚠️ Requiere gestión | ⚠️ Requiere gestión      | ✅ Serverless        | ✅ Serverless    | ⚠️ Manual               |
+| **Seguridad**           | ✅ IAM, VPC, Secrets       | ✅ IAM, RBAC                | ✅ Azure AD, RBAC   | ✅ GCP IAM, Workload     | ✅ Azure RBAC        | ✅ GCP IAM       | ⚠️ Limitada             |
+| **Ecosistema .NET**     | ✅ Excelente               | ✅ Excelente                | ✅ Nativo Microsoft | ✅ Excelente             | ✅ Nativo Microsoft  | ✅ Excelente     | ✅ Excelente            |
+| **Escalabilidad**       | ✅ Automática              | ✅ Flexible                 | ✅ Flexible         | ✅ Flexible (Autopilot)  | ✅ Automática        | ✅ Automática    | ⚠️ Manual               |
+| **Complejidad**         | ✅ Baja (serverless)       | ❌ Alta (YAML, Helm, ops)   | ❌ Alta (K8s, ops)  | ❌ Alta (K8s, GKE)       | ✅ Baja (serverless) | ✅ Baja          | ⚠️ Media (clustering)   |
+| **Alta disponibilidad** | ✅ Multi-AZ                | ✅ Multi-AZ, HA             | ✅ Multi-AZ, HA     | ✅ Multi-region          | ✅ Multi-AZ          | ✅ Multi-region  | ⚠️ Manual               |
+| **Costos**              | ⚠️ Premium serverless      | ⚠️ Nodos + gestión          | ⚠️ Nodos + gestión  | ⚠️ Autopilot competitivo | ⚠️ Pago por uso      | ⚠️ Pago por uso  | ✅ Solo infraestructura |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

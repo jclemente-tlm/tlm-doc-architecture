@@ -36,18 +36,19 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | Kafka (MSK)                   | Apache Pulsar           | Google Pub/Sub           | NATS                    | SNS+SQS              | RabbitMQ            | Azure SB               |
-| ------------------- | ----------------------------- | ----------------------- | ------------------------ | ----------------------- | -------------------- | ------------------- | ---------------------- |
-| **Agnosticidad**    | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud     | ❌ Lock-in GCP           | ✅ OSS, multi-cloud     | ❌ Lock-in AWS       | ✅ OSS, multi-cloud | ❌ Lock-in Azure       |
-| **Escalabilidad**   | ✅ Masiva                     | ✅ Masiva, auto-scaling | ✅ Serverless ilimitada  | ✅ Muy alta             | ✅ Automática        | ⚠️ Limitada         | ✅ Muy buena           |
-| **Operación**       | ⚠️ Gestionada (MSK)           | ⚠️ Compleja operación   | ✅ Totalmente gestionado | ⚠️ Self-hosted          | ✅ Gestionada        | ⚠️ Compleja         | ✅ Gestionada          |
-| **Rendimiento**     | ✅ Máximo                     | ✅ Muy alto             | ✅ Muy alto              | ✅ Sub-ms latencia      | ✅ Muy alto          | ⚠️ Moderado         | ✅ Muy alto            |
-| **Ecosistema .NET** | ✅ Confluent.Kafka            | ✅ Apache.Pulsar.Client | ✅ Google.Cloud.PubSub   | ✅ NATS.Client          | ✅ AWS SDK           | ✅ RabbitMQ.Client  | ✅ Azure SDK           |
-| **Persistencia**    | ✅ Log distribuido inmutable  | ✅ Tiered storage       | ✅ 7+ días default       | ✅ JetStream            | ✅ Persistente       | ✅ Durable queues   | ✅ Persistencia nativa |
-| **Streaming**       | ✅ Nativo (replay, windowing) | ✅ Functions, SQL       | ⚠️ Dataflow requerido    | ✅ JetStream            | ❌ No soportado      | ❌ No soportado     | ❌ Limitado            |
-| **Event Sourcing**  | ✅ Ideal (log inmutable)      | ✅ Excellent            | ⚠️ Parcial               | ✅ JetStream            | ⚠️ Parcial           | ❌ No recomendado   | ⚠️ Parcial             |
-| **Multi-tenancy**   | ⚠️ Por topics                 | ✅ Nativo (namespaces)  | ✅ Por proyectos         | ✅ Accounts/Users       | ⚠️ Por topics        | ⚠️ Por vhosts       | ⚠️ Por namespaces      |
-| **Costos**          | ⚠️ Infraestructura managed    | ⚠️ Infraestructura      | ⚠️ Pago por mensaje      | ✅ Solo infraestructura | ✅ Pago por uso bajo | ✅ OSS              | ⚠️ Pago por uso        |
+| Criterio                | Kafka (MSK)                   | Apache Pulsar           | Google Pub/Sub           | NATS                    | SNS+SQS              | RabbitMQ            | Azure SB               |
+| ----------------------- | ----------------------------- | ----------------------- | ------------------------ | ----------------------- | -------------------- | ------------------- | ---------------------- |
+| **Agnosticidad**        | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud     | ❌ Lock-in GCP           | ✅ OSS, multi-cloud     | ❌ Lock-in AWS       | ✅ OSS, multi-cloud | ❌ Lock-in Azure       |
+| **Escalabilidad**       | ✅ Masiva                     | ✅ Masiva, auto-scaling | ✅ Serverless ilimitada  | ✅ Muy alta             | ✅ Automática        | ⚠️ Limitada         | ✅ Muy buena           |
+| **Operación**           | ⚠️ Gestionada (MSK)           | ⚠️ Compleja operación   | ✅ Totalmente gestionado | ⚠️ Self-hosted          | ✅ Gestionada        | ⚠️ Compleja         | ✅ Gestionada          |
+| **Rendimiento**         | ✅ 1M+ msg/seg, <10ms p99     | ✅ 1M+ msg/seg          | ✅ 100K+ msg/seg         | ✅ 10M+ msg/seg, <1ms   | ✅ 100K+ msg/seg     | ⚠️ 50K msg/seg      | ✅ 100K+ msg/seg       |
+| **Ecosistema .NET**     | ✅ Confluent.Kafka            | ✅ Apache.Pulsar.Client | ✅ Google.Cloud.PubSub   | ✅ NATS.Client          | ✅ AWS SDK           | ✅ RabbitMQ.Client  | ✅ Azure SDK           |
+| **Persistencia**        | ✅ Log distribuido inmutable  | ✅ Tiered storage       | ✅ 7+ días default       | ✅ JetStream            | ✅ Persistente       | ✅ Durable queues   | ✅ Persistencia nativa |
+| **Streaming**           | ✅ Nativo (replay, windowing) | ✅ Functions, SQL       | ⚠️ Dataflow requerido    | ✅ JetStream            | ❌ No soportado      | ❌ No soportado     | ❌ Limitado            |
+| **Event Sourcing**      | ✅ Ideal (log inmutable)      | ✅ Excellent            | ⚠️ Parcial               | ✅ JetStream            | ⚠️ Parcial           | ❌ No recomendado   | ⚠️ Parcial             |
+| **Multi-tenancy**       | ⚠️ Por topics                 | ✅ Nativo (namespaces)  | ✅ Por proyectos         | ✅ Accounts/Users       | ⚠️ Por topics        | ⚠️ Por vhosts       | ⚠️ Por namespaces      |
+| **Alta disponibilidad** | ✅ Replicación, Multi-AZ      | ✅ Multi-datacenter     | ✅ Multi-region          | ✅ Clustering           | ✅ Multi-AZ          | ⚠️ Clustering       | ✅ Geo-replicación     |
+| **Costos**              | ⚠️ Infraestructura managed    | ⚠️ Infraestructura      | ⚠️ Pago por mensaje      | ✅ Solo infraestructura | ✅ Pago por uso bajo | ✅ OSS              | ⚠️ Pago por uso        |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -92,6 +93,7 @@ Se selecciona **Apache Kafka (AWS MSK)** como solución estándar de mensajería
 - **Complejidad operativa:** mitigada con AWS MSK managed y automatización Terraform
 - **Curva de aprendizaje:** mitigada con capacitación y documentación corporativa
 - **Costos infraestructura:** optimizados con políticas retención y dimensionamiento adecuado
+- **Atomicidad con BD:** para garantizar consistencia con PostgreSQL (ADR-010), usar patrones como Transactional Outbox (ver guías de arquitectura)
 
 ---
 

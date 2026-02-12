@@ -32,15 +32,14 @@ Las alternativas de multi-tenancy evaluadas fueron:
 
 ### Comparativa Cualitativa
 
-| Criterio           | Single-Tenant     | Multi-Tenant DB     | Schema/Tenant  | Compartmented      | Híbrido              |
-| ------------------ | ----------------- | ------------------- | -------------- | ------------------ | -------------------- |
-| **Aislamiento**    | ✅ Total          | ⚠️ A nivel app      | ⚠️ Por esquema | ✅ Vía sidecars    | ✅ Flexible          |
-| **Escalabilidad**  | ❌ Muy limitada   | ✅ Excelente        | ✅ Muy buena   | ✅ Horizontal      | ✅ Buena             |
-| **Operación**      | ❌ Compleja       | ✅ Centralizada     | ⚠️ Moderada    | ⚠️ Infra adicional | ⚠️ Compleja flexible |
-| **Costos**         | ❌ Muy altos      | ✅ Eficiente        | ✅ Eficiente   | ⚠️ Infraestructura | ⚠️ Moderados         |
-| **Flexibilidad**   | ✅ Máxima         | ❌ Muy limitada     | ⚠️ Limitada    | ✅ Alta            | ✅ Alta              |
-| **Compliance**     | ✅ Máximo control | ⚠️ Requiere cuidado | ⚠️ Bueno       | ✅ Excelente       | ✅ Excelente         |
-| **Implementación** | ✅ Rápida         | ✅ Rápida           | ⚠️ Moderada    | ❌ Compleja        | ⚠️ Compleja          |
+| Criterio          | Single-Tenant   | Multi-Tenant DB     | Schema/Tenant    | Compartmented      | Híbrido              |
+| ----------------- | --------------- | ------------------- | ---------------- | ------------------ | -------------------- |
+| **Aislamiento**   | ✅ Total        | ⚠️ A nivel app      | ⚠️ Por esquema   | ✅ Vía sidecars    | ✅ Flexible          |
+| **Escalabilidad** | ❌ Muy limitada | ✅ Excelente        | ✅ Muy buena     | ✅ Horizontal      | ✅ Buena             |
+| **Seguridad**     | ✅ Máxima       | ⚠️ Requiere cuidado | ⚠️ RLS/Políticas | ✅ Muy alta        | ✅ Flexible          |
+| **Operación**     | ❌ Compleja     | ✅ Centralizada     | ⚠️ Moderada      | ⚠️ Infra adicional | ⚠️ Compleja flexible |
+| **Costos**        | ❌ Muy altos    | ✅ Eficiente        | ✅ Eficiente     | ⚠️ Infraestructura | ⚠️ Moderados         |
+| **Flexibilidad**  | ✅ Máxima       | ❌ Muy limitada     | ⚠️ Limitada      | ✅ Alta            | ✅ Alta              |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

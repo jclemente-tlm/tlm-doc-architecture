@@ -47,6 +47,7 @@ Alternativas evaluadas:
 | **Costos**              | ✅ Gratis (públicos), bajo privados | ⚠️ US$0.10/GB storage | ⚠️ US$0.10/GB            | ⚠️ US$5/mes + storage      | ❌ US$7/mes por repo | ⚠️ US$50/mes (team) | ✅ Solo infraestructura |
 | **Alta disponibilidad** | ✅ Global, gestionado               | ✅ Multi-AZ           | ✅ Multi-regional        | ✅ Geo-replicación         | ✅ Gestionado        | ✅ SaaS/self-hosted | ⚠️ Manual               |
 | **Performance**         | ✅ CDN global                       | ✅ VPC Endpoints      | ✅ Regional optimization | ✅ Muy bueno               | ⚠️ Rate limits       | ✅ Buena            | ⚠️ Depende infra        |
+| **Comunidad**           | ✅ GitHub nativo                    | ✅ Soporte AWS        | ✅ Soporte Google        | ✅ Soporte Microsoft       | ⚠️ Docker Hub focus  | ✅ Red Hat (9K⭐)   | ✅ CNCF (26K⭐)         |
 | **Ecosistema .NET**     | ✅ Excelente                        | ✅ Excelente          | ✅ Excelente             | ✅ Nativo Microsoft        | ✅ Excelente         | ✅ Excelente        | ✅ Excelente            |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple

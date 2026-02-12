@@ -38,16 +38,17 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | Parameter Store   | Azure App Config | Google Runtime   | Consul              | etcd              |
-| ------------------- | ----------------- | ---------------- | ---------------- | ------------------- | ----------------- |
-| **Agnosticidad**    | ❌ Lock-in AWS    | ❌ Lock-in Azure | ❌ Lock-in GCP   | ✅ Agnóstico        | ✅ OSS, agnóstico |
-| **Operación**       | ✅ Gestionado     | ✅ Gestionado    | ✅ Gestionado    | ⚠️ Requiere gestión | ⚠️ Self-hosted    |
-| **Seguridad**       | ✅ Enterprise     | ✅ Enterprise    | ✅ Enterprise    | ✅ Máxima           | ✅ TLS, RBAC      |
-| **Ecosistema .NET** | ✅ Muy buena      | ✅ Excelente     | ⚠️ Limitada      | ✅ Buena            | ⚠️ Limitada       |
-| **Versionado**      | ✅ Automática     | ✅ Automática    | ✅ Automática    | ✅ Muy flexible     | ✅ Revisions      |
-| **Feature Flags**   | ⚠️ Básico         | ✅ Nativo        | ⚠️ Básico        | ✅ Flexible         | ⚠️ Manual         |
-| **Multi-tenancy**   | ⚠️ Por parámetros | ✅ Labels        | ⚠️ Por proyectos | ✅ Namespaces       | ⚠️ Prefixes       |
-| **Costos**          | ⚠️ Por uso        | ✅ Económico     | ✅ Económico     | ⚠️ Infraestructura  | ✅ Gratis OSS     |
+| Criterio            | Parameter Store   | Azure App Config | Google Runtime    | Consul                | etcd              |
+| ------------------- | ----------------- | ---------------- | ----------------- | --------------------- | ----------------- |
+| **Agnosticidad**    | ❌ Lock-in AWS    | ❌ Lock-in Azure | ❌ Lock-in GCP    | ✅ Agnóstico          | ✅ OSS, agnóstico |
+| **Operación**       | ✅ Gestionado     | ✅ Gestionado    | ✅ Gestionado     | ⚠️ Requiere gestión   | ⚠️ Self-hosted    |
+| **Seguridad**       | ✅ Enterprise     | ✅ Enterprise    | ✅ Enterprise     | ✅ Máxima             | ✅ TLS, RBAC      |
+| **Ecosistema .NET** | ✅ Muy buena      | ✅ Excelente     | ⚠️ Limitada       | ✅ Buena              | ⚠️ Limitada       |
+| **Versionado**      | ✅ Automática     | ✅ Automática    | ✅ Automática     | ✅ Muy flexible       | ✅ Revisions      |
+| **Feature Flags**   | ⚠️ Básico         | ✅ Nativo        | ⚠️ Básico         | ✅ Flexible           | ⚠️ Manual         |
+| **Multi-tenancy**   | ⚠️ Por parámetros | ✅ Labels        | ⚠️ Por proyectos  | ✅ Namespaces         | ⚠️ Prefixes       |
+| **Comunidad**       | ✅ Soporte AWS    | ✅ Soporte Azure | ✅ Soporte Google | ✅ Muy activa (28K⭐) | ✅ CNCF (47K⭐)   |
+| **Costos**          | ⚠️ Por uso        | ✅ Económico     | ✅ Económico      | ⚠️ Infraestructura    | ✅ Gratis OSS     |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

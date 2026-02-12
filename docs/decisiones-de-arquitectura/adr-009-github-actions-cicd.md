@@ -44,7 +44,8 @@ Alternativas evaluadas:
 | **Operación**       | ✅ Gestionado         | ✅ Gestionado/Híbrido | ⚠️ Manual               | ✅ Gestionado           | ✅ Gestionado    | ✅ Gestionado | ⚠️ Self-hosted |
 | **Seguridad**       | ✅ Integrada          | ✅ Integrada          | ⚠️ Limitada             | ✅ Integrada            | ✅ Integrada     | ✅ Integrada  | ✅ Buena       |
 | **Ecosistema .NET** | ✅ Excelente          | ✅ Bueno              | ✅ Bueno                | ✅ Nativo               | ✅ Bueno         | ✅ Bueno      | ✅ Excelente   |
-| **Extensibilidad**  | ✅ Marketplace        | ✅ Extenso            | ✅ Plugins              | ⚠️ Limitado             | ⚠️ Básico        | ⚠️ Limitado   | ✅ Plugins     |
+| **Extensibilidad**  | ✅ 20K+ actions       | ✅ 5K+ templates      | ✅ 1.8K+ plugins        | ⚠️ Extensions básicas   | ⚠️ Integraciones | ⚠️ Orbs       | ✅ Plugins     |
+| **Comunidad**       | ✅ Muy activa         | ✅ Muy activa         | ✅ Muy activa (65K⭐)   | ✅ Soporte Microsoft    | ✅ Soporte AWS   | ✅ SaaS líder | ✅ JetBrains   |
 | **Costos**          | ✅ Plan gratuito      | ✅ Plan gratuito/OSS  | ⚠️ Infraestructura      | ✅ Plan gratuito        | ⚠️ Por uso       | ⚠️ Por uso    | ⚠️ Licencias   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple

@@ -38,15 +38,16 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | Terraform           | Pulumi              | Ansible                   | CloudFormation | ARM Templates    | GCP DM         |
-| ------------------- | ------------------- | ------------------- | ------------------------- | -------------- | ---------------- | -------------- |
-| **Agnosticidad**    | ✅ Multi-cloud      | ✅ Multi-cloud      | ✅ Multi-cloud            | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP |
-| **Operación**       | ✅ Declarativo      | ⚠️ Imperativo       | ⚠️ Imperativo/Declarativo | ✅ Declarativo | ✅ Declarativo   | ✅ Declarativo |
-| **Seguridad**       | ✅ Enterprise grade | ✅ Enterprise grade | ✅ SSH/Enterprise         | ✅ AWS IAM     | ✅ Azure RBAC    | ✅ GCP IAM     |
-| **Ecosistema .NET** | ✅ Muy buena        | ✅ Muy buena        | ⚠️ Config mgmt focus      | ⚠️ Solo AWS    | ⚠️ Solo Azure    | ⚠️ Solo GCP    |
-| **Versionado**      | ✅ Automática       | ✅ Automática       | ✅ Git-based              | ✅ Nativo      | ✅ Nativo        | ✅ Nativo      |
-| **Módulos**         | ✅ Reutilizables    | ✅ Reutilizables    | ✅ Roles/Collections      | ⚠️ Solo AWS    | ⚠️ Solo Azure    | ⚠️ Solo GCP    |
-| **Costos**          | ⚠️ Por uso          | ⚠️ Por uso          | ✅ Gratis OSS             | ✅ Incluido    | ✅ Incluido      | ✅ Incluido    |
+| Criterio            | Terraform             | Pulumi              | Ansible                   | CloudFormation | ARM Templates    | GCP DM         |
+| ------------------- | --------------------- | ------------------- | ------------------------- | -------------- | ---------------- | -------------- |
+| **Agnosticidad**    | ✅ Multi-cloud        | ✅ Multi-cloud      | ✅ Multi-cloud            | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP |
+| **Operación**       | ✅ Declarativo        | ⚠️ Imperativo       | ⚠️ Imperativo/Declarativo | ✅ Declarativo | ✅ Declarativo   | ✅ Declarativo |
+| **Seguridad**       | ✅ Enterprise grade   | ✅ Enterprise grade | ✅ SSH/Enterprise         | ✅ AWS IAM     | ✅ Azure RBAC    | ✅ GCP IAM     |
+| **Integración SDK** | ✅ Muy buena          | ✅ Multi-lenguaje   | ⚠️ SSH/Python             | ⚠️ Solo AWS    | ⚠️ Solo Azure    | ⚠️ Solo GCP    |
+| **Versionado**      | ✅ Automática         | ✅ Automática       | ✅ Git-based              | ✅ Nativo      | ✅ Nativo        | ✅ Nativo      |
+| **Módulos**         | ✅ Reutilizables      | ✅ Reutilizables    | ✅ Roles/Collections      | ⚠️ Solo AWS    | ⚠️ Solo Azure    | ⚠️ Solo GCP    |
+| **Comunidad**       | ✅ Muy activa (42K⭐) | ✅ Activa (21K⭐)   | ✅ Muy activa (62K⭐)     | ✅ Soporte AWS | ✅ Soporte Azure | ✅ Soporte GCP |
+| **Costos**          | ⚠️ Por uso            | ⚠️ Por uso          | ✅ Gratis OSS             | ✅ Incluido    | ✅ Incluido      | ✅ Incluido    |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

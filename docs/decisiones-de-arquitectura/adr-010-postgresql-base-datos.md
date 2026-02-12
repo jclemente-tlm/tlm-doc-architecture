@@ -37,17 +37,18 @@ Alternativas evaluadas:
 
 ### Comparativa Cualitativa
 
-| Criterio            | PostgreSQL                    | CockroachDB            | MySQL               | SQL Server           | Oracle                | Aurora          |
-| ------------------- | ----------------------------- | ---------------------- | ------------------- | -------------------- | --------------------- | --------------- |
-| **Agnosticidad**    | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud    | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle     | ❌ Lock-in AWS  |
-| **Operación**       | ✅ Simple, automatizable      | ⚠️ Clustering complejo | ✅ Simple           | ⚠️ Compleja          | ⚠️ Compleja           | ✅ Gestionado   |
-| **Seguridad**       | ✅ Avanzada, RLS, cifrado     | ✅ Enterprise grade    | ⚠️ Básica           | ✅ Enterprise        | ✅ Enterprise         | ✅ Enterprise   |
-| **Ecosistema .NET** | ✅ Excelente (Npgsql)         | ✅ PostgreSQL driver   | ✅ Muy bueno        | ✅ Nativo            | ✅ Bueno              | ✅ Compatible   |
-| **Escalabilidad**   | ✅ Particionamiento, sharding | ✅ Horizontal nativa   | ⚠️ Limitada         | ⚠️ Always On         | ⚠️ RAC                | ✅ Automática   |
-| **Extensibilidad**  | ✅ Plugins, JSONB, PostGIS    | ⚠️ PostgreSQL subset   | ⚠️ Limitada         | ⚠️ Limitada          | ✅ Máxima             | ⚠️ Limitada     |
-| **Costos**          | ✅ Gratuito                   | ⚠️ Free/Enterprise     | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro           | ⚠️ Pago por uso |
-| **Comunidad**       | ✅ Muy activa                 | ⚠️ Creciendo           | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise | ⚠️ Limitada AWS |
-| **Portabilidad**    | ✅ Multi-plataforma           | ✅ Cloud-native        | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada           | ❌ AWS          |
+| Criterio                | PostgreSQL                    | CockroachDB            | MySQL               | SQL Server           | Oracle                | Aurora          |
+| ----------------------- | ----------------------------- | ---------------------- | ------------------- | -------------------- | --------------------- | --------------- |
+| **Agnosticidad**        | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud    | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle     | ❌ Lock-in AWS  |
+| **Operación**           | ✅ Simple, automatizable      | ⚠️ Clustering complejo | ✅ Simple           | ⚠️ Compleja          | ⚠️ Compleja           | ✅ Gestionado   |
+| **Seguridad**           | ✅ Avanzada, RLS, cifrado     | ✅ Enterprise grade    | ⚠️ Básica           | ✅ Enterprise        | ✅ Enterprise         | ✅ Enterprise   |
+| **Ecosistema .NET**     | ✅ Excelente (Npgsql)         | ✅ PostgreSQL driver   | ✅ Muy bueno        | ✅ Nativo            | ✅ Bueno              | ✅ Compatible   |
+| **Escalabilidad**       | ✅ Particionamiento, sharding | ✅ Horizontal nativa   | ⚠️ Limitada         | ⚠️ Always On         | ⚠️ RAC                | ✅ Automática   |
+| **Extensibilidad**      | ✅ Plugins, JSONB, PostGIS    | ⚠️ PostgreSQL subset   | ⚠️ Limitada         | ⚠️ Limitada          | ✅ Máxima             | ⚠️ Limitada     |
+| **Costos**              | ✅ Gratuito                   | ⚠️ Free/Enterprise     | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro           | ⚠️ Pago por uso |
+| **Alta disponibilidad** | ✅ Replicación nativa         | ✅ Multi-region nativa | ⚠️ Replicación      | ✅ Always On         | ✅ RAC                | ✅ Multi-AZ     |
+| **Comunidad**           | ✅ Muy activa (15K⭐)         | ✅ Muy activa (30K⭐)  | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise | ⚠️ Limitada AWS |
+| **Portabilidad**        | ✅ Multi-plataforma           | ✅ Cloud-native        | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada           | ❌ AWS          |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

@@ -44,6 +44,7 @@ Las alternativas evaluadas fueron:
 | **Multi-tenancy**   | ✅ Nativo y flexible        | ✅ Excelente soporte     | ✅ Nativo y flexible     | ✅ Excelente soporte     | ⚠️ Básico                | ✅ Muy bueno             | ⚠️ Básico                |
 | **Protocolos**      | ✅ Todos los estándares     | ✅ Completo              | ✅ Todos los estándares  | ✅ Completo              | ⚠️ Limitado              | ✅ Completo              | ⚠️ Limitado              |
 | **Personalización** | ✅ Altamente personalizable | ⚠️ Limitada              | ✅ Altamente flexible    | ⚠️ Limitada              | ⚠️ Muy limitada          | ⚠️ Limitada              | ⚠️ Muy limitada          |
+| **Comunidad**       | ✅ Muy activa (21K⭐)       | ✅ Enterprise líder      | ✅ Activa (6K⭐)         | ✅ Enterprise            | ✅ Soporte AWS           | ✅ Soporte Microsoft     | ✅ Soporte Google        |
 | **Costos**          | ✅ Solo infraestructura     | ❌ Enterprise costoso    | ✅ Community + comercial | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
