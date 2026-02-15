@@ -13,7 +13,7 @@ Aceptada – Agosto 2025
 
 Los servicios corporativos requieren una solución robusta de infraestructura como código para:
 
-- **Despliegue multi-cloud** (AWS, Azure, GCP) con portabilidad
+- **Despliegue multi-cloud** (AWS, Azure) con portabilidad
 - **Multi-entorno** (dev, staging, prod) con configuraciones específicas
 - **Multi-tenancy** con recursos segregados por país/tenant
 - **Versionado y rollback** de infraestructura
@@ -31,23 +31,20 @@ Alternativas evaluadas:
 - **Pulumi** (Multi-lenguaje, programático)
 - **Ansible** (Config management, YAML, agentless)
 - **AWS CloudFormation** (AWS nativo)
-- **ARM Templates** (Azure nativo)
-- **GCP Deployment Manager** (GCP nativo)
+- **Azure Bicep** (Azure nativo, moderno)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-### Comparativa Cualitativa
-
-| Criterio            | Terraform             | Pulumi              | Ansible                   | CloudFormation | ARM Templates    | GCP DM         |
-| ------------------- | --------------------- | ------------------- | ------------------------- | -------------- | ---------------- | -------------- |
-| **Agnosticidad**    | ✅ Multi-cloud        | ✅ Multi-cloud      | ✅ Multi-cloud            | ❌ Lock-in AWS | ❌ Lock-in Azure | ❌ Lock-in GCP |
-| **Operación**       | ✅ Declarativo        | ⚠️ Imperativo       | ⚠️ Imperativo/Declarativo | ✅ Declarativo | ✅ Declarativo   | ✅ Declarativo |
-| **Seguridad**       | ✅ Enterprise grade   | ✅ Enterprise grade | ✅ SSH/Enterprise         | ✅ AWS IAM     | ✅ Azure RBAC    | ✅ GCP IAM     |
-| **Integración SDK** | ✅ Muy buena          | ✅ Multi-lenguaje   | ⚠️ SSH/Python             | ⚠️ Solo AWS    | ⚠️ Solo Azure    | ⚠️ Solo GCP    |
-| **Versionado**      | ✅ Automática         | ✅ Automática       | ✅ Git-based              | ✅ Nativo      | ✅ Nativo        | ✅ Nativo      |
-| **Módulos**         | ✅ Reutilizables      | ✅ Reutilizables    | ✅ Roles/Collections      | ⚠️ Solo AWS    | ⚠️ Solo Azure    | ⚠️ Solo GCP    |
-| **Comunidad**       | ✅ Muy activa (42K⭐) | ✅ Activa (21K⭐)   | ✅ Muy activa (62K⭐)     | ✅ Soporte AWS | ✅ Soporte Azure | ✅ Soporte GCP |
-| **Costos**          | ⚠️ Por uso            | ⚠️ Por uso          | ✅ Gratis OSS             | ✅ Incluido    | ✅ Incluido      | ✅ Incluido    |
+| Criterio            | Terraform             | Pulumi              | Ansible                   | AWS CloudFormation | Azure Bicep      |
+| ------------------- | --------------------- | ------------------- | ------------------------- | ------------------ | ---------------- |
+| **Agnosticidad**    | ✅ Multi-cloud        | ✅ Multi-cloud      | ✅ Multi-cloud            | ❌ Lock-in AWS     | ❌ Lock-in Azure |
+| **Operación**       | ✅ Declarativo        | ⚠️ Imperativo       | ⚠️ Imperativo/Declarativo | ✅ Declarativo     | ✅ Declarativo   |
+| **Seguridad**       | ✅ Enterprise grade   | ✅ Enterprise grade | ✅ SSH/Enterprise         | ✅ AWS IAM         | ✅ Azure RBAC    |
+| **Integración SDK** | ✅ Muy buena          | ✅ Multi-lenguaje   | ⚠️ SSH/Python             | ⚠️ Solo AWS        | ⚠️ Solo Azure    |
+| **Versionado**      | ✅ Automática         | ✅ Automática       | ✅ Git-based              | ✅ Nativo          | ✅ Nativo        |
+| **Módulos**         | ✅ Reutilizables      | ✅ Reutilizables    | ✅ Roles/Collections      | ⚠️ Solo AWS        | ⚠️ Solo Azure    |
+| **Comunidad**       | ✅ Muy activa (42K⭐) | ✅ Activa (21K⭐)   | ✅ Muy activa (62K⭐)     | ✅ Soporte AWS     | ✅ Soporte Azure |
+| **Costos**          | ⚠️ Por uso            | ⚠️ Por uso          | ✅ Gratis OSS             | ✅ Incluido        | ✅ Incluido      |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -68,7 +65,7 @@ Se selecciona **Terraform** como solución estándar de infraestructura como có
 
 - **Ansible:** excelente para configuration management pero enfoque imperativo/procedural, estado no declarativo (no state file), menor idempotencia vs Terraform, mejor para config servers que infraestructura
 - **Pulumi:** menor adopción enterprise vs Terraform (3K vs 40K stars GitHub), ecosistema módulos menos maduro, learning curve programación vs HCL declarativo
-- **CloudFormation, ARM, GCP DM:** lock-in cloud específico, menor portabilidad multi-cloud, requiere reescritura completa para migraciones
+- **CloudFormation, Bicep:** lock-in cloud específico, menor portabilidad multi-cloud, requiere reescritura completa para migraciones
 
 ---
 

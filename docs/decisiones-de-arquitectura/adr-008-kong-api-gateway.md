@@ -34,22 +34,20 @@ Alternativas evaluadas:
 - **YARP (Yet Another Reverse Proxy)** (Microsoft, open source, .NET nativo)
 - **Traefik** (Open source, cloud-native)
 - **NGINX Plus** (Comercial, agnóstico)
-- **Ocelot** (Open source, .NET específico)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-### Comparativa Cualitativa
-
-| Criterio               | Kong                  | AWS API Gateway     | Azure API Mgmt       | Apigee              | YARP             | Traefik           | NGINX Plus    | Ocelot           |
-| ---------------------- | --------------------- | ------------------- | -------------------- | ------------------- | ---------------- | ----------------- | ------------- | ---------------- |
-| **Agnosticidad**       | ✅ Agnóstico          | ❌ Lock-in AWS      | ❌ Lock-in Azure     | ❌ Lock-in GCP      | ⚠️ .NET nativo   | ✅ Agnóstico      | ✅ Agnóstico  | ⚠️ .NET nativo   |
-| **Madurez**            | ✅ Muy alta           | ✅ Muy alta         | ✅ Muy alta          | ✅ Líder enterprise | ⚠️ Media         | ✅ Alta           | ✅ Muy alta   | ⚠️ Baja          |
-| **Ecosistema Plugins** | ✅ Extenso            | ⚠️ AWS integrations | ✅ Policies extensas | ✅ Muy completo     | ⚠️ Limitado      | ⚠️ Medio          | ⚠️ Medio      | ❌ Limitado      |
-| **Seguridad**          | ✅ Completa           | ✅ IAM/Cognito      | ✅ Azure AD/RBAC     | ✅ Enterprise grade | ✅ OAuth2/JWT    | ✅ Completa       | ✅ Completa   | ⚠️ Limitada      |
-| **Escalabilidad**      | ✅ Clustering nativo  | ✅ Serverless auto  | ✅ Auto-scaling      | ✅ Global           | ⚠️ Manual con LB | ✅ K8s/Clustering | ✅ Clustering | ⚠️ Manual con LB |
-| **Observabilidad**     | ✅ Completa           | ✅ CloudWatch       | ✅ App Insights      | ✅ Analytics nativo | ✅ Nativa .NET   | ✅ Completa       | ✅ Completa   | ⚠️ Básica        |
-| **Comunidad**          | ✅ Muy activa         | ✅ Soporte AWS      | ✅ Soporte Microsoft | ✅ Soporte Google   | ⚠️ Creciente     | ✅ Activa         | ✅ Activa     | ⚠️ Pequeña       |
-| **Costos**             | ✅ OSS (+ Enterprise) | ⚠️ Por requests     | ⚠️ Por requests      | ❌ Muy costoso      | ✅ OSS           | ✅ OSS            | ⚠️ Comercial  | ✅ OSS           |
+| Criterio                  | Kong                  | AWS API Gateway        | Azure API Management | Apigee                  | YARP             | Traefik           | NGINX Plus     |
+| ------------------------- | --------------------- | ---------------------- | -------------------- | ----------------------- | ---------------- | ----------------- | -------------- |
+| **Agnosticidad**          | ✅ Agnóstico          | ❌ Lock-in AWS         | ❌ Lock-in Azure     | ❌ Lock-in GCP          | ⚠️ .NET nativo   | ✅ Agnóstico      | ✅ Agnóstico   |
+| **Madurez**               | ✅ Muy alta           | ✅ Muy alta            | ✅ Muy alta          | ✅ Líder enterprise     | ⚠️ Media         | ✅ Alta           | ✅ Muy alta    |
+| **Complejidad operativa** | ⚠️ Self-hosted/ECS    | ✅ Infra AWS existente | ⚠️ Vendor adicional  | ❌ Vendor GCP adicional | ⚠️ Self-hosted   | ⚠️ Self-hosted    | ⚠️ Self-hosted |
+| **Ecosistema Plugins**    | ✅ Extenso            | ⚠️ AWS integrations    | ✅ Policies extensas | ✅ Muy completo         | ⚠️ Limitado      | ⚠️ Medio          | ⚠️ Medio       |
+| **Seguridad**             | ✅ Completa           | ✅ IAM/Cognito         | ✅ Azure AD/RBAC     | ✅ Enterprise grade     | ✅ OAuth2/JWT    | ✅ Completa       | ✅ Completa    |
+| **Escalabilidad**         | ✅ Clustering nativo  | ✅ Serverless auto     | ✅ Auto-scaling      | ✅ Global               | ⚠️ Manual con LB | ✅ K8s/Clustering | ✅ Clustering  |
+| **Observabilidad**        | ✅ Completa           | ✅ CloudWatch          | ✅ App Insights      | ✅ Analytics nativo     | ✅ Nativa .NET   | ✅ Completa       | ✅ Completa    |
+| **Comunidad**             | ✅ Muy activa         | ✅ Soporte AWS         | ✅ Soporte Microsoft | ✅ Soporte Google       | ⚠️ Creciente     | ✅ Activa         | ✅ Activa      |
+| **Costos**                | ✅ OSS (+ Enterprise) | ⚠️ Por requests        | ⚠️ Por requests      | ❌ Muy costoso          | ✅ OSS           | ✅ OSS            | ⚠️ Comercial   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -74,11 +72,10 @@ Se selecciona **Kong (OSS)** como solución estándar de API Gateway para todos 
 
 - **AWS API Gateway:** lock-in AWS, costos por requests elevados a escala (US$3.50/millón), integración limitada con ecosistema no-AWS, menor flexibilidad para lógica compleja
 - **Azure API Management:** lock-in Azure, infraestructura AWS ya establecida (ADR-003, ADR-007), costos premium (US$2.5K/mes tier básico), requiere integración cross-cloud
-- **Apigee:** costos prohibitivos (US$200K+/año enterprise), lock-in Google Cloud, sobrede- dimensionado para necesidades actuales, complejidad operativa alta
+- **Apigee:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), costos prohibitivos (US$200K+/año enterprise), sobrede-dimensionado para necesidades actuales, complejidad operativa alta
 - **YARP:** ecosistema de plugins limitado, acoplamiento con .NET, menor madurez, no cubre casos de uso enterprise complejos
 - **Traefik:** buena alternativa pero menor ecosistema de plugins que Kong, menos adopción en casos de uso enterprise complejos
 - **NGINX Plus:** costos comerciales elevados (US$2.5K/instancia/año) sin ventajas significativas sobre Kong OSS para casos de uso actuales
-- **Ocelot:** proyecto menos activo, capacidades enterprise limitadas, comunidad pequeña, no es opción seria para gateway corporativo
 
 ---
 
@@ -118,4 +115,3 @@ Se selecciona **Kong (OSS)** como solución estándar de API Gateway para todos 
 - [Traefik](https://doc.traefik.io/traefik/)
 - [NGINX Plus](https://www.nginx.com/products/nginx/)
 - [YARP](https://microsoft.github.io/reverse-proxy/)
-- [Ocelot](https://ocelot.readthedocs.io/)

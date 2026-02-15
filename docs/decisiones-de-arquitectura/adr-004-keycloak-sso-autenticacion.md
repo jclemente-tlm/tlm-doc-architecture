@@ -25,8 +25,6 @@ La intención estratégica es mantener agnosticidad y evitar lock-in con proveed
 Las alternativas evaluadas fueron:
 
 - **Keycloak** (open source, agnóstico)
-- **Okta** (líder SaaS identity, enterprise)
-- **FusionAuth** (OSS alternativa moderna)
 - **Auth0** (SaaS, gestionado)
 - **AWS Cognito** (gestionado AWS)
 - **Azure AD B2C** (gestionado Azure)
@@ -34,18 +32,17 @@ Las alternativas evaluadas fueron:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-### Comparativa Cualitativa
-
-| Criterio            | Keycloak                    | Okta                     | FusionAuth               | Auth0                    | AWS Cognito              | Azure AD B2C             | Google IdP               |
-| ------------------- | --------------------------- | ------------------------ | ------------------------ | ------------------------ | ------------------------ | ------------------------ | ------------------------ |
-| **Agnosticidad**    | ✅ OSS, portátil            | ⚠️ SaaS independiente    | ✅ OSS, portátil         | ⚠️ SaaS independiente    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           |
-| **Operación**       | ⚠️ Requiere gestión         | ✅ Totalmente gestionado | ⚠️ Requiere gestión      | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado |
-| **Seguridad**       | ✅ Enterprise grade         | ✅ Líder mercado         | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      |
-| **Multi-tenancy**   | ✅ Nativo y flexible        | ✅ Excelente soporte     | ✅ Nativo y flexible     | ✅ Excelente soporte     | ⚠️ Básico                | ✅ Muy bueno             | ⚠️ Básico                |
-| **Protocolos**      | ✅ Todos los estándares     | ✅ Completo              | ✅ Todos los estándares  | ✅ Completo              | ⚠️ Limitado              | ✅ Completo              | ⚠️ Limitado              |
-| **Personalización** | ✅ Altamente personalizable | ⚠️ Limitada              | ✅ Altamente flexible    | ⚠️ Limitada              | ⚠️ Muy limitada          | ⚠️ Limitada              | ⚠️ Muy limitada          |
-| **Comunidad**       | ✅ Muy activa (21K⭐)       | ✅ Enterprise líder      | ✅ Activa (6K⭐)         | ✅ Enterprise            | ✅ Soporte AWS           | ✅ Soporte Microsoft     | ✅ Soporte Google        |
-| **Costos**          | ✅ Solo infraestructura     | ❌ Enterprise costoso    | ✅ Community + comercial | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    |
+| Criterio                  | Keycloak                    | Auth0                    | AWS Cognito              | Azure AD B2C             | Google Identity Platform |
+| ------------------------- | --------------------------- | ------------------------ | ------------------------ | ------------------------ | ------------------------ |
+| **Agnosticidad**          | ✅ OSS, portátil            | ⚠️ SaaS independiente    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           |
+| **Operación**             | ⚠️ Requiere gestión         | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado |
+| **Complejidad operativa** | ⚠️ Self-hosted              | ✅ SaaS simplificado     | ✅ Infra AWS existente   | ⚠️ Vendor adicional      | ❌ Vendor GCP adicional  |
+| **Seguridad**             | ✅ Enterprise grade         | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      |
+| **Multi-tenancy**         | ✅ Nativo y flexible        | ✅ Excelente soporte     | ⚠️ Básico                | ✅ Muy bueno             | ⚠️ Básico                |
+| **Protocolos**            | ✅ Todos los estándares     | ✅ Completo              | ⚠️ Limitado              | ✅ Completo              | ⚠️ Limitado              |
+| **Personalización**       | ✅ Altamente personalizable | ⚠️ Limitada              | ⚠️ Muy limitada          | ⚠️ Limitada              | ⚠️ Muy limitada          |
+| **Comunidad**             | ✅ Muy activa (21K⭐)       | ✅ Enterprise            | ✅ Soporte AWS           | ✅ Soporte Microsoft     | ✅ Soporte Google        |
+| **Costos**                | ✅ Solo infraestructura     | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -64,12 +61,10 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 
 ## Alternativas descartadas
 
-- **Okta:** costos enterprise prohibitivos (US$2-15/usuario/mes = US$24K-180K/año para 1K usuarios), lock-in SaaS, menor control sobre datos sensibles
-- **FusionAuth:** menor madurez vs Keycloak (2018 vs 2014), comunidad más pequeña, ecosistema de plugins limitado
 - **Auth0:** costos altos (US$23-240/mes base + usuarios), lock-in SaaS, personalización limitada
 - **AWS Cognito:** limitaciones en protocolos (sin SAML completo), lock-in AWS, multi-tenancy básico
 - **Azure AD B2C:** lock-in Azure, infraestructura AWS ya establecida, integración menos fluida
-- **Google IdP:** lock-in GCP, capacidades multi-tenancy limitadas, menor adopción enterprise
+- **Google Identity Platform:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **SDK .NET adicional** (Google.Cloud.IdentityPlatform) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), capacidades multi-tenancy limitadas, menor adopción enterprise
 
 ---
 
@@ -92,8 +87,6 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 ## 📚 REFERENCIAS
 
 - [Keycloak Documentation](https://www.keycloak.org/documentation)
-- [Okta Identity Cloud](https://www.okta.com/)
-- [FusionAuth](https://fusionauth.io/)
 - [Auth0](https://auth0.com/)
 - [Multi-tenancy with Keycloak Realms](https://www.keycloak.org/docs/latest/server_admin/#_realms)
 - [Keycloak Performance Tuning](https://www.keycloak.org/docs/latest/server_installation/#_clustering)

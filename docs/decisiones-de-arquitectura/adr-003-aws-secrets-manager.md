@@ -27,23 +27,21 @@ Las alternativas evaluadas fueron:
 - **AWS Secrets Manager** (Gestionado AWS, integración nativa)
 - **Azure Key Vault** (Gestionado Azure, integración nativa)
 - **Google Secret Manager** (Gestionado GCP, integración nativa)
+- **GitHub Secrets** (Gestionado GitHub, CI/CD integrado)
 - **HashiCorp Vault** (Open source/Enterprise, agnóstico)
-- **CyberArk Conjur** (Enterprise secrets management, agnóstico)
-- **Doppler** (SaaS secrets management, multi-cloud)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-### Comparativa Cualitativa
-
-| Criterio            | AWS Secrets Manager      | Azure Key Vault          | Google Secret Manager    | HashiCorp Vault         | CyberArk Conjur         | Doppler             |
-| ------------------- | ------------------------ | ------------------------ | ------------------------ | ----------------------- | ----------------------- | ------------------- |
-| **Agnosticidad**    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           | ✅ Totalmente agnóstico | ✅ Agnóstico            | ✅ Multi-cloud SaaS |
-| **Operación**       | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ⚠️ Requiere gestión     | ⚠️ Requiere gestión     | ✅ SaaS gestionado  |
-| **Seguridad**       | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade     | ✅ Enterprise grade     | ✅ Enterprise grade |
-| **Ecosistema .NET** | ✅ Muy buena             | ✅ Excelente             | ⚠️ Limitada              | ✅ Buena                | ✅ Buena                | ✅ Excelente SDK    |
-| **Rotación**        | ✅ Automática            | ✅ Automática            | ✅ Automática            | ✅ Muy flexible         | ✅ Políticas avanzadas  | ✅ Integraciones    |
-| **Comunidad**       | ✅ Soporte AWS           | ✅ Soporte Microsoft     | ✅ Soporte Google        | ✅ Muy activa (30K⭐)   | ✅ Enterprise           | ⚠️ Startup (5K⭐)   |
-| **Costos**          | ⚠️ Por uso               | ✅ Muy económico         | ✅ Muy económico         | ⚠️ Infraestructura      | ❌ Licencias enterprise | ⚠️ US$24-120/mes    |
+| Criterio                  | AWS Secrets Manager      | Azure Key Vault          | Google Secret Manager    | GitHub Secrets       | HashiCorp Vault         |
+| ------------------------- | ------------------------ | ------------------------ | ------------------------ | -------------------- | ----------------------- |
+| **Agnosticidad**          | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           | ❌ Lock-in GitHub    | ✅ Totalmente agnóstico |
+| **Operación**             | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Gestionado        | ⚠️ Requiere gestión     |
+| **Complejidad operativa** | ✅ Infra AWS existente   | ⚠️ Vendor adicional      | ❌ Vendor GCP adicional  | ✅ GitHub existente  | ⚠️ Self-hosted          |
+| **Seguridad**             | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ⚠️ Básica CI/CD      | ✅ Enterprise grade     |
+| **Ecosistema .NET**       | ✅ Muy buena             | ✅ Excelente             | ⚠️ Limitada              | ⚠️ Solo CI/CD        | ✅ Buena                |
+| **Rotación**              | ✅ Automática            | ✅ Automática            | ✅ Automática            | ❌ Manual            | ✅ Muy flexible         |
+| **Comunidad**             | ✅ Soporte AWS           | ✅ Soporte Microsoft     | ✅ Soporte Google        | ✅ Soporte GitHub    | ✅ Muy activa (30K⭐)   |
+| **Costos**                | ⚠️ Por uso               | ✅ Muy económico         | ✅ Muy económico         | ✅ Gratis (limitado) | ⚠️ Infraestructura      |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -65,10 +63,9 @@ Se selecciona **AWS Secrets Manager** por las siguientes razones:
 ## Alternativas descartadas
 
 - **Azure Key Vault:** lock-in Azure, infraestructura AWS ya establecida, menor integración con servicios AWS nativos
-- **Google Secret Manager:** lock-in GCP, menor integración ecosistema AWS, SDK .NET menos maduro que AWS
+- **Google Secret Manager:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **SDK .NET adicional** (Google.Cloud.SecretManager) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), menor integración ecosistema AWS
+- **GitHub Secrets:** limitado exclusivamente a CI/CD (GitHub Actions), no soporta uso runtime en aplicaciones productivas, sin rotación automática enterprise, no reemplaza secrets manager corporativo
 - **HashiCorp Vault:** complejidad operativa alta (HA, unsealing, backups), requiere expertise DevOps dedicado, costos infraestructura + mantenimiento, sobrede-dimensionado para escala actual
-- **CyberArk Conjur:** costos enterprise prohibitivos (US$50K+ licencias), complejidad excesiva para necesidades actuales, orientado a grandes corporaciones
-- **Doppler:** SaaS lock-in (US$24-120/mes), menor madurez vs AWS Secrets Manager, vendor risk startup vs AWS, menor integración IAM/VPC
 
 ---
 
@@ -96,7 +93,6 @@ Se selecciona **AWS Secrets Manager** por las siguientes razones:
 - [Azure Key Vault Docs](https://learn.microsoft.com/en-us/azure/key-vault/general/)
 - [HashiCorp Vault Pricing](https://www.hashicorp.com/products/vault/pricing)
 - [HashiCorp Vault Docs](https://www.vaultproject.io/docs/)
-- [CyberArk Conjur](https://www.cyberark.com/products/secrets-manager-conjur/)
-- [Doppler Secrets Manager](https://www.doppler.com/)
+- [GitHub Secrets Docs](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)
 - [Comparativa HashiCorp Vault vs AWS Secrets Manager vs Azure Key Vault](https://sanj.dev/post/hashicorp-vault-aws-secrets-azure-key-vault-comparison)
 - [Arc42: Decisiones de arquitectura](https://arc42.org/decision/)

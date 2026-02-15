@@ -26,25 +26,22 @@ Alternativas evaluadas:
 
 - **Grafana Stack OSS** (Loki + Mimir + Tempo + Grafana + Alloy)
 - **ELK Stack** (Elasticsearch + Logstash + Kibana)
-- **Datadog** (SaaS líder APM y observabilidad)
-- **New Relic** (SaaS APM enterprise)
-- **Splunk** (Enterprise logging y analytics)
+- **Datadog** (SaaS observabilidad completo)
+- **Splunk Observability Cloud** (Enterprise observabilidad)
 - **AWS CloudWatch + X-Ray** (nativo AWS)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-### Comparativa Cualitativa
-
-| Criterio            | Grafana Stack (Loki+Mimir+Tempo) | ELK Stack               | Datadog                 | New Relic                | Splunk                      | AWS CloudWatch + X-Ray |
-| ------------------- | -------------------------------- | ----------------------- | ----------------------- | ------------------------ | --------------------------- | ---------------------- |
-| **Agnosticidad**    | ✅ OSS, multi-cloud              | ✅ OSS, multi-cloud     | ❌ Lock-in SaaS         | ❌ Lock-in SaaS          | ⚠️ Enterprise on-prem       | ❌ Lock-in AWS         |
-| **Operación**       | ⚠️ Self-managed                  | ⚠️ Self-managed         | ✅ Gestionado           | ✅ Gestionado            | ⚠️ On-prem/cloud gestionado | ✅ Gestionado          |
-| **Correlación**     | ✅ OpenTelemetry nativo          | ⚠️ Manual               | ✅ Nativa               | ✅ Nativa                | ✅ Nativa                   | ✅ Nativa              |
-| **Ecosistema .NET** | ✅ OpenTelemetry SDK             | ✅ Serilog/Elastic      | ✅ APM integrado        | ✅ .NET Agent nativo     | ✅ .NET instrumentation     | ✅ AWS SDK             |
-| **Costos**          | ✅ Solo infraestructura          | ✅ Solo infraestructura | ❌ US$15-31/host/mes    | ❌ US$99-349/usuario/mes | ❌ US$150/GB ingestión      | ⚠️ Pago por uso        |
-| **Visualización**   | ✅ Grafana unificado             | ✅ Kibana maduro        | ✅ Dashboards avanzados | ✅ UI intuitiva          | ✅ SPL queries poderosas    | ⚠️ CloudWatch básico   |
-| **Performance**     | ✅ Alta escala, optimizado       | ⚠️ Requiere tuning      | ✅ Optimizado           | ✅ Optimizado            | ✅ Enterprise-scale         | ✅ Bueno               |
-| **Alertas**         | ✅ Grafana Alerting integrado    | ✅ Watcher/Alerting     | ✅ Alertas avanzadas    | ✅ Alertas ML            | ✅ Alertas sofisticadas     | ✅ CloudWatch Alarms   |
+| Criterio            | Grafana Stack (Loki+Mimir+Tempo) | ELK Stack               | Datadog                 | Splunk Observability    | AWS CloudWatch + X-Ray |
+| ------------------- | -------------------------------- | ----------------------- | ----------------------- | ----------------------- | ---------------------- |
+| **Agnosticidad**    | ✅ OSS, multi-cloud              | ✅ OSS, multi-cloud     | ❌ Lock-in SaaS         | ⚠️ On-prem/SaaS         | ❌ Lock-in AWS         |
+| **Operación**       | ⚠️ Self-managed                  | ⚠️ Self-managed         | ✅ Gestionado           | ⚠️ On-prem/cloud        | ✅ Gestionado          |
+| **Correlación**     | ✅ OpenTelemetry nativo          | ⚠️ Manual/APM adicional | ✅ Nativa               | ✅ Nativa               | ✅ Nativa              |
+| **Ecosistema .NET** | ✅ OpenTelemetry SDK             | ✅ Serilog/Elastic      | ✅ APM integrado        | ✅ .NET instrumentation | ✅ AWS SDK             |
+| **Costos**          | ✅ Solo infraestructura          | ✅ Solo infraestructura | ❌ US$15-31/host/mes    | ❌ US$150/GB ingestión  | ⚠️ Pago por uso        |
+| **Visualización**   | ✅ Grafana unificado             | ✅ Kibana maduro        | ✅ Dashboards avanzados | ✅ Dashboards potentes  | ⚠️ CloudWatch básico   |
+| **Performance**     | ✅ Alta escala, optimizado       | ⚠️ Requiere tuning      | ✅ Optimizado           | ✅ Enterprise-scale     | ✅ Bueno               |
+| **Alertas**         | ✅ Grafana Alerting integrado    | ✅ Watcher/Alerting     | ✅ Alertas avanzadas    | ✅ Alertas ML/AI        | ✅ CloudWatch Alarms   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -75,10 +72,9 @@ Se selecciona el **Grafana Stack OSS** con:
 
 ## Alternativas descartadas
 
-- **ELK Stack:** mayor complejidad operativa, Elasticsearch resource-intensive (memoria, CPU, storage), costos de licenciamiento X-Pack/Platinum features, tuning complejo para scale
+- **ELK Stack:** mayor complejidad operativa, Elasticsearch resource-intensive (memoria, CPU, storage), costos de licenciamiento X-Pack/Platinum features, tuning complejo para scale, correlación logs-métricas-trazas requiere Elastic APM adicional
 - **Datadog:** costos prohibitivos a escala (US$15-31/host/mes = US$180K-372K/año para 100 hosts), lock-in SaaS, vendor risk, menor control sobre datos sensibles
-- **New Relic:** costos enterprise altos (US$99-349/usuario/mes + data ingestion), modelo pricing complejo, lock-in SaaS, menor flexibilidad customización
-- **Splunk:** costos enterprise prohibitivos (US$150/GB ingestión = US$450K/año para 10GB/día), complejidad licenciamiento, orientado a security analytics no DevOps observability
+- **Splunk Observability Cloud:** costos enterprise prohibitivos (US$150/GB ingestión = US$450K/año para 10GB/día), complejidad licenciamiento, más orientado a analytics/SIEM que observabilidad moderna, pricing por volumen dificulta predicción
 - **CloudWatch + X-Ray:** lock-in AWS, visualización básica limitada, costos variables crecientes con escala, no portable multi-cloud, CloudWatch Insights consultas costosas
 - **Prometheus standalone:** Mimir ofrece mejor escalabilidad horizontal, HA nativa, retención long-term S3/GCS, menor complejidad operativa vs Thanos
 

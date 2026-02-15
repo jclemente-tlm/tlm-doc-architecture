@@ -24,54 +24,47 @@ Los servicios corporativos requieren una solución de mensajería asíncrona que
 
 Alternativas evaluadas:
 
-- **Apache Kafka (AWS MSK)** (open source, alta escalabilidad, agnóstico, streaming)
-- **Apache Pulsar** (open source, multi-tenancy nativo, competidor moderno de Kafka)
+- **Apache Kafka** (open source, alta escalabilidad, agnóstico, streaming)
 - **Google Cloud Pub/Sub** (gestionado GCP, serverless, global)
-- **NATS** (open source, cloud-native, ligero, CNCF)
 - **AWS SNS + SQS** (gestionado, integración nativa AWS, lock-in)
 - **RabbitMQ** (open source, flexible, limitada escalabilidad)
 - **Azure Service Bus** (gestionado, lock-in Azure)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-### Comparativa Cualitativa
-
-| Criterio                | Kafka (MSK)                   | Apache Pulsar           | Google Pub/Sub           | NATS                    | SNS+SQS              | RabbitMQ            | Azure SB               |
-| ----------------------- | ----------------------------- | ----------------------- | ------------------------ | ----------------------- | -------------------- | ------------------- | ---------------------- |
-| **Agnosticidad**        | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud     | ❌ Lock-in GCP           | ✅ OSS, multi-cloud     | ❌ Lock-in AWS       | ✅ OSS, multi-cloud | ❌ Lock-in Azure       |
-| **Escalabilidad**       | ✅ Masiva                     | ✅ Masiva, auto-scaling | ✅ Serverless ilimitada  | ✅ Muy alta             | ✅ Automática        | ⚠️ Limitada         | ✅ Muy buena           |
-| **Operación**           | ⚠️ Gestionada (MSK)           | ⚠️ Compleja operación   | ✅ Totalmente gestionado | ⚠️ Self-hosted          | ✅ Gestionada        | ⚠️ Compleja         | ✅ Gestionada          |
-| **Rendimiento**         | ✅ 1M+ msg/seg, <10ms p99     | ✅ 1M+ msg/seg          | ✅ 100K+ msg/seg         | ✅ 10M+ msg/seg, <1ms   | ✅ 100K+ msg/seg     | ⚠️ 50K msg/seg      | ✅ 100K+ msg/seg       |
-| **Ecosistema .NET**     | ✅ Confluent.Kafka            | ✅ Apache.Pulsar.Client | ✅ Google.Cloud.PubSub   | ✅ NATS.Client          | ✅ AWS SDK           | ✅ RabbitMQ.Client  | ✅ Azure SDK           |
-| **Persistencia**        | ✅ Log distribuido inmutable  | ✅ Tiered storage       | ✅ 7+ días default       | ✅ JetStream            | ✅ Persistente       | ✅ Durable queues   | ✅ Persistencia nativa |
-| **Streaming**           | ✅ Nativo (replay, windowing) | ✅ Functions, SQL       | ⚠️ Dataflow requerido    | ✅ JetStream            | ❌ No soportado      | ❌ No soportado     | ❌ Limitado            |
-| **Event Sourcing**      | ✅ Ideal (log inmutable)      | ✅ Excellent            | ⚠️ Parcial               | ✅ JetStream            | ⚠️ Parcial           | ❌ No recomendado   | ⚠️ Parcial             |
-| **Multi-tenancy**       | ⚠️ Por topics                 | ✅ Nativo (namespaces)  | ✅ Por proyectos         | ✅ Accounts/Users       | ⚠️ Por topics        | ⚠️ Por vhosts       | ⚠️ Por namespaces      |
-| **Alta disponibilidad** | ✅ Replicación, Multi-AZ      | ✅ Multi-datacenter     | ✅ Multi-region          | ✅ Clustering           | ✅ Multi-AZ          | ⚠️ Clustering       | ✅ Geo-replicación     |
-| **Costos**              | ⚠️ Infraestructura managed    | ⚠️ Infraestructura      | ⚠️ Pago por mensaje      | ✅ Solo infraestructura | ✅ Pago por uso bajo | ✅ OSS              | ⚠️ Pago por uso        |
+| Criterio                  | Apache Kafka                | Google Cloud Pub/Sub     | AWS SNS+SQS            | RabbitMQ            | Azure Service Bus      |
+| ------------------------- | --------------------------- | ------------------------ | ---------------------- | ------------------- | ---------------------- |
+| **Agnosticidad**          | ✅ OSS, multi-cloud         | ❌ Lock-in GCP           | ❌ Lock-in AWS         | ✅ OSS, multi-cloud | ❌ Lock-in Azure       |
+| **Escalabilidad**         | ✅ Masiva                   | ✅ Serverless ilimitada  | ✅ Automática          | ⚠️ Limitada         | ✅ Muy buena           |
+| **Operación**             | ⚠️ Self-hosted/Managed      | ✅ Totalmente gestionado | ✅ Gestionada          | ⚠️ Compleja         | ✅ Gestionada          |
+| **Complejidad operativa** | ⚠️ Automatización requerida | ❌ Vendor GCP adicional  | ✅ Infra AWS existente | ⚠️ Self-hosted      | ⚠️ Vendor adicional    |
+| **Rendimiento**           | ✅ 1M+ msg/seg, <10ms p99   | ✅ 100K+ msg/seg         | ✅ 100K+ msg/seg       | ⚠️ 50K msg/seg      | ✅ 100K+ msg/seg       |
+| **Ecosistema .NET**       | ✅ Confluent.Kafka          | ✅ Google.Cloud.PubSub   | ✅ AWS SDK             | ✅ RabbitMQ.Client  | ✅ Azure SDK           |
+| **Persistencia**          | ✅ Log distribuido          | ✅ 7+ días default       | ✅ Persistente         | ✅ Durable queues   | ✅ Persistencia nativa |
+| **Streaming**             | ✅ Nativo (replay)          | ⚠️ Dataflow requerido    | ❌ No soportado        | ❌ No soportado     | ❌ Limitado            |
+| **Event Sourcing**        | ✅ Ideal (log inmutable)    | ⚠️ Parcial               | ⚠️ Parcial             | ❌ No recomendado   | ⚠️ Parcial             |
+| **Multi-tenancy**         | ⚠️ Por topics               | ✅ Por proyectos         | ⚠️ Por topics          | ⚠️ Por vhosts       | ⚠️ Por namespaces      |
+| **Alta disponibilidad**   | ✅ Replicación, Multi-AZ    | ✅ Multi-region          | ✅ Multi-AZ            | ⚠️ Clustering       | ✅ Geo-replicación     |
+| **Costos**                | ⚠️ Infraestructura          | ⚠️ Pago por mensaje      | ✅ Pago por uso bajo   | ✅ OSS              | ⚠️ Pago por uso        |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ✔️ DECISIÓN
 
-Se selecciona **Apache Kafka (AWS MSK)** como solución estándar de mensajería asíncrona y event streaming para todos los servicios corporativos.
+Se selecciona **Apache Kafka** como solución estándar de mensajería asíncrona y event streaming para todos los servicios corporativos.
 
 ## Justificación
 
-- Portabilidad multi-cloud (OSS estándar de la industria)
-- Escalabilidad masiva y alto throughput
-- Soporte nativo de event sourcing y streaming (replay, windowing)
-- Log distribuido inmutable ideal para auditoría
-- Integración nativa con .NET mediante Confluent.Kafka
-- Operación gestionada con AWS MSK (sin administrar brokers)
-- Flexibilidad para migrar entre clouds manteniendo mismo stack
-- Ecosistema maduro con tooling de monitoreo y observabilidad
+- **Portabilidad multi-cloud:** OSS estándar de la industria, portable entre clouds
+- **Escalabilidad masiva:** soporte de millones de mensajes por segundo
+- **Event sourcing nativo:** log distribuido inmutable ideal para auditoría y replay
+- **Streaming completo:** replay de eventos, windowing, procesamiento temporal
+- **Ecosistema maduro:** tooling extenso, integración .NET (Confluent.Kafka), monitoreo
+- **Flexibilidad deployment:** self-hosted, Confluent Cloud, AWS MSK, Azure HDInsight, etc.
 
 ## Alternativas descartadas
 
-- **Apache Pulsar:** alternativa moderna excelente pero menor adopción en industria vs Kafka, complejidad operativa similar, ecosistema .NET menos maduro, equipo aún familiarizándose con Kafka
-- **Google Cloud Pub/Sub:** lock-in GCP, infraestructura AWS ya establecida, costos por mensaje (US$40/TB vs US$0.10/GB Kafka), no soporta replay nativo, requiere Dataflow para streaming
-- **NATS:** excelente para mensajería ligera pero no diseñado para event sourcing y almacenamiento largo plazo, JetStream aún inmaduro comparado con Kafka, menor adopción enterprise
+- **Google Cloud Pub/Sub:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing activo), **SDK .NET adicional** (Google.Cloud.PubSub) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), costos por mensaje (US$40/TB vs US$0.10/GB Kafka), no soporta replay nativo, requiere Dataflow para streaming
 - **AWS SNS+SQS:** lock-in AWS, no soporta replay de eventos ni event sourcing robusto, no diseñado para streaming, limitado a patrones pub/sub y queue básicos
 - **RabbitMQ:** escalabilidad limitada (< 50K msg/seg), no diseñado para streaming de eventos ni event sourcing, modelo broker tradicional vs log distribuido
 - **Azure Service Bus:** lock-in Azure, infraestructura AWS ya establecida, menor portabilidad, no soporta streaming nativo
@@ -90,7 +83,7 @@ Se selecciona **Apache Kafka (AWS MSK)** como solución estándar de mensajería
 
 ### Negativas (Riesgos y Mitigaciones)
 
-- **Complejidad operativa:** mitigada con AWS MSK managed y automatización Terraform
+- **Complejidad operativa:** mitigada con automatización Terraform, monitoreo proactivo, y expertise DevOps
 - **Curva de aprendizaje:** mitigada con capacitación y documentación corporativa
 - **Costos infraestructura:** optimizados con políticas retención y dimensionamiento adecuado
 - **Atomicidad con BD:** para garantizar consistencia con PostgreSQL (ADR-010), usar patrones como Transactional Outbox (ver guías de arquitectura)
@@ -100,10 +93,9 @@ Se selecciona **Apache Kafka (AWS MSK)** como solución estándar de mensajería
 ## 📚 REFERENCIAS
 
 - [Apache Kafka](https://kafka.apache.org/)
-- [AWS MSK](https://aws.amazon.com/msk/)
 - [Confluent.Kafka .NET Client](https://docs.confluent.io/kafka-clients/dotnet/current/overview.html)
 - [Event Sourcing with Kafka](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
-- [Dead Letter Queue Pattern](https://docs.confluent.io/platform/current/streams/developer-guide/dsl-api.html#dead-letter-queue)
+- [Kafka Documentation](https://kafka.apache.org/documentation/)
 
 ---
 

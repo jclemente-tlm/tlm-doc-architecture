@@ -36,19 +36,18 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-### Comparativa Cualitativa
-
-| Criterio            | Parameter Store   | Azure App Config | Google Runtime    | Consul                | etcd              |
-| ------------------- | ----------------- | ---------------- | ----------------- | --------------------- | ----------------- |
-| **Agnosticidad**    | ❌ Lock-in AWS    | ❌ Lock-in Azure | ❌ Lock-in GCP    | ✅ Agnóstico          | ✅ OSS, agnóstico |
-| **Operación**       | ✅ Gestionado     | ✅ Gestionado    | ✅ Gestionado     | ⚠️ Requiere gestión   | ⚠️ Self-hosted    |
-| **Seguridad**       | ✅ Enterprise     | ✅ Enterprise    | ✅ Enterprise     | ✅ Máxima             | ✅ TLS, RBAC      |
-| **Ecosistema .NET** | ✅ Muy buena      | ✅ Excelente     | ⚠️ Limitada       | ✅ Buena              | ⚠️ Limitada       |
-| **Versionado**      | ✅ Automática     | ✅ Automática    | ✅ Automática     | ✅ Muy flexible       | ✅ Revisions      |
-| **Feature Flags**   | ⚠️ Básico         | ✅ Nativo        | ⚠️ Básico         | ✅ Flexible           | ⚠️ Manual         |
-| **Multi-tenancy**   | ⚠️ Por parámetros | ✅ Labels        | ⚠️ Por proyectos  | ✅ Namespaces         | ⚠️ Prefixes       |
-| **Comunidad**       | ✅ Soporte AWS    | ✅ Soporte Azure | ✅ Soporte Google | ✅ Muy activa (28K⭐) | ✅ CNCF (47K⭐)   |
-| **Costos**          | ⚠️ Por uso        | ✅ Económico     | ✅ Económico      | ⚠️ Infraestructura    | ✅ Gratis OSS     |
+| Criterio                  | AWS Parameter Store    | Azure App Configuration | Google Runtime Config   | HashiCorp Consul      | etcd              |
+| ------------------------- | ---------------------- | ----------------------- | ----------------------- | --------------------- | ----------------- |
+| **Agnosticidad**          | ❌ Lock-in AWS         | ❌ Lock-in Azure        | ❌ Lock-in GCP          | ✅ Agnóstico          | ✅ OSS, agnóstico |
+| **Operación**             | ✅ Gestionado          | ✅ Gestionado           | ✅ Gestionado           | ⚠️ Requiere gestión   | ⚠️ Self-hosted    |
+| **Complejidad operativa** | ✅ Infra AWS existente | ⚠️ Vendor adicional     | ❌ Vendor GCP adicional | ⚠️ Self-hosted        | ⚠️ Self-hosted    |
+| **Seguridad**             | ✅ Enterprise          | ✅ Enterprise           | ✅ Enterprise           | ✅ Máxima             | ✅ TLS, RBAC      |
+| **Ecosistema .NET**       | ✅ Muy buena           | ✅ Excelente            | ⚠️ Limitada             | ✅ Buena              | ⚠️ Limitada       |
+| **Versionado**            | ✅ Automática          | ✅ Automática           | ✅ Automática           | ✅ Muy flexible       | ✅ Revisions      |
+| **Feature Flags**         | ⚠️ Básico              | ✅ Nativo               | ⚠️ Básico               | ✅ Flexible           | ⚠️ Manual         |
+| **Multi-tenancy**         | ⚠️ Por parámetros      | ✅ Labels               | ⚠️ Por proyectos        | ✅ Namespaces         | ⚠️ Prefixes       |
+| **Comunidad**             | ✅ Soporte AWS         | ✅ Soporte Azure        | ✅ Soporte Google       | ✅ Muy activa (28K⭐) | ✅ CNCF (47K⭐)   |
+| **Costos**                | ⚠️ Por uso             | ✅ Económico            | ✅ Económico            | ⚠️ Infraestructura    | ✅ Gratis OSS     |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -68,7 +67,7 @@ Se selecciona **AWS Parameter Store** como solución principal para la gestión 
 
 - **etcd:** distributed key-value store robusto pero orientado a Kubernetes ecosystem, complejidad operativa alta (clustering, quorum, backups), menor integración .NET vs Parameter Store, overhead para uso simple config
 - **Azure App Configuration:** lock-in Azure, infraestructura AWS ya establecida, menor portabilidad
-- **Google Runtime Config:** lock-in GCP, SDK .NET limitado, menor madurez vs otros
+- **Google Runtime Config:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **SDK .NET adicional** (Google.Cloud.RuntimeConfig) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), SDK .NET limitado, menor madurez vs otros
 - **HashiCorp Consul:** mayor complejidad operativa y mantenimiento, requiere expertise, costos infraestructura
 
 ---

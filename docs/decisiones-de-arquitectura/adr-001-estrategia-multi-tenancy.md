@@ -1,5 +1,5 @@
 ---
-title: "ADR-001: Multi-Tenancy y Gestión por Países"
+title: "ADR-001: Estrategia Multi-Tenancy"
 sidebar_position: 1
 ---
 
@@ -29,8 +29,6 @@ Las alternativas de multi-tenancy evaluadas fueron:
 - **Hybrid Approach** (Combinación según criticidad): Consiste en aplicar diferentes patrones de multi-tenancy según el tipo de servicio o dato. Por ejemplo, servicios críticos o regulados (como Identidad o Finanzas) se implementan como single-tenant (una base de datos dedicada por país o cliente), mientras que servicios operacionales o de soporte (como Track & Trace o Notificación) pueden usar modelos multi-tenant (por ejemplo, un esquema por país en una misma base de datos). Así, se logra un balance entre cumplimiento, seguridad, costos y eficiencia operativa.
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
-
-### Comparativa Cualitativa
 
 | Criterio          | Single-Tenant   | Multi-Tenant DB     | Schema/Tenant    | Compartmented      | Híbrido              |
 | ----------------- | --------------- | ------------------- | ---------------- | ------------------ | -------------------- |
