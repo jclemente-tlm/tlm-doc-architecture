@@ -55,7 +55,7 @@ Alternativas evaluadas:
 
 Se selecciona **AWS Parameter Store** como solución principal para la gestión de configuraciones, desacoplada mediante interfaces y adaptadores. La arquitectura soporta migración a Consul u otras soluciones según necesidades de portabilidad o despliegue híbrido.
 
-## Justificación
+### Justificación
 
 - Gestión centralizada, segura y versionada
 - Portabilidad y despliegue multi-cloud
@@ -63,7 +63,7 @@ Se selecciona **AWS Parameter Store** como solución principal para la gestión 
 - Integración gestionada, bajo costo y facilidad de operación
 - Consul es opción madura para escenarios on-premises o híbridos
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **etcd:** distributed key-value store robusto pero orientado a Kubernetes ecosystem, complejidad operativa alta (clustering, quorum, backups), menor integración .NET vs Parameter Store, overhead para uso simple config
 - **Azure App Configuration:** lock-in Azure, infraestructura AWS ya establecida, menor portabilidad

@@ -56,7 +56,7 @@ Alternativas evaluadas:
 
 Se selecciona **AWS S3** como solución estándar de almacenamiento de objetos para todos los servicios y microservicios corporativos.
 
-## Justificación
+### Justificación
 
 - Operación gestionada, sin infraestructura propia
 - Escalabilidad y durabilidad garantizadas
@@ -65,7 +65,7 @@ Se selecciona **AWS S3** como solución estándar de almacenamiento de objetos p
 - Compatibilidad total con API S3 y herramientas del ecosistema
 - Observabilidad y monitoreo integrados
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **Digital Ocean Spaces:** pricing simple ($5/mes 250GB+1TB transfer), CDN integrado, pero límite escalabilidad vs S3, menor SLA (99.95% vs 99.99%), ecosistema herramientas reducido, no ideal para almacenamiento masivo enterprise
 - **MinIO:** portabilidad máxima pero mayor complejidad operativa (clustering, HA, backups, monitoreo), costos infraestructura ocultos, overhead vs solución gestionada, requiere expertise DevOps

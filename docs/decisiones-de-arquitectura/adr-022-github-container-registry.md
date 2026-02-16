@@ -52,7 +52,7 @@ Alternativas evaluadas:
 
 Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo de contenedores.
 
-## Justificación
+### Justificación
 
 - **Integración perfecta con GitHub Actions** (ADR-009) - autenticación automática via GITHUB_TOKEN
 - **Costo cero** para repositorios públicos, bajo para privados
@@ -63,7 +63,7 @@ Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo 
 - **Sin vendor lock-in** - compatible con Docker registry API v2
 - **Migratable** - fácil exportar/importar imágenes si cambio necesario
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **Amazon ECR:** lock-in AWS, requiere autenticación ECR adicional, costos US$0.10/GB storage, mayor complejidad multi-region
 - **Azure ACR:** lock-in Azure, costos base US$5/mes + storage, menor integración ecosistema GitHub

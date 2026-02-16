@@ -50,7 +50,7 @@ Las alternativas evaluadas fueron:
 
 Se selecciona **Keycloak** como solución para la gestión de identidades y autenticación centralizada en todos los entornos del sistema corporativo.
 
-## Justificación
+### Justificación
 
 - Integración nativa con protocolos estándar y ecosistema `.NET`
 - Multi-tenancy robusto con aislamiento por país (`tenant (realm)`)
@@ -59,7 +59,7 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 - Portabilidad y despliegue en cualquier cloud/on-premises
 - Menor complejidad operativa frente a SaaS, con control total
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **Auth0:** costos altos (US$23-240/mes base + usuarios), lock-in SaaS, personalización limitada
 - **AWS Cognito:** limitaciones en protocolos (sin SAML completo), lock-in AWS, multi-tenancy básico

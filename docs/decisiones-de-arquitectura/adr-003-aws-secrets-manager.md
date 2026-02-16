@@ -49,7 +49,7 @@ Las alternativas evaluadas fueron:
 
 Se selecciona **AWS Secrets Manager** como solución para la gestión de secretos en todos los entornos del servicio de notificaciones.
 
-## Justificación
+### Justificación
 
 Se selecciona **AWS Secrets Manager** por las siguientes razones:
 
@@ -60,7 +60,7 @@ Se selecciona **AWS Secrets Manager** por las siguientes razones:
 - **Costos operativos optimizados**, al no requerir infraestructura dedicada y estar plenamente integrado en el ecosistema AWS.
 - **Simplicidad de integración** gracias a SDKs y APIs compatibles con .NET, y automatización vía IaC (CloudFormation, Terraform).
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **Azure Key Vault:** lock-in Azure, infraestructura AWS ya establecida, menor integración con servicios AWS nativos
 - **Google Secret Manager:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **SDK .NET adicional** (Google.Cloud.SecretManager) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), menor integración ecosistema AWS

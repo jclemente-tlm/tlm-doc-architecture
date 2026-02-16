@@ -53,7 +53,7 @@ Alternativas evaluadas:
 
 Se selecciona **Apache Kafka** como solución estándar de mensajería asíncrona y event streaming para todos los servicios corporativos.
 
-## Justificación
+### Justificación
 
 - **Portabilidad multi-cloud:** OSS estándar de la industria, portable entre clouds
 - **Escalabilidad masiva:** soporte de millones de mensajes por segundo
@@ -62,7 +62,7 @@ Se selecciona **Apache Kafka** como solución estándar de mensajería asíncron
 - **Ecosistema maduro:** tooling extenso, integración .NET (Confluent.Kafka), monitoreo
 - **Flexibilidad deployment:** self-hosted, Confluent Cloud, AWS MSK, Azure HDInsight, etc.
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **Google Cloud Pub/Sub:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing activo), **SDK .NET adicional** (Google.Cloud.PubSub) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), costos por mensaje (US$40/TB vs US$0.10/GB Kafka), no soporta replay nativo, requiere Dataflow para streaming
 - **AWS SNS+SQS:** lock-in AWS, no soporta replay de eventos ni event sourcing robusto, no diseñado para streaming, limitado a patrones pub/sub y queue básicos

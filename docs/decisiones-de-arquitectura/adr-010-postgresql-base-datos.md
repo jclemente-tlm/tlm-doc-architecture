@@ -55,7 +55,7 @@ Alternativas evaluadas:
 
 Se selecciona **PostgreSQL** como base de datos relacional estándar para todos los servicios y microservicios corporativos que requieran almacenamiento transaccional.
 
-## Justificación
+### Justificación
 
 - Open source, sin costos de licenciamiento y bajo TCO
 - Soporte avanzado para transacciones ACID, integridad referencial y consultas complejas
@@ -67,7 +67,7 @@ Se selecciona **PostgreSQL** como base de datos relacional estándar para todos 
 - Integración con herramientas de CI/CD, automatización y migraciones
 - Cumplimiento de estándares de seguridad y normativas internacionales
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **MySQL/MariaDB:** menor soporte para extensiones avanzadas, multi-tenant más limitado (no RLS nativo), JSONB menos optimizado
 - **SQL Server:** costos de licenciamiento prohibitivos (US$14K+ Standard, US$55K+ Enterprise), lock-in Microsoft, menor flexibilidad multi-cloud

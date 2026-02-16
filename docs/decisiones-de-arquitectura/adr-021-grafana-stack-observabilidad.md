@@ -56,7 +56,7 @@ Se selecciona el **Grafana Stack OSS** con:
 - **Recolección:** Alloy (recolector de métricas, logs y trazas)
 - **Alertas:** Grafana Alerting (alertas unificadas)
 
-## Justificación
+### Justificación
 
 - **Stack unificado Grafana:** Loki, Mimir y Tempo comparten arquitectura común
 - **Alloy como recolector universal:** Reemplaza múltiples agentes (Promtail, Prometheus Agent, OpenTelemetry Collector)
@@ -70,7 +70,7 @@ Se selecciona el **Grafana Stack OSS** con:
 - Retención flexible por tipo de telemetría
 - Compatibilidad con Serilog (ADR-016)
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **ELK Stack:** mayor complejidad operativa, Elasticsearch resource-intensive (memoria, CPU, storage), costos de licenciamiento X-Pack/Platinum features, tuning complejo para scale, correlación logs-métricas-trazas requiere Elastic APM adicional
 - **Datadog:** costos prohibitivos a escala (US$15-31/host/mes = US$180K-372K/año para 100 hosts), lock-in SaaS, vendor risk, menor control sobre datos sensibles

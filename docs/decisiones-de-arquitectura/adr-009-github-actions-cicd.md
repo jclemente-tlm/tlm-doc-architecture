@@ -52,7 +52,7 @@ Alternativas evaluadas:
 
 Se selecciona **GitHub Actions** como plataforma estándar de CI/CD para todos los servicios corporativos, priorizando integración nativa, flexibilidad y control operativo.
 
-## Justificación
+### Justificación
 
 - Integración nativa con `GitHub` y repositorios existentes
 - Workflows reutilizables y plantillas para distintos stacks
@@ -61,7 +61,7 @@ Se selecciona **GitHub Actions** como plataforma estándar de CI/CD para todos l
 - Seguridad, auditoría y control de permisos granular
 - Costos optimizados y escalabilidad gestionada
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **Jenkins:** complejidad operativa alta (gestión infraestructura, plugins, seguridad), requiere expertise DevOps dedicado, costos ocultos de mantenimiento
 - **Azure DevOps:** menor adopción en arquitecturas AWS-first, integración menos fluida con servicios AWS vs GitHub Actions

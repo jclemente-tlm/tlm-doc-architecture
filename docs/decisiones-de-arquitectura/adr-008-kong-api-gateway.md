@@ -57,7 +57,7 @@ Alternativas evaluadas:
 
 Se selecciona **Kong (OSS)** como solución estándar de API Gateway para todos los servicios corporativos, desplegado en contenedores sobre AWS ECS Fargate, priorizando **agnosticidad tecnológica**, **madurez**, **ecosistema de plugins** y **escalabilidad enterprise**.
 
-## Justificación
+### Justificación
 
 - **Agnosticidad total:** no depende de stack tecnológico específico, portable entre clouds y tecnologías
 - **Madurez probada:** líder de mercado con millones de implementaciones en producción
@@ -68,7 +68,7 @@ Se selecciona **Kong (OSS)** como solución estándar de API Gateway para todos 
 - **Multi-tenancy nativo:** soporte para workspaces, enrutamiento por tenant
 - **Estándar de la industria:** reduce riesgo de lock-in tecnológico
 
-## Alternativas descartadas
+### Alternativas descartadas
 
 - **AWS API Gateway:** lock-in AWS, costos por requests elevados a escala (US$3.50/millón), integración limitada con ecosistema no-AWS, menor flexibilidad para lógica compleja
 - **Azure API Management:** lock-in Azure, infraestructura AWS ya establecida (ADR-003, ADR-007), costos premium (US$2.5K/mes tier básico), requiere integración cross-cloud
