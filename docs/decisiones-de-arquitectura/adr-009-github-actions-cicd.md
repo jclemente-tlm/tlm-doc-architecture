@@ -34,15 +34,17 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio            | GitHub Actions        | Jenkins                 | Azure DevOps            | AWS CodePipeline | CircleCI      |
-| ------------------- | --------------------- | ----------------------- | ----------------------- | ---------------- | ------------- |
-| **Agnosticidad**    | ⚠️ Vinculado a GitHub | ✅ Totalmente agnóstico | ⚠️ Ecosistema Microsoft | ❌ Lock-in AWS   | ⚠️ Agnóstico  |
-| **Operación**       | ✅ Gestionado         | ⚠️ Manual               | ✅ Gestionado           | ✅ Gestionado    | ✅ Gestionado |
-| **Seguridad**       | ✅ Integrada          | ⚠️ Limitada             | ✅ Integrada            | ✅ Integrada     | ✅ Integrada  |
-| **Ecosistema .NET** | ✅ Excelente          | ✅ Bueno                | ✅ Nativo               | ✅ Bueno         | ✅ Bueno      |
-| **Extensibilidad**  | ✅ 20K+ actions       | ✅ 1.8K+ plugins        | ⚠️ Extensions básicas   | ⚠️ Integraciones | ⚠️ Orbs       |
-| **Comunidad**       | ✅ Muy activa         | ✅ Muy activa (65K⭐)   | ✅ Soporte Microsoft    | ✅ Soporte AWS   | ✅ SaaS líder |
-| **Costos**          | ✅ Plan gratuito      | ⚠️ Infraestructura      | ✅ Plan gratuito        | ⚠️ Por uso       | ⚠️ Por uso    |
+| Criterio                  | GitHub Actions         | Jenkins                 | Azure DevOps            | AWS CodePipeline    | CircleCI               |
+| ------------------------- | ---------------------- | ----------------------- | ----------------------- | ------------------- | ---------------------- |
+| **Agnosticidad**          | ⚠️ Vinculado a GitHub  | ✅ Totalmente agnóstico | ⚠️ Ecosistema Microsoft | ❌ Lock-in AWS      | ⚠️ Agnóstico           |
+| **Modelo de gestión**     | ✅ Gestionado (GitHub) | ⚠️ Self-hosted          | ✅ Gestionado (Azure)   | ✅ Gestionado (AWS) | ✅ Gestionado (SaaS)   |
+| **Complejidad operativa** | ✅ Baja (GitHub)       | ❌ Alta (setup manual)  | ⚠️ Media (vendor nuevo) | ✅ Baja (infra AWS) | ✅ Baja (simplificado) |
+| **Multi-tenancy**         | ✅ Por repos/org       | ✅ Flexible config      | ✅ Projects/Teams       | ⚠️ Por accounts     | ⚠️ Por contexts        |
+| **Seguridad**             | ✅ Integrada           | ⚠️ Limitada             | ✅ Integrada            | ✅ Integrada        | ✅ Integrada           |
+| **Integración .NET**      | ✅ Excelente           | ✅ Bueno                | ✅ Nativo               | ✅ Bueno            | ✅ Bueno               |
+| **Extensibilidad**        | ✅ 20K+ actions        | ✅ 1.8K+ plugins        | ⚠️ Extensions básicas   | ⚠️ Integraciones    | ⚠️ Orbs                |
+| **Comunidad**             | ✅ Muy activa          | ✅ Muy activa (65K⭐)   | ✅ Soporte Microsoft    | ✅ Soporte AWS      | ✅ SaaS líder          |
+| **Costos**                | ✅ Plan gratuito       | ⚠️ Infraestructura      | ✅ Plan gratuito        | ⚠️ Por uso          | ⚠️ Por uso             |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

@@ -32,17 +32,22 @@ Las alternativas evaluadas fueron:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | Keycloak                    | Auth0                    | AWS Cognito              | Azure AD B2C             | Google Identity Platform |
-| ------------------------- | --------------------------- | ------------------------ | ------------------------ | ------------------------ | ------------------------ |
-| **Agnosticidad**          | ✅ OSS, portátil            | ⚠️ SaaS independiente    | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           |
-| **Operación**             | ⚠️ Requiere gestión         | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado |
-| **Complejidad operativa** | ⚠️ Self-hosted              | ✅ SaaS simplificado     | ✅ Infra AWS existente   | ⚠️ Vendor adicional      | ❌ Vendor GCP adicional  |
-| **Seguridad**             | ✅ Enterprise grade         | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      |
-| **Multi-tenancy**         | ✅ Nativo y flexible        | ✅ Excelente soporte     | ⚠️ Básico                | ✅ Muy bueno             | ⚠️ Básico                |
-| **Protocolos**            | ✅ Todos los estándares     | ✅ Completo              | ⚠️ Limitado              | ✅ Completo              | ⚠️ Limitado              |
-| **Personalización**       | ✅ Altamente personalizable | ⚠️ Limitada              | ⚠️ Muy limitada          | ⚠️ Limitada              | ⚠️ Muy limitada          |
-| **Comunidad**             | ✅ Muy activa (21K⭐)       | ✅ Enterprise            | ✅ Soporte AWS           | ✅ Soporte Microsoft     | ✅ Soporte Google        |
-| **Costos**                | ✅ Solo infraestructura     | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    | ⚠️ Por usuario activo    |
+| Criterio                  | Keycloak                    | Auth0                  | AWS Cognito           | Azure AD B2C            | Google Identity Platform |
+| ------------------------- | --------------------------- | ---------------------- | --------------------- | ----------------------- | ------------------------ |
+| **Agnosticidad**          | ✅ OSS, portátil            | ⚠️ SaaS independiente  | ❌ Lock-in AWS        | ❌ Lock-in Azure        | ❌ Lock-in GCP           |
+| **Modelo de gestión**     | ⚠️ Self-hosted              | ✅ Gestionado (SaaS)   | ✅ Gestionado (AWS)   | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)      |
+| **Complejidad operativa** | ⚠️ Media (OSS maduro)       | ✅ Baja (simplificado) | ✅ Baja (infra AWS)   | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)     |
+| **Escalabilidad**         | ✅ Horizontal clustering    | ✅ Auto-scaling SaaS   | ✅ Gestionada         | ✅ Gestionada           | ✅ Gestionada            |
+| **Performance**           | ✅ Óptima (local cache)     | ✅ Muy buena           | ✅ Buena (<100ms)     | ✅ Buena                | ⚠️ Latencia variable     |
+| **Alta disponibilidad**   | ✅ Clustering + DB HA       | ✅ 99.99% SLA          | ✅ Multi-AZ           | ✅ 99.99% SLA           | ✅ Multi-regional        |
+| **Seguridad**             | ✅ Enterprise grade         | ✅ Enterprise grade    | ✅ Enterprise grade   | ✅ Enterprise grade     | ✅ Enterprise grade      |
+| **Integración .NET**      | ✅ SDK completo             | ✅ SDK oficial         | ✅ AWS SDK            | ✅ Azure SDK            | ⚠️ SDK limitado          |
+| **Multi-tenancy**         | ✅ Nativo y flexible        | ✅ Excelente soporte   | ⚠️ Básico             | ✅ Muy bueno            | ⚠️ Básico                |
+| **Protocolos**            | ✅ Todos los estándares     | ✅ Completo            | ⚠️ Limitado           | ✅ Completo             | ⚠️ Limitado              |
+| **Federación**            | ✅ SAML, OIDC, LDAP         | ✅ Social + Enterprise | ⚠️ Limitada           | ✅ AD completo          | ⚠️ Limitada              |
+| **Personalización**       | ✅ Altamente personalizable | ⚠️ Limitada            | ⚠️ Muy limitada       | ⚠️ Limitada             | ⚠️ Muy limitada          |
+| **Comunidad**             | ✅ Muy activa (21K⭐)       | ✅ Enterprise          | ✅ Soporte AWS        | ✅ Soporte Microsoft    | ✅ Soporte Google        |
+| **Costos**                | ✅ Solo infraestructura     | ⚠️ Por usuario activo  | ⚠️ Por usuario activo | ⚠️ Por usuario activo   | ⚠️ Por usuario activo    |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

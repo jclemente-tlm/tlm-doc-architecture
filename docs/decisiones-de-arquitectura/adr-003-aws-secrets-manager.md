@@ -32,16 +32,20 @@ Las alternativas evaluadas fueron:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | AWS Secrets Manager      | Azure Key Vault          | Google Secret Manager    | GitHub Secrets       | HashiCorp Vault         |
-| ------------------------- | ------------------------ | ------------------------ | ------------------------ | -------------------- | ----------------------- |
-| **Agnosticidad**          | ❌ Lock-in AWS           | ❌ Lock-in Azure         | ❌ Lock-in GCP           | ❌ Lock-in GitHub    | ✅ Totalmente agnóstico |
-| **Operación**             | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Totalmente gestionado | ✅ Gestionado        | ⚠️ Requiere gestión     |
-| **Complejidad operativa** | ✅ Infra AWS existente   | ⚠️ Vendor adicional      | ❌ Vendor GCP adicional  | ✅ GitHub existente  | ⚠️ Self-hosted          |
-| **Seguridad**             | ✅ Enterprise grade      | ✅ Enterprise grade      | ✅ Enterprise grade      | ⚠️ Básica CI/CD      | ✅ Enterprise grade     |
-| **Ecosistema .NET**       | ✅ Muy buena             | ✅ Excelente             | ⚠️ Limitada              | ⚠️ Solo CI/CD        | ✅ Buena                |
-| **Rotación**              | ✅ Automática            | ✅ Automática            | ✅ Automática            | ❌ Manual            | ✅ Muy flexible         |
-| **Comunidad**             | ✅ Soporte AWS           | ✅ Soporte Microsoft     | ✅ Soporte Google        | ✅ Soporte GitHub    | ✅ Muy activa (30K⭐)   |
-| **Costos**                | ⚠️ Por uso               | ✅ Muy económico         | ✅ Muy económico         | ✅ Gratis (limitado) | ⚠️ Infraestructura      |
+| Criterio                  | AWS Secrets Manager | Azure Key Vault         | Google Secret Manager  | GitHub Secrets         | HashiCorp Vault         |
+| ------------------------- | ------------------- | ----------------------- | ---------------------- | ---------------------- | ----------------------- |
+| **Agnosticidad**          | ❌ Lock-in AWS      | ❌ Lock-in Azure        | ❌ Lock-in GCP         | ❌ Lock-in GitHub      | ✅ Totalmente agnóstico |
+| **Modelo de gestión**     | ✅ Gestionado (AWS) | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)    | ✅ Gestionado (GitHub) | ⚠️ Self-hosted          |
+| **Complejidad operativa** | ✅ Baja (infra AWS) | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)   | ✅ Baja (GitHub)       | ⚠️ Media (OSS maduro)   |
+| **Performance**           | ✅ Óptima en AWS    | ⚠️ Cross-cloud latency  | ⚠️ Cross-cloud latency | ❌ Solo CI/CD          | ✅ Control self-hosted  |
+| **Seguridad**             | ✅ Enterprise grade | ✅ Enterprise grade     | ✅ Enterprise grade    | ⚠️ Básica CI/CD        | ✅ Enterprise grade     |
+| **Integración .NET**      | ✅ Muy buena        | ✅ Excelente            | ⚠️ Limitada            | ⚠️ Solo CI/CD          | ✅ Buena                |
+| **Multi-tenancy**         | ✅ Por paths/tags   | ✅ Por vaults           | ✅ Por proyectos       | ⚠️ Por repos           | ✅ Namespaces/policies  |
+| **Rotación**              | ✅ Automática       | ✅ Automática           | ✅ Automática          | ❌ Manual              | ✅ Muy flexible         |
+| **Alta disponibilidad**   | ✅ Multi-AZ         | ✅ Geo-redundante       | ✅ Multi-regional      | ✅ GitHub global       | ⚠️ Clustering manual    |
+| **Auditoría**             | ✅ CloudTrail       | ✅ Azure Monitor        | ✅ Cloud Audit Logs    | ⚠️ Logs básicos        | ✅ Audit backend        |
+| **Comunidad**             | ✅ Soporte AWS      | ✅ Soporte Microsoft    | ✅ Soporte Google      | ✅ Soporte GitHub      | ✅ Muy activa (30K⭐)   |
+| **Costos**                | ⚠️ Por uso          | ✅ Muy económico        | ✅ Muy económico       | ✅ Gratis (limitado)   | ⚠️ Infraestructura      |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

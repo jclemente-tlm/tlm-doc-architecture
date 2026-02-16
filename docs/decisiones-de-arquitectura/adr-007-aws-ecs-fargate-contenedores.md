@@ -33,16 +33,19 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                | AWS ECS Fargate            | AWS EKS                     | Azure Kubernetes Service | Azure Container Instances | Docker Swarm            |
-| ----------------------- | -------------------------- | --------------------------- | ------------------------ | ------------------------- | ----------------------- |
-| **Agnosticidad**        | ❌ Lock-in AWS             | ✅ Estándar K8s             | ✅ Estándar K8s          | ❌ Lock-in Azure          | ✅ Docker estándar      |
-| **Operación**           | ✅ Serverless, sin gestión | ⚠️ Requiere gestión cluster | ⚠️ Requiere gestión      | ✅ Serverless             | ⚠️ Manual               |
-| **Seguridad**           | ✅ IAM, VPC, Secrets       | ✅ IAM, RBAC                | ✅ Azure AD, RBAC        | ✅ Azure RBAC             | ⚠️ Limitada             |
-| **Ecosistema .NET**     | ✅ Excelente               | ✅ Excelente                | ✅ Nativo Microsoft      | ✅ Nativo Microsoft       | ✅ Excelente            |
-| **Escalabilidad**       | ✅ Automática              | ✅ Flexible                 | ✅ Flexible              | ✅ Automática             | ⚠️ Manual               |
-| **Complejidad**         | ✅ Baja (serverless)       | ❌ Alta (YAML, Helm, ops)   | ❌ Alta (K8s, ops)       | ✅ Baja (serverless)      | ⚠️ Media (clustering)   |
-| **Alta disponibilidad** | ✅ Multi-AZ                | ✅ Multi-AZ, HA             | ✅ Multi-AZ, HA          | ✅ Multi-AZ               | ⚠️ Manual               |
-| **Costos**              | ⚠️ Premium serverless      | ⚠️ Nodos + gestión          | ⚠️ Nodos + gestión       | ⚠️ Pago por uso           | ✅ Solo infraestructura |
+| Criterio                  | AWS ECS Fargate         | AWS EKS                  | Azure Kubernetes Service | Azure Container Instances | Docker Swarm            |
+| ------------------------- | ----------------------- | ------------------------ | ------------------------ | ------------------------- | ----------------------- |
+| **Agnosticidad**          | ❌ Lock-in AWS          | ✅ Estándar K8s          | ✅ Estándar K8s          | ❌ Lock-in Azure          | ✅ Docker estándar      |
+| **Modelo de gestión**     | ✅ Serverless (AWS)     | ✅ Gestionado (AWS)      | ✅ Gestionado (Azure)    | ✅ Serverless (Azure)     | ⚠️ Self-hosted          |
+| **Complejidad operativa** | ✅ Baja (sin gestión)   | ❌ Alta (K8s, Helm, ops) | ❌ Alta (K8s, ops)       | ✅ Baja (sin gestión)     | ⚠️ Media (clustering)   |
+| **Multi-tenancy**         | ✅ Aislamiento por task | ✅ Namespaces + RBAC     | ✅ Namespaces + RBAC     | ✅ Container groups       | ⚠️ Manual config        |
+| **Seguridad**             | ✅ IAM, VPC, Secrets    | ✅ IAM, RBAC             | ✅ Azure AD, RBAC        | ✅ Azure RBAC             | ⚠️ Limitada             |
+| **Integración .NET**      | ✅ Excelente            | ✅ Muy buena             | ✅ Muy buena             | ✅ Muy buena              | ✅ Nativa Docker        |
+| **Performance**           | ✅ Baja latencia        | ✅ Muy buena             | ✅ Muy buena             | ✅ Inicio rápido          | ⚠️ Depende config       |
+| **Escalabilidad**         | ✅ Automática           | ✅ Flexible              | ✅ Flexible              | ✅ Automática             | ⚠️ Manual               |
+| **Alta disponibilidad**   | ✅ Multi-AZ             | ✅ Multi-AZ, HA          | ✅ Multi-AZ, HA          | ✅ Multi-AZ               | ⚠️ Manual               |
+| **Observabilidad**        | ✅ CloudWatch integrado | ✅ Prometheus/Grafana    | ✅ Azure Monitor         | ✅ Azure Monitor          | ⚠️ Manual setup         |
+| **Costos**                | ⚠️ Premium serverless   | ⚠️ Nodos + gestión       | ⚠️ Nodos + gestión       | ⚠️ Pago por uso           | ✅ Solo infraestructura |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

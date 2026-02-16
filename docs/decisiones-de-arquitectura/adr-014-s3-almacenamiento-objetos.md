@@ -34,21 +34,24 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | AWS S3                           | Digital Ocean Spaces         | Azure Blob Storage     | Google Cloud Storage    | MinIO                   |
-| ------------------------- | -------------------------------- | ---------------------------- | ---------------------- | ----------------------- | ----------------------- |
-| **Integración AWS**       | ✅ Nativa (ECS, IAM, VPC)        | ❌ Externa                   | ❌ Externa             | ❌ Externa              | ❌ Externa              |
-| **Madurez/Ecosistema**    | ✅ Estándar de facto (2006)      | ⚠️ Limitado                  | ✅ Enterprise maduro   | ✅ Enterprise maduro    | ✅ CNCF, muy activo     |
-| **Operación**             | ✅ Gestionado (AWS)              | ✅ Gestionado (DigitalOcean) | ✅ Gestionado (Azure)  | ✅ Gestionado (Google)  | ⚠️ Auto-gestionado      |
-| **Complejidad operativa** | ✅ Infra AWS existente           | ⚠️ Vendor adicional          | ⚠️ Vendor adicional    | ❌ Vendor GCP adicional | ⚠️ Self-hosted          |
-| **Escalabilidad**         | ✅ Ilimitada probada             | ⚠️ Limitada enterprise       | ✅ Ilimitada           | ✅ Ilimitada            | ✅ Horizontal           |
-| **Features avanzados**    | ✅ Lifecycle, Classes, Replica   | ❌ Muy limitados             | ✅ Completos           | ✅ Completos            | ⚠️ Básicos              |
-| **API S3**                | ✅ 100% nativa                   | ✅ 100% compatible           | ⚠️ Parcial             | ⚠️ Parcial              | ✅ 100% compatible      |
-| **Seguridad**             | ✅ Enterprise grade              | ✅ Encriptación, CDN         | ✅ Enterprise grade    | ✅ Enterprise grade     | ✅ IAM, encriptación    |
-| **Alta disponibilidad**   | ✅ 99.99% SLA (Multi-AZ)         | ✅ 99.95% SLA                | ✅ Geo-redundante      | ✅ Multi-regional       | ⚠️ Manual (HA setup)    |
-| **Ecosistema .NET**       | ✅ AWS SDK oficial               | ✅ AWS SDK compatible        | ✅ Azure SDK oficial   | ✅ Google SDK oficial   | ✅ AWS SDK compatible   |
-| **Certificaciones**       | ✅ SOC2, HIPAA, PCI-DSS, ISO     | ⚠️ SOC2                      | ✅ Completo            | ✅ Completo             | ❌ Self-managed         |
-| **Agnosticidad**          | ⚠️ Lock-in AWS (API S3 estándar) | ✅ S3-compatible             | ⚠️ Lock-in Azure       | ⚠️ Lock-in GCP          | ✅ OSS, multi-cloud     |
-| **Costos**                | ⚠️ Moderado (US$23/TB + egress)  | ✅ Flat (US$5/mes 250GB)     | ⚠️ Moderado pago x uso | ⚠️ Moderado pago x uso  | ✅ Solo infraestructura |
+| Criterio                  | AWS S3                           | Digital Ocean Spaces     | Azure Blob Storage      | Google Cloud Storage   | MinIO                   |
+| ------------------------- | -------------------------------- | ------------------------ | ----------------------- | ---------------------- | ----------------------- |
+| **Integración AWS**       | ✅ Nativa (ECS, IAM, VPC)        | ❌ Externa               | ❌ Externa              | ❌ Externa             | ❌ Externa              |
+| **Madurez/Ecosistema**    | ✅ Estándar de facto (2006)      | ⚠️ Limitado              | ✅ Enterprise maduro    | ✅ Enterprise maduro   | ✅ CNCF, muy activo     |
+| **Modelo de gestión**     | ✅ Gestionado (AWS)              | ✅ Gestionado (SaaS)     | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)    | ⚠️ Self-hosted          |
+| **Complejidad operativa** | ✅ Baja (infra AWS)              | ⚠️ Media (vendor nuevo)  | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)   | ⚠️ Media (setup)        |
+| **Multi-tenancy**         | ✅ Buckets + IAM políticas       | ⚠️ Spaces + CORS         | ✅ Containers + RBAC    | ✅ Buckets + IAM       | ✅ Buckets + policies   |
+| **Escalabilidad**         | ✅ Ilimitada probada             | ⚠️ Limitada enterprise   | ✅ Ilimitada            | ✅ Ilimitada           | ✅ Horizontal           |
+| **Performance**           | ✅ Multi-AZ + CloudFront         | ✅ CDN integrado         | ✅ Geo-replicación      | ✅ Multi-regional      | ⚠️ Depende config       |
+| **Features avanzados**    | ✅ Lifecycle, Classes, Replica   | ❌ Muy limitados         | ✅ Completos            | ✅ Completos           | ⚠️ Básicos              |
+| **API S3**                | ✅ 100% nativa                   | ✅ 100% compatible       | ⚠️ Parcial              | ⚠️ Parcial             | ✅ 100% compatible      |
+| **Versionado**            | ✅ Nativo (inmutable)            | ⚠️ Limitado              | ✅ Nativo               | ✅ Nativo              | ✅ Nativo               |
+| **Seguridad**             | ✅ Enterprise grade              | ✅ Encriptación, CDN     | ✅ Enterprise grade     | ✅ Enterprise grade    | ✅ IAM, encriptación    |
+| **Alta disponibilidad**   | ✅ 99.99% SLA (Multi-AZ)         | ✅ 99.95% SLA            | ✅ Geo-redundante       | ✅ Multi-regional      | ⚠️ Manual (HA setup)    |
+| **Integración .NET**      | ✅ AWS SDK oficial               | ✅ AWS SDK compatible    | ✅ Azure SDK oficial    | ✅ Google SDK oficial  | ✅ AWS SDK compatible   |
+| **Certificaciones**       | ✅ SOC2, HIPAA, PCI-DSS, ISO     | ⚠️ SOC2                  | ✅ Completo             | ✅ Completo            | ❌ Self-managed         |
+| **Agnosticidad**          | ⚠️ Lock-in AWS (API S3 estándar) | ✅ S3-compatible         | ⚠️ Lock-in Azure        | ⚠️ Lock-in GCP         | ✅ OSS, multi-cloud     |
+| **Costos**                | ⚠️ Moderado (US$23/TB + egress)  | ✅ Flat (US$5/mes 250GB) | ⚠️ Moderado pago x uso  | ⚠️ Moderado pago x uso | ✅ Solo infraestructura |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

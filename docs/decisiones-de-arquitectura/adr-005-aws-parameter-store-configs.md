@@ -36,18 +36,19 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | AWS Parameter Store    | Azure App Configuration | Google Runtime Config   | HashiCorp Consul      | etcd              |
-| ------------------------- | ---------------------- | ----------------------- | ----------------------- | --------------------- | ----------------- |
-| **Agnosticidad**          | ❌ Lock-in AWS         | ❌ Lock-in Azure        | ❌ Lock-in GCP          | ✅ Agnóstico          | ✅ OSS, agnóstico |
-| **Operación**             | ✅ Gestionado          | ✅ Gestionado           | ✅ Gestionado           | ⚠️ Requiere gestión   | ⚠️ Self-hosted    |
-| **Complejidad operativa** | ✅ Infra AWS existente | ⚠️ Vendor adicional     | ❌ Vendor GCP adicional | ⚠️ Self-hosted        | ⚠️ Self-hosted    |
-| **Seguridad**             | ✅ Enterprise          | ✅ Enterprise           | ✅ Enterprise           | ✅ Máxima             | ✅ TLS, RBAC      |
-| **Ecosistema .NET**       | ✅ Muy buena           | ✅ Excelente            | ⚠️ Limitada             | ✅ Buena              | ⚠️ Limitada       |
-| **Versionado**            | ✅ Automática          | ✅ Automática           | ✅ Automática           | ✅ Muy flexible       | ✅ Revisions      |
-| **Feature Flags**         | ⚠️ Básico              | ✅ Nativo               | ⚠️ Básico               | ✅ Flexible           | ⚠️ Manual         |
-| **Multi-tenancy**         | ⚠️ Por parámetros      | ✅ Labels               | ⚠️ Por proyectos        | ✅ Namespaces         | ⚠️ Prefixes       |
-| **Comunidad**             | ✅ Soporte AWS         | ✅ Soporte Azure        | ✅ Soporte Google       | ✅ Muy activa (28K⭐) | ✅ CNCF (47K⭐)   |
-| **Costos**                | ⚠️ Por uso             | ✅ Económico            | ✅ Económico            | ⚠️ Infraestructura    | ✅ Gratis OSS     |
+| Criterio                  | AWS Parameter Store     | Azure App Configuration | Google Runtime Config | HashiCorp Consul      | etcd              |
+| ------------------------- | ----------------------- | ----------------------- | --------------------- | --------------------- | ----------------- |
+| **Agnosticidad**          | ❌ Lock-in AWS          | ❌ Lock-in Azure        | ❌ Lock-in GCP        | ✅ Agnóstico          | ✅ OSS, agnóstico |
+| **Modelo de gestión**     | ✅ Gestionado (AWS)     | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)   | ⚠️ Self-hosted        | ⚠️ Self-hosted    |
+| **Complejidad operativa** | ✅ Baja (infra AWS)     | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)  | ⚠️ Media (setup)      | ⚠️ Media (K8s)    |
+| **Seguridad**             | ✅ Enterprise           | ✅ Enterprise           | ✅ Enterprise         | ✅ Máxima             | ✅ TLS, RBAC      |
+| **Integración .NET**      | ✅ Muy buena            | ✅ Excelente            | ⚠️ Limitada           | ✅ Buena              | ⚠️ Limitada       |
+| **Versionado**            | ✅ Automática           | ✅ Automática           | ✅ Automática         | ✅ Muy flexible       | ✅ Revisions      |
+| **Feature Flags**         | ⚠️ Básico               | ✅ Nativo               | ⚠️ Básico             | ✅ Flexible           | ⚠️ Manual         |
+| **Auditoría**             | ✅ CloudTrail integrado | ✅ Azure Monitor        | ✅ Cloud Audit Logs   | ✅ Completa logs/ACL  | ⚠️ Manual config  |
+| **Multi-tenancy**         | ⚠️ Por parámetros       | ✅ Labels               | ⚠️ Por proyectos      | ✅ Namespaces         | ⚠️ Prefixes       |
+| **Comunidad**             | ✅ Soporte AWS          | ✅ Soporte Azure        | ✅ Soporte Google     | ✅ Muy activa (28K⭐) | ✅ CNCF (47K⭐)   |
+| **Costos**                | ⚠️ Por uso              | ✅ Económico            | ✅ Económico          | ⚠️ Infraestructura    | ✅ Gratis OSS     |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

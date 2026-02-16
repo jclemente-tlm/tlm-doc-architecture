@@ -30,14 +30,17 @@ Las alternativas de multi-tenancy evaluadas fueron:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio          | Single-Tenant   | Multi-Tenant DB     | Schema/Tenant    | Compartmented      | Híbrido              |
-| ----------------- | --------------- | ------------------- | ---------------- | ------------------ | -------------------- |
-| **Aislamiento**   | ✅ Total        | ⚠️ A nivel app      | ⚠️ Por esquema   | ✅ Vía sidecars    | ✅ Flexible          |
-| **Escalabilidad** | ❌ Muy limitada | ✅ Excelente        | ✅ Muy buena     | ✅ Horizontal      | ✅ Buena             |
-| **Seguridad**     | ✅ Máxima       | ⚠️ Requiere cuidado | ⚠️ RLS/Políticas | ✅ Muy alta        | ✅ Flexible          |
-| **Operación**     | ❌ Compleja     | ✅ Centralizada     | ⚠️ Moderada      | ⚠️ Infra adicional | ⚠️ Compleja flexible |
-| **Costos**        | ❌ Muy altos    | ✅ Eficiente        | ✅ Eficiente     | ⚠️ Infraestructura | ⚠️ Moderados         |
-| **Flexibilidad**  | ✅ Máxima       | ❌ Muy limitada     | ⚠️ Limitada      | ✅ Alta            | ✅ Alta              |
+| Criterio                  | Single-Tenant      | Multi-Tenant DB        | Schema/Tenant       | Compartmented          | Híbrido             |
+| ------------------------- | ------------------ | ---------------------- | ------------------- | ---------------------- | ------------------- |
+| **Aislamiento**           | ✅ Total           | ⚠️ A nivel app         | ⚠️ Por esquema      | ✅ Vía sidecars        | ✅ Flexible         |
+| **Escalabilidad**         | ❌ Muy limitada    | ✅ Excelente           | ✅ Muy buena        | ✅ Horizontal          | ✅ Buena            |
+| **Seguridad**             | ✅ Máxima          | ⚠️ Requiere cuidado    | ⚠️ RLS/Políticas    | ✅ Muy alta            | ✅ Flexible         |
+| **Cumplimiento**          | ✅ Máximo          | ⚠️ Requiere diseño     | ⚠️ RLS robusto      | ✅ Por tenant          | ✅ Por nivel        |
+| **Portabilidad**          | ✅ Total           | ✅ OSS portable        | ✅ OSS portable     | ⚠️ Config compleja     | ✅ Multi-cloud      |
+| **Modelo arquitectura**   | Arquitectura       | Arquitectura           | Arquitectura        | Arquitectura           | Arquitectura        |
+| **Complejidad operativa** | ❌ Alta (múltiple) | ✅ Baja (centralizada) | ⚠️ Media (moderada) | ⚠️ Media (infra extra) | ⚠️ Media (flexible) |
+| **Costos**                | ❌ Muy altos       | ✅ Eficiente           | ✅ Eficiente        | ⚠️ Infraestructura     | ⚠️ Moderados        |
+| **Flexibilidad**          | ✅ Máxima          | ❌ Muy limitada        | ⚠️ Limitada         | ✅ Alta                | ✅ Alta             |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

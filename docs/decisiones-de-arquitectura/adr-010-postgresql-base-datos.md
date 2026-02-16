@@ -34,18 +34,20 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                | PostgreSQL                    | MySQL               | Microsoft SQL Server | Oracle                | AWS Aurora      |
-| ----------------------- | ----------------------------- | ------------------- | -------------------- | --------------------- | --------------- |
-| **Agnosticidad**        | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle     | ❌ Lock-in AWS  |
-| **Operación**           | ✅ Simple, automatizable      | ✅ Simple           | ⚠️ Compleja          | ⚠️ Compleja           | ✅ Gestionado   |
-| **Seguridad**           | ✅ Avanzada, RLS, cifrado     | ⚠️ Básica           | ✅ Enterprise        | ✅ Enterprise         | ✅ Enterprise   |
-| **Ecosistema .NET**     | ✅ Excelente (Npgsql)         | ✅ Muy bueno        | ✅ Nativo            | ✅ Bueno              | ✅ Compatible   |
-| **Escalabilidad**       | ✅ Particionamiento, sharding | ⚠️ Limitada         | ⚠️ Always On         | ⚠️ RAC                | ✅ Automática   |
-| **Extensibilidad**      | ✅ Plugins, JSONB, PostGIS    | ⚠️ Limitada         | ⚠️ Limitada          | ✅ Máxima             | ⚠️ Limitada     |
-| **Costos**              | ✅ Gratuito                   | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro           | ⚠️ Pago por uso |
-| **Alta disponibilidad** | ✅ Replicación nativa         | ⚠️ Replicación      | ✅ Always On         | ✅ RAC                | ✅ Multi-AZ     |
-| **Comunidad**           | ✅ Muy activa (15K⭐)         | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise | ⚠️ Limitada AWS |
-| **Portabilidad**        | ✅ Multi-plataforma           | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada           | ❌ AWS          |
+| Criterio                  | PostgreSQL                    | MySQL               | Microsoft SQL Server | Oracle                 | AWS Aurora          |
+| ------------------------- | ----------------------------- | ------------------- | -------------------- | ---------------------- | ------------------- |
+| **Agnosticidad**          | ✅ OSS, multi-cloud           | ✅ OSS, multi-cloud | ❌ Lock-in Microsoft | ❌ Lock-in Oracle      | ❌ Lock-in AWS      |
+| **Modelo de gestión**     | ⚠️ Self-hosted                | ⚠️ Self-hosted      | ⚠️ Self-hosted       | ⚠️ Self-hosted         | ✅ Gestionado (AWS) |
+| **Complejidad operativa** | ✅ Baja (simple)              | ✅ Baja (simple)    | ⚠️ Media (compleja)  | ❌ Alta (muy compleja) | ✅ Baja (AWS)       |
+| **Multi-tenancy**         | ✅ Schemas + RLS avanzado     | ⚠️ Sin RLS nativo   | ✅ Schemas + RLS     | ✅ VPD avanzado        | ✅ PostgreSQL       |
+| **Seguridad**             | ✅ Avanzada, RLS, cifrado     | ⚠️ Básica           | ✅ Enterprise        | ✅ Enterprise          | ✅ Enterprise       |
+| **Integración .NET**      | ✅ Excelente (Npgsql)         | ✅ Muy bueno        | ✅ Nativo            | ✅ Bueno               | ✅ Compatible       |
+| **Escalabilidad**         | ✅ Particionamiento, sharding | ⚠️ Limitada         | ⚠️ Always On         | ⚠️ RAC                 | ✅ Automática       |
+| **Extensibilidad**        | ✅ Plugins, JSONB, PostGIS    | ⚠️ Limitada         | ⚠️ Limitada          | ✅ Máxima              | ⚠️ Limitada         |
+| **Costos**                | ✅ Gratuito                   | ✅ Gratuito         | ❌ Muy caro          | ❌ Muy caro            | ⚠️ Pago por uso     |
+| **Alta disponibilidad**   | ✅ Replicación nativa         | ⚠️ Replicación      | ✅ Always On         | ✅ RAC                 | ✅ Multi-AZ         |
+| **Comunidad**             | ✅ Muy activa (15K⭐)         | ✅ Muy activa       | ✅ Soporte Microsoft | ✅ Soporte enterprise  | ⚠️ Limitada AWS     |
+| **Portabilidad**          | ✅ Multi-plataforma           | ✅ Multi-plataforma | ❌ Windows principal | ❌ Limitada            | ❌ AWS              |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
