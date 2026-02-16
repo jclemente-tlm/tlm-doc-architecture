@@ -37,13 +37,13 @@ Alternativas evaluadas:
 | **Agnosticidad**          | ✅ OSS, multi-cloud              | ✅ OSS, multi-cloud     | ❌ Lock-in SaaS         | ⚠️ On-prem/SaaS          | ❌ Lock-in AWS         |
 | **Modelo de gestión**     | ⚠️ Self-hosted                   | ⚠️ Self-hosted          | ✅ Gestionado (SaaS)    | ⚠️ Híbrido               | ✅ Gestionado (AWS)    |
 | **Complejidad operativa** | ⚠️ Media (setup moderado)        | ⚠️ Media (tuning)       | ✅ Baja (simplificado)  | ⚠️ Media (on-prem/cloud) | ✅ Baja (AWS nativo)   |
-| **Multi-tenancy**         | ✅ Orgs + data sources           | ⚠️ Indices/Spaces       | ✅ Nativo (orgs/teams)  | ✅ Tenants nativos       | ⚠️ Por accounts        |
-| **Correlación**           | ✅ OpenTelemetry nativo          | ⚠️ Manual/APM adicional | ✅ Nativa               | ✅ Nativa                | ✅ Nativa              |
 | **Integración .NET**      | ✅ OpenTelemetry SDK             | ✅ Serilog/Elastic      | ✅ APM integrado        | ✅ .NET instrumentation  | ✅ AWS SDK             |
-| **Costos**                | ✅ Solo infraestructura          | ✅ Solo infraestructura | ❌ US$15-31/host/mes    | ❌ US$150/GB ingestión   | ⚠️ Pago por uso        |
-| **Visualización**         | ✅ Grafana unificado             | ✅ Kibana maduro        | ✅ Dashboards avanzados | ✅ Dashboards potentes   | ⚠️ CloudWatch básico   |
+| **Multi-tenancy**         | ✅ Orgs + data sources           | ⚠️ Indices/Spaces       | ✅ Nativo (orgs/teams)  | ✅ Tenants nativos       | ⚠️ Por accounts        |
 | **Performance**           | ✅ Alta escala, optimizado       | ⚠️ Requiere tuning      | ✅ Optimizado           | ✅ Enterprise-scale      | ✅ Bueno               |
+| **Correlación**           | ✅ OpenTelemetry nativo          | ⚠️ Manual/APM adicional | ✅ Nativa               | ✅ Nativa                | ✅ Nativa              |
+| **Visualización**         | ✅ Grafana unificado             | ✅ Kibana maduro        | ✅ Dashboards avanzados | ✅ Dashboards potentes   | ⚠️ CloudWatch básico   |
 | **Alertas**               | ✅ Grafana Alerting integrado    | ✅ Watcher/Alerting     | ✅ Alertas avanzadas    | ✅ Alertas ML/AI         | ✅ CloudWatch Alarms   |
+| **Costos**                | ✅ Solo infraestructura          | ✅ Solo infraestructura | ❌ US$15-31/host/mes    | ❌ US$150/GB ingestión   | ⚠️ Pago por uso        |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

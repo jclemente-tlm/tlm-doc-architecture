@@ -37,12 +37,12 @@ Las alternativas evaluadas fueron:
 | **Agnosticidad**          | ✅ OSS, portátil            | ⚠️ SaaS independiente  | ❌ Lock-in AWS        | ❌ Lock-in Azure        | ❌ Lock-in GCP           |
 | **Modelo de gestión**     | ⚠️ Self-hosted              | ✅ Gestionado (SaaS)   | ✅ Gestionado (AWS)   | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)      |
 | **Complejidad operativa** | ⚠️ Media (OSS maduro)       | ✅ Baja (simplificado) | ✅ Baja (infra AWS)   | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)     |
-| **Escalabilidad**         | ✅ Horizontal clustering    | ✅ Auto-scaling SaaS   | ✅ Gestionada         | ✅ Gestionada           | ✅ Gestionada            |
-| **Performance**           | ✅ Óptima (local cache)     | ✅ Muy buena           | ✅ Buena (<100ms)     | ✅ Buena                | ⚠️ Latencia variable     |
-| **Alta disponibilidad**   | ✅ Clustering + DB HA       | ✅ 99.99% SLA          | ✅ Multi-AZ           | ✅ 99.99% SLA           | ✅ Multi-regional        |
 | **Seguridad**             | ✅ Enterprise grade         | ✅ Enterprise grade    | ✅ Enterprise grade   | ✅ Enterprise grade     | ✅ Enterprise grade      |
 | **Integración .NET**      | ✅ SDK completo             | ✅ SDK oficial         | ✅ AWS SDK            | ✅ Azure SDK            | ⚠️ SDK limitado          |
 | **Multi-tenancy**         | ✅ Nativo y flexible        | ✅ Excelente soporte   | ⚠️ Básico             | ✅ Muy bueno            | ⚠️ Básico                |
+| **Escalabilidad**         | ✅ Horizontal clustering    | ✅ Auto-scaling SaaS   | ✅ Gestionada         | ✅ Gestionada           | ✅ Gestionada            |
+| **Performance**           | ✅ Óptima (local cache)     | ✅ Muy buena           | ✅ Buena (<100ms)     | ✅ Buena                | ⚠️ Latencia variable     |
+| **Alta disponibilidad**   | ✅ Clustering + DB HA       | ✅ 99.99% SLA          | ✅ Multi-AZ           | ✅ 99.99% SLA           | ✅ Multi-regional        |
 | **Protocolos**            | ✅ Todos los estándares     | ✅ Completo            | ⚠️ Limitado           | ✅ Completo             | ⚠️ Limitado              |
 | **Federación**            | ✅ SAML, OIDC, LDAP         | ✅ Social + Enterprise | ⚠️ Limitada           | ✅ AD completo          | ⚠️ Limitada              |
 | **Personalización**       | ✅ Altamente personalizable | ⚠️ Limitada            | ⚠️ Muy limitada       | ⚠️ Limitada             | ⚠️ Muy limitada          |

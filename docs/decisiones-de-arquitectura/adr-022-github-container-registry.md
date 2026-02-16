@@ -39,14 +39,14 @@ Alternativas evaluadas:
 | **Agnosticidad**          | ✅ Multi-cloud                      | ❌ Lock-in AWS        | ❌ Lock-in Azure           | ✅ Agnóstico         | ✅ OSS, agnóstico       |
 | **Modelo de gestión**     | ✅ Gestionado (GitHub)              | ✅ Gestionado (AWS)   | ✅ Gestionado (Azure)      | ✅ Gestionado (SaaS) | ⚠️ Self-hosted          |
 | **Complejidad operativa** | ✅ Baja (GitHub)                    | ✅ Baja (infra AWS)   | ⚠️ Media (vendor nuevo)    | ⚠️ Media (externo)   | ⚠️ Media (setup)        |
+| **Seguridad**             | ✅ GitHub Advanced Security         | ✅ ECR Image Scanning | ✅ Defender for Containers | ⚠️ Básico            | ✅ Trivy integrado      |
 | **Integración CI/CD**     | ✅ Nativa GitHub Actions            | ✅ AWS SDK            | ⚠️ Azure DevOps            | ⚠️ Manual            | ⚠️ Manual               |
+| **Performance**           | ✅ CDN global                       | ✅ VPC Endpoints      | ✅ Muy bueno               | ⚠️ Rate limits       | ⚠️ Depende infra        |
+| **Alta disponibilidad**   | ✅ Global, gestionado               | ✅ Multi-AZ           | ✅ Geo-replicación         | ✅ Gestionado        | ⚠️ Manual               |
 | **Autenticación**         | ✅ GitHub tokens (PAT, OIDC)        | ✅ IAM roles          | ✅ Azure AD                | ⚠️ Docker login      | ⚠️ Usuarios locales     |
 | **Versionado/Tags**       | ✅ Semántico + SHA + tags           | ✅ Tags + lifecycles  | ✅ Tags + policies         | ✅ Tags manual       | ✅ Tags + retention     |
-| **Seguridad**             | ✅ GitHub Advanced Security         | ✅ ECR Image Scanning | ✅ Defender for Containers | ⚠️ Básico            | ✅ Trivy integrado      |
-| **Costos**                | ✅ Gratis (públicos), bajo privados | ⚠️ US$0.10/GB storage | ⚠️ US$5/mes + storage      | ❌ US$7/mes por repo | ✅ Solo infraestructura |
-| **Alta disponibilidad**   | ✅ Global, gestionado               | ✅ Multi-AZ           | ✅ Geo-replicación         | ✅ Gestionado        | ⚠️ Manual               |
-| **Performance**           | ✅ CDN global                       | ✅ VPC Endpoints      | ✅ Muy bueno               | ⚠️ Rate limits       | ⚠️ Depende infra        |
 | **Comunidad**             | ✅ GitHub nativo                    | ✅ Soporte AWS        | ✅ Soporte Microsoft       | ⚠️ Docker Hub focus  | ✅ CNCF (26K⭐)         |
+| **Costos**                | ✅ Gratis (públicos), bajo privados | ⚠️ US$0.10/GB storage | ⚠️ US$5/mes + storage      | ❌ US$7/mes por repo | ✅ Solo infraestructura |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

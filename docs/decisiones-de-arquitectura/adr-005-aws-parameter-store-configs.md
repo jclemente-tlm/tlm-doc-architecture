@@ -43,10 +43,10 @@ Alternativas evaluadas:
 | **Complejidad operativa** | ✅ Baja (infra AWS)     | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)  | ⚠️ Media (setup)      | ⚠️ Media (K8s)    |
 | **Seguridad**             | ✅ Enterprise           | ✅ Enterprise           | ✅ Enterprise         | ✅ Máxima             | ✅ TLS, RBAC      |
 | **Integración .NET**      | ✅ Muy buena            | ✅ Excelente            | ⚠️ Limitada           | ✅ Buena              | ⚠️ Limitada       |
+| **Multi-tenancy**         | ⚠️ Por parámetros       | ✅ Labels               | ⚠️ Por proyectos      | ✅ Namespaces         | ⚠️ Prefixes       |
 | **Versionado**            | ✅ Automática           | ✅ Automática           | ✅ Automática         | ✅ Muy flexible       | ✅ Revisions      |
 | **Feature Flags**         | ⚠️ Básico               | ✅ Nativo               | ⚠️ Básico             | ✅ Flexible           | ⚠️ Manual         |
 | **Auditoría**             | ✅ CloudTrail integrado | ✅ Azure Monitor        | ✅ Cloud Audit Logs   | ✅ Completa logs/ACL  | ⚠️ Manual config  |
-| **Multi-tenancy**         | ⚠️ Por parámetros       | ✅ Labels               | ⚠️ Por proyectos      | ✅ Namespaces         | ⚠️ Prefixes       |
 | **Comunidad**             | ✅ Soporte AWS          | ✅ Soporte Azure        | ✅ Soporte Google     | ✅ Muy activa (28K⭐) | ✅ CNCF (47K⭐)   |
 | **Costos**                | ⚠️ Por uso              | ✅ Económico            | ✅ Económico          | ⚠️ Infraestructura    | ✅ Gratis OSS     |
 

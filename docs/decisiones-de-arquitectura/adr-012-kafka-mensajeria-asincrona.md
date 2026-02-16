@@ -37,14 +37,14 @@ Alternativas evaluadas:
 | **Agnosticidad**          | ✅ OSS, multi-cloud       | ❌ Lock-in GCP          | ❌ Lock-in AWS       | ✅ OSS, multi-cloud | ❌ Lock-in Azure        |
 | **Modelo de gestión**     | ⚠️ Self-hosted            | ✅ Gestionado (GCP)     | ✅ Gestionado (AWS)  | ⚠️ Self-hosted      | ✅ Gestionado (Azure)   |
 | **Complejidad operativa** | ⚠️ Media (automatización) | ❌ Alta (vendor GCP)    | ✅ Baja (infra AWS)  | ⚠️ Media (setup)    | ⚠️ Media (vendor nuevo) |
+| **Integración .NET**      | ✅ Confluent.Kafka        | ✅ Google.Cloud.PubSub  | ✅ AWS SDK           | ✅ RabbitMQ.Client  | ✅ Azure SDK            |
+| **Multi-tenancy**         | ⚠️ Por topics             | ✅ Por proyectos        | ⚠️ Por topics        | ⚠️ Por vhosts       | ⚠️ Por namespaces       |
 | **Escalabilidad**         | ✅ Masiva                 | ✅ Serverless ilimitada | ✅ Automática        | ⚠️ Limitada         | ✅ Muy buena            |
 | **Performance**           | ✅ 1M+ msg/seg, <10ms p99 | ✅ 100K+ msg/seg        | ✅ 100K+ msg/seg     | ⚠️ 50K msg/seg      | ✅ 100K+ msg/seg        |
-| **Integración .NET**      | ✅ Confluent.Kafka        | ✅ Google.Cloud.PubSub  | ✅ AWS SDK           | ✅ RabbitMQ.Client  | ✅ Azure SDK            |
+| **Alta disponibilidad**   | ✅ Replicación, Multi-AZ  | ✅ Multi-region         | ✅ Multi-AZ          | ⚠️ Clustering       | ✅ Geo-replicación      |
 | **Persistencia**          | ✅ Log distribuido        | ✅ 7+ días default      | ✅ Persistente       | ✅ Durable queues   | ✅ Persistencia nativa  |
 | **Streaming**             | ✅ Nativo (replay)        | ⚠️ Dataflow requerido   | ❌ No soportado      | ❌ No soportado     | ❌ Limitado             |
 | **Event Sourcing**        | ✅ Ideal (log inmutable)  | ⚠️ Parcial              | ⚠️ Parcial           | ❌ No recomendado   | ⚠️ Parcial              |
-| **Multi-tenancy**         | ⚠️ Por topics             | ✅ Por proyectos        | ⚠️ Por topics        | ⚠️ Por vhosts       | ⚠️ Por namespaces       |
-| **Alta disponibilidad**   | ✅ Replicación, Multi-AZ  | ✅ Multi-region         | ✅ Multi-AZ          | ⚠️ Clustering       | ✅ Geo-replicación      |
 | **Costos**                | ⚠️ Infraestructura        | ⚠️ Pago por mensaje     | ✅ Pago por uso bajo | ✅ OSS              | ⚠️ Pago por uso         |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple

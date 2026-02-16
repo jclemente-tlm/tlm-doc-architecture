@@ -43,10 +43,10 @@ Alternativas evaluadas:
 | **Madurez**               | ✅ Muy alta           | ✅ Muy alta            | ✅ Muy alta             | ✅ Líder enterprise  | ⚠️ Media          | ✅ Alta           | ✅ Muy alta          |
 | **Modelo de gestión**     | ⚠️ Self-hosted        | ✅ Gestionado (AWS)    | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)  | ⚠️ Self-hosted    | ⚠️ Self-hosted    | ⚠️ Self-hosted       |
 | **Complejidad operativa** | ⚠️ Media (ECS)        | ✅ Baja (infra AWS)    | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP) | ⚠️ Media (OSS)    | ⚠️ Media (OSS)    | ⚠️ Media (comercial) |
-| **Multi-tenancy**         | ✅ Workspaces nativos | ⚠️ Por recursos/stages | ✅ Products/groups      | ✅ Org/Environments  | ⚠️ Manual routing | ⚠️ Por paths      | ⚠️ Manual            |
-| **Ecosistema Plugins**    | ✅ Extenso            | ⚠️ AWS integrations    | ✅ Policies extensas    | ✅ Muy completo      | ⚠️ Limitado       | ⚠️ Medio          | ⚠️ Medio             |
 | **Seguridad**             | ✅ Completa           | ✅ IAM/Cognito         | ✅ Azure AD/RBAC        | ✅ Enterprise grade  | ✅ OAuth2/JWT     | ✅ Completa       | ✅ Completa          |
+| **Multi-tenancy**         | ✅ Workspaces nativos | ⚠️ Por recursos/stages | ✅ Products/groups      | ✅ Org/Environments  | ⚠️ Manual routing | ⚠️ Por paths      | ⚠️ Manual            |
 | **Escalabilidad**         | ✅ Clustering nativo  | ✅ Serverless auto     | ✅ Auto-scaling         | ✅ Global            | ⚠️ Manual con LB  | ✅ K8s/Clustering | ✅ Clustering        |
+| **Ecosistema Plugins**    | ✅ Extenso            | ⚠️ AWS integrations    | ✅ Policies extensas    | ✅ Muy completo      | ⚠️ Limitado       | ⚠️ Medio          | ⚠️ Medio             |
 | **Observabilidad**        | ✅ Completa           | ✅ CloudWatch          | ✅ App Insights         | ✅ Analytics nativo  | ✅ Nativa .NET    | ✅ Completa       | ✅ Completa          |
 | **Comunidad**             | ✅ Muy activa         | ✅ Soporte AWS         | ✅ Soporte Microsoft    | ✅ Soporte Google    | ⚠️ Creciente      | ✅ Activa         | ✅ Activa            |
 | **Costos**                | ✅ OSS (+ Enterprise) | ⚠️ Por requests        | ⚠️ Por requests         | ❌ Muy costoso       | ✅ OSS            | ✅ OSS            | ⚠️ Comercial         |

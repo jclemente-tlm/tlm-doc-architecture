@@ -40,9 +40,9 @@ Alternativas evaluadas:
 | **Agnosticidad**          | ✅ Multi-cloud        | ✅ Multi-cloud        | ✅ Multi-cloud        | ❌ Lock-in AWS      | ❌ Lock-in Azure      |
 | **Modelo de gestión**     | ⚠️ Herramienta CLI    | ⚠️ Herramienta CLI    | ⚠️ Herramienta CLI    | ✅ Gestionado (AWS) | ✅ Gestionado (Azure) |
 | **Complejidad operativa** | ✅ Baja (declarativo) | ⚠️ Media (imperativo) | ⚠️ Media (mixto)      | ✅ Baja (AWS)       | ✅ Baja (Azure)       |
+| **Seguridad**             | ✅ Enterprise grade   | ✅ Enterprise grade   | ✅ SSH/Enterprise     | ✅ AWS IAM          | ✅ Azure RBAC         |
 | **Gestión de estado**     | ✅ Robusto y seguro   | ✅ Estado backend     | ❌ No state file      | ✅ S3 backend       | ✅ Azure backend      |
 | **Multi-entorno**         | ✅ Workspaces nativos | ✅ Stacks nativos     | ⚠️ Inventarios        | ✅ Parameters       | ✅ Parameters         |
-| **Seguridad**             | ✅ Enterprise grade   | ✅ Enterprise grade   | ✅ SSH/Enterprise     | ✅ AWS IAM          | ✅ Azure RBAC         |
 | **Versionado**            | ✅ Automática         | ✅ Automática         | ✅ Git-based          | ✅ Nativo           | ✅ Nativo             |
 | **Módulos**               | ✅ Reutilizables      | ✅ Reutilizables      | ✅ Roles/Collections  | ⚠️ Solo AWS         | ⚠️ Solo Azure         |
 | **Comunidad**             | ✅ Muy activa (42K⭐) | ✅ Activa (21K⭐)     | ✅ Muy activa (62K⭐) | ✅ Soporte AWS      | ✅ Soporte Azure      |

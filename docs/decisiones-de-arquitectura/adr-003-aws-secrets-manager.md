@@ -37,12 +37,12 @@ Las alternativas evaluadas fueron:
 | **Agnosticidad**          | ❌ Lock-in AWS      | ❌ Lock-in Azure        | ❌ Lock-in GCP         | ❌ Lock-in GitHub      | ✅ Totalmente agnóstico |
 | **Modelo de gestión**     | ✅ Gestionado (AWS) | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)    | ✅ Gestionado (GitHub) | ⚠️ Self-hosted          |
 | **Complejidad operativa** | ✅ Baja (infra AWS) | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)   | ✅ Baja (GitHub)       | ⚠️ Media (OSS maduro)   |
-| **Performance**           | ✅ Óptima en AWS    | ⚠️ Cross-cloud latency  | ⚠️ Cross-cloud latency | ❌ Solo CI/CD          | ✅ Control self-hosted  |
 | **Seguridad**             | ✅ Enterprise grade | ✅ Enterprise grade     | ✅ Enterprise grade    | ⚠️ Básica CI/CD        | ✅ Enterprise grade     |
 | **Integración .NET**      | ✅ Muy buena        | ✅ Excelente            | ⚠️ Limitada            | ⚠️ Solo CI/CD          | ✅ Buena                |
 | **Multi-tenancy**         | ✅ Por paths/tags   | ✅ Por vaults           | ✅ Por proyectos       | ⚠️ Por repos           | ✅ Namespaces/policies  |
-| **Rotación**              | ✅ Automática       | ✅ Automática           | ✅ Automática          | ❌ Manual              | ✅ Muy flexible         |
+| **Performance**           | ✅ Óptima en AWS    | ⚠️ Cross-cloud latency  | ⚠️ Cross-cloud latency | ❌ Solo CI/CD          | ✅ Control self-hosted  |
 | **Alta disponibilidad**   | ✅ Multi-AZ         | ✅ Geo-redundante       | ✅ Multi-regional      | ✅ GitHub global       | ⚠️ Clustering manual    |
+| **Rotación**              | ✅ Automática       | ✅ Automática           | ✅ Automática          | ❌ Manual              | ✅ Muy flexible         |
 | **Auditoría**             | ✅ CloudTrail       | ✅ Azure Monitor        | ✅ Cloud Audit Logs    | ⚠️ Logs básicos        | ✅ Audit backend        |
 | **Comunidad**             | ✅ Soporte AWS      | ✅ Soporte Microsoft    | ✅ Soporte Google      | ✅ Soporte GitHub      | ✅ Muy activa (30K⭐)   |
 | **Costos**                | ⚠️ Por uso          | ✅ Muy económico        | ✅ Muy económico       | ✅ Gratis (limitado)   | ⚠️ Infraestructura      |
