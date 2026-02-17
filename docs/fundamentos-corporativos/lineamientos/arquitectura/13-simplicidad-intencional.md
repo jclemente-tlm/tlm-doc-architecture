@@ -1,6 +1,6 @@
 ---
 id: simplicidad-intencional
-sidebar_position: 12
+sidebar_position: 13
 title: Simplicidad Intencional
 description: Práctica arquitectónica que evita sobreingeniería y complejidad innecesaria, manteniendo soluciones proporcionales al problema real.
 tags: [lineamiento, arquitectura, simplicidad, YAGNI, KISS, mantenibilidad]

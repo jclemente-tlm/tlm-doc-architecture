@@ -1,6 +1,6 @@
 ---
 id: proteccion-de-datos
-sidebar_position: 4
+sidebar_position: 7
 title: Protección de Datos
 description: Protección de datos sensibles a lo largo de su ciclo de vida
 ---

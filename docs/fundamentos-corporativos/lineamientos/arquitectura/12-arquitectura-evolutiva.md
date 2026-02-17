@@ -1,6 +1,6 @@
 ---
 id: arquitectura-evolutiva
-sidebar_position: 11
+sidebar_position: 12
 title: Arquitectura Evolutiva
 description: Enfoque arquitectónico que diseña sistemas preparados para cambiar de forma controlada a lo largo del tiempo, usando fitness functions para guiar la evolución.
 tags: [lineamiento, arquitectura, evolutionary-architecture, mantenibilidad]

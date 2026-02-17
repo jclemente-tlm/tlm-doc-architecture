@@ -1,6 +1,6 @@
 ---
 id: identidad-y-accesos
-sidebar_position: 2
+sidebar_position: 5
 title: Identidad y Accesos
 description: Gestión de identidades, autenticación y autorización
 ---

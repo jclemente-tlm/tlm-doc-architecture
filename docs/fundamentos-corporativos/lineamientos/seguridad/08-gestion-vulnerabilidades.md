@@ -1,6 +1,6 @@
 ---
 id: gestion-vulnerabilidades
-sidebar_position: 5
+sidebar_position: 8
 title: Gestión de Vulnerabilidades
 description: Identificación, priorización y remediación de vulnerabilidades de seguridad
 ---

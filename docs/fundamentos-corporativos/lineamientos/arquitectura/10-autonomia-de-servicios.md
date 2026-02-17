@@ -1,6 +1,6 @@
 ---
 id: autonomia-de-servicios
-sidebar_position: 9
+sidebar_position: 10
 title: Autonomía de Servicios
 description: Servicios capaces de evolucionar, desplegarse y operar de forma independiente
 ---

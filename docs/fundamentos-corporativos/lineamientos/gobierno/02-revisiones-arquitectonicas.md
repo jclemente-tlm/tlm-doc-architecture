@@ -1,5 +1,5 @@
 ---
-id: architecture-reviews
+id: revisiones-arquitectonicas
 sidebar_position: 2
 title: Revisiones Arquitectónicas
 description: Proceso de evaluación y validación de decisiones arquitectónicas

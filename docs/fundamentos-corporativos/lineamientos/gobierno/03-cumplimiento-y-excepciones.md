@@ -19,4 +19,4 @@ Lineamientos sin verificación de cumplimiento se convierten en documentación i
 ## Referencias Relacionadas
 
 - [Decisiones Arquitectónicas](./01-decisiones-arquitectonicas.md) (ADRs para excepciones)
-- [Revisiones Arquitectónicas](./02-architecture-reviews.md) (evaluación de arquitecturas)
+- [Revisiones Arquitectónicas](./02-revisiones-arquitectonicas.md) (evaluación de arquitecturas)

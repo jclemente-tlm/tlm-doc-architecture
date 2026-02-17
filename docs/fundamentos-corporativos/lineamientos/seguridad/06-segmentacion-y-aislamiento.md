@@ -1,6 +1,6 @@
 ---
 id: segmentacion-y-aislamiento
-sidebar_position: 3
+sidebar_position: 6
 title: Segmentación y Aislamiento
 description: Separación de componentes y recursos por niveles de confianza
 ---

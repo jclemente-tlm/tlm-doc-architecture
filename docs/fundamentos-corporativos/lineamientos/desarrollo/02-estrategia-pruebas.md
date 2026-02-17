@@ -1,5 +1,5 @@
 ---
-id: testing
+id: estrategia-pruebas
 sidebar_position: 2
 title: Estrategia de Pruebas
 description: Estrategia de testing automatizado multinivel para garantizar calidad del software

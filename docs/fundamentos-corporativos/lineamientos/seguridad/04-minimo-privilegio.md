@@ -1,6 +1,6 @@
 ---
 id: minimo-privilegio
-sidebar_position: 8
+sidebar_position: 4
 title: Mínimo Privilegio
 description: Práctica de seguridad que establece que cada usuario, componente o sistema debe operar con el nivel mínimo de privilegios necesario para cumplir su función.
 tags: [lineamiento, seguridad, least-privilege, iam, rbac]

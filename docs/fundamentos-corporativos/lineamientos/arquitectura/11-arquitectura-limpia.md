@@ -1,6 +1,6 @@
 ---
 id: arquitectura-limpia
-sidebar_position: 10
+sidebar_position: 11
 title: Arquitectura Limpia
 description: Patrón arquitectónico que separa las decisiones de negocio de los detalles técnicos, manteniendo el dominio independiente de frameworks e infraestructura.
 tags: [lineamiento, arquitectura, clean-architecture, mantenibilidad]

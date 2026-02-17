@@ -1,6 +1,6 @@
 ---
 id: escalabilidad-y-rendimiento
-sidebar_position: 13
+sidebar_position: 5
 title: Escalabilidad y Rendimiento
 description: Lineamientos para diseñar sistemas eficientes que manejen crecimiento de carga manteniendo tiempos de respuesta aceptables
 tags: [lineamiento, arquitectura, escalabilidad, rendimiento, performance]
