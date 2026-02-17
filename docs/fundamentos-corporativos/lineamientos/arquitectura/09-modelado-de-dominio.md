@@ -1,44 +1,26 @@
 ---
 id: modelado-de-dominio
 sidebar_position: 9
-title: Modelado de Dominio (DDD)
+title: Modelado de Dominio
 description: Arquitectura estructurada en torno al dominio del negocio
 ---
 
-# Modelado de Dominio (DDD)
+# Modelado de Dominio
 
-## 1. Declaración
+La arquitectura debe estructurarse en torno al dominio del negocio, reflejando sus conceptos, reglas y límites. Cuando se define principalmente desde lo técnico, el sistema pierde significado para el negocio, se vuelve difícil de mantener y costoso de cambiar. Orientar la arquitectura al dominio modela explícitamente reglas, procesos y conceptos del negocio, reduciendo malentendidos entre equipos y facilitando evolución sostenible. El dominio es la fuente principal de decisiones arquitectónicas, no una consecuencia de ellas.
 
-La arquitectura debe estructurarse en torno al dominio del negocio, reflejando sus conceptos, reglas y límites, y no únicamente consideraciones técnicas.
+**Este lineamiento aplica a:** sistemas con lógica de negocio relevante o compleja, soluciones que evolucionan con el negocio, arquitecturas con múltiples equipos o dominios, plataformas donde el conocimiento del negocio es crítico.
 
-## 2. Justificación
+## Estándares Obligatorios
 
-Este principio busca alinear el diseño del sistema con el negocio, facilitando la comprensión, evolución y sostenibilidad de la solución en el tiempo.
+- [Identificar bounded contexts por capacidades de negocio](../../estandares/arquitectura/bounded-contexts.md)
+- [Definir lenguaje ubicuo compartido con el negocio](../../estandares/arquitectura/bounded-contexts.md#lenguaje-ubicuo)
+- [Asignar responsabilidades según capacidades del dominio](../../estandares/arquitectura/bounded-contexts.md)
+- [Documentar modelo de dominio en diagramas de contexto](../../estandares/documentacion/c4-model.md)
+- [Evitar mezclar lógicas de dominios distintos](../../estandares/arquitectura/bounded-contexts.md#9-single-responsibility-principle)
 
-Cuando la arquitectura se define principalmente desde lo técnico, el sistema pierde significado para el negocio, se vuelve difícil de mantener y costoso de cambiar.
+## Referencias Relacionadas
 
-El Diseño Orientado al Dominio promueve que el software modele explícitamente las reglas, procesos y conceptos relevantes del negocio, reduciendo malentendidos entre equipos técnicos y no técnicos.
-
-El dominio es la fuente principal de decisiones arquitectónicas, no una consecuencia de ellas.
-
-## 3. Alcance y Contexto
-
-Aplica a:
-
-- Sistemas con lógica de negocio relevante o compleja
-- Soluciones que evolucionan con el negocio
-- Arquitecturas con múltiples equipos o dominios
-- Plataformas donde el conocimiento del negocio es crítico
-
-No implica el uso obligatorio de patrones o tácticas específicas de DDD, sino una orientación conceptual al dominio.
-
-## 4. Implicaciones
-
-- Los límites del sistema reflejan contextos del dominio.
-- El lenguaje utilizado en el diseño y la comunicación es consistente con el negocio.
-- Las responsabilidades se asignan según capacidades del dominio.
-- La arquitectura evita mezclar lógicas de dominios distintos.
-
-**Compensaciones (Trade-offs):**
-
-Requiere mayor esfuerzo inicial de análisis y colaboración con el negocio, a cambio de mayor claridad, menor deuda conceptual y una arquitectura más adaptable al cambio.
+- [Descomposición y Límites](02-descomposicion-y-limites.md)
+- [Autonomía de Servicios](10-autonomia-de-servicios.md)
+- [APIs y Contratos](07-apis-y-contratos.md)

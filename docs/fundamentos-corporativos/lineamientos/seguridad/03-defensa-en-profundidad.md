@@ -7,38 +7,20 @@ description: Múltiples capas de protección independientes en la arquitectura
 
 # Defensa en Profundidad
 
-## 1. Declaración
+La arquitectura debe incorporar múltiples capas de protección independientes, para que la falla o evasión de un control no comprometa la seguridad del sistema. Ningún control es infalible: las configuraciones fallan, los accesos pueden ser mal otorgados y los mecanismos de protección pueden ser evadidos. La defensa en profundidad establece que la seguridad no depende de un único control, sino de la combinación coherente de múltiples barreras complementarias que limitan el alcance y propagación de incidentes.
 
-La arquitectura debe diseñarse incorporando múltiples capas de protección independientes, de modo que la falla o evasión de un control no comprometa la seguridad del sistema en su conjunto.
+**Este lineamiento aplica a:** componentes y servicios, acceso a datos y recursos críticos, integraciones internas y externas, flujos de información dentro de la arquitectura.
 
-## 2. Justificación
+## Estándares Obligatorios
 
-Este principio busca reducir el impacto de fallos, errores humanos o accesos indebidos, evitando que un único punto de falla exponga activos críticos o comprometa todo el sistema.
+- [Eliminar puntos únicos de falla en seguridad](../../estandares/seguridad/security-architecture.md#7-reducción-de-superficie-de-ataque)
+- [Diseñar capas de seguridad independientes y complementarias](../../estandares/seguridad/security-architecture.md#6-defense-in-depth)
+- [Limitar acceso y capacidades progresivamente](../../estandares/seguridad/authorization.md)
+- [Facilitar detección, contención y aislamiento de incidentes](../../estandares/observabilidad/observability.md)
+- [Distribuir controles en distintos niveles arquitectónicos](../../estandares/seguridad/network-security.md)
 
-Ningún control de seguridad es infalible.
-Las configuraciones pueden fallar, los accesos pueden ser mal otorgados y los mecanismos de protección pueden ser evadidos.
+## Referencias Relacionadas
 
-La defensa en profundidad asume esta realidad y establece que la seguridad no depende de un único control, sino de la combinación coherente de múltiples barreras que limitan el alcance y la propagación de un incidente.
-
-## 3. Alcance y Contexto
-
-Este principio aplica a:
-
-- Componentes y servicios
-- Acceso a datos y recursos críticos
-- Integraciones internas y externas
-- Flujos de información dentro de la arquitectura
-
-No implica duplicar controles sin criterio, sino diseñar capas complementarias y con responsabilidades claras.
-
-## 4. Implicaciones
-
-- No debe existir un único punto cuya falla comprometa activos críticos.
-- Las capas de seguridad deben ser independientes y complementarias.
-- El acceso y las capacidades deben limitarse progresivamente.
-- La arquitectura debe facilitar la detección, contención y aislamiento de incidentes.
-- Los controles deben distribuirse en distintos niveles de la arquitectura.
-
-**Compensaciones (Trade-offs):**
-
-Introduce mayor complejidad en diseño, operación y gobierno de la seguridad, a cambio de una reducción significativa del impacto de incidentes y una mayor resiliencia ante fallos inevitables.
+- [Seguridad desde el Diseño](01-seguridad-desde-el-diseno.md)
+- [Zero Trust](02-zero-trust.md)
+- [Segmentación y Aislamiento](06-segmentacion-y-aislamiento.md)

@@ -7,44 +7,20 @@ description: Servicios capaces de evolucionar, desplegarse y operar de forma ind
 
 # Autonomía de Servicios
 
-## 1. Declaración
+Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar independientemente sin coordinación sincronizada con otros servicios. Sin autonomía, los despliegues requieren coordinación entre equipos, los cambios quedan bloqueados por dependencias externas y la escalabilidad organizacional se limita. La autonomía permite que cada servicio asuma responsabilidad completa sobre comportamiento, datos, evolución y ciclo de vida, reduciendo dependencias operativas y permitiendo que equipos entreguen valor continuamente.
 
-Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar de forma independiente sin requerir coordinación sincronizada con otros servicios.
+**Este lineamiento aplica a:** servicios en microservicios, bounded contexts, componentes modulares con ciclos de vida independientes, equipos autónomos con responsabilidad end-to-end.
 
-## 2. Justificación
+## Estándares Obligatorios
 
-Este principio busca maximizar la capacidad de evolución independiente de servicios, permitiendo que equipos entreguen valor de forma continua sin coordinaciones complejas.
+- [Implementar ownership completo de datos por servicio](../../estandares/datos/database-per-service.md)
+- [Habilitar despliegue independiente sin coordinación](../../estandares/desarrollo/independent-deployment.md)
+- [Utilizar comunicación asíncrona cuando sea posible](../../estandares/mensajeria/async-messaging.md)
+- [Implementar modo degradado ante fallos de dependencias](../../estandares/arquitectura/resilience-patterns.md)
+- [Definir contratos de API versionados](../../estandares/apis/api-versioning.md)
 
-La autonomía permite que cada servicio asuma responsabilidad completa sobre su comportamiento, sus datos, su evolución y su ciclo de vida, reduciendo dependencias operativas y organizacionales.
+## Referencias Relacionadas
 
-Sin autonomía:
-
-- Los despliegues requieren coordinación entre múltiples equipos
-- Los cambios quedan bloqueados por dependencias externas
-- Los equipos no pueden iterar a su propio ritmo
-- La escalabilidad organizacional se ve limitada
-
-La autonomía no significa aislamiento total, sino capacidad de tomar decisiones y ejecutar cambios dentro del ámbito del servicio sin afectar a otros.
-
-## 3. Alcance y Contexto
-
-Aplica a:
-
-- Servicios en arquitecturas de microservicios
-- Bounded contexts en DDD
-- Componentes modulares con ciclos de vida independientes
-- Equipos autónomos con responsabilidad end-to-end
-
-La autonomía se evalúa en múltiples dimensiones: despliegue, datos, decisiones técnicas y gobierno.
-
-## 4. Implicaciones
-
-- Cada servicio debe tener ownership completo sobre sus datos (ver [Propiedad de Datos](../../datos/03-propiedad-de-datos.md)).
-- Los servicios deben poder desplegarse independientemente sin coordinar con otros.
-- Los equipos deben tener autoridad para tomar decisiones técnicas dentro de su ámbito.
-- La comunicación entre servicios debe ser asíncrona cuando sea posible.
-- Cada servicio debe ser capaz de operar en modo degradado si sus dependencias fallan.
-
-**Compensaciones (Trade-offs):**
-
-Puede generar duplicación controlada de capacidades y mayor complejidad de gobierno distribuido, a cambio de mayor velocidad de entrega, escalabilidad organizacional y resiliencia operativa.
+- [Propiedad de Datos](../../datos/03-propiedad-de-datos.md)
+- [Descomposición y Límites](02-descomposicion-y-limites.md)
+- [Modelado de Dominio](09-modelado-de-dominio.md)

@@ -8,47 +8,20 @@ tags: [lineamiento, seguridad, least-privilege, iam, rbac]
 
 # Mínimo Privilegio
 
-## Tipo de Lineamiento
+Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegios necesario para cumplir su función, y solo durante el tiempo requerido. Los privilegios excesivos amplifican el impacto de errores de configuración, fallos de software, credenciales comprometidas y accesos indebidos. Cuando los sistemas otorgan más permisos de los necesarios, un fallo localizado puede convertirse en incidente sistémico. El mínimo privilegio reduce el radio de impacto y facilita control, auditoría y corrección de incidentes.
 
-**Lineamiento de Seguridad** - Implementa el principio de [Seguridad desde el Diseño](../../principios/04-seguridad-desde-el-diseno.md)
+**Este lineamiento aplica a:** usuarios finales y operadores, servicios y componentes, integraciones internas y externas, acceso a datos, APIs, eventos y recursos de infraestructura.
 
-## 1. Declaración
+## Estándares Obligatorios
 
-Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegios necesario para cumplir su función, y solo durante el tiempo requerido.
+- [Definir permisos de forma explícita y granular](../../estandares/seguridad/authorization.md)
+- [Otorgar accesos por necesidad, no por conveniencia](../../estandares/seguridad/rbac.md)
+- [Implementar privilegios revisables, revocables y temporales](../../estandares/seguridad/access-review.md)
+- [Evitar componentes con acceso excesivo o transversal](../../estandares/arquitectura/bounded-contexts.md)
+- [Segregar capacidades críticas claramente](../../estandares/seguridad/segregation-of-duties.md)
 
-## 2. Justificación
+## Referencias Relacionadas
 
-Este principio busca reducir el impacto de errores, fallos de seguridad o usos indebidos, limitando el alcance de las acciones que cada actor puede realizar dentro del sistema.
-
-Los privilegios excesivos amplifican el impacto de cualquier incidente:
-
-- Errores de configuración
-- Fallos de software
-- Credenciales comprometidas
-- Accesos indebidos
-
-Cuando los sistemas otorgan más permisos de los necesarios, un fallo localizado puede convertirse en un incidente sistémico.
-El principio de mínimo privilegio reduce el radio de impacto y facilita el control, la auditoría y la corrección de incidentes.
-
-## 3. Alcance y Contexto
-
-Este principio aplica a:
-
-- Usuarios finales y operadores
-- Servicios, procesos y componentes
-- Integraciones internas y externas
-- Acceso a datos, APIs, eventos y recursos de infraestructura
-
-Incluye privilegios funcionales, operativos y de administración.
-
-## 4. Implicaciones
-
-- Los permisos deben definirse de forma explícita y granular.
-- Los accesos deben otorgarse por necesidad, no por conveniencia.
-- Los privilegios deben ser revisables, revocables y temporales cuando sea posible.
-- La arquitectura debe evitar componentes con acceso excesivo o transversal.
-- Las capacidades críticas deben estar claramente segregadas.
-
-**Compensaciones (Trade-offs):**
-
-Requiere mayor esfuerzo inicial de diseño, definición de roles y gestión de accesos, a cambio de una reducción significativa del riesgo, mayor control operativo y mejor trazabilidad de acciones.
+- [Seguridad desde el Diseño](../../principios/04-seguridad-desde-el-diseno.md)
+- [Zero Trust](02-zero-trust.md)
+- [Defensa en Profundidad](03-defensa-en-profundidad.md)

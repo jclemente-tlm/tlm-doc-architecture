@@ -7,44 +7,20 @@ description: Cada dominio es responsable exclusivo de sus datos sin compartir al
 
 # Propiedad de Datos
 
-## 1. Declaración
+Cada dominio de negocio es responsable exclusivo de sus propios datos: definición, calidad, integridad y evolución, sin compartir almacenamiento ni permitir acceso directo desde otros dominios. Cuando múltiples dominios acceden a una misma base de datos, se genera acoplamiento oculto, los cambios de esquema afectan múltiples servicios y se pierde claridad sobre responsabilidades. El ownership claro establece límites arquitectónicos fundamentales y habilita autonomía real mediante exposición de datos vía APIs o eventos.
 
-Cada dominio de negocio es responsable exclusivo de sus propios datos: su definición, calidad, integridad y evolución, sin compartir almacenamiento ni permitir acceso directo desde otros dominios.
+**Este lineamiento aplica a:** arquitecturas de microservicios, monolitos modulares con límites de dominio, sistemas distribuidos, plataformas multi-dominio.
 
-## 2. Justificación
+## Estándares Obligatorios
 
-Este principio busca garantizar autonomía de dominios, evitar acoplamiento implícito vía bases de datos compartidas y permitir evolución independiente de datos y esquemas.
+- [Asignar base de datos independiente por dominio/servicio](../../estandares/datos/database-per-service.md)
+- [Prohibir acceso directo a bases de datos de otros dominios](../../estandares/datos/no-shared-database.md)
+- [Exponer datos mediante APIs o eventos](../../estandares/datos/data-exposure.md)
+- [Documentar ownership de cada conjunto de datos](../../estandares/datos/data-catalog.md)
+- [Gestionar replicación controlada cuando sea necesaria](../../estandares/datos/data-replication.md)
 
-Cuando múltiples dominios acceden directamente a una misma base de datos:
+## Referencias Relacionadas
 
-- Se genera acoplamiento oculto difícil de detectar
-- Los cambios de esquema afectan a múltiples servicios
-- Se pierde claridad sobre quién es responsable de la calidad de datos
-- La evolución independiente se vuelve imposible
-
-El ownership claro de datos establece límites arquitectónicos fundamentales y habilita autonomía real de dominios.
-
-Cada dominio debe ser dueño de sus datos, no compartirlos directamente, y exponer información mediante APIs o eventos.
-
-## 3. Alcance y Contexto
-
-Aplica a:
-
-- Arquitecturas de microservicios
-- Monolitos modulares con límites de dominio
-- Sistemas distribuidos
-- Plataformas multi-dominio
-
-No implica duplicación descontrolada de datos, sino ownership claro y acceso mediante interfaces definidas.
-
-## 4. Implicaciones
-
-- Cada dominio/servicio tiene su propia base de datos.
-- No se permite acceso directo a bases de datos de otros dominios.
-- Los datos se exponen mediante APIs, eventos o mecanismos de replicación controlada.
-- El ownership de cada conjunto de datos debe estar documentado.
-- Los cambios de esquema son responsabilidad exclusiva del dominio dueño.
-
-**Compensaciones (Trade-offs):**
-
-Puede generar duplicación controlada de datos, a cambio de mayor autonomía, claridad semántica y capacidad de evolución.
+- [Datos por Dominio](01-datos-por-dominio.md)
+- [Autonomía de Servicios](../arquitectura/10-autonomia-de-servicios.md)
+- [Modelado de Dominio](../arquitectura/09-modelado-de-dominio.md)
