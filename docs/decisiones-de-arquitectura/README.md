@@ -16,7 +16,6 @@ Cada ADR sigue la estructura:
 - **Estado**: Propuesta, Aceptada, Obsoleta, Supersedida
 - **Contexto**: Situación que motiva la decisión y alternativas evaluadas
 - **Comparativa**: Matriz de criterios con pesos y puntuaciones
-- **Análisis de Costos**: TCO y consideraciones económicas
 - **Decisión**: La decisión tomada con justificación
 - **Consecuencias**: Resultados positivos, negativos y neutros
 - **Referencias**: Enlaces y documentación relevante
@@ -50,12 +49,11 @@ Cada ADR sigue la estructura:
 
 ### ✅ ADRs CONSOLIDADOS/ELIMINADOS
 
-| ADR     | Título                      | Estado       | Acción Completada                                                            |
-| ------- | --------------------------- | ------------ | ---------------------------------------------------------------------------- |
-| ADR-002 | REST + OpenAPI Standard     | ❌ Eliminada | Estándar universal de industria. Ver `estandares/apis/01-diseno-rest.md`     |
-| ADR-015 | Kafka DLT Manejo Errores    | ❌ Eliminada | Patrón estándar de mensajería. Documentado en estándar de Kafka              |
-| ADR-017 | Path Versioning APIs        | ❌ Eliminada | Best practice estándar. Ver `estandares/apis/04-versionado.md`               |
-| ADR-018 | Arquitectura Microservicios | ❌ Eliminada | Patrón genérico dependiente del contexto del proyecto. Ver `lineamientos.md` |
+| ADR     | Título                  | Estado       | Acción Completada                                      |
+| ------- | ----------------------- | ------------ | ------------------------------------------------------ |
+| ADR-XXX | Ejemplo ADR consolidado | ❌ Eliminada | Razón de eliminación y referencia a documentación alt. |
+
+> Esta tabla registrará ADRs que sean consolidados, supersedidos o eliminados en el futuro por no requerir decisión arquitectónica formal.
 
 ## Principios de Decisión
 
@@ -82,6 +80,5 @@ Cada ADR sigue la estructura:
 - **Total ADRs activos**: 14 globales
 - **ADRs Aceptados**: 14
 - **ADRs en Propuesta**: 0
-- **ADRs eliminados** (estándares de industria / patrones genéricos): 4
 - **Cobertura de decisiones críticas**: 100%
 - **Última actualización**: Febrero 2026
