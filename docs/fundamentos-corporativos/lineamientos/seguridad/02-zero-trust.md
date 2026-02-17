@@ -21,7 +21,7 @@ Ningún componente, usuario o sistema es confiable por defecto; toda interacció
 
 ## Referencias Relacionadas
 
-- [Seguridad desde el Diseño](01-seguridad-desde-el-diseno.md)
+- [Arquitectura Segura](01-arquitectura-segura.md)
 - [Defensa en Profundidad](03-defensa-en-profundidad.md)
 - [Mínimo Privilegio](04-minimo-privilegio.md)
 - [Segmentación y Aislamiento](06-segmentacion-y-aislamiento.md)

@@ -34,11 +34,12 @@ Este principio busca integrar la seguridad como propiedad estructural del sistem
 
 **Lineamientos relacionados:**
 
-- [Zero Trust](../../lineamientos/seguridad/06-zero-trust.md)
-- [Defensa en Profundidad](../../lineamientos/seguridad/07-defensa-en-profundidad.md)
-- [Mínimo Privilegio](../../lineamientos/seguridad/08-minimo-privilegio.md)
-- [Identidad y Accesos](../../lineamientos/seguridad/02-identidad-y-accesos.md)
-- [Protección de Datos](../../lineamientos/seguridad/04-proteccion-de-datos.md)
+- [Arquitectura Segura](../../lineamientos/seguridad/01-arquitectura-segura.md)
+- [Zero Trust](../../lineamientos/seguridad/02-zero-trust.md)
+- [Defensa en Profundidad](../../lineamientos/seguridad/03-defensa-en-profundidad.md)
+- [Mínimo Privilegio](../../lineamientos/seguridad/04-minimo-privilegio.md)
+- [Identidad y Accesos](../../lineamientos/seguridad/05-identidad-y-accesos.md)
+- [Protección de Datos](../../lineamientos/seguridad/07-proteccion-de-datos.md)
 
 **ADRs relacionados:**
 
