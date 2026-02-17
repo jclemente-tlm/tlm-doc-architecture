@@ -34,24 +34,25 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | AWS S3                           | Digital Ocean Spaces     | Azure Blob Storage      | Google Cloud Storage   | MinIO                   |
-| ------------------------- | -------------------------------- | ------------------------ | ----------------------- | ---------------------- | ----------------------- |
-| **Agnosticidad**          | ⚠️ Lock-in AWS (API S3 estándar) | ✅ S3-compatible         | ⚠️ Lock-in Azure        | ⚠️ Lock-in GCP         | ✅ OSS, multi-cloud     |
-| **Madurez/Ecosistema**    | ✅ Estándar de facto (2006)      | ⚠️ Limitado              | ✅ Enterprise maduro    | ✅ Enterprise maduro   | ✅ CNCF, muy activo     |
-| **Modelo de gestión**     | ✅ Gestionado (AWS)              | ✅ Gestionado (SaaS)     | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)    | ⚠️ Self-hosted          |
-| **Complejidad operativa** | ✅ Baja (infra AWS)              | ⚠️ Media (vendor nuevo)  | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)   | ⚠️ Media (setup)        |
-| **Seguridad**             | ✅ Enterprise grade              | ✅ Encriptación, CDN     | ✅ Enterprise grade     | ✅ Enterprise grade    | ✅ IAM, encriptación    |
-| **Integración .NET**      | ✅ AWS SDK oficial               | ✅ AWS SDK compatible    | ✅ Azure SDK oficial    | ✅ Google SDK oficial  | ✅ AWS SDK compatible   |
-| **Multi-tenancy**         | ✅ Buckets + IAM políticas       | ⚠️ Spaces + CORS         | ✅ Containers + RBAC    | ✅ Buckets + IAM       | ✅ Buckets + policies   |
-| **Escalabilidad**         | ✅ Ilimitada probada             | ⚠️ Limitada enterprise   | ✅ Ilimitada            | ✅ Ilimitada           | ✅ Horizontal           |
-| **Performance**           | ✅ Multi-AZ + CloudFront         | ✅ CDN integrado         | ✅ Geo-replicación      | ✅ Multi-regional      | ⚠️ Depende config       |
-| **Alta disponibilidad**   | ✅ 99.99% SLA (Multi-AZ)         | ✅ 99.95% SLA            | ✅ Geo-redundante       | ✅ Multi-regional      | ⚠️ Manual (HA setup)    |
-| **Integración AWS**       | ✅ Nativa (ECS, IAM, VPC)        | ❌ Externa               | ❌ Externa              | ❌ Externa             | ❌ Externa              |
-| **API S3**                | ✅ 100% nativa                   | ✅ 100% compatible       | ⚠️ Parcial              | ⚠️ Parcial             | ✅ 100% compatible      |
-| **Versionado**            | ✅ Nativo (inmutable)            | ⚠️ Limitado              | ✅ Nativo               | ✅ Nativo              | ✅ Nativo               |
-| **Features avanzados**    | ✅ Lifecycle, Classes, Replica   | ❌ Muy limitados         | ✅ Completos            | ✅ Completos           | ⚠️ Básicos              |
-| **Certificaciones**       | ✅ SOC2, HIPAA, PCI-DSS, ISO     | ⚠️ SOC2                  | ✅ Completo             | ✅ Completo            | ❌ Self-managed         |
-| **Costos**                | ⚠️ Moderado (US$23/TB + egress)  | ✅ Flat (US$5/mes 250GB) | ⚠️ Moderado pago x uso  | ⚠️ Moderado pago x uso | ✅ Solo infraestructura |
+| Criterio                  | AWS S3                                               | Digital Ocean Spaces                         | Azure Blob Storage                             | Google Cloud Storage                          | MinIO                                  |
+| ------------------------- | ---------------------------------------------------- | -------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | -------------------------------------- |
+| **Agnosticidad**          | ⚠️ Lock-in AWS (API S3 estándar)                     | ✅ S3-compatible                             | ⚠️ Lock-in Azure                               | ⚠️ Lock-in GCP                                | ✅ OSS, multi-cloud                    |
+| **Madurez**               | ✅ Muy alta (2006, AWS pioneer)                      | ⚠️ Media (2017, CDN-focused)                 | ✅ Muy alta (2010, Azure Storage)              | ✅ Muy alta (2010, GCP storage)               | ✅ Alta (2015, CNCF)                   |
+| **Adopción**              | ✅ Muy alta (estándar de facto)                      | ⚠️ Limitada (CDN niche)                      | ✅ Muy alta (Azure enterprise)                 | ✅ Muy alta (GCP enterprise)                  | ✅ Alta (47K⭐, cloud-native)          |
+| **Modelo de gestión**     | ✅ Gestionado (AWS)                                  | ✅ Gestionado (SaaS)                         | ✅ Gestionado (Azure)                          | ✅ Gestionado (GCP)                           | ⚠️ Self-hosted                         |
+| **Complejidad operativa** | ✅ Baja (0.25 FTE, <5h/sem)                          | ⚠️ Media (0.5 FTE, 5-10h/sem)                | ⚠️ Media (0.5 FTE, 5-10h/sem)                  | ⚠️ Alta (1 FTE, 10-20h/sem)                   | ⚠️ Alta (1 FTE, 10-20h/sem)            |
+| **Seguridad**             | ✅ Enterprise grade                                  | ✅ Encriptación, CDN                         | ✅ Enterprise grade                            | ✅ Enterprise grade                           | ✅ IAM, encriptación                   |
+| **Integración .NET**      | ✅ AWSSDK.S3 (15M+ DL/mes, .NET 6+, async)           | ✅ AWSSDK.S3 compatible (S3 API)             | ✅ Azure.Storage.Blobs (10M+ DL/mes, .NET 6+)  | ✅ Google.Cloud.Storage (3M+ DL/mes, .NET 6+) | ✅ Minio (500K+ DL/mes, S3 compatible) |
+| **Multi-tenancy**         | ✅ Buckets + IAM políticas                           | ⚠️ Spaces + CORS                             | ✅ Containers + RBAC                           | ✅ Buckets + IAM                              | ✅ Buckets + policies                  |
+| **Escalabilidad**         | ✅ Hasta exabyte-scale, 100T+ objetos (AWS)          | ⚠️ Hasta 250TB máx (límites empresa)         | ✅ Hasta petabyte-scale (Microsoft enterprise) | ✅ Hasta exabyte-scale (Google Cloud)         | ✅ Hasta multi-PB (MinIO production)   |
+| **Rendimiento**           | ✅ <100ms p50, CDN global                            | ✅ CDN integrado                             | ✅ <100ms Geo-replicación                      | ✅ <100ms Multi-regional                      | ⚠️ Depende config                      |
+| **Alta disponibilidad**   | ✅ 99.99% SLA Multi-AZ                               | ✅ 99.95% SLA                                | ✅ 99.9% SLA Geo-redundante                    | ✅ 99.95% SLA Multi-regional                  | ⚠️ Sin SLA (manual HA)                 |
+| **Integración AWS**       | ✅ Nativa (ECS, IAM, VPC)                            | ❌ Externa                                   | ❌ Externa                                     | ❌ Externa                                    | ❌ Externa                             |
+| **API S3**                | ✅ 100% nativa                                       | ✅ 100% compatible                           | ⚠️ Parcial                                     | ⚠️ Parcial                                    | ✅ 100% compatible                     |
+| **Versionado**            | ✅ Nativo (inmutable)                                | ⚠️ Limitado                                  | ✅ Nativo                                      | ✅ Nativo                                     | ✅ Nativo                              |
+| **Features avanzados**    | ✅ Lifecycle, Classes, Replica                       | ❌ Muy limitados                             | ✅ Completos                                   | ✅ Completos                                  | ⚠️ Básicos                             |
+| **Certificaciones**       | ✅ SOC2, HIPAA, PCI-DSS, ISO                         | ⚠️ SOC2                                      | ✅ Completo                                    | ✅ Completo                                   | ❌ Self-managed                        |
+| **Costos**                | ⚠️ $0.023/GB storage + $0.09/GB egress (~$25-50/mes) | ✅ $0.005/GB + $0.01/GB egress (~$6/mes 1TB) | ⚠️ $0.018/GB + $0.087/GB egress (~$20-45/mes)  | ⚠️ $0.020/GB + $0.12/GB egress (~$25-55/mes)  | ✅ $0 licencia + ~$200-400/mes infra   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

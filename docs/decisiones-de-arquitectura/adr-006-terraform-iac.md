@@ -35,18 +35,19 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | Terraform             | Pulumi                | Ansible               | AWS CloudFormation  | Azure Bicep           |
-| ------------------------- | --------------------- | --------------------- | --------------------- | ------------------- | --------------------- |
-| **Agnosticidad**          | ✅ Multi-cloud        | ✅ Multi-cloud        | ✅ Multi-cloud        | ❌ Lock-in AWS      | ❌ Lock-in Azure      |
-| **Modelo de gestión**     | ⚠️ Herramienta CLI    | ⚠️ Herramienta CLI    | ⚠️ Herramienta CLI    | ✅ Gestionado (AWS) | ✅ Gestionado (Azure) |
-| **Complejidad operativa** | ✅ Baja (declarativo) | ⚠️ Media (imperativo) | ⚠️ Media (mixto)      | ✅ Baja (AWS)       | ✅ Baja (Azure)       |
-| **Seguridad**             | ✅ Enterprise grade   | ✅ Enterprise grade   | ✅ SSH/Enterprise     | ✅ AWS IAM          | ✅ Azure RBAC         |
-| **Gestión de estado**     | ✅ Robusto y seguro   | ✅ Estado backend     | ❌ No state file      | ✅ S3 backend       | ✅ Azure backend      |
-| **Multi-entorno**         | ✅ Workspaces nativos | ✅ Stacks nativos     | ⚠️ Inventarios        | ✅ Parameters       | ✅ Parameters         |
-| **Versionado**            | ✅ Automática         | ✅ Automática         | ✅ Git-based          | ✅ Nativo           | ✅ Nativo             |
-| **Módulos**               | ✅ Reutilizables      | ✅ Reutilizables      | ✅ Roles/Collections  | ⚠️ Solo AWS         | ⚠️ Solo Azure         |
-| **Comunidad**             | ✅ Muy activa (42K⭐) | ✅ Activa (21K⭐)     | ✅ Muy activa (62K⭐) | ✅ Soporte AWS      | ✅ Soporte Azure      |
-| **Costos**                | ⚠️ Por uso            | ⚠️ Por uso            | ✅ Gratis OSS         | ✅ Incluido         | ✅ Incluido           |
+| Criterio                  | Terraform                                        | Pulumi                                      | Ansible                            | AWS CloudFormation          | Azure Bicep                    |
+| ------------------------- | ------------------------------------------------ | ------------------------------------------- | ---------------------------------- | --------------------------- | ------------------------------ |
+| **Agnosticidad**          | ✅ Multi-cloud                                   | ✅ Multi-cloud                              | ✅ Multi-cloud                     | ❌ Lock-in AWS              | ❌ Lock-in Azure               |
+| **Madurez**               | ✅ Muy alta (2014, líder IaC)                    | ⚠️ Media (2018, creciente)                  | ✅ Muy alta (2012, automation std) | ✅ Alta (2011, AWS native)  | ⚠️ Media (2020, ARM evolution) |
+| **Adopción**              | ✅ Muy alta (42K⭐, 1K+ providers)               | ⚠️ Media (21K⭐, expanding)                 | ✅ Muy alta (62K⭐, DevOps std)    | ✅ Alta (AWS standard)      | ⚠️ Media (Azure adoption)      |
+| **Modelo de gestión**     | ⚠️ Herramienta CLI                               | ⚠️ Herramienta CLI                          | ⚠️ Herramienta CLI                 | ✅ Gestionado (AWS)         | ✅ Gestionado (Azure)          |
+| **Complejidad operativa** | ⚠️ Media (0.5 FTE, 5-10h/sem)                    | ⚠️ Alta (1 FTE, 10-20h/sem)                 | ⚠️ Alta (1 FTE, 10-20h/sem)        | ✅ Baja (0.25 FTE, <5h/sem) | ✅ Baja (0.25 FTE, <5h/sem)    |
+| **Seguridad**             | ✅ Enterprise grade                              | ✅ Enterprise grade                         | ✅ SSH/Enterprise                  | ✅ AWS IAM                  | ✅ Azure RBAC                  |
+| **Gestión de estado**     | ✅ Robusto y seguro                              | ✅ Estado backend                           | ❌ No state file                   | ✅ S3 backend               | ✅ Azure backend               |
+| **Multi-entorno**         | ✅ Workspaces nativos                            | ✅ Stacks nativos                           | ⚠️ Inventarios                     | ✅ Parameters               | ✅ Parameters                  |
+| **Versionado**            | ✅ Automática                                    | ✅ Automática                               | ✅ Git-based                       | ✅ Nativo                   | ✅ Nativo                      |
+| **Módulos**               | ✅ Reutilizables                                 | ✅ Reutilizables                            | ✅ Roles/Collections               | ⚠️ Solo AWS                 | ⚠️ Solo Azure                  |
+| **Costos**                | ✅ Gratis OSS + $20/usuario/mes (Cloud opcional) | ⚠️ $1/crédito + planes desde $20/mes (SaaS) | ✅ $0 licencia                     | ✅ Incluido en AWS          | ✅ Incluido en Azure           |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

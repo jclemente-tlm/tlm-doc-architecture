@@ -34,17 +34,18 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | GitHub Actions         | Jenkins                 | Azure DevOps            | AWS CodePipeline    | CircleCI               |
-| ------------------------- | ---------------------- | ----------------------- | ----------------------- | ------------------- | ---------------------- |
-| **Agnosticidad**          | ⚠️ Vinculado a GitHub  | ✅ Totalmente agnóstico | ⚠️ Ecosistema Microsoft | ❌ Lock-in AWS      | ⚠️ Agnóstico           |
-| **Modelo de gestión**     | ✅ Gestionado (GitHub) | ⚠️ Self-hosted          | ✅ Gestionado (Azure)   | ✅ Gestionado (AWS) | ✅ Gestionado (SaaS)   |
-| **Complejidad operativa** | ✅ Baja (GitHub)       | ❌ Alta (setup manual)  | ⚠️ Media (vendor nuevo) | ✅ Baja (infra AWS) | ✅ Baja (simplificado) |
-| **Seguridad**             | ✅ Integrada           | ⚠️ Limitada             | ✅ Integrada            | ✅ Integrada        | ✅ Integrada           |
-| **Integración .NET**      | ✅ Excelente           | ✅ Bueno                | ✅ Nativo               | ✅ Bueno            | ✅ Bueno               |
-| **Multi-tenancy**         | ✅ Por repos/org       | ✅ Flexible config      | ✅ Projects/Teams       | ⚠️ Por accounts     | ⚠️ Por contexts        |
-| **Extensibilidad**        | ✅ 20K+ actions        | ✅ 1.8K+ plugins        | ⚠️ Extensions básicas   | ⚠️ Integraciones    | ⚠️ Orbs                |
-| **Comunidad**             | ✅ Muy activa          | ✅ Muy activa (65K⭐)   | ✅ Soporte Microsoft    | ✅ Soporte AWS      | ✅ SaaS líder          |
-| **Costos**                | ✅ Plan gratuito       | ⚠️ Infraestructura      | ✅ Plan gratuito        | ⚠️ Por uso          | ⚠️ Por uso             |
+| Criterio                  | GitHub Actions                                | Jenkins                                | Azure DevOps                                 | AWS CodePipeline                       | CircleCI                           |
+| ------------------------- | --------------------------------------------- | -------------------------------------- | -------------------------------------------- | -------------------------------------- | ---------------------------------- |
+| **Agnosticidad**          | ⚠️ Vinculado a GitHub                         | ✅ Totalmente agnóstico                | ⚠️ Ecosistema Microsoft                      | ❌ Lock-in AWS                         | ⚠️ Agnóstico                       |
+| **Madurez**               | ✅ Alta (2019, GitHub native)                 | ✅ Muy alta (2011, automation std)     | ✅ Alta (2018, Microsoft suite)              | ⚠️ Media (2015, AWS ecosystem)         | ✅ Alta (2011, SaaS maduro)        |
+| **Adopción**              | ✅ Alta (20K+ actions Marketplace)            | ✅ Muy alta (23K⭐, legacy std)        | ✅ Alta (Microsoft DevOps)                   | ⚠️ Media (AWS adoption)                | ✅ Alta (SaaS líder)               |
+| **Modelo de gestión**     | ✅ Gestionado (GitHub)                        | ⚠️ Self-hosted                         | ✅ Gestionado (Azure)                        | ✅ Gestionado (AWS)                    | ✅ Gestionado (SaaS)               |
+| **Complejidad operativa** | ✅ Baja (0.25 FTE, <5h/sem)                   | ❌ Muy Alta (2+ FTE, 20-40h/sem)       | ⚠️ Media (0.5 FTE, 5-10h/sem)                | ✅ Baja (0.25 FTE, <5h/sem)            | ✅ Baja (0.25 FTE, <5h/sem)        |
+| **Seguridad**             | ✅ Integrada                                  | ⚠️ Limitada                            | ✅ Integrada                                 | ✅ Integrada                           | ✅ Integrada                       |
+| **Multi-tenancy**         | ✅ Por repos/org                              | ✅ Flexible config                     | ✅ Projects/Teams                            | ⚠️ Por accounts                        | ⚠️ Por contexts                    |
+| **Escalabilidad**         | ✅ Hasta 10K+ workflows concurrentes (GitHub) | ⚠️ Limitada por infra (<100 executors) | ✅ Hasta 1K+ agents paralelos (Azure DevOps) | ✅ Hasta 1K+ pipelines (AWS CodeBuild) | ✅ Hasta 1K+ containers (CircleCI) |
+| **Extensibilidad**        | ✅ 20K+ actions                               | ✅ 1.8K+ plugins                       | ⚠️ Extensions básicas                        | ⚠️ Integraciones                       | ⚠️ Orbs                            |
+| **Costos**                | ✅ Gratis (2K min/mes) + $0.008/min exceso    | ⚠️ $0 licencia + ~$200-500/mes infra   | ✅ Gratis (1.8K min/mes) + $40/usuario/mes   | ⚠️ $1/pipeline/mes + variables         | ⚠️ $15-60/usuario/mes (según plan) |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

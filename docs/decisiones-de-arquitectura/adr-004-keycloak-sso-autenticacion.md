@@ -32,22 +32,23 @@ Las alternativas evaluadas fueron:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | Keycloak                    | Auth0                  | AWS Cognito           | Azure AD B2C            | Google Identity Platform |
-| ------------------------- | --------------------------- | ---------------------- | --------------------- | ----------------------- | ------------------------ |
-| **Agnosticidad**          | ✅ OSS, portátil            | ⚠️ SaaS independiente  | ❌ Lock-in AWS        | ❌ Lock-in Azure        | ❌ Lock-in GCP           |
-| **Modelo de gestión**     | ⚠️ Self-hosted              | ✅ Gestionado (SaaS)   | ✅ Gestionado (AWS)   | ✅ Gestionado (Azure)   | ✅ Gestionado (GCP)      |
-| **Complejidad operativa** | ⚠️ Media (OSS maduro)       | ✅ Baja (simplificado) | ✅ Baja (infra AWS)   | ⚠️ Media (vendor nuevo) | ❌ Alta (vendor GCP)     |
-| **Seguridad**             | ✅ Enterprise grade         | ✅ Enterprise grade    | ✅ Enterprise grade   | ✅ Enterprise grade     | ✅ Enterprise grade      |
-| **Integración .NET**      | ✅ SDK completo             | ✅ SDK oficial         | ✅ AWS SDK            | ✅ Azure SDK            | ⚠️ SDK limitado          |
-| **Multi-tenancy**         | ✅ Nativo y flexible        | ✅ Excelente soporte   | ⚠️ Básico             | ✅ Muy bueno            | ⚠️ Básico                |
-| **Escalabilidad**         | ✅ Horizontal clustering    | ✅ Auto-scaling SaaS   | ✅ Gestionada         | ✅ Gestionada           | ✅ Gestionada            |
-| **Performance**           | ✅ Óptima (local cache)     | ✅ Muy buena           | ✅ Buena (<100ms)     | ✅ Buena                | ⚠️ Latencia variable     |
-| **Alta disponibilidad**   | ✅ Clustering + DB HA       | ✅ 99.99% SLA          | ✅ Multi-AZ           | ✅ 99.99% SLA           | ✅ Multi-regional        |
-| **Protocolos**            | ✅ Todos los estándares     | ✅ Completo            | ⚠️ Limitado           | ✅ Completo             | ⚠️ Limitado              |
-| **Federación**            | ✅ SAML, OIDC, LDAP         | ✅ Social + Enterprise | ⚠️ Limitada           | ✅ AD completo          | ⚠️ Limitada              |
-| **Personalización**       | ✅ Altamente personalizable | ⚠️ Limitada            | ⚠️ Muy limitada       | ⚠️ Limitada             | ⚠️ Muy limitada          |
-| **Comunidad**             | ✅ Muy activa (21K⭐)       | ✅ Enterprise          | ✅ Soporte AWS        | ✅ Soporte Microsoft    | ✅ Soporte Google        |
-| **Costos**                | ✅ Solo infraestructura     | ⚠️ Por usuario activo  | ⚠️ Por usuario activo | ⚠️ Por usuario activo   | ⚠️ Por usuario activo    |
+| Criterio                  | Keycloak                                            | Auth0                                           | AWS Cognito                                     | Azure AD B2C                                | Google Identity Platform                    |
+| ------------------------- | --------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
+| **Agnosticidad**          | ✅ OSS, portátil                                    | ⚠️ SaaS independiente                           | ❌ Lock-in AWS                                  | ❌ Lock-in Azure                            | ❌ Lock-in GCP                              |
+| **Madurez**               | ✅ Muy alta (2014, producción estable)              | ✅ Muy alta (líder SaaS)                        | ✅ Alta (2016, AWS ecosystem)                   | ✅ Muy alta (Microsoft AD legacy)           | ⚠️ Media (2017, Firebase integration)       |
+| **Adopción**              | ✅ Muy alta (21K⭐, Red Hat cases)                  | ✅ Muy alta (15K+ empresas)                     | ✅ Alta (AWS adoption)                          | ✅ Muy alta (Microsoft enterprise)          | ⚠️ Media (Firebase focus)                   |
+| **Modelo de gestión**     | ⚠️ Self-hosted                                      | ✅ Gestionado (SaaS)                            | ✅ Gestionado (AWS)                             | ✅ Gestionado (Azure)                       | ✅ Gestionado (GCP)                         |
+| **Complejidad operativa** | ⚠️ Alta (1 FTE, 10-20h/sem)                         | ✅ Baja (0.25 FTE, <5h/sem)                     | ✅ Baja (0.25 FTE, <5h/sem)                     | ⚠️ Media (0.5 FTE, 5-10h/sem)               | ⚠️ Alta (1 FTE, 10-20h/sem)                 |
+| **Seguridad**             | ✅ Enterprise grade                                 | ✅ Enterprise grade                             | ✅ Enterprise grade                             | ✅ Enterprise grade                         | ✅ Enterprise grade                         |
+| **Integración .NET**      | ✅ Keycloak.AuthServices.\* (100K+ DL/mes, .NET 6+) | ✅ Auth0.AspNetCore.Authentication (2M+ DL/mes) | ✅ AWSSDK.CognitoIdentityProvider (10M+ DL/mes) | ✅ Azure.Identity + MSAL (10M+ DL/mes cada) | ⚠️ Google.Cloud.IdentityPlatform (limitado) |
+| **Multi-tenancy**         | ✅ Nativo y flexible                                | ✅ Excelente soporte                            | ⚠️ Básico                                       | ✅ Muy bueno                                | ⚠️ Básico                                   |
+| **Escalabilidad**         | ✅ Hasta 100K+ usuarios concurrentes (Red Hat)      | ✅ Millones usuarios máx (SaaS global)          | ✅ Hasta 100M+ usuarios (Amazon scale)          | ✅ Millones usuarios máx (Microsoft)        | ✅ Hasta 100M+ usuarios (Google scale)      |
+| **Rendimiento**           | ✅ <50ms p95 (local cache)                          | ✅ <100ms p95                                   | ✅ <100ms p95                                   | ✅ <150ms p95                               | ⚠️ 100-300ms variable                       |
+| **Alta disponibilidad**   | ✅ 99.9% estimado (clustering multi-nodo)           | ✅ 99.99% SLA                                   | ✅ 99.99% SLA Multi-AZ                          | ✅ 99.99% SLA                               | ✅ 99.9% SLA Multi-region                   |
+| **Protocolos**            | ✅ Todos los estándares                             | ✅ Completo                                     | ⚠️ Limitado                                     | ✅ Completo                                 | ⚠️ Limitado                                 |
+| **Federación**            | ✅ SAML, OIDC, LDAP                                 | ✅ Social + Enterprise                          | ⚠️ Limitada                                     | ✅ AD completo                              | ⚠️ Limitada                                 |
+| **Personalización**       | ✅ Altamente personalizable                         | ⚠️ Limitada                                     | ⚠️ Muy limitada                                 | ⚠️ Limitada                                 | ⚠️ Muy limitada                             |
+| **Costos**                | ✅ $0 licencia + ~$150-300/mes infra                | ❌ $23-240/mes + por usuario                    | ✅ Gratis (50K MAU/mes) + $0.0055/MAU           | ✅ Gratis (50K MAU/mes) + $0.00325/MAU      | ✅ Gratis (50K MAU/mes) + $0.00275/MAU      |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

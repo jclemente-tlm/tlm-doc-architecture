@@ -34,19 +34,21 @@ Alternativas evaluadas:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | GitHub Container Registry           | Amazon ECR            | Azure Container Registry   | Docker Hub           | Harbor (Self-hosted)    |
-| ------------------------- | ----------------------------------- | --------------------- | -------------------------- | -------------------- | ----------------------- |
-| **Agnosticidad**          | ✅ Multi-cloud                      | ❌ Lock-in AWS        | ❌ Lock-in Azure           | ✅ Agnóstico         | ✅ OSS, agnóstico       |
-| **Modelo de gestión**     | ✅ Gestionado (GitHub)              | ✅ Gestionado (AWS)   | ✅ Gestionado (Azure)      | ✅ Gestionado (SaaS) | ⚠️ Self-hosted          |
-| **Complejidad operativa** | ✅ Baja (GitHub)                    | ✅ Baja (infra AWS)   | ⚠️ Media (vendor nuevo)    | ⚠️ Media (externo)   | ⚠️ Media (setup)        |
-| **Seguridad**             | ✅ GitHub Advanced Security         | ✅ ECR Image Scanning | ✅ Defender for Containers | ⚠️ Básico            | ✅ Trivy integrado      |
-| **Integración CI/CD**     | ✅ Nativa GitHub Actions            | ✅ AWS SDK            | ⚠️ Azure DevOps            | ⚠️ Manual            | ⚠️ Manual               |
-| **Performance**           | ✅ CDN global                       | ✅ VPC Endpoints      | ✅ Muy bueno               | ⚠️ Rate limits       | ⚠️ Depende infra        |
-| **Alta disponibilidad**   | ✅ Global, gestionado               | ✅ Multi-AZ           | ✅ Geo-replicación         | ✅ Gestionado        | ⚠️ Manual               |
-| **Autenticación**         | ✅ GitHub tokens (PAT, OIDC)        | ✅ IAM roles          | ✅ Azure AD                | ⚠️ Docker login      | ⚠️ Usuarios locales     |
-| **Versionado/Tags**       | ✅ Semántico + SHA + tags           | ✅ Tags + lifecycles  | ✅ Tags + policies         | ✅ Tags manual       | ✅ Tags + retention     |
-| **Comunidad**             | ✅ GitHub nativo                    | ✅ Soporte AWS        | ✅ Soporte Microsoft       | ⚠️ Docker Hub focus  | ✅ CNCF (26K⭐)         |
-| **Costos**                | ✅ Gratis (públicos), bajo privados | ⚠️ US$0.10/GB storage | ⚠️ US$5/mes + storage      | ❌ US$7/mes por repo | ✅ Solo infraestructura |
+| Criterio                  | GitHub Container Registry                         | Amazon ECR                                      | Azure Container Registry                  | Docker Hub                          | Harbor (Self-hosted)                 |
+| ------------------------- | ------------------------------------------------- | ----------------------------------------------- | ----------------------------------------- | ----------------------------------- | ------------------------------------ |
+| **Agnosticidad**          | ✅ Multi-cloud                                    | ❌ Lock-in AWS                                  | ❌ Lock-in Azure                          | ✅ Agnóstico                        | ✅ OSS, agnóstico                    |
+| **Madurez**               | ✅ Alta (2020, GitHub native)                     | ✅ Muy alta (2015, AWS standard)                | ✅ Alta (2017, Azure native)              | ✅ Muy alta (2013, pionero público) | ✅ Alta (2014, CNCF graduated)       |
+| **Adopción**              | ✅ Alta (20K+ actions, integrado)                 | ✅ Muy alta (AWS container std)                 | ✅ Alta (Azure ecosystem)                 | ✅ Masiva (8M+ repos públicos)      | ✅ Alta (23K⭐, enterprise cases)    |
+| **Modelo de gestión**     | ✅ Gestionado (GitHub)                            | ✅ Gestionado (AWS)                             | ✅ Gestionado (Azure)                     | ✅ Gestionado (SaaS)                | ⚠️ Self-hosted                       |
+| **Complejidad operativa** | ✅ Baja (0.25 FTE, <5h/sem)                       | ✅ Baja (0.25 FTE, <5h/sem)                     | ⚠️ Media (0.5 FTE, 5-10h/sem)             | ⚠️ Media (0.5 FTE, 5-10h/sem)       | ⚠️ Alta (1 FTE, 10-20h/sem)          |
+| **Seguridad**             | ✅ GitHub Advanced Security                       | ✅ ECR Image Scanning                           | ✅ Defender for Containers                | ⚠️ Básico                           | ✅ Trivy integrado                   |
+| **Integración CI/CD**     | ✅ Nativa GitHub Actions                          | ✅ AWS SDK                                      | ⚠️ Azure DevOps                           | ⚠️ Manual                           | ⚠️ Manual                            |
+| **Rendimiento**           | ✅ <50ms CDN global                               | ✅ <20ms VPC Endpoints                          | ✅ <100ms                                 | ⚠️ Rate limits (200/min)            | ⚠️ Depende infra                     |
+| **Escalabilidad**         | ✅ Hasta 100K+ imágenes, TB+ storage (GitHub)     | ✅ Hasta 1M+ imágenes, PB-scale (AWS container) | ✅ Hasta 100K+ imágenes (Azure ACR)       | ✅ Hasta 10M+ imágenes (Docker Hub) | ✅ Hasta multi-PB storage (Harbor)   |
+| **Alta disponibilidad**   | ✅ 99.95% SLA Global                              | ✅ 99.99% SLA Multi-AZ                          | ✅ 99.9% SLA Geo-replicación              | ✅ 99.9% SLA                        | ⚠️ Sin SLA (manual)                  |
+| **Autenticación**         | ✅ GitHub tokens (PAT, OIDC)                      | ✅ IAM roles                                    | ✅ Azure AD                               | ⚠️ Docker login                     | ⚠️ Usuarios locales                  |
+| **Versionado/Tags**       | ✅ Semántico + SHA + tags                         | ✅ Tags + lifecycles                            | ✅ Tags + policies                        | ✅ Tags manual                      | ✅ Tags + retention                  |
+| **Costos**                | ✅ Gratis (repos públicos) + $0.25/GB/mes privado | ⚠️ $0.10/GB/mes storage + egress (~$10-30/mes)  | ⚠️ $5/mes Basic + $0.167/GB (~$10-25/mes) | ❌ $5-7/mes por repo                | ✅ $0 licencia + ~$100-200/mes infra |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
