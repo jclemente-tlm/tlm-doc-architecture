@@ -39,13 +39,13 @@ Alternativas evaluadas:
 | ------------------------- | ------------------------------------------------ | ------------------------------------------- | ---------------------------------- | --------------------------- | ------------------------------ |
 | **Agnosticidad**          | ✅ Multi-cloud                                   | ✅ Multi-cloud                              | ✅ Multi-cloud                     | ❌ Lock-in AWS              | ❌ Lock-in Azure               |
 | **Madurez**               | ✅ Muy alta (2014, líder IaC)                    | ⚠️ Media (2018, creciente)                  | ✅ Muy alta (2012, automation std) | ✅ Alta (2011, AWS native)  | ⚠️ Media (2020, ARM evolution) |
-| **Adopción**              | ✅ Muy alta (42K⭐, 1K+ providers)               | ⚠️ Media (21K⭐, expanding)                 | ✅ Muy alta (62K⭐, DevOps std)    | ✅ Alta (AWS standard)      | ⚠️ Media (Azure adoption)      |
+| **Adopción**              | ✅ Muy alta (48K⭐, 1K+ providers)               | ⚠️ Media (21K⭐, expanding)                 | ✅ Muy alta (68K⭐, DevOps std)    | ✅ Alta (AWS standard)      | ⚠️ Media (Azure adoption)      |
 | **Modelo de gestión**     | ⚠️ Herramienta CLI                               | ⚠️ Herramienta CLI                          | ⚠️ Herramienta CLI                 | ✅ Gestionado (AWS)         | ✅ Gestionado (Azure)          |
 | **Complejidad operativa** | ⚠️ Media (0.5 FTE, 5-10h/sem)                    | ⚠️ Alta (1 FTE, 10-20h/sem)                 | ⚠️ Alta (1 FTE, 10-20h/sem)        | ✅ Baja (0.25 FTE, <5h/sem) | ✅ Baja (0.25 FTE, <5h/sem)    |
 | **Seguridad**             | ✅ Enterprise grade                              | ✅ Enterprise grade                         | ✅ SSH/Enterprise                  | ✅ AWS IAM                  | ✅ Azure RBAC                  |
 | **Gestión de estado**     | ✅ Robusto y seguro                              | ✅ Estado backend                           | ❌ No state file                   | ✅ S3 backend               | ✅ Azure backend               |
 | **Multi-entorno**         | ✅ Workspaces nativos                            | ✅ Stacks nativos                           | ⚠️ Inventarios                     | ✅ Parameters               | ✅ Parameters                  |
-| **Versionado**            | ✅ Automática                                    | ✅ Automática                               | ✅ Git-based                       | ✅ Nativo                   | ✅ Nativo                      |
+| **Versionado (módulos)**  | ✅ Registry + semvering                          | ✅ Registry + versioning                    | ✅ Git tags + Galaxy               | ✅ CloudFormation registry  | ✅ Template Specs versioning   |
 | **Módulos**               | ✅ Reutilizables                                 | ✅ Reutilizables                            | ✅ Roles/Collections               | ⚠️ Solo AWS                 | ⚠️ Solo Azure                  |
 | **Costos**                | ✅ Gratis OSS + $20/usuario/mes (Cloud opcional) | ⚠️ $1/crédito + planes desde $20/mes (SaaS) | ✅ $0 licencia                     | ✅ Incluido en AWS          | ✅ Incluido en Azure           |
 

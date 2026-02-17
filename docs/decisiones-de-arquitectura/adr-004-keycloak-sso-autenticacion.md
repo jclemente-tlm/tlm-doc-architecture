@@ -35,20 +35,20 @@ Las alternativas evaluadas fueron:
 | Criterio                  | Keycloak                                            | Auth0                                           | AWS Cognito                                     | Azure AD B2C                                | Google Identity Platform                    |
 | ------------------------- | --------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
 | **Agnosticidad**          | ✅ OSS, portátil                                    | ⚠️ SaaS independiente                           | ❌ Lock-in AWS                                  | ❌ Lock-in Azure                            | ❌ Lock-in GCP                              |
-| **Madurez**               | ✅ Muy alta (2014, producción estable)              | ✅ Muy alta (líder SaaS)                        | ✅ Alta (2016, AWS ecosystem)                   | ✅ Muy alta (Microsoft AD legacy)           | ⚠️ Media (2017, Firebase integration)       |
-| **Adopción**              | ✅ Muy alta (21K⭐, Red Hat cases)                  | ✅ Muy alta (15K+ empresas)                     | ✅ Alta (AWS adoption)                          | ✅ Muy alta (Microsoft enterprise)          | ⚠️ Media (Firebase focus)                   |
+| **Madurez**               | ✅ Muy alta (2014, producción estable)              | ✅ Muy alta (2013, líder SaaS)                  | ✅ Alta (2015, AWS ecosystem)                   | ✅ Muy alta (2016, Azure AD B2C)            | ⚠️ Media (2017, Firebase integration)       |
+| **Adopción**              | ✅ Muy alta (33K⭐, Red Hat cases)                  | ✅ Muy alta (15K+ empresas)                     | ✅ Alta (AWS adoption)                          | ✅ Muy alta (Microsoft enterprise)          | ⚠️ Media (Firebase focus)                   |
 | **Modelo de gestión**     | ⚠️ Self-hosted                                      | ✅ Gestionado (SaaS)                            | ✅ Gestionado (AWS)                             | ✅ Gestionado (Azure)                       | ✅ Gestionado (GCP)                         |
-| **Complejidad operativa** | ⚠️ Alta (1 FTE, 10-20h/sem)                         | ✅ Baja (0.25 FTE, <5h/sem)                     | ✅ Baja (0.25 FTE, <5h/sem)                     | ⚠️ Media (0.5 FTE, 5-10h/sem)               | ⚠️ Alta (1 FTE, 10-20h/sem)                 |
+| **Complejidad operativa** | ⚠️ Alta (1 FTE, 10-20h/sem)                         | ✅ Baja (0.25 FTE, <5h/sem)                     | ✅ Baja (0.25 FTE, <5h/sem)                     | ⚠️ Media (0.5 FTE, 5-10h/sem)               | ✅ Baja (0.25 FTE, <5h/sem)                 |
 | **Seguridad**             | ✅ Enterprise grade                                 | ✅ Enterprise grade                             | ✅ Enterprise grade                             | ✅ Enterprise grade                         | ✅ Enterprise grade                         |
 | **Integración .NET**      | ✅ Keycloak.AuthServices.\* (100K+ DL/mes, .NET 6+) | ✅ Auth0.AspNetCore.Authentication (2M+ DL/mes) | ✅ AWSSDK.CognitoIdentityProvider (10M+ DL/mes) | ✅ Azure.Identity + MSAL (10M+ DL/mes cada) | ⚠️ Google.Cloud.IdentityPlatform (limitado) |
 | **Multi-tenancy**         | ✅ Nativo y flexible                                | ✅ Excelente soporte                            | ⚠️ Básico                                       | ✅ Muy bueno                                | ⚠️ Básico                                   |
 | **Escalabilidad**         | ✅ Hasta 100K+ usuarios concurrentes (Red Hat)      | ✅ Millones usuarios máx (SaaS global)          | ✅ Hasta 100M+ usuarios (Amazon scale)          | ✅ Millones usuarios máx (Microsoft)        | ✅ Hasta 100M+ usuarios (Google scale)      |
 | **Rendimiento**           | ✅ <50ms p95 (local cache)                          | ✅ <100ms p95                                   | ✅ <100ms p95                                   | ✅ <150ms p95                               | ⚠️ 100-300ms variable                       |
-| **Alta disponibilidad**   | ✅ 99.9% estimado (clustering multi-nodo)           | ✅ 99.99% SLA                                   | ✅ 99.99% SLA Multi-AZ                          | ✅ 99.99% SLA                               | ✅ 99.9% SLA Multi-region                   |
+| **Alta disponibilidad**   | ✅ 99.9% estimado (clustering multi-nodo)           | ✅ 99.99% SLA                                   | ✅ SLA publicado (AWS Cognito SLA)              | ✅ 99.99% SLA                               | ✅ 99.9% SLA Multi-region                   |
 | **Protocolos**            | ✅ Todos los estándares                             | ✅ Completo                                     | ⚠️ Limitado                                     | ✅ Completo                                 | ⚠️ Limitado                                 |
 | **Federación**            | ✅ SAML, OIDC, LDAP                                 | ✅ Social + Enterprise                          | ⚠️ Limitada                                     | ✅ AD completo                              | ⚠️ Limitada                                 |
 | **Personalización**       | ✅ Altamente personalizable                         | ⚠️ Limitada                                     | ⚠️ Muy limitada                                 | ⚠️ Limitada                                 | ⚠️ Muy limitada                             |
-| **Costos**                | ✅ $0 licencia + ~$150-300/mes infra                | ❌ $23-240/mes + por usuario                    | ✅ Gratis (50K MAU/mes) + $0.0055/MAU           | ✅ Gratis (50K MAU/mes) + $0.00325/MAU      | ✅ Gratis (50K MAU/mes) + $0.00275/MAU      |
+| **Costos**                | ✅ $0 licencia + ~$150-300/mes infra                | ❌ $35-240/mes + por usuario                    | ✅ Gratis (50K MAU/mes) + $0.0055/MAU           | ✅ Gratis (50K MAU/mes) + $0.015/MAU        | ✅ Gratis (50K MAU/mes) + $0.006/MAU        |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -58,12 +58,13 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 
 ### Justificación
 
-- Integración nativa con protocolos estándar y ecosistema `.NET`
-- Multi-tenancy robusto con aislamiento por país (`tenant (realm)`)
-- Personalización total de flujos y UI
-- Costos predecibles y control total de datos
-- Portabilidad y despliegue en cualquier cloud/on-premises
-- Menor complejidad operativa frente a SaaS, con control total
+- **Personalización total:** flujos de autenticación, UI corporativa, extensiones custom (vs limitaciones SaaS)
+- **Multi-tenancy robusto:** aislamiento por país vía realms nativos, superior a alternativas
+- **Costos predecibles:** $0 licencia + ~$150-300/mes infra vs Auth0 ($23-240/mes + por usuario)
+- **Control total de datos:** identidades sensibles permanecen en infraestructura propia
+- **Portabilidad completa:** OSS agnóstico, desplegable en cualquier cloud/on-premises
+- **Protocolos estándar completos:** SAML, OIDC, LDAP, OAuth2 sin restricciones
+- **Trade-off aceptado:** Mayor complejidad operativa (1 FTE) vs SaaS (0.25 FTE), pero justificado por personalización, multi-tenancy y control requeridos
 
 ### Alternativas descartadas
 

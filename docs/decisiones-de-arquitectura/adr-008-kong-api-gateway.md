@@ -18,7 +18,6 @@ Los servicios corporativos requieren una solución robusta de API Gateway para:
 - **Rate limiting y throttling** por tenant y endpoint
 - **Balanceo de carga y health checks automáticos**
 - **Transformación de requests/responses**
-- **Observabilidad integrada** (métricas, logs, tracing)
 - **Multi-tenancy** con enrutamiento por país/cliente
 - **Ecosistema de plugins maduro** para extensibilidad
 - **Escalabilidad horizontal** y clustering nativo
@@ -50,7 +49,6 @@ Alternativas evaluadas:
 | **Rendimiento**           | ✅ 10K+ req/seg                      | ⚠️ 5K-10K req/seg                        | ✅ 10K+ req/seg               | ✅ 10K+ req/seg                | ✅ 50K+ req/seg (.NET perf) | ✅ 10K+ req/seg               | ✅ 20K+ req/seg               |
 | **Escalabilidad**         | ✅ Hasta 100K+ req/seg (Netflix)     | ✅ Millones req/seg máx (AWS serverless) | ✅ Hasta 50K+ req/seg (Azure) | ✅ 200K+ req/seg (Google)      | ⚠️ Hasta 20K req/seg máx    | ✅ Hasta 30K+ req/seg (Lyft)  | ✅ Hasta 40K+ req/seg (Tyk)   |
 | **Ecosistema Plugins**    | ✅ Extenso                           | ⚠️ AWS integrations                      | ✅ Policies extensas          | ✅ Muy completo                | ⚠️ Limitado                 | ⚠️ Medio                      | ⚠️ Medio                      |
-| **Observabilidad**        | ✅ Completa                          | ✅ CloudWatch                            | ✅ App Insights               | ✅ Analytics nativo            | ✅ Nativa .NET              | ✅ Completa                   | ✅ Completa                   |
 | **Costos**                | ✅ $0 licencia + ~$100-200/mes infra | ⚠️ $3.50/millón requests (~$100-500/mes) | ⚠️ $2.5K-15K/mes (según tier) | ❌ $200K+/año enterprise       | ✅ $0 licencia              | ✅ $0 licencia                | ⚠️ $2.5K/instancia/año        |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
@@ -65,10 +63,9 @@ Se selecciona **Kong (OSS)** como solución estándar de API Gateway para todos 
 
 - **Agnosticidad total:** no depende de stack tecnológico específico, portable entre clouds y tecnologías
 - **Madurez probada:** líder de mercado con millones de implementaciones en producción
-- **Ecosistema de plugins extenso:** autenticación (OAuth2, JWT, LDAP), rate limiting, transformaciones, observabilidad
+- **Ecosistema de plugins extenso:** autenticación (OAuth2, JWT, LDAP), rate limiting, transformaciones, monitoreo
 - **Escalabilidad enterprise:** clustering nativo, balanceo distribuido, health checks avanzados
 - **Comunidad y soporte:** documentación extensa, comunidad muy activa, opción enterprise disponible
-- **Observabilidad integrada:** métricas Prometheus, logs estructurados, tracing distribuido
 - **Multi-tenancy nativo:** soporte para workspaces, enrutamiento por tenant
 - **Estándar de la industria:** reduce riesgo de lock-in tecnológico
 
@@ -90,7 +87,7 @@ Se selecciona **Kong (OSS)** como solución estándar de API Gateway para todos 
 - ✅ Agnosticidad tecnológica total - portable entre clouds y stacks
 - ✅ Ecosistema de plugins maduro reduce desarrollo custom
 - ✅ Escalabilidad enterprise probada en producción
-- ✅ Observabilidad y seguridad enterprise-grade
+- ✅ Seguridad enterprise-grade con múltiples métodos de autenticación
 - ✅ Comunidad activa y documentación extensa
 - ✅ Opción de soporte enterprise si es necesario
 
