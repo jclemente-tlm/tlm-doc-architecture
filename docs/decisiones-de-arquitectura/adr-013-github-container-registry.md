@@ -1,6 +1,6 @@
 ---
-title: "ADR-022: GitHub Container Registry"
-sidebar_position: 22
+title: "ADR-013: GitHub Container Registry"
+sidebar_position: 13
 ---
 
 ## ✅ ESTADO

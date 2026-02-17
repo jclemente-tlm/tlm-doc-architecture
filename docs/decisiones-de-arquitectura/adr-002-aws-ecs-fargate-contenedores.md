@@ -1,6 +1,6 @@
 ---
-title: "ADR-007: AWS ECS Fargate Contenedores"
-sidebar_position: 7
+title: "ADR-002: AWS ECS Fargate Contenedores"
+sidebar_position: 2
 ---
 
 ## ✅ ESTADO

@@ -1,6 +1,6 @@
 ---
-title: "ADR-009: GitHub Actions CI/CD"
-sidebar_position: 9
+title: "ADR-012: GitHub Actions CI/CD"
+sidebar_position: 12
 ---
 
 ## ✅ ESTADO

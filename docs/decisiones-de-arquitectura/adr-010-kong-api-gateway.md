@@ -1,6 +1,6 @@
 ---
-title: "ADR-008: Kong API Gateway"
-sidebar_position: 8
+title: "ADR-010: Kong API Gateway"
+sidebar_position: 10
 ---
 
 ## ✅ ESTADO

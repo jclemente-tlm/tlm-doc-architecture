@@ -1,6 +1,6 @@
 ---
-title: "ADR-014: S3 Almacenamiento Objetos"
-sidebar_position: 14
+title: "ADR-007: S3 Almacenamiento Objetos"
+sidebar_position: 7
 ---
 
 ## ✅ ESTADO

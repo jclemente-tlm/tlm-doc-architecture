@@ -1,6 +1,6 @@
 ---
-title: "ADR-021: Grafana Stack Observabilidad"
-sidebar_position: 21
+title: "ADR-014: Grafana Stack Observabilidad"
+sidebar_position: 14
 ---
 
 ## ✅ ESTADO

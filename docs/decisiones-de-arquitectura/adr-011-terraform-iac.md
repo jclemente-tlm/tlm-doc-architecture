@@ -1,6 +1,6 @@
 ---
-title: "ADR-006: Terraform IaC"
-sidebar_position: 6
+title: "ADR-011: Terraform IaC"
+sidebar_position: 11
 ---
 
 ## ✅ ESTADO

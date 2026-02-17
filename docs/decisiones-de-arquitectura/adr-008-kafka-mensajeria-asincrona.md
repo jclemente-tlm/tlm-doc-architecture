@@ -1,6 +1,6 @@
 ---
-title: "ADR-012: Kafka Mensajería Asíncrona"
-sidebar_position: 12
+title: "ADR-008: Kafka Mensajería Asíncrona"
+sidebar_position: 8
 ---
 
 ## ✅ ESTADO

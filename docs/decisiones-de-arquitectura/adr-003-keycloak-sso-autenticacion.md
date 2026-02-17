@@ -1,6 +1,6 @@
 ---
-title: "ADR-004: Keycloak SSO Autenticación"
-sidebar_position: 4
+title: "ADR-003: Keycloak SSO Autenticación"
+sidebar_position: 3
 ---
 
 ## ✅ ESTADO

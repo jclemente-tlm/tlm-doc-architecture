@@ -1,6 +1,6 @@
 ---
-title: "ADR-013: Debezium CDC"
-sidebar_position: 13
+title: "ADR-009: Debezium CDC"
+sidebar_position: 9
 ---
 
 ## ✅ ESTADO

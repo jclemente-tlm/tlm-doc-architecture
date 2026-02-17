@@ -1,6 +1,6 @@
 ---
-title: "ADR-003: AWS Secrets Manager"
-sidebar_position: 3
+title: "ADR-004: AWS Secrets Manager"
+sidebar_position: 4
 ---
 
 ## ✅ ESTADO
