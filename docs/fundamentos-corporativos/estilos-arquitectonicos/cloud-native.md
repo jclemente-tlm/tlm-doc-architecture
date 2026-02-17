@@ -20,7 +20,7 @@ Este estilo arquitectónico implementa los siguientes principios corporativos:
 
 - ✅ [Resiliencia y Tolerancia a Fallos](../principios/03-resiliencia-y-tolerancia-a-fallos.md)
 - ✅ [Arquitectura Evolutiva](../lineamientos/arquitectura/11-arquitectura-evolutiva.md)
-- ✅ [Diseño Cloud Native](../lineamientos/arquitectura/03-diseno-cloud-native.md)
+- ✅ [Cloud Native](../lineamientos/arquitectura/03-cloud-native.md)
 - ✅ [Observabilidad](../lineamientos/arquitectura/05-observabilidad.md)
 
 ## Propósito

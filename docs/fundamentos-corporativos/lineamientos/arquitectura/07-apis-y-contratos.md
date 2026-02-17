@@ -1,11 +1,11 @@
 ---
-id: diseno-apis-y-contratos
+id: apis-y-contratos
 sidebar_position: 7
-title: Diseño de APIs y Contratos de Integración
+title: APIs y Contratos de Integración
 description: Principios para diseñar APIs REST coherentes, contratos explícitos y evolución controlada
 ---
 
-# Diseño de APIs y Contratos de Integración
+# APIs y Contratos de Integración
 
 APIs inconsistentes, contratos mal definidos o documentación desactualizada generan fricción en consumidores, incompatibilidades entre equipos y errores en producción. Especificaciones explícitas (OpenAPI, AsyncAPI) actúan como fuente de verdad que permite validación automática, facilita adopción y reduce malentendidos. Seguir convenciones RESTful, versionado semántico y contratos retrocompatibles garantiza evolución sin romper clientes existentes, reduce coupling temporal y permite despliegues independientes con confianza.
 

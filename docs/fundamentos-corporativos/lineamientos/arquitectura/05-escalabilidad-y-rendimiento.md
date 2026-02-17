@@ -23,7 +23,7 @@ Este lineamiento implementa aspectos de:
 
 ## Cuándo Aplicar Este Lineamiento
 
-### ✅ Aplicar SI el Sistema:
+### ✅ Aplicar SI el Sistema
 
 - Está desplegado en cloud (AWS, Azure, GCP)
 - Tiene crecimiento de usuarios proyectado (> 50% anual)
@@ -32,7 +32,7 @@ Este lineamiento implementa aspectos de:
 - Tiene SLAs estrictos de tiempo de respuesta
 - Procesa transacciones de alto volumen
 
-### ❌ NO Aplicar SI el Sistema:
+### ❌ NO Aplicar SI el Sistema
 
 - Es herramienta interna de < 50 usuarios estables
 - Es proceso batch sin restricciones de tiempo real
@@ -363,7 +363,7 @@ public async Task<PagedResult<NotificationDto>> GetNotifications(
 
 - [Resiliencia y Disponibilidad](04-resiliencia-y-disponibilidad.md)
 - [Observabilidad](05-observabilidad.md)
-- [Diseño Cloud Native](03-diseno-cloud-native.md)
+- [Cloud Native](03-cloud-native.md)
 
 ### ADRs de Talma
 

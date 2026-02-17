@@ -1,11 +1,11 @@
 ---
-id: diseno-orientado-al-dominio
+id: modelado-de-dominio
 sidebar_position: 9
-title: Diseño Orientado al Dominio (DDD)
+title: Modelado de Dominio (DDD)
 description: Arquitectura estructurada en torno al dominio del negocio
 ---
 
-# Diseño Orientado al Dominio (DDD)
+# Modelado de Dominio (DDD)
 
 ## 1. Declaración
 

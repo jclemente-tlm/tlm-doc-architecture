@@ -1,11 +1,11 @@
 ---
-id: diseno-cloud-native
+id: cloud-native
 sidebar_position: 3
-title: Diseño Cloud Native
+title: Cloud Native
 description: Principios de diseño para sistemas que operan en entornos cloud dinámicos y escalables
 ---
 
-# Diseño Cloud Native
+# Cloud Native
 
 Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo mediante arquitecturas stateless, configuración externalizada y resiliencia ante fallos. Aplicaciones que no siguen estos principios pierden beneficios de escalabilidad automática, recuperación rápida y optimización de costos. Adoptar 12-Factor App y patrones cloud-native desde el diseño reduce complejidad operativa y facilita despliegues automatizados.
 

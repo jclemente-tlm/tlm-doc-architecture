@@ -1,11 +1,11 @@
 ---
-id: gestion-datos-dominio
+id: datos-por-dominio
 sidebar_position: 1
-title: Gestión de Datos del Dominio
+title: Datos por Dominio
 description: Responsabilidad exclusiva de datos por dominio, esquemas versionados y evolución controlada
 ---
 
-# Gestión de Datos del Dominio
+# Datos por Dominio
 
 Bases de datos compartidas y esquemas implícitos generan acoplamiento oculto, dependencias cíclicas, errores en runtime e incompatibilidades entre servicios. Cada dominio debe ser dueño exclusivo de sus datos, exponiendo acceso únicamente mediante APIs o eventos, nunca por queries directas. Esquemas versionados (migraciones, JSON Schema, AsyncAPI) actúan como contratos explícitos que facilitan autonomía de equipos, despliegues independientes, validación automática y evolución controlada sin romper consumidores existentes.
 

@@ -1,6 +1,6 @@
 ---
 id: disaster-recovery
-sidebar_position: 5
+sidebar_position: 4
 title: Disaster Recovery y Continuidad
 description: Planes de recuperación ante desastres, backups, RPO/RTO y pruebas de resiliencia
 ---
@@ -24,5 +24,5 @@ Ausencia de plan de recuperación ante desastres expone organización a pérdida
 ## Referencias Relacionadas
 
 - [Resiliencia y Disponibilidad](../arquitectura/04-resiliencia-y-disponibilidad.md) (patrones de resiliencia)
-- [Gestión de Incidentes](./06-gestion-incidentes.md) (respuesta a incidentes operacionales)
 - [Observabilidad](../arquitectura/06-observabilidad.md) (detección temprana de problemas)
+- [CI/CD Pipelines](./01-cicd-pipelines.md) (automatización de deployments y rollbacks)
