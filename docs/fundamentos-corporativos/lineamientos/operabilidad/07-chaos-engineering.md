@@ -1,6 +1,6 @@
 ---
 id: chaos-engineering
-sidebar_position: 6
+sidebar_position: 7
 title: Chaos Engineering
 description: Pruebas de resiliencia, game days y experimentación controlada de fallos
 ---
@@ -24,6 +24,6 @@ Sistemas aparentemente resilientes ocultan puntos de fallo no descubiertos hasta
 ## Referencias Relacionadas
 
 - [Resiliencia y Disponibilidad](../arquitectura/04-resiliencia-y-disponibilidad.md) (patrones de resiliencia)
-- [Observabilidad](../arquitectura/05-observabilidad.md) (monitoreo durante experimentos)
-- [Gestión de Incidentes](./05-gestion-incidentes.md) (respuesta coordinada)
-- [Disaster Recovery](./04-disaster-recovery.md) (validación de procedimientos DR)
+- [Observabilidad](../arquitectura/06-observabilidad.md) (monitoreo durante experimentos)
+- [Gestión de Incidentes](./06-gestion-incidentes.md) (respuesta coordinada)
+- [Disaster Recovery](./05-disaster-recovery.md) (validación de procedimientos DR)

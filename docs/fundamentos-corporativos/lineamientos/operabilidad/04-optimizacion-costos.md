@@ -1,6 +1,6 @@
 ---
 id: optimizacion-costos
-sidebar_position: 3
+sidebar_position: 4
 title: Optimización de Costos Cloud
 description: Gestión financiera y optimización de costos en entornos cloud
 ---

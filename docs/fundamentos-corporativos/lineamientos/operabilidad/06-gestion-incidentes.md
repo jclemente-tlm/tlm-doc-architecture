@@ -1,6 +1,6 @@
 ---
 id: gestion-incidentes
-sidebar_position: 5
+sidebar_position: 6
 title: Gestión de Incidentes
 description: Respuesta a incidentes, on-call, escalaciones y postmortems
 ---
@@ -23,6 +23,6 @@ Ausencia de proceso estructurado de gestión de incidentes genera caos durante c
 
 ## Referencias Relacionadas
 
-- [Observabilidad](../arquitectura/05-observabilidad.md) (detección y diagnóstico de incidentes)
-- [Disaster Recovery](./04-disaster-recovery.md) (recuperación ante desastres)
+- [Observabilidad](../arquitectura/06-observabilidad.md) (detección y diagnóstico de incidentes)
+- [Disaster Recovery](./05-disaster-recovery.md) (recuperación ante desastres)
 - [Resiliencia y Disponibilidad](../arquitectura/04-resiliencia-y-disponibilidad.md) (prevención de incidentes)

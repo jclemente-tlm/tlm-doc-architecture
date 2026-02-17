@@ -1,6 +1,6 @@
 ---
 id: configuracion-entornos
-sidebar_position: 2
+sidebar_position: 3
 title: Configuración y Consistencia de Entornos
 description: Externalización de configuración y paridad entre entornos para reducir "funciona en mi máquina"
 ---
