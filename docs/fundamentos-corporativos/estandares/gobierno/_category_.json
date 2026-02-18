@@ -1,0 +1,8 @@
+{
+    "label": "Gobierno",
+    "position": 10,
+    "link": {
+        "type": "generated-index",
+        "description": "Estándares de gobierno de arquitectura"
+    }
+}

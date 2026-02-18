@@ -1,92 +1,63 @@
-# Estándar Técnico — <Nombre del Estándar>
+---
+id: [nombre-estandar]
+sidebar_position: [número]
+title: [Título del Estándar]
+description: [Descripción breve técnica]
+---
+
+# [Título del Estándar]
+
+## Contexto
+
+- Qué es (breve)
+- Complementa [lineamiento](ruta)
+- **Decisión arquitectónica:** [ADR](ruta) (si existe)
 
 ---
 
-## 1. Propósito
-Describe brevemente **para qué existe este estándar** y **qué problema evita o controla**.
+## Stack Tecnológico
 
-- Máximo 2–3 líneas
-- Sin justificación extensa
-- No explicar el “cómo”
+[Tabla con componentes del stack real]
 
----
+### Dependencias
 
-## 2. Alcance
-Define **dónde aplica** y **dónde no**.
-
-**Aplica a:**
-- Sistemas productivos
-- <Tipos de componentes / dominios>
-
-**No aplica a:**
-- PoC
-- Experimentos
-- Scripts o herramientas locales
+[Dependencias específicas]
 
 ---
 
-## 3. Tecnologías Aprobadas
-Lista **las únicas tecnologías permitidas** para cumplir este estándar.
+## Implementación Técnica
 
-| Componente | Tecnología | Versión mínima | Observaciones |
-|-----------|------------|----------------|---------------|
-|           |            |                |               |
-
-> El uso de tecnologías no listadas requiere aprobación de Arquitectura.
+[Explicación necesaria para entender la implementación]
+[Solo las secciones necesarias para implementar correctamente]
+[Con código del stack real]
+[Sin relleno]
 
 ---
 
-## 4. Requisitos Obligatorios 🔴
-Checklist **verificable y auditable**.  
-Todo ítem debe poder validarse objetivamente.
+## Requisitos Técnicos
 
-- [ ] Requisito obligatorio 1
-- [ ] Requisito obligatorio 2
-- [ ] Requisito obligatorio 3
+### MUST (Obligatorio)
 
----
+[Lo mínimo crítico]
 
-## 5. Prohibiciones
-Prácticas **expresamente no permitidas**, sin excepciones implícitas.
+### SHOULD (Fuertemente recomendado)
 
-- ❌ Práctica prohibida 1
-- ❌ Práctica prohibida 2
-- ❌ Uso de tecnologías no aprobadas
+[Mejores prácticas]
+
+### MUST NOT (Prohibido)
+
+[Antipatrones]
 
 ---
 
-## 6. Configuración Mínima
-Configuración **mínima obligatoria** para cumplir el estándar.
+## [Otras secciones SOLO si son necesarias]
 
-- No es guía
-- No es ejemplo ideal
-- Es el **baseline aceptable**
-
-```text
-snippet canónico mínimo
-```
+- Comandos CLI (si son útiles)
+- Troubleshooting (si hay problemas comunes documentados)
+- Etc.
 
 ---
 
-## 7. Validación
-Define **cómo se comprueba el cumplimiento**.
+## Referencias
 
-- CI/CD
-- Comandos de validación
-- Pruebas automáticas
-- Revisión técnica
-
-```text
-comando-de-validacion
-```
-
-Incumplimientos deben corregirse o documentarse mediante excepción aprobada.
-
----
-
-## 8. Referencias
-Documentos relacionados (no normativos).
-
-- ADR-XXX — Decisión relacionada
-- Estándar o lineamiento relacionado
-- Documentación oficial del proveedor
+[Links relevantes]
