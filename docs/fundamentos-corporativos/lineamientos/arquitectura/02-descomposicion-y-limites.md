@@ -13,9 +13,11 @@ Dividir sistemas en componentes con límites claros facilita el mantenimiento, l
 
 ## Estándares Obligatorios
 
-- [Identificar límites por capacidad de negocio, no por tecnología](../../estandares/arquitectura/bounded-contexts.md)
-- [Definir responsabilidad única y clara por componente](../../estandares/arquitectura/bounded-contexts.md#9-single-responsibility-principle)
-- [Evitar dependencias cíclicas entre componentes](../../estandares/arquitectura/dependency-management.md)
+- [Identificar bounded contexts por capacidad de negocio](../../estandares/arquitectura/bounded-contexts.md)
+- [Definir relaciones entre contextos con context mapping](../../estandares/arquitectura/context-mapping.md)
+- [Establecer contratos explícitos en los límites](../../estandares/apis/api-contracts.md)
+- [Gestionar dependencias y evitar ciclos](../../estandares/arquitectura/dependency-management.md)
+- [Modelar descomposición con C4 Model](../../estandares/documentacion/c4-model.md)
 
 ## Referencias Relacionadas
 

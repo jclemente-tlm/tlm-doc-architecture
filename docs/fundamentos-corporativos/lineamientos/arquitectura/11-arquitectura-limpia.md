@@ -14,11 +14,13 @@ La arquitectura debe separar claramente las decisiones de negocio de los detalle
 
 ## Estándares Obligatorios
 
-- [Separar lógica de negocio de frameworks e infraestructura](../../estandares/arquitectura/bounded-contexts.md)
-- [Orientar dependencias hacia el dominio, no hacia detalles técnicos](../../estandares/arquitectura/dependency-inversion.md)
-- [Limitar impacto de cambios tecnológicos en el núcleo del sistema](../../estandares/arquitectura/hexagonal-architecture.md)
-- [Estructurar sistema reflejando prioridades del negocio](../../estandares/arquitectura/bounded-contexts.md)
-- [Documentar capas y responsabilidades arquitectónicas](../../estandares/documentacion/c4-model.md)
+- [Aplicar arquitectura hexagonal (Ports & Adapters)](../../estandares/arquitectura/hexagonal-architecture.md)
+- [Implementar dependency inversion principle](../../estandares/arquitectura/dependency-inversion.md)
+- [Separar capas de dominio, aplicación e infraestructura](../../estandares/arquitectura/layered-architecture.md)
+- [Mantener dominio libre de frameworks](../../estandares/arquitectura/framework-independence.md)
+- [Diseñar modelo de dominio rico](../../estandares/arquitectura/domain-model.md)
+- [Testear dominio de forma aislada](../../estandares/testing/unit-testing.md)
+- [Documentar estructura de capas con C4](../../estandares/documentacion/c4-model.md)
 
 ## Referencias Relacionadas
 

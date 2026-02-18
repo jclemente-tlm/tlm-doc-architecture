@@ -15,11 +15,15 @@ Código sin documentación clara genera dependencia de autores originales, dific
 
 ## Estándares Obligatorios
 
-- [Mantener README actualizado en todos los repositorios](../../estandares/desarrollo/repositorios.md#estructura-obligatoria-del-readme)
-- [Documentar decisiones arquitectónicas significativas mediante ADRs](../../estandares/arquitectura/architectural-decision-records.md)
-- [Documentar arquitectura de servicios con plantilla arc42](../../estandares/arquitectura/arc42.md)
-- [Modelar arquitectura con notación C4 y Structurizr DSL](../../estandares/arquitectura/c4-model.md)
-- [Especificar APIs con OpenAPI 3.0+](../../estandares/apis/openapi-specification.md)
+- [Mantener README actualizado en repositorios](../../estandares/documentacion/readme-standards.md)
+- [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-decision-records.md)
+- [Documentar arquitectura con arc42](../../estandares/documentacion/arc42.md)
+- [Modelar con C4 Model](../../estandares/documentacion/c4-model.md)
+- [Especificar APIs REST con OpenAPI](../../estandares/apis/openapi-specification.md)
+- [Documentar APIs asíncronas con AsyncAPI](../../estandares/apis/asyncapi-specification.md)
+- [Mantener runbooks operacionales](../../estandares/documentacion/runbooks.md)
+- [Crear guías de onboarding](../../estandares/documentacion/onboarding-guides.md)
+- [Documentar guías de contribución](../../estandares/documentacion/contributing-guides.md)
 
 ## Referencias Relacionadas
 

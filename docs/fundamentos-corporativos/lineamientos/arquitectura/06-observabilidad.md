@@ -13,8 +13,12 @@ En sistemas distribuidos, las fallas pueden propagarse silenciosamente afectando
 
 ## Estándares Obligatorios
 
-- [Generar logs estructurados en formato JSON](../../estandares/observabilidad/observability.md#2-logging)
-- [Emitir métricas siguiendo metodología RED/USE](../../estandares/observabilidad/observability.md#3-métricas)
-- [Implementar trazas distribuidas con W3C Trace Context](../../estandares/observabilidad/observability.md#4-trazas-distribuidas)
-- [Usar identificadores de correlación entre servicios](../../estandares/observabilidad/observability.md)
-- [Configurar health checks para orquestadores](../../estandares/observabilidad/observability.md)
+- [Implementar structured logging en JSON](../../estandares/observabilidad/structured-logging.md)
+- [Emitir métricas siguiendo RED/USE](../../estandares/observabilidad/metrics-standards.md)
+- [Implementar distributed tracing con W3C Trace Context](../../estandares/observabilidad/distributed-tracing.md)
+- [Usar correlation IDs entre servicios](../../estandares/observabilidad/correlation-ids.md)
+- [Configurar health checks liveness y readiness](../../estandares/infraestructura/health-checks.md)
+- [Definir SLIs, SLOs y SLAs](../../estandares/observabilidad/slo-sla.md)
+- [Configurar alertas basadas en SLOs](../../estandares/observabilidad/alerting.md)
+- [Implementar dashboards operacionales](../../estandares/observabilidad/dashboards.md)
+- [Integrar con stack de observabilidad corporativo](../../estandares/observabilidad/observability-stack.md)

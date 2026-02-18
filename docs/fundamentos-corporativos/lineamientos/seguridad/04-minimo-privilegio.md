@@ -14,11 +14,14 @@ Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegi
 
 ## Estándares Obligatorios
 
-- [Definir permisos de forma explícita y granular](../../estandares/seguridad/authorization.md)
-- [Otorgar accesos por necesidad, no por conveniencia](../../estandares/seguridad/rbac.md)
-- [Implementar privilegios revisables, revocables y temporales](../../estandares/seguridad/access-review.md)
-- [Evitar componentes con acceso excesivo o transversal](../../estandares/arquitectura/bounded-contexts.md)
-- [Segregar capacidades críticas claramente](../../estandares/seguridad/segregation-of-duties.md)
+- [Implementar RBAC (Role-Based Access Control)](../../estandares/seguridad/rbac.md)
+- [Aplicar ABAC cuando corresponda](../../estandares/seguridad/abac.md)
+- [Implementar Just-In-Time (JIT) access](../../estandares/seguridad/jit-access.md)
+- [Realizar access reviews periódicos](../../estandares/seguridad/access-reviews.md)
+- [Aplicar segregation of duties](../../estandares/seguridad/segregation-of-duties.md)
+- [Implementar privilege escalation controlado](../../estandares/seguridad/privilege-escalation.md)
+- [Usar service accounts con permisos mínimos](../../estandares/seguridad/service-accounts.md)
+- [Documentar matriz de permisos](../../estandares/seguridad/permissions-matrix.md)
 
 ## Referencias Relacionadas
 

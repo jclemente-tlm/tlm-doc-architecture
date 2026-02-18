@@ -13,8 +13,10 @@ La selección del estilo arquitectónico es una decisión estructural que impact
 
 ## Estándares Obligatorios
 
-- [Documentar estilo seleccionado en ADR](../../estandares/documentacion/architecture-decision-records.md)
-- [Validar coherencia entre estilo declarado y decisiones técnicas](../../estandares/gobierno/architecture-review.md)
+- [Documentar decisión de estilo en ADR](../../estandares/documentacion/architecture-decision-records.md)
+- [Validar selección mediante architecture review](../../estandares/gobierno/architecture-review.md)
+- [Identificar bounded contexts si es arquitectura modular o distribuida](../../estandares/arquitectura/bounded-contexts.md)
+- [Modelar estructura arquitectónica con C4 Model](../../estandares/documentacion/c4-model.md)
 
 ## Referencias Relacionadas
 

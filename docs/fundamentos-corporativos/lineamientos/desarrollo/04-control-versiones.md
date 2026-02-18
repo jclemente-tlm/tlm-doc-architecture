@@ -15,11 +15,14 @@ Uso inconsistente de control de versiones genera historial confuso, conflictos f
 
 ## Estándares Obligatorios
 
-- [Usar Git workflows y estrategias de branching consistentes](../../estandares/desarrollo/repositorios.md#estrategia-de-branching)
-- [Aplicar commits semánticos (Conventional Commits)](../../estandares/desarrollo/repositorios.md#commits-semanticos)
-- [Versionar artefactos con Semantic Versioning (SemVer)](../../estandares/desarrollo/repositorios.md#versionado-de-artefactos)
-- [Proteger ramas principales con políticas de merge](../../estandares/desarrollo/code-quality-review.md#4-requisitos-obligatorios)
-- [Automatizar versionado y tagging en pipelines CI/CD](../../estandares/desarrollo/cicd-pipelines.md)
+- [Definir Git workflow corporativo](../../estandares/desarrollo/git-workflow.md)
+- [Aplicar estrategia de branching](../../estandares/desarrollo/branching-strategy.md)
+- [Usar conventional commits](../../estandares/desarrollo/conventional-commits.md)
+- [Aplicar semantic versioning](../../estandares/desarrollo/semantic-versioning.md)
+- [Proteger ramas principales](../../estandares/desarrollo/branch-protection.md)
+- [Definir estrategia de merge](../../estandares/desarrollo/merge-strategies.md)
+- [Automatizar tagging y releases](../../estandares/desarrollo/release-management.md)
+- [Gestionar estructura de repositorios](../../estandares/desarrollo/repository-structure.md)
 
 ## Referencias Relacionadas
 

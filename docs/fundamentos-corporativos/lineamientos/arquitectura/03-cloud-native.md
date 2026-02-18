@@ -13,11 +13,16 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 
 ## Estándares Obligatorios
 
+- [Seguir metodología 12-Factor App](../../estandares/arquitectura/twelve-factor-app.md)
+- [Contenedorizar aplicaciones con Docker](../../estandares/infraestructura/containerization.md)
 - [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalize-configuration.md)
-- [Diseñar servicios stateless con estado en backing services](../../estandares/arquitectura/bounded-contexts.md#12-diseño-stateless)
-- [Implementar health checks liveness y readiness](../../estandares/observabilidad/observability.md#8-health-checks)
-- [Preparar servicios para escalabilidad horizontal](../../estandares/arquitectura/bounded-contexts.md#13-escalabilidad-horizontal)
-- [Aplicar graceful shutdown para terminación ordenada](../../estandares/arquitectura/resilience-patterns.md#8-graceful-shutdown)
+- [Diseñar servicios stateless](../../estandares/arquitectura/stateless-design.md)
+- [Implementar health checks liveness y readiness](../../estandares/infraestructura/health-checks.md)
+- [Preparar servicios para escalabilidad horizontal](../../estandares/arquitectura/horizontal-scaling.md)
+- [Aplicar graceful shutdown](../../estandares/arquitectura/graceful-shutdown.md)
+- [Gestionar secretos de forma segura](../../estandares/seguridad/secrets-management.md)
+- [Optimizar costos en cloud](../../estandares/infraestructura/cloud-cost-optimization.md)
+- [Implementar observabilidad completa](../../estandares/observabilidad/observability.md)
 
 ## Referencias Relacionadas
 

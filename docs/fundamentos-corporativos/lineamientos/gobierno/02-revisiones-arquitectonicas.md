@@ -13,9 +13,12 @@ Implementar sin revisión arquitectónica genera deuda técnica, decisiones inco
 
 ## Estándares Obligatorios
 
-- [Realizar architecture review antes de implementaciones significativas](../../estandares/gobierno/architecture-review.md)
-- [Documentar resultados, decisiones y acciones de reviews](../../estandares/gobierno/review-documentation.md)
-- [Realizar retrospectivas arquitectónicas post-implementación](../../estandares/gobierno/architecture-retrospectives.md)
+- [Realizar architecture review obligatorio](../../estandares/gobierno/architecture-review.md)
+- [Usar checklist de revisión arquitectónica](../../estandares/gobierno/architecture-review-checklist.md)
+- [Documentar resultados de reviews](../../estandares/gobierno/review-documentation.md)
+- [Realizar retrospectivas post-implementación](../../estandares/gobierno/architecture-retrospectives.md)
+- [Definir comité de arquitectura](../../estandares/gobierno/architecture-board.md)
+- [Validar cumplimiento de lineamientos](../../estandares/gobierno/compliance-validation.md)
 
 ## Referencias Relacionadas
 

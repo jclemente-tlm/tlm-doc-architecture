@@ -14,12 +14,16 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 
 ## Estándares Obligatorios
 
-- [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/bounded-contexts.md#12-diseño-stateless)
-- [Implementar auto-scaling basado en métricas](../../estandares/infraestructura/auto-scaling.md)
-- [Aplicar caché distribuido para datos frecuentes](../../estandares/arquitectura/caching-strategies.md)
-- [Mover operaciones costosas a procesamiento asíncrono](../../estandares/mensajeria/async-messaging.md)
-- [Optimizar consultas de base de datos con índices apropiados](../../estandares/datos/database-optimization.md)
-- [Monitorear métricas de rendimiento (latencia P95, throughput, errores)](../../estandares/observabilidad/observability.md)
+- [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/stateless-design.md)
+- [Implementar auto-scaling basado en métricas](../../estandares/infraestructura/horizontal-scaling.md)
+- [Aplicar estrategias de caché distribuido](../../estandares/arquitectura/caching-strategies.md)
+- [Implementar procesamiento asíncrono](../../estandares/arquitectura/async-processing.md)
+- [Optimizar consultas y esquemas de base de datos](../../estandares/datos/database-optimization.md)
+- [Implementar load balancing](../../estandares/infraestructura/load-balancing.md)
+- [Configurar connection pooling](../../estandares/datos/connection-pooling.md)
+- [Usar CDN para contenido estático](../../estandares/infraestructura/cdn-usage.md)
+- [Monitorear métricas de rendimiento](../../estandares/observabilidad/performance-monitoring.md)
+- [Realizar performance testing](../../estandares/testing/performance-testing.md)
 
 ## Referencias Relacionadas
 

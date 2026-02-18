@@ -14,11 +14,14 @@ La arquitectura debe priorizar soluciones simples y comprensibles, incorporando 
 
 ## Estándares Obligatorios
 
-- [Introducir complejidad solo con beneficio claro y medible](../../estandares/arquitectura/complexity-analysis.md)
-- [Documentar decisiones arquitectónicas de forma comprensible](../../estandares/documentacion/adr-template.md)
-- [Preferir soluciones conocidas y estables sobre enfoques novedosos](../../estandares/arquitectura/technology-selection.md)
-- [Minimizar dependencias innecesarias entre componentes](../../estandares/arquitectura/bounded-contexts.md)
-- [Facilitar operación, monitoreo y evolución del sistema](../../estandares/observabilidad/observability.md)
+- [Justificar complejidad con análisis cost-benefit](../../estandares/arquitectura/complexity-analysis.md)
+- [Aplicar principio YAGNI (You Aren't Gonna Need It)](../../estandares/arquitectura/yagni-principle.md)
+- [Aplicar principio KISS (Keep It Simple, Stupid)](../../estandares/arquitectura/kiss-principle.md)
+- [Evaluar tecnologías con criterios objetivos](../../estandares/arquitectura/technology-selection.md)
+- [Validar simplicidad en architecture reviews](../../estandares/gobierno/architecture-review.md)
+- [Minimizar dependencias entre componentes](../../estandares/arquitectura/loose-coupling.md)
+- [Priorizar operabilidad y mantenibilidad](../../estandares/arquitectura/operational-simplicity.md)
+- [Documentar decisiones de forma clara](../../estandares/documentacion/architecture-decision-records.md)
 
 ## Referencias Relacionadas
 

@@ -17,10 +17,15 @@ La ausencia de testing automatizado genera código frágil, regresiones frecuent
 
 ## Estándares Obligatorios
 
-- [Implementar pruebas automatizadas en múltiples niveles (unitarias, integración, e2e)](../../estandares/desarrollo/testing-standards.md)
-- [Escribir pruebas unitarias con cobertura mínima del 80%](../../estandares/desarrollo/testing-standards.md#unit-tests)
-- [Implementar pruebas de integración para validar interacciones entre componentes](../../estandares/desarrollo/testing-standards.md#integration-tests)
-- [Usar contract testing para validar contratos entre servicios](../../estandares/desarrollo/testing-standards.md#contract-tests)
+- [Implementar pruebas unitarias](../../estandares/testing/unit-testing.md)
+- [Implementar pruebas de integración](../../estandares/testing/integration-testing.md)
+- [Implementar contract testing](../../estandares/testing/contract-testing.md)
+- [Implementar pruebas end-to-end](../../estandares/testing/e2e-testing.md)
+- [Definir cobertura mínima de código](../../estandares/testing/test-coverage.md)
+- [Automatizar ejecución de pruebas en CI/CD](../../estandares/testing/test-automation.md)
+- [Gestionar datos de prueba](../../estandares/testing/test-data-management.md)
+- [Aplicar mocking y stubbing](../../estandares/testing/mocking-stubbing.md)
+- [Realizar performance testing](../../estandares/testing/performance-testing.md)
 
 ## Referencias Relacionadas
 

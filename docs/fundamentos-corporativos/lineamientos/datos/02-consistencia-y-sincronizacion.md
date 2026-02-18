@@ -13,7 +13,11 @@ Sistemas distribuidos requieren trade-offs entre consistencia, disponibilidad y 
 
 ## Estándares Obligatorios
 
-- [Definir modelo de consistencia explícito por caso de uso](../../estandares/datos/database-standards.md)
-- [Preferir sagas o compensaciones sobre transacciones distribuidas](../../estandares/arquitectura/saga-pattern.md)
-- [Implementar idempotencia para garantizar convergencia](../../estandares/mensajeria/kafka-messaging.md)
-- [Usar eventos de dominio para sincronización eventual](../../estandares/mensajeria/kafka-messaging.md)
+- [Definir modelo de consistencia por caso de uso](../../estandares/datos/consistency-models.md)
+- [Implementar saga pattern para transacciones distribuidas](../../estandares/arquitectura/saga-pattern.md)
+- [Garantizar idempotencia en operaciones](../../estandares/mensajeria/idempotency.md)
+- [Usar eventos de dominio para sincronización](../../estandares/arquitectura/domain-events.md)
+- [Implementar estrategias de resolución de conflictos](../../estandares/datos/conflict-resolution.md)
+- [Gestionar replicación de datos](../../estandares/datos/data-replication.md)
+- [Aplicar CQRS cuando corresponda](../../estandares/arquitectura/cqrs-pattern.md)
+- [Implementar compensaciones para rollback](../../estandares/arquitectura/compensation-pattern.md)

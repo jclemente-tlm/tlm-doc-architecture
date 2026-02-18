@@ -13,11 +13,14 @@ Ningún componente, usuario o sistema es confiable por defecto; toda interacció
 
 ## Estándares Obligatorios
 
-- [Implementar autenticación explícita para toda interacción](../../estandares/seguridad/authentication.md)
-- [Aplicar principios Zero Trust en arquitectura de red](../../estandares/seguridad/network-security.md#zero-trust)
-- [Definir límites de confianza explícitos](../../estandares/seguridad/security-architecture.md#trust-boundaries)
-- [Evaluar acceso según identidad, contexto y propósito](../../estandares/seguridad/authorization.md)
-- [Implementar trazabilidad completa de interacciones](../../estandares/observabilidad/observability.md)
+- [Implementar autenticación mutua](../../estandares/seguridad/mutual-authentication.md)
+- [Aplicar Zero Trust networking](../../estandares/seguridad/zero-trust-networking.md)
+- [Evaluar cada petición explícitamente](../../estandares/seguridad/explicit-verification.md)
+- [Asumir brechas (assume breach)](../../estandares/seguridad/assume-breach.md)
+- [Implementar micro-segmentación](../../estandares/seguridad/micro-segmentation.md)
+- [Usar mTLS entre servicios](../../estandares/seguridad/mtls.md)
+- [Implementar auditoría continua](../../estandares/seguridad/continuous-audit.md)
+- [Aplicar context-aware access](../../estandares/seguridad/context-aware-access.md)
 
 ## Referencias Relacionadas
 

@@ -13,7 +13,13 @@ El 60% de brechas de seguridad explotan vulnerabilidades conocidas sin parchear 
 
 ## Estándares Obligatorios
 
-- [Implementar programa integral de gestión de vulnerabilidades](../../estandares/seguridad/vulnerability-management.md)
-- [Implementar scanning automatizado de vulnerabilidades en CI/CD](../../estandares/seguridad/vulnerability-management.md#3-scanning-automatizado)
-- [Mantener inventario actualizado de componentes y versiones](../../estandares/seguridad/vulnerability-management.md)
-- [Validar imágenes de contenedores antes de deployment](../../estandares/seguridad/container-image-scanning.md)
+- [Implementar SAST en CI/CD](../../estandares/desarrollo/sast.md)
+- [Implementar SCA (dependency scanning)](../../estandares/seguridad/dependency-scanning.md)
+- [Escanear imágenes de contenedores](../../estandares/seguridad/container-scanning.md)
+- [Escanear código IaC](../../estandares/seguridad/iac-scanning.md)
+- [Gestionar dependencias con Package Manager](../../estandares/desarrollo/package-management.md)
+- [Mantener inventario de componentes (SBOM)](../../estandares/seguridad/sbom.md)
+- [Definir SLA de remediación por severidad](../../estandares/seguridad/vulnerability-sla.md)
+- [Implementar patch management](../../estandares/seguridad/patch-management.md)
+- [Realizar pentesting periódico](../../estandares/seguridad/penetration-testing.md)
+- [Mantener registro de vulnerabilidades](../../estandares/seguridad/vulnerability-tracking.md)

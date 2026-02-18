@@ -15,11 +15,15 @@ Ausencia de plan de recuperación ante desastres expone organización a pérdida
 
 ## Estándares Obligatorios
 
-- [Definir objetivos RPO/RTO para cada sistema crítico](../../estandares/operabilidad/disaster-recovery.md#definicion-de-objetivos)
-- [Implementar backups automatizados con retención apropiada](../../estandares/operabilidad/disaster-recovery.md#estrategia-de-backups)
-- [Probar procedimientos de restauración al menos trimestralmente](../../estandares/operabilidad/disaster-recovery.md#pruebas-de-recuperacion)
-- [Documentar runbooks de DR actualizados y accesibles](../../estandares/operabilidad/disaster-recovery.md#documentacion-de-procedimientos)
-- [Realizar simulacros de DR con equipos involucrados](../../estandares/operabilidad/disaster-recovery.md#simulacros)
+- [Definir RPO/RTO por sistema](../../estandares/operabilidad/rpo-rto-definition.md)
+- [Implementar backups automatizados](../../estandares/operabilidad/backup-automation.md)
+- [Definir políticas de retención](../../estandares/operabilidad/backup-retention.md)
+- [Probar restauración periódicamente](../../estandares/operabilidad/restore-testing.md)
+- [Documentar runbooks de recuperación](../../estandares/operabilidad/dr-runbooks.md)
+- [Realizar simulacros de DR](../../estandares/operabilidad/dr-drills.md)
+- [Implementar multi-region failover](../../estandares/operabilidad/multi-region-failover.md)
+- [Mantener plan de continuidad de negocio](../../estandares/operabilidad/business-continuity-plan.md)
+- [Definir cadena de comunicación en desastres](../../estandares/operabilidad/incident-communication.md)
 
 ## Referencias Relacionadas
 

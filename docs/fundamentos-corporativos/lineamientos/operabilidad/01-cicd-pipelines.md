@@ -15,11 +15,16 @@ Despliegues manuales generan inconsistencias entre entornos, errores humanos y c
 
 ## Estándares Obligatorios
 
-- [Automatizar despliegues mediante pipelines CI/CD](../../estandares/desarrollo/cicd-pipelines.md)
-- [Ejecutar pruebas automatizadas en cada commit](../../estandares/desarrollo/cicd-pipelines.md#testing-stage)
-- [Integrar validaciones de seguridad (SAST, SCA) en pipelines](../../estandares/desarrollo/cicd-pipelines.md#security-stage)
-- [Implementar quality gates con métricas mínimas](../../estandares/desarrollo/code-quality-review.md)
-- [Aplicar estrategias de deployment seguras (blue/green, canary)](../../estandares/desarrollo/cicd-pipelines.md#deployment-strategies)
+- [Implementar pipelines CI/CD automatizados](../../estandares/operabilidad/cicd-pipelines.md)
+- [Automatizar build y empaquetado](../../estandares/operabilidad/build-automation.md)
+- [Ejecutar testing automatizado en pipelines](../../estandares/testing/test-automation.md)
+- [Integrar SAST en pipelines](../../estandares/desarrollo/sast.md)
+- [Integrar SCA (dependency scanning)](../../estandares/seguridad/dependency-scanning.md)
+- [Implementar quality gates](../../estandares/desarrollo/quality-gates.md)
+- [Aplicar estrategias de deployment](../../estandares/operabilidad/deployment-strategies.md)
+- [Automatizar rollback](../../estandares/operabilidad/rollback-automation.md)
+- [Gestionar artifacts y registries](../../estandares/operabilidad/artifact-management.md)
+- [Implementar traceability desde commit a producción](../../estandares/operabilidad/deployment-traceability.md)
 
 ## Referencias Relacionadas
 

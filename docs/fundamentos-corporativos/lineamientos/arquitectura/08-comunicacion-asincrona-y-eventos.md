@@ -14,9 +14,12 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 ## Estándares Obligatorios
 
 - [Implementar mensajería con Apache Kafka](../../estandares/mensajeria/kafka-messaging.md)
-- [Definir esquemas de eventos con AsyncAPI o JSON Schema](../../estandares/mensajeria/kafka-messaging.md)
-- [Usar eventos para comunicar hechos del dominio, no comandos](../../estandares/mensajeria/kafka-messaging.md)
-- [Implementar idempotencia en consumidores](../../estandares/mensajeria/kafka-messaging.md)
-- [Garantizar entrega at-least-once o exactly-once](../../estandares/mensajeria/kafka-messaging.md)
-- [Configurar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/kafka-messaging.md)
-- [Documentar topología de eventos y consumidores](../../estandares/mensajeria/kafka-messaging.md)
+- [Documentar eventos con AsyncAPI](../../estandares/apis/asyncapi-specification.md)
+- [Diseñar eventos como hechos del dominio](../../estandares/mensajeria/event-design.md)
+- [Implementar consumidores idempotentes](../../estandares/mensajeria/idempotency.md)
+- [Configurar garantías de entrega](../../estandares/mensajeria/message-delivery-guarantees.md)
+- [Implementar Dead Letter Queue](../../estandares/mensajeria/dead-letter-queue.md)
+- [Aplicar patrones de arquitectura orientada a eventos](../../estandares/arquitectura/event-driven-architecture.md)
+- [Implementar saga pattern para transacciones distribuidas](../../estandares/arquitectura/saga-pattern.md)
+- [Mantener catálogo de eventos](../../estandares/mensajeria/event-catalog.md)
+- [Usar event sourcing cuando corresponda](../../estandares/arquitectura/event-sourcing.md)

@@ -15,10 +15,14 @@ Código sin estándares consistentes, análisis estático ni revisiones genera d
 
 ## Estándares Obligatorios
 
-- [Aplicar estándares de calidad de código: análisis estático y cobertura mínima](../../estandares/desarrollo/code-quality-review.md)
 - [Seguir convenciones de código C# y .NET](../../estandares/desarrollo/csharp-dotnet.md)
-- [Aplicar buenas prácticas de desarrollo SQL](../../estandares/desarrollo/sql.md)
-- [Realizar code review obligatorio antes de merge a ramas principales](../../estandares/desarrollo/code-quality-review.md#4-requisitos-obligatorios)
+- [Aplicar buenas prácticas SQL](../../estandares/desarrollo/sql-standards.md)
+- [Implementar análisis estático con linters](../../estandares/desarrollo/static-analysis.md)
+- [Realizar SAST en pipelines CI/CD](../../estandares/desarrollo/sast.md)
+- [Ejecutar code review obligatorio](../../estandares/desarrollo/code-review.md)
+- [Definir quality gates con métricas mínimas](../../estandares/desarrollo/quality-gates.md)
+- [Aplicar formateo automático de código](../../estandares/desarrollo/code-formatting.md)
+- [Monitorear métricas de calidad de código](../../estandares/desarrollo/code-metrics.md)
 
 ## Referencias Relacionadas
 

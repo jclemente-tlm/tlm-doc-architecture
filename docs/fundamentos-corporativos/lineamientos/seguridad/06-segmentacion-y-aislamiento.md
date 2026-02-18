@@ -13,8 +13,11 @@ Las arquitecturas de red plana permiten que compromisos localizados se propaguen
 
 ## Estándares Obligatorios
 
-- [Segmentar redes por niveles de confianza (DMZ, interna, datos)](../../estandares/seguridad/network-security.md#segmentación-y-zonas)
-- [Aislar recursos por entorno en cuentas/subscripciones separadas](../../estandares/seguridad/network-security.md#5-ejemplo-de-infraestructura)
-- [Implementar aislamiento de tenants en soluciones multi-tenant](../../estandares/seguridad/tenant-isolation.md)
-- [Aplicar principio de menor exposición de red (zero trust networking)](../../estandares/seguridad/network-security.md#principios-zero-trust)
-- [Documentar zonas de seguridad y controles entre ellas](../../estandares/seguridad/network-security.md#segmentación-y-zonas)
+- [Segmentar redes por trust zones](../../estandares/seguridad/network-segmentation.md)
+- [Aislar entornos en cuentas separadas](../../estandares/seguridad/environment-isolation.md)
+- [Implementar tenant isolation](../../estandares/seguridad/tenant-isolation.md)
+- [Usar VPCs y subnets](../../estandares/infraestructura/vpc-design.md)
+- [Configurar security groups y NACLs](../../estandares/seguridad/security-groups.md)
+- [Implementar network policies en K8s](../../estandares/seguridad/k8s-network-policies.md)
+- [Aplicar Zero Trust networking](../../estandares/seguridad/zero-trust-networking.md)
+- [Documentar network topology](../../estandares/seguridad/network-topology.md)

@@ -13,8 +13,12 @@ La gestión fragmentada de identidades genera credenciales dispersas, permisos e
 
 ## Estándares Obligatorios
 
-- [Usar identidad federada y SSO corporativo para usuarios](../../estandares/seguridad/identity-access-management.md#4-autenticación-sso)
-- [Implementar autenticación multifactor (MFA) para accesos críticos](../../estandares/seguridad/identity-access-management.md#43-multi-factor-authentication-mfa)
-- [Aplicar mínimo privilegio en autorizaciones](../../estandares/seguridad/identity-access-management.md#rbac)
-- [Gestionar identidades de servicios](../../estandares/seguridad/identity-access-management.md)
-- [No almacenar credenciales en código o configuración](../../estandares/seguridad/secrets-key-management.md)
+- [Implementar SSO con Keycloak/OIDC](../../estandares/seguridad/sso-implementation.md)
+- [Aplicar MFA obligatorio](../../estandares/seguridad/mfa.md)
+- [Implementar federación de identidades](../../estandares/seguridad/identity-federation.md)
+- [Gestionar identidades de servicios](../../estandares/seguridad/service-identity.md)
+- [Implementar OAuth 2.0 / OIDC](../../estandares/seguridad/oauth-oidc.md)
+- [Gestionar ciclo de vida de identidades](../../estandares/seguridad/identity-lifecycle.md)
+- [No almacenar credenciales en código](../../estandares/seguridad/no-hardcoded-credentials.md)
+- [Implementar password policies](../../estandares/seguridad/password-policies.md)
+- [Rotar credenciales automáticamente](../../estandares/seguridad/credential-rotation.md)

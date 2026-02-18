@@ -13,11 +13,15 @@ Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar
 
 ## Estándares Obligatorios
 
-- [Implementar ownership completo de datos por servicio](../../estandares/datos/database-per-service.md)
-- [Habilitar despliegue independiente sin coordinación](../../estandares/desarrollo/independent-deployment.md)
-- [Utilizar comunicación asíncrona cuando sea posible](../../estandares/mensajeria/async-messaging.md)
-- [Implementar modo degradado ante fallos de dependencias](../../estandares/arquitectura/resilience-patterns.md)
-- [Definir contratos de API versionados](../../estandares/apis/api-versioning.md)
+- [Implementar database per service](../../estandares/datos/database-per-service.md)
+- [Prohibir bases de datos compartidas](../../estandares/datos/no-shared-database.md)
+- [Habilitar despliegue independiente](../../estandares/desarrollo/independent-deployment.md)
+- [Versionar APIs para evolución independiente](../../estandares/apis/api-versioning.md)
+- [Mantener retrocompatibilidad en contratos](../../estandares/apis/api-backward-compatibility.md)
+- [Usar comunicación asíncrona para desacoplamiento](../../estandares/mensajeria/async-messaging.md)
+- [Implementar circuit breakers y degradación graceful](../../estandares/arquitectura/circuit-breaker.md)
+- [Definir bounded contexts claros](../../estandares/arquitectura/bounded-contexts.md)
+- [Implementar observabilidad completa por servicio](../../estandares/observabilidad/observability-stack.md)
 
 ## Referencias Relacionadas
 

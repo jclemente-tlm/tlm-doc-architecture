@@ -13,20 +13,12 @@ Bases de datos compartidas y esquemas implícitos generan acoplamiento oculto, d
 
 ## Estándares Obligatorios
 
-### Propiedad y Responsabilidad
-
-- [Asignar propiedad exclusiva de datos por dominio (database per service)](../../estandares/datos/database-standards.md)
-- [Evitar bases de datos compartidas entre servicios](../../estandares/datos/database-standards.md)
-- [Exponer datos mediante APIs o eventos, no acceso directo a BD](../../estandares/arquitectura/bounded-contexts.md)
-
-### Esquemas Versionados
-
-- [Versionar esquemas de BD con migraciones automatizadas (Flyway/Liquibase)](../../estandares/datos/database-standards.md#4-requisitos-obligatorios)
-- [Documentar esquemas de eventos con JSON Schema o AsyncAPI](../../estandares/mensajeria/kafka-messaging.md)
-- [Validar datos contra esquemas antes de persistir](../../estandares/datos/database-standards.md)
-
-### Evolución de Esquemas
-
-- [Gestionar cambios con estrategias expand-contract (backward compatible)](../../estandares/datos/database-standards.md)
-- [Mantener retrocompatibilidad en eventos y APIs de datos](../../estandares/mensajeria/kafka-messaging.md)
-- [Documentar propiedad y lifecycle de datos por dominio](../../estandares/arquitectura/bounded-contexts.md)
+- [Implementar database per service](../../estandares/datos/database-per-service.md)
+- [Prohibir bases de datos compartidas](../../estandares/datos/no-shared-database.md)
+- [Exponer datos solo mediante APIs o eventos](../../estandares/datos/data-exposure.md)
+- [Versionar esquemas de BD con migraciones](../../estandares/datos/database-migrations.md)
+- [Documentar esquemas de eventos con AsyncAPI](../../estandares/apis/asyncapi-specification.md)
+- [Validar datos contra esquemas](../../estandares/datos/data-validation.md)
+- [Aplicar estrategia expand-contract](../../estandares/datos/expand-contract-pattern.md)
+- [Mantener retrocompatibilidad en esquemas](../../estandares/datos/schema-compatibility.md)
+- [Documentar ownership de datos](../../estandares/datos/data-catalog.md)

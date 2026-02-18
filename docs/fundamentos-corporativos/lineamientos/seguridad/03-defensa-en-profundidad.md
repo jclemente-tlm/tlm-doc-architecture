@@ -13,11 +13,14 @@ La arquitectura debe incorporar múltiples capas de protección independientes, 
 
 ## Estándares Obligatorios
 
-- [Eliminar puntos únicos de falla en seguridad](../../estandares/seguridad/security-architecture.md#7-reducción-de-superficie-de-ataque)
-- [Diseñar capas de seguridad independientes y complementarias](../../estandares/seguridad/security-architecture.md#6-defense-in-depth)
-- [Limitar acceso y capacidades progresivamente](../../estandares/seguridad/authorization.md)
-- [Facilitar detección, contención y aislamiento de incidentes](../../estandares/observabilidad/observability.md)
-- [Distribuir controles en distintos niveles arquitectónicos](../../estandares/seguridad/network-security.md)
+- [Implementar seguridad en múltiples capas](../../estandares/seguridad/defense-in-depth.md)
+- [Aplicar seguridad perimetral](../../estandares/seguridad/perimeter-security.md)
+- [Implementar seguridad de red](../../estandares/seguridad/network-security.md)
+- [Aplicar seguridad de aplicación](../../estandares/seguridad/application-security.md)
+- [Implementar seguridad de datos](../../estandares/seguridad/data-security.md)
+- [Configurar WAF y protección DDoS](../../estandares/seguridad/waf-ddos.md)
+- [Implementar detección de intrusiones](../../estandares/seguridad/intrusion-detection.md)
+- [Definir controles compensatorios](../../estandares/seguridad/compensating-controls.md)
 
 ## Referencias Relacionadas
 

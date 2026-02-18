@@ -13,9 +13,13 @@ Sistemas distribuidos enfrentan fallos inevitables: dependencias caídas, latenc
 
 ## Estándares Obligatorios
 
-- [Implementar circuit breakers para dependencias externas](../../estandares/arquitectura/resilience-patterns.md#4-circuit-breaker)
-- [Aplicar timeouts apropiados en llamadas remotas](../../estandares/arquitectura/resilience-patterns.md#7-timeouts)
-- [Configurar retry con backoff exponencial](../../estandares/arquitectura/resilience-patterns.md#5-retry-pattern)
-- [Diseñar degradación graceful ante fallos](../../estandares/arquitectura/resilience-patterns.md#6-graceful-degradation)
-- [Definir SLOs y SLAs documentados](../../estandares/observabilidad/observability.md#10-slos-y-slas)
-- [Implementar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/kafka-messaging.md)
+- [Implementar circuit breakers para dependencias externas](../../estandares/arquitectura/circuit-breaker.md)
+- [Aplicar timeouts apropiados en llamadas remotas](../../estandares/arquitectura/timeout-patterns.md)
+- [Configurar retry con backoff exponencial](../../estandares/arquitectura/retry-patterns.md)
+- [Diseñar degradación graceful ante fallos](../../estandares/arquitectura/graceful-degradation.md)
+- [Implementar bulkhead para aislamiento de recursos](../../estandares/arquitectura/bulkhead-pattern.md)
+- [Aplicar rate limiting para protección de sobrecarga](../../estandares/arquitectura/rate-limiting.md)
+- [Configurar health checks para detección de fallos](../../estandares/infraestructura/health-checks.md)
+- [Definir SLOs y SLAs documentados](../../estandares/observabilidad/slo-sla.md)
+- [Implementar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dead-letter-queue.md)
+- [Diseñar alta disponibilidad con multi-AZ y redundancia](../../estandares/arquitectura/high-availability.md)

@@ -14,11 +14,15 @@ La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, ac
 
 ## Estándares Obligatorios
 
-- [Documentar decisiones arquitectónicas con ADRs](../../estandares/documentacion/adr-template.md)
-- [Revisar y ajustar decisiones arquitectónicas periódicamente](../../estandares/gobierno/architecture-review.md)
-- [Priorizar reversibilidad en decisiones técnicas](../../estandares/arquitectura/bounded-contexts.md)
-- [Definir contratos y límites para contener impacto del cambio](../../estandares/arquitectura/bounded-contexts.md)
-- [Implementar refactorización y mejora continua](../../estandares/desarrollo/refactoring-practices.md)
+- [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-decision-records.md)
+- [Implementar fitness functions](../../estandares/arquitectura/fitness-functions.md)
+- [Realizar architecture reviews periódicos](../../estandares/gobierno/architecture-review.md)
+- [Aplicar refactoring continuo](../../estandares/desarrollo/refactoring-practices.md)
+- [Versionar APIs para evolución segura](../../estandares/apis/api-versioning.md)
+- [Mantener suite de testing comprehensivo](../../estandares/testing/testing-strategy.md)
+- [Diseñar con bajo acoplamiento](../../estandares/arquitectura/loose-coupling.md)
+- [Priorizar reversibilidad de decisiones](../../estandares/arquitectura/reversibility.md)
+- [Realizar retrospectivas arquitectónicas](../../estandares/gobierno/architecture-retrospectives.md)
 
 ## Referencias Relacionadas
 

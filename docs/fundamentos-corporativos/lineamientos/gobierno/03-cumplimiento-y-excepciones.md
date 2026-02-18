@@ -13,8 +13,13 @@ Lineamientos sin verificación de cumplimiento se convierten en documentación i
 
 ## Estándares Obligatorios
 
-- [Validar cumplimiento de lineamientos y estándares](../../estandares/gobierno/compliance-validation.md)
-- [Gestionar excepciones mediante proceso formal con ADR](../../estandares/gobierno/exception-management.md)
+- [Validar cumplimiento de lineamientos](../../estandares/gobierno/compliance-validation.md)
+- [Automatizar validación en CI/CD](../../estandares/gobierno/automated-compliance.md)
+- [Realizar auditorías arquitectónicas](../../estandares/gobierno/architecture-audits.md)
+- [Gestionar excepciones formalmente](../../estandares/gobierno/exception-management.md)
+- [Documentar excepciones con ADRs](../../estandares/documentacion/architecture-decision-records.md)
+- [Definir criterios de aprobación de excepciones](../../estandares/gobierno/exception-criteria.md)
+- [Revisar excepciones periódicamente](../../estandares/gobierno/exception-review.md)
 
 ## Referencias Relacionadas
 

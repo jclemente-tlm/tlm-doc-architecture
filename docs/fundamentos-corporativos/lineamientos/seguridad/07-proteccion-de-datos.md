@@ -13,9 +13,12 @@ La exposición de datos sensibles genera incidentes de seguridad, incumplimiento
 
 ## Estándares Obligatorios
 
-- [Clasificar datos según sensibilidad (público, interno, sensible, regulado)](../../estandares/seguridad/data-protection.md#classification)
-- [Cifrar datos sensibles en tránsito y reposo](../../estandares/seguridad/data-protection.md#encryption)
-- [Aplicar enmascaramiento y tokenización donde corresponda](../../estandares/seguridad/data-protection.md)
-- [Gestionar claves de cifrado con servicios dedicados (KMS)](../../estandares/seguridad/secrets-key-management.md)
-- [Recopilar únicamente datos estrictamente necesarios (minimización)](../../estandares/seguridad/data-protection.md)
-- [Implementar políticas de retención y eliminación automática](../../estandares/seguridad/data-protection.md)
+- [Clasificar datos por sensibilidad](../../estandares/seguridad/data-classification.md)
+- [Cifrar datos en tránsito (TLS 1.2+)](../../estandares/seguridad/encryption-in-transit.md)
+- [Cifrar datos en reposo](../../estandares/seguridad/encryption-at-rest.md)
+- [Gestionar claves con AWS KMS](../../estandares/seguridad/key-management.md)
+- [Aplicar enmascaramiento y tokenización](../../estandares/seguridad/data-masking.md)
+- [Implementar data loss prevention (DLP)](../../estandares/seguridad/dlp.md)
+- [Aplicar minimización de datos](../../estandares/seguridad/data-minimization.md)
+- [Definir políticas de retención](../../estandares/seguridad/data-retention.md)
+- [No loguear datos sensibles](../../estandares/seguridad/sensitive-data-logging.md)

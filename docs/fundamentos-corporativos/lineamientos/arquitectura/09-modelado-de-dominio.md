@@ -14,10 +14,13 @@ La arquitectura debe estructurarse en torno al dominio del negocio, reflejando s
 ## Estándares Obligatorios
 
 - [Identificar bounded contexts por capacidades de negocio](../../estandares/arquitectura/bounded-contexts.md)
-- [Definir lenguaje ubicuo compartido con el negocio](../../estandares/arquitectura/bounded-contexts.md#lenguaje-ubicuo)
-- [Asignar responsabilidades según capacidades del dominio](../../estandares/arquitectura/bounded-contexts.md)
-- [Documentar modelo de dominio en diagramas de contexto](../../estandares/documentacion/c4-model.md)
-- [Evitar mezclar lógicas de dominios distintos](../../estandares/arquitectura/bounded-contexts.md#9-single-responsibility-principle)
+- [Establecer lenguaje ubicuo por contexto](../../estandares/arquitectura/ubiquitous-language.md)
+- [Diseñar modelo de dominio rico](../../estandares/arquitectura/domain-model.md)
+- [Definir agregados y límites transaccionales](../../estandares/arquitectura/aggregates.md)
+- [Distinguir entidades y value objects](../../estandares/arquitectura/entities-value-objects.md)
+- [Implementar domain events](../../estandares/arquitectura/domain-events.md)
+- [Mapear relaciones entre contextos](../../estandares/arquitectura/context-mapping.md)
+- [Documentar modelo con diagramas de dominio](../../estandares/documentacion/c4-model.md)
 
 ## Referencias Relacionadas
 

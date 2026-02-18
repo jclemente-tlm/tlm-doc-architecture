@@ -15,12 +15,15 @@ Gestión manual de infraestructura mediante consolas crea configuraciones no doc
 
 ## Estándares Obligatorios
 
-- [Definir infraestructura mediante código declarativo (Terraform)](../../estandares/infraestructura/infrastructure-as-code.md)
-- [Versionar código de infraestructura en repositorios Git](../../estandares/desarrollo/repositorios.md)
-- [Aplicar code review obligatorio a cambios de infraestructura](../../estandares/desarrollo/code-quality-review.md)
-- [Gestionar state de forma segura y compartida](../../estandares/infraestructura/infrastructure-as-code.md#state-management)
-- [Validar cambios con terraform plan antes de apply](../../estandares/infraestructura/infrastructure-as-code.md#workflow)
-- [Crear módulos reutilizables para recursos comunes](../../estandares/infraestructura/infrastructure-as-code.md#modules)
+- [Usar Terraform para IaC](../../estandares/infraestructura/terraform.md)
+- [Versionar código IaC en Git](../../estandares/infraestructura/iac-versioning.md)
+- [Realizar code review de IaC](../../estandares/infraestructura/iac-code-review.md)
+- [Ejecutar IaC scanning de seguridad](../../estandares/seguridad/iac-scanning.md)
+- [Gestionar Terraform state remotamente](../../estandares/infraestructura/terraform-state-management.md)
+- [Aplicar workflow plan/apply](../../estandares/infraestructura/terraform-workflow.md)
+- [Crear módulos Terraform reutilizables](../../estandares/infraestructura/terraform-modules.md)
+- [Automatizar IaC en CI/CD](../../estandares/infraestructura/iac-automation.md)
+- [Detectar y prevenir configuration drift](../../estandares/infraestructura/drift-detection.md)
 
 ## Referencias Relacionadas
 
