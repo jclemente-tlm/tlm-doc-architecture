@@ -14,9 +14,9 @@ La exposición de datos sensibles genera incidentes de seguridad, incumplimiento
 ## Estándares Obligatorios
 
 - [Clasificar datos por sensibilidad](../../estandares/seguridad/data-classification.md)
-- [Cifrar datos en tránsito (TLS 1.2+)](../../estandares/seguridad/encryption-in-transit.md)
+- [Cifrar datos en tránsito](../../estandares/seguridad/encryption-in-transit.md)
 - [Cifrar datos en reposo](../../estandares/seguridad/encryption-at-rest.md)
-- [Gestionar claves con AWS KMS](../../estandares/seguridad/key-management.md)
+- [Gestionar claves criptográficas](../../estandares/seguridad/key-management.md)
 - [Aplicar enmascaramiento y tokenización](../../estandares/seguridad/data-masking.md)
-- [Implementar data loss prevention (DLP)](../../estandares/seguridad/dlp.md)
+- [Implementar prevención de pérdida de datos](../../estandares/seguridad/data-loss-prevention.md)
 - [Aplicar minimización de datos](../../estandares/seguridad/data-minimization.md)

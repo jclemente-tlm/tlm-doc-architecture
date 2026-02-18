@@ -15,7 +15,7 @@ Las arquitecturas de red plana permiten que compromisos localizados se propaguen
 
 - [Segmentar redes por trust zones](../../estandares/seguridad/network-segmentation.md)
 - [Aislar entornos en cuentas separadas](../../estandares/seguridad/environment-isolation.md)
-- [Implementar tenant isolation](../../estandares/seguridad/tenant-isolation.md)
-- [Usar VPCs y subnets](../../estandares/infraestructura/vpc-design.md)
-- [Configurar security groups y NACLs](../../estandares/seguridad/security-groups.md)
-- [Implementar network policies en K8s](../../estandares/seguridad/k8s-network-policies.md)
+- [Implementar aislamiento de tenants](../../estandares/seguridad/tenant-isolation.md)
+- [Usar redes virtuales aisladas](../../estandares/infraestructura/virtual-networks.md)
+- [Configurar grupos de seguridad y listas de control](../../estandares/seguridad/network-access-controls.md)
+- [Implementar políticas de red en orquestación](../../estandares/seguridad/orchestration-network-policies.md)

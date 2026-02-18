@@ -18,7 +18,7 @@ Garantizar visibilidad end-to-end en arquitecturas distribuidas mediante logging
 - APIs REST (.NET) y microservicios backend
 - Workers, background jobs, Lambdas AWS
 - Sistemas distribuidos con SLOs definidos (uptime 99.9%, latencia p95 `<200ms`)
-- Servicios containerizados detrás de load balancers
+- Servicios contenerizados detrás de load balancers
 
 **No aplica a:**
 

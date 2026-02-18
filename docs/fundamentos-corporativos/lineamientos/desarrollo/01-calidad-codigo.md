@@ -15,8 +15,8 @@ Código sin estándares consistentes, análisis estático ni revisiones genera d
 
 ## Estándares Obligatorios
 
-- [Seguir convenciones de código C# y .NET](../../estandares/desarrollo/csharp-dotnet.md)
-- [Aplicar buenas prácticas SQL](../../estandares/desarrollo/sql-standards.md)
+- [Seguir convenciones de código del stack tecnológico](../../estandares/desarrollo/code-conventions.md)
+- [Aplicar buenas prácticas de bases de datos](../../estandares/desarrollo/database-code-standards.md)
 - [Implementar análisis estático con linters](../../estandares/desarrollo/static-analysis.md)
 - [Realizar SAST en pipelines CI/CD](../../estandares/desarrollo/sast.md)
 - [Ejecutar code review obligatorio](../../estandares/desarrollo/code-review.md)

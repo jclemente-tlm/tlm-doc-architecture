@@ -524,7 +524,7 @@
 - `seguridad/secrets-key-management.md`
   - _"Gestionar secrets con AWS Secrets Manager"_
 - `infraestructura/contenedores.md`
-  - _"Contenedorizar aplicaciones para consistencia"_
+  - _"Contenerizar aplicaciones para consistencia"_
 
 ---
 

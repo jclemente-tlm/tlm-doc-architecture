@@ -4,32 +4,32 @@ Esta sección documenta las decisiones arquitectónicas clave del sistema de ide
 
 ## 9.1 Decisiones principales
 
-| ADR     | Decisión                        | Estado    | Justificación         |
-|---------|----------------------------------|-----------|----------------------|
-| ADR-001 | `Keycloak` como IdP              | Aceptado  | Open source maduro   |
-| ADR-002 | Multi-tenant (`realm`) por país   | Aceptado  | Aislamiento total    |
-| ADR-003 | `PostgreSQL` backend             | Aceptado  | Robustez             |
-| ADR-004 | Federación híbrida               | Aceptado  | Flexibilidad         |
+| ADR     | Decisión                        | Estado   | Justificación      |
+| ------- | ------------------------------- | -------- | ------------------ |
+| ADR-001 | `Keycloak` como IdP             | Aceptado | Open source maduro |
+| ADR-002 | Multi-tenant (`realm`) por país | Aceptado | Aislamiento total  |
+| ADR-003 | `PostgreSQL` backend            | Aceptado | Robustez           |
+| ADR-004 | Federación híbrida              | Aceptado | Flexibilidad       |
 
 ## 9.2 Alternativas evaluadas
 
-| Componente   | Alternativas           | Selección   | Razón         |
-|--------------|-----------------------|-------------|---------------|
-| IdP          | Auth0, Okta, `Keycloak` | `Keycloak` | Control total |
-| Base de datos| MySQL, `PostgreSQL`     | `PostgreSQL`| Compatibilidad|
-| Deployment   | VM, Container, K8s      | Container   | Portabilidad  |
-| Federación   | Full, None, Híbrida     | Híbrida     | Gradual       |
+| Componente    | Alternativas            | Selección    | Razón          |
+| ------------- | ----------------------- | ------------ | -------------- |
+| IdP           | Auth0, Okta, `Keycloak` | `Keycloak`   | Control total  |
+| Base de datos | MySQL, `PostgreSQL`     | `PostgreSQL` | Compatibilidad |
+| Deployment    | VM, Container, K8s      | Container    | Portabilidad   |
+| Federación    | Full, None, Híbrida     | Híbrida      | Gradual        |
 
 > Todas las decisiones siguen los principios: agnóstico de nube, sin desarrollo personalizado, basado en estándares, multi-tenant (`realm`), contenedores primero, sin dependencia de proveedor. Cada ADR documenta contexto, justificación y consecuencias.
 
 ## 9.3 Resumen de decisiones
 
-| #       | Decisión                    | Estado     | Impacto | Fecha       |
-|---------|-----------------------------|------------|---------|-------------|
-| ADR-001 | `Keycloak` containerizado   | Aprobado   | Alto    | 2024-01-15  |
-| ADR-002 | Multi-tenant (`realm`)      | Aprobado   | Alto    | 2024-01-20  |
-| ADR-003 | Database-backed Sessions    | Aprobado   | Medio   | 2024-01-25  |
-| ADR-004 | OAuth2 + OIDC Standard      | Aprobado   | Alto    | 2024-01-30  |
+| #       | Decisión                 | Estado   | Impacto | Fecha      |
+| ------- | ------------------------ | -------- | ------- | ---------- |
+| ADR-001 | `Keycloak` contenerizado | Aprobado | Alto    | 2024-01-15 |
+| ADR-002 | Multi-tenant (`realm`)   | Aprobado | Alto    | 2024-01-20 |
+| ADR-003 | Database-backed Sessions | Aprobado | Medio   | 2024-01-25 |
+| ADR-004 | OAuth2 + OIDC Standard   | Aprobado | Alto    | 2024-01-30 |
 
 ## 9.4 Principios arquitectónicos
 
@@ -52,32 +52,32 @@ Esta sección documenta las decisiones arquitectónicas clave del sistema de ide
 
 ## 9.1 Decisiones principales
 
-| ADR      | Decisión                        | Estado    | Justificación         |
-|----------|----------------------------------|-----------|----------------------|
-| ADR-001  | `Keycloak` como IdP              | Aceptado  | Open source maduro   |
-| ADR-002  | Multi-realm por país             | Aceptado  | Aislamiento completo |
-| ADR-003  | `PostgreSQL` backend             | Aceptado  | Robustez             |
-| ADR-004  | Federación híbrida               | Aceptado  | Flexibilidad         |
+| ADR     | Decisión             | Estado   | Justificación        |
+| ------- | -------------------- | -------- | -------------------- |
+| ADR-001 | `Keycloak` como IdP  | Aceptado | Open source maduro   |
+| ADR-002 | Multi-realm por país | Aceptado | Aislamiento completo |
+| ADR-003 | `PostgreSQL` backend | Aceptado | Robustez             |
+| ADR-004 | Federación híbrida   | Aceptado | Flexibilidad         |
 
 ## 9.2 Alternativas evaluadas
 
-| Componente | Alternativas           | Selección   | Razón         |
-|------------|-----------------------|-------------|---------------|
-| IdP        | Auth0, Okta, `Keycloak` | `Keycloak` | Control total |
-| Base datos | MySQL, `PostgreSQL`     | `PostgreSQL`| Compatibilidad|
-| Deployment | VM, Container, K8s      | Container   | Portabilidad  |
-| Federación | Full, None, Híbrida     | Híbrida     | Gradual       |
+| Componente | Alternativas            | Selección    | Razón          |
+| ---------- | ----------------------- | ------------ | -------------- |
+| IdP        | Auth0, Okta, `Keycloak` | `Keycloak`   | Control total  |
+| Base datos | MySQL, `PostgreSQL`     | `PostgreSQL` | Compatibilidad |
+| Deployment | VM, Container, K8s      | Container    | Portabilidad   |
+| Federación | Full, None, Híbrida     | Híbrida      | Gradual        |
 
 Esta sección documenta las decisiones arquitectónicas más importantes del sistema de identidad utilizando el formato ADR, proporcionando contexto, justificación y consecuencias de cada decisión.
 
-## ADR-001: `Keycloak` containerizado como identity provider central
+## ADR-001: `Keycloak` contenerizado como identity provider central
 
-| Campo         | Valor                                         |
-|---------------|-----------------------------------------------|
-| Estado        | ✅ Aprobado                                   |
-| Fecha         | 2024-01-15                                    |
-| Decidido por  | Equipo de Arquitectura, CISO                  |
-| Interesados   | Desarrollo, Seguridad, Operaciones            |
+| Campo        | Valor                              |
+| ------------ | ---------------------------------- |
+| Estado       | ✅ Aprobado                        |
+| Fecha        | 2024-01-15                         |
+| Decidido por | Equipo de Arquitectura, CISO       |
+| Interesados  | Desarrollo, Seguridad, Operaciones |
 
 ### Contexto
 
@@ -85,7 +85,7 @@ La organización requiere centralizar la gestión de identidades para múltiples
 
 **Requisitos específicos:**
 
-- Solución contenedorizada lista para usar
+- Solución contenerizada lista para usar
 - Soporte para OAuth2/OIDC y SAML 2.0
 - Multi-tenancy con aislamiento por país
 - Federación con Google Workspace y Active Directory
@@ -95,23 +95,23 @@ La organización requiere centralizar la gestión de identidades para múltiples
 
 ### Alternativas consideradas
 
-| Solución                | Portabilidad | Desarrollo Custom | Costo/Año | Vendor Lock-in |
-|-------------------------|--------------|------------------|-----------|---------------|
-| `Keycloak` Container    | ✅ Full      | ❌ None required | $50K      | ❌ None        |
-| Auth0                   | ⚠️ Limited   | ❌ API only      | $180K     | ✅ High        |
-| AWS Cognito             | ❌ AWS only  | ⚠️ Some custom   | $120K     | ✅ Complete    |
-| Azure AD B2C            | ❌ Azure only| ⚠️ Some custom   | $150K     | ✅ Complete    |
-| Custom Identity Service | ✅ Full      | ✅ Extensive     | $200K+    | ❌ None        |
+| Solución                | Portabilidad  | Desarrollo Custom | Costo/Año | Vendor Lock-in |
+| ----------------------- | ------------- | ----------------- | --------- | -------------- |
+| `Keycloak` Container    | ✅ Full       | ❌ None required  | $50K      | ❌ None        |
+| Auth0                   | ⚠️ Limited    | ❌ API only       | $180K     | ✅ High        |
+| AWS Cognito             | ❌ AWS only   | ⚠️ Some custom    | $120K     | ✅ Complete    |
+| Azure AD B2C            | ❌ Azure only | ⚠️ Some custom    | $150K     | ✅ Complete    |
+| Custom Identity Service | ✅ Full       | ✅ Extensive      | $200K+    | ❌ None        |
 
 ### Decisión
 
-Adoptar `Keycloak` containerizado como proveedor de identidad central con deployment cloud-agnostic usando `Docker`/`Kubernetes`.
+Adoptar `Keycloak` contenerizado como proveedor de identidad central con deployment cloud-agnostic usando `Docker`/`Kubernetes`.
 
-### Arquitectura containerizada
+### Arquitectura contenerizada
 
 ```yaml
 # Keycloak Container Stack
-version: '3.8'
+version: "3.8"
 services:
   keycloak:
     image: quay.io/keycloak/keycloak:23.0
@@ -212,12 +212,12 @@ Realms:
 
 ## ADR-002: JWT con RS256 como formato de token estándar
 
-| Campo         | Valor                                         |
-|---------------|-----------------------------------------------|
-| Estado        | ✅ Aprobado                                   |
-| Fecha         | 2024-01-20                                    |
-| Decidido por  | Seguridad, Engineering Lead                   |
-| Relacionado   | ADR-001 (`Keycloak`), ADR-004 (Token Caching) |
+| Campo        | Valor                                         |
+| ------------ | --------------------------------------------- |
+| Estado       | ✅ Aprobado                                   |
+| Fecha        | 2024-01-20                                    |
+| Decidido por | Seguridad, Engineering Lead                   |
+| Relacionado  | ADR-001 (`Keycloak`), ADR-004 (Token Caching) |
 
 ### Contexto
 
@@ -230,12 +230,12 @@ Los microservicios requieren un mecanismo de autenticación/autorización que se
 
 ### Alternativas consideradas
 
-| Formato         | Pros                        | Contras                  | Decisión         |
-|-----------------|-----------------------------|--------------------------|------------------|
-| `JWT RS256`     | Stateless, signature verification, standard | Larger size, key management | ✅ Seleccionado |
-| Opaque Tokens   | Small size, easy revocation | Requires introspection endpoint | ❌ Rechazado |
-| `JWT HS256`     | Smaller, symmetric          | Shared secret distribution | ❌ Rechazado     |
-| PASETO          | Modern, secure by default   | Limited library support   | ❌ Rechazado     |
+| Formato       | Pros                                        | Contras                         | Decisión        |
+| ------------- | ------------------------------------------- | ------------------------------- | --------------- |
+| `JWT RS256`   | Stateless, signature verification, standard | Larger size, key management     | ✅ Seleccionado |
+| Opaque Tokens | Small size, easy revocation                 | Requires introspection endpoint | ❌ Rechazado    |
+| `JWT HS256`   | Smaller, symmetric                          | Shared secret distribution      | ❌ Rechazado    |
+| PASETO        | Modern, secure by default                   | Limited library support         | ❌ Rechazado    |
 
 ### Decisión
 
@@ -311,12 +311,12 @@ Key Rotation Policy:
 
 ## ADR-003: Multi-realm strategy para aislamiento multi-tenant
 
-| Campo         | Valor                                         |
-|---------------|-----------------------------------------------|
-| Estado        | ✅ Aprobado                                   |
-| Fecha         | 2024-02-01                                    |
-| Decidido por  | Product Team, Compliance Officer              |
-| Impacto       | Alto - Afecta todas las operaciones de tenant |
+| Campo        | Valor                                         |
+| ------------ | --------------------------------------------- |
+| Estado       | ✅ Aprobado                                   |
+| Fecha        | 2024-02-01                                    |
+| Decidido por | Product Team, Compliance Officer              |
+| Impacto      | Alto - Afecta todas las operaciones de tenant |
 
 ### Contexto
 
@@ -330,12 +330,12 @@ La organización opera en 4 países con requisitos específicos:
 
 ### Alternativas consideradas
 
-| Estrategia                | Isolation Level | Pros             | Contras                | Decisión         |
-|---------------------------|----------------|------------------|------------------------|------------------|
-| Single Realm + Groups     | Logical        | Simple management| Limited isolation      | ❌ Rechazado     |
-| Multiple Realms           | Complete       | Full isolation   | Complex operations     | ✅ Seleccionado  |
-| Separate Keycloak Instances| Physical      | Ultimate isolation| High operational cost  | ❌ Rechazado     |
-| Hybrid (Master + Country realms)| Mixed    | Balanced approach| Complex design         | ❌ Rechazado     |
+| Estrategia                       | Isolation Level | Pros               | Contras               | Decisión        |
+| -------------------------------- | --------------- | ------------------ | --------------------- | --------------- |
+| Single Realm + Groups            | Logical         | Simple management  | Limited isolation     | ❌ Rechazado    |
+| Multiple Realms                  | Complete        | Full isolation     | Complex operations    | ✅ Seleccionado |
+| Separate Keycloak Instances      | Physical        | Ultimate isolation | High operational cost | ❌ Rechazado    |
+| Hybrid (Master + Country realms) | Mixed           | Balanced approach  | Complex design        | ❌ Rechazado    |
 
 ### Decisión
 
@@ -437,12 +437,12 @@ public class TenantResolver
 
 ## ADR-004: Redis cluster para token validation caching
 
-| Campo         | Valor                                         |
-|---------------|-----------------------------------------------|
-| Estado        | ✅ Aprobado                                   |
-| Fecha         | 2024-02-10                                    |
-| Decidido por  | Performance Team, Site Reliability            |
-| Relacionado   | ADR-002 (`JWT` Tokens)                        |
+| Campo        | Valor                              |
+| ------------ | ---------------------------------- |
+| Estado       | ✅ Aprobado                        |
+| Fecha        | 2024-02-10                         |
+| Decidido por | Performance Team, Site Reliability |
+| Relacionado  | ADR-002 (`JWT` Tokens)             |
 
 ### Contexto
 
@@ -462,13 +462,13 @@ Sin caching:
 
 ### Alternativas consideradas
 
-| Solución         | Pros         | Contras                  | Performance | Decisión         |
-|------------------|--------------|--------------------------|-------------|------------------|
-| No caching       | Simple       | Poor performance         | 60ms        | ❌ Rechazado     |
-| In-memory cache  | Fast         | No sharing across instances | 5ms      | ❌ Rechazado     |
-| Redis single     | Distributed  | Single point of failure  | 8ms         | ❌ Rechazado     |
-| Redis Cluster    | HA + distributed | Complex setup         | 7ms         | ✅ Seleccionado  |
-| DynamoDB         | Managed      | Higher latency           | 15ms        | ❌ Rechazado     |
+| Solución        | Pros             | Contras                     | Performance | Decisión        |
+| --------------- | ---------------- | --------------------------- | ----------- | --------------- |
+| No caching      | Simple           | Poor performance            | 60ms        | ❌ Rechazado    |
+| In-memory cache | Fast             | No sharing across instances | 5ms         | ❌ Rechazado    |
+| Redis single    | Distributed      | Single point of failure     | 8ms         | ❌ Rechazado    |
+| Redis Cluster   | HA + distributed | Complex setup               | 7ms         | ✅ Seleccionado |
+| DynamoDB        | Managed          | Higher latency              | 15ms        | ❌ Rechazado    |
 
 ### Decisión
 
@@ -564,12 +564,10 @@ Redis Cluster:
 
     backup_window: "03:00-05:00"
 
-
   Monitoring:
     cloudwatch_metrics: enabled
     slowlog_enabled: true
     cpu_threshold: 80%
-
 
     memory_threshold: 85%
 ```
@@ -600,12 +598,12 @@ Redis Cluster:
 
 ## ADR-005: Event sourcing para audit trail compliance
 
-| Campo         | Valor                                         |
-|---------------|-----------------------------------------------|
-| Estado        | ✅ Aprobado                                   |
-| Fecha         | 2024-02-15                                    |
-| Decidido por  | Compliance Officer, Data Architect            |
-| Regulatory    | GDPR, SOX, ISO 27001                          |
+| Campo        | Valor                              |
+| ------------ | ---------------------------------- |
+| Estado       | ✅ Aprobado                        |
+| Fecha        | 2024-02-15                         |
+| Decidido por | Compliance Officer, Data Architect |
+| Regulatory   | GDPR, SOX, ISO 27001               |
 
 ### Contexto
 
@@ -617,13 +615,13 @@ Redis Cluster:
 
 ### Alternativas consideradas
 
-| Aspecto         | Logging Tradicional | Event Sourcing | Decisión         |
-|-----------------|--------------------|----------------|------------------|
-| Inmutabilidad   | Archivos modificables | Eventos inmutables | ✅ Event Sourcing |
-| Completitud     | Limitado a lo logueado | Cambios completos | ✅ Event Sourcing |
-| Time travel     | No posible          | Full history replay | ✅ Event Sourcing |
-| Compliance      | Básico              | Auditabilidad total | ✅ Event Sourcing |
-| Complejidad     | Simple              | Más complejo       | Trade-off aceptable |
+| Aspecto       | Logging Tradicional    | Event Sourcing      | Decisión            |
+| ------------- | ---------------------- | ------------------- | ------------------- |
+| Inmutabilidad | Archivos modificables  | Eventos inmutables  | ✅ Event Sourcing   |
+| Completitud   | Limitado a lo logueado | Cambios completos   | ✅ Event Sourcing   |
+| Time travel   | No posible             | Full history replay | ✅ Event Sourcing   |
+| Compliance    | Básico                 | Auditabilidad total | ✅ Event Sourcing   |
+| Complejidad   | Simple                 | Más complejo        | Trade-off aceptable |
 
 ### Decisión
 
@@ -818,13 +816,13 @@ public class SecurityEventProcessor
 
 ## Resumen de decisiones
 
-| ADR         | Decisión                  | Impacto | Estado         |
-|-------------|---------------------------|---------|----------------|
-| ADR-001     | `Keycloak` como IdP       | Alto    | ✅ Implementado|
-| ADR-002     | `JWT RS256` tokens        | Alto    | ✅ Implementado|
-| ADR-003     | Multi-realm multi-tenancy | Alto    | ✅ Implementado|
-| ADR-004     | Redis caching             | Medio   | ✅ Implementado|
-| ADR-005     | Event sourcing audit      | Alto    | ✅ Implementado|
+| ADR     | Decisión                  | Impacto | Estado          |
+| ------- | ------------------------- | ------- | --------------- |
+| ADR-001 | `Keycloak` como IdP       | Alto    | ✅ Implementado |
+| ADR-002 | `JWT RS256` tokens        | Alto    | ✅ Implementado |
+| ADR-003 | Multi-realm multi-tenancy | Alto    | ✅ Implementado |
+| ADR-004 | Redis caching             | Medio   | ✅ Implementado |
+| ADR-005 | Event sourcing audit      | Alto    | ✅ Implementado |
 
 ## Referencias
 

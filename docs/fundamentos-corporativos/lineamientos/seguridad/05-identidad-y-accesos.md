@@ -13,10 +13,10 @@ La gestión fragmentada de identidades genera credenciales dispersas, permisos e
 
 ## Estándares Obligatorios
 
-- [Implementar SSO con Keycloak/OIDC](../../estandares/seguridad/sso-implementation.md)
-- [Aplicar MFA obligatorio](../../estandares/seguridad/mfa.md)
+- [Implementar Single Sign-On corporativo](../../estandares/seguridad/sso-implementation.md)
+- [Aplicar autenticación multi-factor obligatoria](../../estandares/seguridad/mfa.md)
 - [Implementar federación de identidades](../../estandares/seguridad/identity-federation.md)
 - [Gestionar identidades de servicios](../../estandares/seguridad/service-identity.md)
-- [Implementar OAuth 2.0 / OIDC](../../estandares/seguridad/oauth-oidc.md)
+- [Implementar protocolos estándar de autenticación/autorización](../../estandares/seguridad/auth-protocols.md)
 - [Gestionar ciclo de vida de identidades](../../estandares/seguridad/identity-lifecycle.md)
-- [Implementar password policies](../../estandares/seguridad/password-policies.md)
+- [Implementar políticas de contraseñas](../../estandares/seguridad/password-policies.md)

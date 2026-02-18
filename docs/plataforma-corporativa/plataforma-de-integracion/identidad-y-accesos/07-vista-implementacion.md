@@ -1,24 +1,24 @@
 # 7. Vista de implementación
 
 ![Vista de implementación del Sistema de Identidad](/diagrams/servicios-corporativos/identity_system_deployment.png)
-*Figura 7.1: Implementación de Componentes de principales del sistema*
+_Figura 7.1: Implementación de Componentes de principales del sistema_
 
 ## 7.1 Estructura del proyecto
 
-| Componente    | Ubicación         | Tecnología                |
-|---------------|------------------|---------------------------|
-| `Keycloak`    | ECS Fargate      | Keycloak 23+ (`Docker`)   |
-| `PostgreSQL`  | AWS RDS/Aurora   | PostgreSQL 15+            |
+| Componente    | Ubicación           | Tecnología              |
+| ------------- | ------------------- | ----------------------- |
+| `Keycloak`    | ECS Fargate         | Keycloak 23+ (`Docker`) |
+| `PostgreSQL`  | AWS RDS/Aurora      | PostgreSQL 15+          |
 | Configuración | AWS Secrets Manager | JSON                    |
 
 ## 7.2 Dependencias principales
 
-| Dependencia   | Versión | Propósito           |
-|---------------|---------|---------------------|
-| `Keycloak`    | 23+     | Identity Provider   |
-| `PostgreSQL`  | 15+     | Base de datos       |
-| `Docker`      | 20+     | Contenedorización   |
-| AWS ECS       | -       | Orquestación        |
+| Dependencia  | Versión | Propósito         |
+| ------------ | ------- | ----------------- |
+| `Keycloak`   | 23+     | Identity Provider |
+| `PostgreSQL` | 15+     | Base de datos     |
+| `Docker`     | 20+     | Contenerización   |
+| AWS ECS      | -       | Orquestación      |
 
 ## 7.3 Infraestructura AWS
 
@@ -38,11 +38,11 @@
 
 ## 7.5 Ambientes y buenas prácticas
 
-| Ambiente     | Propósito                | Configuración clave                |
-|--------------|--------------------------|------------------------------------|
-| Desarrollo   | Pruebas y desarrollo     | Recursos mínimos, sample data      |
-| Staging      | QA y validación previa   | Datos anonimizados, clustering     |
-| Producción   | Carga real, HA           | Multi-AZ, auto scaling, seguridad  |
+| Ambiente   | Propósito              | Configuración clave               |
+| ---------- | ---------------------- | --------------------------------- |
+| Desarrollo | Pruebas y desarrollo   | Recursos mínimos, sample data     |
+| Staging    | QA y validación previa | Datos anonimizados, clustering    |
+| Producción | Carga real, HA         | Multi-AZ, auto scaling, seguridad |
 
 - Todos los ambientes con monitoreo, logs y backups configurados
 - Acceso restringido por VPN y listas blancas de IP

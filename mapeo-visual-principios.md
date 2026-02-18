@@ -330,7 +330,7 @@ LINEAMIENTOS:
     ├─ Stateless services
     ├─ Externalized config
     ├─ Health checks
-    └─ Containerización
+    └─ Contenerización
 └─ [L-O3] Optimización de Costos ✅
     └─ FinOps
 

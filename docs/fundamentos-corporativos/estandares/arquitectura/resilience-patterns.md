@@ -20,7 +20,7 @@ Garantizar resiliencia en sistemas distribuidos mediante circuit breakers, retri
 - Comunicación entre microservicios
 - Consumers de message brokers
 - Operaciones asíncronas con dependencies externas
-- Servicios containerizados en AWS ECS Fargate
+- Servicios contenerizados en AWS ECS Fargate
 
 **No aplica a:**
 

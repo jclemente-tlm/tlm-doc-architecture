@@ -15,12 +15,12 @@ Gestión manual de infraestructura mediante consolas crea configuraciones no doc
 
 ## Estándares Obligatorios
 
-- [Usar Terraform para IaC](../../estandares/infraestructura/terraform.md)
-- [Versionar código IaC en Git](../../estandares/infraestructura/iac-versioning.md)
+- [Implementar infraestructura como código](../../estandares/infraestructura/iac-implementation.md)
+- [Versionar código IaC en control de versiones](../../estandares/infraestructura/iac-versioning.md)
 - [Realizar code review de IaC](../../estandares/infraestructura/iac-code-review.md)
-- [Ejecutar IaC scanning de seguridad](../../estandares/seguridad/iac-scanning.md)
-- [Gestionar Terraform state remotamente](../../estandares/infraestructura/terraform-state-management.md)
-- [Aplicar workflow plan/apply](../../estandares/infraestructura/terraform-workflow.md)
+- [Ejecutar scanning de seguridad en IaC](../../estandares/seguridad/iac-scanning.md)
+- [Gestionar state de IaC remotamente](../../estandares/infraestructura/iac-state-management.md)
+- [Aplicar workflow plan/apply en IaC](../../estandares/infraestructura/iac-workflow.md)
 - [Detectar y prevenir configuration drift](../../estandares/infraestructura/drift-detection.md)
 
 ## Referencias Relacionadas
