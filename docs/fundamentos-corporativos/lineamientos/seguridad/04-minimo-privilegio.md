@@ -19,9 +19,7 @@ Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegi
 - [Implementar Just-In-Time (JIT) access](../../estandares/seguridad/jit-access.md)
 - [Realizar access reviews periódicos](../../estandares/seguridad/access-reviews.md)
 - [Aplicar segregation of duties](../../estandares/seguridad/segregation-of-duties.md)
-- [Implementar privilege escalation controlado](../../estandares/seguridad/privilege-escalation.md)
 - [Usar service accounts con permisos mínimos](../../estandares/seguridad/service-accounts.md)
-- [Documentar matriz de permisos](../../estandares/seguridad/permissions-matrix.md)
 
 ## Referencias Relacionadas
 

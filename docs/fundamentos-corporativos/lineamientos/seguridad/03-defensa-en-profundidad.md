@@ -19,8 +19,6 @@ La arquitectura debe incorporar múltiples capas de protección independientes, 
 - [Aplicar seguridad de aplicación](../../estandares/seguridad/application-security.md)
 - [Implementar seguridad de datos](../../estandares/seguridad/data-security.md)
 - [Configurar WAF y protección DDoS](../../estandares/seguridad/waf-ddos.md)
-- [Implementar detección de intrusiones](../../estandares/seguridad/intrusion-detection.md)
-- [Definir controles compensatorios](../../estandares/seguridad/compensating-controls.md)
 
 ## Referencias Relacionadas
 

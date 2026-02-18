@@ -19,8 +19,6 @@ La arquitectura debe estructurarse en torno al dominio del negocio, reflejando s
 - [Definir agregados y límites transaccionales](../../estandares/arquitectura/aggregates.md)
 - [Distinguir entidades y value objects](../../estandares/arquitectura/entities-value-objects.md)
 - [Implementar domain events](../../estandares/arquitectura/domain-events.md)
-- [Mapear relaciones entre contextos](../../estandares/arquitectura/context-mapping.md)
-- [Documentar modelo con diagramas de dominio](../../estandares/documentacion/c4-model.md)
 
 ## Referencias Relacionadas
 

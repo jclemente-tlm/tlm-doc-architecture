@@ -19,7 +19,4 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 - [Implementar consumidores idempotentes](../../estandares/mensajeria/idempotency.md)
 - [Configurar garantías de entrega](../../estandares/mensajeria/message-delivery-guarantees.md)
 - [Implementar Dead Letter Queue](../../estandares/mensajeria/dead-letter-queue.md)
-- [Aplicar patrones de arquitectura orientada a eventos](../../estandares/arquitectura/event-driven-architecture.md)
-- [Implementar saga pattern para transacciones distribuidas](../../estandares/arquitectura/saga-pattern.md)
 - [Mantener catálogo de eventos](../../estandares/mensajeria/event-catalog.md)
-- [Usar event sourcing cuando corresponda](../../estandares/arquitectura/event-sourcing.md)

@@ -17,10 +17,8 @@ Ningún componente, usuario o sistema es confiable por defecto; toda interacció
 - [Aplicar Zero Trust networking](../../estandares/seguridad/zero-trust-networking.md)
 - [Evaluar cada petición explícitamente](../../estandares/seguridad/explicit-verification.md)
 - [Asumir brechas (assume breach)](../../estandares/seguridad/assume-breach.md)
-- [Implementar micro-segmentación](../../estandares/seguridad/micro-segmentation.md)
 - [Usar mTLS entre servicios](../../estandares/seguridad/mtls.md)
 - [Implementar auditoría continua](../../estandares/seguridad/continuous-audit.md)
-- [Aplicar context-aware access](../../estandares/seguridad/context-aware-access.md)
 
 ## Referencias Relacionadas
 

@@ -13,10 +13,7 @@ El 60% de brechas de seguridad explotan vulnerabilidades conocidas sin parchear 
 
 ## Estándares Obligatorios
 
-- [Implementar SAST en CI/CD](../../estandares/desarrollo/sast.md)
-- [Implementar SCA (dependency scanning)](../../estandares/seguridad/dependency-scanning.md)
 - [Escanear imágenes de contenedores](../../estandares/seguridad/container-scanning.md)
-- [Escanear código IaC](../../estandares/seguridad/iac-scanning.md)
 - [Gestionar dependencias con Package Manager](../../estandares/desarrollo/package-management.md)
 - [Mantener inventario de componentes (SBOM)](../../estandares/seguridad/sbom.md)
 - [Definir SLA de remediación por severidad](../../estandares/seguridad/vulnerability-sla.md)

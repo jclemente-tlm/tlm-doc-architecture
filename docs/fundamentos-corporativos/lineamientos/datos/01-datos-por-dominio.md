@@ -17,8 +17,5 @@ Bases de datos compartidas y esquemas implícitos generan acoplamiento oculto, d
 - [Prohibir bases de datos compartidas](../../estandares/datos/no-shared-database.md)
 - [Exponer datos solo mediante APIs o eventos](../../estandares/datos/data-exposure.md)
 - [Versionar esquemas de BD con migraciones](../../estandares/datos/database-migrations.md)
-- [Documentar esquemas de eventos con AsyncAPI](../../estandares/apis/asyncapi-specification.md)
 - [Validar datos contra esquemas](../../estandares/datos/data-validation.md)
 - [Aplicar estrategia expand-contract](../../estandares/datos/expand-contract-pattern.md)
-- [Mantener retrocompatibilidad en esquemas](../../estandares/datos/schema-compatibility.md)
-- [Documentar ownership de datos](../../estandares/datos/data-catalog.md)

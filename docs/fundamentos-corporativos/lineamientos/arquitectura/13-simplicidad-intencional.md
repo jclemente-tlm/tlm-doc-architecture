@@ -18,10 +18,8 @@ La arquitectura debe priorizar soluciones simples y comprensibles, incorporando 
 - [Aplicar principio YAGNI (You Aren't Gonna Need It)](../../estandares/arquitectura/yagni-principle.md)
 - [Aplicar principio KISS (Keep It Simple, Stupid)](../../estandares/arquitectura/kiss-principle.md)
 - [Evaluar tecnologías con criterios objetivos](../../estandares/arquitectura/technology-selection.md)
-- [Validar simplicidad en architecture reviews](../../estandares/gobierno/architecture-review.md)
-- [Minimizar dependencias entre componentes](../../estandares/arquitectura/loose-coupling.md)
 - [Priorizar operabilidad y mantenibilidad](../../estandares/arquitectura/operational-simplicity.md)
-- [Documentar decisiones de forma clara](../../estandares/documentacion/architecture-decision-records.md)
+- [Medir simplicidad con métricas objetivas](../../estandares/arquitectura/simplicity-metrics.md)
 
 ## Referencias Relacionadas
 

@@ -20,6 +20,3 @@ Sistemas distribuidos enfrentan fallos inevitables: dependencias caídas, latenc
 - [Implementar bulkhead para aislamiento de recursos](../../estandares/arquitectura/bulkhead-pattern.md)
 - [Aplicar rate limiting para protección de sobrecarga](../../estandares/arquitectura/rate-limiting.md)
 - [Configurar health checks para detección de fallos](../../estandares/infraestructura/health-checks.md)
-- [Definir SLOs y SLAs documentados](../../estandares/observabilidad/slo-sla.md)
-- [Implementar Dead Letter Queue para mensajes fallidos](../../estandares/mensajeria/dead-letter-queue.md)
-- [Diseñar alta disponibilidad con multi-AZ y redundancia](../../estandares/arquitectura/high-availability.md)

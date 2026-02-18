@@ -23,8 +23,6 @@ La ausencia de testing automatizado genera código frágil, regresiones frecuent
 - [Implementar pruebas end-to-end](../../estandares/testing/e2e-testing.md)
 - [Definir cobertura mínima de código](../../estandares/testing/test-coverage.md)
 - [Automatizar ejecución de pruebas en CI/CD](../../estandares/testing/test-automation.md)
-- [Gestionar datos de prueba](../../estandares/testing/test-data-management.md)
-- [Aplicar mocking y stubbing](../../estandares/testing/mocking-stubbing.md)
 - [Realizar performance testing](../../estandares/testing/performance-testing.md)
 
 ## Referencias Relacionadas

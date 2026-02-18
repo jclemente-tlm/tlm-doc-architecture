@@ -19,8 +19,6 @@ Código sin documentación clara genera dependencia de autores originales, dific
 - [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-decision-records.md)
 - [Documentar arquitectura con arc42](../../estandares/documentacion/arc42.md)
 - [Modelar con C4 Model](../../estandares/documentacion/c4-model.md)
-- [Especificar APIs REST con OpenAPI](../../estandares/apis/openapi-specification.md)
-- [Documentar APIs asíncronas con AsyncAPI](../../estandares/apis/asyncapi-specification.md)
 - [Mantener runbooks operacionales](../../estandares/documentacion/runbooks.md)
 - [Crear guías de onboarding](../../estandares/documentacion/onboarding-guides.md)
 - [Documentar guías de contribución](../../estandares/documentacion/contributing-guides.md)

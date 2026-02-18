@@ -21,8 +21,6 @@ Gestión manual de infraestructura mediante consolas crea configuraciones no doc
 - [Ejecutar IaC scanning de seguridad](../../estandares/seguridad/iac-scanning.md)
 - [Gestionar Terraform state remotamente](../../estandares/infraestructura/terraform-state-management.md)
 - [Aplicar workflow plan/apply](../../estandares/infraestructura/terraform-workflow.md)
-- [Crear módulos Terraform reutilizables](../../estandares/infraestructura/terraform-modules.md)
-- [Automatizar IaC en CI/CD](../../estandares/infraestructura/iac-automation.md)
 - [Detectar y prevenir configuration drift](../../estandares/infraestructura/drift-detection.md)
 
 ## Referencias Relacionadas

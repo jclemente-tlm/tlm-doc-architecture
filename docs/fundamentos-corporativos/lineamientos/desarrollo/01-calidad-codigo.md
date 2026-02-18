@@ -21,8 +21,6 @@ Código sin estándares consistentes, análisis estático ni revisiones genera d
 - [Realizar SAST en pipelines CI/CD](../../estandares/desarrollo/sast.md)
 - [Ejecutar code review obligatorio](../../estandares/desarrollo/code-review.md)
 - [Definir quality gates con métricas mínimas](../../estandares/desarrollo/quality-gates.md)
-- [Aplicar formateo automático de código](../../estandares/desarrollo/code-formatting.md)
-- [Monitorear métricas de calidad de código](../../estandares/desarrollo/code-metrics.md)
 
 ## Referencias Relacionadas
 

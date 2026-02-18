@@ -17,10 +17,7 @@ Despliegues manuales generan inconsistencias entre entornos, errores humanos y c
 
 - [Implementar pipelines CI/CD automatizados](../../estandares/operabilidad/cicd-pipelines.md)
 - [Automatizar build y empaquetado](../../estandares/operabilidad/build-automation.md)
-- [Ejecutar testing automatizado en pipelines](../../estandares/testing/test-automation.md)
-- [Integrar SAST en pipelines](../../estandares/desarrollo/sast.md)
 - [Integrar SCA (dependency scanning)](../../estandares/seguridad/dependency-scanning.md)
-- [Implementar quality gates](../../estandares/desarrollo/quality-gates.md)
 - [Aplicar estrategias de deployment](../../estandares/operabilidad/deployment-strategies.md)
 - [Automatizar rollback](../../estandares/operabilidad/rollback-automation.md)
 - [Gestionar artifacts y registries](../../estandares/operabilidad/artifact-management.md)

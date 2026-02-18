@@ -13,11 +13,9 @@ Cada dominio de negocio es responsable exclusivo de sus propios datos: definici�
 
 ## Estándares Obligatorios
 
-- [Asignar base de datos independiente por dominio/servicio](../../estandares/datos/database-per-service.md)
-- [Prohibir acceso directo a bases de datos de otros dominios](../../estandares/datos/no-shared-database.md)
-- [Exponer datos mediante APIs o eventos](../../estandares/datos/data-exposure.md)
-- [Documentar ownership de cada conjunto de datos](../../estandares/datos/data-catalog.md)
-- [Gestionar replicación controlada cuando sea necesaria](../../estandares/datos/data-replication.md)
+- [Definir ownership explícito de datos](../../estandares/datos/data-ownership-definition.md)
+- [Documentar ownership en catálogo de datos](../../estandares/datos/data-catalog.md)
+- [Establecer gobernanza de datos](../../estandares/datos/data-governance.md)
 
 ## Referencias Relacionadas
 

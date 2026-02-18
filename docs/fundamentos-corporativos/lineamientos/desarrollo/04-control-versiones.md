@@ -21,8 +21,6 @@ Uso inconsistente de control de versiones genera historial confuso, conflictos f
 - [Aplicar semantic versioning](../../estandares/desarrollo/semantic-versioning.md)
 - [Proteger ramas principales](../../estandares/desarrollo/branch-protection.md)
 - [Definir estrategia de merge](../../estandares/desarrollo/merge-strategies.md)
-- [Automatizar tagging y releases](../../estandares/desarrollo/release-management.md)
-- [Gestionar estructura de repositorios](../../estandares/desarrollo/repository-structure.md)
 
 ## Referencias Relacionadas
 

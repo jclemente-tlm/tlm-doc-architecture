@@ -19,6 +19,4 @@ La gestión fragmentada de identidades genera credenciales dispersas, permisos e
 - [Gestionar identidades de servicios](../../estandares/seguridad/service-identity.md)
 - [Implementar OAuth 2.0 / OIDC](../../estandares/seguridad/oauth-oidc.md)
 - [Gestionar ciclo de vida de identidades](../../estandares/seguridad/identity-lifecycle.md)
-- [No almacenar credenciales en código](../../estandares/seguridad/no-hardcoded-credentials.md)
 - [Implementar password policies](../../estandares/seguridad/password-policies.md)
-- [Rotar credenciales automáticamente](../../estandares/seguridad/credential-rotation.md)

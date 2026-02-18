@@ -17,12 +17,8 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 - [Contenedorizar aplicaciones con Docker](../../estandares/infraestructura/containerization.md)
 - [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalize-configuration.md)
 - [Diseñar servicios stateless](../../estandares/arquitectura/stateless-design.md)
-- [Implementar health checks liveness y readiness](../../estandares/infraestructura/health-checks.md)
-- [Preparar servicios para escalabilidad horizontal](../../estandares/arquitectura/horizontal-scaling.md)
 - [Aplicar graceful shutdown](../../estandares/arquitectura/graceful-shutdown.md)
-- [Gestionar secretos de forma segura](../../estandares/seguridad/secrets-management.md)
 - [Optimizar costos en cloud](../../estandares/infraestructura/cloud-cost-optimization.md)
-- [Implementar observabilidad completa](../../estandares/observabilidad/observability.md)
 
 ## Referencias Relacionadas
 

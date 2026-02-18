@@ -19,5 +19,3 @@ Las arquitecturas de red plana permiten que compromisos localizados se propaguen
 - [Usar VPCs y subnets](../../estandares/infraestructura/vpc-design.md)
 - [Configurar security groups y NACLs](../../estandares/seguridad/security-groups.md)
 - [Implementar network policies en K8s](../../estandares/seguridad/k8s-network-policies.md)
-- [Aplicar Zero Trust networking](../../estandares/seguridad/zero-trust-networking.md)
-- [Documentar network topology](../../estandares/seguridad/network-topology.md)

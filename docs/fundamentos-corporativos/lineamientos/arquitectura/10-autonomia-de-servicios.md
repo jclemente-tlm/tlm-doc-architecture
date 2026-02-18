@@ -16,12 +16,9 @@ Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar
 - [Implementar database per service](../../estandares/datos/database-per-service.md)
 - [Prohibir bases de datos compartidas](../../estandares/datos/no-shared-database.md)
 - [Habilitar despliegue independiente](../../estandares/desarrollo/independent-deployment.md)
-- [Versionar APIs para evolución independiente](../../estandares/apis/api-versioning.md)
-- [Mantener retrocompatibilidad en contratos](../../estandares/apis/api-backward-compatibility.md)
 - [Usar comunicación asíncrona para desacoplamiento](../../estandares/mensajeria/async-messaging.md)
-- [Implementar circuit breakers y degradación graceful](../../estandares/arquitectura/circuit-breaker.md)
-- [Definir bounded contexts claros](../../estandares/arquitectura/bounded-contexts.md)
-- [Implementar observabilidad completa por servicio](../../estandares/observabilidad/observability-stack.md)
+- [Establecer contratos explícitos en los límites](../../estandares/apis/api-contracts.md)
+- [Definir ownership de servicios](../../estandares/gobierno/service-ownership.md)
 
 ## Referencias Relacionadas
 

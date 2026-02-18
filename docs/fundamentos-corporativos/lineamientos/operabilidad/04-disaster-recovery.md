@@ -22,8 +22,6 @@ Ausencia de plan de recuperación ante desastres expone organización a pérdida
 - [Documentar runbooks de recuperación](../../estandares/operabilidad/dr-runbooks.md)
 - [Realizar simulacros de DR](../../estandares/operabilidad/dr-drills.md)
 - [Implementar multi-region failover](../../estandares/operabilidad/multi-region-failover.md)
-- [Mantener plan de continuidad de negocio](../../estandares/operabilidad/business-continuity-plan.md)
-- [Definir cadena de comunicación en desastres](../../estandares/operabilidad/incident-communication.md)
 
 ## Referencias Relacionadas
 

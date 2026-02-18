@@ -21,9 +21,6 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 - [Optimizar consultas y esquemas de base de datos](../../estandares/datos/database-optimization.md)
 - [Implementar load balancing](../../estandares/infraestructura/load-balancing.md)
 - [Configurar connection pooling](../../estandares/datos/connection-pooling.md)
-- [Usar CDN para contenido estático](../../estandares/infraestructura/cdn-usage.md)
-- [Monitorear métricas de rendimiento](../../estandares/observabilidad/performance-monitoring.md)
-- [Realizar performance testing](../../estandares/testing/performance-testing.md)
 
 ## Referencias Relacionadas
 

@@ -16,8 +16,6 @@ La divergencia entre entornos de desarrollo, QA y producción genera el síndrom
 - [Externalizar configuración (12-Factor App)](../../estandares/infraestructura/externalize-configuration.md)
 - [Gestionar secrets con AWS Secrets Manager](../../estandares/seguridad/secrets-management.md)
 - [Gestionar configuración con AWS Parameter Store](../../estandares/infraestructura/parameter-store.md)
-- [Contenedorizar aplicaciones](../../estandares/infraestructura/containerization.md)
 - [Garantizar paridad entre entornos](../../estandares/infraestructura/environment-parity.md)
 - [Gestionar variables por entorno](../../estandares/infraestructura/environment-variables.md)
 - [Nunca hardcodear configuración](../../estandares/desarrollo/no-hardcoded-config.md)
-- [Validar configuración al inicio](../../estandares/desarrollo/config-validation.md)

@@ -15,8 +15,6 @@ Sistemas distribuidos requieren trade-offs entre consistencia, disponibilidad y 
 
 - [Definir modelo de consistencia por caso de uso](../../estandares/datos/consistency-models.md)
 - [Implementar saga pattern para transacciones distribuidas](../../estandares/arquitectura/saga-pattern.md)
-- [Garantizar idempotencia en operaciones](../../estandares/mensajeria/idempotency.md)
-- [Usar eventos de dominio para sincronización](../../estandares/arquitectura/domain-events.md)
 - [Implementar estrategias de resolución de conflictos](../../estandares/datos/conflict-resolution.md)
 - [Gestionar replicación de datos](../../estandares/datos/data-replication.md)
 - [Aplicar CQRS cuando corresponda](../../estandares/arquitectura/cqrs-pattern.md)

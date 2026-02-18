@@ -20,5 +20,3 @@ La exposición de datos sensibles genera incidentes de seguridad, incumplimiento
 - [Aplicar enmascaramiento y tokenización](../../estandares/seguridad/data-masking.md)
 - [Implementar data loss prevention (DLP)](../../estandares/seguridad/dlp.md)
 - [Aplicar minimización de datos](../../estandares/seguridad/data-minimization.md)
-- [Definir políticas de retención](../../estandares/seguridad/data-retention.md)
-- [No loguear datos sensibles](../../estandares/seguridad/sensitive-data-logging.md)
