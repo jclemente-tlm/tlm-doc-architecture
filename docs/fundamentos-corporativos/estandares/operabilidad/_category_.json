@@ -1,0 +1,8 @@
+{
+    "label": "Operabilidad",
+    "position": 11,
+    "link": {
+        "type": "generated-index",
+        "description": "Estándares para operación, mantenimiento y gestión de servicios en producción."
+    }
+}

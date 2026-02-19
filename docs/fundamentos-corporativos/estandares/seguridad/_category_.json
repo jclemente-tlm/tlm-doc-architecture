@@ -1,0 +1,8 @@
+{
+    "label": "Seguridad",
+    "position": 9,
+    "link": {
+        "type": "generated-index",
+        "description": "Estándares de seguridad, autenticación, autorización y protección de datos."
+    }
+}
