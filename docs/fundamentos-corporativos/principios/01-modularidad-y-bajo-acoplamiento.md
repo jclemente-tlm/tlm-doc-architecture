@@ -32,14 +32,14 @@ Este principio busca permitir la evolución independiente de componentes minimiz
 
 **Lineamientos relacionados:**
 
-- [Diseño Orientado al Dominio (DDD)](../../lineamientos/arquitectura/08-diseno-orientado-al-dominio.md)
-- [Autonomía de Servicios](../../lineamientos/arquitectura/09-autonomia-de-servicios.md)
-- [Arquitectura Limpia](../../lineamientos/arquitectura/10-arquitectura-limpia.md)
+- [Modelado de Dominio](../lineamientos/arquitectura/09-modelado-de-dominio.md)
+- [Autonomía de Servicios](../lineamientos/arquitectura/10-autonomia-de-servicios.md)
+- [Arquitectura Limpia](../lineamientos/arquitectura/11-arquitectura-limpia.md)
 
 **ADRs relacionados:**
 
-- [ADR-012: Kafka para Mensajería Asíncrona](../../decisiones-de-arquitectura/adr-012-kafka-mensajeria-asincrona.md)
-- [ADR-008: Kong como API Gateway](../../decisiones-de-arquitectura/adr-008-kong-api-gateway.md)
+- [ADR-008: Kafka para Mensajería Asíncrona](/docs/decisiones-de-arquitectura/adr-008-kafka-mensajeria-asincrona)
+- [ADR-010: Kong como API Gateway](/docs/decisiones-de-arquitectura/adr-010-kong-api-gateway)
 
 **Frameworks de referencia:**
 

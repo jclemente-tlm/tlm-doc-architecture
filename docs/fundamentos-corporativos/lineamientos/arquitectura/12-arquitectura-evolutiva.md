@@ -24,6 +24,6 @@ La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, ac
 
 ## Referencias Relacionadas
 
-- [Mantenibilidad y Extensibilidad](../../principios/01-mantenibilidad-y-extensibilidad.md)
+- [Mantenibilidad y Extensibilidad](../../principios/04-mantenibilidad-y-extensibilidad.md)
 - [Descomposición y Límites](02-descomposicion-y-limites.md)
 - [Simplicidad Intencional](13-simplicidad-intencional.md)

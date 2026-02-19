@@ -8,11 +8,9 @@ Este portal centraliza los lineamientos, arquitecturas, integraciones y recursos
 
 ## Estructura de la documentación
 
-- **[Lineamientos](lineamientos/)**: Estándares de código, convenciones de nombres, documentación, seguridad, arquitectura y más.
-- **[ADRs](adrs/)**: Architecture Decision Records. Registro de decisiones arquitectónicas relevantes para los sistemas de Talma.
-- **[Aplicaciones](aplicaciones/)**: Documentación específica de aplicaciones, agrupadas por dominio (ejemplo: carga, rampa).
-- **[Capa de Integración](capa-integracion/)**: Especificaciones y recursos para la integración entre sistemas internos y externos.
-- **[Servicios Corporativos](servicios-corporativos/)**: Información y lineamientos sobre servicios compartidos a nivel corporativo.
+- **[Fundamentos Corporativos](./fundamentos-corporativos/)**: Principios, lineamientos, estándares y estilos arquitectónicos corporativos.
+- **[Decisiones de Arquitectura](./decisiones-de-arquitectura/)**: Architecture Decision Records (ADRs). Registro de decisiones arquitectónicas.
+- **[Guías de Arquitectura](./guias-arquitectura/)**: Guías detalladas de implementación de patrones y prácticas arquitectónicas.
 
 ## ¿Cómo navegar y contribuir?
 

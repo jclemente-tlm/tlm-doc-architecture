@@ -156,7 +156,7 @@ Monolito → Monolito Modular → Microservicios
 
 ## Referencias
 
-- [Principios Corporativos](../principios/)
-- [Lineamientos de Arquitectura](../../fundamentos-corporativos/lineamientos/arquitectura/)
-- [Lineamientos: Cuándo usar Microservicios vs Monolito](../lineamientos.md)
-- [ADR-013: PostgreSQL Event Sourcing](../../decisiones-de-arquitectura/adr-013-postgresql-event-sourcing.md)
+## Referencias
+
+- [Principios Corporativos](/docs/fundamentos-corporativos/principios/)
+- [Lineamientos de Arquitectura](/docs/fundamentos-corporativos/lineamientos/arquitectura/)

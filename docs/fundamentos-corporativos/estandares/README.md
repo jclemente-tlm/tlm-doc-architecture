@@ -14,7 +14,7 @@ Estándares técnicos para el desarrollo de APIs REST:
 4. **Versionado**: Semantic versioning, estrategias de compatibilidad
 5. **Performance**: Paginación, caching, compresión, rate limiting
 
-### [Código](./codigo/)
+### [Código](./desarrollo/)
 
 Estándares de Clean Code por lenguaje de programación:
 
@@ -67,8 +67,6 @@ Lineamientos (CÓMO abstracto)
     ↓
 Estándares (QUÉ técnico)  ← Estás aquí
     ↓
-Convenciones (CÓMO escribir)
-    ↓
 Código de Producción
 ```
 
@@ -79,7 +77,6 @@ Código de Producción
 | **Principio**   | Valor fundamental        | "Seguridad desde el Diseño"                                     |
 | **Lineamiento** | Directriz arquitectónica | "Diseñar APIs con autenticación y autorización obligatoria"     |
 | **Estándar**    | Especificación técnica   | "Usar JWT Bearer con validación de issuer, audience y lifetime" |
-| **Convención**  | Regla de escritura       | "Nombres de endpoints en kebab-case: /api/v1/user-profiles"     |
 
 ## 📚 Cómo usar estos estándares
 
@@ -124,10 +121,9 @@ Cada estándar debe implementar uno o más lineamientos:
 
 ## 📖 Referencias
 
-- [Principios](/docs/fundamentos-corporativos/principios)
-- [Lineamientos](/docs/fundamentos-corporativos/lineamientos)
-- [Convenciones](/docs/fundamentos-corporativos/convenciones)
-- [ADRs](/docs/decisiones-de-arquitectura)
+- [Principios](/docs/fundamentos-corporativos/principios/)
+- [Lineamientos](/docs/fundamentos-corporativos/lineamientos/)
+- [ADRs](/docs/decisiones-de-arquitectura/)
 
 ---
 

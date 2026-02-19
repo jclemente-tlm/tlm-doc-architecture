@@ -9,7 +9,7 @@ description: Estándares para definir contratos de eventos con AsyncAPI y esquem
 
 ## Contexto
 
-Este estándar define cómo documentar y versionar contratos de eventos para comunicación asíncrona mediante mensajería. Complementa el lineamiento [Mensajería y Eventos](../../lineamientos/integracion/mensajeria-eventos.md) y [Event-Driven Architecture](../arquitectura/event-driven-architecture.md).
+Este estándar define cómo documentar y versionar contratos de eventos para comunicación asíncrona mediante mensajería. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
 
 **Conceptos incluidos:**
 
@@ -1212,8 +1212,7 @@ public record ValidationResult
 
 **Relacionados:**
 
-- [Event-Driven Architecture](../arquitectura/event-driven-architecture.md)
-- [Mensajería y Eventos](../../lineamientos/integracion/mensajeria-eventos.md)
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md)
 - [Diseño de APIs REST](./rest-api-design.md)
 
 ---

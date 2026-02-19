@@ -9,7 +9,7 @@ description: Estándar para modelado de dominio usando DDD incluyendo agregados,
 
 ## Contexto
 
-Este estándar consolida las prácticas de Domain-Driven Design para modelar la lógica de negocio de forma rica y expresiva. Complementa el lineamiento [Modelado de Dominio](../../lineamientos/arquitectura/12-modelado-de-dominio.md) estableciendo cómo estructurar el dominio usando patrones tácticos y estratégicos de DDD.
+Este estándar consolida las prácticas de Domain-Driven Design para modelar la lógica de negocio de forma rica y expresiva. Complementa el lineamiento [Modelado de Dominio](../../lineamientos/arquitectura/09-modelado-de-dominio.md) estableciendo cómo estructurar el dominio usando patrones tácticos y estratégicos de DDD.
 
 **Conceptos incluidos:**
 

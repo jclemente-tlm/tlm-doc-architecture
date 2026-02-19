@@ -20,7 +20,7 @@ La selección del estilo arquitectónico es una decisión estructural que impact
 
 ## Referencias Relacionadas
 
-- [Seleccionar estilo basado en contexto de negocio](../../estilos-arquitectonicos/criterios-seleccion.md)
+- [Seleccionar estilo basado en contexto de negocio](../../estilos-arquitectonicos/)
 - [Diseñar monolitos modulares para dominios acotados](../../estilos-arquitectonicos/monolito-modular.md)
 - [Adoptar microservicios para dominios independientes](../../estilos-arquitectonicos/microservicios.md)
 - [Implementar arquitectura orientada a eventos para desacoplamiento temporal](../../estilos-arquitectonicos/eventos.md)

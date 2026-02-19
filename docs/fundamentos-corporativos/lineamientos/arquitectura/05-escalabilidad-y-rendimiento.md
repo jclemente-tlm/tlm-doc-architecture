@@ -15,11 +15,11 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 ## Estándares Obligatorios
 
 - [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/scalability-performance.md#1-stateless-design)
-- [Implementar auto-scaling basado en métricas](../../estandares/infraestructura/scalability-performance.md#3-horizontal-scaling)
+- [Implementar auto-scaling basado en métricas](../../estandares/arquitectura/scalability-performance.md#3-horizontal-scaling)
 - [Aplicar estrategias de caché distribuido](../../estandares/arquitectura/scalability-performance.md#2-caching-strategies)
 - [Implementar procesamiento asíncrono](../../estandares/arquitectura/cqrs-event-driven.md#3-async-processing)
 - [Optimizar consultas y esquemas de base de datos](../../estandares/datos/database-standards.md#2-database-optimization)
-- [Implementar load balancing](../../estandares/infraestructura/scalability-performance.md#4-load-balancing)
+- [Implementar load balancing](../../estandares/arquitectura/scalability-performance.md#4-load-balancing)
 - [Configurar connection pooling](../../estandares/datos/database-standards.md#3-connection-pooling)
 
 ## Referencias Relacionadas
@@ -27,5 +27,5 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 - [Resiliencia y Disponibilidad](04-resiliencia-y-disponibilidad.md)
 - [Cloud Native](03-cloud-native.md)
 - [Observabilidad](06-observabilidad.md)
-- [ADR-007: AWS ECS Fargate](../../../decisiones-de-arquitectura/adr-007-aws-ecs-fargate-contenedores.md)
-- [ADR-012: Kafka Mensajería](../../../decisiones-de-arquitectura/adr-012-kafka-mensajeria-asincrona.md)
+- [ADR-002: AWS ECS Fargate](/docs/decisiones-de-arquitectura/adr-002-aws-ecs-fargate-contenedores)
+- [ADR-008: Kafka Mensajería](/docs/decisiones-de-arquitectura/adr-008-kafka-mensajeria-asincrona)

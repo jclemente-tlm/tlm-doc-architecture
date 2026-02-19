@@ -9,7 +9,7 @@ description: Estándares para gestión de infraestructura con Terraform, incluye
 
 ## Contexto
 
-Este estándar define prácticas para gestión de infraestructura como código usando Terraform, incluyendo implementación, workflow, gestión de estado, versionamiento, code review, detección de drift, configuración de redes virtuales y optimización de costos en AWS. Complementa los lineamientos de [Infraestructura](../../lineamientos/infraestructura/) y asegura infraestructura reproducible, auditable y eficiente.
+Este estándar define prácticas para gestión de infraestructura como código usando Terraform, incluyendo implementación, workflow, gestión de estado, versionamiento, code review, detección de drift, configuración de redes virtuales y optimización de costos en AWS. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md) y asegura infraestructura reproducible, auditable y eficiente.
 
 **Conceptos incluidos:**
 

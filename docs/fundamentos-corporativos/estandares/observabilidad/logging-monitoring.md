@@ -9,7 +9,7 @@ description: Estándares para logging estructurado, métricas, dashboards y aler
 
 ## Contexto
 
-Este estándar define prácticas para observabilidad mediante logging estructurado, métricas, dashboards y alertas usando Grafana Stack (Loki + Mimir + Grafana + Alloy) y Serilog. Complementa el lineamiento [Observability](../../lineamientos/observabilidad/observability.md) asegurando visibilidad completa del comportamiento de aplicaciones en producción para debugging rápido, análisis de performance y detección proactiva de problemas.
+Este estándar define prácticas para observabilidad mediante logging estructurado, métricas, dashboards y alertas usando Grafana Stack (Loki + Mimir + Grafana + Alloy) y Serilog. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) asegurando visibilidad completa del comportamiento de aplicaciones en producción para debugging rápido, análisis de performance y detección proactiva de problemas.
 
 **Conceptos incluidos:**
 

@@ -9,7 +9,7 @@ description: Estándares para gestión de configuración, externalización, cent
 
 ## Contexto
 
-Este estándar define prácticas para gestión de configuración de aplicaciones, incluyendo externalización de configuración, uso de servicios centralizados, variables de entorno, y paridad entre ambientes (dev/staging/prod). Complementa el lineamiento [Infrastructure as Code](../../lineamientos/infraestructura/iac.md) y el principio [XII-Factor App Config](https://12factor.net/config) asegurando configuración segura, flexible y mantenible.
+Este estándar define prácticas para gestión de configuración de aplicaciones, incluyendo externalización de configuración, uso de servicios centralizados, variables de entorno, y paridad entre ambientes (dev/staging/prod). Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md) y el principio [XII-Factor App Config](https://12factor.net/config) asegurando configuración segura, flexible y mantenible.
 
 **Conceptos incluidos:**
 

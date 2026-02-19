@@ -9,7 +9,7 @@ description: Estándares para documentar arquitectura usando arc42, C4 Model, Ar
 
 ## Contexto
 
-Este estándar define cómo documentar decisiones y estructuras arquitectónicas de forma consistente, mantenible y útil. Complementa el lineamiento [Documentación Arquitectónica](../../lineamientos/gobierno/documentacion-arquitectonica.md).
+Este estándar define cómo documentar decisiones y estructuras arquitectónicas de forma consistente, mantenible y útil. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md).
 
 **Conceptos incluidos:**
 
@@ -441,10 +441,10 @@ C4Deployment
 
 ## 9. Decisiones de Diseño
 
-Ver [Architecture Decision Records](../../decisiones-de-arquitectura/) para decisiones detalladas:
+Ver [Architecture Decision Records](/docs/decisiones-de-arquitectura/) para decisiones detalladas:
 
-- [ADR-001: Estrategia Multi-Tenancy](../../decisiones-de-arquitectura/adr-001-estrategia-multi-tenancy.md)
-- [ADR-002: AWS ECS Fargate para Contenedores](../../decisiones-de-arquitectura/adr-002-aws-ecs-fargate-contenedores.md)
+- [ADR-001: Estrategia Multi-Tenancy](/docs/decisiones-de-arquitectura/adr-001-estrategia-multi-tenancy)
+- [ADR-002: AWS ECS Fargate para Contenedores](/docs/decisiones-de-arquitectura/adr-002-aws-ecs-fargate-contenedores)
 - ADR-003: PostgreSQL como base de datos principal
 - ADR-004: Event sourcing para auditoría
 
@@ -1097,7 +1097,7 @@ cat > docs/architecture/arc42.md << 'EOF'
 [Completar...]
 
 ## 9. Decisiones de Diseño
-Ver [ADRs](../../../decisiones-de-arquitectura/)
+Ver [ADRs](/docs/decisiones-de-arquitectura/)
 
 ## 10. Requisitos de Calidad
 [Completar...]

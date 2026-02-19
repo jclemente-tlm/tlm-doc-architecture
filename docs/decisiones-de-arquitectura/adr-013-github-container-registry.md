@@ -105,9 +105,8 @@ Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo 
 - [Amazon ECR](https://aws.amazon.com/ecr/)
 - [Harbor](https://goharbor.io/)
 - [Docker Registry API v2](https://docs.docker.com/registry/spec/api/)
-- [ADR-007: AWS ECS Fargate Contenedores](./adr-007-aws-ecs-fargate-contenedores.md)
-- [ADR-009: GitHub Actions CI/CD](./adr-009-github-actions-cicd.md)
-- [ADR-023: Trivy + Checkov Security Scanning](./adr-023-trivy-checkov-security-scanning.md)
+- [ADR-002: AWS ECS Fargate Contenedores](./adr-002-aws-ecs-fargate-contenedores.md)
+- [ADR-012: GitHub Actions CI/CD](./adr-012-github-actions-cicd.md)
 
 ---
 

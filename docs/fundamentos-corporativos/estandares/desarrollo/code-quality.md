@@ -9,7 +9,7 @@ description: Estándares para convenciones de código, code review, refactoring,
 
 ## Contexto
 
-Este estándar define las prácticas para mantener código de alta calidad, legible, mantenible y seguro. Complementa el lineamiento [Calidad de Código](../../lineamientos/desarrollo/calidad-codigo.md).
+Este estándar define las prácticas para mantener código de alta calidad, legible, mantenible y seguro. Complementa el lineamiento [Calidad de Código](../../lineamientos/desarrollo/01-calidad-codigo.md).
 
 **Conceptos incluidos:**
 

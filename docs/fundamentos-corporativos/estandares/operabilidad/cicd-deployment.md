@@ -1454,7 +1454,7 @@ histogram_quantile(0.95, sum(rate(deployment_duration_seconds_bucket[7d])) by (l
 
 **Relacionados:**
 
-- [Infrastructure as Code](./infrastructure-as-code.md)
+- [Infrastructure as Code](../infraestructura/infrastructure-as-code.md)
 - [Logging & Monitoring](../observabilidad/logging-monitoring.md)
 - [Distributed Tracing](../observabilidad/distributed-tracing.md)
 

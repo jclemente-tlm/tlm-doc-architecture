@@ -22,6 +22,6 @@ Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar
 
 ## Referencias Relacionadas
 
-- [Propiedad de Datos](../../datos/03-propiedad-de-datos.md)
+- [Propiedad de Datos](../../lineamientos/datos/03-propiedad-de-datos.md)
 - [Descomposición y Límites](02-descomposicion-y-limites.md)
 - [Modelado de Dominio](09-modelado-de-dominio.md)

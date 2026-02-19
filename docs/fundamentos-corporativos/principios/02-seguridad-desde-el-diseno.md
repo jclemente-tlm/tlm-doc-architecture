@@ -34,17 +34,17 @@ Este principio busca integrar la seguridad como propiedad estructural del sistem
 
 **Lineamientos relacionados:**
 
-- [Arquitectura Segura](../../lineamientos/seguridad/01-arquitectura-segura.md)
-- [Zero Trust](../../lineamientos/seguridad/02-zero-trust.md)
-- [Defensa en Profundidad](../../lineamientos/seguridad/03-defensa-en-profundidad.md)
-- [Mínimo Privilegio](../../lineamientos/seguridad/04-minimo-privilegio.md)
-- [Identidad y Accesos](../../lineamientos/seguridad/05-identidad-y-accesos.md)
-- [Protección de Datos](../../lineamientos/seguridad/07-proteccion-de-datos.md)
+- [Arquitectura Segura](../lineamientos/seguridad/01-arquitectura-segura.md)
+- [Zero Trust](../lineamientos/seguridad/02-zero-trust.md)
+- [Defensa en Profundidad](../lineamientos/seguridad/03-defensa-en-profundidad.md)
+- [Mínimo Privilegio](../lineamientos/seguridad/04-minimo-privilegio.md)
+- [Identidad y Accesos](../lineamientos/seguridad/05-identidad-y-accesos.md)
+- [Protección de Datos](../lineamientos/seguridad/07-proteccion-de-datos.md)
 
 **ADRs relacionados:**
 
-- [ADR-004: Keycloak para SSO y Autenticación](../../../decisiones-de-arquitectura/adr-004-keycloak-sso-autenticacion.md)
-- [ADR-003: AWS Secrets Manager](../../../decisiones-de-arquitectura/adr-003-aws-secrets-manager.md)
+- [ADR-003: Keycloak para SSO y Autenticación](/docs/decisiones-de-arquitectura/adr-003-keycloak-sso-autenticacion)
+- [ADR-004: AWS Secrets Manager](/docs/decisiones-de-arquitectura/adr-004-aws-secrets-manager)
 
 **Frameworks de referencia:**
 

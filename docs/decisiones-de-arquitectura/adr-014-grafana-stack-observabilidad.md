@@ -130,7 +130,6 @@ Se selecciona el **Grafana Stack OSS** con:
 - [AWS CloudWatch](https://aws.amazon.com/cloudwatch/)
 - [OpenTelemetry .NET](https://opentelemetry.io/docs/instrumentation/net/)
 - [Serilog](https://serilog.net/)
-- [ADR-016: Logging Estructurado](./adr-016-logging-estructurado.md)
 
 ---
 

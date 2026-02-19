@@ -9,7 +9,7 @@ description: Estándares para README, CONTRIBUTING, guías de onboarding y runbo
 
 ## Contexto
 
-Este estándar define cómo crear documentación técnica operacional que facilite el uso, contribución y operación de servicios. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/documentacion-tecnica.md).
+Este estándar define cómo crear documentación técnica operacional que facilite el uso, contribución y operación de servicios. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/03-documentacion-tecnica.md).
 
 **Conceptos incluidos:**
 

@@ -9,7 +9,7 @@ description: Patrones para sistemas resilientes incluyendo circuit breaker, retr
 
 ## Contexto
 
-Este estándar consolida los patrones fundamentales para construir sistemas resilientes que manejan fallos gracefully. Complementa el lineamiento [Resiliencia y Disponibilidad](../../lineamientos/arquitectura/14-resiliencia-y-disponibilidad.md).
+Este estándar consolida los patrones fundamentales para construir sistemas resilientes que manejan fallos gracefully. Complementa el lineamiento [Resiliencia y Disponibilidad](../../lineamientos/arquitectura/04-resiliencia-y-disponibilidad.md).
 
 **Conceptos incluidos:**
 

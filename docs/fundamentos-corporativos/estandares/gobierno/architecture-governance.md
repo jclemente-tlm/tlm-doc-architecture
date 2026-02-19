@@ -9,7 +9,7 @@ description: Estándares para reviews, auditorías, Architecture Board, ADR regi
 
 ## Contexto
 
-Este estándar define el modelo de gobierno para decisiones arquitectónicas, incluyendo procesos de revisión, auditorías periódicas, gestión del Architecture Board y ciclo de vida de ADRs. Complementa el lineamiento [Gobierno de Arquitectura](../../lineamientos/gobierno/gobierno-arquitectura.md) asegurando consistencia y calidad en decisiones arquitectónicas.
+Este estándar define el modelo de gobierno para decisiones arquitectónicas, incluyendo procesos de revisión, auditorías periódicas, gestión del Architecture Board y ciclo de vida de ADRs. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) asegurando consistencia y calidad en decisiones arquitectónicas.
 
 **Conceptos incluidos:**
 
@@ -1325,7 +1325,7 @@ adr generate toc > README.md
 
 ### GitHub Actions Validation
 
-Ver [.github/workflows/validate-adrs.yml](../../.github/workflows/validate-adrs.yml) para validación automática de:
+Se debe implementar validación automática en CI/CD para:
 
 - Numeración secuencial
 - Secciones requeridas presentes

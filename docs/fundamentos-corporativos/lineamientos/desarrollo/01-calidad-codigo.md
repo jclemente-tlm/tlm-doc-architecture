@@ -11,7 +11,7 @@ Código sin estándares consistentes, análisis estático ni revisiones genera d
 
 **Este lineamiento aplica a:** Convenciones de código (C#, SQL), análisis estático y linters (SonarQube, StyleCop), code reviews y revisión por pares, métricas de calidad (complejidad ciclomática, duplicación), herramientas de formateo y estilo.
 
-**No aplica a:** Testing automatizado (ver [Estrategia de Pruebas](./04-testing.md)), monitoreo en producción.
+**No aplica a:** Testing automatizado (ver [Estrategia de Pruebas](./02-estrategia-pruebas.md)), monitoreo en producción.
 
 ## Estándares Obligatorios
 

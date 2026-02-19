@@ -34,15 +34,14 @@ Este principio busca mantener la operación continua del sistema ante fallos med
 
 **Lineamientos relacionados:**
 
-- [Escalabilidad y Rendimiento](../../lineamientos/arquitectura/13-escalabilidad-y-rendimiento.md)
-- [Observabilidad y Monitoreo](../../lineamientos/operabilidad/01-observabilidad-y-monitoreo.md)
-- [Recuperación ante Desastres](../../lineamientos/operabilidad/02-recuperacion-ante-desastres.md)
+- [Escalabilidad y Rendimiento](../lineamientos/arquitectura/05-escalabilidad-y-rendimiento.md)
+- [Observabilidad](../lineamientos/arquitectura/06-observabilidad.md)
+- [Disaster Recovery](../lineamientos/operabilidad/04-disaster-recovery.md)
 
 **ADRs relacionados:**
 
-- [ADR-011: Redis como Cache Distribuido](../../decisiones-de-arquitectura/adr-011-redis-cache-distribuido.md)
-- [ADR-007: AWS ECS Fargate para Contenedores](../../decisiones-de-arquitectura/adr-007-aws-ecs-fargate-contenedores.md)
-- [ADR-021: Grafana Stack para Observabilidad](../../decisiones-de-arquitectura/adr-021-grafana-stack-observabilidad.md)
+- [ADR-002: AWS ECS Fargate para Contenedores](/docs/decisiones-de-arquitectura/adr-002-aws-ecs-fargate-contenedores)
+- [ADR-014: Grafana Stack para Observabilidad](/docs/decisiones-de-arquitectura/adr-014-grafana-stack-observabilidad)
 
 **Frameworks de referencia:**
 

@@ -9,7 +9,7 @@ description: Estándar para el manejo consistente de errores en APIs usando RFC 
 
 ## Contexto
 
-Este estándar define cómo manejar, reportar y registrar errores de manera consistente en todas las APIs. Complementa el lineamiento [APIs y Contratos](../../lineamientos/integracion/apis-contratos.md) y [Manejo de Errores](../../lineamientos/desarrollo/manejo-errores.md).
+Este estándar define cómo manejar, reportar y registrar errores de manera consistente en todas las APIs. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/07-apis-y-contratos.md).
 
 **Propósito:** Respuestas de error predecibles, diagnóstico rápido, experiencia de usuario clara.
 

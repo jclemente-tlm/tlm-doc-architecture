@@ -9,7 +9,7 @@ description: Estándares para el diseño de APIs REST incluyendo contratos, vers
 
 ## Contexto
 
-Este estándar consolida las prácticas fundamentales para diseñar APIs REST consistentes, mantenibles y escalables. Complementa el lineamiento [APIs y Contratos](../../lineamientos/integracion/apis-contratos.md) asegurando uniformidad en toda la organización.
+Este estándar consolida las prácticas fundamentales para diseñar APIs REST consistentes, mantenibles y escalables. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/07-apis-y-contratos.md) asegurando uniformidad en toda la organización.
 
 **Conceptos incluidos:**
 

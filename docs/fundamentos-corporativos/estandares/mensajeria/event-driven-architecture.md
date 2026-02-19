@@ -9,7 +9,7 @@ description: Estándares para arquitectura basada en eventos, diseño de eventos
 
 ## Contexto
 
-Este estándar define prácticas para implementar arquitectura basada en eventos (EDA) usando Apache Kafka, incluyendo diseño de eventos, catálogo centralizado, mensajería asíncrona e idempotencia. Complementa los lineamientos [Event-Driven Architecture](../../lineamientos/mensajeria/event-driven.md) y [Async Communication](../../lineamientos/mensajeria/async-communication.md) asegurando comunicación desacoplada, escalable y confiable entre servicios.
+Este estándar define prácticas para implementar arquitectura basada en eventos (EDA) usando Apache Kafka, incluyendo diseño de eventos, catálogo centralizado, mensajería asíncrona e idempotencia. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) asegurando comunicación desacoplada, escalable y confiable entre servicios.
 
 **Conceptos incluidos:**
 

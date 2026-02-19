@@ -2,9 +2,9 @@
 
 Los lineamientos traducen los principios arquitectónicos en guías prácticas y prescriptivas para el diseño, desarrollo y operación de sistemas en Talma.
 
-## 📋 Estructura
+## � Estructura
 
-### [Arquitectura](arquitectura)
+### [Arquitectura](./arquitectura/)
 
 Lineamientos fundamentales para el diseño de sistemas:
 
@@ -22,7 +22,7 @@ Lineamientos fundamentales para el diseño de sistemas:
 12. Arquitectura Evolutiva
 13. Simplicidad Intencional
 
-### [Datos](datos)
+### [Datos](./datos/)
 
 Lineamientos para gestión de datos en arquitecturas distribuidas:
 
@@ -30,7 +30,7 @@ Lineamientos para gestión de datos en arquitecturas distribuidas:
 2. Consistencia y Sincronización
 3. Propiedad de Datos
 
-### [Desarrollo](desarrollo)
+### [Desarrollo](./desarrollo/)
 
 Lineamientos para prácticas de desarrollo:
 
@@ -39,7 +39,7 @@ Lineamientos para prácticas de desarrollo:
 3. Documentación Técnica
 4. Control de Versiones
 
-### [Gobierno](gobierno)
+### [Gobierno](./gobierno/)
 
 Lineamientos para gobierno de arquitectura:
 
@@ -47,16 +47,16 @@ Lineamientos para gobierno de arquitectura:
 2. Revisiones Arquitectónicas
 3. Cumplimiento y Excepciones
 
-### [Operabilidad](operabilidad)
+### [Operabilidad](./operabilidad/)
 
-Lineamientos para operación y despliegue:
+Lineamientos para operación de sistemas:
 
 1. CI/CD Pipelines
 2. Infraestructura como Código
-3. Configuración y Entornos
+3. Configuración de Entornos
 4. Disaster Recovery
 
-### [Seguridad](seguridad)
+### [Seguridad](./seguridad/)
 
 Lineamientos de seguridad:
 

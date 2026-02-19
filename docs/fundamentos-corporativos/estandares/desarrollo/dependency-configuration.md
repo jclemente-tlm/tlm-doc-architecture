@@ -9,7 +9,7 @@ description: Estándares para gestión de paquetes, versionamiento semántico, c
 
 ## Contexto
 
-Este estándar define las prácticas para gestión de dependencias, configuración y despliegue de servicios, asegurando independencia, trazabilidad y operación segura. Complementa los lineamientos [Microservicios](../../lineamientos/arquitectura/microservicios.md) y [Configuración](../../lineamientos/desarrollo/configuracion.md).
+Este estándar define las prácticas para gestión de dependencias, configuración y despliegue de servicios, asegurando independencia, trazabilidad y operación segura. Complementa los lineamientos [Autonomía de Servicios](../../lineamientos/arquitectura/10-autonomia-de-servicios.md) y [Configuración de Entornos](../../lineamientos/operabilidad/03-configuracion-entornos.md).
 
 **Conceptos incluidos:**
 

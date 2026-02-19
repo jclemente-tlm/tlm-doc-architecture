@@ -9,7 +9,7 @@ description: Estándares para tracing distribuido, correlation IDs y definición
 
 ## Contexto
 
-Este estándar define prácticas para implementar tracing distribuido, propagación de correlation IDs y definición de Service Level Objectives (SLOs) y Service Level Agreements (SLAs) usando OpenTelemetry y Grafana Tempo. Complementa el lineamiento [Observability](../../lineamientos/observabilidad/observability.md) permitiendo rastrear requests a través de múltiples servicios, diagnosticar cuellos de botella y medir confiabilidad objetivamente.
+Este estándar define prácticas para implementar tracing distribuido, propagación de correlation IDs y definición de Service Level Objectives (SLOs) y Service Level Agreements (SLAs) usando OpenTelemetry y Grafana Tempo. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) permitiendo rastrear requests a través de múltiples servicios, diagnosticar cuellos de botella y medir confiabilidad objetivamente.
 
 **Conceptos incluidos:**
 

@@ -9,7 +9,7 @@ description: Modelos de consistencia, resolución de conflictos, replicación de
 
 ## Contexto
 
-Este estándar define cómo manejar consistencia en sistemas distribuidos con múltiples bases de datos, incluyendo modelos de consistencia, estrategias de replicación, resolución de conflictos y evolución de esquemas sin downtime. Complementa el lineamiento [Consistencia de Datos](../../lineamientos/datos/consistencia-datos.md).
+Este estándar define cómo manejar consistencia en sistemas distribuidos con múltiples bases de datos, incluyendo modelos de consistencia, estrategias de replicación, resolución de conflictos y evolución de esquemas sin downtime. Complementa el lineamiento [Consistencia y Sincronización](../../lineamientos/datos/02-consistencia-y-sincronizacion.md).
 
 **Conceptos incluidos:**
 

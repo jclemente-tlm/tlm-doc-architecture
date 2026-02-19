@@ -27,5 +27,5 @@ Gestión manual de infraestructura mediante consolas crea configuraciones no doc
 
 - [CI/CD y Automatización](./01-cicd-pipelines.md) (automatización de provisioning)
 - [Configuración de Entornos](./03-configuracion-entornos.md) (configuración de aplicaciones)
-- [Disaster Recovery](./05-disaster-recovery.md) (recreación de infraestructura)
+- [Disaster Recovery](./04-disaster-recovery.md) (recreación de infraestructura)
 - [Segmentación y Aislamiento](../seguridad/06-segmentacion-y-aislamiento.md) (networking, VPCs)

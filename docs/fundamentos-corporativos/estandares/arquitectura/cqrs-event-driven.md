@@ -9,7 +9,7 @@ description: Patrones CQRS, Saga, procesamiento asíncrono y compensación para 
 
 ## Contexto
 
-Este estándar consolida patrones para arquitecturas event-driven y separación de comandos/consultas. Complementa los lineamientos [Arquitectura Event-Driven](../../lineamientos/arquitectura/arquitectura-event-driven.md) y [Modelado de Dominio](../../lineamientos/arquitectura/12-modelado-de-dominio.md).
+Este estándar consolida patrones para arquitecturas event-driven y separación de comandos/consultas. Complementa los lineamientos [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) y [Modelado de Dominio](../../lineamientos/arquitectura/09-modelado-de-dominio.md).
 
 **Conceptos incluidos:**
 

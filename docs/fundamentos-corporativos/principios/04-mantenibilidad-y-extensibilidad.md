@@ -34,15 +34,14 @@ Este principio busca minimizar el costo de cambio y maximizar la capacidad de ad
 
 **Lineamientos relacionados:**
 
-- [Arquitectura Limpia](../../lineamientos/arquitectura/10-arquitectura-limpia.md)
-- [Arquitectura Evolutiva](../../lineamientos/arquitectura/11-arquitectura-evolutiva.md)
-- [Simplicidad Intencional](../../lineamientos/arquitectura/12-simplicidad-intencional.md)
-- [Diseño Orientado al Dominio](../../lineamientos/arquitectura/08-diseno-orientado-al-dominio.md)
+- [Arquitectura Limpia](../lineamientos/arquitectura/11-arquitectura-limpia.md)
+- [Arquitectura Evolutiva](../lineamientos/arquitectura/12-arquitectura-evolutiva.md)
+- [Simplicidad Intencional](../lineamientos/arquitectura/13-simplicidad-intencional.md)
+- [Modelado de Dominio](../lineamientos/arquitectura/09-modelado-de-dominio.md)
 
 **ADRs relacionados:**
 
-- [ADR-025: SonarQube para SAST y Code Quality](../../../decisiones-de-arquitectura/adr-025-sonarqube-sast-code-quality.md)
-- [ADR-009: GitHub Actions para CI/CD](../../../decisiones-de-arquitectura/adr-009-github-actions-cicd.md)
+- [ADR-012: GitHub Actions para CI/CD](/docs/decisiones-de-arquitectura/adr-012-github-actions-cicd)
 
 **Frameworks de referencia:**
 

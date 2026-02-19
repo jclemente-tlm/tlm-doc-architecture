@@ -9,7 +9,7 @@ description: Estándares para migraciones, optimización, connection pooling y v
 
 ## Contexto
 
-Este estándar define las prácticas operacionales fundamentales para trabajar con bases de datos relacionales, cubriendo migraciones, performance, configuración y calidad de datos. Complementa el lineamiento [Gestión de Datos](../../lineamientos/datos/gestion-datos.md).
+Este estándar define las prácticas operacionales fundamentales para trabajar con bases de datos relacionales, cubriendo migraciones, performance, configuración y calidad de datos. Complementa el lineamiento [Datos por Dominio](../../lineamientos/datos/01-datos-por-dominio.md).
 
 **Conceptos incluidos:**
 

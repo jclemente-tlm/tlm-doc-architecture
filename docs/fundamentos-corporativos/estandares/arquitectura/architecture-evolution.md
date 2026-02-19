@@ -9,7 +9,7 @@ description: Patrones para evolución arquitectónica incluyendo fitness functio
 
 ## Contexto
 
-Este estándar consolida prácticas para evolucionar arquitecturas de forma controlada. Complementa el lineamiento [Gobierno de Arquitectura](../../lineamientos/gobierno/01-gobierno-arquitectura.md).
+Este estándar consolida prácticas para evolucionar arquitecturas de forma controlada. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md).
 
 **Conceptos incluidos:**
 

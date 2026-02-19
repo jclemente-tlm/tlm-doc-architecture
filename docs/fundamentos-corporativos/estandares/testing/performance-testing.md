@@ -599,7 +599,7 @@ groups:
 **Relacionados:**
 
 - [Testing Strategy](./testing-strategy.md)
-- [Observability Standards](../observabilidad/metrics-alerting.md)
+- [Logging y Monitoreo](../observabilidad/logging-monitoring.md)
 - [Scalability Patterns](../arquitectura/scalability-performance.md)
 
 ---

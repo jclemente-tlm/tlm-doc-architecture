@@ -9,7 +9,7 @@ description: Estándares para construcción, gestión y despliegue de contenedor
 
 ## Contexto
 
-Este estándar define las prácticas para containerización de aplicaciones usando Docker, incluyendo construcción de imágenes, optimización, seguridad, registro y despliegue en AWS ECS Fargate. Complementa los lineamientos de [Infraestructura](../../lineamientos/infraestructura/) y asegura contenedores eficientes, seguros y estandarizados.
+Este estándar define las prácticas para containerización de aplicaciones usando Docker, incluyendo construcción de imágenes, optimización, seguridad, registro y despliegue en AWS ECS Fargate. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md) y asegura contenedores eficientes, seguros y estandarizados.
 
 **Conceptos cubiertos:**
 

@@ -9,7 +9,7 @@ description: Estándares para garantías de entrega de mensajes y manejo de mens
 
 ## Contexto
 
-Este estándar define estrategias para garantizar confiabilidad en procesamiento de mensajes Kafka, incluyendo diferentes niveles de garantías de entrega (at-most-once, at-least-once, exactly-once) y manejo de mensajes fallidos mediante Dead Letter Queue (DLQ). Complementa el lineamiento [Event-Driven Architecture](../../lineamientos/mensajeria/event-driven.md) asegurando que mensajes críticos no se pierdan y mensajes problemáticos se gestionen apropiadamente.
+Este estándar define estrategias para garantizar confiabilidad en procesamiento de mensajes Kafka, incluyendo diferentes niveles de garantías de entrega (at-most-once, at-least-once, exactly-once) y manejo de mensajes fallidos mediante Dead Letter Queue (DLQ). Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) asegurando que mensajes críticos no se pierdan y mensajes problemáticos se gestionen apropiadamente.
 
 **Conceptos incluidos:**
 

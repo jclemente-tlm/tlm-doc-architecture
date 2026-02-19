@@ -9,7 +9,7 @@ description: Estándares para validación de compliance, gestión de excepciones
 
 ## Contexto
 
-Este estándar define cómo validar compliance con lineamientos y estándares corporativos, gestionar excepciones cuando son necesarias, y establecer ownership claro de servicios. Complementa el lineamiento [Gobierno de Arquitectura](../../lineamientos/gobierno/gobierno-arquitectura.md) asegurando accountability y flexibilidad controlada.
+Este estándar define cómo validar compliance con lineamientos y estándares corporativos, gestionar excepciones cuando son necesarias, y establecer ownership claro de servicios. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) asegurando accountability y flexibilidad controlada.
 
 **Conceptos incluidos:**
 
@@ -1466,7 +1466,7 @@ echo "✅ Compliance framework setup completed!"
 **Relacionados:**
 
 - [Architecture Governance](./architecture-governance.md)
-- [Security Standards](../seguridad/)
+- [Lineamientos de Seguridad](../../lineamientos/seguridad/)
 
 ---
 
