@@ -188,7 +188,7 @@ Migración de Customer Service de PostgreSQL single instance a PostgreSQL con r�
 
 ## Documentación
 
-- ADR: [ADR-015 PostgreSQL Read Replica](../adrs/adr-015-postgres-read-replica.md)
+- ADR: [ADR-009: Debezium CDC](../../../decisiones-de-arquitectura/adr-009-debezium-cdc.md)
 - C4 Diagrams: [Container Diagram actualizado](../architecture/c4-diagrams/customer-container.md)
 - Performance Analysis: [Análisis de carga actual](../performance/customer-load-analysis.md)
 

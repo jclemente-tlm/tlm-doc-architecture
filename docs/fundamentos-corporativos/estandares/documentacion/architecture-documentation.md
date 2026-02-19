@@ -1097,7 +1097,7 @@ cat > docs/architecture/arc42.md << 'EOF'
 [Completar...]
 
 ## 9. Decisiones de Diseño
-Ver [ADRs](../adrs/)
+Ver [ADRs](../../../decisiones-de-arquitectura/)
 
 ## 10. Requisitos de Calidad
 [Completar...]

@@ -20,7 +20,7 @@ Este estilo arquitectónico implementa los siguientes principios corporativos:
 
 - ✅ [Modularidad y Bajo Acoplamiento](../principios/02-modularidad-y-bajo-acoplamiento.md)
 - ✅ [Resiliencia y Tolerancia a Fallos](../principios/03-resiliencia-y-tolerancia-a-fallos.md)
-- ✅ [Arquitectura Evolutiva](../lineamientos/arquitectura/11-arquitectura-evolutiva.md)
+- ✅ [Arquitectura Evolutiva](../../fundamentos-corporativos/lineamientos/arquitectura/12-arquitectura-evolutiva.md)
 - ✅ [Consistencia Contextual](../principios/datos/03-consistencia-contextual.md)
 
 ## Propósito
