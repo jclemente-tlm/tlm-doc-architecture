@@ -14,12 +14,12 @@ Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegi
 
 ## Estándares Obligatorios
 
-- [Implementar RBAC (Role-Based Access Control)](../../estandares/seguridad/rbac.md)
-- [Aplicar ABAC cuando corresponda](../../estandares/seguridad/abac.md)
-- [Implementar Just-In-Time (JIT) access](../../estandares/seguridad/jit-access.md)
-- [Realizar access reviews periódicos](../../estandares/seguridad/access-reviews.md)
-- [Aplicar segregation of duties](../../estandares/seguridad/segregation-of-duties.md)
-- [Usar service accounts con permisos mínimos](../../estandares/seguridad/service-accounts.md)
+- [Implementar RBAC (Role-Based Access Control)](../../estandares/seguridad/identity-access-management.md#3-role-based-access-control-rbac)
+- [Aplicar ABAC cuando corresponda](../../estandares/seguridad/identity-access-management.md#4-attribute-based-access-control-abac)
+- [Implementar Just-In-Time (JIT) access](../../estandares/seguridad/identity-access-management.md#7-just-in-time-jit-access)
+- [Realizar access reviews periódicos](../../estandares/seguridad/identity-access-management.md)
+- [Aplicar segregation of duties](../../estandares/seguridad/security-governance.md#6-segregation-of-duties)
+- [Usar service accounts con permisos mínimos](../../estandares/seguridad/identity-access-management.md#8-service-accounts)
 
 ## Referencias Relacionadas
 

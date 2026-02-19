@@ -13,9 +13,9 @@ La divergencia entre entornos de desarrollo, QA y producción genera el síndrom
 
 ## Estándares Obligatorios
 
-- [Externalizar configuración (12-Factor App)](../../estandares/infraestructura/externalize-configuration.md)
-- [Gestionar secretos de forma segura](../../estandares/seguridad/secrets-management.md)
-- [Gestionar configuración centralizada](../../estandares/infraestructura/centralized-configuration.md)
-- [Garantizar paridad entre entornos](../../estandares/infraestructura/environment-parity.md)
-- [Gestionar variables por entorno](../../estandares/infraestructura/environment-variables.md)
-- [Nunca hardcodear configuración](../../estandares/desarrollo/no-hardcoded-config.md)
+- [Externalizar configuración (12-Factor App)](../../estandares/infraestructura/configuration-management.md#1-externalize-configuration)
+- [Gestionar secretos de forma segura](../../estandares/seguridad/secrets-key-management.md#1-secrets-management)
+- [Gestionar configuración centralizada](../../estandares/infraestructura/configuration-management.md#2-centralized-configuration)
+- [Garantizar paridad entre entornos](../../estandares/infraestructura/configuration-management.md#4-environment-parity)
+- [Gestionar variables por entorno](../../estandares/infraestructura/configuration-management.md#3-environment-variables)
+- [Nunca hardcodear configuración](../../estandares/desarrollo/dependency-configuration.md#3-no-hardcoded-config)

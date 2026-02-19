@@ -13,9 +13,9 @@ Cada dominio de negocio es responsable exclusivo de sus propios datos: definici�
 
 ## Estándares Obligatorios
 
-- [Definir ownership explícito de datos](../../estandares/datos/data-ownership-definition.md)
-- [Documentar ownership en catálogo de datos](../../estandares/datos/data-catalog.md)
-- [Establecer gobernanza de datos](../../estandares/datos/data-governance.md)
+- [Definir ownership explícito de datos](../../estandares/datos/data-architecture.md#3-data-ownership)
+- [Documentar ownership en catálogo de datos](../../estandares/datos/data-architecture.md#5-data-catalog)
+- [Establecer gobernanza de datos](../../estandares/datos/data-architecture.md#4-data-governance)
 
 ## Referencias Relacionadas
 

@@ -13,12 +13,12 @@ Lineamientos sin verificación de cumplimiento se convierten en documentación i
 
 ## Estándares Obligatorios
 
-- [Validar cumplimiento de lineamientos](../../estandares/gobierno/compliance-validation.md)
-- [Automatizar validación en CI/CD](../../estandares/gobierno/automated-compliance.md)
-- [Realizar auditorías arquitectónicas](../../estandares/gobierno/architecture-audits.md)
-- [Gestionar excepciones formalmente](../../estandares/gobierno/exception-management.md)
-- [Definir criterios de aprobación de excepciones](../../estandares/gobierno/exception-criteria.md)
-- [Revisar excepciones periódicamente](../../estandares/gobierno/exception-review.md)
+- [Validar cumplimiento de lineamientos](../../estandares/gobierno/compliance-exceptions.md#1-compliance-validation)
+- [Automatizar validación en CI/CD](../../estandares/gobierno/compliance-exceptions.md#2-automated-compliance)
+- [Realizar auditorías arquitectónicas](../../estandares/gobierno/architecture-governance.md#4-architecture-audits)
+- [Gestionar excepciones formalmente](../../estandares/gobierno/compliance-exceptions.md#3-exception-management)
+- [Definir criterios de aprobación de excepciones](../../estandares/gobierno/compliance-exceptions.md#4-exception-criteria)
+- [Revisar excepciones periódicamente](../../estandares/gobierno/compliance-exceptions.md#5-exception-review)
 
 ## Referencias Relacionadas
 

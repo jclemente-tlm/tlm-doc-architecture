@@ -15,13 +15,13 @@ Despliegues manuales generan inconsistencias entre entornos, errores humanos y c
 
 ## Estándares Obligatorios
 
-- [Implementar pipelines CI/CD automatizados](../../estandares/operabilidad/cicd-pipelines.md)
-- [Automatizar build y empaquetado](../../estandares/operabilidad/build-automation.md)
-- [Integrar SCA (dependency scanning)](../../estandares/seguridad/dependency-scanning.md)
-- [Aplicar estrategias de deployment](../../estandares/operabilidad/deployment-strategies.md)
-- [Automatizar rollback](../../estandares/operabilidad/rollback-automation.md)
-- [Gestionar artifacts y registries](../../estandares/operabilidad/artifact-management.md)
-- [Implementar traceability desde commit a producción](../../estandares/operabilidad/deployment-traceability.md)
+- [Implementar pipelines CI/CD automatizados](../../estandares/operabilidad/cicd-deployment.md#1-ci-cd-pipelines)
+- [Automatizar build y empaquetado](../../estandares/operabilidad/cicd-deployment.md#2-build-automation)
+- [Integrar SCA (dependency scanning)](../../estandares/seguridad/security-scanning.md#2-dependency-scanning)
+- [Aplicar estrategias de deployment](../../estandares/operabilidad/cicd-deployment.md#3-deployment-strategies)
+- [Automatizar rollback](../../estandares/operabilidad/cicd-deployment.md#5-rollback-automation)
+- [Gestionar artifacts y registries](../../estandares/operabilidad/cicd-deployment.md#6-artifact-management)
+- [Implementar traceability desde commit a producción](../../estandares/operabilidad/cicd-deployment.md#4-deployment-traceability)
 
 ## Referencias Relacionadas
 

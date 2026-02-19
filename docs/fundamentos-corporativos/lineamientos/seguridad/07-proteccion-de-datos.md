@@ -13,10 +13,10 @@ La exposición de datos sensibles genera incidentes de seguridad, incumplimiento
 
 ## Estándares Obligatorios
 
-- [Clasificar datos por sensibilidad](../../estandares/seguridad/data-classification.md)
-- [Cifrar datos en tránsito](../../estandares/seguridad/encryption-in-transit.md)
-- [Cifrar datos en reposo](../../estandares/seguridad/encryption-at-rest.md)
-- [Gestionar claves criptográficas](../../estandares/seguridad/key-management.md)
-- [Aplicar enmascaramiento y tokenización](../../estandares/seguridad/data-masking.md)
-- [Implementar prevención de pérdida de datos](../../estandares/seguridad/data-loss-prevention.md)
-- [Aplicar minimización de datos](../../estandares/seguridad/data-minimization.md)
+- [Clasificar datos por sensibilidad](../../estandares/seguridad/data-protection.md#4-data-classification)
+- [Cifrar datos en tránsito](../../estandares/seguridad/data-protection.md#2-encryption-in-transit)
+- [Cifrar datos en reposo](../../estandares/seguridad/data-protection.md#1-encryption-at-rest)
+- [Gestionar claves criptográficas](../../estandares/seguridad/secrets-key-management.md#2-key-management)
+- [Aplicar enmascaramiento y tokenización](../../estandares/seguridad/data-protection.md#3-data-masking)
+- [Implementar prevención de pérdida de datos](../../estandares/seguridad/data-protection.md)
+- [Aplicar minimización de datos](../../estandares/seguridad/data-protection.md)

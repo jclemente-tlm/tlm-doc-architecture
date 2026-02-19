@@ -15,13 +15,13 @@ Ausencia de plan de recuperación ante desastres expone organización a pérdida
 
 ## Estándares Obligatorios
 
-- [Definir RPO/RTO por sistema](../../estandares/operabilidad/rpo-rto-definition.md)
-- [Implementar backups automatizados](../../estandares/operabilidad/backup-automation.md)
-- [Definir políticas de retención](../../estandares/operabilidad/backup-retention.md)
-- [Probar restauración periódicamente](../../estandares/operabilidad/restore-testing.md)
-- [Documentar runbooks de recuperación](../../estandares/operabilidad/dr-runbooks.md)
-- [Realizar simulacros de DR](../../estandares/operabilidad/dr-drills.md)
-- [Implementar multi-region failover](../../estandares/operabilidad/multi-region-failover.md)
+- [Definir RPO/RTO por sistema](../../estandares/operabilidad/disaster-recovery.md#6-rpo-rto-definition)
+- [Implementar backups automatizados](../../estandares/operabilidad/disaster-recovery.md#1-backup-automation)
+- [Definir políticas de retención](../../estandares/operabilidad/disaster-recovery.md#2-backup-retention)
+- [Probar restauración periódicamente](../../estandares/operabilidad/disaster-recovery.md#3-restore-testing)
+- [Documentar runbooks de recuperación](../../estandares/operabilidad/disaster-recovery.md#5-dr-runbooks)
+- [Realizar simulacros de DR](../../estandares/operabilidad/disaster-recovery.md#4-dr-drills)
+- [Implementar multi-region failover](../../estandares/operabilidad/disaster-recovery.md#7-multi-region-failover)
 
 ## Referencias Relacionadas
 

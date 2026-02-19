@@ -13,12 +13,12 @@ La arquitectura debe estructurarse en torno al dominio del negocio, reflejando s
 
 ## Estándares Obligatorios
 
-- [Identificar bounded contexts por capacidades de negocio](../../estandares/arquitectura/bounded-contexts.md)
-- [Establecer lenguaje ubicuo por contexto](../../estandares/arquitectura/ubiquitous-language.md)
-- [Diseñar modelo de dominio rico](../../estandares/arquitectura/domain-model.md)
-- [Definir agregados y límites transaccionales](../../estandares/arquitectura/aggregates.md)
-- [Distinguir entidades y value objects](../../estandares/arquitectura/entities-value-objects.md)
-- [Implementar domain events](../../estandares/arquitectura/domain-events.md)
+- [Identificar bounded contexts por capacidades de negocio](../../estandares/arquitectura/domain-modeling.md#4-bounded-contexts)
+- [Establecer lenguaje ubicuo por contexto](../../estandares/arquitectura/domain-modeling.md#6-ubiquitous-language)
+- [Diseñar modelo de dominio rico](../../estandares/arquitectura/domain-modeling.md#1-domain-model)
+- [Definir agregados y límites transaccionales](../../estandares/arquitectura/domain-modeling.md#2-aggregates)
+- [Distinguir entidades y value objects](../../estandares/arquitectura/domain-modeling.md#3-entities-value-objects)
+- [Implementar domain events](../../estandares/arquitectura/domain-modeling.md#7-domain-events)
 
 ## Referencias Relacionadas
 

@@ -14,13 +14,13 @@ La arquitectura debe separar claramente las decisiones de negocio de los detalle
 
 ## Estándares Obligatorios
 
-- [Aplicar arquitectura hexagonal (Ports & Adapters)](../../estandares/arquitectura/hexagonal-architecture.md)
-- [Implementar dependency inversion principle](../../estandares/arquitectura/dependency-inversion.md)
-- [Separar capas de dominio, aplicación e infraestructura](../../estandares/arquitectura/layered-architecture.md)
-- [Mantener dominio libre de frameworks](../../estandares/arquitectura/framework-independence.md)
-- [Diseñar modelo de dominio rico](../../estandares/arquitectura/domain-model.md)
-- [Testear dominio de forma aislada](../../estandares/testing/unit-testing.md)
-- [Documentar estructura de capas con C4](../../estandares/documentacion/c4-model.md)
+- [Aplicar arquitectura hexagonal (Ports & Adapters)](../../estandares/arquitectura/clean-architecture.md#1-hexagonal-architecture-ports-adapters)
+- [Implementar dependency inversion principle](../../estandares/arquitectura/clean-architecture.md#2-dependency-inversion-principle-dip)
+- [Separar capas de dominio, aplicación e infraestructura](../../estandares/arquitectura/clean-architecture.md#3-layered-architecture)
+- [Mantener dominio libre de frameworks](../../estandares/arquitectura/clean-architecture.md#4-framework-independence)
+- [Diseñar modelo de dominio rico](../../estandares/arquitectura/domain-modeling.md#1-domain-model)
+- [Testear dominio de forma aislada](../../estandares/testing/unit-integration-testing.md#1-unit-testing)
+- [Documentar estructura de capas con C4](../../estandares/documentacion/architecture-documentation.md#2-c4-model)
 
 ## Referencias Relacionadas
 

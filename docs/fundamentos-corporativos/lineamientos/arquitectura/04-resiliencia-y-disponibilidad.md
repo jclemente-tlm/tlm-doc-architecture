@@ -13,10 +13,10 @@ Sistemas distribuidos enfrentan fallos inevitables: dependencias caídas, latenc
 
 ## Estándares Obligatorios
 
-- [Implementar circuit breakers para dependencias externas](../../estandares/arquitectura/circuit-breaker.md)
-- [Aplicar timeouts apropiados en llamadas remotas](../../estandares/arquitectura/timeout-patterns.md)
-- [Configurar retry con backoff exponencial](../../estandares/arquitectura/retry-patterns.md)
-- [Diseñar degradación graceful ante fallos](../../estandares/arquitectura/graceful-degradation.md)
-- [Implementar bulkhead para aislamiento de recursos](../../estandares/arquitectura/bulkhead-pattern.md)
-- [Aplicar rate limiting para protección de sobrecarga](../../estandares/arquitectura/rate-limiting.md)
-- [Configurar health checks para detección de fallos](../../estandares/infraestructura/health-checks.md)
+- [Implementar circuit breakers para dependencias externas](../../estandares/arquitectura/resilience-patterns.md#1-circuit-breaker)
+- [Aplicar timeouts apropiados en llamadas remotas](../../estandares/arquitectura/resilience-patterns.md#3-timeout)
+- [Configurar retry con backoff exponencial](../../estandares/arquitectura/resilience-patterns.md#2-retry)
+- [Diseñar degradación graceful ante fallos](../../estandares/arquitectura/resilience-patterns.md#6-graceful-degradation)
+- [Implementar bulkhead para aislamiento de recursos](../../estandares/arquitectura/resilience-patterns.md#4-bulkhead)
+- [Aplicar rate limiting para protección de sobrecarga](../../estandares/arquitectura/resilience-patterns.md#5-rate-limiting)
+- [Configurar health checks para detección de fallos](../../estandares/infraestructura/scalability-performance.md)

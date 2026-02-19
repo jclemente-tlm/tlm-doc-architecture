@@ -14,13 +14,13 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 
 ## Estándares Obligatorios
 
-- [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/stateless-design.md)
-- [Implementar auto-scaling basado en métricas](../../estandares/infraestructura/horizontal-scaling.md)
-- [Aplicar estrategias de caché distribuido](../../estandares/arquitectura/caching-strategies.md)
-- [Implementar procesamiento asíncrono](../../estandares/arquitectura/async-processing.md)
-- [Optimizar consultas y esquemas de base de datos](../../estandares/datos/database-optimization.md)
-- [Implementar load balancing](../../estandares/infraestructura/load-balancing.md)
-- [Configurar connection pooling](../../estandares/datos/connection-pooling.md)
+- [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/scalability-performance.md#1-stateless-design)
+- [Implementar auto-scaling basado en métricas](../../estandares/infraestructura/scalability-performance.md#3-horizontal-scaling)
+- [Aplicar estrategias de caché distribuido](../../estandares/arquitectura/scalability-performance.md#2-caching-strategies)
+- [Implementar procesamiento asíncrono](../../estandares/arquitectura/cqrs-event-driven.md#3-async-processing)
+- [Optimizar consultas y esquemas de base de datos](../../estandares/datos/database-standards.md#2-database-optimization)
+- [Implementar load balancing](../../estandares/infraestructura/scalability-performance.md#4-load-balancing)
+- [Configurar connection pooling](../../estandares/datos/database-standards.md#3-connection-pooling)
 
 ## Referencias Relacionadas
 

@@ -13,12 +13,12 @@ La arquitectura debe incorporar múltiples capas de protección independientes, 
 
 ## Estándares Obligatorios
 
-- [Implementar seguridad en múltiples capas](../../estandares/seguridad/defense-in-depth.md)
-- [Aplicar seguridad perimetral](../../estandares/seguridad/perimeter-security.md)
+- [Implementar seguridad en múltiples capas](../../estandares/seguridad/security-governance.md#4-defense-in-depth)
+- [Aplicar seguridad perimetral](../../estandares/seguridad/network-security.md#5-perimetersecurity)
 - [Implementar seguridad de red](../../estandares/seguridad/network-security.md)
-- [Aplicar seguridad de aplicación](../../estandares/seguridad/application-security.md)
-- [Implementar seguridad de datos](../../estandares/seguridad/data-security.md)
-- [Configurar WAF y protección DDoS](../../estandares/seguridad/waf-ddos.md)
+- [Aplicar seguridad de aplicación](../../estandares/seguridad/security-governance.md#3-application-security-owasp-top-10)
+- [Implementar seguridad de datos](../../estandares/seguridad/data-protection.md)
+- [Configurar WAF y protección DDoS](../../estandares/seguridad/network-security.md)
 
 ## Referencias Relacionadas
 

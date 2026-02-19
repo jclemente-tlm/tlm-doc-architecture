@@ -13,10 +13,10 @@ En sistemas distribuidos, las fallas pueden propagarse silenciosamente afectando
 
 ## Estándares Obligatorios
 
-- [Implementar structured logging en JSON](../../estandares/observabilidad/structured-logging.md)
-- [Emitir métricas siguiendo RED/USE](../../estandares/observabilidad/metrics-standards.md)
-- [Implementar distributed tracing con W3C Trace Context](../../estandares/observabilidad/distributed-tracing.md)
-- [Usar correlation IDs entre servicios](../../estandares/observabilidad/correlation-ids.md)
-- [Definir SLIs, SLOs y SLAs](../../estandares/observabilidad/slo-sla.md)
-- [Configurar alertas basadas en SLOs](../../estandares/observabilidad/alerting.md)
-- [Implementar dashboards operacionales](../../estandares/observabilidad/dashboards.md)
+- [Implementar structured logging en JSON](../../estandares/observabilidad/logging-monitoring.md#1-structured-logging)
+- [Emitir métricas siguiendo RED/USE](../../estandares/observabilidad/logging-monitoring.md#2-metrics-standards)
+- [Implementar distributed tracing con W3C Trace Context](../../estandares/observabilidad/distributed-tracing.md#1-distributed-tracing)
+- [Usar correlation IDs entre servicios](../../estandares/observabilidad/distributed-tracing.md#2-correlation-ids)
+- [Definir SLIs, SLOs y SLAs](../../estandares/observabilidad/distributed-tracing.md#3-slo-sla)
+- [Configurar alertas basadas en SLOs](../../estandares/observabilidad/logging-monitoring.md#4-alerting)
+- [Implementar dashboards operacionales](../../estandares/observabilidad/logging-monitoring.md#3-dashboards)

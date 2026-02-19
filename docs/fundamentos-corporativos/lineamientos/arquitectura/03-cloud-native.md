@@ -13,12 +13,12 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 
 ## Estándares Obligatorios
 
-- [Seguir metodología 12-Factor App](../../estandares/arquitectura/twelve-factor-app.md)
+- [Seguir metodología 12-Factor App](../../estandares/arquitectura/architecture-evolution.md#4-twelve-factor-app)
 - [Contenerizar aplicaciones](../../estandares/infraestructura/containerization.md)
-- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/externalize-configuration.md)
-- [Diseñar servicios stateless](../../estandares/arquitectura/stateless-design.md)
-- [Aplicar graceful shutdown](../../estandares/arquitectura/graceful-shutdown.md)
-- [Optimizar costos en cloud](../../estandares/infraestructura/cloud-cost-optimization.md)
+- [Externalizar configuración en variables de entorno](../../estandares/infraestructura/configuration-management.md#1-externalize-configuration)
+- [Diseñar servicios stateless](../../estandares/arquitectura/scalability-performance.md#1-stateless-design)
+- [Aplicar graceful shutdown](../../estandares/arquitectura/resilience-patterns.md#7-graceful-shutdown)
+- [Optimizar costos en cloud](../../estandares/infraestructura/infrastructure-as-code.md#8-cloud-cost-optimization)
 
 ## Referencias Relacionadas
 

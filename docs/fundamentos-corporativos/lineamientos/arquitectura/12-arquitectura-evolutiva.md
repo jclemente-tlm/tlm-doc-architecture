@@ -14,13 +14,13 @@ La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, ac
 
 ## Estándares Obligatorios
 
-- [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-decision-records.md)
-- [Implementar fitness functions](../../estandares/arquitectura/fitness-functions.md)
-- [Realizar architecture reviews periódicos](../../estandares/gobierno/architecture-review.md)
-- [Aplicar refactoring continuo](../../estandares/desarrollo/refactoring-practices.md)
-- [Mantener suite de testing comprehensivo](../../estandares/testing/testing-strategy.md)
-- [Diseñar con bajo acoplamiento](../../estandares/arquitectura/loose-coupling.md)
-- [Priorizar reversibilidad de decisiones](../../estandares/arquitectura/reversibility.md)
+- [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-documentation.md#3-architecture-decision-records-adrs)
+- [Implementar fitness functions](../../estandares/arquitectura/architecture-evolution.md#1-fitness-functions)
+- [Realizar architecture reviews periódicos](../../estandares/gobierno/architecture-governance.md#1-architecture-review)
+- [Aplicar refactoring continuo](../../estandares/desarrollo/code-quality.md#3-refactoring-practices)
+- [Mantener suite de testing comprehensivo](../../estandares/testing/testing-strategy.md#1-testing-pyramid)
+- [Diseñar con bajo acoplamiento](../../estandares/arquitectura/architecture-principles.md#3-loose-coupling)
+- [Priorizar reversibilidad de decisiones](../../estandares/arquitectura/architecture-evolution.md#2-reversibility)
 
 ## Referencias Relacionadas
 

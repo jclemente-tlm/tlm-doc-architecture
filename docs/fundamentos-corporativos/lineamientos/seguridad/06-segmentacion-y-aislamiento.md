@@ -13,9 +13,9 @@ Las arquitecturas de red plana permiten que compromisos localizados se propaguen
 
 ## Estándares Obligatorios
 
-- [Segmentar redes por trust zones](../../estandares/seguridad/network-segmentation.md)
-- [Aislar entornos en cuentas separadas](../../estandares/seguridad/environment-isolation.md)
-- [Implementar aislamiento de tenants](../../estandares/seguridad/tenant-isolation.md)
-- [Usar redes virtuales aisladas](../../estandares/infraestructura/virtual-networks.md)
-- [Configurar grupos de seguridad y listas de control](../../estandares/seguridad/network-access-controls.md)
-- [Implementar políticas de red en orquestación](../../estandares/seguridad/orchestration-network-policies.md)
+- [Segmentar redes por trust zones](../../estandares/seguridad/network-security.md#1-network-segmentation)
+- [Aislar entornos en cuentas separadas](../../estandares/seguridad/network-security.md#3-environment-isolation)
+- [Implementar aislamiento de tenants](../../estandares/seguridad/network-security.md#4-tenant-isolation)
+- [Usar redes virtuales aisladas](../../estandares/infraestructura/infrastructure-as-code.md#7-virtual-networks)
+- [Configurar grupos de seguridad y listas de control](../../estandares/seguridad/network-security.md#2-network-access-controls)
+- [Implementar políticas de red en orquestación](../../estandares/seguridad/network-security.md)

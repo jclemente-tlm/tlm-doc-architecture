@@ -13,10 +13,10 @@ El 60% de brechas de seguridad explotan vulnerabilidades conocidas sin parchear 
 
 ## Estándares Obligatorios
 
-- [Escanear imágenes de contenedores](../../estandares/seguridad/container-scanning.md)
-- [Gestionar dependencias con Package Manager](../../estandares/desarrollo/package-management.md)
-- [Mantener inventario de componentes (SBOM)](../../estandares/seguridad/sbom.md)
-- [Definir SLA de remediación por severidad](../../estandares/seguridad/vulnerability-sla.md)
-- [Implementar patch management](../../estandares/seguridad/patch-management.md)
-- [Realizar pentesting periódico](../../estandares/seguridad/penetration-testing.md)
-- [Mantener registro de vulnerabilidades](../../estandares/seguridad/vulnerability-tracking.md)
+- [Escanear imágenes de contenedores](../../estandares/seguridad/security-scanning.md#1-container-scanning)
+- [Gestionar dependencias con Package Manager](../../estandares/desarrollo/dependency-configuration.md#1-package-management)
+- [Mantener inventario de componentes (SBOM)](../../estandares/seguridad/security-scanning.md#4-sbom-software-bill-of-materials)
+- [Definir SLA de remediación por severidad](../../estandares/seguridad/security-testing.md#4-vulnerability-sla)
+- [Implementar patch management](../../estandares/seguridad/security-governance.md#5-patch-management)
+- [Realizar pentesting periódico](../../estandares/seguridad/security-testing.md#2-penetration-testing)
+- [Mantener registro de vulnerabilidades](../../estandares/seguridad/security-testing.md#3-vulnerability-tracking)

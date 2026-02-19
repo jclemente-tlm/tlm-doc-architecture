@@ -15,13 +15,13 @@ Código sin documentación clara genera dependencia de autores originales, dific
 
 ## Estándares Obligatorios
 
-- [Mantener README actualizado en repositorios](../../estandares/documentacion/readme-standards.md)
-- [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-decision-records.md)
-- [Documentar arquitectura con arc42](../../estandares/documentacion/arc42.md)
-- [Modelar con C4 Model](../../estandares/documentacion/c4-model.md)
-- [Mantener runbooks operacionales](../../estandares/documentacion/runbooks.md)
-- [Crear guías de onboarding](../../estandares/documentacion/onboarding-guides.md)
-- [Documentar guías de contribución](../../estandares/documentacion/contributing-guides.md)
+- [Mantener README actualizado en repositorios](../../estandares/documentacion/technical-documentation.md#1-readme-standards)
+- [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-documentation.md#3-architecture-decision-records-adrs)
+- [Documentar arquitectura con arc42](../../estandares/documentacion/architecture-documentation.md#1-arc42-template)
+- [Modelar con C4 Model](../../estandares/documentacion/architecture-documentation.md#2-c4-model)
+- [Mantener runbooks operacionales](../../estandares/documentacion/technical-documentation.md#4-runbooks)
+- [Crear guías de onboarding](../../estandares/documentacion/technical-documentation.md#3-onboarding-guides)
+- [Documentar guías de contribución](../../estandares/documentacion/technical-documentation.md#2-contributing-guides)
 
 ## Referencias Relacionadas
 

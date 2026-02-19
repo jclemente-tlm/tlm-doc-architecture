@@ -14,12 +14,12 @@ La arquitectura debe priorizar soluciones simples y comprensibles, incorporando 
 
 ## Estándares Obligatorios
 
-- [Justificar complejidad con análisis cost-benefit](../../estandares/arquitectura/complexity-analysis.md)
-- [Aplicar principio YAGNI (You Aren't Gonna Need It)](../../estandares/arquitectura/yagni-principle.md)
-- [Aplicar principio KISS (Keep It Simple, Stupid)](../../estandares/arquitectura/kiss-principle.md)
-- [Evaluar tecnologías con criterios objetivos](../../estandares/arquitectura/technology-selection.md)
-- [Priorizar operabilidad y mantenibilidad](../../estandares/arquitectura/operational-simplicity.md)
-- [Medir simplicidad con métricas objetivas](../../estandares/arquitectura/simplicity-metrics.md)
+- [Justificar complejidad con análisis cost-benefit](../../estandares/arquitectura/architecture-principles.md#6-complexity-analysis)
+- [Aplicar principio YAGNI (You Aren't Gonna Need It)](../../estandares/arquitectura/architecture-principles.md#2-yagni-you-arent-gonna-need-it)
+- [Aplicar principio KISS (Keep It Simple, Stupid)](../../estandares/arquitectura/architecture-principles.md#1-kiss-keep-it-simple-stupid)
+- [Evaluar tecnologías con criterios objetivos](../../estandares/arquitectura/architecture-evolution.md#3-technology-selection)
+- [Priorizar operabilidad y mantenibilidad](../../estandares/arquitectura/architecture-principles.md#5-operational-simplicity)
+- [Medir simplicidad con métricas objetivas](../../estandares/arquitectura/architecture-principles.md#7-simplicity-metrics)
 
 ## Referencias Relacionadas
 
