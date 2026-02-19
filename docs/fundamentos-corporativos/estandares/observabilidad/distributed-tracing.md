@@ -1,169 +1,204 @@
 ---
 id: distributed-tracing
-sidebar_position: 3
+sidebar_position: 2
 title: Distributed Tracing
-description: Tracing distribuido con OpenTelemetry y W3C Trace Context
+description: Estándares para tracing distribuido, correlation IDs y definición de SLOs/SLAs usando OpenTelemetry y Grafana Tempo.
 ---
 
 # Distributed Tracing
 
 ## Contexto
 
-Este estándar define cómo implementar distributed tracing con OpenTelemetry siguiendo W3C Trace Context para correlacionar requests a través de múltiples servicios. Complementa el [lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) especificando **cómo** rastrear flujos end-to-end.
+Este estándar define prácticas para implementar tracing distribuido, propagación de correlation IDs y definición de Service Level Objectives (SLOs) y Service Level Agreements (SLAs) usando OpenTelemetry y Grafana Tempo. Complementa el lineamiento [Observability](../../lineamientos/observabilidad/observability.md) permitiendo rastrear requests a través de múltiples servicios, diagnosticar cuellos de botella y medir confiabilidad objetivamente.
+
+**Conceptos incluidos:**
+
+- **Distributed Tracing** → Rastreo de requests cross-service con spans
+- **Correlation IDs** → Identificadores únicos para correlacionar logs/traces
+- **SLO/SLA** → Objetivos y acuerdos de nivel de servicio medibles
 
 ---
 
 ## Stack Tecnológico
 
-| Componente          | Tecnología                  | Versión | Uso                           |
-| ------------------- | --------------------------- | ------- | ----------------------------- |
-| **Framework**       | ASP.NET Core                | 8.0+    | Framework base                |
-| **Instrumentación** | OpenTelemetry .NET          | 1.7+    | SDK de tracing                |
-| **Exportador**      | OpenTelemetry.Exporter.OTLP | 1.7+    | Export a Grafana Alloy        |
-| **Propagación**     | W3C Trace Context           | 1.0     | Header traceparent/tracestate |
-| **Collector**       | Grafana Alloy               | 1.0+    | Recolector OTLP               |
-| **Storage**         | Grafana Tempo               | 2.3+    | Almacenamiento traces         |
-| **Visualización**   | Grafana                     | 10.0+   | Traces y correlación          |
-
-### Dependencias NuGet
-
-```xml
-<PackageReference Include="OpenTelemetry" Version="1.7.0" />
-<PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.7.0" />
-<PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.7.0" />
-<PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.7.0" />
-<PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.7.0" />
-<PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.8" />
-```
+| Componente          | Tecnología         | Versión | Uso                                |
+| ------------------- | ------------------ | ------- | ---------------------------------- |
+| **Tracing Library** | OpenTelemetry      | 1.7+    | Instrumentación de traces          |
+| **Trace Storage**   | Grafana Tempo      | 2.3+    | Almacenamiento de traces           |
+| **Agent**           | Grafana Alloy      | 1.0+    | Recolección y forwarding de traces |
+| **Trace Protocol**  | OTLP               | 1.0+    | Protocolo de exportación           |
+| **Visualization**   | Grafana            | 10.2+   | Visualización de traces            |
+| **SLO Monitoring**  | Grafana SLO Plugin | -       | Tracking de SLOs                   |
 
 ---
 
-## Implementación Técnica
+## Conceptos Fundamentales
 
-### Configuración Base OpenTelemetry
+Este estándar cubre 3 aspectos relacionados con observabilidad avanzada:
+
+### Índice de Conceptos
+
+1. **Distributed Tracing**: Rastreo completo de requests multi-servicio
+2. **Correlation IDs**: Identificadores para correlación logs-traces-metrics
+3. **SLO/SLA**: Medición objetiva de confiabilidad y acuerdos de servicio
+
+### Relación entre Conceptos
+
+```mermaid
+graph TB
+    A[Request con Trace ID] -->|Propagate| B[Service A]
+    B -->|Span A| C[Grafana Tempo]
+    B -->|Call| D[Service B]
+    D -->|Span B| C
+    D -->|Call| E[Service C]
+    E -->|Span C| C
+
+    C -->|Visualize| F[Grafana Trace View]
+
+    A -->|Correlation ID| G[Logs Loki]
+    G -->|Link trace| F
+
+    C -->|Metrics| H[SLO Calculation]
+    H -->|Latency P95| I[SLO: Latency < 500ms]
+    H -->|Error rate| J[SLO: Errors < 1%]
+
+    I -->|Aggregate| K[SLA: 99.9% uptime]
+    J -->|Aggregate| K
+
+    style C fill:#e1f5ff
+    style F fill:#e8f5e9
+    style H fill:#fff4e1
+    style K fill:#ffebee
+```
+
+**Principios clave:**
+
+1. **End-to-end visibility**: Ver request completo a través de todos los servicios
+2. **Context propagation**: Pasar trace/correlation ID automáticamente
+3. **Causality tracking**: Entender qué causó qué
+4. **Objective measurement**: SLOs basados en métricas reales, no percepciones
+
+---
+
+## 1. Distributed Tracing
+
+### ¿Qué es Distributed Tracing?
+
+Técnica para rastrear el flujo de un request a través de múltiples servicios, capturando timing, errores y contexto de cada operación (span) en el camino.
+
+**Propósito:** Diagnosticar latencia, identificar cuellos de botella, entender flujo de requests en arquitecturas distribuidas.
+
+**Componentes clave:**
+
+- **Trace**: Request completo end-to-end (ID único)
+- **Span**: Operación individual dentro del trace (ej. HTTP call, DB query)
+- **Context propagation**: Pasar trace ID entre servicios (headers HTTP, Kafka headers)
+- **Sampling**: Capturar % de traces para reducir overhead
+
+**Beneficios:**
+✅ Diagnosticar latencia cross-service
+✅ Identificar servicios lentos o cayendo
+✅ Entender dependencias entre servicios
+✅ Debugging distribuido
+
+### Trace Anatomy
+
+```
+Trace ID: abc123def456 (único para todo el request)
+│
+├─ Span 1: HTTP POST /orders (Service: API Gateway)
+│  ├─ Duration: 450ms
+│  ├─ Status: OK
+│  └─ Attributes: http.method=POST, http.route=/orders
+│     │
+│     ├─ Span 2: HTTP POST /api/orders (Service: Order Service)
+│     │  ├─ Duration: 420ms
+│     │  ├─ Parent: Span 1
+│     │  └─ Attributes: http.method=POST, http.target=/api/orders
+│     │     │
+│     │     ├─ Span 3: SELECT FROM customers (DB: PostgreSQL)
+│     │     │  ├─ Duration: 15ms
+│     │     │  ├─ Parent: Span 2
+│     │     │  └─ Attributes: db.system=postgresql, db.statement=SELECT...
+│     │     │
+│     │     ├─ Span 4: INSERT INTO orders (DB: PostgreSQL)
+│     │     │  ├─ Duration: 25ms
+│     │     │  ├─ Parent: Span 2
+│     │     │  └─ Attributes: db.system=postgresql, db.statement=INSERT...
+│     │     │
+│     │     └─ Span 5: HTTP POST /api/payments (Service: Payment Service)
+│     │        ├─ Duration: 350ms  ← BOTTLENECK
+│     │        ├─ Parent: Span 2
+│     │        └─ Attributes: http.method=POST, http.status_code=200
+│     │           │
+│     │           ├─ Span 6: HTTP POST /charge (External: Stripe API)
+│     │           │  ├─ Duration: 320ms
+│     │           │  ├─ Parent: Span 5
+│     │           │  └─ Attributes: http.url=https://api.stripe.com/charge
+│     │           │
+│     │           └─ Span 7: INSERT INTO payments (DB: PostgreSQL)
+│     │              ├─ Duration: 10ms
+│     │              ├─ Parent: Span 5
+│     │              └─ Attributes: db.system=postgresql
+```
+
+**Análisis:** El bottleneck es Span 5 (Payment Service) debido a latencia de Stripe API (Span 6: 320ms).
+
+### Implementación OpenTelemetry
 
 ```csharp
-// Program.cs
-using OpenTelemetry.Trace;
+// Program.cs: Configurar OpenTelemetry Tracing
 using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Configurar OpenTelemetry Tracing
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(resource => resource
-        .AddService(
-            serviceName: "orders-api",
-            serviceVersion: "1.0.0",
-            serviceInstanceId: Environment.MachineName
-        )
+        .AddService("customer-service", serviceVersion: "1.2.3")
         .AddAttributes(new Dictionary<string, object>
         {
             ["deployment.environment"] = builder.Environment.EnvironmentName,
-            ["service.namespace"] = "talma.orders"
-        })
-    )
+            ["service.namespace"] = "ecommerce"
+        }))
     .WithTracing(tracing => tracing
-        // ✅ Instrumentación automática ASP.NET Core
+        // Auto-instrumentation
         .AddAspNetCoreInstrumentation(options =>
         {
             options.RecordException = true;
-            options.EnrichWithHttpRequest = (activity, httpRequest) =>
+            options.EnrichWithHttpRequest = (activity, request) =>
             {
-                activity.SetTag("http.client_ip", httpRequest.HttpContext.Connection.RemoteIpAddress?.ToString());
-                activity.SetTag("http.user_agent", httpRequest.Headers["User-Agent"].ToString());
-            };
-            options.EnrichWithHttpResponse = (activity, httpResponse) =>
-            {
-                activity.SetTag("http.response_content_length", httpResponse.ContentLength);
+                activity.SetTag("http.client_ip", request.HttpContext.Connection.RemoteIpAddress);
+                activity.SetTag("http.user_agent", request.Headers["User-Agent"].ToString());
             };
         })
-
-        // ✅ Instrumentación automática HttpClient
         .AddHttpClientInstrumentation(options =>
         {
             options.RecordException = true;
-            options.EnrichWithHttpRequestMessage = (activity, httpRequest) =>
+            options.EnrichWithHttpRequestMessage = (activity, request) =>
             {
-                activity.SetTag("http.request.method", httpRequest.Method.Method);
+                activity.SetTag("http.request.header.correlation-id",
+                    request.Headers.GetValues("X-Correlation-ID").FirstOrDefault());
             };
         })
+        .AddNpgsql()  // PostgreSQL instrumentation
 
-        // ✅ Instrumentación Entity Framework Core
-        .AddEntityFrameworkCoreInstrumentation(options =>
-        {
-            options.SetDbStatementForText = true;
-            options.SetDbStatementForStoredProcedure = true;
-            options.EnrichWithIDbCommand = (activity, command) =>
-            {
-                activity.SetTag("db.rows_affected", command.ExecuteNonQuery());
-            };
-        })
+        // Custom sources
+        .AddSource("CustomerService.Activities")
 
-        // ✅ Source custom
-        .AddSource("Talma.Orders.Api")
-
-        // ✅ Sampling: 100% en desarrollo, 10% en producción
-        .SetSampler(builder.Environment.IsDevelopment()
-            ? new AlwaysOnSampler()
-            : new TraceIdRatioBasedSampler(0.1))
-
-        // ✅ Exportar a Grafana Tempo via OTLP
+        // Exportar a Grafana Tempo via OTLP
         .AddOtlpExporter(options =>
         {
             options.Endpoint = new Uri("http://grafana-alloy:4317");
-            options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+            options.Protocol = OtlpExportProtocol.Grpc;
         })
-    );
+
+        // Sampling: 10% en producción, 100% en dev
+        .SetSampler(builder.Environment.IsProduction()
+            ? new TraceIdRatioBasedSampler(0.1)
+            : new AlwaysOnSampler()));
 
 var app = builder.Build();
-app.Run();
-```
-
-### W3C Trace Context - Propagación de Headers
-
-```http
-# Request entrante con traceparent
-GET /api/v1/orders/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
-Host: api.talma.com
-traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
-tracestate: talma=t61rcWkgMzE
-
-# Formato traceparent:
-# version-trace-id-parent-id-trace-flags
-# 00-{traceId:32hex}-{spanId:16hex}-{flags:2hex}
-
-# ✅ ASP.NET Core automáticamente:
-# 1. Extrae traceparent del request
-# 2. Crea nuevo span con parent-id
-# 3. Propaga traceparent a downstream calls
-```
-
-### Spans Automáticos
-
-```csharp
-// ✅ ASP.NET Core crea spans automáticos para:
-// - HTTP requests (GET /api/v1/orders/{id})
-// - HTTP responses (status code, duration)
-// - Exceptions (stack traces automáticos)
-
-// ✅ HttpClient crea spans automáticos para:
-// - HTTP calls a otros servicios
-// - DNS resolution
-// - Connection establishment
-
-// ✅ EF Core crea spans automáticos para:
-// - SELECT queries
-// - INSERT/UPDATE/DELETE operations
-// - Connection open/close
-
-// Ejemplo de trace automático:
-// orders-api: GET /api/v1/orders/550e8400-e29b-41d4-a716-446655440000
-//   ├─ db: SELECT * FROM orders WHERE id = $1
-//   ├─ http: GET http://customer-api/api/v1/customers/3fa85f64
-//   │  └─ db: SELECT * FROM customers WHERE id = $1
-//   └─ http: POST http://notification-api/api/v1/notifications
-//      └─ kafka: SEND order.created
 ```
 
 ### Custom Spans
@@ -173,232 +208,187 @@ using System.Diagnostics;
 
 public class OrderService
 {
-    private static readonly ActivitySource _activitySource = new("Talma.Orders.Api", "1.0.0");
+    private static readonly ActivitySource ActivitySource = new("CustomerService.Activities");
+    private readonly ILogger<OrderService> _logger;
 
-    public async Task<Order> CreateOrderAsync(CreateOrderRequest request)
+    public async Task<Order> CreateOrderAsync(CreateOrderCommand command)
     {
-        // ✅ Crear span custom
-        using var activity = _activitySource.StartActivity(
-            "ProcessOrder",
-            ActivityKind.Internal
-        );
+        // Crear custom activity (span)
+        using var activity = ActivitySource.StartActivity("CreateOrder", ActivityKind.Internal);
 
-        // ✅ Agregar tags
-        activity?.SetTag("order.customer_id", request.CustomerId);
-        activity?.SetTag("order.item_count", request.Items.Count);
-        activity?.SetTag("order.country", request.Country);
+        // Agregar tags (attributes)
+        activity?.SetTag("order.customer_id", command.CustomerId);
+        activity?.SetTag("order.total_amount", command.TotalAmount);
+        activity?.SetTag("order.item_count", command.Items.Count);
 
         try
         {
-            // Validación
-            using (var validationActivity = _activitySource.StartActivity("ValidateOrder"))
+            // Validación (sub-span automático si usa DB)
+            var customer = await _customerRepository.GetByIdAsync(command.CustomerId);
+            if (customer == null)
             {
-                await ValidateOrderAsync(request);
-                validationActivity?.SetTag("validation.result", "success");
+                activity?.SetStatus(ActivityStatusCode.Error, "Customer not found");
+                activity?.SetTag("error", true);
+                throw new NotFoundException($"Customer {command.CustomerId} not found");
             }
 
-            // Cálculo de precio
-            using (var pricingActivity = _activitySource.StartActivity("CalculatePricing"))
+            // Crear orden
+            var order = new Order
             {
-                var totalAmount = CalculateTotalAmount(request.Items);
-                pricingActivity?.SetTag("pricing.total_amount", totalAmount);
-                pricingActivity?.SetTag("pricing.currency", "USD");
+                CustomerId = command.CustomerId,
+                Items = command.Items,
+                TotalAmount = command.TotalAmount,
+                Status = OrderStatus.Pending
+            };
+
+            await _orderRepository.CreateAsync(order);
+
+            // Procesar pago (custom span)
+            using (var paymentActivity = ActivitySource.StartActivity("ProcessPayment", ActivityKind.Client))
+            {
+                paymentActivity?.SetTag("payment.method", command.PaymentMethod);
+                paymentActivity?.SetTag("payment.amount", command.TotalAmount);
+
+                var payment = await _paymentService.ProcessAsync(order);
+
+                paymentActivity?.SetTag("payment.id", payment.Id);
+                paymentActivity?.SetTag("payment.status", payment.Status);
             }
 
-            // Persistencia
-            using (var saveActivity = _activitySource.StartActivity("SaveOrder"))
-            {
-                var order = await SaveOrderAsync(request);
-                saveActivity?.SetTag("db.order_id", order.Id);
-            }
-
-            // ✅ Marcar como exitoso
+            // Success
             activity?.SetStatus(ActivityStatusCode.Ok);
+            activity?.SetTag("order.id", order.Id);
+
+            _logger.LogInformation(
+                "Order created: {OrderId} for customer {CustomerId}",
+                order.Id,
+                command.CustomerId);
 
             return order;
         }
-        catch (ValidationException ex)
-        {
-            // ✅ Registrar exception
-            activity?.RecordException(ex);
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-
-            // ✅ Tags de error
-            activity?.SetTag("error.type", "validation");
-            activity?.SetTag("error.message", ex.Message);
-
-            throw;
-        }
         catch (Exception ex)
         {
+            // Registrar error en span
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
             activity?.RecordException(ex);
-            activity?.SetStatus(ActivityStatusCode.Error, "Unexpected error");
-            activity?.SetTag("error.type", "internal");
 
+            _logger.LogError(ex, "Error creating order");
             throw;
         }
     }
 }
 ```
 
-### Spans para Operaciones de Larga Duración
+### Context Propagation (HTTP)
 
 ```csharp
-public class BackgroundOrderProcessor
+// Context propagation es AUTOMÁTICA con OpenTelemetry HttpClient instrumentation
+
+public class PaymentServiceClient
 {
-    private static readonly ActivitySource _activitySource = new("Talma.Orders.Processor", "1.0.0");
+    private readonly HttpClient _httpClient;
 
-    public async Task ProcessPendingOrdersAsync()
+    public PaymentServiceClient(HttpClient httpClient)
     {
-        using var activity = _activitySource.StartActivity(
-            "ProcessPendingOrders",
-            ActivityKind.Internal
-        );
+        _httpClient = httpClient;
+    }
 
-        var pendingOrders = await GetPendingOrdersAsync();
-        activity?.SetTag("orders.pending_count", pendingOrders.Count);
+    public async Task<Payment> ProcessPaymentAsync(Order order)
+    {
+        // OpenTelemetry automáticamente inyecta headers:
+        // - traceparent: 00-abc123def456-span789-01
+        // - tracestate: (vendor-specific state)
 
-        var successCount = 0;
-        var errorCount = 0;
-
-        foreach (var order in pendingOrders)
+        var request = new HttpRequestMessage(HttpMethod.Post, "/api/payments")
         {
-            // ✅ Span por cada orden procesada
-            using var orderActivity = _activitySource.StartActivity(
-                "ProcessSingleOrder",
-                ActivityKind.Internal
-            );
-
-            orderActivity?.SetTag("order.id", order.Id);
-            orderActivity?.SetTag("order.number", order.OrderNumber);
-
-            try
+            Content = JsonContent.Create(new
             {
-                await ProcessOrderAsync(order);
-                successCount++;
-                orderActivity?.SetStatus(ActivityStatusCode.Ok);
-            }
-            catch (Exception ex)
-            {
-                errorCount++;
-                orderActivity?.RecordException(ex);
-                orderActivity?.SetStatus(ActivityStatusCode.Error);
-            }
-        }
+                order.Id,
+                order.TotalAmount
+            })
+        };
 
-        activity?.SetTag("orders.processed_success", successCount);
-        activity?.SetTag("orders.processed_errors", errorCount);
-        activity?.SetStatus(ActivityStatusCode.Ok);
+        var response = await _httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<Payment>();
     }
 }
+
+// En Payment Service, OpenTelemetry automáticamente EXTRAE trace context
+// y crea span hijo del span de Order Service
 ```
 
-### Propagación Manual de Trace Context
+### Context Propagation (Kafka)
 
 ```csharp
-public class OrderEventPublisher
+// Para Kafka, necesitamos propagar manualmente (OpenTelemetry no lo hace automático)
+
+public class KafkaEventProducer
 {
-    private static readonly ActivitySource _activitySource = new("Talma.Orders.Events", "1.0.0");
+    private readonly IProducer<string, string> _producer;
 
     public async Task PublishOrderCreatedAsync(Order order)
     {
-        using var activity = _activitySource.StartActivity(
-            "PublishOrderCreated",
-            ActivityKind.Producer  // ✅ Producer for messaging
-        );
-
-        activity?.SetTag("messaging.system", "kafka");
-        activity?.SetTag("messaging.destination", "order.created");
-        activity?.SetTag("messaging.message_id", Guid.NewGuid().ToString());
-
-        var orderEvent = new OrderCreatedEvent
+        var @event = new OrderCreatedEvent
         {
+            EventId = Guid.NewGuid(),
             OrderId = order.Id,
-            OrderNumber = order.OrderNumber,
-            CustomerId = order.CustomerId,
-            TotalAmount = order.TotalAmount,
-            CreatedAt = order.CreatedAt
+            CustomerId = order.CustomerId
         };
-
-        // ✅ Propagar trace context en message headers
-        var headers = new Headers();
-
-        if (Activity.Current != null)
-        {
-            headers.Add("traceparent", Encoding.UTF8.GetBytes(Activity.Current.Id));
-
-            if (!string.IsNullOrEmpty(Activity.Current.TraceStateString))
-            {
-                headers.Add("tracestate", Encoding.UTF8.GetBytes(Activity.Current.TraceStateString));
-            }
-        }
 
         var message = new Message<string, string>
         {
-            Key = order.Id.ToString(),
-            Value = JsonSerializer.Serialize(orderEvent),
-            Headers = headers
+            Key = order.CustomerId.ToString(),
+            Value = JsonSerializer.Serialize(@event),
+            Headers = new Headers()
         };
 
-        await _kafkaProducer.ProduceAsync("order.created", message);
+        // Inyectar trace context en headers Kafka
+        var propagator = Propagators.DefaultTextMapPropagator;
+        propagator.Inject(new PropagationContext(Activity.Current?.Context ?? default, Baggage.Current),
+            message.Headers,
+            (headers, key, value) =>
+            {
+                headers.Add(key, Encoding.UTF8.GetBytes(value));
+            });
 
-        activity?.SetTag("messaging.kafka.partition", message.Partition.Value);
-        activity?.SetTag("messaging.kafka.offset", message.Offset.Value);
-        activity?.SetStatus(ActivityStatusCode.Ok);
+        await _producer.ProduceAsync("order.created", message);
     }
 }
 
-// Consumer side
+// Consumer: Extraer trace context
 public class OrderCreatedConsumer
 {
-    private static readonly ActivitySource _activitySource = new("Talma.Notifications.Consumer", "1.0.0");
-
-    public async Task ConsumeAsync(ConsumeResult<string, string> result)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        // ✅ Extraer trace context de headers
-        string? traceparent = null;
-        string? tracestate = null;
-
-        if (result.Message.Headers.TryGetLastBytes("traceparent", out var traceparentBytes))
+        while (!stoppingToken.IsCancellationRequested)
         {
-            traceparent = Encoding.UTF8.GetString(traceparentBytes);
-        }
+            var result = _consumer.Consume(stoppingToken);
 
-        if (result.Message.Headers.TryGetLastBytes("tracestate", out var tracestateBytes))
-        {
-            tracestate = Encoding.UTF8.GetString(tracestateBytes);
-        }
+            // Extraer trace context desde headers
+            var propagator = Propagators.DefaultTextMapPropagator;
+            var parentContext = propagator.Extract(default, result.Message.Headers,
+                (headers, key) =>
+                {
+                    var header = headers.FirstOrDefault(h => h.Key == key);
+                    return header != null ? new[] { Encoding.UTF8.GetString(header.GetValueBytes()) } : Enumerable.Empty<string>();
+                });
 
-        // ✅ Crear span como hijo del producer
-        using var activity = _activitySource.StartActivity(
-            "ConsumeOrderCreated",
-            ActivityKind.Consumer,
-            parentId: traceparent  // ✅ Link to producer span
-        );
+            Baggage.Current = parentContext.Baggage;
 
-        if (!string.IsNullOrEmpty(tracestate))
-        {
-            activity?.SetTag("tracestate", tracestate);
-        }
+            // Crear span hijo
+            using var activity = ActivitySource.StartActivity(
+                "ProcessOrderCreated",
+                ActivityKind.Consumer,
+                parentContext.ActivityContext);
 
-        activity?.SetTag("messaging.system", "kafka");
-        activity?.SetTag("messaging.source", result.Topic);
-        activity?.SetTag("messaging.kafka.partition", result.Partition.Value);
-        activity?.SetTag("messaging.kafka.offset", result.Offset.Value);
+            activity?.SetTag("messaging.system", "kafka");
+            activity?.SetTag("messaging.destination", "order.created");
 
-        try
-        {
-            var orderEvent = JsonSerializer.Deserialize<OrderCreatedEvent>(result.Message.Value);
+            await HandleEventAsync(result.Message.Value);
 
-            await ProcessOrderCreatedEventAsync(orderEvent);
-
-            activity?.SetStatus(ActivityStatusCode.Ok);
-        }
-        catch (Exception ex)
-        {
-            activity?.RecordException(ex);
-            activity?.SetStatus(ActivityStatusCode.Error);
-            throw;
+            _consumer.Commit(result);
         }
     }
 }
@@ -407,66 +397,507 @@ public class OrderCreatedConsumer
 ### Sampling Strategies
 
 ```csharp
-// ✅ 1. AlwaysOnSampler - 100% traces (Development)
+// 1. Always On (Development)
 .SetSampler(new AlwaysOnSampler())
 
-// ✅ 2. TraceIdRatioBasedSampler - % aleatorio (Production)
-.SetSampler(new TraceIdRatioBasedSampler(0.1))  // 10%
+// 2. Ratio-based (10% en producción)
+.SetSampler(new TraceIdRatioBasedSampler(0.1))
 
-// ✅ 3. ParentBasedSampler - Heredar decisión del parent
-.SetSampler(new ParentBasedSampler(
-    new TraceIdRatioBasedSampler(0.1)
-))
+// 3. Parent-based (si parent fue sampled, child también)
+.SetSampler(new ParentBasedSampler(new TraceIdRatioBasedSampler(0.1)))
 
-// ✅ 4. Custom Sampler - Basado en atributos
-public class CustomSampler : Sampler
+// 4. Custom sampler (sample 100% de errores, 10% de success)
+public class ErrorAwareSampler : Sampler
 {
+    private readonly Sampler _baseSampler = new TraceIdRatioBasedSampler(0.1);
+
     public override SamplingResult ShouldSample(in SamplingParameters samplingParameters)
     {
-        // Siempre samplear errores
-        if (samplingParameters.Tags.Any(t => t.Key == "http.status_code" && t.Value.ToString().StartsWith("5")))
+        // Siempre sample si hay error
+        var tags = samplingParameters.Tags;
+        if (tags?.Any(t => t.Key == "error" && t.Value?.ToString() == "true") == true)
         {
             return new SamplingResult(SamplingDecision.RecordAndSample);
         }
 
-        // Samplear 100% endpoints críticos
-        if (samplingParameters.Tags.Any(t => t.Key == "http.route" && t.Value.ToString().Contains("/orders")))
-        {
-            return new SamplingResult(SamplingDecision.RecordAndSample);
-        }
-
-        // 10% para el resto
-        return new TraceIdRatioBasedSampler(0.1).ShouldSample(samplingParameters);
+        // Si no hay error, usar ratio-based
+        return _baseSampler.ShouldSample(samplingParameters);
     }
 }
 ```
 
-### Visualización en Grafana
+---
 
-```promql
-# Buscar traces por TraceID
-# Grafana → Explore → Tempo datasource
-# Query: Trace ID = 4bf92f3577b34da6a3ce929d0e0e4736
+## 2. Correlation IDs
 
-# Buscar traces por tags
+### ¿Qué son Correlation IDs?
+
+Identificadores únicos que se propagan a través de todos los componentes de un request (logs, traces, metrics) permitiendo correlacionar eventos relacionados.
+
+**Propósito:** Rastrear un request específico a través de logs, traces y métricas para debugging holístico.
+
+**Tipos:**
+
+- **Trace ID**: Generado por OpenTelemetry (hexadecimal 32 chars)
+- **Correlation ID**: Application-level ID (puede ser trace ID o custom)
+- **Request ID**: ID del request HTTP individual
+
+**Beneficios:**
+✅ Correlacionar logs de múltiples servicios
+✅ Link traces a logs específicos
+✅ Debugging end-to-end de problemas
+✅ Customer support (buscar por correlation ID)
+
+### Implementación
+
+```csharp
+// Middleware para correlation ID
+public class CorrelationIdMiddleware
 {
-  resource.service.name="orders-api" &&
-  span.http.status_code >= 500
+    private readonly RequestDelegate _next;
+    private const string CorrelationIdHeader = "X-Correlation-ID";
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // 1. Obtener correlation ID desde header (si existe)
+        var correlationId = context.Request.Headers[CorrelationIdHeader].FirstOrDefault();
+
+        // 2. Si no existe, crear uno nuevo (usar trace ID de OpenTelemetry)
+        if (string.IsNullOrEmpty(correlationId))
+        {
+            correlationId = Activity.Current?.TraceId.ToString() ?? Guid.NewGuid().ToString();
+        }
+
+        // 3. Guardar en HttpContext para acceso posterior
+        context.Items["CorrelationId"] = correlationId;
+
+        // 4. Agregar a logs via LogContext
+        using (LogContext.PushProperty("CorrelationId", correlationId))
+        {
+            // 5. Agregar a response headers (para cliente)
+            context.Response.OnStarting(() =>
+            {
+                context.Response.Headers.Add(CorrelationIdHeader, correlationId);
+                return Task.CompletedTask;
+            });
+
+            await _next(context);
+        }
+    }
 }
 
-# Buscar traces lentos
+// Registrar middleware (PRIMERO en pipeline)
+app.UseMiddleware<CorrelationIdMiddleware>();
+```
+
+### Propagación a servicios downstream
+
+```csharp
+// HttpClient: Propagar correlation ID automáticamente
+public class CorrelationIdDelegatingHandler : DelegatingHandler
 {
-  resource.service.name="orders-api" &&
-  duration > 1s
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    protected override async Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
+    {
+        // Obtener correlation ID del request actual
+        var correlationId = _httpContextAccessor.HttpContext?.Items["CorrelationId"]?.ToString();
+
+        if (!string.IsNullOrEmpty(correlationId))
+        {
+            // Agregar header a request downstream
+            request.Headers.Add("X-Correlation-ID", correlationId);
+        }
+
+        return await base.SendAsync(request, cancellationToken);
+    }
 }
 
-# Link desde logs a traces
-# En Grafana Loki, derivar TraceID desde logs:
-{
-  job="orders-api"
+// Registrar handler
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient("payment-service")
+    .AddHttpMessageHandler<CorrelationIdDelegatingHandler>();
+```
+
+### Uso en logs
+
+```csharp
+// Logs automáticamente incluyen CorrelationId (gracias a LogContext)
+_logger.LogInformation("Processing order {OrderId}", order.Id);
+
+// Output JSON:
+// {
+//   "timestamp": "2026-02-19T15:30:00Z",
+//   "level": "Information",
+//   "message": "Processing order abc-123",
+//   "properties": {
+//     "OrderId": "abc-123",
+//     "CorrelationId": "trace-xyz-789",  ← Automático
+//     "TraceId": "abc123def456",
+//     "SpanId": "span789"
+//   }
+// }
+```
+
+### Query logs por Correlation ID (Loki)
+
+```logql
+# Buscar todos los logs de un request específico
+{service="customer-service"} | json | CorrelationId="trace-xyz-789"
+
+# Buscar logs de TODOS los servicios para un correlation ID
+{service=~".*"} | json | CorrelationId="trace-xyz-789" | line_format "{{.service}} [{{.level}}] {{.message}}"
+
+# Output:
+# customer-service [Information] Received order request
+# customer-service [Information] Validating customer abc-123
+# payment-service [Information] Processing payment for order order-456
+# payment-service [Error] Payment gateway timeout
+# customer-service [Error] Order creation failed
+```
+
+### Link traces a logs en Grafana
+
+```csharp
+// Serilog: Agregar trace ID a logs
+Log.Logger = new LoggerConfiguration()
+    .Enrich.WithSpan()  // Agrega TraceId y SpanId automáticamente
+    .WriteTo.Console(new CompactJsonFormatter())
+    .CreateLogger();
+
+// Configurar Grafana para link logs ↔ traces:
+// 1. En Loki data source, configurar "Derived fields":
+//    - Name: TraceID
+//    - Regex: "TraceId":"(\w+)"
+//    - URL: ${__value.raw}
+//    - Internal link: Tempo data source
+//
+// 2. Ahora en logs panel, aparece botón "Tempo" para abrir trace
+```
+
+---
+
+## 3. SLO/SLA
+
+### ¿Qué son SLO y SLA?
+
+- **SLO (Service Level Objective)**: Objetivo interno de confiabilidad que el equipo se compromete a alcanzar (ej. "P95 latency < 500ms")
+- **SLA (Service Level Agreement)**: Acuerdo contractual con clientes sobre nivel de servicio, con penalidades si no se cumple (ej. "99.9% uptime")
+
+**Propósito:** Medir objetivamente la confiabilidad del servicio, establecer expectativas claras, priorizar mejoras.
+
+**Componentes clave:**
+
+- **SLI (Service Level Indicator)**: Métrica que mide comportamiento (ej. latency, error rate, availability)
+- **SLO Target**: Umbral objetivo (ej. 99.9%)
+- **SLO Window**: Período de medición (ej. 30 días)
+- **Error budget**: Margen de error permitido (100% - SLO)
+
+**Beneficios:**
+✅ Objetividad en calidad de servicio
+✅ Priorización de trabajo (si SLO en riesgo → top priority)
+✅ Balance desarrollo features vs confiabilidad
+✅ Transparencia con stakeholders
+
+### SLI Categories
+
+| Categoría        | SLI                                    | Descripción                | Fuente              |
+| ---------------- | -------------------------------------- | -------------------------- | ------------------- |
+| **Availability** | `successful_requests / total_requests` | % de requests exitosos     | HTTP 2xx vs 5xx     |
+| **Latency**      | `P95(request_duration) < threshold`    | 95% requests bajo umbral   | request_duration_ms |
+| **Throughput**   | `requests_per_second`                  | Capacidad de procesamiento | request count       |
+| **Correctness**  | `successful_validations / total`       | % datos correctos          | validation errors   |
+
+### Ejemplo: Definir SLOs
+
+```yaml
+# SLOs para Customer Service
+
+slos:
+  # 1. Availability
+  - name: availability
+    description: Percentage of successful HTTP requests
+    sli:
+      ratio:
+        numerator: http_server_request_duration_seconds_count{status_code!~"5.."}
+        denominator: http_server_request_duration_seconds_count
+    target: 99.9 # 99.9% availability
+    window: 30d
+    error_budget: 0.1 # 0.1% = 43 minutos downtime por mes
+
+  # 2. Latency
+  - name: latency-p95
+    description: 95th percentile request latency
+    sli:
+      latency:
+        query: |
+          histogram_quantile(0.95,
+            rate(http_server_request_duration_seconds_bucket[5m])
+          )
+        threshold: 0.5 # 500ms
+    target: 99.0 # 99% de ventanas de 5min bajo 500ms
+    window: 30d
+
+  # 3. Error rate
+  - name: error-rate
+    description: Percentage of failed requests
+    sli:
+      ratio:
+        numerator: http_server_request_duration_seconds_count{status_code=~"5.."}
+        denominator: http_server_request_duration_seconds_count
+    target: 99.0 # <1% error rate
+    window: 30d
+```
+
+### Implementación con Grafana
+
+```hcl
+# terraform/modules/grafana/slo.tf
+
+resource "grafana_slo" "customer_service_availability" {
+  name        = "Customer Service - Availability"
+  description = "99.9% of HTTP requests should be successful"
+
+  query {
+    type = "freeform"
+
+    # Success ratio
+    freeform {
+      query = <<-EOT
+        sum(rate(http_server_request_duration_seconds_count{
+          service="customer-service",
+          status_code!~"5.."
+        }[5m]))
+        /
+        sum(rate(http_server_request_duration_seconds_count{
+          service="customer-service"
+        }[5m]))
+      EOT
+    }
+  }
+
+  objectives {
+    value  = 99.9
+    window = "30d"
+  }
+
+  destination_datasource {
+    uid = grafana_data_source.mimir.uid
+  }
+
+  label {
+    key   = "service"
+    value = "customer-service"
+  }
+
+  label {
+    key   = "team"
+    value = "platform"
+  }
 }
-| json
-| __trace_id__=`TraceId`
+
+resource "grafana_slo" "customer_service_latency" {
+  name        = "Customer Service - Latency P95"
+  description = "P95 latency should be below 500ms"
+
+  query {
+    type = "freeform"
+
+    freeform {
+      query = <<-EOT
+        histogram_quantile(0.95,
+          rate(http_server_request_duration_seconds_bucket{
+            service="customer-service"
+          }[5m])
+        ) < 0.5
+      EOT
+    }
+  }
+
+  objectives {
+    value  = 99.0
+    window = "30d"
+  }
+
+  destination_datasource {
+    uid = grafana_data_source.mimir.uid
+  }
+}
+```
+
+### SLO Dashboard
+
+```json
+{
+  "dashboard": {
+    "title": "Customer Service - SLOs",
+    "panels": [
+      {
+        "title": "Availability SLO",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "avg_over_time(slo:customer_service:availability:ratio[30d]) * 100",
+            "legendFormat": "Current"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "thresholds": {
+              "steps": [
+                { "value": 0, "color": "red" },
+                { "value": 99.0, "color": "yellow" },
+                { "value": 99.9, "color": "green" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "title": "Error Budget Remaining",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "(1 - (slo:customer_service:availability:error_budget_consumed / slo:customer_service:availability:error_budget_total)) * 100"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                { "value": 0, "color": "red" },
+                { "value": 20, "color": "yellow" },
+                { "value": 50, "color": "green" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "title": "SLO Compliance (30 days)",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "avg_over_time(slo:customer_service:availability:ratio[30d]) * 100",
+            "legendFormat": "Availability"
+          },
+          {
+            "expr": "99.9",
+            "legendFormat": "SLO Target"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Error Budget Policy
+
+```markdown
+# Error Budget Policy - Customer Service
+
+## SLO Targets
+
+- **Availability**: 99.9% (43 min downtime/mes)
+- **Latency P95**: < 500ms en 99% ventanas 5min
+- **Error Rate**: < 1%
+
+## Error Budget
+
+- **Total budget**: 0.1% (43 minutos downtime por mes)
+- **Calculation**: `(1 - SLO_target) * total_requests`
+
+## Actions by Error Budget Status
+
+### ✅ Budget > 50% (Healthy)
+
+- **Development**: Normal velocity, features + tech debt balance
+- **Deployments**: Normal cadence (daily)
+- **Risk tolerance**: Can take calculated risks
+
+### ⚠️ Budget 20-50% (Warning)
+
+- **Development**: Prioritize reliability over features (70/30)
+- **Deployments**: Reduce frequency (2-3x/week), increase review
+- **Risk tolerance**: Conservative, no risky changes
+
+### 🚨 Budget < 20% (Critical)
+
+- **Development**: STOP features, 100% focus on reliability
+- **Deployments**: Freeze (only critical fixes con approval)
+- **Risk tolerance**: Zero tolerance, rollback aggressive
+- **Escalation**: Tech Lead + Product Manager notified
+
+### ❌ Budget Exhausted (Breach)
+
+- **Action**: Full incident response, root cause analysis mandatory
+- **Deployment**: Complete freeze until SLO recovered
+- **Communication**: Stakeholders + customers notified
+- **Postmortem**: Required within 48h
+```
+
+### SLA Example (Customer-facing)
+
+```markdown
+# Service Level Agreement - Customer Service API
+
+**Effective Date**: 2026-01-01
+**Version**: 1.0
+
+## Service Description
+
+Customer Service API provides REST endpoints for customer and order management.
+
+## Service Levels
+
+### 1. Availability
+
+- **Commitment**: 99.9% uptime monthly (excluding planned maintenance)
+- **Measurement**: Successful HTTP responses (2xx, 3xx, 4xx) / Total requests
+- **Downtime allowance**: 43 minutes per month
+
+### 2. Performance
+
+- **Commitment**: 95th percentile response time < 500ms
+- **Measurement**: P95 of HTTP request duration
+- **Endpoints covered**: All `/api/*` endpoints
+
+### 3. Support Response Times
+
+- **Critical (P1)**: < 1 hour
+- **High (P2)**: < 4 hours
+- **Medium (P3)**: < 24 hours
+- **Low (P4)**: < 72 hours
+
+## Exclusions
+
+This SLA does not cover:
+
+- Client-side errors (4xx excluding 429 rate limit)
+- Third-party service failures beyond our control
+- Scheduled maintenance (with 7 days notice)
+- Force majeure events
+
+## Service Credits (if SLA breached)
+
+| Availability  | Service Credit |
+| ------------- | -------------- |
+| 99.0% - 99.9% | 10%            |
+| 95.0% - 99.0% | 25%            |
+| < 95.0%       | 50%            |
+
+## Requesting Credit
+
+- Must be requested within 30 days of incident
+- Provide correlation IDs demonstrating breach
+- Credits applied to next billing cycle
 ```
 
 ---
@@ -475,52 +906,84 @@ public class CustomSampler : Sampler
 
 ### MUST (Obligatorio)
 
-- **MUST** usar OpenTelemetry SDK para tracing en .NET
-- **MUST** propagar W3C Trace Context (traceparent header)
-- **MUST** instrumentar ASP.NET Core automáticamente
-- **MUST** instrumentar HttpClient automáticamente
-- **MUST** crear spans custom para operaciones de negocio críticas
-- **MUST** registrar exceptions en spans con `RecordException()`
-- **MUST** establecer status de span (Ok, Error)
-- **MUST** exportar traces a Grafana Tempo via OTLP
-- **MUST** incluir resource attributes (service.name, environment)
-- **MUST** propagar trace context en mensajes Kafka
+**Distributed Tracing:**
+
+- **MUST** instrumentar aplicación con OpenTelemetry Tracing
+- **MUST** exportar traces vía OTLP a Grafana Tempo
+- **MUST** habilitar auto-instrumentation (ASP.NET Core, HttpClient, Database)
+- **MUST** propagar trace context entre servicios (HTTP headers automático)
+- **MUST** usar sampling apropiado (10% en producción, 100% dev)
+- **MUST** registrar excepciones en spans (`activity.RecordException(ex)`)
+
+**Correlation IDs:**
+
+- **MUST** implementar middleware de correlation ID (primero en pipeline)
+- **MUST** usar trace ID de OpenTelemetry como correlation ID
+- **MUST** propagar correlation ID en headers HTTP (`X-Correlation-ID`)
+- **MUST** incluir correlation ID en logs (via LogContext)
+- **MUST** retornar correlation ID en response headers
+
+**SLO/SLA:**
+
+- **MUST** definir al menos 2 SLOs: Availability y Latency
+- **MUST** medir SLOs desde métricas reales (OpenTelemetry)
+- **MUST** documentar SLOs en README del servicio
+- **MUST** crear dashboard Grafana mostrando SLO compliance
+- **MUST** establecer error budget policy
 
 ### SHOULD (Fuertemente recomendado)
 
-- **SHOULD** instrumentar Entity Framework Core automáticamente
-- **SHOULD** agregar tags relevantes a spans (customer_id, country, etc.)
-- **SHOULD** usar ActivityKind apropiado (Server, Client, Producer, Consumer, Internal)
-- **SHOULD** implementar sampling en producción (10-20%)
-- **SHOULD** enriquecer spans con información de negocio
-- **SHOULD** crear spans para operaciones asíncronas largas
-- **SHOULD** incluir baggage para propagar contexto de negocio
+- **SHOULD** crear custom spans para operaciones críticas de negocio
+- **SHOULD** agregar tags relevantes a spans (customer_id, order_id, etc.)
+- **SHOULD** propagar context en Kafka (manual injection/extraction)
+- **SHOULD** configurar link entre Loki logs y Tempo traces (derived fields)
+- **SHOULD** usar parent-based sampler para mantener coherencia de traces
+- **SHOULD** definir SLO para error rate
+- **SHOULD** alertar cuando error budget < 20%
+- **SHOULD** incluir SLA en documentación customer-facing
 
 ### MAY (Opcional)
 
-- **MAY** usar custom samplers basados en atributos
-- **MAY** implementar tail sampling para errores
-- **MAY** agregar links entre spans relacionados
-- **MAY** usar exemplares para link metrics → traces
+- **MAY** implementar custom sampler (ej. 100% traces con errores)
+- **MAY** usar baggage para propagar metadata adicional
+- **MAY** crear SLOs adicionales (throughput, correctness)
+- **MAY** automatizar SLO reporting (weekly emails)
 
 ### MUST NOT (Prohibido)
 
-- **MUST NOT** samplear traces con errores (siempre capturar)
-- **MUST NOT** incluir información sensible en tags
-- **MUST NOT** crear spans excesivos en hot paths
-- **MUST NOT** bloquear requests esperando export de traces
-- **MUST NOT** hardcodear trace IDs
+- **MUST NOT** deshabilitar tracing en producción (usar sampling)
+- **MUST NOT** logear trace IDs manualmente (Serilog.Enrich.WithSpan lo hace automático)
+- **MUST NOT** definir SLOs sin métricas reales (no "feelings")
+- **MUST NOT** ignorar error budget exhausted (requiere acción)
 
 ---
 
 ## Referencias
 
-- [Lineamiento: Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md)
-- Estándares relacionados:
-  - [Structured Logging](structured-logging.md)
-  - [Métricas](metrics-standards.md)
-  - [Correlation IDs](correlation-ids.md)
-- Especificaciones:
-  - [OpenTelemetry Tracing](https://opentelemetry.io/docs/specs/otel/trace/)
-  - [W3C Trace Context](https://www.w3.org/TR/trace-context/)
-  - [Grafana Tempo](https://grafana.com/docs/tempo/)
+**OpenTelemetry:**
+
+- [OpenTelemetry Tracing](https://opentelemetry.io/docs/specs/otel/trace/)
+- [.NET OpenTelemetry Tracing](https://github.com/open-telemetry/opentelemetry-dotnet)
+- [W3C Trace Context](https://www.w3.org/TR/trace-context/)
+
+**Grafana Tempo:**
+
+- [Grafana Tempo Documentation](https://grafana.com/docs/tempo/latest/)
+- [Trace to Logs](https://grafana.com/docs/grafana/latest/datasources/tempo/#trace-to-logs)
+
+**SLOs:**
+
+- [Google SRE Book - SLOs](https://sre.google/sre-book/service-level-objectives/)
+- [Grafana SLO Plugin](https://grafana.com/docs/grafana-cloud/alerting-and-irm/slo/)
+- [Implementing SLOs](https://sre.google/workbook/implementing-slos/)
+
+**Relacionados:**
+
+- [Logging & Monitoring](./logging-monitoring.md)
+- [Resilience Patterns](../arquitectura/resilience-patterns.md)
+- [API Error Handling](../apis/api-error-handling.md)
+
+---
+
+**Última actualización**: 19 de febrero de 2026
+**Responsable**: Equipo de Arquitectura

@@ -1,661 +1,629 @@
 ---
 id: resilience-patterns
-sidebar_position: 2
+sidebar_position: 3
 title: Patrones de Resiliencia
-description: Estándares consolidados para circuit breakers, retry patterns, graceful degradation, timeouts y graceful shutdown con Polly 8.0+
+description: Patrones para sistemas resilientes incluyendo circuit breaker, retry, timeout, bulkhead, rate limiting y graceful shutdown.
 ---
 
-# Estándar Técnico — Patrones de Resiliencia
+# Patrones de Resiliencia
 
-## 1. Propósito
+## Contexto
 
-Garantizar resiliencia en sistemas distribuidos mediante circuit breakers, retries, timeouts y graceful shutdown.
+Este estándar consolida los patrones fundamentales para construir sistemas resilientes que manejan fallos gracefully. Complementa el lineamiento [Resiliencia y Disponibilidad](../../lineamientos/arquitectura/14-resiliencia-y-disponibilidad.md).
 
-## 2. Alcance
+**Conceptos incluidos:**
 
-**Aplica a:**
+- **Circuit Breaker** → Detener llamadas a servicios fallidos
+- **Retry** → Reintentar operaciones fallidas
+- **Timeout** → Límites de tiempo de espera
+- **Bulkhead** → Aislamiento de recursos
+- **Rate Limiting** → Control de tasa de requests
+- **Graceful Degradation** → Degradación funcional controlada
+- **Graceful Shutdown** → Apagado ordenado
 
-- Llamadas HTTP a servicios externos y APIs
-- Conexiones a bases de datos y caches
-- Comunicación entre microservicios
-- Consumers de message brokers
-- Operaciones asíncronas con dependencies externas
-- Servicios contenerizados en AWS ECS Fargate
+---
 
-**No aplica a:**
+## Stack Tecnológico
 
-- Operaciones in-process puras sin dependencies externas
-- Lambda functions (serverless con manejo de AWS)
-- Scripts batch de corta duración (`<5s`)
-- Health checks simples
+| Componente        | Tecnología                                    | Versión | Uso                                       |
+| ----------------- | --------------------------------------------- | ------- | ----------------------------------------- |
+| **Resilience**    | Polly                                         | 8.0+    | Circuit breaker, retry, timeout, bulkhead |
+| **Rate Limiting** | ASP.NET Core Rate Limiting                    | 8.0+    | Control de tasa built-in                  |
+| **Health Checks** | Microsoft.Extensions.Diagnostics.HealthChecks | 8.0+    | Monitoreo de dependencias                 |
+| **Observability** | OpenTelemetry                                 | 1.7+    | Métricas de resiliencia                   |
 
-## 3. Tecnologías Aprobadas
+---
 
-| Componente        | Tecnología                      | Versión mínima | Observaciones                                |
-| ----------------- | ------------------------------- | -------------- | -------------------------------------------- |
-| **Resilience**    | Polly                           | 8.0+           | Circuit breaker + retry + timeout + fallback |
-| **HTTP**          | Microsoft.Extensions.Http.Polly | 8.0+           | Integración con HttpClient                   |
-| **Monitoring**    | Polly.Extensions.Telemetry      | 8.0+           | Métricas OpenTelemetry                       |
-| **Testing**       | Polly.Testing                   | 8.0+           | Unit tests de policies                       |
-| **Database**      | Npgsql                          | 8.0+           | Retry automático PostgreSQL                  |
-| **EF Core**       | Microsoft.EntityFrameworkCore   | 8.0+           | ExecutionStrategy custom                     |
-| **Cache**         | StackExchange.Redis             | 2.7+           | Timeouts configurables                       |
-| **Feature Flags** | LaunchDarkly / Unleash          | -              | Feature toggles                              |
-| **Load Balancer** | AWS ALB                         | -              | Connection draining                          |
+## Conceptos Fundamentales
 
-> El uso de tecnologías no listadas requiere aprobación de Arquitectura.
+Este estándar cubre 7 patrones de resiliencia:
 
-## 4. Circuit Breaker Pattern
+### Índice de Conceptos
 
-### Requisitos Obligatorios 🔴
+1. **Circuit Breaker**: Detener llamadas a servicios fallidos
+2. **Retry**: Reintentar operaciones transitorias
+3. **Timeout**: Evitar esperas indefinidas
+4. **Bulkhead**: Aislar recursos por tipo de operación
+5. **Rate Limiting**: Controlar tasa de requests
+6. **Graceful Degradation**: Funcionalidad reducida vs fallo total
+7. **Graceful Shutdown**: Apagado sin pérdida de requests
 
-#### Configuración de Umbrales
+### Relación entre Conceptos
 
-- [ ] Umbral de fallos consecutivos: mínimo 5 fallos en ventana
-- [ ] Umbral de tasa de fallo: mínimo 50% en ventana deslizante
-- [ ] Duración de circuito abierto: 30-60 segundos mínimo
-- [ ] Requests permitidos en half-open: 1-3 requests de prueba
-- [ ] Tamaño de ventana deslizante: 10-100 requests
+```mermaid
+graph TB
+    A[Timeout] --> B[Retry]
+    B --> C[Circuit Breaker]
+    C --> D[Graceful Degradation]
+    E[Bulkhead] --> F[Resiliencia]
+    G[Rate Limiting] --> F
+    C --> F
+    H[Graceful Shutdown] --> F
+```
 
-#### Excepciones a Manejar
+---
 
-- [ ] Timeouts (HttpRequestException, TaskCanceledException)
-- [ ] Network errors (SocketException, IOException)
-- [ ] HTTP 5xx (server errors)
-- [ ] HTTP 429 (rate limiting)
-- [ ] Excepciones transitorias custom
+## 1. Circuit Breaker
 
-#### Acciones al Cambiar Estado
+### ¿Qué es Circuit Breaker?
 
-- [ ] Log de transición de estados (Closed → Open → Half-Open)
-- [ ] Métricas de estado actual del circuito
-- [ ] Alertas cuando circuito abre
-- [ ] Eventos para circuit breaker dashboard
+Patrón que detiene llamadas a un servicio que está fallando, evitando cascada de fallos y dando tiempo de recuperación.
 
-#### Fallback y Degradación
+**Estados:**
 
-- [ ] Fallback definido para circuito abierto
-- [ ] Cache de respuestas previas cuando aplique
-- [ ] Respuesta default o degraded mode
-- [ ] Mensaje de error descriptivo al cliente
+- **Closed**: Normal, pasan requests
+- **Open**: Servicio fallando, rechaza requests inmediatamente
+- **Half-Open**: Prueba si servicio se recuperó
 
-#### Isolation
+**Propósito:** Fail fast, evitar cascada de timeouts, dar tiempo de recuperación.
 
-- [ ] Circuit breaker por servicio downstream
-- [ ] No compartir circuit breaker entre servicios distintos
-- [ ] Aislamiento por endpoint crítico vs no-crítico
+**Beneficios:**
+✅ Evita sobrecarga en servicios fallidos
+✅ Respuesta rápida al usuario
+✅ Auto-recuperación
 
-### Prohibiciones Circuit Breaker
-
-- ❌ Circuit breaker compartido entre servicios diferentes
-- ❌ Abrir circuito en primer fallo (debe acumular fallos)
-- ❌ Duración de circuito abierto `<10` segundos (muy agresivo)
-- ❌ No implementar half-open state
-- ❌ Circuit breaker sin métricas ni logs
-- ❌ Silenciar errores sin fallback
-
-### Configuración Circuit Breaker
+### Implementación
 
 ```csharp
-// Program.cs
-using Polly;
-using Polly.CircuitBreaker;
+// Circuit Breaker con Polly
+var circuitBreakerPolicy = Policy
+    .Handle<HttpRequestException>()
+    .Or<TimeoutException>()
+    .CircuitBreakerAsync(
+        handledEventsAllowedBeforeBreaking: 5, // Abrir después de 5 fallos
+        durationOfBreak: TimeSpan.FromSeconds(30), // Mantener abierto 30s
+        onBreak: (exception, duration) =>
+        {
+            _logger.LogWarning(
+                "Circuit breaker opened for {Duration}s due to {Exception}",
+                duration.TotalSeconds, exception.GetType().Name);
+        },
+        onReset: () =>
+        {
+            _logger.LogInformation("Circuit breaker reset");
+        },
+        onHalfOpen: () =>
+        {
+            _logger.LogInformation("Circuit breaker half-open, testing service");
+        });
 
+// Uso
+try
+{
+    var response = await circuitBreakerPolicy.ExecuteAsync(async () =>
+        await _httpClient.GetAsync("https://api.example.com/data"));
+}
+catch (BrokenCircuitException)
+{
+    _logger.LogWarning("Circuit breaker is open, using fallback");
+    return GetCachedData();
+}
+```
+
+---
+
+## 2. Retry
+
+### ¿Qué es Retry?
+
+Patrón que reintenta operaciones fallidas con estrategia de backoff.
+
+**Estrategias:**
+
+- **Immediate**: Sin espera (solo para fallos transitorios rápidos)
+- **Linear**: Espera fija entre intentos
+- **Exponential Backoff**: Espera creciente (2^n)
+- **Jitter**: Aleatorización para evitar thundering herd
+
+**Propósito:** Manejar fallos transitorios sin intervención manual.
+
+**Beneficios:**
+✅ Maneja blips de red
+✅ Absorbe fallos transitorios
+✅ Mejora confiabilidad
+
+### Implementación
+
+```csharp
+// Retry con Exponential Backoff + Jitter
+var retryPolicy = Policy
+    .Handle<HttpRequestException>()
+    .Or<TimeoutException>()
+    .WaitAndRetryAsync(
+        retryCount: 3,
+        sleepDurationProvider: retryAttempt =>
+        {
+            // Exponential backoff: 2^retryAttempt segundos
+            var exponentialDelay = TimeSpan.FromSeconds(Math.Pow(2, retryAttempt));
+
+            // Jitter: ±25% aleatorio
+            var jitter = TimeSpan.FromMilliseconds(
+                Random.Shared.Next(
+                    (int)(exponentialDelay.TotalMilliseconds * 0.75),
+                    (int)(exponentialDelay.TotalMilliseconds * 1.25)));
+
+            return jitter;
+        },
+        onRetry: (exception, timespan, retryCount, context) =>
+        {
+            _logger.LogWarning(
+                "Retry {RetryCount} after {Delay}ms due to {Exception}",
+                retryCount, timespan.TotalMilliseconds, exception.GetType().Name);
+        });
+
+// Uso
+var data = await retryPolicy.ExecuteAsync(async () =>
+    await _httpClient.GetFromJsonAsync<Data>("https://api.example.com/data"));
+```
+
+---
+
+## 3. Timeout
+
+### ¿Qué es Timeout?
+
+Límite de tiempo máximo para operaciones, evitando esperas indefinidas.
+
+**Tipos:**
+
+- **Timeout Optimista**: Por intento individual
+- **Timeout Pesimista**: Para toda la operación (incluyendo retries)
+
+**Propósito:** Evitar bloqueos indefinidos, liberar recursos.
+
+**Beneficios:**
+✅ Recursos liberados rápidamente
+✅ UX predecible
+✅ Evita thread starvation
+
+### Implementación
+
+```csharp
+// Timeout por request
+var timeoutPolicy = Policy
+    .TimeoutAsync<HttpResponseMessage>(
+        timeout: TimeSpan.FromSeconds(10),
+        onTimeoutAsync: async (context, timespan, task) =>
+        {
+            _logger.LogWarning("Request timed out after {Timeout}s", timespan.TotalSeconds);
+        });
+
+// Combinar Timeout + Retry + Circuit Breaker
+var resilientPolicy = Policy.WrapAsync(
+    timeoutPolicy,           // Más interno: 10s por request
+    retryPolicy,             // Medio: 3 retries
+    circuitBreakerPolicy);    // Más externo: circuit breaker
+
+// Configurar HttpClient con timeout global
+builder.Services.AddHttpClient("resilient-api")
+    .ConfigureHttpClient(client =>
+    {
+        client.Timeout = TimeSpan.FromSeconds(30); // Timeout total
+    })
+    .AddPolicyHandler(resilientPolicy);
+```
+
+---
+
+## 4. Bulkhead
+
+### ¿Qué es Bulkhead?
+
+Patrón que aísla recursos para diferentes tipos de operaciones, evitando que una operación monopolice todos los recursos.
+
+**Propósito:** Contener fallos, garantizar recursos para operaciones críticas.
+
+**Tipos:**
+
+- **Thread Pool Bulkhead**: Pool de threads dedicado
+- **Semaphore Bulkhead**: Límite de concurrencia
+
+**Beneficios:**
+✅ Operaciones críticas protegidas
+✅ Fallos contenidos
+✅ Mejor control de recursos
+
+### Implementación
+
+```csharp
+// Bulkhead con Polly - Límite de concurrencia
+var bulkheadPolicy = Policy
+    .BulkheadAsync<HttpResponseMessage>(
+        maxParallelization: 10,  // Máx 10 requests concurrentes
+        maxQueuingActions: 20,   // Máx 20 en cola
+        onBulkheadRejectedAsync: async context =>
+        {
+            _logger.LogWarning("Bulkhead limit reached, request rejected");
+        });
+
+// Bulkheads separados por criticidad
+public class ResilientHttpClientFactory
+{
+    public IAsyncPolicy<HttpResponseMessage> GetPolicy(CriticalityLevel level)
+    {
+        return level switch
+        {
+            CriticalityLevel.Critical => CreateCriticalPolicy(),
+            CriticalityLevel.Normal => CreateNormalPolicy(),
+            CriticalityLevel.LowPriority => CreateLowPriorityPolicy(),
+            _ => throw new ArgumentException()
+        };
+    }
+
+    private IAsyncPolicy<HttpResponseMessage> CreateCriticalPolicy()
+    {
+        var bulkhead = Policy.BulkheadAsync<HttpResponseMessage>(
+            maxParallelization: 50,  // Más recursos
+            maxQueuingActions: 100);
+
+        return Policy.WrapAsync(GetTimeoutPolicy(), GetRetryPolicy(), bulkhead);
+    }
+
+    private IAsyncPolicy<HttpResponseMessage> CreateLowPriorityPolicy()
+    {
+        var bulkhead = Policy.BulkheadAsync<HttpResponseMessage>(
+            maxParallelization: 5,   // Menos recursos
+            maxQueuingActions: 10);
+
+        return Policy.WrapAsync(GetTimeoutPolicy(), bulkhead);
+    }
+}
+```
+
+---
+
+## 5. Rate Limiting
+
+### ¿Qué es Rate Limiting?
+
+Control de la tasa de requests entrantes para proteger el servicio de sobrecarga.
+
+**Algoritmos:**
+
+- **Fixed Window**: N requests por ventana de tiempo fija
+- **Sliding Window**: Ventana que se mueve con el tiempo
+- **Token Bucket**: Tokens regenerados a tasa fija
+- **Concurrency**: Límite de requests concurrentes
+
+**Propósito:** Proteger de abusos, garantizar equidad, prevenir DoS.
+
+**Beneficios:**
+✅ Servicio protegido
+✅ Recursos distribuidos equitativamente
+✅ Prevención de abusos
+
+### Implementación
+
+```csharp
+// Rate Limiting en ASP.NET Core 8+
 var builder = WebApplication.CreateBuilder(args);
 
-var circuitBreakerOptions = new CircuitBreakerStrategyOptions
+builder.Services.AddRateLimiter(options =>
 {
-    FailureRatio = 0.5,              // 50% de fallos
-    MinimumThroughput = 10,          // Mínimo 10 requests en ventana
-    SamplingDuration = TimeSpan.FromSeconds(30),  // Ventana de 30s
-    BreakDuration = TimeSpan.FromSeconds(60),     // Abierto por 60s
-    ShouldHandle = new PredicateBuilder()
-        .Handle<HttpRequestException>()
-        .Handle<TimeoutException>()
-        .HandleResult<HttpResponseMessage>(r =>
-            (int)r.StatusCode >= 500 || r.StatusCode == System.Net.HttpStatusCode.TooManyRequests),
-    OnOpened = args =>
+    // Fixed Window: 100 requests por minuto
+    options.AddFixedWindowLimiter("fixed", options =>
     {
-        Console.WriteLine($"Circuit breaker abierto: {args.Outcome}");
-        return ValueTask.CompletedTask;
-    },
-    OnClosed = args =>
-    {
-        Console.WriteLine("Circuit breaker cerrado");
-        return ValueTask.CompletedTask;
-    }
-};
+        options.PermitLimit = 100;
+        options.Window = TimeSpan.FromMinutes(1);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 20;
+    });
 
-builder.Services.AddHttpClient("PaymentService", client =>
-{
-    client.BaseAddress = new Uri("https://api.payments.talma.com");
-    client.Timeout = TimeSpan.FromSeconds(10);
-})
-.AddResilienceHandler("payment-resilience", builder =>
-{
-    builder
-        .AddTimeout(TimeSpan.FromSeconds(10))
-        .AddRetry(new RetryStrategyOptions
-        {
-            MaxRetryAttempts = 3,
-            Delay = TimeSpan.FromSeconds(1),
-            BackoffType = DelayBackoffType.Exponential
-        })
-        .AddCircuitBreaker(circuitBreakerOptions);
+    // Sliding Window: más justo
+    options.AddSlidingWindowLimiter("sliding", options =>
+    {
+        options.PermitLimit = 100;
+        options.Window = TimeSpan.FromMinutes(1);
+        options.SegmentsPerWindow = 6; // 10s por segmento
+    });
+
+    // Token Bucket: permite bursts
+    options.AddTokenBucketLimiter("token", options =>
+    {
+        options.TokenLimit = 100;
+        options.ReplenishmentPeriod = TimeSpan.FromMinutes(1);
+        options.TokensPerPeriod = 100;
+        options.AutoReplenishment = true;
+    });
+
+    // Concurrency Limiter
+    options.AddConcurrencyLimiter("concurrency", options =>
+    {
+        options.PermitLimit = 50;
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 100;
+    });
+
+    options.OnRejected = async (context, token) =>
+    {
+        context.HttpContext.Response.StatusCode = 429;
+        await context.HttpContext.Response.WriteAsync(
+            "Too many requests. Please try again later.",
+            token);
+    };
 });
 
 var app = builder.Build();
-app.Run();
-```
+app.UseRateLimiter();
 
-## 5. Retry Pattern con Exponential Backoff
-
-### Requisitos Obligatorios 🔴
-
-#### Estrategia de Backoff
-
-- [ ] **Exponential backoff:** delay = base \* 2^attempt
-- [ ] **Jitter:** randomización del delay (±25%) para evitar thundering herd
-- [ ] **Max retry attempts:** 3-5 intentos máximo
-- [ ] **Max delay:** límite superior de backoff (30-60 segundos)
-- [ ] **Initial delay:** 100-1000ms según criticidad
-
-#### Excepciones Retriables
-
-- [ ] HTTP 408 (Request Timeout)
-- [ ] HTTP 429 (Too Many Requests) - respetar Retry-After header
-- [ ] HTTP 5xx (Server Errors)
-- [ ] Network errors (SocketException, IOException)
-- [ ] Timeouts (TaskCanceledException, TimeoutException)
-- [ ] Database transient errors (connection loss, deadlock)
-
-#### Idempotencia
-
-- [ ] Operaciones GET/HEAD siempre retriables
-- [ ] POST/PUT/DELETE con idempotency key
-- [ ] Verificar que operación no se ejecutó dos veces
-- [ ] Usar transaction IDs o correlation IDs
-
-#### Retry-After Header
-
-- [ ] Respetar Retry-After de HTTP 429/503
-- [ ] Parsear formato RFC1123 o segundos
-- [ ] Override de backoff si Retry-After > max delay
-
-### Prohibiciones Retry
-
-- ❌ Retry sin backoff (retry inmediato)
-- ❌ Retry infinito o >10 intentos
-- ❌ Retry de errores 4xx (excepto 429)
-- ❌ Retry de operaciones no idempotentes sin idempotency key
-- ❌ Ignorar Retry-After header
-- ❌ Backoff sin jitter (causa thundering herd)
-
-### Configuración Retry
-
-```csharp
-builder.Services.AddHttpClient("PaymentService")
-.AddResilienceHandler("payment-retry", builder =>
+// Aplicar rate limiting
+app.MapGet("/api/products", async (ProductService service) =>
 {
-    builder.AddRetry(new RetryStrategyOptions
+    return await service.GetAllAsync();
+})
+.RequireRateLimiting("fixed");
+
+// Rate limiting por cliente
+app.MapGet("/api/orders", async (HttpContext context, OrderService service) =>
+{
+    return await service.GetOrdersAsync();
+})
+.RequireRateLimiting(new RateLimiterPolicy
+{
+    PartitionedRateLimiter = context =>
     {
-        MaxRetryAttempts = 3,
-        Delay = TimeSpan.FromSeconds(1),      // Base delay
-        BackoffType = DelayBackoffType.Exponential,
-        UseJitter = true,                      // Añadir jitter ±25%
-        MaxDelay = TimeSpan.FromSeconds(30),   // Límite superior
-        ShouldHandle = new PredicateBuilder()
-            .Handle<HttpRequestException>()
-            .Handle<TimeoutException>()
-            .HandleResult<HttpResponseMessage>(response =>
+        var userId = context.User.FindFirst("sub")?.Value;
+        return RateLimitPartition.GetFixedWindowLimiter(
+            userId ?? "anonymous",
+            _ => new FixedWindowRateLimiterOptions
             {
-                return response.StatusCode == System.Net.HttpStatusCode.TooManyRequests ||
-                       (int)response.StatusCode >= 500;
-            }),
-        OnRetry = args =>
-        {
-            Console.WriteLine($"Retry {args.AttemptNumber} after {args.RetryDelay}");
-            return ValueTask.CompletedTask;
-        }
-    });
+                PermitLimit = 50,
+                Window = TimeSpan.FromMinutes(1)
+            });
+    }
 });
 ```
+
+---
 
 ## 6. Graceful Degradation
 
-### Requisitos Obligatorios 🔴
+### ¿Qué es Graceful Degradation?
 
-#### Clasificación de Funcionalidades
+Estrategia de ofrecer funcionalidad reducida en lugar de fallo total cuando dependencias no están disponibles.
 
-- [ ] **Core:** autenticación, pagos, compliance (no degradable)
-- [ ] **Important:** búsqueda, notificaciones (degradable con fallback)
-- [ ] **Nice-to-have:** recomendaciones, analytics (degradable sin fallback)
+**Propósito:** Mantener sistema operativo parcialmente, mejor UX.
 
-#### Estrategias de Fallback
+**Estrategias:**
 
-- [ ] Cached response (stale cache is better than no cache)
-- [ ] Default/static response
-- [ ] Funcionalidad reducida
-- [ ] Empty result con mensaje informativo
-- [ ] Skip feature (ocultar UI)
+- Fallback a cache
+- Funcionalidad reducida
+- Respuestas default
+- Modo read-only
 
-#### Feature Toggles
+**Beneficios:**
+✅ Sistema parcialmente operativo
+✅ Mejor UX
+✅ Revenue parcial vs cero
 
-- [ ] Feature flags para deshabilitar funcionalidad no-crítica
-- [ ] Kill switches para servicios degradados
-- [ ] Rollback automático si error rate > umbral
-- [ ] Toggles por tenant/usuario/región
-
-#### Comunicación al Usuario
-
-- [ ] Mensaje claro de funcionalidad reducida
-- [ ] No exponer errores técnicos internos
-- [ ] Sugerencias de retry o alternativas
-- [ ] Status page para servicios degradados
-
-### Prohibiciones Degradación
-
-- ❌ Degradar funcionalidad core/crítica
-- ❌ Fallar completamente si dependencia no-crítica falla
-- ❌ Mostrar errores técnicos al usuario final
-- ❌ Stale cache >24 horas sin advertencia
-- ❌ Fallback que expone datos sensibles
-
-### Configuración Degradación
+### Implementación
 
 ```csharp
-builder.Services.AddHttpClient("RecommendationService")
-.AddResilienceHandler("recommendation-resilience", pipelineBuilder =>
+public class ProductService
 {
-    pipelineBuilder
-        .AddCircuitBreaker(new CircuitBreakerStrategyOptions
-        {
-            FailureRatio = 0.5,
-            MinimumThroughput = 5,
-            BreakDuration = TimeSpan.FromSeconds(30)
-        })
-        .AddFallback(new FallbackStrategyOptions<HttpResponseMessage>
-        {
-            FallbackAction = async args =>
-            {
-                var cache = args.Context.ServiceProvider
-                    .GetRequiredService<IDistributedCache>();
-
-                var cached = await cache.GetStringAsync("recommendations:default");
-                if (cached != null)
-                {
-                    return Outcome.FromResult(new HttpResponseMessage
-                    {
-                        StatusCode = HttpStatusCode.OK,
-                        Content = new StringContent(cached)
-                    });
-                }
-
-                return Outcome.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent("[]")
-                });
-            }
-        });
-});
-```
-
-## 7. Timeouts
-
-### Requisitos Obligatorios 🔴
-
-#### Timeouts por Capa
-
-- [ ] **HTTP:** 10-30 segundos (según endpoint)
-- [ ] **Database:** 5-30 segundos (queries simples vs complejos)
-- [ ] **Cache (Redis):** 1-3 segundos
-- [ ] **Message Broker:** 5-10 segundos para produce, 30s para consume
-- [ ] **File Storage:** 60 segundos (uploads), 30 segundos (downloads)
-
-#### Propagación de CancellationToken
-
-- [ ] Todos los métodos async reciben `CancellationToken cancellationToken`
-- [ ] Propagación a llamadas downstream
-- [ ] `HttpContext.RequestAborted` en APIs ASP.NET Core
-- [ ] Verificar `cancellationToken.IsCancellationRequested` en loops
-
-#### Configuración de HttpClient
-
-- [ ] `HttpClient.Timeout` configurado (default 100s es muy alto)
-- [ ] Timeout por request usando `CancellationTokenSource`
-- [ ] Timeout en handler con Polly
-
-### Prohibiciones Timeout
-
-- ❌ Timeout infinito (`Timeout.InfiniteTimeSpan`)
-- ❌ Timeout muy alto (>120 segundos) sin justificación
-- ❌ Ignorar `CancellationToken` en métodos async
-- ❌ No propagar cancellation token a downstream calls
-- ❌ Timeout menor que retry delay acumulado
-
-### Configuración Timeout
-
-```csharp
-// HttpClient con timeout
-builder.Services.AddHttpClient("PaymentService", client =>
-{
-    client.BaseAddress = new Uri("https://api.payments.talma.com");
-    client.Timeout = TimeSpan.FromSeconds(10);
-})
-.AddResilienceHandler("payment-timeout", builder =>
-{
-    builder.AddTimeout(TimeSpan.FromSeconds(10));
-});
-
-// DbContext con timeout
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseNpgsql(
-        connectionString,
-        npgsqlOptions =>
-        {
-            npgsqlOptions.CommandTimeout(30);
-        });
-});
-
-// Redis con timeout
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.ConfigurationOptions = new ConfigurationOptions
-    {
-        SyncTimeout = 1000,
-        AsyncTimeout = 3000
-    };
-});
-```
-
-### Controller con CancellationToken
-
-```csharp
-[ApiController]
-[Route("api/[controller]")]
-public class OrdersController : ControllerBase
-{
-    [HttpGet("{id}")]
-    [RequestTimeout("00:00:10")]
-    public async Task<IActionResult> GetOrder(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        var order = await _orderService.GetByIdAsync(id, cancellationToken);
-        return order != null ? Ok(order) : NotFound();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> CreateOrder(
-        [FromBody] CreateOrderRequest request,
-        CancellationToken cancellationToken)
-    {
-        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        cts.CancelAfter(TimeSpan.FromSeconds(30));
-
-        var order = await _orderService.CreateAsync(request, cts.Token);
-        return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
-    }
-}
-```
-
-## 8. Graceful Shutdown
-
-### Requisitos Obligatorios 🔴
-
-#### Manejo de Señales
-
-- [ ] Escuchar **SIGTERM** (no solo SIGKILL)
-- [ ] Timeout de shutdown: 30-90 segundos
-- [ ] Marcar servicio como "not ready" inmediatamente
-- [ ] Esperar a que load balancer deje de enviar tráfico (10-15s)
-
-#### Completado de Requests
-
-- [ ] Completar requests HTTP en proceso
-- [ ] Esperar a consumers de Kafka terminen processing
-- [ ] Finalizar background tasks en curso
-- [ ] Timeout para forzar shutdown si tarda mucho
-
-#### Cierre de Conexiones
-
-- [ ] Cerrar conexiones de database limpiamente
-- [ ] Desconectar de message brokers
-- [ ] Cerrar conexiones Redis
-- [ ] Flush de logs pendientes
-
-#### Health Checks
-
-- [ ] `/health/ready` retorna 503 durante shutdown
-- [ ] `/health/live` sigue retornando 200 (proceso activo)
-- [ ] Load balancer deja de enviar tráfico basado en readiness
-
-### Prohibiciones Shutdown
-
-- ❌ Terminar proceso sin esperar requests en proceso
-- ❌ No escuchar SIGTERM (solo catch SIGKILL)
-- ❌ Shutdown timeout muy largo (>120s)
-- ❌ No marcar como not-ready antes de shutdown
-- ❌ No cerrar conexiones DB/Redis
-
-### Configuración Graceful Shutdown
-
-```csharp
-// Program.cs
-var app = builder.Build();
-
-var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-
-lifetime.ApplicationStopping.Register(() =>
-{
-    logger.LogInformation("Received SIGTERM. Starting graceful shutdown...");
-    HealthCheckService.IsShuttingDown = true;
-    Thread.Sleep(TimeSpan.FromSeconds(15)); // Esperar load balancer drain
-    logger.LogInformation("Ready to shutdown");
-});
-
-lifetime.ApplicationStopped.Register(() =>
-{
-    logger.LogInformation("Application stopped gracefully");
-});
-
-app.MapHealthChecks("/health/ready", new HealthCheckOptions
-{
-    Predicate = check => check.Tags.Contains("ready")
-});
-
-app.MapHealthChecks("/health/live", new HealthCheckOptions
-{
-    Predicate = check => check.Tags.Contains("live")
-});
-
-app.Run();
-```
-
-```yaml
-# AWS ECS Task Definition
-spec:
-  containers:
-    - name: payment-service
-      lifecycle:
-        preStop:
-          exec:
-            command: ["/bin/sh", "-c", "sleep 15"]
-  terminationGracePeriodSeconds: 90
-```
-
-## 9. Ejemplos Completos
-
-### Pipeline Completo de Resiliencia
-
-```csharp
-builder.Services.AddHttpClient("PaymentService", client =>
-{
-    client.BaseAddress = new Uri("https://api.payments.talma.com");
-    client.Timeout = TimeSpan.FromSeconds(30);
-})
-.AddResilienceHandler("payment-full-resilience", builder =>
-{
-    builder
-        // 1. Timeout por request
-        .AddTimeout(TimeSpan.FromSeconds(10))
-        // 2. Retry con backoff
-        .AddRetry(new RetryStrategyOptions
-        {
-            MaxRetryAttempts = 3,
-            Delay = TimeSpan.FromSeconds(1),
-            BackoffType = DelayBackoffType.Exponential,
-            UseJitter = true
-        })
-        // 3. Circuit breaker
-        .AddCircuitBreaker(new CircuitBreakerStrategyOptions
-        {
-            FailureRatio = 0.5,
-            MinimumThroughput = 10,
-            BreakDuration = TimeSpan.FromSeconds(60)
-        })
-        // 4. Fallback
-        .AddFallback(new FallbackStrategyOptions<HttpResponseMessage>
-        {
-            FallbackAction = async args => Outcome.FromResult(
-                new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.ServiceUnavailable,
-                    Content = new StringContent("{\"error\":\"Service temporarily unavailable\"}")
-                })
-        });
-});
-```
-
-### Service con Resiliencia Completa
-
-```csharp
-public class PaymentService
-{
-    private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
     private readonly IDistributedCache _cache;
-    private readonly ILogger<PaymentService> _logger;
+    private readonly ILogger<ProductService> _logger;
 
-    public async Task<PaymentResult> ProcessPaymentAsync(
-        PaymentRequest request,
-        CancellationToken cancellationToken)
+    public async Task<ProductDetails> GetProductAsync(Guid productId)
     {
-        var cacheKey = $"payment:{request.OrderId}";
-
         try
         {
-            var httpRequest = new HttpRequestMessage(HttpMethod.Post, "/api/v1/payments")
-            {
-                Content = JsonContent.Create(request)
-            };
-
-            httpRequest.Headers.Add("Idempotency-Key", request.OrderId.ToString());
-            httpRequest.Headers.Add("X-Correlation-Id", Activity.Current?.Id);
-
-            var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
-            response.EnsureSuccessStatusCode();
-
-            var result = await response.Content.ReadFromJsonAsync<PaymentResult>(cancellationToken);
-
-            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result),
-                new DistributedCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
-                }, cancellationToken);
-
-            return result;
+            // Intento primario: servicio de inventory
+            var inventoryData = await GetFromInventoryServiceAsync(productId);
+            await _cache.SetAsync($"product:{productId}", inventoryData, TimeSpan.FromMinutes(5));
+            return inventoryData;
         }
-        catch (BrokenCircuitException ex)
+        catch (Exception ex) when (ex is HttpRequestException or TimeoutException or BrokenCircuitException)
         {
-            _logger.LogWarning(ex, "Circuit breaker opened for payment service");
+            _logger.LogWarning(ex, "Inventory service unavailable, using fallback");
 
-            var cached = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            // Fallback 1: Cache
+            var cached = await _cache.GetAsync<ProductDetails>($"product:{productId}");
             if (cached != null)
             {
-                return JsonSerializer.Deserialize<PaymentResult>(cached);
+                cached.DataSource = "cache";
+                cached.IsDegraded = true;
+                return cached;
             }
 
-            return new PaymentResult
+            // Fallback 2: DB local (sin stock real-time)
+            var dbProduct = await _localDbContext.Products
+                .Where(p => p.Id == productId)
+                .FirstOrDefaultAsync();
+
+            if (dbProduct != null)
             {
-                Status = PaymentStatus.Deferred,
-                Message = "Payment service temporarily unavailable"
-            };
-        }
-        catch (TimeoutException ex)
-        {
-            _logger.LogError(ex, "Timeout processing payment for order {OrderId}", request.OrderId);
-            throw;
+                return new ProductDetails
+                {
+                    Id = dbProduct.Id,
+                    Name = dbProduct.Name,
+                    Price = dbProduct.Price,
+                    StockStatus = "Unknown", // Degradado: sin stock
+                    IsDegraded = true,
+                    DataSource = "local-db"
+                };
+            }
+
+            // Fallback 3: Respuesta default
+            return ProductDetails.Unavailable(productId);
         }
     }
 }
+
+public class ProductDetails
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+    public string StockStatus { get; set; }
+    public bool IsDegraded { get; set; }
+    public string DataSource { get; set; }
+
+    public static ProductDetails Unavailable(Guid id) => new()
+    {
+        Id = id,
+        Name = "Product information temporarily unavailable",
+        Price = 0,
+        StockStatus = "Unknown",
+        IsDegraded = true,
+        DataSource = "fallback"
+    };
+}
 ```
 
-## 10. Validación y Auditoría
+---
 
-### Checklist de Cumplimiento
+## 7. Graceful Shutdown
 
-- [ ] Todos los HttpClients tienen pipeline de resiliencia (timeout + retry + circuit breaker)
-- [ ] Métodos async reciben y propagan CancellationToken
-- [ ] Feature toggles implementados para funcionalidad no-crítica
-- [ ] Graceful shutdown configurado con SIGTERM handling
-- [ ] Fallbacks definidos para servicios no-críticos
-- [ ] Idempotency keys en operaciones POST/PUT/DELETE
-- [ ] Health checks /health/live y /health/ready configurados
-- [ ] Métricas de resiliencia exportadas a Grafana/Prometheus
+### ¿Qué es Graceful Shutdown?
 
-### Comandos de Validación
+Apagado ordenado que termina requests en curso antes de cerrar el proceso.
 
-```bash
-# Verificar configuración de resiliencia
-grep -r "AddResilienceHandler" --include="*.cs" ./
-grep -r "AddCircuitBreaker" --include="*.cs" ./
-grep -r "AddRetry" --include="*.cs" ./
+**Propósito:** Evitar pérdida de requests, corrupción de datos.
 
-# Verificar propagación de CancellationToken
-grep -r "CancellationToken" --include="*.cs" ./ | wc -l
+**Fases:**
 
-# Métricas de Polly
-curl http://localhost:5000/metrics | grep polly
+1. Dejar de aceptar nuevos requests
+2. Terminar requests en curso
+3. Cerrar conexiones
+4. Apagar proceso
 
-# Simular graceful shutdown
-docker stop --time=90 payment-service
-docker logs payment-service | grep "graceful shutdown"
+**Beneficios:**
+✅ Cero requests perdidos
+✅ Datos consistentes
+✅ Deploy sin downtime
+
+### Implementación
+
+```csharp
+// Program.cs - Graceful Shutdown
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<HostOptions>(options =>
+{
+    options.ShutdownTimeout = TimeSpan.FromSeconds(30); // Esperar hasta 30s
+});
+
+var app = builder.Build();
+
+// Health check marca unhealthy durante shutdown
+var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+lifetime.ApplicationStopping.Register(() =>
+{
+    _logger.LogInformation("Application stopping, marking as unhealthy");
+    // Load balancer dejará de enviar tráfico
+});
+
+// Background service que maneja shutdown gracefully
+public class OrderProcessingService : BackgroundService
+{
+    private readonly ILogger<OrderProcessingService> _logger;
+    private readonly IServiceScopeFactory _scopeFactory;
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        try
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                using var scope = _scopeFactory.CreateScope();
+                var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
+
+                await orderService.ProcessPendingOrdersAsync(stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            _logger.LogInformation("Shutdown requested, finishing current batch");
+
+            // Teminar batch actual sin aceptar nuevos
+            await FinishCurrentBatchAsync();
+
+            _logger.LogInformation("Graceful shutdown completed");
+        }
+    }
+
+    private async Task FinishCurrentBatchAsync()
+    {
+        // Terminar operaciones en curso
+        using var scope = _scopeFactory.CreateScope();
+        var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
+        await orderService.FlushPendingAsync();
+    }
+}
+
+// ECS gracefully drena conexiones
+// task definition healthcheck + deregistration_delay permiten
+// que ALB deje de enviar tráfico y espere 30s antes de kill
 ```
 
-### Métricas de Cumplimiento
+---
 
-| Métrica                             | Target   | Verificación    |
-| ----------------------------------- | -------- | --------------- |
-| Services con circuit breaker        | 100%     | Code review     |
-| Retry con jitter habilitado         | 100%     | Code review     |
-| Métodos async con CancellationToken | >95%     | Code analysis   |
-| Timeout rate                        | `<1%`    | Grafana metrics |
-| Circuit breaker open events         | `<5/día` | Alertas         |
-| Graceful shutdown duration p99      | `<30s`   | Metrics         |
-| Zero-downtime deployments           | 100%     | Deployment logs |
+## Matriz de Decisión
 
-## 11. Prohibiciones Generales
+| Escenario             | Circuit Breaker | Retry | Timeout | Bulkhead | Rate Limiting | Degradation | Shutdown |
+| --------------------- | --------------- | ----- | ------- | -------- | ------------- | ----------- | -------- |
+| **HTTP a externos**   | ✅✅            | ✅✅  | ✅✅    | ✅       | -             | ✅          | -        |
+| **API pública**       | ✅              | ✅    | ✅      | ✅✅     | ✅✅          | ✅          | ✅✅     |
+| **Background worker** | ✅              | ✅✅  | ✅      | ✅       | -             | -           | ✅✅     |
+| **Operación crítica** | ✅✅            | ✅✅  | ✅✅    | ✅✅     | -             | ✅✅        | ✅✅     |
 
-- ❌ HttpClient sin pipeline de resiliencia
-- ❌ Operaciones no idempotentes con retry sin idempotency key
-- ❌ Circuit breaker compartido entre servicios diferentes
-- ❌ Timeout infinito o muy alto sin justificación
-- ❌ Degradar funcionalidad core/crítica
-- ❌ Shutdown sin esperar requests en proceso
-- ❌ No logging/métricas de eventos de resiliencia
+---
 
-## 12. Referencias
+## Requisitos Técnicos
 
-- [Polly Documentation](https://www.pollydocs.org/)
-- [Release It! - Michael Nygard](https://pragprog.com/titles/mnee2/release-it-second-edition/)
-- [AWS Well-Architected - Reliability Pillar](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/)
-- [Martin Fowler - Circuit Breaker](https://martinfowler.com/bliki/CircuitBreaker.html)
-- [Google SRE Book - Handling Overload](https://sre.google/sre-book/handling-overload/)
-- [Microsoft Patterns & Practices](https://learn.microsoft.com/en-us/azure/architecture/patterns/)
-- [12-Factor App - Disposability](https://12factor.net/disposability)
-- [Exponential Backoff And Jitter](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/)
-- [ASP.NET Core Request Timeouts](https://learn.microsoft.com/en-us/aspnet/core/performance/timeouts)
-- [AWS ECS Task Lifecycle](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-lifecycle.html)
+### MUST (Obligatorio)
+
+- **MUST** implementar timeout en todas las llamadas HTTP externas
+- **MUST** usar circuit breaker para dependencias externas
+- **MUST** implementar graceful shutdown en servicios
+- **MUST** configurar rate limiting en APIs públicas
+- **MUST** monitorear métricas de resiliencia (circuit state, retry count)
+
+### SHOULD (Fuertemente recomendado)
+
+- **SHOULD** usar retry con exponential backoff + jitter
+- **SHOULD** implementar graceful degradation con fallbacks
+- **SHOULD** usar bulkhead para aislar operaciones críticas
+- **SHOULD** combinar políticas (timeout + retry + circuit breaker)
+
+### MAY (Opcional)
+
+- **MAY** usar rate limiting interno entre servicios
+
+### MUST NOT (Prohibido)
+
+- **MUST NOT** hacer retry infinito
+- **MUST NOT** usar timeout > 30s sin justificación
+- **MUST NOT** hacer circuit breaker sin logging/métricas
+
+---
+
+## Referencias
+
+- [Polly Documentation](https://www.thepollyproject.org/)
+- [Release It! (Michael Nygard)](https://pragprog.com/titles/mnee2/release-it-second-edition/)
+- [ASP.NET Core Rate Limiting](https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit)
+- [AWS ECS Graceful Shutdown](https://aws.amazon.com/blogs/containers/graceful-shutdowns-with-ecs/)

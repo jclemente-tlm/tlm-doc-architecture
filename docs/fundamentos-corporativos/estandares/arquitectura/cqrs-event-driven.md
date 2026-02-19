@@ -1,0 +1,578 @@
+---
+id: cqrs-event-driven
+sidebar_position: 4
+title: CQRS y Event-Driven
+description: Patrones CQRS, Saga, procesamiento asíncrono y compensación para arquitecturas event-driven.
+---
+
+# CQRS y Event-Driven
+
+## Contexto
+
+Este estándar consolida patrones para arquitecturas event-driven y separación de comandos/consultas. Complementa los lineamientos [Arquitectura Event-Driven](../../lineamientos/arquitectura/arquitectura-event-driven.md) y [Modelado de Dominio](../../lineamientos/arquitectura/12-modelado-de-dominio.md).
+
+**Conceptos incluidos:**
+
+- **CQRS Pattern** → Command Query Responsibility Segregation
+- **Saga Pattern** → Transacciones distribuidas con compensación
+- **Async Processing** → Procesamiento asíncrono desacoplado
+- **Compensation Pattern** → Rollback lógico en sistemas distribuidos
+
+---
+
+## Stack Tecnológico
+
+| Componente      | Tecnología          | Versión    | Uso                                   |
+| --------------- | ------------------- | ---------- | ------------------------------------- |
+| **Messaging**   | Apache Kafka        | 3.6+       | Event bus para CQRS y sagas           |
+| **Mediator**    | MediatR             | 12.0+      | Patrón mediator para commands/queries |
+| **Event Store** | PostgreSQL + Marten | 16+ / 7.0+ | Event sourcing (opcional)             |
+| ** Framework**  | ASP.NET Core        | 8.0+       | APIs con CQRS                         |
+
+---
+
+## Conceptos Fundamentales
+
+Este estándar cubre 4 patrones para arquitecturas event-driven:
+
+### Índice de Conceptos
+
+1. **CQRS**: Separar comandos (escritura) de queries (lectura)
+2. **Saga**: Coordinar transacciones distribuidas
+3. **Async Processing**: Procesamiento desacoplado vía eventos
+4. **Compensation**: Rollback lógico distribuido
+
+### Relación entre Conceptos
+
+```mermaid
+graph TB
+    A[CQRS] --> B[Commands]
+    A --> C[Queries]
+    B --> D[Domain Events]
+    D --> E[Async Processing]
+    E --> F[Saga]
+    F --> G[Compensation]
+```
+
+---
+
+## 1. CQRS Pattern
+
+### ¿Qué es CQRS?
+
+Patrón que separa operaciones de escritura (commands) de lectura (queries), permitiendo optimizar cada lado independientemente.
+
+**Propósito:** Escalar lecturas/escrituras independientemente, modelos optimizados por caso de uso.
+
+**Niveles:**
+
+- **Simple**: Handlers separados, misma DB
+- **Intermedio**: DBs separadas (write/read), sincronización vía eventos
+- **Completo**: Event Sourcing + projections
+
+**Beneficios:**
+✅ Escalamiento independiente
+✅ Modelos optimizados
+✅ Mejor performance de queries
+
+### Ejemplo
+
+```csharp
+// Command: Intención de cambiar estado
+public record CreateOrderCommand(
+    Guid CustomerId,
+    List<OrderLineDto> Lines) : IRequest<Result<Guid>>;
+
+// Command Handler: Lógica de negocio
+public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Result<Guid>>
+{
+    private readonly IOrderRepository _repository;
+    private readonly IEventBus _eventBus;
+
+    public async Task<Result<Guid>> Handle(CreateOrderCommand request, CancellationToken ct)
+    {
+        var order = Order.Create(request.CustomerId);
+
+        foreach (var line in request.Lines)
+        {
+            order.AddLine(line.ProductId, line.Quantity, line.UnitPrice);
+        }
+
+        await _repository.SaveAsync(order);
+
+        // Publicar domain event
+        await _eventBus.PublishAsync(new OrderCreatedEvent(order.Id, order.CustomerId));
+
+        return Result.Success(order.Id);
+    }
+}
+
+// Query: Solo lectura, sin lógica de negocio
+public record GetOrderByIdQuery(Guid OrderId) : IRequest<OrderDto?>;
+
+// Query Handler: Lectura optimizada
+public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDto?>
+{
+    private readonly IReadDbContext _readDb; // Read-optimized DB
+
+    public async Task<OrderDto?> Handle(GetOrderByIdQuery request, CancellationToken ct)
+    {
+        // Query directo, sin pasar por aggregate
+        return await _readDb.Orders
+            .Where(o => o.Id == request.OrderId)
+            .Select(o => new OrderDto
+            {
+                Id = o.Id,
+                CustomerName = o.CustomerName,
+                Total = o.Total,
+                Status = o.Status,
+                Lines = o.Lines.Select(l => new OrderLineDto
+                {
+                    ProductName = l.ProductName,
+                    Quantity = l.Quantity,
+                    Subtotal = l.Subtotal
+                }).ToList()
+            })
+            .FirstOrDefaultAsync(ct);
+    }
+}
+
+// Controller usa mediator
+[ApiController]
+[Route("api/v1/orders")]
+public class OrdersController : ControllerBase
+{
+    private readonly IMediator _mediator;
+
+    [HttpPost]
+    public async Task<IActionResult> CreateOrder(CreateOrderCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result.IsSuccess
+            ? CreatedAtAction(nameof(GetOrder), new { id = result.Value }, result.Value)
+            : BadRequest(result.Error);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetOrder(Guid id)
+    {
+        var order = await _mediator.Send(new GetOrderByIdQuery(id));
+        return order != null ? Ok(order) : NotFound();
+    }
+}
+```
+
+---
+
+## 2. Saga Pattern
+
+### ¿Qué es Saga?
+
+Patrón para transacciones distribuidas mediante secuencia de transacciones locales coordinadas por eventos o comandos.
+
+**Tipos:**
+
+- **Choreography**: Cada servicio reacciona a eventos (descentralizado)
+- **Orchestration**: Coordinador central gestiona flujo
+
+**Propósito:** Consistencia eventual en arquitecturas distribuidas.
+
+**Beneficios:**
+✅ Transacciones distribuidas sin 2PC
+✅ Cada servicio mantiene autonomía
+✅ Rollback lógico vía compensación
+
+### Ejemplo - Saga Choreography
+
+```csharp
+// Saga: Order → Payment → Inventory → Shipping
+
+// 1. Order Service crea orden
+public class OrderService
+{
+    public async Task<Guid> CreateOrderAsync(CreateOrderDto dto)
+    {
+        var order = Order.Create(dto.CustomerId, dto.Lines);
+        order.Status = OrderStatus.Pending;
+
+        await _repository.SaveAsync(order);
+
+        // Publicar evento para iniciar saga
+        await _eventBus.PublishAsync(new OrderCreatedEvent(
+            OrderId: order.Id,
+            CustomerId: order.CustomerId,
+            Total: order.Total));
+
+        return order.Id;
+    }
+
+    // Manejar éxito de pago
+    public async Task Handle(PaymentSucceededEvent @event)
+    {
+        var order = await _repository.GetByIdAsync(@event.OrderId);
+        order.MarkAsPaid();
+        await _repository.SaveAsync(order);
+
+        // Continuar saga
+        await _eventBus.PublishAsync(new OrderPaidEvent(@event.OrderId));
+    }
+
+    // Manejar fallo de pago (compensación)
+    public async Task Handle(PaymentFailedEvent @event)
+    {
+        var order = await _repository.GetByIdAsync(@event.OrderId);
+        order.Cancel("Payment failed");
+        await _repository.SaveAsync(order);
+
+        await _eventBus.PublishAsync(new OrderCancelledEvent(@event.OrderId));
+    }
+}
+
+// 2. Payment Service procesa pago
+public class PaymentService
+{
+    public async Task Handle(OrderCreatedEvent @event)
+    {
+        try
+        {
+            var payment = await _paymentGateway.ChargeAsync(
+                @event.CustomerId,
+                @event.Total);
+
+            await _eventBus.PublishAsync(new PaymentSucceededEvent(
+                @event.OrderId,
+                payment.TransactionId));
+        }
+        catch (PaymentException ex)
+        {
+            await _eventBus.PublishAsync(new PaymentFailedEvent(
+                @event.OrderId,
+                ex.Reason));
+        }
+    }
+}
+
+// 3. Inventory Service reserva stock
+public class InventoryService
+{
+    public async Task Handle(OrderPaidEvent @event)
+    {
+        var order = await _orderClient.GetOrderAsync(@event.OrderId);
+
+        try
+        {
+            foreach (var line in order.Lines)
+            {
+                await _inventory.ReserveStockAsync(line.ProductId, line.Quantity);
+            }
+
+            await _eventBus.PublishAsync(new InventoryReservedEvent(@event.OrderId));
+        }
+        catch (InsufficientStockException)
+        {
+            // Compensación: refund del pago
+            await _eventBus.PublishAsync(new InventoryReservationFailedEvent(@event.OrderId));
+        }
+    }
+
+    // Compensación: liberar stock
+    public async Task Handle(OrderCancelledEvent @event)
+    {
+        var reservations = await _inventory.GetReservationsAsync(@event.OrderId);
+        foreach (var reservation in reservations)
+        {
+            await _inventory.ReleaseStockAsync(reservation.ProductId, reservation.Quantity);
+        }
+    }
+}
+```
+
+---
+
+## 3. Async Processing
+
+### ¿Qué es Async Processing?
+
+Procesamiento desacoplado mediante message brokers donde el productor no espera respuesta inmediata.
+
+**Propósito:** Desacoplamiento temporal, escalabilidad, resiliencia.
+
+**Patrones:**
+
+- **Fire and Forget**: Sin respuesta
+- **Request-Reply**: Respuesta asíncrona
+- **Pub/Sub**: Múltiples consumers
+
+**Beneficios:**
+✅ Desacoplamiento servicios
+✅ Peak handling
+✅ Retry automático
+
+### Ejemplo
+
+```csharp
+// Producer: Publicar evento sin esperar
+public class OrderService
+{
+    private readonly IEventProducer _eventProducer;
+
+    public async Task ConfirmOrderAsync(Guid orderId)
+    {
+        var order = await _repository.GetByIdAsync(orderId);
+        order.Confirm();
+
+        await _repository.SaveAsync(order);
+
+        // Fire and forget - no esperamos respuesta
+        await _eventProducer.PublishAsync(
+            topic: "order.confirmed",
+            key: orderId.ToString(),
+            value: new OrderConfirmedEvent
+            {
+                OrderId = orderId,
+                CustomerId = order.CustomerId,
+                Total = order.Total,
+                ConfirmedAt = DateTime.UtcNow
+            });
+    }
+}
+
+// Consumer: Procesar async
+public class OrderConfirmedConsumer : BackgroundService
+{
+    private readonly IEventConsumer _consumer;
+    private readonly IEmailService _emailService;
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        await foreach (var message in _consumer.ConsumeAsync("order.confirmed", stoppingToken))
+        {
+            try
+            {
+                var @event = message.Value.Deserialize<OrderConfirmedEvent>();
+
+                // Procesamiento asíncrono
+                await _emailService.SendOrderConfirmationAsync(
+                    @event.CustomerId,
+                    @event.OrderId);
+
+                await message.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing order confirmation");
+                // Mensaje va a DLQ después de N retries
+            }
+        }
+    }
+}
+
+// Configuración Kafka para async processing
+public static class KafkaConfiguration
+{
+    public static IServiceCollection AddKafkaProducer(this IServiceCollection services)
+    {
+        services.AddSingleton<IEventProducer>(sp =>
+        {
+            var config = new ProducerConfig
+            {
+                BootstrapServers = "kafka:9092",
+                Acks = Acks.Leader, // Async: solo líder confirma
+                EnableIdempotence = true,
+                MaxInFlight = 5,
+                CompressionType = CompressionType.Snappy
+            };
+
+            return new EventProducer(config);
+        });
+
+        return services;
+    }
+}
+```
+
+---
+
+## 4. Compensation Pattern
+
+### ¿Qué es Compensation?
+
+Patrón de "rollback lógico" en sistemas distribuidos donde no hay transacciones ACID globales.
+
+**Propósito:** Deshacer cambios en caso de fallo de saga.
+
+**Estrategias:**
+
+- **Backward Recovery**: Compensar transacciones completadas
+- **Forward Recovery**: Completar saga alternativamente
+- **Semantic Lock**: Marcar recursos como "pendientes"
+
+**Beneficios:**
+✅ Consistencia eventual
+✅ Sin 2PC
+✅ Autonomía de servicios
+
+### Ejemplo
+
+```csharp
+// Saga con compensación explícita
+public class BookingCompensation
+{
+    public record ReservationStep(
+        string Service,
+        Func<Task> Execute,
+        Func<Task> Compensate);
+
+    public async Task<Result> ExecuteSagaAsync(List<ReservationStep> steps)
+    {
+        var completedSteps = new Stack<ReservationStep>();
+
+        try
+        {
+            // Ejecutar pasos secuencialmente
+            foreach (var step in steps)
+            {
+                _logger.LogInformation("Executing step: {Service}", step.Service);
+                await step.Execute();
+                completedSteps.Push(step);
+            }
+
+            return Result.Success();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Saga failed, compensating {Count} steps", completedSteps.Count);
+
+            // Compensar en orden inverso
+            while (completedSteps.Count > 0)
+            {
+                var step = completedSteps.Pop();
+
+                try
+                {
+                    _logger.LogInformation("Compensating step: {Service}", step.Service);
+                    await step.Compensate();
+                }
+                catch (Exception compensationEx)
+                {
+                    _logger.LogError(compensationEx,
+                        "Compensation failed for {Service}", step.Service);
+                    // Enviar a dead letter para intervención manual
+                }
+            }
+
+            return Result.Failure("Saga failed and compensated");
+        }
+    }
+}
+
+// Uso: Booking de viaje
+public class TravelBookingSaga
+{
+    public async Task<Result> BookTripAsync(TripBookingDto dto)
+    {
+        var flightReservationId = Guid.Empty;
+        var hotelReservationId = Guid.Empty;
+        var carReservationId = Guid.Empty;
+
+        var steps = new List<ReservationStep>
+        {
+            new ReservationStep(
+                Service: "Flight",
+                Execute: async () =>
+                {
+                    flightReservationId = await _flightService.ReserveFlightAsync(dto.Flight);
+                },
+                Compensate: async () =>
+                {
+                    if (flightReservationId != Guid.Empty)
+                        await _flightService.CancelReservationAsync(flightReservationId);
+                }),
+
+            new ReservationStep(
+                Service: "Hotel",
+                Execute: async () =>
+                {
+                    hotelReservationId = await _hotelService.ReserveRoomAsync(dto.Hotel);
+                },
+                Compensate: async () =>
+                {
+                    if (hotelReservationId != Guid.Empty)
+                        await _hotelService.CancelReservationAsync(hotelReservationId);
+                }),
+
+            new ReservationStep(
+                Service: "Car Rental",
+                Execute: async () =>
+                {
+                    carReservationId = await _carService.ReserveCarAsync(dto.Car);
+                },
+                Compensate: async () =>
+                {
+                    if (carReservationId != Guid.Empty)
+                        await _carService.CancelReservationAsync(carReservationId);
+                })
+        };
+
+        var compensation = new BookingCompensation();
+        return await compensation.ExecuteSagaAsync(steps);
+    }
+}
+```
+
+---
+
+## Matriz de Decisión
+
+| Escenario                   | CQRS   | Saga   | Async Processing | Compensation |
+| --------------------------- | ------ | ------ | ---------------- | ------------ |
+| **Alta lectura**            | ✅✅✅ | -      | ✅               | -            |
+| **Transacción distribuida** | ✅     | ✅✅✅ | ✅✅             | ✅✅✅       |
+| **Integración servicios**   | ✅     | ✅✅   | ✅✅✅           | ✅✅         |
+| **Event Sourcing**          | ✅✅✅ | ✅     | ✅✅             | -            |
+
+---
+
+## Requisitos Técnicos
+
+### MUST (Obligatorio)
+
+**CQRS:**
+
+- **MUST** separar commands de queries en handlers distintos
+- **MUST** validar commands antes de ejecutar
+
+**Saga:**
+
+- **MUST** implementar compensación para cada paso de saga
+- **MUST** hacer sagas idempotentes
+
+**Async Processing:**
+
+- **MUST** usar at-least-once delivery con idempotencia
+- **MUST** configurar dead letter queue
+
+**Compensation:**
+
+- **MUST** loggear compensaciones para auditoría
+
+### SHOULD (Fuertemente recomendado)
+
+- **SHOULD** usar choreography saga para <5 servicios
+- **SHOULD** usar orchestration saga para >=5 servicios
+- **SHOULD** publicar domain events desde aggregates
+
+### MUST NOT (Prohibido)
+
+- **MUST NOT** usar 2PC en microservicios
+- **MUST NOT** hacer sagas sin timeout
+- **MUST NOT** queries que modifiquen estado
+
+---
+
+## Referencias
+
+- [CQRS Pattern (Martin Fowler)](https://martinfowler.com/bliki/CQRS.html)
+- [Saga Pattern (Chris Richardson)](https://microservices.io/patterns/data/saga.html)
+- [MediatR Documentation](https://github.com/jbogard/MediatR)
+- [Kafka Documentation](https://kafka.apache.org/documentation/)
