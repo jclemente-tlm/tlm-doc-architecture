@@ -505,7 +505,7 @@ Modelo de control de acceso donde las decisiones se basan en atributos del sujet
 
 **Ejemplo de política:**
 
-- "Permitir si (user.department == 'Finance' AND resource.classification == 'public' AND environment.time >= 08:00 AND environment.time <= 18:00)"
+- `"Permitir si (user.department == 'Finance' AND resource.classification == 'public' AND environment.time >= 08:00 AND environment.time <= 18:00)"`
 
 **Beneficios:**
 ✅ Control de acceso muy granular

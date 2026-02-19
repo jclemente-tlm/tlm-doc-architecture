@@ -40,11 +40,11 @@ Alternativas evaluadas:
 | **Madurez**                   | ✅ Alta (2016, Red Hat/IBM)                                       | ✅ Muy alta (1992, líder mercado)             | ✅ Muy alta (1994, enterprise)       | ✅ Alta (2016, AWS standard)        | ✅ Alta (2015, Azure std)           | ✅ Alta (2014, Apache Beam)      |
 | **Adopción**                  | ✅ Muy alta (8K⭐, líder OSS CDC)                                 | ✅ Muy alta (enterprise líder)                | ⚠️ Media (mainframe legacy)          | ✅ Alta (AWS ecosystem)             | ✅ Alta (Azure ecosystem)           | ⚠️ Media (GCP adoption)          |
 | **Modelo de gestión**         | ⚠️ Self-hosted (Kafka Connect)                                    | ⚠️ Self-hosted/Cloud                          | ⚠️ Self-hosted                       | ✅ Fully managed                    | ✅ Fully managed                    | ✅ Fully managed                 |
-| **Complejidad operativa**     | ⚠️ Media (0.5 FTE, 5-10h/sem)                                     | ❌ Muy alta (2+ FTE, 20-40h/sem)              | ❌ Muy alta (2+ FTE, 20-40h/sem)     | ✅ Baja (0.25 FTE, <5h/sem)         | ✅ Baja (0.25 FTE, <5h/sem)         | ⚠️ Media (0.5 FTE, 5-10h/sem)    |
+| **Complejidad operativa**     | ⚠️ Media (0.5 FTE, 5-10h/sem)                                     | ❌ Muy alta (2+ FTE, 20-40h/sem)              | ❌ Muy alta (2+ FTE, 20-40h/sem)     | ✅ Baja (0.25 FTE, `<5h/sem)`         | ✅ Baja (0.25 FTE, `<5h/sem)`         | ⚠️ Media (0.5 FTE, 5-10h/sem)    |
 | **Integración Kafka**         | ✅ Nativa (Kafka Connect)                                         | ⚠️ Requiere adaptadores                       | ⚠️ Manual integration                | ⚠️ Kinesis preferred                | ⚠️ Event Hubs preferred             | ⚠️ Pub/Sub preferred             |
 | **Bases de datos soportadas** | ✅ PostgreSQL, MySQL, MongoDB, SQL Server, Oracle, DB2, Cassandra | ✅ Oracle, SQL Server, MySQL, PostgreSQL, DB2 | ✅ DB2, Oracle, SQL Server, Informix | ✅ 20+ engines (RDS, Aurora, etc.)  | ✅ 20+ engines (SQL, NoSQL)         | ⚠️ BigQuery, Spanner, Cloud SQL  |
 | **CDC Method**                | ✅ Log-based (transaction logs)                                   | ✅ Log-based + trigger-based                  | ✅ Log-based                         | ✅ Log-based + trigger-based        | ⚠️ Polling + trigger-based          | ⚠️ Batch + streaming             |
-| **Latencia**                  | ✅ <100ms (real-time streaming)                                   | ✅ <50ms (enterprise tuned)                   | ✅ <100ms                            | ⚠️ ~1-10s (near real-time)          | ⚠️ ~5-30s (configurable)            | ⚠️ ~10s-5min (depending mode)    |
+| **Latencia**                  | ✅ `<100ms `(real-time streaming)                                   | ✅ `<50ms `(enterprise tuned)                   | ✅ `<100ms `                           | ⚠️ ~1-10s (near real-time)          | ⚠️ ~5-30s (configurable)            | ⚠️ ~10s-5min (depending mode)    |
 | **Rendimiento**               | ✅ 10K+ events/seg                                                | ✅ 50K+ events/seg                            | ✅ 20K+ events/seg                   | ⚠️ 5K-10K events/seg                | ⚠️ Variable (batch oriented)        | ✅ 100K+ events/seg (streaming)  |
 | **Escalabilidad**             | ✅ Horizontal (Kafka partitions)                                  | ✅ Horizontal + vertical                      | ⚠️ Principalmente vertical           | ⚠️ Auto-scaling limitado            | ✅ Auto-scaling                     | ✅ Auto-scaling                  |
 | **Schema Evolution**          | ✅ Avro, JSON, Protobuf (Schema Registry)                         | ⚠️ Limitado                                   | ⚠️ Manual config                     | ❌ No soportado                     | ⚠️ Básico                           | ⚠️ Manual schemas                |
@@ -68,7 +68,7 @@ Se selecciona **Debezium** como solución estándar de Change Data Capture (CDC)
 
 - **Agnosticidad total:** no depende de cloud provider específico, soporta múltiples bases de datos (PostgreSQL, MySQL, MongoDB, SQL Server, Oracle)
 - **Integración nativa con Kafka:** desplegado como Kafka Connect, aprovecha infraestructura existente (ADR-012)
-- **Log-based CDC real-time:** latencia <100ms capturando cambios directamente de transaction logs sin impacto en base de datos
+- **Log-based CDC real-time:** latencia `<100ms `capturando cambios directamente de transaction logs sin impacto en base de datos
 - **Open source Apache 2.0:** sin costos de licencia, comunidad activa, soporte Red Hat enterprise disponible
 - **Schema evolution:** soporte completo para Avro, JSON, Protobuf con Schema Registry
 - **Costos optimizados:** $0 licencia + infraestructura compartida con Kafka (~$300-600/mes incremental)
@@ -79,7 +79,7 @@ Se selecciona **Debezium** como solución estándar de Change Data Capture (CDC)
 
 - **Oracle GoldenGate:** costos prohibitivos ($50K-500K/año), lock-in Oracle, complejidad operativa muy alta (2+ FTE), sobrede-dimensionado para necesidades actuales
 - **IBM InfoSphere:** costos extremadamente altos ($100K-1M+/año), foco mainframe legacy, comunidad en declive, lock-in IBM, no justificado sin infraestructura IBM
-- **AWS DMS:** lock-in AWS, latencia mayor (~1-10s vs <100ms), transformaciones limitadas, costos escalables ($360-1K/mes base), preferencia Kinesis sobre Kafka reduce integración
+- **AWS DMS:** lock-in AWS, latencia mayor (~1-10s vs `<100ms)`, transformaciones limitadas, costos escalables ($360-1K/mes base), preferencia Kinesis sobre Kafka reduce integración
 - **Azure Data Factory:** lock-in Azure, orientado a ETL batch más que CDC real-time, latencia ~5-30s, infraestructura AWS ya establecida (ADR-003, ADR-007)
 - **Google Cloud Dataflow:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), menor adopción CDC específico
 
@@ -91,7 +91,7 @@ Se selecciona **Debezium** como solución estándar de Change Data Capture (CDC)
 
 - ✅ Agnosticidad tecnológica total - portable entre clouds y bases de datos
 - ✅ Integración nativa con infraestructura Kafka existente
-- ✅ CDC real-time (<100ms) sin impacto en base de datos origen
+- ✅ CDC real-time (`<100ms)` sin impacto en base de datos origen
 - ✅ Costos optimizados ($0 licencia + infraestructura compartida)
 - ✅ Schema evolution con Schema Registry (Avro, Protobuf)
 - ✅ Escalabilidad horizontal probada en producción

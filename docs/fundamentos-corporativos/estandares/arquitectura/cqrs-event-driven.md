@@ -558,8 +558,8 @@ public class TravelBookingSaga
 
 ### SHOULD (Fuertemente recomendado)
 
-- **SHOULD** usar choreography saga para <5 servicios
-- **SHOULD** usar orchestration saga para >=5 servicios
+- **SHOULD** usar choreography saga para `<5 `servicios
+- **SHOULD** usar orchestration saga para `>=5 `servicios
 - **SHOULD** publicar domain events desde aggregates
 
 ### MUST NOT (Prohibido)

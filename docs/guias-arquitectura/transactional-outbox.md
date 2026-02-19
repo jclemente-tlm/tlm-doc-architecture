@@ -538,8 +538,8 @@ var message = new Message<string, string>
 
 ### Cuándo NO usar Outbox
 
-- **Eventos en tiempo real crítico** (<1s latencia): considerar CDC (Debezium)
-- **Alto volumen** (>100K eventos/seg): CDC es más eficiente
+- **Eventos en tiempo real crítico** (`<1s `latencia): considerar CDC (Debezium)
+- **Alto volumen** (`>100K `eventos/seg): CDC es más eficiente
 - **Eventos no críticos**: best-effort directo a Kafka puede ser suficiente
 
 ---

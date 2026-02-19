@@ -1131,7 +1131,6 @@ Brief description of infrastructure changes.
 ```terraform
 # Plan output will be posted automatically by GitHub Actions
 ```
-````
 
 </details>
 
@@ -1153,7 +1152,6 @@ Steps to rollback if issues occur:
 ### Related Issues
 
 Fixes #XXX
-
 ````
 
 ---
@@ -1194,7 +1192,7 @@ terraform apply -refresh-only
 
 # Alternativa: Import cambios manuals
 terraform import aws_security_group_rule.manual sg-xxxxx
-````
+```
 
 ### Detección Automatizada
 

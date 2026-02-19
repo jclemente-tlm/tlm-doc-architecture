@@ -702,7 +702,7 @@ app.Run();
 
 ### SHOULD (Fuertemente recomendado)
 
-- **SHOULD** usar Result<T> para manejar errores en lugar de excepciones
+- **SHOULD** usar `Result<T>` para manejar errores en lugar de excepciones
 - **SHOULD** usar Value Objects para conceptos de dominio
 - **SHOULD** aplicar Domain Events para comunicación entre agregados
 - **SHOULD** validar con FluentValidation en Application layer
