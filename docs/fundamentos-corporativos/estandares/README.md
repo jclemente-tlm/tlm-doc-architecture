@@ -1,6 +1,6 @@
 # Estándares Técnicos Talma
 
-Esta sección contiene los estándares técnicos que implementan los [lineamientos arquitectónicos](/docs/fundamentos-corporativos/lineamientos) de Talma.
+Esta sección contiene los estándares técnicos que implementan los [lineamientos arquitectónicos](../lineamientos/) de Talma.
 
 ## 📋 Estructura
 
@@ -121,9 +121,9 @@ Cada estándar debe implementar uno o más lineamientos:
 
 ## 📖 Referencias
 
-- [Principios](/docs/fundamentos-corporativos/principios/)
-- [Lineamientos](/docs/fundamentos-corporativos/lineamientos/)
-- [ADRs](/docs/decisiones-de-arquitectura/)
+- [Principios](../principios/)
+- [Lineamientos](../lineamientos/)
+- [ADRs](/decisiones-de-arquitectura/)
 
 ---
 

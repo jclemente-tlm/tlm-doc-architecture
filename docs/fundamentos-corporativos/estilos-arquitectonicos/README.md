@@ -158,5 +158,5 @@ Monolito → Monolito Modular → Microservicios
 
 ## Referencias
 
-- [Principios Corporativos](/docs/fundamentos-corporativos/principios/)
-- [Lineamientos de Arquitectura](/docs/fundamentos-corporativos/lineamientos/arquitectura/)
+- [Principios Corporativos](../principios/)
+- [Lineamientos de Arquitectura](../lineamientos/arquitectura/)
