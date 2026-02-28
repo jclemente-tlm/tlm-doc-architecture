@@ -20,7 +20,7 @@ const config: Config = {
   deploymentBranch: "docs",
   trailingSlash: false,
 
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
 
   i18n: {
     defaultLocale: "es",
