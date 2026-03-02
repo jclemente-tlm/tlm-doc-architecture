@@ -6,12 +6,22 @@ import styles from './styles.module.css';
 // Cards adaptadas a la documentación del proyecto
 const FeatureList = [
   {
-    title: 'Lineamientos y Estándares',
+    title: 'Lineamientos de Arquitectura',
     img: require('@site/static/img/checklist.png').default,
     description: (
       <>
-        Accede a las guías de <b>nombres, código y documentación</b> para mantener la calidad y consistencia en todos los servicios.<br />
+        Guías prácticas que traducen los principios corporativos en reglas concretas para <b>arquitectura, desarrollo, seguridad y operabilidad</b>.<br />
         <a href="/tlm-doc-architecture/docs/fundamentos/lineamientos">Ver lineamientos</a>
+      </>
+    ),
+  },
+  {
+    title: 'Estándares Técnicos',
+    img: require('@site/static/img/coding.png').default,
+    description: (
+      <>
+        Reglas técnicas obligatorias para el desarrollo consistente de servicios, desde <b>código y APIs</b> hasta <b>infraestructura, seguridad y observabilidad</b>.<br />
+        <a href="/tlm-doc-architecture/docs/fundamentos/estandares">Ver estándares</a>
       </>
     ),
   },
@@ -20,18 +30,8 @@ const FeatureList = [
     img: require('@site/static/img/documentation.png').default,
     description: (
       <>
-        Consulta las decisiones clave de arquitectura tomadas para el ecosistema Talma.<br />
+        Conoce el contexto, las alternativas evaluadas y el razonamiento detrás de las <b>decisiones de diseño</b> del ecosistema Talma.<br />
         <a href="/tlm-doc-architecture/docs/adrs">Ver ADRs</a>
-      </>
-    ),
-  },
-  {
-    title: 'Principios y Arquitectura',
-    img: require('@site/static/img/coding.png').default,
-    description: (
-      <>
-        Explora los <b>principios de arquitectura</b> y mejores prácticas para el desarrollo de servicios escalables y seguros.<br />
-        <a href="/tlm-doc-architecture/docs/fundamentos/principios">Ver principios</a>
       </>
     ),
   },
