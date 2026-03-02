@@ -40,11 +40,11 @@ Alternativas evaluadas:
 | **Madurez**                   | ✅ Alta (2016, Red Hat/IBM)                                       | ✅ Muy alta (1992, líder mercado)             | ✅ Muy alta (1994, enterprise)       | ✅ Alta (2016, AWS standard)        | ✅ Alta (2015, Azure std)           | ✅ Alta (2014, Apache Beam)      |
 | **Adopción**                  | ✅ Muy alta (8K⭐, líder OSS CDC)                                 | ✅ Muy alta (enterprise líder)                | ⚠️ Media (mainframe legacy)          | ✅ Alta (AWS ecosystem)             | ✅ Alta (Azure ecosystem)           | ⚠️ Media (GCP adoption)          |
 | **Modelo de gestión**         | ⚠️ Self-hosted (Kafka Connect)                                    | ⚠️ Self-hosted/Cloud                          | ⚠️ Self-hosted                       | ✅ Fully managed                    | ✅ Fully managed                    | ✅ Fully managed                 |
-| **Complejidad operativa**     | ⚠️ Media (0.5 FTE, 5-10h/sem)                                     | ❌ Muy alta (2+ FTE, 20-40h/sem)              | ❌ Muy alta (2+ FTE, 20-40h/sem)     | ✅ Baja (0.25 FTE, `<5h/sem)`         | ✅ Baja (0.25 FTE, `<5h/sem)`         | ⚠️ Media (0.5 FTE, 5-10h/sem)    |
+| **Complejidad operativa**     | ⚠️ Media (0.5 FTE, 5-10h/sem)                                     | ❌ Muy alta (2+ FTE, 20-40h/sem)              | ❌ Muy alta (2+ FTE, 20-40h/sem)     | ✅ Baja (0.25 FTE, `<5h/sem)`       | ✅ Baja (0.25 FTE, `<5h/sem)`       | ⚠️ Media (0.5 FTE, 5-10h/sem)    |
 | **Integración Kafka**         | ✅ Nativa (Kafka Connect)                                         | ⚠️ Requiere adaptadores                       | ⚠️ Manual integration                | ⚠️ Kinesis preferred                | ⚠️ Event Hubs preferred             | ⚠️ Pub/Sub preferred             |
 | **Bases de datos soportadas** | ✅ PostgreSQL, MySQL, MongoDB, SQL Server, Oracle, DB2, Cassandra | ✅ Oracle, SQL Server, MySQL, PostgreSQL, DB2 | ✅ DB2, Oracle, SQL Server, Informix | ✅ 20+ engines (RDS, Aurora, etc.)  | ✅ 20+ engines (SQL, NoSQL)         | ⚠️ BigQuery, Spanner, Cloud SQL  |
 | **CDC Method**                | ✅ Log-based (transaction logs)                                   | ✅ Log-based + trigger-based                  | ✅ Log-based                         | ✅ Log-based + trigger-based        | ⚠️ Polling + trigger-based          | ⚠️ Batch + streaming             |
-| **Latencia**                  | ✅ `<100ms `(real-time streaming)                                   | ✅ `<50ms `(enterprise tuned)                   | ✅ `<100ms `                           | ⚠️ ~1-10s (near real-time)          | ⚠️ ~5-30s (configurable)            | ⚠️ ~10s-5min (depending mode)    |
+| **Latencia**                  | ✅ `<100ms `(real-time streaming)                                 | ✅ `<50ms `(enterprise tuned)                 | ✅ `<100ms `                         | ⚠️ ~1-10s (near real-time)          | ⚠️ ~5-30s (configurable)            | ⚠️ ~10s-5min (depending mode)    |
 | **Rendimiento**               | ✅ 10K+ events/seg                                                | ✅ 50K+ events/seg                            | ✅ 20K+ events/seg                   | ⚠️ 5K-10K events/seg                | ⚠️ Variable (batch oriented)        | ✅ 100K+ events/seg (streaming)  |
 | **Escalabilidad**             | ✅ Horizontal (Kafka partitions)                                  | ✅ Horizontal + vertical                      | ⚠️ Principalmente vertical           | ⚠️ Auto-scaling limitado            | ✅ Auto-scaling                     | ✅ Auto-scaling                  |
 | **Schema Evolution**          | ✅ Avro, JSON, Protobuf (Schema Registry)                         | ⚠️ Limitado                                   | ⚠️ Manual config                     | ❌ No soportado                     | ⚠️ Básico                           | ⚠️ Manual schemas                |
@@ -89,30 +89,21 @@ Se selecciona **Debezium** como solución estándar de Change Data Capture (CDC)
 
 ### Positivas
 
-- ✅ Agnosticidad tecnológica total - portable entre clouds y bases de datos
-- ✅ Integración nativa con infraestructura Kafka existente
-- ✅ CDC real-time (`<100ms)` sin impacto en base de datos origen
-- ✅ Costos optimizados ($0 licencia + infraestructura compartida)
-- ✅ Schema evolution con Schema Registry (Avro, Protobuf)
-- ✅ Escalabilidad horizontal probada en producción
-- ✅ Comunidad activa + soporte Red Hat enterprise disponible
-- ✅ Open source con visibilidad completa del código
+- Agnosticidad tecnológica total - portable entre clouds y bases de datos
+- Integración nativa con infraestructura Kafka existente
+- CDC real-time (`<100ms`) sin impacto en base de datos origen
+- Costos optimizados ($0 licencia + infraestructura compartida)
+- Schema evolution con Schema Registry (Avro, Protobuf)
+- Escalabilidad horizontal probada en producción
+- Comunidad activa + soporte Red Hat enterprise disponible
+- Open source con visibilidad completa del código
 
-### Negativas
+### Negativas (Riesgos y Mitigaciones)
 
-- ⚠️ Requiere aprendizaje de Kafka Connect y Debezium connectors
-- ⚠️ Complejidad operativa media (monitoring, connector management)
-- ⚠️ Requiere configuración específica por base de datos (transaction logs, permisos)
-- ⚠️ Snapshot inicial puede ser lento en bases de datos muy grandes
-
-### Mitigaciones
-
-- Capacitación del equipo en Debezium y Kafka Connect
-- Automatización completa con Terraform/IaC para deployment
-- Documentación interna de patterns y troubleshooting
-- Monitoreo proactivo con JMX metrics + Kafka metrics
-- Planificación de snapshots iniciales en ventanas de bajo tráfico
-- Configuración de SMT (Single Message Transforms) para casos comunes
+- **Curva de aprendizaje Kafka/Debezium:** mitigado con capacitación del equipo
+- **Complejidad operativa:** mitigado con monitoreo proactivo (JMX + Kafka metrics)
+- **Configuración específica por base de datos:** mitigado con automatización Terraform/IaC y documentación interna
+- **Snapshot inicial lento:** mitigado con planificación en ventanas de bajo tráfico y configuración de SMT
 
 ---
 

@@ -81,18 +81,18 @@ Las alternativas de multi-tenancy evaluadas fueron:
 
 ### Positivas
 
-- ✅ **Cumplimiento regulatorio** garantizado para datos críticos
-- ✅ **Optimización de costos** con recursos compartidos apropiados
-- ✅ **Escalabilidad granular** por tenant y por criticidad
-- ✅ **Flexibilidad operacional** para diferentes necesidades
-- ✅ **Portabilidad mantenida** entre clouds y on-premises
-- ✅ **Auditoría simplificada** con separación clara
+- **Cumplimiento regulatorio** garantizado para datos críticos
+- **Optimización de costos** con recursos compartidos apropiados
+- **Escalabilidad granular** por tenant y por criticidad
+- **Flexibilidad operacional** para diferentes necesidades
+- **Portabilidad mantenida** entre clouds y on-premises
+- **Auditoría simplificada** con separación clara
 
-### Negativas
+### Negativas (Riesgos y Mitigaciones)
 
-- ❌ **Complejidad arquitectónica** mayor que enfoques simples
-- ❌ **Gestión de múltiples patrones** requiere expertise
-- ❌ **Testing complejo** debe cubrir todos los niveles
+- **Complejidad arquitectónica:** mitigado con documentación de patrones y capacitación
+- **Gestión de múltiples patrones:** mitigado con guías de arquitectura y ADRs detallados
+- **Testing complejo:** mitigado con estrategia de testing automatizada por nivel
 
 ---
 

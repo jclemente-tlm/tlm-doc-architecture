@@ -40,11 +40,11 @@ Alternativas evaluadas:
 | **Madurez**                 | ✅ Muy alta (1996, ACID std)                    | ✅ Muy alta (1995, web std)                  | ✅ Muy alta (1989, Microsoft)          | ✅ Muy alta (1979, enterprise)           | ✅ Alta (2014, Aurora)               |
 | **Adopción**                | ✅ Muy alta (20K⭐, DB del año)                 | ✅ Muy alta (12K⭐, web standard)            | ✅ Muy alta (Microsoft legacy)         | ✅ Muy alta (enterprise líder)           | ✅ Alta (MySQL/PG compatible)        |
 | **Modelo de gestión**       | ⚠️ Self-hosted                                  | ⚠️ Self-hosted                               | ⚠️ Self-hosted                         | ⚠️ Self-hosted                           | ✅ Gestionado (AWS)                  |
-| **Complejidad operativa**   | ⚠️ Media (0.5 FTE, 5-10h/sem)                   | ⚠️ Media (0.5 FTE, 5-10h/sem)                | ⚠️ Alta (1 FTE, 10-20h/sem)            | ❌ Muy Alta (2+ FTE, 20-40h/sem)         | ✅ Baja (0.25 FTE, `<5h/sem)`          |
+| **Complejidad operativa**   | ⚠️ Media (0.5 FTE, 5-10h/sem)                   | ⚠️ Media (0.5 FTE, 5-10h/sem)                | ⚠️ Alta (1 FTE, 10-20h/sem)            | ❌ Muy Alta (2+ FTE, 20-40h/sem)         | ✅ Baja (0.25 FTE, `<5h/sem)`        |
 | **Seguridad**               | ✅ Avanzada, RLS, cifrado                       | ⚠️ Básica                                    | ✅ Enterprise                          | ✅ Enterprise                            | ✅ Enterprise                        |
 | **Integración .NET**        | ✅ Npgsql (20M+ DL/mes, .NET 6+, async/EF)      | ✅ MySql.Data (15M+ DL/mes, .NET 6+, EF)     | ✅ System.Data.SqlClient (nativo .NET) | ✅ Oracle.ManagedDataAccess (2M+ DL/mes) | ✅ Npgsql compatible                 |
 | **Multi-tenancy**           | ✅ Schemas + RLS avanzado                       | ⚠️ Sin RLS nativo                            | ✅ Schemas + RLS                       | ✅ VPD avanzado                          | ✅ PostgreSQL                        |
-| **Latencia (query simple)** | ✅ p95 `<10ms `                                   | ✅ p95 `<10ms `                                | ✅ p95 `<5ms `                           | ✅ p95 `<5ms `                             | ✅ p95 `<5ms `                         |
+| **Latencia (query simple)** | ✅ p95 `<10ms `                                 | ✅ p95 `<10ms `                              | ✅ p95 `<5ms `                         | ✅ p95 `<5ms `                           | ✅ p95 `<5ms `                       |
 | **Rendimiento**             | ✅ 5K-10K TPS                                   | ✅ 5K-10K TPS                                | ✅ 10K+ TPS                            | ✅ 20K+ TPS                              | ✅ 15K+ TPS                          |
 | **Escalabilidad**           | ✅ Hasta 10TB+ DB, 20K TPS (Apple, Spotify)     | ✅ Hasta 10TB+ DB (InnoDB production)        | ⚠️ Hasta 4TB+ DB (Always On)           | ⚠️ Multi-TB DB, 50K+ TPS (RAC Oracle)    | ✅ Hasta 100TB+ DB, 40K TPS (Aurora) |
 | **Alta disponibilidad**     | ✅ 99.9% estimado (replicación master-slave)    | ⚠️ 99.5% estimado (replicación master-slave) | ✅ 99.99% SLA (Always On clustering)   | ✅ 99.99% SLA (RAC clustering)           | ✅ 99.99% SLA Multi-AZ               |
@@ -99,9 +99,9 @@ Se selecciona **PostgreSQL** como base de datos relacional estándar para todos 
 
 ### Negativas (Riesgos y Mitigaciones)
 
-- **Complejidad tuning:** mitigada con automatización, monitoreo Prometheus y buenas prácticas documentadas
-- **Escalabilidad horizontal:** limitada vs NoSQL - mitigada con particionamiento, Citus y sharding
-- **Operación self-managed:** mitigada con automatización Terraform y managed services (RDS)
+- **Complejidad tuning:** mitigado con automatización, monitoreo Prometheus y buenas prácticas documentadas
+- **Escalabilidad horizontal limitada:** mitigado con particionamiento, Citus y sharding
+- **Operación self-managed:** mitigado con automatización Terraform y managed services (RDS)
 
 ---
 
