@@ -11,7 +11,7 @@ const FeatureList = [
     description: (
       <>
         Accede a las guías de <b>nombres, código y documentación</b> para mantener la calidad y consistencia en todos los servicios.<br />
-        <a href="/tlm-doc-architecture/docs/lineamientos">Ver lineamientos</a>
+        <a href="/tlm-doc-architecture/docs/fundamentos/lineamientos">Ver lineamientos</a>
       </>
     ),
   },
@@ -31,7 +31,7 @@ const FeatureList = [
     description: (
       <>
         Explora los <b>principios de arquitectura</b> y mejores prácticas para el desarrollo de servicios escalables y seguros.<br />
-        <a href="/tlm-doc-architecture/docs/lineamientos/principios-de-arquitectura/01-clean-architecture">Ver arquitectura</a>
+        <a href="/tlm-doc-architecture/docs/fundamentos/principios">Ver principios</a>
       </>
     ),
   },
