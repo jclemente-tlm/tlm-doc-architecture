@@ -123,7 +123,7 @@ Cada estándar debe implementar uno o más lineamientos:
 
 - [Principios](../principios/)
 - [Lineamientos](../lineamientos/)
-- [ADRs](/decisiones-de-arquitectura/)
+- [ADRs](/adrs/)
 
 ---
 

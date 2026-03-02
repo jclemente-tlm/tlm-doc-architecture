@@ -27,5 +27,5 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 - [Resiliencia y Disponibilidad](04-resiliencia-y-disponibilidad.md)
 - [Cloud Native](03-cloud-native.md)
 - [Observabilidad](06-observabilidad.md)
-- [ADR-002: AWS ECS Fargate](/docs/decisiones-de-arquitectura/adr-002-aws-ecs-fargate-contenedores)
-- [ADR-008: Kafka Mensajería](/docs/decisiones-de-arquitectura/adr-008-kafka-mensajeria-asincrona)
+- [ADR-002: AWS ECS Fargate](/docs/adrs/adr-002-aws-ecs-fargate-contenedores)
+- [ADR-008: Kafka Mensajería](/docs/adrs/adr-008-kafka-mensajeria-asincrona)

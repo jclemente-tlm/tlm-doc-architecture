@@ -43,8 +43,8 @@ Este principio busca integrar la seguridad como propiedad estructural del sistem
 
 **ADRs relacionados:**
 
-- [ADR-003: Keycloak para SSO y Autenticación](/docs/decisiones-de-arquitectura/adr-003-keycloak-sso-autenticacion)
-- [ADR-004: AWS Secrets Manager](/docs/decisiones-de-arquitectura/adr-004-aws-secrets-manager)
+- [ADR-003: Keycloak para SSO y Autenticación](/docs/adrs/adr-003-keycloak-sso-autenticacion)
+- [ADR-004: AWS Secrets Manager](/docs/adrs/adr-004-aws-secrets-manager)
 
 **Frameworks de referencia:**
 

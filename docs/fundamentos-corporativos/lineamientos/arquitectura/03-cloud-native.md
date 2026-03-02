@@ -22,4 +22,4 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 
 ## Referencias Relacionadas
 
-- [Gestionar secretos en AWS Secrets Manager](/docs/decisiones-de-arquitectura/adr-004-aws-secrets-manager)
+- [Gestionar secretos en AWS Secrets Manager](/docs/adrs/adr-004-aws-secrets-manager)

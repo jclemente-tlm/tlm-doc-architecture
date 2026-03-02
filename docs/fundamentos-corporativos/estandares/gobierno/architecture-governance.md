@@ -188,7 +188,7 @@ Migración de Customer Service de PostgreSQL single instance a PostgreSQL con r�
 
 ## Documentación
 
-- ADR: [ADR-009: Debezium CDC](../../../decisiones-de-arquitectura/adr-009-debezium-cdc.md)
+- ADR: [ADR-009: Debezium CDC](../../../adrs/adr-009-debezium-cdc.md)
 - C4 Diagrams: [Container Diagram actualizado](../architecture/c4-diagrams/customer-container.md)
 - Performance Analysis: [Análisis de carga actual](../performance/customer-load-analysis.md)
 
@@ -1150,7 +1150,7 @@ Registro centralizado que mantiene **índice completo** de todos los Architectur
 **Ubicación:**
 
 ```
-docs/decisiones-de-arquitectura/
+docs/adrs/
 ├── README.md               # ADR Registry (índice principal)
 ├── adr-001-multi-tenancy.md
 ├── adr-002-aws-ecs-fargate.md
@@ -1446,7 +1446,7 @@ Estrategia de versionamiento y trazabilidad de ADRs usando Git, asegurando que t
 # Crear nuevo ADR (draft)
 git checkout -b feature/adr-015-postgres-read-replica
 # Editar adr-015-postgres-read-replica.md
-git add docs/decisiones-de-arquitectura/adr-015-postgres-read-replica.md
+git add docs/adrs/adr-015-postgres-read-replica.md
 git commit -m "docs(adr): add ADR-015 PostgreSQL Read Replica (Propuesto)"
 git push origin feature/adr-015-postgres-read-replica
 
@@ -1503,7 +1503,7 @@ name: Validate ADRs
 on:
   pull_request:
     paths:
-      - "docs/decisiones-de-arquitectura/adr-*.md"
+      - "docs/adrs/adr-*.md"
 
 jobs:
   validate:
@@ -1513,7 +1513,7 @@ jobs:
 
       - name: Validate ADR Format
         run: |
-          for file in docs/decisiones-de-arquitectura/adr-*.md; do
+          for file in docs/adrs/adr-*.md; do
             echo "Validating $file..."
 
             # Check frontmatter exists
@@ -1534,7 +1534,7 @@ jobs:
 
       - name: Check Sequential Numbering
         run: |
-          numbers=$(ls docs/decisiones-de-arquitectura/adr-*.md | \
+          numbers=$(ls docs/adrs/adr-*.md | \
             sed 's/.*adr-\([0-9]*\)-.*/\1/' | sort -n)
 
           expected=1
@@ -1678,7 +1678,7 @@ docs/gobierno/
 # setup-governance.sh
 
 # 1. Crear estructura de directorios
-mkdir -p docs/{decisiones-de-arquitectura,gobierno/{reviews/{2026-Q1,2026-Q2},board-meetings,audits,retrospectives},templates}
+mkdir -p docs/{adrs,gobierno/{reviews/{2026-Q1,2026-Q2},board-meetings,audits,retrospectives},templates}
 
 # 2. Crear ADR Template
 cat > docs/templates/adr-template.md << 'EOF'
@@ -1760,7 +1760,7 @@ cat > docs/templates/review-checklist.md << 'EOF'
 EOF
 
 # 4. Crear ADR Registry
-cat > docs/decisiones-de-arquitectura/README.md << 'EOF'
+cat > docs/adrs/README.md << 'EOF'
 # Architecture Decision Records
 
 [Ver contenido completo del template mostrado anteriormente]
@@ -1773,7 +1773,7 @@ cat > .github/workflows/validate-adrs.yml << 'EOF'
 EOF
 
 # 6. Crear primer ADR de ejemplo (el que documenta este proceso)
-cat > docs/decisiones-de-arquitectura/adr-001-architecture-governance-process.md << 'EOF'
+cat > docs/adrs/adr-001-architecture-governance-process.md << 'EOF'
 ---
 id: adr-001-architecture-governance-process
 title: Architecture Governance Process

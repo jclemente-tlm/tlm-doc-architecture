@@ -40,8 +40,8 @@ Este principio busca mantener la operación continua del sistema ante fallos med
 
 **ADRs relacionados:**
 
-- [ADR-002: AWS ECS Fargate para Contenedores](/docs/decisiones-de-arquitectura/adr-002-aws-ecs-fargate-contenedores)
-- [ADR-014: Grafana Stack para Observabilidad](/docs/decisiones-de-arquitectura/adr-014-grafana-stack-observabilidad)
+- [ADR-002: AWS ECS Fargate para Contenedores](/docs/adrs/adr-002-aws-ecs-fargate-contenedores)
+- [ADR-014: Grafana Stack para Observabilidad](/docs/adrs/adr-014-grafana-stack-observabilidad)
 
 **Frameworks de referencia:**
 

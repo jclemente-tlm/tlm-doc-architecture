@@ -85,7 +85,7 @@ Código de Producción
 
 - [Principios](../principios)
 - [Estándares](../estandares)
-- [ADRs](/decisiones-de-arquitectura)
+- [ADRs](/adrs)
 
 ---
 

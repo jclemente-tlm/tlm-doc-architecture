@@ -38,8 +38,8 @@ Este principio busca permitir la evolución independiente de componentes minimiz
 
 **ADRs relacionados:**
 
-- [ADR-008: Kafka para Mensajería Asíncrona](/docs/decisiones-de-arquitectura/adr-008-kafka-mensajeria-asincrona)
-- [ADR-010: Kong como API Gateway](/docs/decisiones-de-arquitectura/adr-010-kong-api-gateway)
+- [ADR-008: Kafka para Mensajería Asíncrona](/docs/adrs/adr-008-kafka-mensajeria-asincrona)
+- [ADR-010: Kong como API Gateway](/docs/adrs/adr-010-kong-api-gateway)
 
 **Frameworks de referencia:**
 

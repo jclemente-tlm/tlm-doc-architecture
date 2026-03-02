@@ -441,10 +441,10 @@ C4Deployment
 
 ## 9. Decisiones de Diseño
 
-Ver [Architecture Decision Records](/docs/decisiones-de-arquitectura/) para decisiones detalladas:
+Ver [Architecture Decision Records](/docs/adrs/) para decisiones detalladas:
 
-- [ADR-001: Estrategia Multi-Tenancy](/docs/decisiones-de-arquitectura/adr-001-estrategia-multi-tenancy)
-- [ADR-002: AWS ECS Fargate para Contenedores](/docs/decisiones-de-arquitectura/adr-002-aws-ecs-fargate-contenedores)
+- [ADR-001: Estrategia Multi-Tenancy](/docs/adrs/adr-001-estrategia-multi-tenancy)
+- [ADR-002: AWS ECS Fargate para Contenedores](/docs/adrs/adr-002-aws-ecs-fargate-contenedores)
 - ADR-003: PostgreSQL como base de datos principal
 - ADR-004: Event sourcing para auditoría
 
@@ -834,7 +834,7 @@ stateDiagram-v2
 
 ```
 docs/
-└── decisiones-de-arquitectura/
+└── adrs/
     ├── README.md                           # Índice de ADRs
     ├── adr-001-estrategia-multi-tenancy.md
     ├── adr-002-aws-ecs-fargate-contenedores.md
@@ -1097,7 +1097,7 @@ cat > docs/architecture/arc42.md << 'EOF'
 [Completar...]
 
 ## 9. Decisiones de Diseño
-Ver [ADRs](/docs/decisiones-de-arquitectura/)
+Ver [ADRs](/docs/adrs/)
 
 ## 10. Requisitos de Calidad
 [Completar...]

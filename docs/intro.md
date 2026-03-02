@@ -9,7 +9,7 @@ Este portal centraliza los lineamientos, arquitecturas, integraciones y recursos
 ## Estructura de la documentación
 
 - **[Fundamentos Corporativos](./fundamentos-corporativos/)**: Principios, lineamientos, estándares y estilos arquitectónicos corporativos.
-- **[Decisiones de Arquitectura](./decisiones-de-arquitectura/)**: Architecture Decision Records (ADRs). Registro de decisiones arquitectónicas.
+- **[Decisiones de Arquitectura](./adrs/)**: Architecture Decision Records (ADRs). Registro de decisiones arquitectónicas.
 - **[Guías de Arquitectura](./guias-arquitectura/)**: Guías detalladas de implementación de patrones y prácticas arquitectónicas.
 
 ## ¿Cómo navegar y contribuir?

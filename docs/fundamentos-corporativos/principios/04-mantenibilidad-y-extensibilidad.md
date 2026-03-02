@@ -41,7 +41,7 @@ Este principio busca minimizar el costo de cambio y maximizar la capacidad de ad
 
 **ADRs relacionados:**
 
-- [ADR-012: GitHub Actions para CI/CD](/docs/decisiones-de-arquitectura/adr-012-github-actions-cicd)
+- [ADR-012: GitHub Actions para CI/CD](/docs/adrs/adr-012-github-actions-cicd)
 
 **Frameworks de referencia:**
 

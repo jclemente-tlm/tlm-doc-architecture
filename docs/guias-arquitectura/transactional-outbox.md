@@ -2,13 +2,13 @@
 
 > **Guía de implementación** para garantizar atomicidad entre PostgreSQL y Kafka.
 
-- **Decisión arquitectónica**: Ver [ADR-008: Kafka Mensajería Asíncrona](/docs/decisiones-de-arquitectura/adr-008-kafka-mensajeria-asincrona)
+- **Decisión arquitectónica**: Ver [ADR-008: Kafka Mensajería Asíncrona](/docs/adrs/adr-008-kafka-mensajeria-asincrona)
 
 ---
 
 ## 📋 Propósito
 
-Garantizar que los eventos publicados a Kafka ([ADR-008](/docs/decisiones-de-arquitectura/adr-008-kafka-mensajeria-asincrona)) sean consistentes con las transacciones en PostgreSQL ([ADR-006](/docs/decisiones-de-arquitectura/adr-006-postgresql-base-datos)), resolviendo el problema de **dual-write**.
+Garantizar que los eventos publicados a Kafka ([ADR-008](/docs/adrs/adr-008-kafka-mensajeria-asincrona)) sean consistentes con las transacciones en PostgreSQL ([ADR-006](/docs/adrs/adr-006-postgresql-base-datos)), resolviendo el problema de **dual-write**.
 
 ## 🎯 Casos de Uso
 
@@ -550,8 +550,8 @@ var message = new Message<string, string>
 - [Transactional Outbox Pattern - Microservices.io](https://microservices.io/patterns/data/transactional-outbox.html)
 - [Saga Pattern - Microsoft](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/saga/saga)
 - [Implementing the Outbox Pattern](https://debezium.io/blog/2019/02/19/reliable-microservices-data-exchange-with-the-outbox-pattern/)
-- [ADR-008: Kafka Mensajería Asíncrona](../decisiones-de-arquitectura/adr-008-kafka-mensajeria-asincrona.md)
-- [ADR-006: PostgreSQL Base de Datos](../decisiones-de-arquitectura/adr-006-postgresql-base-datos.md)
+- [ADR-008: Kafka Mensajería Asíncrona](../adrs/adr-008-kafka-mensajeria-asincrona.md)
+- [ADR-006: PostgreSQL Base de Datos](../adrs/adr-006-postgresql-base-datos.md)
 
 ---
 
