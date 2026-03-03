@@ -8,11 +8,16 @@ Esta es una ADAPTACIÓN de tu plantilla original para manejar estándares consol
 - **Estándar Consolidado**: N conceptos relacionados → 1 archivo (resilience-patterns.md que incluye circuit-breaker + retry + timeout + bulkhead + rate-limiting + graceful-degradation + graceful-shutdown)
 
 📐 ESTRUCTURA ADAPTADA:
-1. Mantén frontmatter y contexto igual
-2. Conceptos Fundamentales → ÍNDICE de los N conceptos
-3. Cada concepto → Sección independiente con subsecciones
-4. Implementación → Puede mostrar patrones combinados
-5. Requisitos → Unificados al final
+1. Mantén frontmatter y contexto igual (incluye ADR si existe)
+2. Índice de conceptos → dentro de `## Contexto` o como sección propia con nombre descriptivo (no genérico)
+3. Cada concepto → sección `## N. [Nombre Concepto]` independiente con subsecciones
+4. Implementación integrada → solo si tiene sentido mostrar los conceptos combinados
+5. Requisitos → unificados al final, agrupados por concepto con negrita si es necesario
+
+🗂️ NOMBRES DE SECCIONES (igual que plantilla atómica):
+- Evita nombres genéricos: "Conceptos Fundamentales", "Información General"
+- Usa nombre descriptivo del contenido real: `## Patrones de Resiliencia`, `## Visión General`, `## Relación entre Conceptos`
+- Regla: si no puedes nombrarlo sin una palabra genérica, intégralo en `## Contexto`
 
 🎯 DENSIDAD:
 - 800-1200 líneas para consolidados grandes (7-10 conceptos)
@@ -35,6 +40,8 @@ description: [Descripción que menciona todos los conceptos incluidos]
 
 Este estándar consolida [N conceptos relacionados] para [objetivo común]. Complementa el lineamiento [X](../../lineamientos/categoria/nombre.md) asegurando [valor que aporta].
 
+**Decisión arquitectónica:** [ADR-XXX: Título](../../adrs/adr-xxx.md) (si existe)
+
 **Conceptos incluidos:**
 
 - [Concepto 1] → Referenciado desde [lineamiento A](link)
@@ -56,9 +63,10 @@ Este estándar consolida [N conceptos relacionados] para [objetivo común]. Comp
 
 ---
 
-## Conceptos Fundamentales
+## Visión General
 
-Este estándar cubre [N] patrones/prácticas relacionadas con [tema general]:
+> 💡 **Renombra esta sección por algo más descriptivo si aplica** (ej: `## Patrones de Resiliencia`, `## Modelo de Seguridad`).
+> Si el índice de conceptos ya cabe en `## Contexto`, elimina esta sección.
 
 ### Índice de Conceptos
 
@@ -200,7 +208,7 @@ services.Add[Feature](options =>
 
 ---
 
-## [Repetir secciones para Concepto 4, 5, N...]
+<!-- Repetir la estructura anterior para cada concepto adicional -->
 
 ---
 
@@ -375,8 +383,3 @@ _logger.LogWarning(
 
 - [Otro estándar relacionado](link)
 - [Lineamiento relacionado](link)
-
----
-
-**Última actualización**: [Fecha]
-**Responsable**: Equipo de Arquitectura
