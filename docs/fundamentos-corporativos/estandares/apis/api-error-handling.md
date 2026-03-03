@@ -956,7 +956,7 @@ public class ErrorMetricsMiddleware
 
 - [Diseño de APIs REST](./rest-api-design.md)
 - [Resiliencia](../arquitectura/resilience-patterns.md)
-- [Observabilidad](../observabilidad/logging-monitoring.md)
+- [Structured Logging](../observabilidad/structured-logging.md)
 
 ---
 

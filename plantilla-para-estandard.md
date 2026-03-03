@@ -51,6 +51,40 @@ GUÍA DE USO DE LA PLANTILLA:
 📏 REFERENCIA DE DENSIDAD:
 - hexagonal-architecture.md: 783 líneas (justificado: patrón complejo)
 - yagni-principle.md: 263 líneas (justificado: principio simple)
+
+📦 PARA ESTÁNDARES CON MÚLTIPLES CONCEPTOS (CONSOLIDADOS):
+Usa esta misma plantilla — no necesitas una plantilla separada. Solo añade:
+
+1. CUÁNDO consolidar vs. atomizar:
+   - Consolidar: los conceptos comparten stack, siempre se aplican juntos y pierden sentido solos
+   - Atomizar: los conceptos son independientes, tienen stacks distintos o se consultan por separado
+
+2. En `## Contexto`, agrega una lista "Conceptos incluidos" después de la descripción:
+   **Conceptos incluidos:**
+   - **[Concepto 1]** — [descripción en una línea]
+   - **[Concepto N]** — [descripción en una línea]
+
+3. Densidad para consolidados:
+   - 800-1200 líneas para grandes (7-10 conceptos)
+   - 500-800 líneas para medianos (4-6 conceptos)
+   - 300-500 líneas para pequeños (2-3 conceptos)
+
+4. Sección introductoria opcional antes de los conceptos:
+   - Solo si necesitan contexto compartido (cómo se relacionan, cuándo usar cada uno)
+   - Nómbrala por lo que contiene: `## Patrones de Resiliencia`, `## Relación entre Conceptos`
+   - Si el índice en `## Contexto` es suficiente, omítela
+
+5. `## Implementación Integrada` (opcional):
+   - Solo si los conceptos interactúan en un mismo fragmento de código
+   - Si se configuran por separado sin interacción directa, omítela
+
+6. `## Matriz de Decisión` (opcional):
+   - Solo si hay 4+ conceptos y no es obvio cuándo usar cada uno
+   - Para 2-3 conceptos basta con "Cuándo usar cada uno" en la sección introductoria
+
+7. En `## Requisitos Técnicos`, agrupa por concepto cuando haya muchos requisitos mezclados:
+   - **MUST** ([Concepto 1]) [requisito específico]
+   - **SHOULD** ([Concepto 2]) [recomendación específica]
 -->
 
 ---
@@ -70,6 +104,12 @@ tags: [categoria, tecnología]
 Este estándar define [qué es brevemente]. Complementa el [lineamiento de X](../../lineamientos/categoria/nombre.md) asegurando [valor que aporta].
 
 **Decisión arquitectónica:** [ADR-XXX: Título](../../adrs/adr-xxx.md) (si existe)
+
+<!-- CONSOLIDADO: si el estándar cubre múltiples conceptos, añade aquí:
+**Conceptos incluidos:**
+- **[Concepto 1]** — [descripción en una línea]
+- **[Concepto N]** — [descripción en una línea]
+-->
 
 ---
 
@@ -192,6 +232,24 @@ graph TB
 
 ---
 
+<!-- CONSOLIDADO OPCIONAL: ## Implementación Integrada
+Incluye esta sección solo si los conceptos interactúan en un mismo fragmento de código.
+Si se configuran por separado, omítela.
+
+```csharp
+// ✅ Código que combina [Concepto 1] + [Concepto 2] + [Concepto N]
+```
+-->
+
+<!-- CONSOLIDADO OPCIONAL: ## Matriz de Decisión
+Incluye esta sección solo si hay 4+ conceptos y no es obvio cuándo usar cada uno.
+
+| Escenario     | [Concepto 1] | [Concepto 2] | [Concepto N] |
+| ------------- | ------------ | ------------ | ------------ |
+| [Escenario A] | ✅           | ✅           | —            |
+| [Escenario B] | —            | ✅           | ✅           |
+-->
+
 ## Beneficios en Práctica
 
 > 💡 **Incluye esta sección para patrones/arquitecturas con casos de uso claros**
@@ -233,7 +291,10 @@ Después (con el estándar):
 
 <!-- Guía de cantidad: 3–5 MUST, 2–4 SHOULD, 1–3 MAY, 1–3 MUST NOT.
      Menos es mejor — si tienes 8+ MUST, revisa si algunos son SHOULD en realidad.
-     Omite secciones vacías (especialmente MAY si no hay opciones reales). -->
+     Omite secciones vacías (especialmente MAY si no hay opciones reales).
+     CONSOLIDADO: cuando haya requisitos de conceptos distintos, agrupa con prefijo:
+     - **MUST** ([Concepto 1]) [requisito específico]
+     - **SHOULD** ([Concepto 2]) [recomendación específica] -->
 
 ### MUST (Obligatorio)
 

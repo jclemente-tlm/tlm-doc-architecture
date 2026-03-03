@@ -1567,7 +1567,7 @@ resource "aws_cloudwatch_metric_alarm" "rto_exceeded" {
 
 - [CI/CD Deployment](./cicd-deployment.md)
 - [Infrastructure as Code](../infraestructura/infrastructure-as-code.md)
-- [Logging & Monitoring](../observabilidad/logging-monitoring.md)
+- [Alertas con Grafana](../observabilidad/alerting.md)
 
 ---
 

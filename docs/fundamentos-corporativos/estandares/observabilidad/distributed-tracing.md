@@ -979,7 +979,7 @@ This SLA does not cover:
 
 **Relacionados:**
 
-- [Logging & Monitoring](./logging-monitoring.md)
+- [Structured Logging](./structured-logging.md) — correlación de logs con trazas
 - [Resilience Patterns](../arquitectura/resilience-patterns.md)
 - [API Error Handling](../apis/api-error-handling.md)
 
