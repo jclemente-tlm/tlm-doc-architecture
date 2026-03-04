@@ -1,8 +1,9 @@
 ---
 id: api-error-handling
-sidebar_position: 2
+sidebar_position: 6
 title: Manejo de Errores en APIs
 description: Estándar para el manejo consistente de errores en APIs usando RFC 7807 Problem Details, códigos de estado HTTP y logging estructurado.
+tags: [apis, error-handling, rest, problem-details, rfc7807]
 ---
 
 # Manejo de Errores en APIs
@@ -27,9 +28,7 @@ Este estándar define cómo manejar, reportar y registrar errores de manera cons
 
 ---
 
-## Principios Fundamentales
-
-### 1. Formato Estándar: RFC 7807 Problem Details
+## Formato de Error: RFC 7807
 
 **Estructura:**
 
@@ -56,7 +55,9 @@ Este estándar define cómo manejar, reportar y registrar errores de manera cons
 - `detail`: Explicación específica del error (opcional)
 - `instance`: URI de la petición que causó el error
 
-### 2. Códigos de Estado HTTP Apropiados
+---
+
+## Códigos de Estado HTTP
 
 | Código | Uso                         | Ejemplo                       |
 | ------ | --------------------------- | ----------------------------- |
@@ -70,7 +71,9 @@ Este estándar define cómo manejar, reportar y registrar errores de manera cons
 | 500    | Error interno no controlado | Excepción no manejada         |
 | 503    | Servicio no disponible      | Dependencia externa caída     |
 
-### 3. Categorías de Errores
+---
+
+## Tipos de Error
 
 ```csharp
 public static class ErrorTypes
@@ -612,196 +615,27 @@ public class ExternalApiClient
 
 ## Logging de Errores
 
-### Logs Estructurados con Serilog
+Loggear por tipo de excepción permite ajustar el nivel según gravedad y reducir ruido:
 
 ```csharp
-// Program.cs - Configurar Serilog
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-    .MinimumLevel.Override("System", LogEventLevel.Warning)
-    .Enrich.FromLogContext()
-    .Enrich.WithProperty("Application", "CustomerApi")
-    .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName)
-    .WriteTo.Console(
-        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
-    .WriteTo.File(
-        path: "logs/api-.log",
-        rollingInterval: RollingInterval.Day,
-        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
-    .CreateLogger();
-
-builder.Host.UseSerilog();
-
-// Middleware para logging enriquecido
-public class EnrichedLoggingMiddleware
-{
-    private readonly RequestDelegate _next;
-
-    public EnrichedLoggingMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        using (LogContext.PushProperty("RequestId", context.TraceIdentifier))
-        using (LogContext.PushProperty("UserId", context.User?.FindFirst("sub")?.Value))
-        using (LogContext.PushProperty("UserEmail", context.User?.FindFirst("email")?.Value))
-        using (LogContext.PushProperty("IpAddress", context.Connection.RemoteIpAddress?.ToString()))
-        {
-            await _next(context);
-        }
-    }
-}
-
-app.UseMiddleware<EnrichedLoggingMiddleware>();
+catch (NotFoundException ex)          => _logger.LogWarning(ex, "Recurso no encontrado: {ResourceName} ID={Key}", ex.ResourceName, ex.Key);
+catch (ValidationException ex)        => _logger.LogWarning("Validación: {Errors}", string.Join(", ", ex.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}")));
+catch (BusinessRuleException ex)      => _logger.LogWarning(ex, "Regla violada: {RuleCode}", ex.RuleCode);
+catch (ServiceUnavailableException ex)=> _logger.LogError(ex, "Servicio no disponible: {ServiceName}", ex.ServiceName);
+catch (Exception ex)                  => _logger.LogError(ex, "Error no controlado: {Message}", ex.Message);
 ```
 
-### Logging de Excepciones
-
-```csharp
-public class ErrorLoggingMiddleware
-{
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ErrorLoggingMiddleware> _logger;
-
-    public ErrorLoggingMiddleware(RequestDelegate next, ILogger<ErrorLoggingMiddleware> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        try
-        {
-            await _next(context);
-        }
-        catch (NotFoundException ex)
-        {
-            _logger.LogWarning(ex,
-                "Recurso no encontrado: {ResourceName} con ID {Key}",
-                ex.ResourceName, ex.Key);
-            throw;
-        }
-        catch (ValidationException ex)
-        {
-            _logger.LogWarning(
-                "Errores de validación: {Errors}",
-                string.Join(", ", ex.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}")));
-            throw;
-        }
-        catch (BusinessRuleException ex)
-        {
-            _logger.LogWarning(ex,
-                "Regla de negocio violada: {RuleCode} - {Message}",
-                ex.RuleCode, ex.Message);
-            throw;
-        }
-        catch (ServiceUnavailableException ex)
-        {
-            _logger.LogError(ex,
-                "Servicio no disponible: {ServiceName}",
-                ex.ServiceName);
-            throw;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex,
-                "Error no controlado: {Message}",
-                ex.Message);
-            throw;
-        }
-    }
-}
-```
+:::note Configuración de Serilog
+Para la configuración completa de Serilog con enrichment, sinks y niveles ver [Structured Logging](../observabilidad/structured-logging.md).
+:::
 
 ---
 
 ## Monitoreo y Observabilidad
 
-### Métricas de Errores
-
-```csharp
-public class ErrorMetrics
-{
-    private readonly Meter _meter;
-    private readonly Counter<long> _errorCounter;
-    private readonly Histogram<double> _errorDuration;
-
-    public ErrorMetrics(IMeterFactory meterFactory)
-    {
-        _meter = meterFactory.Create("CustomerApi.Errors");
-
-        _errorCounter = _meter.CreateCounter<long>(
-            "api.errors",
-            description: "Total de errores por tipo");
-
-        _errorDuration = _meter.CreateHistogram<double>(
-            "api.error.duration_ms",
-            description: "Tiempo hasta fallo");
-    }
-
-    public void RecordError(string errorType, int statusCode, double durationMs)
-    {
-        _errorCounter.Add(1,
-            new KeyValuePair<string, object?>("error_type", errorType),
-            new KeyValuePair<string, object?>("status_code", statusCode));
-
-        _errorDuration.Record(durationMs,
-            new KeyValuePair<string, object?>("error_type", errorType));
-    }
-}
-
-// Middleware para métricas de errores
-public class ErrorMetricsMiddleware
-{
-    private readonly RequestDelegate _next;
-    private readonly ErrorMetrics _metrics;
-
-    public ErrorMetricsMiddleware(RequestDelegate next, ErrorMetrics metrics)
-    {
-        _next = next;
-        _metrics = metrics;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        var sw = Stopwatch.StartNew();
-
-        try
-        {
-            await _next(context);
-        }
-        catch (Exception ex)
-        {
-            sw.Stop();
-
-            var errorType = ex.GetType().Name;
-            var statusCode = GetStatusCode(ex);
-
-            _metrics.RecordError(errorType, statusCode, sw.Elapsed.TotalMilliseconds);
-
-            throw;
-        }
-    }
-
-    private static int GetStatusCode(Exception ex)
-    {
-        return ex switch
-        {
-            NotFoundException => 404,
-            ValidationException => 400,
-            BusinessRuleException => 422,
-            ConflictException => 409,
-            UnauthorizedAccessException => 403,
-            ServiceUnavailableException => 503,
-            _ => 500
-        };
-    }
-}
-```
+:::note Métricas de errores
+Para implementar métricas de errores (counters, histogramas por tipo de excepción) ver [Métricas y Estándares](../observabilidad/metrics-standards.md).
+:::
 
 ---
 
@@ -941,24 +775,11 @@ public class ErrorMetricsMiddleware
 
 ## Referencias
 
-**Estándares:**
-
-- [RFC 7807 - Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc7807.html)
-- [RFC 9110 - HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html)
-
-**Documentación oficial:**
-
-- [ASP.NET Core Error Handling](https://learn.microsoft.com/aspnet/core/web-api/handle-errors)
-- [Hellang.Middleware.ProblemDetails](https://github.com/khellang/Middleware)
-- [Serilog](https://serilog.net/)
-
-**Relacionados:**
-
-- [Diseño de APIs REST](./rest-api-design.md)
-- [Resiliencia](../arquitectura/resilience-patterns.md)
-- [Structured Logging](../observabilidad/structured-logging.md)
-
----
-
-**Última actualización**: 18 de febrero de 2026
-**Responsable**: Equipo de Arquitectura
+- [RFC 7807 - Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc7807.html) — Especificación Problem Details
+- [RFC 9110 - HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html) — Semántica HTTP
+- [ASP.NET Core Error Handling](https://learn.microsoft.com/aspnet/core/web-api/handle-errors) — Manejo de errores en ASP.NET Core
+- [Hellang.Middleware.ProblemDetails](https://github.com/khellang/Middleware) — Middleware RFC 7807
+- [Serilog](https://serilog.net/) — Logging estructurado
+- [Estándares REST](./rest-standards.md) — Estándar relacionado
+- [Resiliencia](../arquitectura/resilience-patterns.md) — Estándar relacionado
+- [Structured Logging](../observabilidad/structured-logging.md) — Configuración de logging

@@ -13,12 +13,12 @@ APIs inconsistentes, contratos mal definidos o documentación desactualizada gen
 
 ## Estándares Obligatorios
 
-- [Seguir convenciones RESTful en diseño de APIs](../../estandares/apis/rest-api-design.md#1-rest-standards)
-- [Implementar versionado explícito de APIs](../../estandares/apis/rest-api-design.md#3-api-versioning)
-- [Documentar APIs REST con OpenAPI 3.0+](../../estandares/apis/event-api-contracts.md#2-asyncapi-specification)
+- [Seguir convenciones RESTful en diseño de APIs](../../estandares/apis/rest-standards.md)
+- [Implementar versionado explícito de APIs](../../estandares/apis/api-versioning.md)
+- [Documentar APIs REST con OpenAPI 3.0+](../../estandares/apis/api-contracts.md)
 - [Estandarizar manejo de errores en APIs](../../estandares/apis/api-error-handling.md)
-- [Aplicar paginación en colecciones](../../estandares/apis/rest-api-design.md#4-api-pagination)
-- [Mantener retrocompatibilidad en evolución](../../estandares/apis/rest-api-design.md#5-backward-compatibility)
+- [Aplicar paginación en colecciones](../../estandares/apis/api-pagination.md)
+- [Mantener retrocompatibilidad en evolución](../../estandares/apis/backward-compatibility.md)
 - [Implementar contract testing automatizado](../../estandares/testing/contract-e2e-testing.md#1-contract-testing)
 
 ## Referencias Relacionadas

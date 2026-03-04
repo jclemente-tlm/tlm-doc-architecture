@@ -17,7 +17,7 @@ Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar
 - [Prohibir bases de datos compartidas](../../estandares/datos/data-architecture.md#2-no-shared-database)
 - [Habilitar despliegue independiente](../../estandares/desarrollo/dependency-configuration.md#4-independent-deployment)
 - [Usar comunicación asíncrona para desacoplamiento](../../estandares/mensajeria/event-driven-architecture.md#1-async-messaging)
-- [Establecer contratos explícitos en los límites](../../estandares/apis/rest-api-design.md#2-api-contracts)
+- [Establecer contratos explícitos en los límites](../../estandares/apis/api-contracts.md)
 - [Definir ownership de servicios](../../estandares/gobierno/compliance-exceptions.md#6-service-ownership)
 
 ## Referencias Relacionadas

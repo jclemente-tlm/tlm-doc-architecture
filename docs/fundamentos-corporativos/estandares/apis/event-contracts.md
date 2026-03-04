@@ -1,11 +1,12 @@
 ---
-id: event-api-contracts
-sidebar_position: 3
-title: Contratos de Eventos y APIs Asíncronas
-description: Estándares para definir contratos de eventos con AsyncAPI y esquemas JSON Schema para comunicación asíncrona.
+id: event-contracts
+sidebar_position: 7
+title: Contratos de Eventos
+description: Estándares para definir, versionar y documentar contratos de eventos de dominio usando AsyncAPI 3.0 y JSON Schema.
+tags: [apis, eventos, asyncapi, kafka, mensajeria, json-schema]
 ---
 
-# Contratos de Eventos y APIs Asíncronas
+# Contratos de Eventos
 
 ## Contexto
 
@@ -13,32 +14,8 @@ Este estándar define cómo documentar y versionar contratos de eventos para com
 
 **Conceptos incluidos:**
 
-- **Event Contracts** → Definición estructurada de eventos de dominio
-- **AsyncAPI Specification** → Documentación de APIs asíncronas
-
----
-
-## Stack Tecnológico
-
-| Componente        | Tecnología       | Versión | Uso                         |
-| ----------------- | ---------------- | ------- | --------------------------- |
-| **Mensajería**    | Apache Kafka     | 3.6+    | Event streaming             |
-| **Serialización** | System.Text.Json | 8.0+    | JSON serialization          |
-| **Esquemas**      | JSON Schema      | 2020-12 | Validación de eventos       |
-| **Documentación** | AsyncAPI         | 3.0+    | Especificación de contratos |
-| **Validación**    | NJsonSchema      | 11.0+   | Validación runtime          |
-| **Observability** | OpenTelemetry    | 1.7+    | Trazas distribuidas         |
-
----
-
-## Conceptos Fundamentales
-
-### Índice de Conceptos
-
-1. **Event Contracts**: Estructura, versionamiento y catálogo de eventos
-2. **AsyncAPI Specification**: Documentación de canales, operaciones y esquemas
-
-### Relación entre Conceptos
+- **Event Contracts** — Definición estructurada de eventos de dominio
+- **AsyncAPI Specification** — Documentación de APIs asíncronas
 
 ```mermaid
 graph LR
@@ -58,7 +35,20 @@ graph LR
 
 ---
 
-## 1. Event Contracts
+## Stack Tecnológico
+
+| Componente        | Tecnología       | Versión | Uso                         |
+| ----------------- | ---------------- | ------- | --------------------------- |
+| **Mensajería**    | Apache Kafka     | 3.6+    | Event streaming             |
+| **Serialización** | System.Text.Json | 8.0+    | JSON serialization          |
+| **Esquemas**      | JSON Schema      | 2020-12 | Validación de eventos       |
+| **Documentación** | AsyncAPI         | 3.0+    | Especificación de contratos |
+| **Validación**    | NJsonSchema      | 11.0+   | Validación runtime          |
+| **Observability** | OpenTelemetry    | 1.7+    | Trazas distribuidas         |
+
+---
+
+## Event Contracts
 
 ### ¿Qué es un Contrato de Evento?
 
@@ -592,7 +582,7 @@ public class EventUpcaster
 
 ---
 
-## 2. AsyncAPI Specification
+## AsyncAPI Specification
 
 ### ¿Qué es AsyncAPI?
 
@@ -1057,88 +1047,46 @@ public record ValidationResult
 
 ## Catálogo de Eventos
 
-### Event Catalog Centralizado
+Cada evento publicado debe registrarse en el catálogo del dominio con la siguiente plantilla:
 
 ```markdown
-# Catálogo de Eventos
+### {domain}.{entity}.{action}.{version}
 
-## Dominio: Customers
+**Descripción**: Evento emitido cuando ...
 
-### customers.customer.created.v1
+**Topic**: {domain}-events
 
-**Descripción**: Evento emitido cuando un nuevo cliente es creado
-
-**Topic**: customers-events
-
-**Schema**: [customer-created-v1.json](schemas/customer-created-v1.json)
+**Schema**: [schema-v1.json](schemas/schema-v1.json)
 
 **Publicadores**:
 
-- customer-service
+- {service-name}
 
 **Consumidores**:
 
-- billing-service (facturación)
-- notification-service (email bienvenida)
-- analytics-service (métricas)
+- {consumer-service} ({propósito})
 
 **Versionamiento**:
 
-- v1.0: Versión inicial (2024-01-15)
-
-**Breaking Changes**: Ninguno
-
----
-
-### customers.customer.updated.v1
-
-**Descripción**: Evento emitido cuando un cliente es actualizado
-
-**Topic**: customers-events
-
-**Schema**: [customer-updated-v1.json](schemas/customer-updated-v1.json)
-
-**Publicadores**:
-
-- customer-service
-
-**Consumidores**:
-
-- billing-service
-- crm-service
-
-**Versionamiento**:
-
-- v1.0: Versión inicial (2024-01-15)
-- v1.1: Agregado campo `phone` (2024-06-20) - Compatible
-
-**Breaking Changes**: Ninguno
-
----
-
-### customers.customer.deleted.v1
-
-**Descripción**: Evento emitido cuando un cliente es eliminado (soft delete)
-
-**Topic**: customers-events
-
-**Schema**: [customer-deleted-v1.json](schemas/customer-deleted-v1.json)
-
-**Publicadores**:
-
-- customer-service
-
-**Consumidores**:
-
-- billing-service (cancelar suscripciones)
-- notification-service (email despedida)
-
-**Versionamiento**:
-
-- v1.0: Versión inicial (2024-01-15)
+- v1.0: Versión inicial (YYYY-MM-DD)
 
 **Breaking Changes**: Ninguno
 ```
+
+:::tip Catálogo centralizado
+El catálogo de eventos de cada dominio vive en la documentación del servicio propietario, no en este estándar. Usar una herramienta como [AsyncAPI Studio](https://studio.asyncapi.com/) o Backstage para mantener el catálogo actualizado.
+:::
+
+---
+
+## Beneficios en Práctica
+
+| Sin contratos de eventos                               | Con contratos AsyncAPI + JSON Schema                           |
+| ------------------------------------------------------ | -------------------------------------------------------------- |
+| Consumidores acoplan a implementación interna          | Contrato explícito e independiente del código                  |
+| Cambios rompen consumidores sin aviso                  | Versionamiento semántico y upcasting controlado                |
+| Depuración difícil en producción                       | `correlationId` + `causationId` permiten trazabilidad completa |
+| Sin validación: eventos malógrados llegan a producción | JSON Schema valida en publicación y consumo                    |
 
 ---
 
@@ -1198,24 +1146,11 @@ public record ValidationResult
 
 ## Referencias
 
-**Estándares:**
-
-- [AsyncAPI 3.0 Specification](https://www.asyncapi.com/docs/reference/specification/v3.0.0)
-- [JSON Schema 2020-12](https://json-schema.org/draft/2020-12/json-schema-core.html)
-- [CloudEvents 1.0](https://cloudevents.io/)
-
-**Documentación:**
-
-- [Apache Kafka](https://kafka.apache.org/documentation/)
-- [NJsonSchema](https://github.com/RicoSuter/NJsonSchema)
-- [AsyncAPI Code Generation](https://www.asyncapi.com/tools/generator)
-
-**Relacionados:**
-
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md)
-- [Diseño de APIs REST](./rest-api-design.md)
-
----
-
-**Última actualización**: 18 de febrero de 2026
-**Responsable**: Equipo de Arquitectura
+- [AsyncAPI 3.0 Specification](https://www.asyncapi.com/docs/reference/specification/v3.0.0) — Especificación AsyncAPI
+- [JSON Schema 2020-12](https://json-schema.org/draft/2020-12/json-schema-core.html) — Esquemas JSON
+- [CloudEvents 1.0](https://cloudevents.io/) — Envelope estándar de eventos
+- [Apache Kafka](https://kafka.apache.org/documentation/) — Event streaming
+- [NJsonSchema](https://github.com/RicoSuter/NJsonSchema) — Validación runtime de JSON Schema
+- [AsyncAPI Code Generation](https://www.asyncapi.com/tools/generator) — Generación de código desde AsyncAPI
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Estándares REST](./rest-standards.md) — Estándar relacionado

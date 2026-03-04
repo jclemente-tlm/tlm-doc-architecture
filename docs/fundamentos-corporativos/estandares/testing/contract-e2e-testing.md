@@ -730,9 +730,5 @@ jobs:
 
 - [Testing Strategy](./testing-strategy.md)
 - [Unit & Integration Testing](./unit-integration-testing.md)
-- [REST API Design](../apis/rest-api-design.md)
-
----
-
-**Última actualización**: 2026-02-19
-**Responsable**: Equipo de Arquitectura
+- [Estándares REST](../apis/rest-standards.md)
+- [Contratos de APIs](../apis/api-contracts.md)

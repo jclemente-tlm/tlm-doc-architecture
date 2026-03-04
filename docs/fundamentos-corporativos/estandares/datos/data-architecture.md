@@ -1387,7 +1387,7 @@ networks:
 - [Consistencia de Datos](./data-consistency.md)
 - [Estándares de Base de Datos](./database-standards.md)
 - [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md)
-- [Contratos de Eventos](../apis/event-api-contracts.md)
+- [Contratos de Eventos](../apis/event-contracts.md)
 
 ---
 

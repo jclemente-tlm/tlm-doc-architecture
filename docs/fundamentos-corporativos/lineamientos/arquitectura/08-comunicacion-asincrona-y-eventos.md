@@ -14,7 +14,7 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 ## Estándares Obligatorios
 
 - [Usar mensajería asíncrona](../../estandares/mensajeria/event-driven-architecture.md#1-async-messaging)
-- [Documentar contratos de eventos](../../estandares/apis/event-api-contracts.md#1-event-contracts)
+- [Documentar contratos de eventos](../../estandares/apis/event-contracts.md)
 - [Diseñar eventos como hechos del dominio](../../estandares/mensajeria/event-driven-architecture.md#2-event-design)
 - [Implementar consumidores idempotentes](../../estandares/mensajeria/event-driven-architecture.md#4-idempotency)
 - [Configurar garantías de entrega](../../estandares/mensajeria/message-reliability.md#1-message-delivery-guarantees)
