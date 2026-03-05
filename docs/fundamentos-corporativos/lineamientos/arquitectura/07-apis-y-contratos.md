@@ -13,7 +13,7 @@ APIs inconsistentes, contratos mal definidos o documentación desactualizada gen
 
 ## Estándares Obligatorios
 
-- [Seguir convenciones RESTful en diseño de APIs](../../estandares/apis/rest-standards.md)
+- [Seguir convenciones RESTful en diseño de APIs](../../estandares/apis/api-rest-standards.md)
 - [Implementar versionado explícito de APIs](../../estandares/apis/api-versioning.md)
 - [Documentar APIs REST con OpenAPI 3.0+](../../estandares/apis/api-contracts.md)
 - [Estandarizar manejo de errores en APIs](../../estandares/apis/api-error-handling.md)

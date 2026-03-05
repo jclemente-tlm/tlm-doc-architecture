@@ -2,7 +2,8 @@
 id: architecture-principles
 sidebar_position: 5
 title: Principios de Arquitectura
-description: Principios KISS, YAGNI, acoplamiento bajo, gestión de dependencias, simplicidad operacional, análisis de complejidad y métricas de simplicidad.
+description: Principios KISS, YAGNI, acoplamiento bajo, gestión de dependencias, simplicidad operacional y métricas de complejidad.
+tags: [arquitectura, kiss, yagni, solid, simplicidad, principios]
 ---
 
 # Principios de Arquitectura
@@ -18,8 +19,7 @@ Este estándar consolida los principios fundamentales que guían las decisiones 
 - **Loose Coupling** → Minimizar dependencias entre componentes
 - **Dependency Management** → Control explícito de dependencias externas
 - **Operational Simplicity** → Diseñar para facilitar operación
-- **Complexity Analysis** → Medir y controlar complejidad
-- **Simplicity Metrics** → Métricas objetivas de simplicidad
+- **Métricas de Complejidad y Simplicidad** → Medir y controlar complejidad con umbrales objetivos
 
 ---
 
@@ -34,23 +34,7 @@ Este estándar consolida los principios fundamentales que guían las decisiones 
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 7 principios para arquitecturas simples:
-
-### Índice de Conceptos
-
-1. **KISS**: Preferir soluciones simples sobre complejas
-2. **YAGNI**: Implementar solo lo necesario ahora
-3. **Loose Coupling**: Minimizar dependencias
-4. **Dependency Management**: Control explícito de dependencias
-5. **Operational Simplicity**: Facilitar troubleshooting
-6. **Complexity Analysis**: Identificar complejidad
-7. **Simplicity Metrics**: Medir simplicidad objetivamente
-
----
-
-## 1. KISS (Keep It Simple, Stupid)
+## KISS (Keep It Simple, Stupid)
 
 ### ¿Qué es KISS?
 
@@ -87,7 +71,7 @@ public class CustomerRepository : ICustomerRepository
 
 ---
 
-## 2. YAGNI (You Aren't Gonna Need It)
+## YAGNI (You Aren't Gonna Need It)
 
 ### ¿Qué es YAGNI?
 
@@ -130,7 +114,7 @@ public class ProductService
 
 ---
 
-## 3. Loose Coupling
+## Loose Coupling
 
 ### ¿Qué es Loose Coupling?
 
@@ -142,6 +126,10 @@ Minimizar dependencias directas entre componentes usando abstracciones.
 ✅ Componentes intercambiables
 ✅ Testing aislado
 ✅ Cambios localizados
+
+:::note
+Este principio se aplica estructuralmente a través de [Clean Architecture (Ports & Adapters)](./clean-architecture.md), que define la mecánica concreta de interfaces y adaptadores por capa.
+:::
 
 ### Ejemplo Comparativo
 
@@ -175,7 +163,7 @@ public class OrderProcessor
 
 ---
 
-## 4. Dependency Management
+## Dependency Management
 
 ### ¿Qué es Dependency Management?
 
@@ -207,7 +195,7 @@ Control explícito de todas las dependencias externas del proyecto.
 
 ---
 
-## 5. Operational Simplicity
+## Operational Simplicity
 
 ### ¿Qué es Operational Simplicity?
 
@@ -258,22 +246,26 @@ public async Task<Result<PaymentId>> ProcessPayment(OrderId orderId, Money amoun
 
 ---
 
-## 6. Complexity Analysis
+## Métricas de Complejidad y Simplicidad
 
-### ¿Qué es Complexity Analysis?
+### ¿Qué son las métricas de complejidad?
 
-Identificación y medición sistemática de complejidad en el código.
+Identificación y medición sistemática de complejidad en el código, combinando métricas objetivas para medir y trackear la simplicidad en el tiempo.
 
-**Métricas:**
+**Métricas clave:**
 
-- **Cyclomatic Complexity**: Número de caminos independientes
-- **Cognitive Complexity**: Esfuerzo mental para entender
-- **Lines of Code**: Tamaño del código
+- **Cyclomatic Complexity**: Número de caminos independientes (umbral: ≤ 10 por método)
+- **Cognitive Complexity**: Esfuerzo mental para entender (umbral: ≤ 15)
+- **Lines of Code**: Tamaño del código (método ≤ 50, clase ≤ 300, archivo ≤ 500)
+- **Dependencias directas por proyecto**: < 15
+- **Complejidad ciclomática promedio**: < 5
+- **Profundidad de herencia**: < 4
+- **Test coverage**: > 80%
 
 **Beneficios:**
-✅ Identificar hotspots
-✅ Objetivizar code reviews
-✅ Prevenir degradación
+✅ Identificar hotspots objetivamente
+✅ Detectar degradación temprano
+✅ Baseline medible para mejoras continuas
 
 ### Umbrales Recomendados
 
@@ -294,35 +286,14 @@ complexity:
 
 ---
 
-## 7. Simplicity Metrics
-
-### ¿Qué son Simplicity Metrics?
-
-Métricas objetivas para medir y trackear simplicidad en el tiempo.
-
-**Métricas clave:**
-
-- LOC total
-- Dependencias por proyecto (< 15)
-- Complejidad ciclomática promedio (< 5)
-- Profundidad de herencia (< 4)
-- Test coverage (> 80%)
-
-**Beneficios:**
-✅ Seguimiento objetivo
-✅ Detectar degradación temprano
-✅ Baseline para mejoras
-
----
-
 ## Matriz de Decisión
 
-| Escenario         | KISS   | YAGNI  | Loose Coupling | Dep. Mgmt | Op. Simplicity |
-| ----------------- | ------ | ------ | -------------- | --------- | -------------- |
-| **Nuevo feature** | ✅✅✅ | ✅✅✅ | ✅✅           | ✅        | ✅             |
-| **Refactoring**   | ✅✅✅ | ✅     | ✅✅✅         | ✅        | ✅             |
-| **Microservicio** | ✅✅   | ✅✅   | ✅✅✅         | ✅✅✅    | ✅✅✅         |
-| **MVP**           | ✅✅✅ | ✅✅✅ | ✅             | ✅        | ✅             |
+| Escenario         | KISS   | YAGNI  | Loose Coupling | Dep. Mgmt | Op. Simplicity | Métricas |
+| ----------------- | ------ | ------ | -------------- | --------- | -------------- | -------- |
+| **Nuevo feature** | ✅✅✅ | ✅✅✅ | ✅✅           | ✅        | ✅             | ✅       |
+| **Refactoring**   | ✅✅✅ | ✅     | ✅✅✅         | ✅        | ✅             | ✅✅✅   |
+| **Microservicio** | ✅✅   | ✅✅   | ✅✅✅         | ✅✅✅    | ✅✅✅         | ✅✅     |
+| **MVP**           | ✅✅✅ | ✅✅✅ | ✅             | ✅        | ✅             | ✅       |
 
 ---
 

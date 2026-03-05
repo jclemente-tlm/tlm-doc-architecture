@@ -3,6 +3,7 @@ id: clean-architecture
 sidebar_position: 1
 title: Clean Architecture (Arquitectura Limpia)
 description: Estándar para implementar arquitectura limpia con separación de responsabilidades, inversión de dependencias y independencia de frameworks.
+tags: [arquitectura, clean-architecture, hexagonal, dip, capas]
 ---
 
 # Clean Architecture (Arquitectura Limpia)
@@ -12,6 +13,7 @@ description: Estándar para implementar arquitectura limpia con separación de r
 Este estándar consolida los principios fundamentales de Clean Architecture aplicados a servicios .NET. Complementa el lineamiento [Arquitectura Limpia](../../lineamientos/arquitectura/11-arquitectura-limpia.md) asegurando que la lógica de negocio permanezca independiente de frameworks e infraestructura.
 
 **Conceptos incluidos:**
+
 - **Hexagonal Architecture (Ports & Adapters)** → Aislamiento mediante puertos y adaptadores
 - **Dependency Inversion Principle** → Dependencias apuntan hacia abstracciones
 - **Layered Architecture** → Separación en capas Domain, Application, Infrastructure
@@ -21,28 +23,17 @@ Este estándar consolida los principios fundamentales de Clean Architecture apli
 
 ## Stack Tecnológico
 
-| Componente        | Tecnología            | Versión | Uso                                    |
-| ----------------- | --------------------- | ------- | -------------------------------------- |
-| **Framework**     | ASP.NET Core          | 8.0+    | Framework base para APIs               |
-| **ORM**           | Entity Framework Core | 8.0+    | Adaptador de persistencia              |
-| **Validación**    | FluentValidation      | 11.0+   | Validación en capa de aplicación       |
-| **Mapeo**         | Mapster               | 7.4+    | Conversión entre capas                 |
-| **Testing**       | xUnit + Moq           | 2.6+    | Testing aislado de dominio             |
+| Componente     | Tecnología            | Versión | Uso                              |
+| -------------- | --------------------- | ------- | -------------------------------- |
+| **Framework**  | ASP.NET Core          | 8.0+    | Framework base para APIs         |
+| **ORM**        | Entity Framework Core | 8.0+    | Adaptador de persistencia        |
+| **Validación** | FluentValidation      | 11.0+   | Validación en capa de aplicación |
+| **Mapeo**      | Mapster               | 7.4+    | Conversión entre capas           |
+| **Testing**    | xUnit + Moq           | 2.6+    | Testing aislado de dominio       |
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 4 principios arquitectónicos interrelacionados:
-
-### Índice de Conceptos
-
-1. **Hexagonal Architecture**: Patrón de puertos y adaptadores para aislar dominio
-2. **Dependency Inversion**: Invertir dependencias hacia abstracciones
-3. **Layered Architecture**: Organización en 4 capas (Domain, Application, Infrastructure, Presentation)
-4. **Framework Independence**: Dominio libre de dependencias técnicas
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
@@ -56,13 +47,14 @@ graph TB
 
 ---
 
-## 1. Hexagonal Architecture (Ports & Adapters)
+## Hexagonal Architecture (Ports & Adapters)
 
 ### ¿Qué es Hexagonal Architecture?
 
 Patrón arquitectónico que organiza el código en capas concéntricas donde el dominio está en el centro, completamente aislado de detalles técnicos mediante **puertos** (interfaces) y **adaptadores** (implementaciones).
 
 **Componentes:**
+
 - **Dominio (Core)**: Lógica de negocio pura, sin dependencias externas
 - **Puertos (Ports)**: Interfaces que definen contratos
   - **Primarios (Driving)**: Controllers, Event Handlers
@@ -149,7 +141,7 @@ public class OrderRepository : IOrderRepository
 
 ---
 
-## 2. Dependency Inversion Principle (DIP)
+## Dependency Inversion Principle (DIP)
 
 ### ¿Qué es Dependency Inversion?
 
@@ -226,7 +218,7 @@ public class EmailNotificationService : INotificationService
 
 ---
 
-## 3. Layered Architecture
+## Layered Architecture
 
 ### ¿Qué es Layered Architecture?
 
@@ -247,6 +239,7 @@ Organización del código en capas con responsabilidades claramente definidas y 
 ```
 
 **Reglas:**
+
 - Domain no depende de nadie
 - Application solo depende de Domain
 - Infrastructure depende de Application y Domain
@@ -358,13 +351,14 @@ app.Run();
 
 ---
 
-## 4. Framework Independence
+## Framework Independence
 
 ### ¿Qué es Framework Independence?
 
 Principio que establece que **el dominio debe estar libre de dependencias a frameworks específicos** (EF Core, ASP.NET, etc.), permitiendo que la lógica de negocio evolucione independientemente de decisiones tecnológicas.
 
 **Reglas:**
+
 - Domain NO referencia EF Core, ASP.NET, Dapper, etc.
 - Domain usa POCOs (Plain Old CLR Objects)
 - Atributos de frameworks solo en Infrastructure
@@ -669,14 +663,40 @@ app.Run();
 
 ## Matriz de Decisión
 
-| Escenario | Hexagonal Arch | Dependency Inversion | Layered Arch | Framework Independence |
-|-----------|----------------|---------------------|--------------|----------------------|
-| **Microservicio nuevo** | ✅✅✅ | ✅✅✅ | ✅✅✅ | ✅✅✅ |
-| **Dominio complejo** | ✅✅✅ | ✅✅ | ✅✅✅ | ✅✅✅ |
-| **CRUD simple** | ✅ | ✅✅ | ✅✅ | ✅ |
-| **Prototipo/PoC** | - | ✅ | ✅ | - |
-| **Sistema legacy a refactorizar** | ✅✅✅ | ✅✅✅ | ✅✅ | ✅✅ |
-| **Alto cambio de requisitos** | ✅✅✅ | ✅✅✅ | ✅✅ | ✅✅✅ |
+| Escenario                         | Hexagonal Arch | Dependency Inversion | Layered Arch | Framework Independence |
+| --------------------------------- | -------------- | -------------------- | ------------ | ---------------------- |
+| **Microservicio nuevo**           | ✅✅✅         | ✅✅✅               | ✅✅✅       | ✅✅✅                 |
+| **Dominio complejo**              | ✅✅✅         | ✅✅                 | ✅✅✅       | ✅✅✅                 |
+| **CRUD simple**                   | ✅             | ✅✅                 | ✅✅         | ✅                     |
+| **Prototipo/PoC**                 | -              | ✅                   | ✅           | -                      |
+| **Sistema legacy a refactorizar** | ✅✅✅         | ✅✅✅               | ✅✅         | ✅✅                   |
+| **Alto cambio de requisitos**     | ✅✅✅         | ✅✅✅               | ✅✅         | ✅✅✅                 |
+
+---
+
+## Beneficios en Práctica
+
+```yaml
+# ✅ Casos de uso reales en Talma
+
+Caso 1: Migrar de PostgreSQL a Cosmos DB
+  Cambio necesario: Solo OrderRepository en Infrastructure
+  Sin cambios:
+    ✅ Dominio, casos de uso, validadores, tests unitarios
+  Tiempo: 2-3 días
+
+Caso 2: Exponer el mismo caso de uso vía gRPC además de HTTP
+  Cambio necesario: Nuevo adaptador primario (GrpcOrdersService)
+  Sin cambios:
+    ✅ CreateOrderUseCase y toda la capa Application/Domain
+  Tiempo: 1 día
+
+Caso 3: Cambiar proveedor de notificaciones (SMTP → AWS SES)
+  Cambio necesario: Nueva implementación de IEmailService en Infrastructure
+  Sin cambios:
+    ✅ Domain Events, Application handlers, tests con mocks
+  Tiempo: 2-4 horas
+```
 
 ---
 
@@ -685,18 +705,22 @@ app.Run();
 ### MUST (Obligatorio)
 
 **Hexagonal Architecture:**
+
 - **MUST** definir puertos como interfaces en Domain o Application
 - **MUST** implementar adaptadores en Infrastructure y Presentation
 
 **Dependency Inversion:**
+
 - **MUST** hacer que dependencias apunten hacia abstracciones
 - **MUST** usar inyección de dependencias para conectar puertos con adaptadores
 
 **Layered Architecture:**
+
 - **MUST** organizar código en 4 capas: Domain, Application, Infrastructure, Presentation
 - **MUST** respetar reglas de dependencia entre capas
 
 **Framework Independence:**
+
 - **MUST** mantener Domain sin dependencias a frameworks
 - **MUST** configurar EF Core mediante Fluent API en Infrastructure
 
@@ -710,7 +734,6 @@ app.Run();
 ### MAY (Opcional)
 
 - **MAY** implementar CQRS para separar commands y queries
-- **MAY** usar MediatR para desacoplar casos de uso
 
 ### MUST NOT (Prohibido)
 

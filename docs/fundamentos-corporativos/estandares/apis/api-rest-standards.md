@@ -1,12 +1,12 @@
 ---
-id: rest-standards
+id: api-rest-standards
 sidebar_position: 1
-title: Estándares REST
+title: Estándares de APIs REST
 description: Principios REST, convenciones HTTP, estructura de URIs y códigos de estado para APIs consistentes.
 tags: [apis, rest, http, uri, status-codes]
 ---
 
-# Estándares REST
+# Estándares de APIs REST
 
 ## Contexto
 

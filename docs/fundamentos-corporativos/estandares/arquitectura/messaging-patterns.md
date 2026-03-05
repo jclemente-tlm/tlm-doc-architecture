@@ -1,170 +1,49 @@
 ---
-id: cqrs-event-driven
-sidebar_position: 4
-title: CQRS y Event-Driven
-description: Patrones CQRS, Saga, procesamiento asíncrono y compensación para arquitecturas event-driven.
+id: messaging-patterns
+sidebar_position: 5
+title: Patrones de Mensajería
+description: Saga, procesamiento asíncrono y compensación para arquitecturas distribuidas con Kafka.
+tags: [arquitectura, kafka, saga, event-driven, mensajeria, compensacion]
 ---
 
-# CQRS y Event-Driven
+# Patrones de Mensajería
 
 ## Contexto
 
-Este estándar consolida patrones para arquitecturas event-driven y separación de comandos/consultas. Complementa los lineamientos [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) y [Modelado de Dominio](../../lineamientos/arquitectura/09-modelado-de-dominio.md).
+Este estándar consolida patrones de mensajería para sistemas distribuidos. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md). Ver [CQRS](./cqrs.md) para la separación de comandos y consultas en la capa de aplicación.
 
 **Conceptos incluidos:**
 
-- **CQRS Pattern** → Command Query Responsibility Segregation
-- **Saga Pattern** → Transacciones distribuidas con compensación
-- **Async Processing** → Procesamiento asíncrono desacoplado
+- **Saga Pattern** → Transacciones distribuidas con coordinación por eventos
+- **Async Processing** → Procesamiento asíncrono desacoplado con Kafka
 - **Compensation Pattern** → Rollback lógico en sistemas distribuidos
 
 ---
 
 ## Stack Tecnológico
 
-| Componente      | Tecnología          | Versión    | Uso                                   |
-| --------------- | ------------------- | ---------- | ------------------------------------- |
-| **Messaging**   | Apache Kafka        | 3.6+       | Event bus para CQRS y sagas           |
-| **Mediator**    | MediatR             | 12.0+      | Patrón mediator para commands/queries |
-| **Event Store** | PostgreSQL + Marten | 16+ / 7.0+ | Event sourcing (opcional)             |
-| ** Framework**  | ASP.NET Core        | 8.0+       | APIs con CQRS                         |
+| Componente      | Tecnología          | Versión    | Uso                                            |
+| --------------- | ------------------- | ---------- | ---------------------------------------------- |
+| **Messaging**   | Apache Kafka        | 3.6+       | Event bus para sagas y procesamiento asíncrono |
+| **Event Store** | PostgreSQL + Marten | 16+ / 7.0+ | Event sourcing (opcional)                      |
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 4 patrones para arquitecturas event-driven:
-
-### Índice de Conceptos
-
-1. **CQRS**: Separar comandos (escritura) de queries (lectura)
-2. **Saga**: Coordinar transacciones distribuidas
-3. **Async Processing**: Procesamiento desacoplado vía eventos
-4. **Compensation**: Rollback lógico distribuido
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
-    A[CQRS] --> B[Commands]
-    A --> C[Queries]
-    B --> D[Domain Events]
-    D --> E[Async Processing]
-    E --> F[Saga]
-    F --> G[Compensation]
+    A[Domain Events] --> B[Async Processing]
+    B --> C[Kafka]
+    C --> D[Saga Pattern]
+    D --> E[Compensation]
+    C --> F[Fire and Forget]
+    C --> G[Pub/Sub]
 ```
 
 ---
 
-## 1. CQRS Pattern
-
-### ¿Qué es CQRS?
-
-Patrón que separa operaciones de escritura (commands) de lectura (queries), permitiendo optimizar cada lado independientemente.
-
-**Propósito:** Escalar lecturas/escrituras independientemente, modelos optimizados por caso de uso.
-
-**Niveles:**
-
-- **Simple**: Handlers separados, misma DB
-- **Intermedio**: DBs separadas (write/read), sincronización vía eventos
-- **Completo**: Event Sourcing + projections
-
-**Beneficios:**
-✅ Escalamiento independiente
-✅ Modelos optimizados
-✅ Mejor performance de queries
-
-### Ejemplo
-
-```csharp
-// Command: Intención de cambiar estado
-public record CreateOrderCommand(
-    Guid CustomerId,
-    List<OrderLineDto> Lines) : IRequest<Result<Guid>>;
-
-// Command Handler: Lógica de negocio
-public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Result<Guid>>
-{
-    private readonly IOrderRepository _repository;
-    private readonly IEventBus _eventBus;
-
-    public async Task<Result<Guid>> Handle(CreateOrderCommand request, CancellationToken ct)
-    {
-        var order = Order.Create(request.CustomerId);
-
-        foreach (var line in request.Lines)
-        {
-            order.AddLine(line.ProductId, line.Quantity, line.UnitPrice);
-        }
-
-        await _repository.SaveAsync(order);
-
-        // Publicar domain event
-        await _eventBus.PublishAsync(new OrderCreatedEvent(order.Id, order.CustomerId));
-
-        return Result.Success(order.Id);
-    }
-}
-
-// Query: Solo lectura, sin lógica de negocio
-public record GetOrderByIdQuery(Guid OrderId) : IRequest<OrderDto?>;
-
-// Query Handler: Lectura optimizada
-public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDto?>
-{
-    private readonly IReadDbContext _readDb; // Read-optimized DB
-
-    public async Task<OrderDto?> Handle(GetOrderByIdQuery request, CancellationToken ct)
-    {
-        // Query directo, sin pasar por aggregate
-        return await _readDb.Orders
-            .Where(o => o.Id == request.OrderId)
-            .Select(o => new OrderDto
-            {
-                Id = o.Id,
-                CustomerName = o.CustomerName,
-                Total = o.Total,
-                Status = o.Status,
-                Lines = o.Lines.Select(l => new OrderLineDto
-                {
-                    ProductName = l.ProductName,
-                    Quantity = l.Quantity,
-                    Subtotal = l.Subtotal
-                }).ToList()
-            })
-            .FirstOrDefaultAsync(ct);
-    }
-}
-
-// Controller usa mediator
-[ApiController]
-[Route("api/v1/orders")]
-public class OrdersController : ControllerBase
-{
-    private readonly IMediator _mediator;
-
-    [HttpPost]
-    public async Task<IActionResult> CreateOrder(CreateOrderCommand command)
-    {
-        var result = await _mediator.Send(command);
-        return result.IsSuccess
-            ? CreatedAtAction(nameof(GetOrder), new { id = result.Value }, result.Value)
-            : BadRequest(result.Error);
-    }
-
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetOrder(Guid id)
-    {
-        var order = await _mediator.Send(new GetOrderByIdQuery(id));
-        return order != null ? Ok(order) : NotFound();
-    }
-}
-```
-
----
-
-## 2. Saga Pattern
+## Saga Pattern
 
 ### ¿Qué es Saga?
 
@@ -289,7 +168,9 @@ public class InventoryService
 
 ---
 
-## 3. Async Processing
+---
+
+## Async Processing
 
 ### ¿Qué es Async Processing?
 
@@ -393,7 +274,9 @@ public static class KafkaConfiguration
 
 ---
 
-## 4. Compensation Pattern
+---
+
+## Compensation Pattern
 
 ### ¿Qué es Compensation?
 
@@ -522,25 +405,40 @@ public class TravelBookingSaga
 
 ---
 
+---
+
 ## Matriz de Decisión
 
-| Escenario                   | CQRS   | Saga   | Async Processing | Compensation |
-| --------------------------- | ------ | ------ | ---------------- | ------------ |
-| **Alta lectura**            | ✅✅✅ | -      | ✅               | -            |
-| **Transacción distribuida** | ✅     | ✅✅✅ | ✅✅             | ✅✅✅       |
-| **Integración servicios**   | ✅     | ✅✅   | ✅✅✅           | ✅✅         |
-| **Event Sourcing**          | ✅✅✅ | ✅     | ✅✅             | -            |
+| Escenario                   | Saga   | Async Processing | Compensation |
+| --------------------------- | ------ | ---------------- | ------------ |
+| **Transacción distribuida** | ✅✅✅ | ✅✅             | ✅✅✅       |
+| **Integración servicios**   | ✅✅   | ✅✅✅           | ✅✅         |
+| **Event Sourcing**          | ✅     | ✅✅             | -            |
+
+---
+
+## Beneficios en Práctica
+
+```yaml
+# ✅ Comparativa de impacto
+
+Antes (sin Saga Pattern):
+  Problema: Pago y reserva de stock en llamadas síncronas encadenadas
+    — si inventory falla después de cobrar, el pago queda sin revertir
+  Consecuencia: Inconsistencia de datos, cliente cobrado sin stock reservado
+
+Después (con Saga + Compensation):
+  Estado: Cada servicio publica y consume eventos Kafka;
+    fallo en inventory dispara compensación que revierte el pago automáticamente
+  Resultado: Consistencia eventual garantizada, sin 2PC,
+    servicios autónomos con rollback lógico auditado
+```
 
 ---
 
 ## Requisitos Técnicos
 
 ### MUST (Obligatorio)
-
-**CQRS:**
-
-- **MUST** separar commands de queries en handlers distintos
-- **MUST** validar commands antes de ejecutar
 
 **Saga:**
 
@@ -558,21 +456,19 @@ public class TravelBookingSaga
 
 ### SHOULD (Fuertemente recomendado)
 
-- **SHOULD** usar choreography saga para `<5 `servicios
-- **SHOULD** usar orchestration saga para `>=5 `servicios
-- **SHOULD** publicar domain events desde aggregates
+- **SHOULD** usar choreography saga para `< 5` servicios
+- **SHOULD** usar orchestration saga para `>= 5` servicios
 
 ### MUST NOT (Prohibido)
 
 - **MUST NOT** usar 2PC en microservicios
 - **MUST NOT** hacer sagas sin timeout
-- **MUST NOT** queries que modifiquen estado
 
 ---
 
 ## Referencias
 
-- [CQRS Pattern (Martin Fowler)](https://martinfowler.com/bliki/CQRS.html)
+- [Lineamiento Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — lineamiento que origina este estándar
 - [Saga Pattern (Chris Richardson)](https://microservices.io/patterns/data/saga.html)
-- [MediatR Documentation](https://github.com/jbogard/MediatR)
 - [Kafka Documentation](https://kafka.apache.org/documentation/)
+- [CQRS](./cqrs.md) — separación de commands y queries que produce los eventos de dominio

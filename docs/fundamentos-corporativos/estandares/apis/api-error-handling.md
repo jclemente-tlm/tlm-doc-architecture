@@ -780,6 +780,6 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 - [ASP.NET Core Error Handling](https://learn.microsoft.com/aspnet/core/web-api/handle-errors) — Manejo de errores en ASP.NET Core
 - [Hellang.Middleware.ProblemDetails](https://github.com/khellang/Middleware) — Middleware RFC 7807
 - [Serilog](https://serilog.net/) — Logging estructurado
-- [Estándares REST](./rest-standards.md) — Estándar relacionado
+- [Estándares REST](./api-rest-standards.md) — Estándar relacionado
 - [Resiliencia](../arquitectura/resilience-patterns.md) — Estándar relacionado
 - [Structured Logging](../observabilidad/structured-logging.md) — Configuración de logging

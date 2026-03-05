@@ -1,8 +1,9 @@
 ---
 id: resilience-patterns
-sidebar_position: 3
+sidebar_position: 6
 title: Patrones de Resiliencia
 description: Patrones para sistemas resilientes incluyendo circuit breaker, retry, timeout, bulkhead, rate limiting y graceful shutdown.
+tags: [arquitectura, resiliencia, polly, circuit-breaker, retry]
 ---
 
 # Patrones de Resiliencia
@@ -34,21 +35,7 @@ Este estándar consolida los patrones fundamentales para construir sistemas resi
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 7 patrones de resiliencia:
-
-### Índice de Conceptos
-
-1. **Circuit Breaker**: Detener llamadas a servicios fallidos
-2. **Retry**: Reintentar operaciones transitorias
-3. **Timeout**: Evitar esperas indefinidas
-4. **Bulkhead**: Aislar recursos por tipo de operación
-5. **Rate Limiting**: Controlar tasa de requests
-6. **Graceful Degradation**: Funcionalidad reducida vs fallo total
-7. **Graceful Shutdown**: Apagado sin pérdida de requests
-
-### Relación entre Conceptos
+## Relación entre Patrones
 
 ```mermaid
 graph TB
@@ -63,7 +50,7 @@ graph TB
 
 ---
 
-## 1. Circuit Breaker
+## Circuit Breaker
 
 ### ¿Qué es Circuit Breaker?
 
@@ -122,7 +109,7 @@ catch (BrokenCircuitException)
 
 ---
 
-## 2. Retry
+## Retry
 
 ### ¿Qué es Retry?
 
@@ -178,7 +165,7 @@ var data = await retryPolicy.ExecuteAsync(async () =>
 
 ---
 
-## 3. Timeout
+## Timeout
 
 ### ¿Qué es Timeout?
 
@@ -225,7 +212,7 @@ builder.Services.AddHttpClient("resilient-api")
 
 ---
 
-## 4. Bulkhead
+## Bulkhead
 
 ### ¿Qué es Bulkhead?
 
@@ -292,7 +279,7 @@ public class ResilientHttpClientFactory
 
 ---
 
-## 5. Rate Limiting
+## Rate Limiting
 
 ### ¿Qué es Rate Limiting?
 
@@ -396,7 +383,7 @@ app.MapGet("/api/orders", async (HttpContext context, OrderService service) =>
 
 ---
 
-## 6. Graceful Degradation
+## Graceful Degradation
 
 ### ¿Qué es Graceful Degradation?
 
@@ -494,7 +481,7 @@ public class ProductDetails
 
 ---
 
-## 7. Graceful Shutdown
+## Graceful Shutdown
 
 ### ¿Qué es Graceful Shutdown?
 
@@ -589,6 +576,26 @@ public class OrderProcessingService : BackgroundService
 | **API pública**       | ✅              | ✅    | ✅      | ✅✅     | ✅✅          | ✅          | ✅✅     |
 | **Background worker** | ✅              | ✅✅  | ✅      | ✅       | -             | -           | ✅✅     |
 | **Operación crítica** | ✅✅            | ✅✅  | ✅✅    | ✅✅     | -             | ✅✅        | ✅✅     |
+
+---
+
+## Beneficios en Práctica
+
+```yaml
+# ✅ Comparativa de impacto
+
+Antes (sin el estándar):
+  Problema: Sin circuit breaker ni timeout, un servicio externo lento
+    bloquea threads y provoca cascada de fallos
+  Consecuencia: Todo el sistema cae en 2-3 minutos por thread starvation
+
+Después (con el estándar):
+  Estado: Circuit Breaker abre tras 5 fallos consecutivos,
+    Retry con backoff absorbe blips de red,
+    Graceful Degradation sirve datos desde cache
+  Resultado: Fallo contenido — ~95% de requests exitosos
+    durante degradación del servicio externo
+```
 
 ---
 

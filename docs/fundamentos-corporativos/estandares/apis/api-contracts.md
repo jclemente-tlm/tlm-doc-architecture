@@ -251,6 +251,6 @@ app.UseSwaggerUI(options =>
 - [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) — Integración Swagger
 - [FluentValidation](https://docs.fluentvalidation.net/) — Validación de requests
 - [ASP.NET Core Web APIs](https://learn.microsoft.com/aspnet/core/web-api/) — Documentación oficial
-- [Estándares REST](./rest-standards.md) — Base HTTP
+- [Estándares REST](./api-rest-standards.md) — Base HTTP
 - [Versionamiento de APIs](./api-versioning.md) — Estándar relacionado
 - [Manejo de Errores en APIs](./api-error-handling.md) — Respuestas de error

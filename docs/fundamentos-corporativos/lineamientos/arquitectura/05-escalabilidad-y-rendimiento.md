@@ -17,7 +17,7 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 - [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/scalability-performance.md#1-stateless-design)
 - [Implementar auto-scaling basado en métricas](../../estandares/arquitectura/scalability-performance.md#3-horizontal-scaling)
 - [Aplicar estrategias de caché distribuido](../../estandares/arquitectura/scalability-performance.md#2-caching-strategies)
-- [Implementar procesamiento asíncrono](../../estandares/arquitectura/cqrs-event-driven.md#3-async-processing)
+- [Implementar procesamiento asíncrono](../../estandares/arquitectura/messaging-patterns.md#async-processing)
 - [Optimizar consultas y esquemas de base de datos](../../estandares/datos/database-standards.md#2-database-optimization)
 - [Implementar load balancing](../../estandares/arquitectura/scalability-performance.md#4-load-balancing)
 - [Configurar connection pooling](../../estandares/datos/database-standards.md#3-connection-pooling)

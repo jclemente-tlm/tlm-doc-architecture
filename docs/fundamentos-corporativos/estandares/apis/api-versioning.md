@@ -187,4 +187,4 @@ app.UseSwaggerUI(options =>
 - [ASP.NET Core API Versioning](https://learn.microsoft.com/aspnet/core/web-api/) — Documentación oficial
 - [Compatibilidad Hacia Atrás](./backward-compatibility.md) — Estrategias de evolución
 - [Contratos de APIs](./api-contracts.md) — Documentación OpenAPI
-- [Estándares REST](./rest-standards.md) — Base HTTP
+- [Estándares REST](./api-rest-standards.md) — Base HTTP

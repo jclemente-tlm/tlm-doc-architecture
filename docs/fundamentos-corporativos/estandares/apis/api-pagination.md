@@ -244,5 +244,5 @@ public async Task<ActionResult<CursorPagedResult<EventDto>>> GetFeed(
 - [RFC 8288 - Web Linking](https://www.rfc-editor.org/rfc/rfc8288.html) — Links de paginación HATEOAS
 - [ASP.NET Core Web APIs](https://learn.microsoft.com/aspnet/core/web-api/) — Documentación oficial
 - [Cursor-based Pagination](https://use-the-index-luke.com/no-offset) — Referencia técnica
-- [Estándares REST](./rest-standards.md) — Base HTTP y status codes
+- [Estándares REST](./api-rest-standards.md) — Base HTTP y status codes
 - [Contratos de APIs](./api-contracts.md) — DTOs y validación

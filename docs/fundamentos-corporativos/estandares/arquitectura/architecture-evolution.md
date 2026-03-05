@@ -1,8 +1,9 @@
 ---
 id: architecture-evolution
-sidebar_position: 7
+sidebar_position: 8
 title: Evolución de Arquitectura
 description: Patrones para evolución arquitectónica incluyendo fitness functions, reversibilidad, selección tecnológica y twelve-factor app.
+tags: [arquitectura, evolucion, fitness-functions, twelve-factor, tecnologias]
 ---
 
 # Evolución de Arquitectura
@@ -30,20 +31,7 @@ Este estándar consolida prácticas para evolucionar arquitecturas de forma cont
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 4 prácticas para evolución:
-
-### Índice de Conceptos
-
-1. **Fitness Functions**: Tests automatizados de arquitectura
-2. **Reversibility**: Minimizar decisiones irreversibles
-3. **Technology Selection**: Criterios objetivos
-4. **Twelve-Factor App**: Cloud-native best practices
-
----
-
-## 1. Fitness Functions
+## Fitness Functions
 
 ### ¿Qué son Fitness Functions?
 
@@ -91,7 +79,7 @@ public void Controllers_Should_Not_Have_Business_Logic()
 
 ---
 
-## 2. Reversibility
+## Reversibility
 
 ### ¿Qué es Reversibility?
 
@@ -130,7 +118,7 @@ builder.Services.AddScoped<IEmailService, AwsSesEmailService>();
 
 ---
 
-## 3. Technology Selection
+## Technology Selection
 
 ### ¿Qué es Technology Selection?
 
@@ -194,7 +182,7 @@ review_date: 2026-08-18
 
 ---
 
-## 4. Twelve-Factor App
+## Twelve-Factor App
 
 ### ¿Qué es Twelve-Factor App?
 
@@ -214,6 +202,10 @@ Metodología de 12 principios para construir apps cloud-native.
 10. **Dev/Prod Parity**: Minimizar diferencias
 11. **Logs**: Streams de eventos
 12. **Admin Processes**: One-off tasks
+
+:::note
+El Factor 6 (Processes: Stateless) se implementa mediante el patrón Stateless Design. Ver [Escalabilidad y Performance → Stateless Design](./scalability-performance.md).
+:::
 
 **Beneficios:**
 ✅ Portabilidad cloud
@@ -313,6 +305,7 @@ app.Run();
 
 ## Referencias
 
+- [Lineamiento Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento que origina este estándar
 - [Building Evolutionary Architectures (ThoughtWorks)](https://evolutionaryarchitecture.com/)
 - [The Twelve-Factor App](https://12factor.net/)
 - [ArchUnit](https://www.archunit.org/)

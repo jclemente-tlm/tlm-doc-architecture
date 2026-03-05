@@ -1153,4 +1153,4 @@ El catálogo de eventos de cada dominio vive en la documentación del servicio p
 - [NJsonSchema](https://github.com/RicoSuter/NJsonSchema) — Validación runtime de JSON Schema
 - [AsyncAPI Code Generation](https://www.asyncapi.com/tools/generator) — Generación de código desde AsyncAPI
 - [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
-- [Estándares REST](./rest-standards.md) — Estándar relacionado
+- [Estándares REST](./api-rest-standards.md) — Estándar relacionado

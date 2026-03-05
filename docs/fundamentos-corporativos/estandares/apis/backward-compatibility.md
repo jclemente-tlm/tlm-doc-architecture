@@ -224,4 +224,4 @@ Ejemplos:
 - [API Evolution Patterns](https://www.martinfowler.com/articles/enterpriseREST.html) — Expand-Contract y patrones
 - [Versionamiento de APIs](./api-versioning.md) — Configuración de Asp.Versioning.Mvc
 - [Contratos de APIs](./api-contracts.md) — DTOs y OpenAPI
-- [Estándares REST](./rest-standards.md) — Base HTTP
+- [Estándares REST](./api-rest-standards.md) — Base HTTP

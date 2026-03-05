@@ -730,5 +730,5 @@ jobs:
 
 - [Testing Strategy](./testing-strategy.md)
 - [Unit & Integration Testing](./unit-integration-testing.md)
-- [Estándares REST](../apis/rest-standards.md)
+- [Estándares REST](../apis/api-rest-standards.md)
 - [Contratos de APIs](../apis/api-contracts.md)

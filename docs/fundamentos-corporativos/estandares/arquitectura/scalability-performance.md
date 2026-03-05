@@ -1,8 +1,9 @@
 ---
 id: scalability-performance
-sidebar_position: 6
+sidebar_position: 7
 title: Escalabilidad y Performance
 description: Patrones para escalabilidad y performance incluyendo stateless design, caching, horizontal scaling, load balancing y health checks.
+tags: [arquitectura, escalabilidad, performance, redis, stateless]
 ---
 
 # Escalabilidad y Performance
@@ -12,8 +13,6 @@ description: Patrones para escalabilidad y performance incluyendo stateless desi
 Este estándar consolida patrones para sistemas escalables y performantes. Complementa el lineamiento [Escalabilidad y Rendimiento](../../lineamientos/arquitectura/05-escalabilidad-y-rendimiento.md).
 
 **Conceptos incluidos:**
-
-
 
 - **Stateless Design** → Servicios sin estado local
 - **Caching Strategies** → Estrategias de cache distribuido
@@ -35,21 +34,7 @@ Este estándar consolida patrones para sistemas escalables y performantes. Compl
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 5 patrones para escalabilidad:
-
-### Índice de Conceptos
-
-1. **Stateless Design**: Sin estado compartido localmente
-2. **Caching Strategies**: Cache distribuido y local
-3. **Horizontal Scaling**: Agregar réplicas vs aumentar recursos
-4. **Load Balancing**: Algoritmos de distribución
-5. **Health Checks**: Liveness, readiness, startup
-
----
-
-## 1. Stateless Design
+## Stateless Design
 
 ### ¿Qué es Stateless Design?
 
@@ -87,15 +72,17 @@ public async Task<IActionResult> CreateOrder(CreateOrderDto dto)
 }
 ```
 
+:::note
+El principio de procesos sin estado es también el Factor 6 de [Twelve-Factor App](./architecture-evolution.md#twelve-factor-app). Consulta ese estándar para el contexto cloud-native más amplio.
+:::
+
 ---
 
-## 2. Caching Strategies
+## Caching Strategies
 
 ### ¿Qué son Caching Strategies?
 
 Estrategias de almacenamiento temporal para reducir latencia y carga.
-
-
 
 **Niveles:**
 
@@ -146,17 +133,15 @@ public class ProductService
 
 ---
 
-## 3. Horizontal Scaling
+## Horizontal Scaling
 
 ### ¿Qué es Horizontal Scaling?
 
-
 Incrementar capacidad agregando más instancias vs aumentar recursos de una instancia.
-
 
 **Características:**
 
-- Múltiples rép licas idénticas
+- Múltiples réplicas idénticas
 - Load balancer distribuye tráfico
 - Sin límite teórico de capacidad
 
@@ -182,13 +167,11 @@ service:
 
 ---
 
-## 4. Load Balancing
-
+## Load Balancing
 
 ### ¿Qué es Load Balancing?
 
-
-Distribución de tráfico entre múltiples instancias.
+Distribución de tráfico entre múltiples instancias usando AWS ALB como capa L7.
 
 **Algoritmos:**
 
@@ -202,7 +185,7 @@ Distribución de tráfico entre múltiples instancias.
 ✅ Failover automático
 ✅ Health-based routing
 
-### Configuración
+### Configuración ALB (Target Group)
 
 ```yaml
 # ALB Target Group
@@ -212,50 +195,143 @@ target_group:
     interval: 30
     timeout: 5
     healthy_threshold: 2
-      unhealthy_threshold: 3
+    unhealthy_threshold: 3
 
   deregistration_delay: 30
   load_balancing_algorithm: least_outstanding_requests
-`` `
+```
+
+### Consumo de servicios internos con IHttpClientFactory
+
+Cuando un microservicio llama a otro detrás de un ALB, `IHttpClientFactory` gestiona el pool de conexiones y Polly agrega retry automático:
+
+```csharp
+// Program.cs
+builder.Services.AddHttpClient<IInventoryClient, InventoryHttpClient>(client =>
+{
+    // La URL del ALB se externaliza como variable de entorno (12-factor)
+    client.BaseAddress = new Uri(
+        builder.Configuration["INVENTORY_SERVICE_URL"]
+            ?? throw new InvalidOperationException("INVENTORY_SERVICE_URL required"));
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+})
+.AddStandardResilienceHandler(); // Polly: retry + circuit breaker automático
+
+// Implementación del cliente tipado
+public class InventoryHttpClient : IInventoryClient
+{
+    private readonly HttpClient _httpClient;
+
+    public InventoryHttpClient(HttpClient httpClient)
+        => _httpClient = httpClient;
+
+    public async Task<StockResult> GetStockAsync(Guid productId, CancellationToken ct = default)
+    {
+        var response = await _httpClient.GetAsync($"/api/inventory/{productId}", ct);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<StockResult>(cancellationToken: ct)
+               ?? throw new InvalidOperationException("Invalid inventory response");
+    }
+}
+```
+
+:::note
+El retry y circuit breaker del cliente HTTP se configuran con Polly en el estándar de [Resilience Patterns](./resilience-patterns.md).
+:::
 
 ---
 
-
-##5. Health Checks
+## Health Checks
 
 ### ¿Qué son Health Checks?
 
-
-Endpoints que permiten al orquestador determinar el estado de una instancia.
+Endpoints que permiten al orquestador determinar el estado de una instancia. AWS ECS Fargate usa estos probes para decidir si enviar tráfico o reemplazar el contenedor.
 
 **Tipos:**
 
-- **Liveness**: ¿Está el proceso vivo?
-- **Readiness**: ¿Puede recibir tráfico?
-- **Startup**: ¿Completó inicialización?
+- **Liveness**: ¿Está el proceso vivo? (ECS lo usa para decidir si reiniciar el contenedor)
+- **Readiness**: ¿Puede recibir tráfico? (ALB lo usa para routing)
+- **Startup**: ¿Completó inicialización? (evita liveness failures en boot)
 
 **Beneficios:**
 ✅ Failover automático
 ✅ No enviar tráfico a instancias degradadas
-✅ Auto-healing
+✅ Auto-healing sin intervención manual
 
 ### Implementación
 
 ```csharp
-// Health Checks
+// Program.cs
+builder.Services.AddHealthChecks()
+    .AddNpgSql(
+        connectionString,
+        name: "database",
+        tags: ["critical", "readiness"])
+    .AddRedis(
+        redisConnectionString,
+        name: "redis",
+        tags: ["critical", "readiness"])
+    .AddCheck<KafkaHealthCheck>(
+        "kafka",
+        tags: ["readiness"]);
+
+// Liveness: proceso vivo aunque depéndencias fallen
 app.UseHealthChecks("/health/live", new HealthCheckOptions
 {
-    Predicate = _ => false
+    Predicate = _ => false // Solo verifica que el proceso responde
 });
 
+// Readiness: BD y cache disponibles
 app.UseHealthChecks("/health/ready", new HealthCheckOptions
 {
-    Predicate = check => check.Tags.Contains("critical")
+    Predicate = check => check.Tags.Contains("readiness")
 });
 
-services.AddHealthChecks()
-    .AddNpgSql(connectionString, name: "database", tags: new[] { "critical" })
-    .AddRedis(connectionString, name: "redis", tags: new[] { "critical" });
+// Startup: igual que readiness pero usado en el primer arranque
+app.UseHealthChecks("/health/startup", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("readiness")
+});
+
+// Health check personalizado
+public class KafkaHealthCheck : IHealthCheck
+{
+    private readonly IProducer<Null, string> _producer;
+
+    public KafkaHealthCheck(IProducer<Null, string> producer)
+        => _producer = producer;
+
+    public Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Verificar conectividad con el broker
+            var metadata = _producer.GetMetadata(allTopics: false, timeout: TimeSpan.FromSeconds(5));
+            return Task.FromResult(
+                metadata.Brokers.Count > 0
+                    ? HealthCheckResult.Healthy("Kafka broker reachable")
+                    : HealthCheckResult.Degraded("No brokers available"));
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(HealthCheckResult.Unhealthy("Kafka unreachable", ex));
+        }
+    }
+}
+```
+
+```yaml
+# ECS Task Definition — configurar probes en la tarea
+container_definitions:
+  health_check:
+    command:
+      ["CMD-SHELL", "curl -f http://localhost:8080/health/live || exit 1"]
+    interval: 30
+    timeout: 5
+    retries: 3
+    start_period: 60 # Para containers con startup lento
 ```
 
 ---
@@ -267,6 +343,25 @@ services.AddHealthChecks()
 | **API pública** | ✅✅✅    | ✅✅✅ | ✅✅✅     | ✅✅✅ | ✅✅✅        |
 | **API interna** | ✅✅✅    | ✅✅   | ✅✅       | ✅✅   | ✅✅✅        |
 | **Worker**      | ✅✅      | ✅     | ✅✅       | -      | ✅✅          |
+
+---
+
+## Beneficios en Práctica
+
+```yaml
+# ✅ Comparativa de impacto
+
+Antes (sin diseño stateless + auto-scaling):
+  Problema: Servicio con sesiones en memoria local no puede replicarse,
+    un solo nodo maneja todo el tráfico
+  Consecuencia: Caída total ante spike de tráfico o reinicio del proceso
+
+Después (con el estándar):
+  Estado: Sesiones en Redis, 3 instancias mínimas con auto-scaling a 20,
+    ALB distribuye carga con health checks
+  Resultado: Spike de 10x tráfico absorbido en < 60s sin intervención manual,
+    deploy sin downtime por rolling deployment
+```
 
 ---
 

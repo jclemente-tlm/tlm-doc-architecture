@@ -3,6 +3,7 @@ id: domain-modeling
 sidebar_position: 2
 title: Modelado de Dominio (Domain-Driven Design)
 description: Estándar para modelado de dominio usando DDD incluyendo agregados, entidades, value objects, bounded contexts y domain events.
+tags: [arquitectura, ddd, domain-driven-design, aggregates, eventos]
 ---
 
 # Modelado de Dominio (Domain-Driven Design)
@@ -30,26 +31,12 @@ Este estándar consolida las prácticas de Domain-Driven Design para modelar la 
 | **Framework**     | ASP.NET Core                   | 8.0+    | Base para implementación DDD          |
 | **ORM**           | Entity Framework Core          | 8.0+    | Mapeo de agregados con owned entities |
 | **Validación**    | FluentValidation               | 11.0+   | Validación de reglas de negocio       |
-| **Eventos**       | MediatR                        | 12.0+   | Publicación de domain events          |
+| **Eventos**       | IEventDispatcher (propio)      | -       | Publicación de domain events          |
 | **Value Objects** | ValueObject (CSharpFunctional) | 2.0+    | Implementación de VOs                 |
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 7 patrones de DDD para modelado rico de dominio:
-
-### Índice de Conceptos
-
-1. **Domain Model**: Modelo que refleja el lenguaje y reglas del negocio
-2. **Aggregates**: Límites de consistencia transaccional
-3. **Entities & Value Objects**: Objetos con identidad vs objetos inmutables por valor
-4. **Bounded Contexts**: Límites explícitos de modelos
-5. **Context Mapping**: Patrones de integración entre contexts
-6. **Ubiquitous Language**: Lenguaje compartido
-7. **Domain Events**: Eventos del dominio para comunicación
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
@@ -65,7 +52,7 @@ graph TB
 
 ---
 
-## 1. Domain Model
+## Domain Model
 
 ### ¿Qué es Domain Model?
 
@@ -149,14 +136,14 @@ public class Order
             throw new DomainException("Cannot confirm empty order");
 
         Status = OrderStatus.Confirmed;
-        AddDomainEvent(new OrderConfirmedEvent(Id));
+        AddDomainEvent(new OrderConfirmedEvent(Id)); // Ver sección Domain Events
     }
 }
 ```
 
 ---
 
-## 2. Aggregates
+## Aggregates
 
 ### ¿Qué son Aggregates?
 
@@ -241,7 +228,7 @@ internal class OrderLine
 
 ---
 
-## 3. Entities & Value Objects
+## Entities y Value Objects
 
 ### ¿Qué son?
 
@@ -336,7 +323,7 @@ public class Money : ValueObject
 
 ---
 
-## 4. Bounded Contexts
+## Bounded Contexts
 
 ### ¿Qué son Bounded Contexts?
 
@@ -409,7 +396,7 @@ namespace Billing.Domain
 
 ---
 
-## 5. Context Mapping
+## Context Mapping
 
 ### ¿Qué es Context Mapping?
 
@@ -478,7 +465,7 @@ namespace Billing.Infrastructure.Integration
 
 ---
 
-## 6. Ubiquitous Language
+## Ubiquitous Language
 
 ### ¿Qué es Ubiquitous Language?
 
@@ -554,7 +541,7 @@ namespace OrderManagement.Domain
 
 ---
 
-## 7. Domain Events
+## Domain Events
 
 ### ¿Qué son Domain Events?
 
@@ -583,7 +570,7 @@ public record OrderConfirmedEvent(
     Money Total,
     DateTime ConfirmedAt) : IDomainEvent;
 
-// Aggregate publica eventos
+// Aggregate registra eventos internamente
 public class Order
 {
     private readonly List<IDomainEvent> _domainEvents = new();
@@ -596,7 +583,6 @@ public class Order
 
         Status = OrderStatus.Confirmed;
 
-        // Publicar evento
         _domainEvents.Add(new OrderConfirmedEvent(
             OrderId: Id,
             CustomerId: CustomerId,
@@ -607,28 +593,40 @@ public class Order
     public void ClearDomainEvents() => _domainEvents.Clear();
 }
 
+// Interface de event handler sin frameworks externos
+public interface IEventHandler<TEvent> where TEvent : IDomainEvent
+{
+    Task HandleAsync(TEvent domainEvent, CancellationToken ct = default);
+}
+
 // Handlers reaccionan a eventos
-public class OrderConfirmedEventHandler : INotificationHandler<OrderConfirmedEvent>
+public class OrderConfirmedEventHandler : IEventHandler<OrderConfirmedEvent>
 {
     private readonly IEmailService _emailService;
     private readonly IInventoryService _inventoryService;
 
-    public async Task Handle(OrderConfirmedEvent notification, CancellationToken ct)
+    public async Task HandleAsync(OrderConfirmedEvent domainEvent, CancellationToken ct = default)
     {
         // Enviar email al cliente
         await _emailService.SendOrderConfirmationAsync(
-            notification.CustomerId,
-            notification.OrderId);
+            domainEvent.CustomerId,
+            domainEvent.OrderId);
 
         // Reservar inventario
-        await _inventoryService.ReserveStockAsync(notification.OrderId);
+        await _inventoryService.ReserveStockAsync(domainEvent.OrderId);
     }
 }
 
-// Publicación en EF Core SaveChanges
+// IEventDispatcher: contrato implementado en Infrastructure
+public interface IEventDispatcher
+{
+    Task DispatchAsync(IDomainEvent domainEvent, CancellationToken ct = default);
+}
+
+// Publicación en EF Core SaveChanges usando IEventDispatcher propio
 public class ApplicationDbContext : DbContext
 {
-    private readonly IMediator _mediator;
+    private readonly IEventDispatcher _eventDispatcher;
 
     public override async Task<int> SaveChangesAsync(CancellationToken ct = default)
     {
@@ -641,7 +639,7 @@ public class ApplicationDbContext : DbContext
         // Publicar eventos después de guardar
         foreach (var domainEvent in events)
         {
-            await _mediator.Publish(domainEvent, ct);
+            await _eventDispatcher.DispatchAsync(domainEvent, ct);
         }
 
         return result;

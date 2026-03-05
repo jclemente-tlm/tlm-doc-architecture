@@ -1409,7 +1409,8 @@ _logger.LogWarning(
 
 - [Message Reliability](./message-reliability.md)
 - [Distributed Tracing](../observabilidad/distributed-tracing.md)
-- [CQRS Event-Driven](../arquitectura/cqrs-event-driven.md)
+- [CQRS](../arquitectura/cqrs.md)
+- [Patrones de Mensajería](../arquitectura/messaging-patterns.md)
 
 ---
 
