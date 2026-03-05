@@ -422,6 +422,13 @@ public class CustomerService : ICustomerService
 
 ## Validación de Requests
 
+**Principios:**
+
+- **Validar todo**: nunca confiar en los datos de entrada, independientemente del origen
+- **Fallar rápido**: validar antes de ejecutar lógica de negocio o acceder a la base de datos
+- **Mensajes claros**: proporcionar feedback accionable al cliente, no mensajes genéricos
+- **Consistencia**: toda respuesta de error de validación sigue el shape `ApiResponse<object>` con `errors[].details`
+
 ### FluentValidation con Errores Estructurados
 
 ```csharp
@@ -451,6 +458,56 @@ public class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRe
 // El ApiExceptionHandler intercepta ValidationException lanzada por FluentValidation
 // y la convierte a ApiResponse<object> con errors[].details por campo.
 ```
+
+### Data Annotations como alternativa
+
+Para APIs simples o contratos con sistemas externos donde FluentValidation sería excesivo:
+
+```csharp
+public record CreateCustomerRequest
+{
+    [Required(ErrorMessage = "El nombre es requerido")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "El nombre debe tener entre 2 y 100 caracteres")]
+    public required string Name { get; init; }
+
+    [Required(ErrorMessage = "El email es requerido")]
+    [EmailAddress(ErrorMessage = "El formato del email es inválido")]
+    [StringLength(254)]
+    [ValidEmailDomain]                          // Atributo personalizado (ver abajo)
+    public required string Email { get; init; }
+
+    [Phone(ErrorMessage = "El formato del teléfono no es válido")]
+    public string? Phone { get; init; }
+
+    [Range(18, 120, ErrorMessage = "La edad debe estar entre 18 y 120 años")]
+    public int Age { get; init; }
+}
+```
+
+**Atributo de validación personalizado:**
+
+```csharp
+public class ValidEmailDomainAttribute : ValidationAttribute
+{
+    private static readonly string[] AllowedDomains = ["talma.pe", "talma.com"];
+
+    protected override ValidationResult? IsValid(object? value, ValidationContext context)
+    {
+        if (value is string email && !string.IsNullOrEmpty(email))
+        {
+            var domain = email.Split('@').LastOrDefault()?.ToLower();
+            if (!AllowedDomains.Contains(domain))
+                return new ValidationResult(
+                    $"Solo se permiten emails de dominios: {string.Join(", ", AllowedDomains)}");
+        }
+        return ValidationResult.Success;
+    }
+}
+```
+
+:::note FluentValidation vs Data Annotations
+Preferir **FluentValidation** para lógica de validación compleja, condicional o reutilizable. Data Annotations es adecuado para contratos simples. Ambos son interceptados por `ApiExceptionHandler` cuando se usa `AddFluentValidationAutoValidation()`.
+:::
 
 ---
 
