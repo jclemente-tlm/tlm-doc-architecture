@@ -18,7 +18,7 @@ APIs inconsistentes, contratos mal definidos o documentación desactualizada gen
 - [Documentar APIs REST con OpenAPI 3.0+](../../estandares/apis/api-contracts.md)
 - [Estandarizar manejo de errores en APIs](../../estandares/apis/api-error-handling.md)
 - [Aplicar paginación en colecciones](../../estandares/apis/api-pagination.md)
-- [Mantener retrocompatibilidad en evolución](../../estandares/apis/backward-compatibility.md)
+- [Mantener retrocompatibilidad en evolución](../../estandares/apis/api-versioning.md#compatibilidad-hacia-atrás)
 - [Implementar contract testing automatizado](../../estandares/testing/contract-e2e-testing.md#1-contract-testing)
 
 ## Referencias Relacionadas

@@ -2,8 +2,8 @@
 id: api-rest-standards
 sidebar_position: 1
 title: Estándares de APIs REST
-description: Principios REST, convenciones HTTP, estructura de URIs, wrapper de respuesta estándar y códigos de estado para APIs consistentes.
-tags: [apis, rest, http, uri, status-codes, response-wrapper]
+description: Principios REST, convenciones HTTP, estructura de URIs, filtrado y búsqueda, wrapper de respuesta estándar y códigos de estado para APIs consistentes.
+tags: [apis, rest, http, uri, status-codes, response-wrapper, filtering]
 ---
 
 # Estándares de APIs REST
@@ -30,10 +30,11 @@ Este estándar define los principios REST y convenciones HTTP base para toda API
 
 **Restricciones fundamentales:**
 
-- **Recursos**: Sustantivos (no verbos) en URIs
-- **Stateless**: Sin estado de sesión en el servidor
-- **Cacheable**: Uso de headers HTTP de caché
-- **Uniform Interface**: Consistencia en operaciones entre recursos
+- **Recursos como sustantivos**: Usar sustantivos para endpoints (`/users`, `/orders`)
+- **Verbos HTTP apropiados**: GET, POST, PUT, DELETE, PATCH según la operación
+- **Representación uniforme**: Consistencia en estructura de URLs y respuestas
+- **Sin estado**: Cada request debe contener toda la información necesaria
+- **Respuestas cacheables**: Usar headers HTTP de caché (`Cache-Control`, `ETag`) cuando aplique
 
 **Verbos HTTP:**
 
@@ -92,6 +93,94 @@ GET    /api/v1/getCustomers
 GET    /api/v1/customers/{id}/orders/{orderId}/items/{itemId}/details
 ```
 
+### Jerarquía de un dominio
+
+Representación de la estructura de recursos para un dominio completo:
+
+```
+/api/v1/companies/{companyId}
+├── /users                           # Usuarios de la compañía
+├── /departments                     # Departamentos
+│   └── /{departmentId}/employees    # Empleados del departamento
+└── /orders                          # Órdenes de la compañía
+    └── /{orderId}/items             # Ítems de la orden
+```
+
+---
+
+## Filtrado y Búsqueda
+
+Query params estandarizados para colecciones GET. Usar la convención `filter[campo]` para filtros exactos.
+
+### Parámetros disponibles
+
+| Parámetro       | Ejemplo                 | Descripción                               |
+| --------------- | ----------------------- | ----------------------------------------- |
+| `filter[campo]` | `filter[status]=active` | Filtro exacto por campo                   |
+| `search`        | `search=acme`           | Búsqueda de texto libre (multi-campo)     |
+| `fields`        | `fields=id,name,email`  | Proyección: reduce campos en la respuesta |
+| `sort`          | `sort=createdAt`        | Campo por el que ordenar                  |
+| `order`         | `order=desc`            | Dirección: `asc` (default) o `desc`       |
+
+### Ejemplos de uso
+
+```
+# Filtros exactos
+GET /api/v1/customers?filter[status]=active&filter[country]=PE
+
+# Búsqueda de texto libre
+GET /api/v1/customers?search=acme corp
+
+# Proyección de campos (payload reducido)
+GET /api/v1/customers?fields=id,name,email
+
+# Ordenamiento
+GET /api/v1/customers?sort=createdAt&order=desc
+
+# Combinado con paginación
+GET /api/v1/customers?filter[status]=active&sort=name&order=asc&page=1&pageSize=20
+```
+
+### Implementación C\#
+
+```csharp
+public record CustomerFilterRequest
+{
+    [FromQuery(Name = "filter[status]")]  public string? Status  { get; init; }
+    [FromQuery(Name = "filter[country]")] public string? Country { get; init; }
+    [FromQuery] public string? Search { get; init; }
+    [FromQuery] public string? Fields { get; init; }
+    [FromQuery] public string  Sort   { get; init; } = "createdAt";
+    [FromQuery] public string  Order  { get; init; } = "asc";
+}
+
+[HttpGet]
+[ProducesResponseType(typeof(ApiResponse<CustomerDto[]>), StatusCodes.Status200OK)]
+public async Task<ActionResult<ApiResponse<CustomerDto[]>>> GetAll(
+    [FromQuery] CustomerFilterRequest filter,
+    [FromQuery] int page     = 1,
+    [FromQuery] int pageSize = 20)
+{
+    var result = await _customerService.GetFilteredAsync(filter, page, pageSize);
+    return Ok(new ApiResponse<CustomerDto[]>
+    {
+        Status = "success",
+        Data   = result.Items,
+        Meta   = new MetaData
+        {
+            TraceId    = HttpContext.TraceIdentifier,
+            Pagination = new PaginationMeta
+            {
+                Page       = result.Page,
+                Size       = result.PageSize,
+                Total      = result.TotalCount,
+                TotalPages = result.TotalPages
+            }
+        }
+    });
+}
+```
+
 ---
 
 ## Estructura de Respuesta
@@ -118,7 +207,7 @@ Toda API en Talma usa el wrapper `ApiResponse<T>` como shape uniforme para éxit
 | `links`      | Opcional    | Links de navegación                                  |
 | `extra`      | Opcional    | Extensiones futuras (warnings, flags)                |
 
-### Modelos C#
+### Modelos C\#
 
 ```csharp
 public class ApiResponse<T>
@@ -378,7 +467,7 @@ builder.Services.AddProblemDetails(); // Solo para compatibilidad con ASP.NET Co
 
 - **MAY** soportar múltiples formatos de respuesta (JSON, XML) via content negotiation
 - **MAY** incluir API health checks (`/health`, `/ready`)
-- **MAY** soportar filtrado, ordenamiento y búsqueda en colecciones
+- **MAY** soportar filtrado, ordenamiento y búsqueda en colecciones (ver [Filtrado y Búsqueda](#filtrado-y-búsqueda))
 
 ### MUST NOT (Prohibido)
 

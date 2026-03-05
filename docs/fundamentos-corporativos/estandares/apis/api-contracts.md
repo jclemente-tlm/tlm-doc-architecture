@@ -229,6 +229,7 @@ app.UseSwaggerUI(options =>
 - **MUST** usar DTOs separados para requests y responses (no exponer entidades de dominio)
 - **MUST** versionar contratos OpenAPI al hacer cambios incompatibles
 - **MUST** incluir `ProducesResponseType` en cada action para todos los status codes posibles
+- **MUST** envolver toda respuesta en `ApiResponse<T>` (ver [Estructura de Respuesta](./api-rest-standards.md#estructura-de-respuesta))
 
 ### SHOULD (Fuertemente recomendado)
 

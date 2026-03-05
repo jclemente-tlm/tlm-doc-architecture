@@ -1,6 +1,6 @@
 ---
 id: event-contracts
-sidebar_position: 7
+sidebar_position: 3
 title: Contratos de Eventos
 description: Estándares para definir, versionar y documentar contratos de eventos de dominio usando AsyncAPI 3.0 y JSON Schema.
 tags: [apis, eventos, asyncapi, kafka, mensajeria, json-schema]
@@ -1153,4 +1153,4 @@ El catálogo de eventos de cada dominio vive en la documentación del servicio p
 - [NJsonSchema](https://github.com/RicoSuter/NJsonSchema) — Validación runtime de JSON Schema
 - [AsyncAPI Code Generation](https://www.asyncapi.com/tools/generator) — Generación de código desde AsyncAPI
 - [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
-- [Estándares REST](./api-rest-standards.md) — Estándar relacionado
+- [Estándares REST](../apis/api-rest-standards.md) — Estándar relacionado

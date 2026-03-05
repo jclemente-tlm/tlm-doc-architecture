@@ -82,15 +82,15 @@ public async Task<ActionResult<ApiResponse<CustomerDto[]>>> GetAll(
                 Total      = result.TotalCount,
                 TotalPages = result.TotalPages
             },
-            Links = new Dictionary<string, string?>
+            Links = new Dictionary<string, string>
             {
-                ["first"]    = Url.Action(nameof(GetAll), new { page = 1, pageSize }),
+                ["first"]    = Url.Action(nameof(GetAll), new { page = 1, pageSize })!,
                 ["previous"] = result.HasPreviousPage
-                    ? Url.Action(nameof(GetAll), new { page = page - 1, pageSize }) : null,
+                    ? Url.Action(nameof(GetAll), new { page = page - 1, pageSize })! : null!,
                 ["next"]     = result.HasNextPage
-                    ? Url.Action(nameof(GetAll), new { page = page + 1, pageSize }) : null,
-                ["last"]     = Url.Action(nameof(GetAll), new { page = result.TotalPages, pageSize })
-            }.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value!)
+                    ? Url.Action(nameof(GetAll), new { page = page + 1, pageSize })! : null!,
+                ["last"]     = Url.Action(nameof(GetAll), new { page = result.TotalPages, pageSize })!
+            }.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value)
         }
     });
 }
@@ -116,7 +116,7 @@ public async Task<PagedResult<CustomerDto>> GetPagedAsync(
     var items = await query
         .Skip((page - 1) * pageSize)
         .Take(pageSize)
-        .ProjectTo<CustomerDto>(_mapper.ConfigurationProvider)
+        .ProjectToType<CustomerDto>()
         .ToArrayAsync();
 
     return new PagedResult<CustomerDto>
@@ -133,14 +133,6 @@ public async Task<PagedResult<CustomerDto>> GetPagedAsync(
 Usar para feeds infinitos (timelines, streams de eventos, notificaciones).
 
 ```csharp
-public record CursorPagedResult<T>
-{
-    public T[] Items { get; init; } = Array.Empty<T>();
-    public string? NextCursor { get; init; }
-    public string? PreviousCursor { get; init; }
-    public bool HasMore { get; init; }
-}
-
 [HttpGet("feed")]
 public async Task<ActionResult<ApiResponse<EventDto[]>>> GetFeed(
     [FromQuery] string? cursor = null,
@@ -177,7 +169,7 @@ public async Task<ActionResult<ApiResponse<EventDto[]>>> GetFeed(
         .OrderByDescending(e => e.CreatedAt)
         .ThenByDescending(e => e.Id)
         .Take(limit + 1) // +1 para detectar si hay más páginas
-        .ProjectTo<EventDto>(_mapper.ConfigurationProvider)
+        .ProjectToType<EventDto>()
         .ToArrayAsync();
 
     var hasMore = items.Length > limit;

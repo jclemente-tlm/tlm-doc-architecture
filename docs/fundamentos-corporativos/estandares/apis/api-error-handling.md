@@ -1,6 +1,6 @@
 ---
 id: api-error-handling
-sidebar_position: 6
+sidebar_position: 5
 title: Manejo de Errores en APIs
 description: Estándar para el manejo consistente de errores en APIs usando el wrapper ApiResponse, códigos de error de negocio, códigos de estado HTTP y logging estructurado.
 tags: [apis, error-handling, rest, response-wrapper]
@@ -103,14 +103,17 @@ Los equipos pueden definir códigos específicos del dominio siguiendo el patró
 
 ## Tipos de Error
 
-````csharp
-// Ver ErrorCodes en la sección anterior para la lista de códigos estándar.
-// Excepciones de dominio — se mapean en ApiExceptionHandler:
+Los errores del dominio se expresan como excepciones tipadas que `ApiExceptionHandler` convierte automáticamente en `ApiResponse<object>`. La jerarquía completa está en [Excepciones Personalizadas](#excepciones-personalizadas).
 
-public abstract class DomainException : Exception
-{
-    protected DomainException(string message) : base(message) { }
-}
+| Excepción                     | HTTP | Código de error           |
+| ----------------------------- | ---- | ------------------------- |
+| `ValidationException`         | 400  | `VALIDATION_FAILED`       |
+| `NotFoundException`           | 404  | `NOT_FOUND`               |
+| `ConflictException`           | 409  | `CONFLICT`                |
+| `BusinessRuleException`       | 422  | código específico dominio |
+| `UnauthorizedAccessException` | 403  | `FORBIDDEN`               |
+| `ServiceUnavailableException` | 503  | `SERVICE_UNAVAILABLE`     |
+| Cualquier otra `Exception`    | 500  | `INTERNAL_ERROR`          |
 
 ---
 
@@ -209,7 +212,7 @@ public class ApiExceptionHandler : IExceptionHandler
 // Program.cs
 builder.Services.AddExceptionHandler<ApiExceptionHandler>();
 app.UseExceptionHandler();
-````
+```
 
 ### Excepciones Personalizadas
 
@@ -359,7 +362,7 @@ public class CustomerService : ICustomerService
 
         // Retornar null, controller lanza NotFoundException
         return customer != null
-            ? _mapper.Map<CustomerDto>(customer)
+            ? customer.Adapt<CustomerDto>()
             : null;
     }
 
@@ -410,7 +413,7 @@ public class CustomerService : ICustomerService
             throw new ServiceUnavailableException("Database", ex);
         }
 
-        return _mapper.Map<CustomerDto>(customer);
+        return customer.Adapt<CustomerDto>();
     }
 }
 ```
