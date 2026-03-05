@@ -39,7 +39,8 @@ Este estándar define cómo paginar colecciones grandes para mejorar performance
 ## Paginación Offset-based
 
 ```csharp
-// DTO resultado paginado
+// Modelo interno del servicio — NO es la respuesta API directa
+// El controller lo mapea a ApiResponse<T[]> con meta.pagination
 public record PagedResult<T>
 {
     public T[] Items { get; init; } = Array.Empty<T>();
@@ -49,23 +50,14 @@ public record PagedResult<T>
     public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
     public bool HasPreviousPage => Page > 1;
     public bool HasNextPage => Page < TotalPages;
-    public PaginationLinks? Links { get; init; }
-}
-
-public record PaginationLinks
-{
-    public string? First { get; init; }
-    public string? Previous { get; init; }
-    public string? Next { get; init; }
-    public string? Last { get; init; }
 }
 ```
 
 ```csharp
-// Controller
+// Controller — retorna ApiResponse<CustomerDto[]> con paginación en meta
 [HttpGet]
-[ProducesResponseType(typeof(PagedResult<CustomerDto>), StatusCodes.Status200OK)]
-public async Task<ActionResult<PagedResult<CustomerDto>>> GetAll(
+[ProducesResponseType(typeof(ApiResponse<CustomerDto[]>), StatusCodes.Status200OK)]
+public async Task<ActionResult<ApiResponse<CustomerDto[]>>> GetAll(
     [FromQuery] int page = 1,
     [FromQuery] int pageSize = 20,
     [FromQuery] string? sortBy = null,
@@ -76,24 +68,31 @@ public async Task<ActionResult<PagedResult<CustomerDto>>> GetAll(
 
     var result = await _customerService.GetPagedAsync(page, pageSize, sortBy, sortOrder);
 
-    result = result with
+    return Ok(new ApiResponse<CustomerDto[]>
     {
-        Links = new PaginationLinks
+        Status = "success",
+        Data   = result.Items,
+        Meta   = new MetaData
         {
-            First    = Url.Action(nameof(GetAll), new { page = 1, pageSize }),
-            Previous = result.HasPreviousPage
-                ? Url.Action(nameof(GetAll), new { page = page - 1, pageSize }) : null,
-            Next     = result.HasNextPage
-                ? Url.Action(nameof(GetAll), new { page = page + 1, pageSize }) : null,
-            Last     = Url.Action(nameof(GetAll), new { page = result.TotalPages, pageSize })
+            TraceId    = HttpContext.TraceIdentifier,
+            Pagination = new PaginationMeta
+            {
+                Page       = result.Page,
+                Size       = result.PageSize,
+                Total      = result.TotalCount,
+                TotalPages = result.TotalPages
+            },
+            Links = new Dictionary<string, string?>
+            {
+                ["first"]    = Url.Action(nameof(GetAll), new { page = 1, pageSize }),
+                ["previous"] = result.HasPreviousPage
+                    ? Url.Action(nameof(GetAll), new { page = page - 1, pageSize }) : null,
+                ["next"]     = result.HasNextPage
+                    ? Url.Action(nameof(GetAll), new { page = page + 1, pageSize }) : null,
+                ["last"]     = Url.Action(nameof(GetAll), new { page = result.TotalPages, pageSize })
+            }.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value!)
         }
-    };
-
-    Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
-    Response.Headers.Append("X-Page", result.Page.ToString());
-    Response.Headers.Append("X-Page-Size", result.PageSize.ToString());
-
-    return Ok(result);
+    });
 }
 ```
 
@@ -143,7 +142,7 @@ public record CursorPagedResult<T>
 }
 
 [HttpGet("feed")]
-public async Task<ActionResult<CursorPagedResult<EventDto>>> GetFeed(
+public async Task<ActionResult<ApiResponse<EventDto[]>>> GetFeed(
     [FromQuery] string? cursor = null,
     [FromQuery] int limit = 20)
 {
@@ -192,9 +191,15 @@ public async Task<ActionResult<CursorPagedResult<EventDto>>> GetFeed(
         nextCursor = Convert.ToBase64String(Encoding.UTF8.GetBytes(cursorData));
     }
 
-    return Ok(new CursorPagedResult<EventDto>
+    return Ok(new ApiResponse<EventDto[]>
     {
-        Items = resultItems, NextCursor = nextCursor, HasMore = hasMore
+        Status = "success",
+        Data   = resultItems,
+        Meta   = new MetaData
+        {
+            TraceId = HttpContext.TraceIdentifier,
+            Extra   = new { hasMore, nextCursor }
+        }
     });
 }
 ```
@@ -216,14 +221,13 @@ public async Task<ActionResult<CursorPagedResult<EventDto>>> GetFeed(
 ### MUST (Obligatorio)
 
 - **MUST** paginar todo endpoint que retorne colecciones (límite máximo: 100 items por página)
-- **MUST** incluir metadata de paginación en la respuesta (`total`, `page`, `pageSize`, `totalPages`)
+- **MUST** incluir metadata de paginación en `meta.pagination` del wrapper (`total`, `page`, `size`, `totalPages`)
 - **MUST** implementar un `pageSize` máximo y forzarlo si el cliente envía un valor mayor
 - **MUST** retornar `400` si los parámetros de paginación son inválidos (negativos, no numéricos)
 
 ### SHOULD (Fuertemente recomendado)
 
-- **SHOULD** incluir links HATEOAS de paginación (`first`, `previous`, `next`, `last`)
-- **SHOULD** exponer `X-Total-Count` como header de respuesta
+- **SHOULD** incluir links de navegación en `meta.links` (`first`, `previous`, `next`, `last`)
 - **SHOULD** usar cursor-based pagination para feeds infinitos o colecciones en tiempo real
 - **SHOULD** soportar ordenamiento (`sortBy`, `sortOrder`) en endpoints paginados
 

@@ -2,8 +2,8 @@
 id: api-error-handling
 sidebar_position: 6
 title: Manejo de Errores en APIs
-description: Estándar para el manejo consistente de errores en APIs usando RFC 7807 Problem Details, códigos de estado HTTP y logging estructurado.
-tags: [apis, error-handling, rest, problem-details, rfc7807]
+description: Estándar para el manejo consistente de errores en APIs usando el wrapper ApiResponse, códigos de error de negocio, códigos de estado HTTP y logging estructurado.
+tags: [apis, error-handling, rest, response-wrapper]
 ---
 
 # Manejo de Errores en APIs
@@ -18,42 +18,70 @@ Este estándar define cómo manejar, reportar y registrar errores de manera cons
 
 ## Stack Tecnológico
 
-| Componente          | Tecnología                        | Versión | Uso                     |
-| ------------------- | --------------------------------- | ------- | ----------------------- |
-| **Framework**       | ASP.NET Core                      | 8.0+    | Manejo de excepciones   |
-| **Problem Details** | Hellang.Middleware.ProblemDetails | 6.5+    | RFC 7807 implementation |
-| **Logging**         | Serilog                           | 3.1+    | Logs estructurados      |
-| **Validación**      | FluentValidation                  | 11.0+   | Errores de validación   |
-| **Observability**   | OpenTelemetry                     | 1.7+    | Trazas de errores       |
+| Componente        | Tecnología       | Versión | Uso                   |
+| ----------------- | ---------------- | ------- | --------------------- |
+| **Framework**     | ASP.NET Core     | 8.0+    | Manejo de excepciones |
+| **Logging**       | Serilog          | 3.1+    | Logs estructurados    |
+| **Validación**    | FluentValidation | 11.0+   | Errores de validación |
+| **Observability** | OpenTelemetry    | 1.7+    | Trazas de errores     |
 
 ---
 
-## Formato de Error: RFC 7807
+## Formato de Error: Wrapper ApiResponse
+
+Todos los errores usan el mismo wrapper `ApiResponse<object>` definido en [Estándares REST](./api-rest-standards.md).
 
 **Estructura:**
 
 ```json
 {
-  "type": "https://docs.talma.com/errors/validation-error",
-  "title": "Uno o más errores de validación ocurrieron",
-  "status": 400,
-  "detail": "El campo 'email' no tiene un formato válido",
-  "instance": "/api/v1/customers",
-  "traceId": "0HN1JQFQ3K7QK:00000001",
-  "errors": {
-    "email": ["El formato del email es inválido"],
-    "phone": ["El teléfono debe estar en formato E.164"]
+  "status": "error",
+  "data": null,
+  "errors": [
+    {
+      "code": "VALIDATION_FAILED",
+      "message": "La solicitud contiene errores de validación",
+      "details": [
+        { "field": "email", "issue": "El formato no es válido" },
+        { "field": "name", "issue": "Es un campo requerido" }
+      ]
+    }
+  ],
+  "meta": {
+    "traceId": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
+    "timestamp": "2024-01-15T10:30:01Z"
   }
 }
 ```
 
-**Campos obligatorios:**
+**Campos obligatorios en cada item de `errors`:**
 
-- `type`: URI que identifica el tipo de error
-- `title`: Resumen legible del error
-- `status`: Código de estado HTTP
-- `detail`: Explicación específica del error (opcional)
-- `instance`: URI de la petición que causó el error
+- `code`: Identificador único del tipo de error (_SCREAMING_SNAKE_CASE_)
+- `message`: Resumen legible del error para el desarrollador
+- `details`: Array de `{ field, issue }` para errores de campo (puede ser `[]`)
+
+**Códigos de error estándar:**
+
+```csharp
+public static class ErrorCodes
+{
+    // Errores de cliente (4xx)
+    public const string ValidationFailed    = "VALIDATION_FAILED";
+    public const string NotFound            = "NOT_FOUND";
+    public const string Unauthorized        = "UNAUTHORIZED";
+    public const string Forbidden           = "FORBIDDEN";
+    public const string Conflict            = "CONFLICT";
+    public const string BusinessRuleViolated = "BUSINESS_RULE_VIOLATED";
+    public const string RateLimitExceeded   = "RATE_LIMIT_EXCEEDED";
+
+    // Errores de servidor (5xx)
+    public const string InternalError       = "INTERNAL_ERROR";
+    public const string ServiceUnavailable  = "SERVICE_UNAVAILABLE";
+}
+```
+
+Los equipos pueden definir códigos específicos del dominio siguiendo el patrón: `RESOURCE_REASON`
+(ej: `ORDER_ALREADY_SHIPPED`, `CUSTOMER_EMAIL_DUPLICATE`).
 
 ---
 
@@ -75,24 +103,14 @@ Este estándar define cómo manejar, reportar y registrar errores de manera cons
 
 ## Tipos de Error
 
-```csharp
-public static class ErrorTypes
-{
-    // Errores de cliente (4xx)
-    public const string ValidationError = "https://docs.talma.com/errors/validation-error";
-    public const string NotFound = "https://docs.talma.com/errors/not-found";
-    public const string Unauthorized = "https://docs.talma.com/errors/unauthorized";
-    public const string Forbidden = "https://docs.talma.com/errors/forbidden";
-    public const string Conflict = "https://docs.talma.com/errors/conflict";
-    public const string BusinessRule = "https://docs.talma.com/errors/business-rule";
-    public const string RateLimit = "https://docs.talma.com/errors/rate-limit";
+````csharp
+// Ver ErrorCodes en la sección anterior para la lista de códigos estándar.
+// Excepciones de dominio — se mapean en ApiExceptionHandler:
 
-    // Errores de servidor (5xx)
-    public const string InternalError = "https://docs.talma.com/errors/internal-error";
-    public const string ServiceUnavailable = "https://docs.talma.com/errors/service-unavailable";
-    public const string DependencyFailure = "https://docs.talma.com/errors/dependency-failure";
+public abstract class DomainException : Exception
+{
+    protected DomainException(string message) : base(message) { }
 }
-```
 
 ---
 
@@ -101,106 +119,97 @@ public static class ErrorTypes
 ### Configuración Global
 
 ```csharp
-// Program.cs
-var builder = WebApplication.CreateBuilder(args);
-
-// Configurar Problem Details con Hellang.Middleware
-builder.Services.AddProblemDetails(options =>
+// ApiExceptionHandler.cs
+// Middleware global que convierte excepciones en ApiResponse<object>
+public class ApiExceptionHandler : IExceptionHandler
 {
-    // Mapear excepciones a Problem Details
-    options.Map<ValidationException>(ex => new ProblemDetails
+    private readonly ILogger<ApiExceptionHandler> _logger;
+    private readonly IHostEnvironment _env;
+
+    public ApiExceptionHandler(ILogger<ApiExceptionHandler> logger, IHostEnvironment env)
     {
-        Type = ErrorTypes.ValidationError,
-        Title = "Errores de validación",
-        Status = StatusCodes.Status400BadRequest,
-        Detail = ex.Message,
-        Extensions =
+        _logger = logger;
+        _env = env;
+    }
+
+    public async ValueTask<bool> TryHandleAsync(
+        HttpContext context,
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var (statusCode, code, message, details) = exception switch
         {
-            ["errors"] = ex.Errors.GroupBy(e => e.PropertyName)
-                .ToDictionary(
-                    g => ToCamelCase(g.Key),
-                    g => g.Select(e => e.ErrorMessage).ToArray())
-        }
-    });
+            ValidationException ve => (
+                StatusCodes.Status400BadRequest,
+                ErrorCodes.ValidationFailed,
+                "La solicitud contiene errores de validación",
+                ve.Errors.Select(e => new ErrorDetail
+                {
+                    Field = char.ToLowerInvariant(e.PropertyName[0]) + e.PropertyName[1..],
+                    Issue = e.ErrorMessage
+                }).ToList()),
 
-    options.Map<NotFoundException>(ex => new ProblemDetails
-    {
-        Type = ErrorTypes.NotFound,
-        Title = "Recurso no encontrado",
-        Status = StatusCodes.Status404NotFound,
-        Detail = ex.Message
-    });
+            NotFoundException nfe => (
+                StatusCodes.Status404NotFound,
+                ErrorCodes.NotFound,
+                nfe.Message,
+                (List<ErrorDetail>)[]),
 
-    options.Map<BusinessRuleException>(ex => new ProblemDetails
-    {
-        Type = ErrorTypes.BusinessRule,
-        Title = "Regla de negocio violada",
-        Status = StatusCodes.Status422UnprocessableEntity,
-        Detail = ex.Message,
-        Extensions =
+            BusinessRuleException bre => (
+                StatusCodes.Status422UnprocessableEntity,
+                bre.RuleCode,
+                bre.Message,
+                (List<ErrorDetail>)[]),
+
+            ConflictException ce => (
+                StatusCodes.Status409Conflict,
+                ErrorCodes.Conflict,
+                ce.Message,
+                (List<ErrorDetail>)[]),
+
+            UnauthorizedAccessException => (
+                StatusCodes.Status403Forbidden,
+                ErrorCodes.Forbidden,
+                "No tiene permisos para realizar esta acción",
+                (List<ErrorDetail>)[]),
+
+            _ => (
+                StatusCodes.Status500InternalServerError,
+                ErrorCodes.InternalError,
+                _env.IsDevelopment() ? exception.Message : "Ocurrió un error inesperado.",
+                (List<ErrorDetail>)[])
+        };
+
+        // Log según gravedad
+        if (statusCode >= 500)
+            _logger.LogError(exception, "Error no controlado: {Message}", exception.Message);
+        else
+            _logger.LogWarning(exception, "Error de cliente [{Code}]: {Message}", code, message);
+
+        context.Response.StatusCode = statusCode;
+        context.Response.ContentType = "application/json";
+
+        var response = new ApiResponse<object>
         {
-            ["ruleCode"] = ex.RuleCode
-        }
-    });
+            Status = "error",
+            Data   = null,
+            Errors = [new ErrorInfo { Code = code, Message = message, Details = details }],
+            Meta   = new MetaData
+            {
+                TraceId   = context.TraceIdentifier,
+                Timestamp = DateTime.UtcNow
+            }
+        };
 
-    options.Map<ConflictException>(ex => new ProblemDetails
-    {
-        Type = ErrorTypes.Conflict,
-        Title = "Conflicto de recursos",
-        Status = StatusCodes.Status409Conflict,
-        Detail = ex.Message
-    });
+        await context.Response.WriteAsJsonAsync(response, cancellationToken);
+        return true;
+    }
+}
 
-    options.Map<UnauthorizedAccessException>(ex => new ProblemDetails
-    {
-        Type = ErrorTypes.Forbidden,
-        Title = "Acceso denegado",
-        Status = StatusCodes.Status403Forbidden,
-        Detail = "No tiene permisos para realizar esta acción"
-    });
-
-    // Errores no manejados (500)
-    options.Map<Exception>(ex => new ProblemDetails
-    {
-        Type = ErrorTypes.InternalError,
-        Title = "Error interno del servidor",
-        Status = StatusCodes.Status500InternalServerError,
-        Detail = builder.Environment.IsDevelopment()
-            ? ex.Message
-            : "Ocurrió un error inesperado. Por favor contacte al soporte."
-    });
-
-    // Agregar información adicional a todos los errores
-    options.CustomizeProblemDetails = context =>
-    {
-        context.ProblemDetails.Instance = context.HttpContext.Request.Path;
-        context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
-        context.ProblemDetails.Extensions["timestamp"] = DateTime.UtcNow;
-
-        // En desarrollo, incluir stack trace
-        if (builder.Environment.IsDevelopment() &&
-            context.Exception != null)
-        {
-            context.ProblemDetails.Extensions["stackTrace"] = context.Exception.StackTrace;
-        }
-    };
-
-    // Incluir Problem Details en respuestas
-    options.IncludeExceptionDetails = (ctx, ex) => builder.Environment.IsDevelopment();
-});
-
-var app = builder.Build();
-
-// ⚠️ IMPORTANTE: UseProblemDetails debe ir ANTES de UseAuthentication/UseAuthorization
-app.UseProblemDetails();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-```
+// Program.cs
+builder.Services.AddExceptionHandler<ApiExceptionHandler>();
+app.UseExceptionHandler();
+````
 
 ### Excepciones Personalizadas
 
@@ -276,75 +285,55 @@ public class CustomersController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Obtiene un cliente por ID
-    /// </summary>
+    // Controllers solo lanzar excepciones — ApiExceptionHandler las convierte al wrapper
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(CustomerDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<CustomerDto>> GetById(Guid id)
+    [ProducesResponseType(typeof(ApiResponse<CustomerDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<CustomerDto>>> GetById(Guid id)
     {
-        // ✅ Lanzar excepción, middleware la convierte a Problem Details
         var customer = await _customerService.GetByIdAsync(id);
-
-        if (customer == null)
+        if (customer is null)
             throw new NotFoundException(nameof(Customer), id);
 
-        return Ok(customer);
+        return Ok(ApiResponse<CustomerDto>.Success(
+            customer,
+            new MetaData { TraceId = HttpContext.TraceIdentifier }));
     }
 
-    /// <summary>
-    /// Crea un nuevo cliente
-    /// </summary>
     [HttpPost]
-    [ProducesResponseType(typeof(CustomerDto), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<ActionResult<CustomerDto>> Create(
+    [ProducesResponseType(typeof(ApiResponse<CustomerDto>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<ApiResponse<CustomerDto>>> Create(
         [FromBody] CreateCustomerRequest request)
     {
-        try
-        {
-            var customer = await _customerService.CreateAsync(request);
-
-            return CreatedAtAction(
-                nameof(GetById),
-                new { id = customer.Id },
-                customer);
-        }
-        catch (ConflictException ex)
-        {
-            // Ya manejado por middleware, solo para logging
-            _logger.LogWarning(ex, "Conflicto al crear cliente: {Email}", request.Email);
-            throw; // Re-lanzar para que middleware lo maneje
-        }
+        var customer = await _customerService.CreateAsync(request);
+        var response = ApiResponse<CustomerDto>.Success(
+            customer,
+            new MetaData { TraceId = HttpContext.TraceIdentifier });
+        return CreatedAtAction(nameof(GetById), new { id = customer.Id }, response);
     }
 
-    /// <summary>
-    /// Cancela un pedido
-    /// </summary>
     [HttpPost("{id}/cancel")]
-    [ProducesResponseType(typeof(OrderDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<ActionResult<OrderDto>> CancelOrder(Guid id)
+    [ProducesResponseType(typeof(ApiResponse<OrderDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<ApiResponse<OrderDto>>> CancelOrder(Guid id)
     {
         var order = await _orderService.GetByIdAsync(id);
-
-        if (order == null)
+        if (order is null)
             throw new NotFoundException(nameof(Order), id);
 
-        // Validación de regla de negocio
         if (order.Status == OrderStatus.Shipped)
-        {
             throw new BusinessRuleException(
                 "ORDER_ALREADY_SHIPPED",
                 "No se puede cancelar un pedido que ya fue enviado");
-        }
 
         var cancelled = await _orderService.CancelAsync(id);
-        return Ok(cancelled);
+        return Ok(ApiResponse<OrderDto>.Success(
+            cancelled,
+            new MetaData { TraceId = HttpContext.TraceIdentifier }));
     }
 }
 ```
@@ -439,87 +428,25 @@ public class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRe
     public CreateCustomerRequestValidator()
     {
         RuleFor(x => x.Name)
-            .NotEmpty()
-            .WithMessage("El nombre es requerido")
-            .WithErrorCode("REQUIRED_FIELD")
-            .Length(2, 100)
-            .WithMessage("El nombre debe tener entre 2 y 100 caracteres")
-            .WithErrorCode("INVALID_LENGTH");
+            .NotEmpty().WithMessage("El nombre es requerido")
+            .Length(2, 100).WithMessage("El nombre debe tener entre 2 y 100 caracteres");
 
         RuleFor(x => x.Email)
-            .NotEmpty()
-            .WithMessage("El email es requerido")
-            .WithErrorCode("REQUIRED_FIELD")
-            .EmailAddress()
-            .WithMessage("El formato del email es inválido")
-            .WithErrorCode("INVALID_FORMAT");
+            .NotEmpty().WithMessage("El email es requerido")
+            .EmailAddress().WithMessage("El formato del email es inválido");
 
         RuleFor(x => x.Phone)
             .Matches(@"^\+\d{10,15}$")
             .When(x => !string.IsNullOrEmpty(x.Phone))
-            .WithMessage("El teléfono debe estar en formato E.164 (+51987654321)")
-            .WithErrorCode("INVALID_FORMAT");
+            .WithMessage("El teléfono debe estar en formato E.164 (+51987654321)");
 
         RuleFor(x => x.Document)
-            .NotNull()
-            .WithMessage("El documento es requerido")
-            .WithErrorCode("REQUIRED_FIELD")
+            .NotNull().WithMessage("El documento es requerido")
             .SetValidator(new DocumentDtoValidator());
     }
 }
-
-// Resultado de validación para Problem Details
-public class ValidationProblemDetailsResult : IActionResult
-{
-    private readonly ValidationResult _validationResult;
-
-    public ValidationProblemDetailsResult(ValidationResult validationResult)
-    {
-        _validationResult = validationResult;
-    }
-
-    public async Task ExecuteResultAsync(ActionContext context)
-    {
-        var problemDetails = new ValidationProblemDetails
-        {
-            Type = ErrorTypes.ValidationError,
-            Title = "Uno o más errores de validación ocurrieron",
-            Status = StatusCodes.Status400BadRequest,
-            Instance = context.HttpContext.Request.Path,
-            Extensions =
-            {
-                ["traceId"] = context.HttpContext.TraceIdentifier
-            }
-        };
-
-        foreach (var error in _validationResult.Errors)
-        {
-            var propertyName = ToCamelCase(error.PropertyName);
-
-            if (!problemDetails.Errors.ContainsKey(propertyName))
-            {
-                problemDetails.Errors[propertyName] = new[] { error.ErrorMessage };
-            }
-            else
-            {
-                var existingErrors = problemDetails.Errors[propertyName].ToList();
-                existingErrors.Add(error.ErrorMessage);
-                problemDetails.Errors[propertyName] = existingErrors.ToArray();
-            }
-        }
-
-        context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-        await context.HttpContext.Response.WriteAsJsonAsync(problemDetails);
-    }
-
-    private static string ToCamelCase(string str)
-    {
-        if (string.IsNullOrEmpty(str) || !char.IsUpper(str[0]))
-            return str;
-
-        return char.ToLowerInvariant(str[0]) + str[1..];
-    }
-}
+// El ApiExceptionHandler intercepta ValidationException lanzada por FluentValidation
+// y la convierte a ApiResponse<object> con errors[].details por campo.
 ```
 
 ---
@@ -645,18 +572,25 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 ```json
 {
-  "type": "https://docs.talma.com/errors/validation-error",
-  "title": "Uno o más errores de validación ocurrieron",
-  "status": 400,
-  "instance": "/api/v1/customers",
-  "traceId": "0HN1JQFQ3K7QK:00000001",
-  "timestamp": "2026-02-18T10:30:00Z",
-  "errors": {
-    "email": ["El formato del email es inválido"],
-    "phone": ["El teléfono debe estar en formato E.164"],
-    "document.number": [
-      "Número de documento inválido para el tipo especificado"
-    ]
+  "status": "error",
+  "data": null,
+  "errors": [
+    {
+      "code": "VALIDATION_FAILED",
+      "message": "La solicitud contiene errores de validación",
+      "details": [
+        { "field": "email", "issue": "El formato del email es inválido" },
+        {
+          "field": "phone",
+          "issue": "El teléfono debe estar en formato E.164"
+        },
+        { "field": "document.number", "issue": "Número de documento inválido" }
+      ]
+    }
+  ],
+  "meta": {
+    "traceId": "0HN1JQFQ3K7QK:00000001",
+    "timestamp": "2026-02-18T10:30:00Z"
   }
 }
 ```
@@ -665,13 +599,19 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 ```json
 {
-  "type": "https://docs.talma.com/errors/not-found",
-  "title": "Recurso no encontrado",
-  "status": 404,
-  "detail": "Customer con ID 'f7c8e3a1-2b4d-4e6f-9a8b-1c2d3e4f5a6b' no fue encontrado",
-  "instance": "/api/v1/customers/f7c8e3a1-2b4d-4e6f-9a8b-1c2d3e4f5a6b",
-  "traceId": "0HN1JQFQ3K7QK:00000002",
-  "timestamp": "2026-02-18T10:31:00Z"
+  "status": "error",
+  "data": null,
+  "errors": [
+    {
+      "code": "NOT_FOUND",
+      "message": "Customer con ID 'f7c8e3a1-2b4d-4e6f-9a8b-1c2d3e4f5a6b' no fue encontrado",
+      "details": []
+    }
+  ],
+  "meta": {
+    "traceId": "0HN1JQFQ3K7QK:00000002",
+    "timestamp": "2026-02-18T10:31:00Z"
+  }
 }
 ```
 
@@ -679,14 +619,19 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 ```json
 {
-  "type": "https://docs.talma.com/errors/business-rule",
-  "title": "Regla de negocio violada",
-  "status": 422,
-  "detail": "No se puede cancelar un pedido que ya fue enviado",
-  "instance": "/api/v1/orders/a1b2c3d4-e5f6-7890-abcd-ef1234567890/cancel",
-  "traceId": "0HN1JQFQ3K7QK:00000003",
-  "timestamp": "2026-02-18T10:32:00Z",
-  "ruleCode": "ORDER_ALREADY_SHIPPED"
+  "status": "error",
+  "data": null,
+  "errors": [
+    {
+      "code": "ORDER_ALREADY_SHIPPED",
+      "message": "No se puede cancelar un pedido que ya fue enviado",
+      "details": []
+    }
+  ],
+  "meta": {
+    "traceId": "0HN1JQFQ3K7QK:00000003",
+    "timestamp": "2026-02-18T10:32:00Z"
+  }
 }
 ```
 
@@ -694,13 +639,19 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 ```json
 {
-  "type": "https://docs.talma.com/errors/conflict",
-  "title": "Conflicto de recursos",
-  "status": 409,
-  "detail": "Ya existe un cliente con el email 'john.doe@example.com'",
-  "instance": "/api/v1/customers",
-  "traceId": "0HN1JQFQ3K7QK:00000004",
-  "timestamp": "2026-02-18T10:33:00Z"
+  "status": "error",
+  "data": null,
+  "errors": [
+    {
+      "code": "CONFLICT",
+      "message": "Ya existe un cliente con el email 'john.doe@example.com'",
+      "details": []
+    }
+  ],
+  "meta": {
+    "traceId": "0HN1JQFQ3K7QK:00000004",
+    "timestamp": "2026-02-18T10:33:00Z"
+  }
 }
 ```
 
@@ -708,13 +659,19 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 ```json
 {
-  "type": "https://docs.talma.com/errors/service-unavailable",
-  "title": "Servicio no disponible",
-  "status": 503,
-  "detail": "El servicio 'ExternalApi' no está disponible",
-  "instance": "/api/v1/customers/f7c8e3a1-2b4d-4e6f-9a8b-1c2d3e4f5a6b",
-  "traceId": "0HN1JQFQ3K7QK:00000005",
-  "timestamp": "2026-02-18T10:34:00Z"
+  "status": "error",
+  "data": null,
+  "errors": [
+    {
+      "code": "SERVICE_UNAVAILABLE",
+      "message": "El servicio 'ExternalApi' no está disponible",
+      "details": []
+    }
+  ],
+  "meta": {
+    "traceId": "0HN1JQFQ3K7QK:00000005",
+    "timestamp": "2026-02-18T10:34:00Z"
+  }
 }
 ```
 
@@ -722,13 +679,19 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 ```json
 {
-  "type": "https://docs.talma.com/errors/internal-error",
-  "title": "Error interno del servidor",
-  "status": 500,
-  "detail": "Ocurrió un error inesperado. Por favor contacte al soporte.",
-  "instance": "/api/v1/customers",
-  "traceId": "0HN1JQFQ3K7QK:00000006",
-  "timestamp": "2026-02-18T10:35:00Z"
+  "status": "error",
+  "data": null,
+  "errors": [
+    {
+      "code": "INTERNAL_ERROR",
+      "message": "Ocurrió un error inesperado. Por favor contacte al soporte.",
+      "details": []
+    }
+  ],
+  "meta": {
+    "traceId": "0HN1JQFQ3K7QK:00000006",
+    "timestamp": "2026-02-18T10:35:00Z"
+  }
 }
 ```
 
@@ -738,13 +701,14 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 ### MUST (Obligatorio)
 
-- **MUST** usar RFC 7807 Problem Details para todos los errores
-- **MUST** retornar códigos de estado HTTP apropiados
-- **MUST** incluir `traceId` en todas las respuestas de error
+- **MUST** usar `ApiResponse<object>` con `status: "error"` para todas las respuestas de error
+- **MUST** retornar códigos de estado HTTP apropiados (no siempre 200)
+- **MUST** incluir `meta.traceId` en todas las respuestas de error
+- **MUST** usar `code` en _SCREAMING_SNAKE_CASE_ para identificar el tipo de error
 - **MUST** loggear todos los errores con contexto suficiente
 - **MUST** evitar exponer información sensible en mensajes de error
 - **MUST** evitar stack traces en producción
-- **MUST** mapear excepciones de dominio a Problem Details
+- **MUST** mapear excepciones de dominio en `ApiExceptionHandler`
 - **MUST** validar requests antes de procesarlos
 
 ### SHOULD (Fuertemente recomendado)
@@ -753,8 +717,7 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 - **SHOULD** incluir correlation ID en logs y respuestas
 - **SHOULD** implementar métricas de errores (counters, histograms)
 - **SHOULD** diferenciar errores de cliente (4xx) vs servidor (5xx)
-- **SHOULD** incluir URIs descriptivas en campo `type`
-- **SHOULD** usar códigos de error específicos para reglas de negocio
+- **SHOULD** usar códigos de error específicos del dominio (`ORDER_ALREADY_SHIPPED`, no sólo `BUSINESS_RULE_VIOLATED`)
 - **SHOULD** implementar alertas para errores 5xx
 
 ### MAY (Opcional)
@@ -777,8 +740,7 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 - [RFC 7807 - Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc7807.html) — Especificación Problem Details
 - [RFC 9110 - HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html) — Semántica HTTP
-- [ASP.NET Core Error Handling](https://learn.microsoft.com/aspnet/core/web-api/handle-errors) — Manejo de errores en ASP.NET Core
-- [Hellang.Middleware.ProblemDetails](https://github.com/khellang/Middleware) — Middleware RFC 7807
+- [ASP.NET Core IExceptionHandler](https://learn.microsoft.com/aspnet/core/web-api/handle-errors) — Manejo de errores en ASP.NET Core
 - [Serilog](https://serilog.net/) — Logging estructurado
 - [Estándares REST](./api-rest-standards.md) — Estándar relacionado
 - [Resiliencia](../arquitectura/resilience-patterns.md) — Estándar relacionado
