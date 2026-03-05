@@ -341,7 +341,7 @@ public class CustomersController : ControllerBase
 }
 ```
 
-### Servicio con Manejo de Errores
+### Uso en Services
 
 ```csharp
 public class CustomerService : ICustomerService
@@ -360,7 +360,7 @@ public class CustomerService : ICustomerService
         var customer = await _context.Customers
             .FirstOrDefaultAsync(c => c.Id == id);
 
-        // Retornar null, controller lanza NotFoundException
+        // Retornar null — el controller lanza NotFoundException
         return customer != null
             ? customer.Adapt<CustomerDto>()
             : null;
@@ -373,10 +373,8 @@ public class CustomerService : ICustomerService
             .FirstOrDefaultAsync(c => c.Email == request.Email);
 
         if (existingCustomer != null)
-        {
             throw new ConflictException(
                 $"Ya existe un cliente con el email '{request.Email}'");
-        }
 
         // Validar documento único
         var existingDocument = await _context.Customers
@@ -385,20 +383,18 @@ public class CustomerService : ICustomerService
                 c.DocumentNumber == request.Document.Number);
 
         if (existingDocument != null)
-        {
             throw new ConflictException(
                 $"Ya existe un cliente con el documento {request.Document.Type}-{request.Document.Number}");
-        }
 
         var customer = new Customer
         {
-            Id = Guid.NewGuid(),
-            Name = request.Name,
-            Email = request.Email,
-            Phone = request.Phone,
-            DocumentType = request.Document.Type,
+            Id             = Guid.NewGuid(),
+            Name           = request.Name,
+            Email          = request.Email,
+            Phone          = request.Phone,
+            DocumentType   = request.Document.Type,
             DocumentNumber = request.Document.Number,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt      = DateTime.UtcNow
         };
 
         _context.Customers.Add(customer);
@@ -420,183 +416,17 @@ public class CustomerService : ICustomerService
 
 ---
 
-## Validación de Requests
+:::note Errores de validación
+Cuando `FluentValidation` o Data Annotations detectan un error, `ApiExceptionHandler` lo convierte automáticamente en `ApiResponse<object>` con `status: "error"`, código `VALIDATION_FAILED` y `errors[].details` por campo — sin código adicional en el controller.
 
-**Principios:**
-
-- **Validar todo**: nunca confiar en los datos de entrada, independientemente del origen
-- **Fallar rápido**: validar antes de ejecutar lógica de negocio o acceder a la base de datos
-- **Mensajes claros**: proporcionar feedback accionable al cliente, no mensajes genéricos
-- **Consistencia**: toda respuesta de error de validación sigue el shape `ApiResponse<object>` con `errors[].details`
-
-### FluentValidation con Errores Estructurados
-
-```csharp
-// Validador
-public class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRequest>
-{
-    public CreateCustomerRequestValidator()
-    {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("El nombre es requerido")
-            .Length(2, 100).WithMessage("El nombre debe tener entre 2 y 100 caracteres");
-
-        RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("El email es requerido")
-            .EmailAddress().WithMessage("El formato del email es inválido");
-
-        RuleFor(x => x.Phone)
-            .Matches(@"^\+\d{10,15}$")
-            .When(x => !string.IsNullOrEmpty(x.Phone))
-            .WithMessage("El teléfono debe estar en formato E.164 (+51987654321)");
-
-        RuleFor(x => x.Document)
-            .NotNull().WithMessage("El documento es requerido")
-            .SetValidator(new DocumentDtoValidator());
-    }
-}
-// El ApiExceptionHandler intercepta ValidationException lanzada por FluentValidation
-// y la convierte a ApiResponse<object> con errors[].details por campo.
-```
-
-### Data Annotations como alternativa
-
-Para APIs simples o contratos con sistemas externos donde FluentValidation sería excesivo:
-
-```csharp
-public record CreateCustomerRequest
-{
-    [Required(ErrorMessage = "El nombre es requerido")]
-    [StringLength(100, MinimumLength = 2, ErrorMessage = "El nombre debe tener entre 2 y 100 caracteres")]
-    public required string Name { get; init; }
-
-    [Required(ErrorMessage = "El email es requerido")]
-    [EmailAddress(ErrorMessage = "El formato del email es inválido")]
-    [StringLength(254)]
-    [ValidEmailDomain]                          // Atributo personalizado (ver abajo)
-    public required string Email { get; init; }
-
-    [Phone(ErrorMessage = "El formato del teléfono no es válido")]
-    public string? Phone { get; init; }
-
-    [Range(18, 120, ErrorMessage = "La edad debe estar entre 18 y 120 años")]
-    public int Age { get; init; }
-}
-```
-
-**Atributo de validación personalizado:**
-
-```csharp
-public class ValidEmailDomainAttribute : ValidationAttribute
-{
-    private static readonly string[] AllowedDomains = ["talma.pe", "talma.com"];
-
-    protected override ValidationResult? IsValid(object? value, ValidationContext context)
-    {
-        if (value is string email && !string.IsNullOrEmpty(email))
-        {
-            var domain = email.Split('@').LastOrDefault()?.ToLower();
-            if (!AllowedDomains.Contains(domain))
-                return new ValidationResult(
-                    $"Solo se permiten emails de dominios: {string.Join(", ", AllowedDomains)}");
-        }
-        return ValidationResult.Success;
-    }
-}
-```
-
-:::note FluentValidation vs Data Annotations
-Preferir **FluentValidation** para lógica de validación compleja, condicional o reutilizable. Data Annotations es adecuado para contratos simples. Ambos son interceptados por `ApiExceptionHandler` cuando se usa `AddFluentValidationAutoValidation()`.
+Para definir validadores ver [Contratos de APIs — Validación](./api-contracts.md#validación-con-fluentvalidation).
 :::
 
 ---
 
-## Manejo de Errores en Dependencias Externas
-
-### Circuit Breaker con Error Handling
-
-```csharp
-public class ExternalApiClient
-{
-    private readonly HttpClient _httpClient;
-    private readonly ILogger<ExternalApiClient> _logger;
-    private readonly IAsyncPolicy<HttpResponseMessage> _resiliencePolicy;
-
-    public ExternalApiClient(
-        HttpClient httpClient,
-        ILogger<ExternalApiClient> logger)
-    {
-        _httpClient = httpClient;
-        _logger = logger;
-
-        // Política de resiliencia con manejo de errores
-        var retry = Policy
-            .Handle<HttpRequestException>()
-            .Or<TimeoutException>()
-            .OrResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
-            .WaitAndRetryAsync(
-                retryCount: 3,
-                sleepDurationProvider: attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)),
-                onRetry: (outcome, timespan, retryCount, context) =>
-                {
-                    _logger.LogWarning(
-                        "Retry {RetryCount} después de {Delay}ms: {Reason}",
-                        retryCount,
-                        timespan.TotalMilliseconds,
-                        outcome.Exception?.Message ?? "HTTP " + outcome.Result.StatusCode);
-                });
-
-        var circuitBreaker = Policy
-            .Handle<HttpRequestException>()
-            .OrResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
-            .CircuitBreakerAsync(
-                handledEventsAllowedBeforeBreaking: 5,
-                durationOfBreak: TimeSpan.FromSeconds(30),
-                onBreak: (outcome, duration) =>
-                {
-                    _logger.LogError(
-                        "Circuit breaker OPEN por {Duration}s: {Reason}",
-                        duration.TotalSeconds,
-                        outcome.Exception?.Message ?? "HTTP " + outcome.Result.StatusCode);
-                },
-                onReset: () =>
-                {
-                    _logger.LogInformation("Circuit breaker RESET");
-                });
-
-        _resiliencePolicy = Policy.WrapAsync(retry, circuitBreaker);
-    }
-
-    public async Task<CustomerData> GetCustomerAsync(string customerId)
-    {
-        try
-        {
-            var response = await _resiliencePolicy.ExecuteAsync(async () =>
-                await _httpClient.GetAsync($"/customers/{customerId}"));
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ServiceUnavailableException(
-                    "ExternalApi",
-                    new HttpRequestException($"HTTP {response.StatusCode}"));
-            }
-
-            return await response.Content.ReadFromJsonAsync<CustomerData>()
-                ?? throw new InvalidOperationException("Response body was null");
-        }
-        catch (BrokenCircuitException ex)
-        {
-            _logger.LogError(ex, "Circuit breaker está abierto para ExternalApi");
-            throw new ServiceUnavailableException("ExternalApi", ex);
-        }
-        catch (Exception ex) when (ex is not ServiceUnavailableException)
-        {
-            _logger.LogError(ex, "Error al llamar a ExternalApi");
-            throw new ServiceUnavailableException("ExternalApi", ex);
-        }
-    }
-}
-```
+:::note Resiliencia y dependencias externas
+Para manejo de errores en llamadas a servicios externos (retry, circuit breaker, timeout) ver [Patrones de Resiliencia](../arquitectura/resilience-patterns.md).
+:::
 
 ---
 

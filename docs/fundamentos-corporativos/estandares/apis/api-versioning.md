@@ -114,9 +114,7 @@ public class OrdersController : ControllerBase
 }
 ```
 
----
-
-## Swagger con Múltiples Versiones
+### Swagger multi-versión
 
 ```csharp
 // Generar un documento Swagger por versión
