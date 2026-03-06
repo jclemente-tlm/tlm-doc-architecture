@@ -1281,7 +1281,7 @@ app.Run();
 - **SHOULD** usar compiled queries para queries frecuentes
 - **SHOULD** monitorear métricas de DB (latency, connections, slow queries)
 - **SHOULD** usar read replicas para alta carga de lectura
-- **SHOULD** implementar caching para redOurcir hits a DB
+- **SHOULD** implementar caching para reducir hits a DB
 - **SHOULD** usar batch operations para inserts/updates masivos
 - **SHOULD** documentar índices y su propósito
 

@@ -37,20 +37,7 @@ Este estándar consolida las prácticas fundamentales para diseñar una arquitec
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 6 aspectos de arquitectura de datos:
-
-### Índice de Conceptos
-
-1. **Database per Service**: Autonomía de datos por servicio
-2. **No Shared Database**: Aislamiento y desacoplamiento
-3. **Data Ownership**: Ownership y responsabilidad clara
-4. **Data Governance**: Políticas y cumplimiento
-5. **Data Catalog**: Descubrimiento y documentación
-6. **Data Exposure**: Estrategias de exposición controlada
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
@@ -66,18 +53,9 @@ graph TB
     style D fill:#e8f5e9,color:#000000
 ```
 
-**Cuándo aplicar:**
-
-- **Database per Service**: Siempre en microservicios
-- **No Shared Database**: Obligatorio para desacoplamiento
-- **Data Ownership**: Desde diseño inicial
-- **Data Governance**: Para cumplimiento y calidad
-- **Data Catalog**: En organizaciones con múltiples equipos
-- **Data Exposure**: Para compartir datos entre servicios
-
 ---
 
-## 1. Database per Service
+## Database per Service
 
 ### ¿Qué es Database per Service?
 
@@ -136,63 +114,23 @@ public class OrderService
     }
 }
 
-// ✅ BUENO: Database per service
+// ✅ BUENO: Database per service — cada servicio su propio DbContext
 
-// CustomerService - CustomerDbContext
+// CustomerService
 public class CustomerDbContext : DbContext
 {
-    public DbSet<Customer> Customers { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        options.UseNpgsql("Host=customer-db;Database=customers");
-    }
+        => options.UseNpgsql("Host=customer-db;Database=customers");
 }
 
-public class CustomerRepository
-{
-    private readonly CustomerDbContext _context; // ✅ DB propia
-
-    public async Task<Customer> GetByIdAsync(Guid id)
-    {
-        return await _context.Customers.FindAsync(id);
-    }
-}
-
-// OrderService - OrderDbContext (separado)
+// OrderService — DbContext propio, sin acceso a CustomerDbContext
 public class OrderDbContext : DbContext
 {
-    public DbSet<Order> Orders { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        options.UseNpgsql("Host=order-db;Database=orders");
-    }
+        => options.UseNpgsql("Host=order-db;Database=orders");
 }
 
-public class OrderService
-{
-    private readonly OrderDbContext _orderContext; // ✅ DB propia
-    private readonly ICustomerApiClient _customerClient; // ✅ API call, no DB directa
-
-    public async Task<Order> CreateOrderAsync(CreateOrderRequest request)
-    {
-        // ✅ BUENO: Validar vía API
-        var customer = await _customerClient.GetByIdAsync(request.CustomerId);
-
-        // ✅ Guardar solo ID, no toda la entidad
-        var order = new Order
-        {
-            CustomerId = request.CustomerId,
-            CustomerName = customer.Name // ✅ Snapshot de datos necesarios
-        };
-
-        _orderContext.Orders.Add(order);
-        await _orderContext.SaveChangesAsync();
-
-        return order;
-    }
-}
+// ✅ Para comunicación entre servicios sin acceso directo a DB, ver ## No Shared Database
 ```
 
 ### Implementación
@@ -293,7 +231,7 @@ dotnet ef database update --context OrderDbContext
 
 ---
 
-## 2. No Shared Database
+## No Shared Database
 
 ### ¿Qué es No Shared Database?
 
@@ -469,8 +407,7 @@ builder.Services.AddHttpClient<ICustomerApiClient, CustomerApiClient>(client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.Timeout = TimeSpan.FromSeconds(10);
 })
-.AddPolicyHandler(GetRetryPolicy())
-.AddPolicyHandler(GetCircuitBreakerPolicy());
+.AddStandardResilienceHandler(); // ✅ .NET 8+: retry + circuit breaker + timeout integrados
 
 // appsettings.json
 {
@@ -479,26 +416,21 @@ builder.Services.AddHttpClient<ICustomerApiClient, CustomerApiClient>(client =>
   }
 }
 
-// Políticas de resiliencia
-static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+// Personalizar opciones de resiliencia si se necesita ajuste (opcional)
+builder.Services.ConfigureHttpClientDefaults(http =>
 {
-    return HttpPolicyExtensions
-        .HandleTransientHttpError()
-        .WaitAndRetryAsync(3, retryAttempt =>
-            TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-}
-
-static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
-{
-    return HttpPolicyExtensions
-        .HandleTransientHttpError()
-        .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
-}
+    http.AddStandardResilienceHandler(options =>
+    {
+        options.Retry.MaxRetryAttempts = 3;
+        options.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(30);
+        options.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(10);
+    });
+});
 ```
 
 ---
 
-## 3. Data Ownership
+## Data Ownership
 
 ### ¿Qué es Data Ownership?
 
@@ -618,7 +550,7 @@ public class PIIAttribute : Attribute
 
 ---
 
-## 4. Data Governance
+## Data Governance
 
 ### ¿Qué es Data Governance?
 
@@ -691,62 +623,18 @@ public class Customer
     public string? TaxId { get; set; }
 }
 
-// Políticas por clasificación
-public class DataGovernancePolicy
-{
-    public static Dictionary<DataClassification, PolicyRules> Policies = new()
-    {
-        {
-            DataClassification.Public,
-            new PolicyRules
-            {
-                EncryptionRequired = false,
-                MaskingRequired = false,
-                AuditLoggingRequired = false,
-                RetentionDays = null, // Indefinido
-                BackupRequired = true
-            }
-        },
-        {
-            DataClassification.PII,
-            new PolicyRules
-            {
-                EncryptionRequired = true,
-                MaskingRequired = true,
-                AuditLoggingRequired = true,
-                RetentionDays = 2555, // 7 años
-                BackupRequired = true,
-                RightToErasure = true, // GDPR
-                ConsentRequired = true
-            }
-        },
-        {
-            DataClassification.Restricted,
-            new PolicyRules
-            {
-                EncryptionRequired = true,
-                MaskingRequired = true,
-                AuditLoggingRequired = true,
-                RetentionDays = 3650, // 10 años
-                BackupRequired = true,
-                AccessRestricted = true
-            }
-        }
-    };
-}
-
-public class PolicyRules
-{
-    public bool EncryptionRequired { get; set; }
-    public bool MaskingRequired { get; set; }
-    public bool AuditLoggingRequired { get; set; }
-    public int? RetentionDays { get; set; }
-    public bool BackupRequired { get; set; }
-    public bool RightToErasure { get; set; }
-    public bool ConsentRequired { get; set; }
-    public bool AccessRestricted { get; set; }
-}
+// Aplicar clasificación en entidades — los atributos documentan la política
 ```
+
+### Políticas por Clasificación
+
+| Clasificación    | Encriptación | Enmascaramiento | Auditoría | Retención  | Right to Erasure |
+| ---------------- | ------------ | --------------- | --------- | ---------- | ---------------- |
+| **Public**       | No           | No              | No        | Indefinida | No               |
+| **Internal**     | No           | No              | No        | Indefinida | No               |
+| **Confidential** | Sí           | Sí              | Sí        | —          | No               |
+| **PII**          | Sí           | Sí              | Sí        | 7 años     | Sí (GDPR)        |
+| **Restricted**   | Sí           | Sí              | Sí        | 10 años    | Sí               |
 
 ### Data Quality Checks
 
@@ -812,7 +700,7 @@ public class CustomerDataQualityValidator : IDataQualityValidator
 
 ---
 
-## 5. Data Catalog
+## Data Catalog
 
 ### ¿Qué es un Data Catalog?
 
@@ -838,195 +726,41 @@ Inventario centralizado de todos los assets de datos en la organización con sus
 
 ### Estructura del Catálogo
 
-```yaml
-# data-catalog.yaml - Catálogo de datos corporativo
+Cada dataset debe registrar los siguientes campos:
 
+```yaml
 datasets:
-  - id: customers
+  - id: customers # Identificador único del dataset
     name: Customers
     domain: Customer Management
     owner:
       team: Team Apollo
       contact: team-apollo@talma.com
     service: customer-service
-    database:
-      type: postgresql
-      host: customer-db.internal
-      database: customers
-      schema: customer
-
+    classification: PII # Public | Internal | Confidential | PII | Restricted
     tables:
       - name: customers
-        description: Master data de clientes
-        classification: PII
         columns:
-          - name: id
-            type: uuid
-            primary_key: true
-            description: Identificador único del cliente
-
-          - name: name
-            type: varchar(100)
-            nullable: false
-            description: Nombre completo del cliente
-
           - name: email
             type: varchar(254)
-            nullable: false
-            unique: true
             pii: true
-            description: Email del cliente (PII)
-
-          - name: phone
-            type: varchar(20)
-            nullable: true
-            pii: true
-            description: Teléfono en formato E.164 (PII)
-
-          - name: created_at
-            type: timestamp
-            nullable: false
-            default: CURRENT_TIMESTAMP
-            description: Fecha de creación del registro
-
-        indexes:
-          - name: idx_customers_email
-            columns: [email]
-            unique: true
-
-          - name: idx_customers_created_at
-            columns: [created_at]
-
-        sample_data:
-          - id: "f7c8e3a1-2b4d-4e6f-9a8b-1c2d3e4f5a6b"
-            name: "Acme Corporation"
-            email: "contact@acme.com"
-            phone: "+51987654321"
-            created_at: "2026-01-15T10:30:00Z"
-
     apis:
       - endpoint: GET /api/v1/customers/{id}
-        description: Obtiene un cliente por ID
         authentication: Bearer token
-        rate_limit: 100 req/min
-
-      - endpoint: POST /api/v1/customers
-        description: Crea un nuevo cliente
-        authentication: Bearer token
-
     events:
       - type: customers.customer.created.v1
-        description: Cliente creado
         topic: customers-events
-        schema_url: https://docs.talma.com/schemas/customer-created-v1.json
-
-    quality_metrics:
-      completeness: 99.8%
-      accuracy: 99.5%
-      freshness: Real-time
-      uniqueness: 100%
-
     retention_policy:
       duration: 7 years
-      archive_after: 2 years
       deletion_strategy: Soft delete
-
     access_control:
-      - role: customer-service
-        permissions: [read, write, delete]
       - role: order-service
         permissions: [read]
-      - role: analytics-service
-        permissions: [read]
-
-  - id: orders
-    name: Orders
-    domain: Order Management
-    owner:
-      team: Team Commerce
-      contact: team-commerce@talma.com
-    # ... similar structure
-```
-
-### API para Data Catalog
-
-```csharp
-// Data Catalog Service
-
-public interface IDataCatalogService
-{
-    Task<DatasetMetadata?> GetDatasetAsync(string datasetId);
-    Task<IEnumerable<DatasetMetadata>> SearchDatasetsAsync(string query);
-    Task<DataLineage> GetDataLineageAsync(string datasetId);
-}
-
-public record DatasetMetadata
-{
-    public string Id { get; init; } = default!;
-    public string Name { get; init; } = default!;
-    public string Domain { get; init; } = default!;
-    public OwnerInfo Owner { get; init; } = default!;
-    public string Service { get; init; } = default!;
-    public DatabaseInfo Database { get; init; } = default!;
-    public TableMetadata[] Tables { get; init; } = Array.Empty<TableMetadata>();
-    public ApiEndpoint[] Apis { get; init; } = Array.Empty<ApiEndpoint>();
-    public EventMetadata[] Events { get; init; } = Array.Empty<EventMetadata>();
-    public QualityMetrics QualityMetrics { get; init; } = default!;
-}
-
-public record TableMetadata
-{
-    public string Name { get; init; } = default!;
-    public string Description { get; init; } = default!;
-    public DataClassification Classification { get; init; }
-    public ColumnMetadata[] Columns { get; init; } = Array.Empty<ColumnMetadata>();
-}
-
-public record ColumnMetadata
-{
-    public string Name { get; init; } = default!;
-    public string Type { get; init; } = default!;
-    public bool Nullable { get; init; }
-    public bool PrimaryKey { get; init; }
-    public bool Unique { get; init; }
-    public bool Pii { get; init; }
-    public string Description { get; init; } = default!;
-}
-
-// Controller para consultar catálogo
-[ApiController]
-[Route("api/v1/data-catalog")]
-public class DataCatalogController : ControllerBase
-{
-    private readonly IDataCatalogService _catalogService;
-
-    [HttpGet("datasets/{id}")]
-    public async Task<ActionResult<DatasetMetadata>> GetDataset(string id)
-    {
-        var dataset = await _catalogService.GetDatasetAsync(id);
-        return dataset != null ? Ok(dataset) : NotFound();
-    }
-
-    [HttpGet("datasets/search")]
-    public async Task<ActionResult<IEnumerable<DatasetMetadata>>> SearchDatasets(
-        [FromQuery] string query)
-    {
-        var datasets = await _catalogService.SearchDatasetsAsync(query);
-        return Ok(datasets);
-    }
-
-    [HttpGet("datasets/{id}/lineage")]
-    public async Task<ActionResult<DataLineage>> GetLineage(string id)
-    {
-        var lineage = await _catalogService.GetDataLineageAsync(id);
-        return Ok(lineage);
-    }
-}
 ```
 
 ---
 
-## 6. Data Exposure
+## Data Exposure
 
 ### ¿Qué es Data Exposure?
 
@@ -1184,6 +918,10 @@ public class OrderCustomerSyncHandler : IEventHandler<CustomerCreatedEvent>
 }
 ```
 
+:::warning Riesgo: pérdida silenciosa de eventos
+El patrón anterior (guardar en DB → publicar evento) tiene un riesgo: si `PublishAsync` falla después de `SaveChangesAsync`, el dato se persiste pero el evento nunca se envía. Para garantizar **at-least-once delivery**, usar el **Transactional Outbox Pattern**: guardar el evento en la misma transacción junto con la entidad, y publicarlo desde un proceso en background. Ver [Event-Driven Architecture](../../mensajeria/event-driven-architecture.md) para la implementación.
+:::
+
 ### Patrón 3: Data Replication (Analytics)
 
 ```csharp
@@ -1219,24 +957,35 @@ public class AnalyticsReplicationService
 {
     public async Task SyncCustomerAnalyticsAsync()
     {
-        // Leer desde fuentes primarias vía API
-        var customers = await _customerApiClient.GetAllAsync();
-        var orders = await _orderApiClient.GetAllAsync();
+        // ✅ Usar paginación: nunca cargar toda la colección en memoria
+        var page = 1;
+        const int pageSize = 500;
+        IReadOnlyList<CustomerDto> customers;
 
-        // Construir vista agregada
-        var analytics = customers.Select(c => new CustomerAnalyticsView
+        do
         {
-            CustomerId = c.Id,
-            Name = c.Name,
-            Email = c.Email,
-            TotalOrders = orders.Count(o => o.CustomerId == c.Id),
-            TotalSpent = orders.Where(o => o.CustomerId == c.Id).Sum(o => o.TotalAmount),
-            LastOrderDate = orders.Where(o => o.CustomerId == c.Id).Max(o => o.CreatedAt),
-            SyncedAt = DateTime.UtcNow
-        });
+            customers = await _customerApiClient.GetPagedAsync(page++, pageSize);
 
-        // Guardar en réplica
-        await _analyticsContext.CustomerAnalytics.UpsertRange(analytics).RunAsync();
+            if (customers.Count == 0) break;
+
+            // Obtener órdenes solo para los customers de esta página
+            var customerIds = customers.Select(c => c.Id).ToArray();
+            var orders = await _orderApiClient.GetByCustomerIdsAsync(customerIds);
+
+            var analytics = customers.Select(c => new CustomerAnalyticsView
+            {
+                CustomerId = c.Id,
+                Name = c.Name,
+                Email = c.Email,
+                TotalOrders = orders.Count(o => o.CustomerId == c.Id),
+                TotalSpent = orders.Where(o => o.CustomerId == c.Id).Sum(o => o.TotalAmount),
+                LastOrderDate = orders.Where(o => o.CustomerId == c.Id).MaxBy(o => o.CreatedAt)?.CreatedAt ?? default,
+                SyncedAt = DateTime.UtcNow
+            });
+
+            await _analyticsContext.CustomerAnalytics.UpsertRange(analytics).RunAsync();
+        }
+        while (customers.Count == pageSize);
     }
 }
 ```

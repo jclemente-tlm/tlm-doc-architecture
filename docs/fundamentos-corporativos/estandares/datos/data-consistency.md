@@ -32,18 +32,7 @@ Este estándar define cómo manejar consistencia en sistemas distribuidos con m�
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 4 aspectos de consistencia de datos:
-
-### Índice de Conceptos
-
-1. **Consistency Models**: Strong, Eventual, Causal
-2. **Conflict Resolution**: Last-Write-Wins, CRDT, Manual
-3. **Data Replication**: Síncrona, asíncrona, streaming
-4. **Expand-Contract Pattern**: Evolución de esquemas segura
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
@@ -60,15 +49,9 @@ graph TB
     style H fill:#e8f5e9,color:#000000
 ```
 
-**Trade-offs:**
-
-- **Strong Consistency**: Datos siempre correctos, pero latencia y disponibilidad reducidas
-- **Eventual Consistency**: Alta disponibilidad y performance, pero requiere manejo de conflictos
-- **Causal Consistency**: Balance entre ambos para relaciones causa-efecto
-
 ---
 
-## 1. Consistency Models
+## Consistency Models
 
 ### ¿Qué son los Modelos de Consistencia?
 
@@ -131,15 +114,16 @@ public class OrderService
 
                 _context.OrderItems.Add(orderItem);
 
-                // Reservar inventario en misma transacción
-                var inventory = await _context.Inventory
-                    .FirstOrDefaultAsync(i => i.ProductId == item.ProductId);
+                // ✅ Reservar en tabla local del servicio (NO es la DB de InventoryService)
+                // OrderService mantiene un ledger propio de reservas dentro de su misma DB
+                var reservation = await _context.InventoryReservations
+                    .FirstOrDefaultAsync(r => r.ProductId == item.ProductId);
 
-                if (inventory == null || inventory.Available < item.Quantity)
+                if (reservation == null || reservation.Available < item.Quantity)
                     throw new InsufficientInventoryException(item.ProductId);
 
-                inventory.Available -= item.Quantity;
-                inventory.Reserved += item.Quantity;
+                reservation.Available -= item.Quantity;
+                reservation.Reserved += item.Quantity;
             }
 
             await _context.SaveChangesAsync();
@@ -367,7 +351,7 @@ public class CustomerService
 
 ---
 
-## 2. Conflict Resolution
+## Conflict Resolution
 
 ### ¿Qué es la Resolución de Conflictos?
 
@@ -615,7 +599,7 @@ public class InventoryService
 
 ---
 
-## 3. Data Replication
+## Data Replication
 
 ### ¿Qué es la Replicación de Datos?
 
@@ -668,25 +652,29 @@ public class CustomerDbContext : DbContext
     }
 }
 
-// Factory para decidir conexión
-public class CustomerDbContextFactory
-{
-    public CustomerDbContext CreateContext(bool readOnly = false)
-    {
-        var optionsBuilder = new DbContextOptionsBuilder<CustomerDbContext>();
-        return new CustomerDbContext(optionsBuilder.Options, readOnly);
-    }
-}
+// ✅ .NET 8: usar IDbContextFactory<T> para crear contextos con DI correctamente
+// Program.cs
+builder.Services.AddDbContextFactory<CustomerDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("CustomerDatabase")));
+
+builder.Services.AddDbContextFactory<CustomerReadDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("CustomerDatabaseReplica"))
+           .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
 // Service usa replica para lecturas
 public class CustomerQueryService
 {
-    private readonly CustomerDbContextFactory _contextFactory;
+    private readonly IDbContextFactory<CustomerReadDbContext> _readFactory;
+
+    public CustomerQueryService(IDbContextFactory<CustomerReadDbContext> readFactory)
+    {
+        _readFactory = readFactory;
+    }
 
     public async Task<Customer?> GetByIdAsync(Guid id)
     {
         // ✅ Usar read replica (eventual consistency ok)
-        using var context = _contextFactory.CreateContext(readOnly: true);
+        await using var context = await _readFactory.CreateDbContextAsync();
 
         return await context.Customers
             .AsNoTracking()
@@ -696,7 +684,7 @@ public class CustomerQueryService
     public async Task<PagedResult<Customer>> SearchAsync(string query, int page, int pageSize)
     {
         // ✅ Queries pesados en replica
-        using var context = _contextFactory.CreateContext(readOnly: true);
+        await using var context = await _readFactory.CreateDbContextAsync();
 
         var results = await context.Customers
             .Where(c => c.Name.Contains(query) || c.Email.Contains(query))
@@ -711,12 +699,17 @@ public class CustomerQueryService
 
 public class CustomerCommandService
 {
-    private readonly CustomerDbContextFactory _contextFactory;
+    private readonly IDbContextFactory<CustomerDbContext> _writeFactory;
+
+    public CustomerCommandService(IDbContextFactory<CustomerDbContext> writeFactory)
+    {
+        _writeFactory = writeFactory;
+    }
 
     public async Task<Customer> CreateAsync(CreateCustomerRequest request)
     {
         // ✅ Escrituras siempre en master
-        using var context = _contextFactory.CreateContext(readOnly: false);
+        await using var context = await _writeFactory.CreateDbContextAsync();
 
         var customer = new Customer
         {
@@ -735,70 +728,15 @@ public class CustomerCommandService
 
 ### Event-Driven Replication
 
-```csharp
-// Replicar datos entre servicios vía eventos
+Patrón complementario a las read replicas: los servicios mantienen snapshots locales de datos de otros dominios consumiendo eventos.
 
-// Service A publica cambios
-public class CustomerService
-{
-    private readonly CustomerDbContext _context;
-    private readonly IEventPublisher _eventPublisher;
-
-    public async Task<Customer> UpdateAsync(Guid id, UpdateCustomerRequest request)
-    {
-        var customer = await _context.Customers.FindAsync(id);
-        customer.Name = request.Name;
-
-        await _context.SaveChangesAsync();
-
-        // ✅ Publicar evento
-        await _eventPublisher.PublishAsync(new CustomerUpdatedEvent
-        {
-            Data = new CustomerUpdatedData
-            {
-                CustomerId = id,
-                Name = customer.Name,
-                Email = customer.Email,
-                UpdatedAt = DateTime.UtcNow
-            }
-        });
-
-        return customer;
-    }
-}
-
-// Service B mantiene snapshot local
-public class OrderCustomerSnapshotHandler : IEventHandler<CustomerUpdatedEvent>
-{
-    private readonly OrderDbContext _context;
-
-    public async Task HandleAsync(CustomerUpdatedEvent @event, CancellationToken ct)
-    {
-        // ✅ Actualizar snapshot local
-        var snapshot = await _context.CustomerSnapshots
-            .FirstOrDefaultAsync(s => s.CustomerId == @event.Data.CustomerId, ct);
-
-        if (snapshot == null)
-        {
-            snapshot = new CustomerSnapshot
-            {
-                CustomerId = @event.Data.CustomerId
-            };
-            _context.CustomerSnapshots.Add(snapshot);
-        }
-
-        snapshot.Name = @event.Data.Name;
-        snapshot.Email = @event.Data.Email;
-        snapshot.LastSynced = @event.Data.UpdatedAt;
-
-        await _context.SaveChangesAsync(ct);
-    }
-}
-```
+:::note
+El patrón de publicar eventos y mantener snapshots locales está detallado con ejemplo completo en la sección **Eventual Consistency** de este mismo estándar y en [Event-Driven Architecture](../mensajeria/event-driven-architecture.md).
+:::
 
 ---
 
-## 4. Expand-Contract Pattern
+## Expand-Contract Pattern
 
 ### ¿Qué es Expand-Contract?
 
@@ -996,93 +934,6 @@ public class Customer
 }
 
 // FASE 3-7: Similar al ejemplo anterior (migrate, deploy, contract)
-```
-
----
-
-## Patrones de Uso Común
-
-### Saga Pattern para Consistencia Distribuida
-
-```csharp
-// Coordinar transacción distribuida sin 2PC
-
-public class CreateOrderSaga
-{
-    // Paso 1: Validar customer
-    public async Task<bool> ValidateCustomerAsync(Guid customerId)
-    {
-        var customer = await _customerClient.GetByIdAsync(customerId);
-        return customer != null;
-    }
-
-    // Paso 2: Reservar inventario
-    public async Task<ReservationResult> ReserveInventoryAsync(OrderItem[] items)
-    {
-        return await _inventoryClient.ReserveAsync(new ReservationRequest
-        {
-            Items = items
-        });
-    }
-
-    // Paso 3: Procesar pago
-    public async Task<PaymentResult> ProcessPaymentAsync(decimal amount)
-    {
-        return await _paymentClient.ChargeAsync(new PaymentRequest
-        {
-            Amount = amount
-        });
-    }
-
-    // Paso 4: Crear orden
-    public async Task<Order> CreateOrderAsync(CreateOrderRequest request)
-    {
-        var order = new Order { /* ... */ };
-        _context.Orders.Add(order);
-        await _context.SaveChangesAsync();
-        return order;
-    }
-
-    // Coordinador de saga
-    public async Task<Order> ExecuteAsync(CreateOrderRequest request)
-    {
-        ReservationResult? reservation = null;
-        PaymentResult? payment = null;
-
-        try
-        {
-            // 1. Validar customer
-            if (!await ValidateCustomerAsync(request.CustomerId))
-                throw new ValidationException("Invalid customer");
-
-            // 2. Reservar inventario
-            reservation = await ReserveInventoryAsync(request.Items);
-            if (!reservation.Success)
-                throw new BusinessRuleException("INSUFFICIENT_INVENTORY", "Inventory unavailable");
-
-            // 3. Procesar pago
-            payment = await ProcessPaymentAsync(request.TotalAmount);
-            if (!payment.Success)
-                throw new BusinessRuleException("PAYMENT_FAILED", "Payment declined");
-
-            // 4. Crear orden
-            var order = await CreateOrderAsync(request);
-
-            return order;
-        }
-        catch (Exception)
-        {
-            // ✅ COMPENSAR en orden inverso
-            if (payment?.Success == true)
-                await _paymentClient.RefundAsync(payment.TransactionId);
-
-            if (reservation?.Success == true)
-                await _inventoryClient.ReleaseAsync(reservation.ReservationId);
-
-            throw;
-        }
-    }
-}
 ```
 
 ---
