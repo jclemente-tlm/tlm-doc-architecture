@@ -1,12 +1,12 @@
 ---
 id: security-scanning
 sidebar_position: 11
-title: Security Scanning
+title: Escaneo de Seguridad
 description: Estándares para escaneo de contenedores, dependencias, infraestructura como código y SBOM
 tags: [seguridad, scanning, trivy, checkov, owasp, sbom, contenedores]
 ---
 
-# Security Scanning
+# Escaneo de Seguridad
 
 ## Contexto
 

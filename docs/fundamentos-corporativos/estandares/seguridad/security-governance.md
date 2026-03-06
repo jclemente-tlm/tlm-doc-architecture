@@ -1,7 +1,7 @@
 ---
 id: security-governance
 sidebar_position: 10
-title: Security Governance
+title: Gobernanza de Seguridad
 description: Estándares para security by design, architecture reviews, defense-in-depth, patch management, segregation of duties
 tags:
   [
@@ -14,7 +14,7 @@ tags:
   ]
 ---
 
-# Security Governance
+# Gobernanza de Seguridad
 
 ## Contexto
 

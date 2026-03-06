@@ -1,7 +1,7 @@
 ---
 id: security-testing
 sidebar_position: 8
-title: Security Testing
+title: Pruebas de Seguridad
 description: Estándares para threat modeling, penetration testing, vulnerability tracking y SLAs
 tags:
   [
@@ -14,7 +14,7 @@ tags:
   ]
 ---
 
-# Security Testing
+# Pruebas de Seguridad
 
 ## Contexto
 

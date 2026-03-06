@@ -1,12 +1,12 @@
 ---
 id: secrets-key-management
 sidebar_position: 9
-title: Secrets & Key Management
+title: Gestión de Secretos y Claves Criptográficas
 description: Estándares para gestión de secretos (passwords, API keys) y claves de cifrado
 tags: [seguridad, secrets, aws-secrets-manager, aws-kms, cifrado]
 ---
 
-# Secrets & Key Management
+# Gestión de Secretos y Claves Criptográficas
 
 ## Contexto
 

@@ -1,7 +1,7 @@
 ---
 id: data-protection
 sidebar_position: 7
-title: Data Protection
+title: Protección de Datos
 description: Estándares consolidados para cifrado at-rest y in-transit, enmascaramiento, clasificación, minimización, prevención de pérdida de datos y seguridad general de datos
 tags:
   [
@@ -15,7 +15,7 @@ tags:
   ]
 ---
 
-# Data Protection
+# Protección de Datos
 
 ## Contexto
 
