@@ -292,7 +292,6 @@ Brief description of infrastructure changes.
 - [ ] Plan output reviewed
 - [ ] Cost impact reviewed (Infracost)
 
-
 ### Terraform Plan Output
 
 <details>
@@ -303,11 +302,8 @@ Brief description of infrastructure changes.
 
 # Plan output posted automatically by GitHub Actions
 ```
-````
-
 
 </details>
-
 
 ### Cost Impact
 
@@ -325,8 +321,7 @@ Brief description of infrastructure changes.
 ### Related Issues
 
 Fixes #XXX
-
-```
+````
 
 ---
 
@@ -361,4 +356,7 @@ Fixes #XXX
 - [GitHub Actions: Environments](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment) — aprobaciones manuales en CD
 - [IaC — Implementación con Terraform](./iac-implementation.md) — estructura de proyecto y módulos
 - [IaC — State y Drift Detection](./iac-state-drift.md) — gestión de state y detección de cambios
+
+```
+
 ```
