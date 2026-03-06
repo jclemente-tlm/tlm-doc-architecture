@@ -18,7 +18,7 @@ Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar
 - [Habilitar despliegue independiente](../../estandares/infraestructura/independent-deployment.md)
 - [Usar comunicación asíncrona para desacoplamiento](../../estandares/mensajeria/async-messaging.md)
 - [Establecer contratos explícitos en los límites](../../estandares/apis/api-contracts.md)
-- [Definir ownership de servicios](../../estandares/gobierno/compliance-exceptions.md#6-service-ownership)
+- [Definir ownership de servicios](../../estandares/gobierno/service-ownership.md#service-ownership)
 
 ## Referencias Relacionadas
 

@@ -1329,7 +1329,7 @@ jobs:
 **Relacionados:**
 
 - [Technical Documentation](./technical-documentation.md)
-- [Architecture Governance](../gobierno/architecture-governance.md)
+- [Architecture Review y Checklist](../gobierno/architecture-review-process.md)
 
 ---
 

@@ -16,7 +16,7 @@ La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, ac
 
 - [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-documentation.md#3-architecture-decision-records-adrs)
 - [Implementar fitness functions](../../estandares/arquitectura/architecture-evolution.md#1-fitness-functions)
-- [Realizar architecture reviews periódicos](../../estandares/gobierno/architecture-governance.md#1-architecture-review)
+- [Realizar architecture reviews periódicos](../../estandares/gobierno/architecture-review-process.md#architecture-review)
 - [Aplicar refactoring continuo](../../estandares/desarrollo/code-quality.md#3-refactoring-practices)
 - [Mantener suite de testing comprehensivo](../../estandares/testing/testing-pyramid.md)
 - [Diseñar con bajo acoplamiento](../../estandares/arquitectura/architecture-principles.md#3-loose-coupling)
