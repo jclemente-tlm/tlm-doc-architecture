@@ -1,12 +1,12 @@
 ---
 id: architecture-board-audits
 sidebar_position: 2
-title: Architecture Board y Audits
+title: Architecture Board y Auditorías
 description: Comité de decisiones arquitectónicas, auditorías periódicas de compliance y retrospectivas de mejora continua.
 tags: [gobierno, architecture-board, audits, retrospectivas]
 ---
 
-# Architecture Board y Audits
+# Architecture Board y Auditorías
 
 ## Contexto
 
@@ -54,7 +54,7 @@ Comité multidisciplinario que toma decisiones estratégicas sobre arquitectura 
 | **Táctico**     | Revisar ADRs SEV-1/SEV-2, resolver conflictos, aprobar excepciones, auditorías          |
 | **Operativo**   | Reuniones quincenales, atención a escalations, seguimiento de action items              |
 
-### Criterios de Escalation
+### Criterios de Escalación
 
 ```mermaid
 graph TD
@@ -90,17 +90,17 @@ graph TD
 **Quorum**: Mínimo 60% de miembros para decisiones vinculantes
 
 ```markdown
-# Architecture Board Meeting - YYYY-MM-DD
+# Reunión del Architecture Board - YYYY-MM-DD
 
-**Attendees**: [lista]
+**Asistentes**: [lista]
 
 ---
 
 ## Agenda
 
-1. Review de Action Items anteriores (10 min)
+1. Revisión de tareas pendientes anteriores (10 min)
 2. ADR Reviews (60 min)
-   - ADR-NNN: [Título] — [Presenter] — [Decisión: ✅/❌/⏳]
+   - ADR-NNN: [Título] — [Presentador] — [Decisión: ✅/❌/⏳]
 3. Lineamientos y Estándares (20 min)
 4. Technology Radar Update (15 min)
 5. Auditorías Programadas (10 min)
@@ -108,11 +108,11 @@ graph TD
 
 ---
 
-## Action Items
+## Tareas Pendientes
 
-| Owner     | Action            | Due Date   |
-| --------- | ----------------- | ---------- |
-| @[handle] | [acción concreta] | YYYY-MM-DD |
+| Responsable | Tarea             | Fecha límite |
+| ----------- | ----------------- | ------------ |
+| @[handle]   | [acción concreta] | YYYY-MM-DD   |
 ```
 
 **Tipos de votación:**
@@ -123,9 +123,9 @@ graph TD
 
 ---
 
-## Architecture Audits
+## Auditorías de Arquitectura
 
-### ¿Qué son las Architecture Audits?
+### ¿Qué son las Auditorías de Arquitectura?
 
 Auditorías periódicas que verifican compliance de servicios con lineamientos, estándares y ADRs corporativos.
 
@@ -162,59 +162,59 @@ sequenceDiagram
     Auditor->>Team: Follow-up audit (30-60 días)
 ```
 
-### Audit Checklist y Scoring
+### Checklist y Puntaje de Auditoría
 
 ```markdown
-# Architecture Audit - [Service Name]
+# Auditoría de Arquitectura - [Nombre del Servicio]
 
-**Auditor**: [Nombre] | **Fecha**: YYYY-MM-DD | **Team**: [Equipo]
+**Auditor**: [Nombre] | **Fecha**: YYYY-MM-DD | **Equipo**: [Equipo]
 
-## Scoring por Categoría
+## Puntaje por Categoría
 
-| Categoría        | Peso | Score      | Status   |
-| ---------------- | ---- | ---------- | -------- |
-| Documentación    | 15%  | XX/15      | 🟢/🟡/🔴 |
-| API Standards    | 10%  | XX/10      | 🟢/🟡/🔴 |
-| Security         | 20%  | XX/20      | 🟢/🟡/🔴 |
-| Observability    | 15%  | XX/15      | 🟢/🟡/🔴 |
-| Resilience       | 10%  | XX/10      | 🟢/🟡/🔴 |
-| Data Management  | 10%  | XX/10      | 🟢/🟡/🔴 |
-| Testing          | 10%  | XX/10      | 🟢/🟡/🔴 |
-| CI/CD Deployment | 10%  | XX/10      | 🟢/🟡/🔴 |
-| **TOTAL**        |      | **XX/100** | 🟢/🟡/🔴 |
+| Categoría         | Peso | Puntaje    | Estado   |
+| ----------------- | ---- | ---------- | -------- |
+| Documentación     | 15%  | XX/15      | 🟢/🟡/🔴 |
+| Estándares de API | 10%  | XX/10      | 🟢/🟡/🔴 |
+| Seguridad         | 20%  | XX/20      | 🟢/🟡/🔴 |
+| Observabilidad    | 15%  | XX/15      | 🟢/🟡/🔴 |
+| Resiliencia       | 10%  | XX/10      | 🟢/🟡/🔴 |
+| Gestión de Datos  | 10%  | XX/10      | 🟢/🟡/🔴 |
+| Pruebas           | 10%  | XX/10      | 🟢/🟡/🔴 |
+| Despliegue CI/CD  | 10%  | XX/10      | 🟢/🟡/🔴 |
+| **TOTAL**         |      | **XX/100** | 🟢/🟡/🔴 |
 
-## Rating
+## Calificación
 
-- 🟢 Excellent: 90-100% | 🟢 Good: 80-89%
-- 🟡 Needs Improvement: 70-79% | 🔴 Critical: < 70%
+- 🟢 Excelente: 90-100% | 🟢 Bueno: 80-89%
+- 🟡 Requiere Mejora: 70-79% | 🔴 Crítico: < 70%
 
-## Findings
+## Hallazgos
 
-### 🔴 HIGH SEVERITY
+### 🔴 SEVERIDAD ALTA
 
 **FINDING-N: [Título]**
 
-- **Category**: [categoría]
-- **Description**: [qué está mal y qué impacto tiene]
-- **Recommendation**: [acción concreta]
-- **Remediation**: [N] días | **Owner**: @handle
+- **Categoría**: [categoría]
+- **Descripción**: [qué está mal y qué impacto tiene]
+- **Recomendación**: [acción concreta]
+- **Remediación**: [N] días | **Responsable**: @handle
 
-## Remediation Plan
+## Plan de Remediación
 
-| Finding   | Severity | Owner   | Due Date   | Status     |
-| --------- | -------- | ------- | ---------- | ---------- |
-| FINDING-1 | High     | @handle | YYYY-MM-DD | ⏳ Planned |
+| Hallazgo  | Severidad | Responsable | Fecha límite | Estado         |
+| --------- | --------- | ----------- | ------------ | -------------- |
+| FINDING-1 | Alta      | @handle     | YYYY-MM-DD   | ⏳ Planificado |
 
-## Follow-up Audit
+## Auditoría de Seguimiento
 
-**Date**: [30-60 días] — Scope: verificar remediaciones High/Medium
+**Fecha**: [30-60 días] — Alcance: verificar remediaciones Alta/Media
 ```
 
 ---
 
-## Architecture Retrospectives
+## Retrospectivas de Arquitectura
 
-### ¿Qué son las Architecture Retrospectives?
+### ¿Qué son las Retrospectivas de Arquitectura?
 
 Reuniones trimestrales para reflexionar sobre decisiones pasadas, aprender de aciertos y errores, y mejorar el proceso de gobierno arquitectónico.
 
@@ -245,13 +245,13 @@ Reuniones trimestrales para reflexionar sobre decisiones pasadas, aprender de ac
 ### Template de Retro
 
 ```markdown
-# Architecture Retrospective Q[X] [YYYY]
+# Retrospectiva de Arquitectura Q[X] [YYYY]
 
-**Facilitator**: [Nombre] | **Participants**: Board + Tech Leads
+**Facilitador**: [Nombre] | **Participantes**: Board + Tech Leads
 
 ---
 
-## Gather Data — ADRs del Trimestre
+## Recopilación de Datos — ADRs del Trimestre
 
 | ADR     | Tema     | Resultado | Equipo   |
 | ------- | -------- | --------- | -------- |
@@ -263,7 +263,7 @@ Reuniones trimestrales para reflexionar sobre decisiones pasadas, aprender de ac
 
 ---
 
-## Generate Insights
+## Generación de Insights
 
 ### ✅ Qué funcionó bien
 
@@ -279,15 +279,15 @@ Reuniones trimestrales para reflexionar sobre decisiones pasadas, aprender de ac
 
 ---
 
-## Action Items
+## Tareas Pendientes
 
-| Acción               | Owner   | Due Date   | Métrica de éxito          |
-| -------------------- | ------- | ---------- | ------------------------- |
-| [AI-N: acción SMART] | @handle | YYYY-MM-DD | [cómo mediremos el éxito] |
+| Acción               | Responsable | Fecha límite | Métrica de éxito          |
+| -------------------- | ----------- | ------------ | ------------------------- |
+| [AI-N: acción SMART] | @handle     | YYYY-MM-DD   | [cómo mediremos el éxito] |
 
 ---
 
-**Next Retrospective**: [fecha Q siguiente]
+**Próxima Retrospectiva**: [fecha Q siguiente]
 ```
 
 ---
@@ -324,7 +324,7 @@ Reuniones trimestrales para reflexionar sobre decisiones pasadas, aprender de ac
 
 - [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento base
 - [Architecture Review y Checklist](./architecture-review-process.md) — proceso de revisión y checklist
-- [ADR Management](./adr-management.md) — registro, lifecycle y versionado de ADRs
+- [Gestión de ADRs](./adr-management.md) — registro, lifecycle y versionado de ADRs
 - [Compliance y Validación](./compliance-validation.md) — validación automatizada de compliance
 - [TOGAF Architecture Governance](https://pubs.opengroup.org/architecture/togaf9-doc/arch/chap50.html) — referencia de gobierno arquitectónico
 - [Architecture Review Boards — Thoughtworks](https://www.thoughtworks.com/insights/blog/architecture/architecture-review-boards) — buenas prácticas

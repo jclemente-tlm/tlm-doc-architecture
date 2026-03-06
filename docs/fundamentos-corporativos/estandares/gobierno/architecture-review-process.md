@@ -109,10 +109,10 @@ sequenceDiagram
 - Asegurar alineación con estrategia corporativa
 - Documentar decisiones en meeting minutes
 
-### Solicitud de Review
+### Solicitud de Revisión
 
 ```markdown
-# Architecture Review Request
+# Solicitud de Revisión Arquitectónica
 
 **Fecha**: YYYY-MM-DD
 **Solicitante**: [Nombre] ([Rol - Equipo])
@@ -142,9 +142,9 @@ sequenceDiagram
 
 - [Riesgo]: [Mitigación]
 
-## Questions para el Board
+## Preguntas para el Board
 
-1. [Pregunta específica donde se necesita input del Board]
+1. [Pregunta específica donde se necesita opinión del Board]
 
 ## Timeline Propuesto
 
@@ -259,13 +259,13 @@ Lista estandarizada de verificación que garantiza cobertura completa durante ar
 - [ ] **Dependencies** identificadas (otros equipos, vendors)
 - [ ] **Rollback plan** probado
 
-### Template de Review Report
+### Plantilla de Informe de Revisión
 
 ```markdown
-# Architecture Review Report
+# Informe de Revisión Arquitectónica
 
 **ADR**: [ADR-NNN Título]
-**Reviewer**: [Nombre] (@handle)
+**Revisor**: [Nombre] (@handle)
 **Fecha**: YYYY-MM-DD
 **Solicitante**: [Nombre] (@handle)
 
@@ -274,7 +274,7 @@ Lista estandarizada de verificación que garantiza cobertura completa durante ar
 ## Resumen Ejecutivo
 
 **Decisión**: [✅ APROBADO | ⚠️ APROBADO con condiciones | ❌ RECHAZADO | ⏳ POSPUESTO]
-**Issues**: [N Critical, N High, N Medium, N Low]
+**Hallazgos**: [N Crítico, N Alto, N Medio, N Bajo]
 
 ---
 
@@ -332,8 +332,8 @@ Registro formal de resultados de reviews, actas del Board, audit reports y retro
 
 - **Review Reports** → Resultado de architecture reviews individuales
 - **Board Meeting Minutes** → Actas de reuniones del Architecture Board
-- **Audit Reports** → Ver [Architecture Board y Audits](./architecture-board-audits.md)
-- **Retrospective Reports** → Ver [Architecture Board y Audits](./architecture-board-audits.md)
+- **Audit Reports** → Ver [Architecture Board y Auditorías](./architecture-board-audits.md)
+- **Retrospective Reports** → Ver [Architecture Board y Auditorías](./architecture-board-audits.md)
 
 **Estructura en repositorio:**
 
@@ -356,29 +356,29 @@ docs/gobierno/
 ### Dashboard de Seguimiento
 
 ```markdown
-# Architecture Governance Dashboard - Q1 2026
+# Dashboard de Gobierno Arquitectónico - Q1 2026
 
-## Reviews Status
+## Estado de Revisiones
 
-| Review                   | Date       | Status       | Pending Actions |
-| ------------------------ | ---------- | ------------ | --------------- |
-| ADR-015 Postgres Replica | 2026-02-18 | ✅ Completed | 0               |
-| ADR-016 .NET 8 Migration | 2026-02-20 | ✅ Completed | 0               |
-| ADR-017 GraphQL          | 2026-02-20 | ❌ Rejected  | N/A             |
+| Revisión                 | Fecha      | Estado        | Acciones Pendientes |
+| ------------------------ | ---------- | ------------- | ------------------- |
+| ADR-015 Postgres Replica | 2026-02-18 | ✅ Completado | 0                   |
+| ADR-016 .NET 8 Migration | 2026-02-20 | ✅ Completado | 0                   |
+| ADR-017 GraphQL          | 2026-02-20 | ❌ Rechazado  | N/A                 |
 
-## Action Items Tracking (resumen)
+## Seguimiento de Tareas Pendientes (resumen)
 
-| Action                           | Owner  | Due Date   | Status     |
-| -------------------------------- | ------ | ---------- | ---------- |
-| ISSUE-1: Circuit breaker impl.   | @juanp | 2026-02-25 | ⏳ Planned |
-| ISSUE-2: Data residency confirm. | @juanp | 2026-02-20 | ✅ Done    |
+| Acción                           | Responsable | Fecha límite | Estado        |
+| -------------------------------- | ----------- | ------------ | ------------- |
+| ISSUE-1: Circuit breaker impl.   | @juanp      | 2026-02-25   | ⏳ Pendiente  |
+| ISSUE-2: Data residency confirm. | @juanp      | 2026-02-20   | ✅ Completado |
 
-## Metrics Q1 2026
+## Métricas Q1 2026
 
-- ADRs Reviewed: 12
-- Average Review Time: 8 días (target: 7 días) 🟡
-- Approval Rate: 75% (9/12)
-- Action Items Completion Rate: 78% (target: 90%) 🔴
+- ADRs Revisados: 12
+- Tiempo Promedio de Revisión: 8 días (objetivo: 7 días) 🟡
+- Tasa de Aprobación: 75% (9/12)
+- Tasa de cierre de tareas: 78% (objetivo: 90%) 🔴
 ```
 
 ---
@@ -412,8 +412,8 @@ docs/gobierno/
 ## Referencias
 
 - [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento que origina este estándar
-- [Architecture Board y Audits](./architecture-board-audits.md) — comité, auditorías y retrospectivas
-- [ADR Management](./adr-management.md) — registro, lifecycle y versionado de ADRs
+- [Architecture Board y Auditorías](./architecture-board-audits.md) — comité, auditorías y retrospectivas
+- [Gestión de ADRs](./adr-management.md) — registro, lifecycle y versionado de ADRs
 - [Compliance y Excepciones](./compliance-validation.md) — validación de compliance corporativo
 - [ADR de Michael Nygard](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions) — referencia original de ADRs
 - [Architecture Review Boards — Thoughtworks](https://www.thoughtworks.com/insights/blog/architecture/architecture-review-boards) — buenas prácticas

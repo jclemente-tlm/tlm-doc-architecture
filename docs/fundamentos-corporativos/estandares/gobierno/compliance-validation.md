@@ -109,61 +109,61 @@ Proceso de verificar que servicios, infraestructura y código cumplen con lineam
 - [ ] SLOs definidos para servicios críticos
 ```
 
-### Compliance Report Template
+### Plantilla de Informe de Cumplimiento
 
 ```markdown
-# Compliance Report - [Service Name]
+# Informe de Cumplimiento - [Nombre del Servicio]
 
-**Service**: [Nombre del servicio]
-**Owner**: [Tech Lead] | **Date**: YYYY-MM-DD | **Validator**: [Arquitecto]
-
----
-
-## Overall Compliance: XX% ([🟢/🟡/🔴] [RATING])
-
-- 🟢 Excellent: 90-100% | 🟢 Good: 80-89%
-- 🟡 Needs Improvement: 70-79% | 🔴 Critical: < 70%
+**Servicio**: [Nombre del servicio]
+**Responsable**: [Tech Lead] | **Fecha**: YYYY-MM-DD | **Validador**: [Arquitecto]
 
 ---
 
-## Compliance by Category
+## Cumplimiento General: XX% ([🟢/🟡/🔴] [CALIFICACIÓN])
 
-| Categoría       | Score | Status   |
-| --------------- | ----- | -------- |
-| Seguridad       | XX/10 | 🟢/🟡/🔴 |
-| APIs            | XX/8  | 🟢/🟡/🔴 |
-| Datos           | XX/7  | 🟢/🟡/🔴 |
-| Infraestructura | XX/7  | 🟢/🟡/🔴 |
-| Observabilidad  | XX/7  | 🟢/🟡/🔴 |
-| Testing         | XX/10 | 🟢/🟡/🔴 |
-| Documentación   | XX/15 | 🟢/🟡/🔴 |
+- 🟢 Excelente: 90-100% | 🟢 Bueno: 80-89%
+- 🟡 Requiere Mejora: 70-79% | 🔴 Crítico: < 70%
 
 ---
 
-## Non-Compliance Items
+## Cumplimiento por Categoría
 
-### 🔴 High Severity
+| Categoría       | Puntaje | Estado   |
+| --------------- | ------- | -------- |
+| Seguridad       | XX/10   | 🟢/🟡/🔴 |
+| APIs            | XX/8    | 🟢/🟡/🔴 |
+| Datos           | XX/7    | 🟢/🟡/🔴 |
+| Infraestructura | XX/7    | 🟢/🟡/🔴 |
+| Observabilidad  | XX/7    | 🟢/🟡/🔴 |
+| Testing         | XX/10   | 🟢/🟡/🔴 |
+| Documentación   | XX/15   | 🟢/🟡/🔴 |
+
+---
+
+## Elementos No Conformes
+
+### 🔴 Alta Severidad
 
 **NC-N: [Título]**
 
-- **Standard**: [link al estándar]
-- **Current State**: [qué hay actualmente]
-- **Expected State**: [qué debería haber]
-- **Risk**: [impacto si no se corrige]
-- **Remediation**: [acción concreta]
-- **Timeline**: [N] días | **Owner**: @handle
+- **Estándar**: [link al estándar]
+- **Estado Actual**: [qué hay actualmente]
+- **Estado Esperado**: [qué debería haber]
+- **Riesgo**: [impacto si no se corrige]
+- **Remediación**: [acción concreta]
+- **Plazo**: [N] días | **Responsable**: @handle
 
 ---
 
-## Action Items
+## Plan de Acción
 
-| Item | Severity | Owner   | Due Date   | Status     |
-| ---- | -------- | ------- | ---------- | ---------- |
-| NC-N | High     | @handle | YYYY-MM-DD | ⏳ Planned |
+| Ítem | Severidad | Responsable | Fecha límite | Estado         |
+| ---- | --------- | ----------- | ------------ | -------------- |
+| NC-N | Alta      | @handle     | YYYY-MM-DD   | ⏳ Planificado |
 
 ---
 
-## Next Review: [YYYY-MM-DD]
+## Próxima Revisión: [YYYY-MM-DD]
 ```
 
 ---
@@ -354,9 +354,9 @@ sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml
 
 ## Referencias
 
-- [Exception Management](./exception-management.md) — proceso cuando no hay compliance
-- [Service Ownership](./service-ownership.md) — accountability por compliance
-- [Architecture Board y Audits](./architecture-board-audits.md) — auditorías periódicas
+- [Gestión de Excepciones](./exception-management.md) — proceso cuando no hay compliance
+- [Ownership de Servicios](./service-ownership.md) — accountability por compliance
+- [Architecture Board y Auditorías](./architecture-board-audits.md) — auditorías periódicas
 - [SonarQube Quality Gates](https://docs.sonarsource.com/sonarqube/latest/user-guide/quality-gates/) — configuración
 - [Trivy Documentation](https://aquasecurity.github.io/trivy/) — container scanning
 - [Checkov Documentation](https://www.checkov.io/1.Welcome/What%20is%20Checkov.html) — IaC scanning

@@ -1,12 +1,12 @@
 ---
 id: adr-management
 sidebar_position: 3
-title: ADR Management
+title: Gestión de ADRs
 description: Registro centralizado, ciclo de vida, versionamiento y gestión de Architecture Decision Records (ADRs).
 tags: [gobierno, adr, architecture-decisions, governance]
 ---
 
-# ADR Management
+# Gestión de ADRs
 
 ## Contexto
 
@@ -128,7 +128,7 @@ El `README.md` del directorio `docs/adrs/` mantiene tres índices:
 
 - [ADR-012: Vault Secrets](adr-012-vault-secrets.md) → Reemplazado por ADR-013
 
-## Deprecated / Superseded
+## Obsoletos / Reemplazados
 
 - _(Ninguno actualmente)_
 ```
@@ -392,8 +392,6 @@ informed: "[Stakeholders informados]"
 - **MUST** incluir ADRs en el repositorio de documentación
 - **MUST** definir estado explícito en cada ADR (Propuesto, Aceptado, Rechazado, etc.)
 - **MUST** marcar ADRs obsoletos como `Deprecated` o `Superseded`
-- **MUST NOT** modificar ADRs con estado `Aceptado` — crear nuevo ADR si cambia la decisión
-- **MUST NOT** omitir Architecture Review para decisiones significativas
 
 ### SHOULD (Fuertemente recomendado)
 
@@ -403,6 +401,12 @@ informed: "[Stakeholders informados]"
 - **SHOULD** incluir diagramas C4 en ADRs significativos
 - **SHOULD** mantener separados índices por número, categoría y estado
 
+### MUST NOT (Prohibido)
+
+- **MUST NOT** modificar ADRs con estado `Aceptado` — crear nuevo ADR si cambia la decisión
+- **MUST NOT** reutilizar números de ADRs
+- **MUST NOT** omitir Architecture Review para decisiones arquitectónicamente significativas
+
 ---
 
 ## Referencias
@@ -411,5 +415,5 @@ informed: "[Stakeholders informados]"
 - [ADR GitHub Organization](https://adr.github.io/) — recursos y herramientas
 - [adr-tools](https://github.com/npryce/adr-tools) — CLI para gestión de ADRs
 - [Architecture Review y Checklist](./architecture-review-process.md) — proceso de revisión
-- [Architecture Board y Audits](./architecture-board-audits.md) — gobierno operativo
+- [Architecture Board y Auditorías](./architecture-board-audits.md) — gobierno operativo
 - [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento base

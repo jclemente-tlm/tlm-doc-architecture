@@ -1,12 +1,12 @@
 ---
 id: service-ownership
 sidebar_position: 6
-title: Service Ownership
+title: Ownership de Servicios
 description: Modelo de ownership de servicios con accountability clara, registro de responsables y proceso de transición de ownership.
 tags: [gobierno, ownership, servicios, accountability]
 ---
 
-# Service Ownership
+# Ownership de Servicios
 
 ## Contexto
 
@@ -72,20 +72,20 @@ graph TB
     style K fill:#ffe1e1,color:#000000
 ```
 
-### Service Ownership Registry
+### Registro de Ownership de Servicios
 
 ```markdown
-# Service Ownership Registry
+# Registro de Ownership de Servicios
 
 **Última actualización**: YYYY-MM-DD
 
-| Service              | Owner (Tech Lead)      | Team              | On-Call             | Slack Channel         | Repositorio                |
-| -------------------- | ---------------------- | ----------------- | ------------------- | --------------------- | -------------------------- |
-| Customer Service     | Juan Pérez (@juanp)    | Customer Team     | customer-oncall     | #customer-service     | talma/customer-service     |
-| Order Service        | Carlos Ruiz (@carlosr) | Order Team        | order-oncall        | #order-service        | talma/order-service        |
-| Payment Service      | Ana Torres (@anat)     | Payment Team      | payment-oncall      | #payment-service      | talma/payment-service      |
-| Notification Service | María Medina (@mariam) | Notification Team | notification-oncall | #notification-service | talma/notification-service |
-| Auth Service         | Luis García (@luisg)   | Platform Team     | platform-oncall     | #auth-service         | talma/auth-service         |
+| Servicio             | Responsable (Tech Lead) | Equipo            | On-Call             | Canal Slack           | Repositorio                |
+| -------------------- | ----------------------- | ----------------- | ------------------- | --------------------- | -------------------------- |
+| Customer Service     | Juan Pérez (@juanp)     | Customer Team     | customer-oncall     | #customer-service     | talma/customer-service     |
+| Order Service        | Carlos Ruiz (@carlosr)  | Order Team        | order-oncall        | #order-service        | talma/order-service        |
+| Payment Service      | Ana Torres (@anat)      | Payment Team      | payment-oncall      | #payment-service      | talma/payment-service      |
+| Notification Service | María Medina (@mariam)  | Notification Team | notification-oncall | #notification-service | talma/notification-service |
+| Auth Service         | Luis García (@luisg)    | Platform Team     | platform-oncall     | #auth-service         | talma/auth-service         |
 ```
 
 ---
@@ -99,7 +99,7 @@ El Tech Lead como Service Owner dedica tiempo a cinco dimensiones:
 #### Compliance (20% del tiempo)
 
 - Mantener adherencia a estándares corporativos
-- Gestionar excepciones si son necesarias (usar [Exception Management](./exception-management.md))
+- Gestionar excepciones si son necesarias (usar [Gestión de Excepciones](./exception-management.md))
 - Participar en architecture reviews y audits
 - Actualizar el servicio ante nuevos lineamientos
 
@@ -152,17 +152,17 @@ El Tech Lead como Service Owner dedica tiempo a cinco dimensiones:
 El siguiente dashboard sirve para visibilizar el estado de cada servicio por owner:
 
 ```markdown
-# Service Owner Dashboard — [Mes YYYY]
+# Dashboard del Owner de Servicios — [Mes YYYY]
 
-| Owner    | Service      | SLO Compliance | Critical CVEs | Compliance Score | Cost vs Budget |
-| -------- | ------------ | -------------- | ------------- | ---------------- | -------------- |
-| @juanp   | Customer     | 99.5% ✅       | 0 ✅          | 87% ✅           | 95% ✅         |
-| @carlosr | Order        | 98.2% ⚠️       | 1 ⚠️          | 92% ✅           | 105% ⚠️        |
-| @anat    | Payment      | 99.9% ✅       | 0 ✅          | 78% ⚠️           | 88% ✅         |
-| @mariam  | Notification | 97.5% ⚠️       | 0 ✅          | 85% ✅           | 92% ✅         |
-| @luisg   | Auth         | 99.95% ✅      | 0 ✅          | 95% ✅           | 90% ✅         |
+| Responsable | Servicio     | Cumplimiento SLO | CVEs Críticos | Puntaje Compliance | Costo vs Presupuesto |
+| ----------- | ------------ | ---------------- | ------------- | ------------------ | -------------------- |
+| @juanp      | Customer     | 99.5% ✅         | 0 ✅          | 87% ✅             | 95% ✅               |
+| @carlosr    | Order        | 98.2% ⚠️         | 1 ⚠️          | 92% ✅             | 105% ⚠️              |
+| @anat       | Payment      | 99.9% ✅         | 0 ✅          | 78% ⚠️             | 88% ✅               |
+| @mariam     | Notification | 97.5% ⚠️         | 0 ✅          | 85% ✅             | 92% ✅               |
+| @luisg      | Auth         | 99.95% ✅        | 0 ✅          | 95% ✅             | 90% ✅               |
 
-Leyenda: ✅ Target met | ⚠️ Below target | 🔴 Critical action required
+Leyenda: ✅ Objetivo cumplido | ⚠️ Por debajo del objetivo | 🔴 Acción crítica requerida
 ```
 
 **Targets:**
@@ -189,15 +189,15 @@ Cuando un Tech Lead cambia de rol o de servicio:
 | 5. Handover formal      | Día de cambio        | Architecture Board |
 | 6. Update registry      | Día de cambio        | Architecture Board |
 
-### Knowledge Transfer Checklist
+### Checklist para Transfer de Conocimiento
 
 ```markdown
-# Ownership Transition — [Service Name]
+# Transición de Ownership — [Nombre del Servicio]
 
-**From**: [Nombre saliente] (@handle)
-**To**: [Nombre entrante] (@handle)
-**Date**: YYYY-MM-DD
-**Reason**: [Motivo del cambio]
+**De**: [Nombre saliente] (@handle)
+**Para**: [Nombre entrante] (@handle)
+**Fecha**: YYYY-MM-DD
+**Motivo**: [Motivo del cambio]
 
 ---
 
@@ -236,8 +236,8 @@ Cuando un Tech Lead cambia de rol o de servicio:
 
 ---
 
-**Completion Date**: YYYY-MM-DD
-**Verified by**: Architecture Board
+**Fecha de Finalización**: YYYY-MM-DD
+**Verificado por**: Architecture Board
 ```
 
 ---
@@ -251,7 +251,6 @@ Cuando un Tech Lead cambia de rol o de servicio:
 - **MUST** el Service Owner ser accountable por compliance del servicio
 - **MUST** notificar al Architecture Board con 30 días de anticipación ante cambio de ownership
 - **MUST** ejecutar knowledge transfer completo antes del traspaso formal
-- **MUST NOT** operar servicios en producción sin Service Owner asignado
 
 ### SHOULD (Fuertemente recomendado)
 
@@ -260,13 +259,18 @@ Cuando un Tech Lead cambia de rol o de servicio:
 - **SHOULD** revisar el registry trimestralmente para confirmar owners vigentes
 - **SHOULD** incluir ownership responsibilities en el onboarding de Tech Leads
 
+### MUST NOT (Prohibido)
+
+- **MUST NOT** operar servicios en producción sin Service Owner asignado
+- **MUST NOT** completar una transición de ownership sin knowledge transfer documentado
+
 ---
 
 ## Referencias
 
 - [Compliance y Validación](./compliance-validation.md) — compliance que el owner debe asegurar
-- [Exception Management](./exception-management.md) — proceso cuando no hay compliance
-- [Architecture Board y Audits](./architecture-board-audits.md) — auditorías al servicio
+- [Gestión de Excepciones](./exception-management.md) — proceso cuando no hay compliance
+- [Architecture Board y Auditorías](./architecture-board-audits.md) — auditorías al servicio
 - [Architecture Review y Checklist](./architecture-review-process.md) — reviews que el owner gestiona
 - [Lineamiento Autonomía de Servicios](../../lineamientos/arquitectura/10-autonomia-de-servicios.md) — lineamiento relacionado
 - [Team Topologies](https://teamtopologies.com/) — referencia para ownership model

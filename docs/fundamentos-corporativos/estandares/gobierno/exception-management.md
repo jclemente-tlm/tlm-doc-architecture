@@ -1,7 +1,7 @@
 ---
 id: exception-management
 sidebar_position: 5
-title: Exception Management
+title: Gestión de Excepciones
 description: Proceso formal para solicitar, evaluar, aprobar y revisar excepciones a lineamientos y estándares corporativos.
 tags: [gobierno, exceptions, compliance, governance]
 ---
@@ -85,45 +85,45 @@ sequenceDiagram
     end
 ```
 
-### Exception Request Template
+### Plantilla de Solicitud de Excepción
 
 ```markdown
-# Exception Request - EXC-REQ-NNN
+# Solicitud de Excepción — EXC-REQ-NNN
 
-**Service**: [Nombre del servicio]
-**Requested by**: [Nombre] ([Rol])
-**Date**: YYYY-MM-DD
-**Type**: Temporal | Permanente
-
----
-
-## Standard / Lineamiento
-
-**Standard**: [Link al estándar]
-**Requirement**: [Qué exige el estándar]
+**Servicio**: [Nombre del servicio]
+**Solicitado por**: [Nombre] ([Rol])
+**Fecha**: YYYY-MM-DD
+**Tipo**: Temporal | Permanente
 
 ---
 
-## Non-Compliance Description
+## Estándar / Lineamiento
+
+**Estándar**: [Link al estándar]
+**Requisito**: [Qué exige el estándar]
+
+---
+
+## Descripción del Incumplimiento
 
 [Describir estado actual vs estado esperado]
 
 ---
 
-## Justification for Exception
+## Justificación de la Excepción
 
-### Business Context
+### Contexto de Negocio
 
 [Contexto de negocio, deadlines, impacto cuantificado]
 
-### Risk Assessment
+### Evaluación de Riesgos
 
-**Risk si se mantiene excepción:**
+**Riesgo si se mantiene la excepción:**
 | Riesgo | Severidad | Mitigación |
 | ------ | --------- | ---------------- |
 | [Riesgo] | 🟡 Medium | [cómo se mitiga] |
 
-### Compensating Controls
+### Controles Compensatorios
 
 Mientras la excepción esté activa:
 
@@ -132,41 +132,41 @@ Mientras la excepción esté activa:
 
 ---
 
-## Proposed Timeline
+## Cronograma Propuesto
 
-**Exception Duration**: [N] días (hasta YYYY-MM-DD)
+**Duración de la excepción**: [N] días (hasta YYYY-MM-DD)
 
-**Remediation Plan**:
+**Plan de Remediación**:
 
 - YYYY-MM-DD: [Milestone 1]
-- YYYY-MM-DD: [Milestone 2 — Fully compliant]
+- YYYY-MM-DD: [Hito 2 — Completamente conforme]
 
 ---
 
-## Alternatives Considered
+## Alternativas Consideradas
 
-### Alternative 1: Cumplir estándar ahora
+### Alternativa 1: Cumplir estándar ahora
 
-**Pros**: ✅ Compliance inmediato
+**Pros**: ✅ Cumplimiento inmediato
 **Contras**: ❌ [impacto concreto]
-**Decision**: [por qué se descartó]
+**Decisión**: [por qué se descartó]
 
-### Alternative 2: [Opción intermedia]
+### Alternativa 2: [Opción intermedia]
 
 **Pros**: ✅ [ventaja]
 **Contras**: ❌ [desventaja]
-**Decision**: [por qué se descartó]
+**Decisión**: [por qué se descartó]
 
 ---
 
-## Business Impact if Exception Denied
+## Impacto si se Niega la Excepción
 
 - [Impacto cuantificado si es posible]
 
 ---
 
-**Submitted**: YYYY-MM-DD
-**Status**: ⏳ Pending Review
+**Enviado**: YYYY-MM-DD
+**Estado**: ⏳ Pendiente de revisión
 ```
 
 ---
@@ -181,41 +181,41 @@ Criterios objetivos y transparentes para evaluar si una excepción debe aprobars
 
 ### Criterios de Evaluación
 
-**1. Business Impact (peso 30%)**
+**1. Impacto de Negocio (peso 30%)**
 
-| Score | Condición                                                                      |
-| ----- | ------------------------------------------------------------------------------ |
-| 10    | Denial causa revenue loss significativo (> $100K) o incumplimiento contractual |
-| 7     | Denial causa delay en features con impacto moderado cuantificado               |
-| 4     | Denial causa inconveniencia pero no bloquea el negocio                         |
-| 0     | Sin impacto de negocio                                                         |
+| Score | Condición                                                                              |
+| ----- | -------------------------------------------------------------------------------------- |
+| 10    | Denegar causa pérdida de ingresos significativa (> $100K) o incumplimiento contractual |
+| 7     | Denegar causa retraso en funcionalidades con impacto moderado cuantificado             |
+| 4     | Denegar causa inconveniencia pero no bloquea el negocio                                |
+| 0     | Sin impacto de negocio                                                                 |
 
-**2. Technical Justification (peso 25%)**
+**2. Justificación Técnica (peso 25%)**
 
-| Score | Condición                                                          |
-| ----- | ------------------------------------------------------------------ |
-| 10    | Restricción técnica legítima fuera de control (vendor limitation)  |
-| 7     | Alternativa compliant es significativamente más compleja o costosa |
-| 4     | Preferencia técnica, pero alternativa compliant es viable          |
-| 0     | Sin justificación técnica válida                                   |
+| Score | Condición                                                                |
+| ----- | ------------------------------------------------------------------------ |
+| 10    | Restricción técnica legítima fuera de control (limitación del proveedor) |
+| 7     | Alternativa conforme es significativamente más compleja o costosa        |
+| 4     | Preferencia técnica, pero alternativa conforme es viable                 |
+| 0     | Sin justificación técnica válida                                         |
 
-**3. Risk & Compensating Controls (peso 25%)**
+**3. Riesgo y Controles Compensatorios (peso 25%)**
 
 | Score | Condición                                                          |
 | ----- | ------------------------------------------------------------------ |
 | 10    | Riesgo completamente mitigado con controles compensatorios sólidos |
-| 7     | Riesgo parcialmente mitigado, residual risk aceptable              |
+| 7     | Riesgo parcialmente mitigado, riesgo residual aceptable            |
 | 4     | Controles compensatorios débiles o inexistentes                    |
 | 0     | Riesgo inaceptable sin mitigación                                  |
 
-**4. Remediation Plan (peso 20%)**
+**4. Plan de Remediación (peso 20%)**
 
-| Score | Condición                                                                 |
-| ----- | ------------------------------------------------------------------------- |
-| 10    | Plan claro, timeline realista, recursos asignados, milestones específicos |
-| 7     | Plan presente pero timeline o recursos inciertos                          |
-| 4     | Plan vago o timeline no realista                                          |
-| 0     | Sin plan de remediation                                                   |
+| Score | Condición                                                            |
+| ----- | -------------------------------------------------------------------- |
+| 10    | Plan claro, timeline realista, recursos asignados, hitos específicos |
+| 7     | Plan presente pero timeline o recursos inciertos                     |
+| 4     | Plan vago o timeline no realista                                     |
+| 0     | Sin plan de remediación                                              |
 
 **Umbral de decisión:**
 
@@ -225,52 +225,52 @@ Criterios objetivos y transparentes para evaluar si una excepción debe aprobars
 | 60-69% | ⚠️ Requiere aprobación formal del Architecture Board        |
 | < 60%  | ❌ Rechazado — se debe remediar                             |
 
-### Evaluation Template (simplificado)
+### Plantilla de Evaluación (simplificada)
 
 ```markdown
-# Exception Evaluation - EXC-REQ-NNN
+# Evaluación de Excepción — EXC-REQ-NNN
 
 **Evaluador**: [Arquitecto] | **Fecha**: YYYY-MM-DD
 
-## Scoring
+## Puntuación
 
-| Criterio                     | Peso | Score | Puntaje |
-| ---------------------------- | ---- | ----- | ------- |
-| Business Impact              | 30%  | X/10  | XX%     |
-| Technical Justification      | 25%  | X/10  | XX%     |
-| Risk & Compensating Controls | 25%  | X/10  | XX%     |
-| Remediation Plan             | 20%  | X/10  | XX%     |
-| **Total**                    |      |       | **XX%** |
+| Criterio                          | Peso | Score | Puntaje |
+| --------------------------------- | ---- | ----- | ------- |
+| Impacto de Negocio                | 30%  | X/10  | XX%     |
+| Justificación Técnica             | 25%  | X/10  | XX%     |
+| Riesgo y Controles Compensatorios | 25%  | X/10  | XX%     |
+| Plan de Remediación               | 20%  | X/10  | XX%     |
+| **Total**                         |      |       | **XX%** |
 
-## Rationale por Criterio
+## Justificación por Criterio
 
-**Business Impact**: [Justificación del score]
-**Technical Justification**: [Justificación del score]
-**Risk & Controls**: [Justificación del score]
-**Remediation Plan**: [Justificación del score]
+**Impacto de Negocio**: [Justificación del score]
+**Justificación Técnica**: [Justificación del score]
+**Riesgo y Controles**: [Justificación del score]
+**Plan de Remediación**: [Justificación del score]
 
-## Recommendation
+## Recomendación
 
-[✅ APPROVE | ❌ REJECT] [with conditions: ...]
+[✅ APROBAR | ❌ RECHAZAR] [con condiciones: ...]
 
-**Conditions (si aplica)**:
+**Condiciones (si aplica)**:
 
 1. [Condición 1]
 2. [Condición 2]
 
-## Board Decision
+## Decisión del Board
 
-**Decision**: [Approved/Rejected]
-**Date**: YYYY-MM-DD
-**Exception ID**: EXC-NNN
-**Expiration**: YYYY-MM-DD
+**Decisión**: [Aprobado/Rechazado]
+**Fecha**: YYYY-MM-DD
+**ID Excepción**: EXC-NNN
+**Expiración**: YYYY-MM-DD
 ```
 
 ---
 
-## Exception Review
+## Revisión de Excepciones
 
-### ¿Qué es Exception Review?
+### ¿Qué es la Revisión de Excepciones?
 
 Proceso periódico de revisión de excepciones activas para verificar si se deben renovar, cerrar (compliance alcanzado) o revocar.
 
@@ -282,83 +282,83 @@ Proceso periódico de revisión de excepciones activas para verificar si se debe
 
 **Resultados posibles:**
 
-| Resultado                | Cuándo aplica                                          |
-| ------------------------ | ------------------------------------------------------ |
-| **Close (Compliant)**    | Remediation completada exitosamente                    |
-| **Extend**               | Progreso demostrable, timeline ajustado (justificado)  |
-| **Revoke**               | Controles compensatorios fallaron o riesgo inaceptable |
-| **Convert to Permanent** | Restricción técnica real confirmada (excepcional)      |
+| Resultado                  | Cuándo aplica                                          |
+| -------------------------- | ------------------------------------------------------ |
+| **Cerrar (Conforme)**      | Remediación completada exitosamente                    |
+| **Extender**               | Progreso demostrable, timeline ajustado (justificado)  |
+| **Revocar**                | Controles compensatorios fallaron o riesgo inaceptable |
+| **Convertir a Permanente** | Restricción técnica real confirmada (excepcional)      |
 
-### Exception Registry
+### Registro de Excepciones
 
 ```markdown
-# Exception Registry — [Mes] [YYYY]
+# Registro de Excepciones — [Mes] [YYYY]
 
-## Active Exceptions
+## Excepciones Activas
 
-| ID      | Service          | Standard         | Type      | Expiration | Status        | Owner    |
-| ------- | ---------------- | ---------------- | --------- | ---------- | ------------- | -------- |
-| EXC-042 | Customer Service | Contract Testing | Temporal  | 2026-05-20 | ✅ Active     | @juanp   |
-| EXC-038 | Payment Service  | PostgreSQL       | Permanent | N/A        | ✅ Active     | @anat    |
-| EXC-045 | Order Service    | Redis Caching    | Temporal  | 2026-04-01 | ⚠️ Review Due | @carlosr |
+| ID      | Servicio         | Estándar         | Tipo      | Vencimiento | Estado                | Responsable |
+| ------- | ---------------- | ---------------- | --------- | ----------- | --------------------- | ----------- |
+| EXC-042 | Customer Service | Contract Testing | Temporal  | 2026-05-20  | ✅ Activa             | @juanp      |
+| EXC-038 | Payment Service  | PostgreSQL       | Permanent | N/A         | ✅ Activa             | @anat       |
+| EXC-045 | Order Service    | Redis Caching    | Temporal  | 2026-04-01  | ⚠️ Revisión Pendiente | @carlosr    |
 
-## Closed Exceptions (90 días)
+## Excepciones Cerradas (90 días)
 
-| ID      | Service          | Standard      | Closed     | Outcome      |
-| ------- | ---------------- | ------------- | ---------- | ------------ |
-| EXC-040 | Customer Service | IaC (partial) | 2026-02-10 | ✅ Compliant |
+| ID      | Servicio         | Estándar      | Cerrada    | Resultado   |
+| ------- | ---------------- | ------------- | ---------- | ----------- |
+| EXC-040 | Customer Service | IaC (partial) | 2026-02-10 | ✅ Conforme |
 
-## Statistics
+## Estadísticas
 
-- **Active**: N | **Avg Duration**: N días
-- **Compliance Rate Post-Exception**: XX%
-- **Extension Rate**: XX% | **Revocation Rate**: XX%
+- **Activas**: N | **Duración Promedio**: N días
+- **Tasa de Cumplimiento Post-Excepción**: XX%
+- **Tasa de Extensión**: XX% | **Tasa de Revocación**: XX%
 ```
 
 ### Exception Review Meeting Template
 
 ```markdown
-# Exception Review — [Mes YYYY]
+# Revisión de Excepciones — [Mes YYYY]
 
-**Date**: YYYY-MM-DD | **Facilitator**: [Arquitecto]
+**Fecha**: YYYY-MM-DD | **Facilitador**: [Arquitecto]
 
 ---
 
 ## Agenda
 
-1. Mid-term reviews (50% del periodo)
-2. Expiring soon (próximas 30 días)
-3. Overdue reviews
+1. Revisiones a mitad de período (50% del periodo)
+2. Por vencer (próximas 30 días)
+3. Revisiones atrasadas
 
 ---
 
-## EXC-NNN: [Service] — [Standard]
+## EXC-NNN: [Servicio] — [Estándar]
 
-**Background**: [Resumen de la excepción]
+**Antecedentes**: [Resumen de la excepción]
 
-**Progress Update**:
+**Avance**:
 
 - ✅ [Hito cumplido]
 - ⚠️ [Hito en riesgo]
 
-**Compensating Controls Status**:
+**Estado de Controles Compensatorios**:
 
 - ✅/❌ [Control 1]: [Estado]
 - ✅/❌ [Control 2]: [Estado]
 
-**Decision**: [✅ CONTINUE | ✅ CLOSE | ⚠️ EXTEND | 🚨 REVOKE]
+**Decisión**: [✅ CONTINUAR | ✅ CERRAR | ⚠️ EXTENDER | 🚨 REVOCAR]
 
-**Actions**:
+**Acciones**:
 
-- [Action item con owner y due date]
+- [Tarea con responsable y fecha límite]
 
 ---
 
-## Summary
+## Resumen
 
-| Reviewed | Closed | Extended | Continuing | Revoked |
-| -------- | ------ | -------- | ---------- | ------- |
-| N        | N      | N        | N          | N       |
+| Revisadas | Cerradas | Extendidas | Continúan | Revocadas |
+| --------- | -------- | ---------- | --------- | --------- |
+| N         | N        | N          | N         | N         |
 ```
 
 ---
@@ -374,8 +374,6 @@ Proceso periódico de revisión de excepciones activas para verificar si se debe
 - **MUST** revisar excepciones temporales al 50% del periodo y al expirar
 - **MUST** revisar excepciones permanentes anualmente
 - **MUST** revocar excepciones si los controles compensatorios fallan
-- **MUST NOT** aprobar excepciones sin evaluation formal con scoring
-- **MUST NOT** extender excepciones sin justificación documentada y nueva evaluación
 
 ### SHOULD (Fuertemente recomendado)
 
@@ -384,11 +382,17 @@ Proceso periódico de revisión de excepciones activas para verificar si se debe
 - **SHOULD** publicar exception registry en el portal de documentación
 - **SHOULD** incluir exception trend en governance dashboard
 
+### MUST NOT (Prohibido)
+
+- **MUST NOT** aprobar excepciones sin evaluación formal con scoring
+- **MUST NOT** extender excepciones sin justificación documentada y nueva evaluación
+- **MUST NOT** convertir excepciones temporales en permanentes por inercia
+
 ---
 
 ## Referencias
 
 - [Compliance y Validación](./compliance-validation.md) — validación automatizada
-- [Service Ownership](./service-ownership.md) — accountability del service owner
-- [Architecture Board y Audits](./architecture-board-audits.md) — quien aprueba excepciones
+- [Ownership de Servicios](./service-ownership.md) — accountability del service owner
+- [Architecture Board y Auditorías](./architecture-board-audits.md) — quien aprueba excepciones
 - [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento base
