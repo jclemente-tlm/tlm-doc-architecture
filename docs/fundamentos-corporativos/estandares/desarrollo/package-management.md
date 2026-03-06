@@ -262,7 +262,7 @@ jobs:
         run: dotnet nuget push "**/*.nupkg" --source "https://nuget.pkg.github.com/talma/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### Vulnerability Scanning
+### Análisis de Vulnerabilidades
 
 ```yaml
 # .github/workflows/dependency-audit.yml

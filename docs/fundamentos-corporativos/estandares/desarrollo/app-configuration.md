@@ -118,7 +118,7 @@ builder.Configuration.AddCommandLine(args);
 var app = builder.Build();
 ```
 
-### Configuration Structure
+### Estructura de Configuración
 
 ```json
 // appsettings.json - Valores DEFAULT

@@ -160,7 +160,7 @@ Convención para nombrar y usar ramas según su propósito.
 ✅ Automatización por prefijo
 ✅ Búsqueda y filtrado fácil
 
-### Naming Conventions
+### Convenciones de Nomenclatura
 
 ```bash
 # ✅ BUENO: Descriptivo, incluye ticket, kebab-case
@@ -799,11 +799,8 @@ jobs:
 
 ### MUST NOT (Prohibido)
 
-- **MUST NOT** hacer commit directo a main
-- **MUST NOT** usar force push en main
-- **MUST NOT** eliminar main
-- **MUST NOT** hacer merge sin revisión
-- **MUST NOT** hacer merge con CI fallando
+- **MUST NOT** hacer commit directo, force push ni eliminar main
+- **MUST NOT** hacer merge sin revisión aprobada ni con CI fallando
 - **MUST NOT** usar mensajes de commit genéricos ("fix", "update", "WIP")
 
 ---

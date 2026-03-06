@@ -189,7 +189,7 @@ dotnet_diagnostic.CA1303.severity = none
 dotnet_diagnostic.CA2007.severity = warning
 ```
 
-### Naming Conventions
+### Convenciones de Nomenclatura
 
 ```csharp
 // ✅ BUENO: Naming conventions consistentes
@@ -229,7 +229,7 @@ private ILogger logger; // Field sin _
 private const int MAX_RETRIES = 3; // Constante en UPPER_CASE (no .NET style)
 ```
 
-### File Organization
+### Organización de Archivos
 
 ```csharp
 // ✅ BUENO: Organización estándar
@@ -438,7 +438,7 @@ Proceso de reestructurar código existente sin cambiar su comportamiento externo
 ✅ Menos bugs
 ✅ Mejor diseño
 
-### Common Refactorings
+### Refactorizaciones Comunes
 
 ```csharp
 // ❌ Code Smell: Long Method (> 30 líneas)
@@ -583,7 +583,7 @@ public class CustomerReportService
 }
 ```
 
-### Refactoring Safely
+### Refactorizar con Seguridad
 
 ```bash
 # 1. Asegurar tests existentes pasan
@@ -831,7 +831,7 @@ jobs:
 
 ## Implementación Integrada
 
-### Setup Completo de Quality
+### Setup Completo de Calidad
 
 ```bash
 # 1. Crear estructura de proyecto
@@ -953,10 +953,8 @@ chmod +x .git/hooks/pre-commit
 
 ### MUST NOT (Prohibido)
 
-- **MUST NOT** deshabilitar analyzers sin justificación documentada
+- **MUST NOT** silenciar warnings ni deshabilitar analyzers o TreatWarningsAsErrors sin justificación documentada
 - **MUST NOT** hacer merge sin pasar quality gate
-- **MUST NOT** ignorar warnings sin resolución
-- **MUST NOT** deshabilitar TreatWarningsAsErrors en proyectos principales
 - **MUST NOT** hacer commits con TODOs sin ticket asociado
 
 ---

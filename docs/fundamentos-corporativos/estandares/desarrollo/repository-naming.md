@@ -116,8 +116,7 @@ Si un repositorio cumple varios propósitos, elegir la categoría de su función
 
 - **MUST NOT** usar guiones bajos (`_`), puntos (`.`) ni mayúsculas en el nombre
 - **MUST NOT** colocar el prefijo `tlm-` en una posición distinta al inicio
-- **MUST NOT** combinar dos categorías en un mismo nombre (ej: `tlm-svc-api-orders`)
-- **MUST NOT** usar nombres genéricos que no comuniquen el propósito (ej: `tlm-svc-service1`)
+- **MUST NOT** combinar dos categorías ni usar nombres genéricos que no comuniquen el propósito (ej: `tlm-svc-api-orders`, `tlm-svc-service1`)
 
 ---
 
