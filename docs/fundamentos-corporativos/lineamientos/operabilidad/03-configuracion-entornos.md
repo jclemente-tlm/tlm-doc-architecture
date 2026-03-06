@@ -18,4 +18,4 @@ La divergencia entre entornos de desarrollo, QA y producción genera el síndrom
 - [Gestionar configuración centralizada](../../estandares/infraestructura/configuration-management.md#2-centralized-configuration)
 - [Garantizar paridad entre entornos](../../estandares/infraestructura/configuration-management.md#4-environment-parity)
 - [Gestionar variables por entorno](../../estandares/infraestructura/configuration-management.md#3-environment-variables)
-- [Nunca hardcodear configuración](../../estandares/desarrollo/dependency-configuration.md#3-no-hardcoded-config)
+- [Nunca hardcodear configuración](../../estandares/desarrollo/app-configuration.md)

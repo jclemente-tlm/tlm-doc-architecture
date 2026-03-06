@@ -14,7 +14,7 @@ El 60% de brechas de seguridad explotan vulnerabilidades conocidas sin parchear 
 ## Estándares Obligatorios
 
 - [Escanear imágenes de contenedores](../../estandares/seguridad/security-scanning.md#1-container-scanning)
-- [Gestionar dependencias con Package Manager](../../estandares/desarrollo/dependency-configuration.md#1-package-management)
+- [Gestionar dependencias con Package Manager](../../estandares/desarrollo/package-management.md)
 - [Mantener inventario de componentes (SBOM)](../../estandares/seguridad/security-scanning.md#4-sbom-software-bill-of-materials)
 - [Definir SLA de remediación por severidad](../../estandares/seguridad/security-testing.md#4-vulnerability-sla)
 - [Implementar patch management](../../estandares/seguridad/security-governance.md#5-patch-management)

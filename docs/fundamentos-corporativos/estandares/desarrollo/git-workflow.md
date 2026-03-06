@@ -13,11 +13,11 @@ Este estándar define el flujo de trabajo con Git para desarrollo colaborativo, 
 
 **Conceptos incluidos:**
 
-- **Git Workflow** → Flujo de trabajo colaborativo
-- **Branching Strategy** → Estrategia de ramas
-- **Merge Strategies** → Estrategias de merge
-- **Branch Protection** → Protección de ramas críticas
-- **Conventional Commits** → Commits estructurados
+- **Git Workflow** — Flujo de trabajo colaborativo
+- **Branching Strategy** — Estrategia de ramas
+- **Merge Strategies** — Estrategias de merge
+- **Branch Protection** — Protección de ramas críticas
+- **Conventional Commits** — Commits estructurados
 
 ---
 
@@ -32,19 +32,7 @@ Este estándar define el flujo de trabajo con Git para desarrollo colaborativo, 
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 5 aspectos del flujo de trabajo con Git:
-
-### Índice de Conceptos
-
-1. **Git Workflow**: Flujo de desarrollo colaborativo (GitHub Flow)
-2. **Branching Strategy**: Estrategia de ramas por propósito
-3. **Merge Strategies**: Cómo integrar cambios
-4. **Branch Protection**: Reglas para proteger ramas críticas
-5. **Conventional Commits**: Formato estructurado de commits
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
@@ -62,7 +50,7 @@ graph TB
 
 ---
 
-## 1. Git Workflow
+## Git Workflow
 
 ### ¿Qué es Git Workflow?
 
@@ -149,7 +137,7 @@ sequenceDiagram
 
 ---
 
-## 2. Branching Strategy
+## Branching Strategy
 
 ### ¿Qué es Branching Strategy?
 
@@ -223,7 +211,7 @@ jobs:
 
 ---
 
-## 3. Merge Strategies
+## Merge Strategies
 
 ### ¿Qué son Merge Strategies?
 
@@ -302,7 +290,7 @@ Automatically delete head branches: ✅ Enabled
 
 ---
 
-## 4. Branch Protection
+## Branch Protection
 
 ### ¿Qué es Branch Protection?
 
@@ -389,7 +377,7 @@ Protection rules:
 
 ---
 
-## 5. Conventional Commits
+## Conventional Commits
 
 ### ¿Qué son Conventional Commits?
 

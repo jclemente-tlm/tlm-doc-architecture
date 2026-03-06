@@ -2,7 +2,8 @@
 id: database-standards
 sidebar_position: 3
 title: Estándares de Base de Datos
-description: Estándares para migraciones, optimización, connection pooling y validación de datos en bases de datos relacionales.
+description: Estándares para migraciones, naming SQL, stored procedures, optimización, connection pooling y validación de datos en bases de datos relacionales.
+tags: [datos, database, sql, migrations, performance, ef-core, postgresql]
 ---
 
 # Estándares de Base de Datos
@@ -11,60 +12,60 @@ description: Estándares para migraciones, optimización, connection pooling y v
 
 Este estándar define las prácticas operacionales fundamentales para trabajar con bases de datos relacionales, cubriendo migraciones, performance, configuración y calidad de datos. Complementa el lineamiento [Datos por Dominio](../../lineamientos/datos/01-datos-por-dominio.md).
 
+**Cuándo aplicar:** Todo servicio con PostgreSQL o SQL Server que use EF Core, stored procedures o queries directas.
+
 **Conceptos incluidos:**
 
-- **Database Migrations** → Control de versión de esquemas
-- **Database Optimization** → Índices, queries, performance
-- **Connection Pooling** → Gestión eficiente de conexiones
-- **Data Validation** → Integridad y calidad de datos
+- **Database Migrations** — Control de versión de esquemas con EF Core
+- **SQL Naming Conventions** — Nombres consistentes para objetos de BD
+- **Stored Procedures** — Estructura y mejores prácticas en PL/pgSQL
+- **Database Optimization** — Índices, queries eficientes, performance
+- **Connection Pooling** — Gestión eficiente de conexiones
+- **Data Validation** — Integridad y calidad de datos
 
 ---
 
 ## Stack Tecnológico
 
-| Componente          | Tecnología            | Versión | Uso                     |
-| ------------------- | --------------------- | ------- | ----------------------- |
-| **Base de Datos**   | PostgreSQL            | 15+     | Base de datos principal |
-| **ORM**             | Entity Framework Core | 8.0+    | Data access layer       |
-| **Migraciones**     | EF Core Migrations    | 8.0+    | Schema migrations       |
-| **Connection Pool** | Npgsql                | 8.0+    | PostgreSQL driver       |
-| **Validación**      | FluentValidation      | 11.0+   | Reglas de negocio       |
-| **Monitoring**      | OpenTelemetry         | 1.7+    | Métricas de DB          |
+| Componente          | Tecnología              | Versión | Uso                      |
+| ------------------- | ----------------------- | ------- | ------------------------ |
+| **Base de Datos**   | PostgreSQL              | 15+     | Base de datos principal  |
+| **ORM**             | Entity Framework Core   | 8.0+    | Data access layer        |
+| **Migraciones**     | EF Core Migrations      | 8.0+    | Schema migrations        |
+| **Connection Pool** | Npgsql                  | 8.0+    | PostgreSQL driver        |
+| **Validación**      | FluentValidation        | 11.0+   | Reglas de negocio        |
+| **Monitoring**      | OpenTelemetry           | 1.7+    | Métricas de DB           |
+| **DB**              | SQL Server / PostgreSQL | —       | Motor relacional         |
+| **Dialect**         | T-SQL / PL/pgSQL        | —       | Lenguaje de stored procs |
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 4 aspectos operacionales de bases de datos:
-
-### Índice de Conceptos
-
-1. **Database Migrations**: Versionamiento y evolución de esquemas
-2. **Database Optimization**: Performance de queries e índices
-3. **Connection Pooling**: Gestión de recursos de conexión
-4. **Data Validation**: Integridad y calidad de datos
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
     A[Database Migrations] --> B[Schema Evolution]
-    C[Database Optimization] --> D[Performance]
-    E[Connection Pooling] --> D
-    F[Data Validation] --> G[Data Quality]
-    B --> H[Reliable Operations]
-    D --> H
-    G --> H
+    C[SQL Naming Conventions] --> F[Código legible]
+    D[Stored Procedures] --> F
+    E[Database Optimization] --> G[Performance]
+    H[Connection Pooling] --> G
+    I[Data Validation] --> J[Data Quality]
+    B --> K[Reliable Operations]
+    F --> K
+    G --> K
+    J --> K
 
     style A fill:#e1f5ff
-    style C fill:#fff4e1
-    style E fill:#e8f5e9
-    style F fill:#ffe1f3
+    style C fill:#e8f5e9
+    style D fill:#fff3e0
+    style E fill:#fff4e1
+    style H fill:#f3e5f5
+    style I fill:#ffe1f3
 ```
 
 ---
 
-## 1. Database Migrations
+## Database Migrations
 
 ### ¿Qué son las Migraciones de Base de Datos?
 
@@ -323,7 +324,190 @@ public class GoodMigration : Migration
 
 ---
 
-## 2. Database Optimization
+## SQL Naming Conventions
+
+### Propósito
+
+Convenciones para nombrar objetos de base de datos (schemas, tablas, índices, constraints, vistas, funciones y stored procedures) de forma consistente y predecible.
+
+**Beneficios:**
+✅ SQL legible y uniforme entre equipos
+✅ Trazabilidad clara de relaciones entre objetos
+✅ Facilita mantenimiento y auditoría de esquemas
+
+```sql
+-- ✅ BUENO: Naming conventions consistentes
+
+-- Schemas: lowercase, singular
+CREATE SCHEMA customer;
+CREATE SCHEMA order_mgmt;
+
+-- Tables: lowercase, plural, snake_case
+CREATE TABLE customer.customers (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Indexes: ix_{table}_{columns}
+CREATE INDEX ix_customers_email ON customer.customers (email);
+CREATE INDEX ix_customers_created_at ON customer.customers (created_at);
+
+-- Unique constraints: uq_{table}_{columns}
+ALTER TABLE customer.customers
+ADD CONSTRAINT uq_customers_email UNIQUE (email);
+
+-- Foreign keys: fk_{table}_{referenced_table}
+ALTER TABLE customer.addresses
+ADD CONSTRAINT fk_addresses_customers
+FOREIGN KEY (customer_id) REFERENCES customer.customers(id);
+
+-- Check constraints: ck_{table}_{condition}
+ALTER TABLE customer.customers
+ADD CONSTRAINT ck_customers_email_format
+CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$');
+
+-- Views: v_{name}
+CREATE VIEW customer.v_active_customers AS
+SELECT * FROM customer.customers WHERE deleted_at IS NULL;
+
+-- Funciones: fn_{name}
+CREATE FUNCTION customer.fn_get_by_email(p_email VARCHAR)
+RETURNS TABLE (id UUID, name VARCHAR, email VARCHAR)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT c.id, c.name, c.email
+    FROM customer.customers c
+    WHERE c.email = p_email;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored procedures: sp_{accion}_{entidad}
+CREATE PROCEDURE customer.sp_archive_customer(p_customer_id UUID)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE customer.customers
+    SET deleted_at = CURRENT_TIMESTAMP
+    WHERE id = p_customer_id;
+END;
+$$;
+```
+
+:::note Naming en EF Core
+Para la configuración de naming en C# (DbContext, `HasColumnName`, `HasDatabaseName`), ver la sección `### Convenciones de Naming` dentro de [Database Migrations](#database-migrations).
+:::
+
+---
+
+## Stored Procedures
+
+### Propósito
+
+Estándar para escribir stored procedures robustos con validaciones, manejo de errores y parámetros de salida claros.
+
+**Beneficios:**
+✅ Lógica de BD encapsulada y reutilizable
+✅ Manejo explícito de errores sin excepciones silenciosas
+✅ Interfaz clara entre aplicación y BD
+
+```sql
+-- ✅ BUENO: Stored procedure con mejores prácticas
+
+CREATE OR REPLACE PROCEDURE customer.sp_create_customer(
+    p_name VARCHAR(100),
+    p_email VARCHAR(254),
+    p_phone VARCHAR(20),
+    p_document_type VARCHAR(10),
+    p_document_number VARCHAR(20),
+    OUT p_customer_id UUID,
+    OUT p_error_code VARCHAR(50),
+    OUT p_error_message TEXT
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_existing_count INT;
+BEGIN
+    -- 1. Inicializar outputs
+    p_customer_id := NULL;
+    p_error_code := NULL;
+    p_error_message := NULL;
+
+    -- 2. Validaciones
+    IF p_name IS NULL OR LENGTH(TRIM(p_name)) < 2 THEN
+        p_error_code := 'INVALID_NAME';
+        p_error_message := 'Name must be at least 2 characters';
+        RETURN;
+    END IF;
+
+    IF p_email IS NULL OR p_email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$' THEN
+        p_error_code := 'INVALID_EMAIL';
+        p_error_message := 'Invalid email format';
+        RETURN;
+    END IF;
+
+    -- 3. Verificar duplicados
+    SELECT COUNT(*) INTO v_existing_count
+    FROM customer.customers
+    WHERE email = p_email;
+
+    IF v_existing_count > 0 THEN
+        p_error_code := 'DUPLICATE_EMAIL';
+        p_error_message := 'Email already exists';
+        RETURN;
+    END IF;
+
+    -- 4. Insertar
+    INSERT INTO customer.customers (
+        name, email, phone, document_type, document_number, created_at
+    )
+    VALUES (
+        TRIM(p_name), LOWER(p_email), p_phone,
+        p_document_type, p_document_number, CURRENT_TIMESTAMP
+    )
+    RETURNING id INTO p_customer_id;
+
+    RAISE NOTICE 'Customer created: %', p_customer_id;
+
+EXCEPTION
+    WHEN unique_violation THEN
+        p_error_code := 'DUPLICATE_KEY';
+        p_error_message := 'Duplicate key violation';
+    WHEN OTHERS THEN
+        p_error_code := 'INTERNAL_ERROR';
+        p_error_message := SQLERRM;
+END;
+$$;
+```
+
+```csharp
+// Llamada desde C# con Npgsql
+var parameters = new[]
+{
+    new NpgsqlParameter("p_name", "John Doe"),
+    new NpgsqlParameter("p_email", "john@example.com"),
+    new NpgsqlParameter("p_phone", "+51987654321"),
+    new NpgsqlParameter("p_document_type", "DNI"),
+    new NpgsqlParameter("p_document_number", "12345678"),
+    new NpgsqlParameter("p_customer_id", DbType.Guid)  { Direction = ParameterDirection.Output },
+    new NpgsqlParameter("p_error_code", DbType.String) { Direction = ParameterDirection.Output, Size = 50 },
+    new NpgsqlParameter("p_error_message", DbType.String) { Direction = ParameterDirection.Output, Size = -1 }
+};
+
+await context.Database.ExecuteSqlRawAsync(
+    "CALL customer.sp_create_customer($1, $2, $3, $4, $5, $6, $7, $8)",
+    parameters);
+
+var customerId = (Guid?)parameters[5].Value;
+var errorCode  = parameters[6].Value as string;
+```
+
+---
+
+## Database Optimization
 
 ### ¿Qué es la Optimización de Base de Datos?
 
@@ -580,7 +764,7 @@ public class SlowQueryMiddleware
 
 ---
 
-## 3. Connection Pooling
+## Connection Pooling
 
 ### ¿Qué es Connection Pooling?
 
@@ -738,7 +922,7 @@ builder.Services.AddHealthChecks()
 
 ---
 
-## 4. Data Validation
+## Data Validation
 
 ### ¿Qué es la Validación de Datos?
 
@@ -1056,6 +1240,19 @@ app.Run();
 - **MUST** incluir rollback (Down) en cada migración
 - **MUST** usar naming conventions consistentes (snake_case para PostgreSQL)
 
+**SQL Naming Conventions:**
+
+- **MUST** seguir las naming conventions SQL definidas en este estándar
+- **MUST** omitir nombres genéricos como `id`, `nombre`, `fecha` sin prefijo de tabla
+- **MUST NOT** omitir schema al referenciar objetos de BD
+
+**Stored Procedures:**
+
+- **MUST** incluir manejo de errores explícito en todos los stored procedures
+- **MUST** usar parámetros `OUT` para reportar errores sin lanzar excepciones
+- **SHOULD** versionar scripts SQL en Git junto con el código de la aplicación
+- **MUST NOT** usar lógica de negocio crítica sin validaciones previas de inputs
+
 **Database Optimization:**
 
 - **MUST** crear índices en foreign keys
@@ -1121,10 +1318,20 @@ app.Run();
 
 **Relacionados:**
 
+- [Lineamiento Datos por Dominio](../../lineamientos/datos/01-datos-por-dominio.md) — lineamiento que origina este estándar
+- [Lineamiento Consistencia y Sincronización](../../lineamientos/datos/02-consistencia-y-sincronizacion.md) — complementa SQL standards
 - [Arquitectura de Datos](./data-architecture.md)
 - [Consistencia de Datos](./data-consistency.md)
 
+**Referencias externas:**
+
+- [PostgreSQL Naming Conventions](https://www.postgresql.org/docs/current/sql-syntax-lexical.html) — convenciones oficiales
+- [SQL Server T-SQL Reference](https://learn.microsoft.com/sql/t-sql/language-reference) — referencia T-SQL
+- [Entity Framework Core](https://learn.microsoft.com/ef/core/) — documentación oficial
+- [Npgsql Documentation](https://www.npgsql.org/doc/) — driver PostgreSQL
+- [FluentValidation](https://docs.fluentvalidation.net/) — validación en application layer
+
 ---
 
-**Última actualización**: 18 de febrero de 2026
+**Última actualización**: 5 de marzo de 2026
 **Responsable**: Equipo de Arquitectura

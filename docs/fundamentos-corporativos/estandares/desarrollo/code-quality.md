@@ -2,7 +2,7 @@
 id: code-quality
 sidebar_position: 2
 title: Calidad de Código
-description: Estándares para convenciones de código, code review, refactoring, análisis estático (SAST), y quality gates.
+description: Estándares para convenciones de código, code review, refactoring, análisis estático y quality gates.
 ---
 
 # Calidad de Código
@@ -13,60 +13,42 @@ Este estándar define las prácticas para mantener código de alta calidad, legi
 
 **Conceptos incluidos:**
 
-- **Code Conventions** → Estilo y convenciones de código
-- **Code Review** → Revisión de código sistemática
-- **Refactoring Practices** → Mejora continua del código
-- **SAST** → Análisis estático de seguridad
-- **Static Analysis** → Análisis de calidad y complejidad
-- **Quality Gates** → Criterios de aceptación automatizados
+- **Code Conventions** — Estilo y convenciones de código
+- **Code Review** — Revisión de código sistemática
+- **Refactoring Practices** — Mejora continua del código
+- **Static Analysis** — Análisis de calidad y complejidad
+- **Quality Gates** — Criterios de aceptación automatizados
 
 ---
 
 ## Stack Tecnológico
 
-| Componente          | Tecnología             | Versión | Uso                      |
-| ------------------- | ---------------------- | ------- | ------------------------ |
-| **Linter**          | Roslyn Analyzers       | 4.9+    | Análisis estático .NET   |
-| **Code Style**      | EditorConfig           | -       | Convenciones de código   |
-| **SAST**            | SonarQube Community    | 10.0+   | Análisis de seguridad    |
-| **Dependency Scan** | OWASP Dependency-Check | 9.0+    | Vulnerabilidades en deps |
-| **Code Coverage**   | Coverlet               | 6.0+    | Cobertura de tests       |
-| **Quality Metrics** | SonarQube              | 10.0+   | Métricas de calidad      |
+| Componente          | Tecnología       | Versión | Uso                    |
+| ------------------- | ---------------- | ------- | ---------------------- |
+| **Linter**          | Roslyn Analyzers | 4.9+    | Análisis estático .NET |
+| **Code Style**      | EditorConfig     | -       | Convenciones de código |
+| **Code Coverage**   | Coverlet         | 6.0+    | Cobertura de tests     |
+| **Quality Metrics** | SonarQube        | 10.0+   | Métricas de calidad    |
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 6 aspectos de calidad de código:
-
-### Índice de Conceptos
-
-1. **Code Conventions**: Estilo consistente y legible
-2. **Code Review**: Revisión sistemática por pares
-3. **Refactoring Practices**: Mejora continua sin cambio funcional
-4. **SAST**: Detección temprana de vulnerabilidades
-5. **Static Analysis**: Análisis de complejidad y code smells
-6. **Quality Gates**: Criterios automatizados de aceptación
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
     A[Code Conventions] --> B[Code Review]
     C[Static Analysis] --> D[Quality Gates]
-    E[SAST] --> D
     F[Refactoring] --> B
     B --> G[High Quality Code]
     D --> G
 
     style A fill:#e1f5ff
-    style E fill:#ffe1e1
     style D fill:#fff4e1
 ```
 
 ---
 
-## 1. Code Conventions
+## Code Conventions
 
 ### ¿Qué son las Code Conventions?
 
@@ -296,7 +278,7 @@ public class CreateCustomerUseCase
 
 ---
 
-## 2. Code Review
+## Code Review
 
 ### ¿Qué es Code Review?
 
@@ -435,7 +417,7 @@ var orders = await _context.Orders
 
 ---
 
-## 3. Refactoring Practices
+## Refactoring Practices
 
 ### ¿Qué es Refactoring?
 
@@ -623,156 +605,11 @@ git reset --hard HEAD~1
 
 ---
 
-## 4. SAST (Static Application Security Testing)
+:::note Seguridad en el pipeline
+Para análisis estático de seguridad (SAST) — CodeQL, Semgrep, dotnet-security-scan — ver [SAST](../seguridad/sast.md).
+:::
 
-### ¿Qué es SAST?
-
-Análisis estático de código para identificar vulnerabilidades de seguridad sin ejecutar el código.
-
-**Vulnerabilidades detectadas:**
-
-- **Injection flaws**: SQL injection, command injection
-- **Authentication issues**: Weak password validation
-- **Sensitive data exposure**: Hardcoded secrets
-- **Security misconfiguration**: Insecure defaults
-- **Known vulnerable dependencies**: CVEs en packages
-
-**Propósito:** Detectar vulnerabilidades temprano (shift-left security).
-
-**Beneficios:**
-✅ Detección temprana de vulnerabilidades
-✅ Menor costo de remediación
-✅ Cumplimiento de seguridad
-✅ Educación del equipo
-
-### SonarQube Configuration
-
-```yaml
-# sonar-project.properties
-# Configuración de SonarQube para .NET
-
-sonar.projectKey=customer-service
-sonar.projectName=Customer Service
-sonar.projectVersion=1.0
-
-# Source
-sonar.sources=src
-sonar.tests=tests
-
-# Exclusions
-sonar.exclusions=**/Migrations/**,**/wwwroot/**,**/obj/**,**/bin/**
-
-# Coverage
-sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml
-sonar.coverage.exclusions=**/Tests/**,**/Migrations/**
-
-# Language
-sonar.language=cs
-
-# Quality Gate
-sonar.qualitygate.wait=true
-sonar.qualitygate.timeout=300
-```
-
-```yaml
-# .github/workflows/sonarqube.yml
-# Integración de SonarQube en CI/CD
-
-name: SonarQube Analysis
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    types: [opened, synchronize, reopened]
-
-jobs:
-  sonarqube:
-    name: SonarQube Scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Full history for better analysis
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.0.x"
-
-      - name: Install SonarScanner
-        run: dotnet tool install --global dotnet-sonarscanner
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Begin SonarQube analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          dotnet sonarscanner begin \
-            /k:"customer-service" \
-            /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" \
-            /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
-            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
-
-      - name: Build
-        run: dotnet build --no-restore
-
-      - name: Test with coverage
-        run: |
-          dotnet test --no-build --verbosity normal \
-            /p:CollectCoverage=true \
-            /p:CoverletOutputFormat=opencover
-
-      - name: End SonarQube analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-```
-
-### OWASP Dependency Check
-
-```yaml
-# .github/workflows/dependency-check.yml
-# Escaneo de vulnerabilidades en dependencias
-
-name: OWASP Dependency Check
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-  schedule:
-    - cron: "0 2 * * 1" # Weekly scan Monday 2am
-
-jobs:
-  dependency-check:
-    name: Dependency Vulnerability Scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run OWASP Dependency-Check
-        uses: dependency-check/Dependency-Check_Action@main
-        with:
-          project: "customer-service"
-          path: "."
-          format: "HTML"
-          args: >
-            --enableRetired
-            --failOnCVSS 7
-            --suppression dependency-check-suppressions.xml
-
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependency-check-report
-          path: ${{ github.workspace }}/reports
-```
-
----
-
-## 5. Static Analysis
+## Static Analysis
 
 ### ¿Qué es Static Analysis?
 
@@ -863,7 +700,7 @@ Análisis automático de código para detectar code smells, complejidad excesiva
 
 ---
 
-## 6. Quality Gates
+## Quality Gates
 
 ### ¿Qué son Quality Gates?
 
@@ -975,7 +812,7 @@ jobs:
 
           echo "✅ Coverage is $COVERAGE_PCT%"
 
-      # 4. SAST with SonarQube
+      # 4. SonarQube Quality Gate
       - name: SonarQube Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -988,27 +825,6 @@ jobs:
           dotnet build
 
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-
-      # 5. Dependency vulnerabilities (fail on High/Critical)
-      - name: Dependency scan
-        run: |
-          dotnet list package --vulnerable --include-transitive | tee deps.txt
-
-          if grep -q "Critical\|High" deps.txt; then
-            echo "❌ Critical or High vulnerabilities found"
-            exit 1
-          fi
-
-          echo "✅ No critical vulnerabilities"
-
-      # 6. Security scan
-      - name: Trivy scan
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: "fs"
-          scan-ref: "."
-          severity: "HIGH,CRITICAL"
-          exit-code: "1"
 ```
 
 ---
@@ -1105,13 +921,6 @@ chmod +x .git/hooks/pre-commit
 - **MUST** hacer commits atómicos por refactoring
 - **MUST** refactorizar antes de agregar nueva funcionalidad si código no está limpio
 
-**SAST:**
-
-- **MUST** ejecutar SAST en cada PR
-- **MUST** resolver vulnerabilidades Critical/High antes de merge
-- **MUST** escanear dependencias por vulnerabilidades
-- **MUST** no tener secretos hardcoded
-
 **Static Analysis:**
 
 - **MUST** usar Roslyn Analyzers
@@ -1164,8 +973,6 @@ chmod +x .git/hooks/pre-commit
 **Herramientas:**
 
 - [Roslyn Analyzers](https://github.com/dotnet/roslyn-analyzers)
-- [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/)
-- [Trivy](https://aquasecurity.github.io/trivy/)
 
 **Relacionados:**
 

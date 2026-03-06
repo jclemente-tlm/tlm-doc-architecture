@@ -18,7 +18,7 @@ Uso inconsistente de control de versiones genera historial confuso, conflictos f
 - [Definir Git workflow corporativo](../../estandares/desarrollo/git-workflow.md#1-git-workflow)
 - [Aplicar estrategia de branching](../../estandares/desarrollo/git-workflow.md#2-branching-strategy)
 - [Usar conventional commits](../../estandares/desarrollo/git-workflow.md#5-conventional-commits)
-- [Aplicar semantic versioning](../../estandares/desarrollo/dependency-configuration.md#2-semantic-versioning)
+- [Aplicar semantic versioning](../../estandares/desarrollo/versioning.md)
 - [Proteger ramas principales](../../estandares/desarrollo/git-workflow.md#4-branch-protection)
 - [Definir estrategia de merge](../../estandares/desarrollo/git-workflow.md#3-merge-strategies)
 
