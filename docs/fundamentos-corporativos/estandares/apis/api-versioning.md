@@ -338,9 +338,8 @@ Ejemplos:
 
 ### MUST NOT (Prohibido)
 
-- **MUST NOT** hacer cambios incompatibles en versiones MINOR o PATCH
+- **MUST NOT** hacer cambios incompatibles (breaking changes) ni romper clientes existentes en versiones MINOR o PATCH
 - **MUST NOT** remover una versión sin al menos 6 meses de deprecación previa
-- **MUST NOT** romper clientes existentes en versiones MINOR o PATCH
 - **MUST NOT** remover endpoints sin período de deprecación previo
 
 ---

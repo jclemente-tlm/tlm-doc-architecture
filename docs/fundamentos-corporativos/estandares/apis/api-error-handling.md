@@ -618,11 +618,9 @@ Para implementar métricas de errores (counters, histogramas por tipo de excepci
 
 ### MUST NOT (Prohibido)
 
-- **MUST NOT** exponer detalles de implementación interna
-- **MUST NOT** incluir stack traces en producción
+- **MUST NOT** exponer detalles de implementación interna ni stack traces en respuestas de producción
 - **MUST NOT** loggear información sensible (passwords, tokens)
-- **MUST NOT** usar código 500 para errores de validación o negocio
-- **MUST NOT** retornar HTML para APIs JSON
+- **MUST NOT** usar código 500 para errores de validación o negocio, ni retornar HTML en APIs JSON
 
 ---
 

@@ -472,9 +472,8 @@ builder.Services.AddProblemDetails(); // Solo para compatibilidad con ASP.NET Co
 ### MUST NOT (Prohibido)
 
 - **MUST NOT** usar verbos en URIs (`/getCustomers`, `/createOrder`)
-- **MUST NOT** exponer detalles de implementación interna en URIs o responses
 - **MUST NOT** usar códigos de estado genéricos (evitar siempre 200 con error en body)
-- **MUST NOT** retornar stack traces o información sensible en errores
+- **MUST NOT** exponer detalles de implementación interna, stack traces ni información sensible en URIs o respuestas
 
 ---
 
