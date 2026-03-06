@@ -1,17 +1,17 @@
 ---
 id: containerization
 sidebar_position: 1
-title: Containerización
+title: Contenerización
 description: Estándares para construcción, gestión y despliegue de contenedores Docker en AWS ECS Fargate.
 ---
 
-# Containerización
+# Contenerización
 
 ## Contexto
 
-Este estándar define las prácticas para containerización de aplicaciones usando Docker, incluyendo construcción de imágenes, optimización, seguridad, registro y despliegue en AWS ECS Fargate. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md) y asegura contenedores eficientes, seguros y estandarizados.
+Este estándar define las prácticas para contenerización de aplicaciones usando Docker, incluyendo construcción de imágenes, optimización, seguridad, registro y despliegue en AWS ECS Fargate. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md) y asegura contenedores eficientes, seguros y estandarizados.
 
-**Conceptos cubiertos:**
+**Conceptos incluidos:**
 
 - **Dockerfile Best Practices** → Construcción optimizada de imágenes
 - **Multi-stage Builds** → Reducción de tamaño de imágenes
@@ -34,9 +34,7 @@ Este estándar define las prácticas para containerización de aplicaciones usan
 
 ---
 
-## Fundamentos de Containerización
-
-### ¿Qué es la Containerización?
+## ¿Qué es la Contenerización?
 
 Empaquetado de aplicaciones con sus dependencias en unidades aisladas y portables (contenedores) que pueden ejecutarse consistentemente en cualquier entorno.
 
@@ -49,7 +47,7 @@ Empaquetado de aplicaciones con sus dependencias en unidades aisladas y portable
 ✅ **Eficiencia**: Menor overhead que VMs
 ✅ **Escalabilidad**: Spin up/down rápido de instancias
 
-### Anatomía de un Contenedor
+## Anatomía de un Contenedor
 
 ```mermaid
 graph TB

@@ -1,6 +1,6 @@
 ---
 id: independent-deployment
-sidebar_position: 10
+sidebar_position: 4
 title: Despliegue Independiente
 description: Estándares para desplegar servicios de forma independiente sin acoplamiento de releases, usando contenedores, feature flags y estrategias sin downtime.
 tags: [infraestructura, deployment, docker, feature-flags, blue-green]
@@ -18,16 +18,16 @@ Cada servicio debe poder desplegarse sin coordinación con otros equipos. Comple
 
 ## Stack Tecnológico
 
-| Componente      | Tecnología     | Versión | Uso                       |
-| --------------- | -------------- | ------- | ------------------------- |
-| **Containers**  | Docker         | 24+     | Empaquetado del servicio  |
-| **Orquestador** | Kubernetes     | 1.28+   | Despliegue en clúster     |
-| **CI/CD**       | GitHub Actions | —       | Pipeline automatizado     |
-| **Flags**       | Feature Flags  | —       | Dark launches / canary    |
+| Componente      | Tecnología     | Versión | Uso                      |
+| --------------- | -------------- | ------- | ------------------------ |
+| **Containers**  | Docker         | 24+     | Empaquetado del servicio |
+| **Orquestador** | Kubernetes     | 1.28+   | Despliegue en clúster    |
+| **CI/CD**       | GitHub Actions | —       | Pipeline automatizado    |
+| **Flags**       | Feature Flags  | —       | Dark launches / canary   |
 
 ---
 
-## Independent Deployment
+## Despliegue Independiente
 
 ### ¿Qué es Despliegue Independiente?
 
@@ -243,3 +243,84 @@ public class CustomerApiContractTests
 
 ---
 
+## Requisitos Técnicos
+
+### MUST (Obligatorio)
+
+**Pipeline:**
+
+- **MUST** cada servicio tener su propio pipeline CI/CD independiente
+- **MUST** pipeline incluir etapas: test → build → deploy-dev → deploy-staging → deploy-production
+- **MUST** usar environments de GitHub Actions con aprobaciones para producción
+- **MUST** requerir que todos los tests pasen antes de proceder al build
+
+**Compatibilidad:**
+
+- **MUST** mantener backward compatibility en APIs públicas entre versiones
+- **MUST** versionar contratos de API (e.g., `/api/v1/`, `/api/v2/`)
+- **MUST** ejecutar contract tests antes de cada deploy a producción
+- **MUST** no realizar breaking changes sin deprecation period mínimo de un sprint
+
+**Deployment:**
+
+- **MUST** cada servicio tener su propia task definition en ECS (sin compartir)
+- **MUST** usar estrategia de deployment que permita rollback en menos de 5 minutos
+- **MUST** monitorear deployment con health checks y `ecs wait services-stable`
+
+**Database:**
+
+- **MUST** aplicar migraciones de base de datos de forma backward compatible (Expand-Contract Pattern)
+- **MUST** nunca compartir base de datos entre servicios
+
+### SHOULD (Fuertemente recomendado)
+
+- **SHOULD** implementar feature flags para dark launches y canary releases
+- **SHOULD** usar blue-green o rolling deployment en producción para zero downtime
+- **SHOULD** configurar alertas de CloudWatch que disparen rollback automático ante error rate elevado
+- **SHOULD** publicar evento de dominio al completar deploy exitoso (para trazabilidad)
+- **SHOULD** etiquetar imágenes Docker con el SHA del commit que generó el deploy
+
+### MAY (Opcional)
+
+- **MAY** implementar canary releases con route ponderado (10% → 50% → 100%)
+- **MAY** usar AWS CodeDeploy para orquestar blue-green en ECS
+- **MAY** integrar smoke tests automáticos post-deploy antes de promover al siguiente ambiente
+
+### MUST NOT (Prohibido)
+
+- **MUST NOT** compartir pipeline CI/CD entre servicios distintos
+- **MUST NOT** coordinar deploys con otros equipos como pre-requisito (acoplamiento de releases)
+- **MUST NOT** introducir breaking changes sin incrementar versión mayor de la API
+- **MUST NOT** realizar deploy manual en producción sin registro de aprobación
+
+---
+
+## Referencias
+
+**Despliegue Continuo:**
+
+- [GitHub Actions: Environments & Deployments](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
+- [AWS ECS Rolling Update](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-ecs.html)
+- [AWS ECS Blue/Green Deployment](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-bluegreen.html)
+
+**Contract Testing:**
+
+- [Pact — Consumer Driven Contract Testing](https://docs.pact.io/)
+- [Microsoft API Versioning](https://github.com/dotnet/aspnet-api-versioning)
+
+**Patrones:**
+
+- [Expand-Contract Pattern (Parallel Change)](https://martinfowler.com/bliki/ParallelChange.html)
+- [Feature Toggles (Feature Flags)](https://martinfowler.com/articles/feature-toggles.html)
+- [Sam Newman — Independent Deployability](https://samnewman.io/blog/2021/08/12/why-i-no-longer-use-the-term-microservices/)
+
+**Relacionados:**
+
+- [Containerización](./containerization.md)
+- [Infrastructure as Code](./infrastructure-as-code.md)
+- [Configuration Management](./configuration-management.md)
+
+---
+
+**Última actualización**: 5 de marzo de 2026
+**Responsable**: Platform Team / DevOps

@@ -1,11 +1,11 @@
 ---
 id: infrastructure-as-code
 sidebar_position: 2
-title: Infrastructure as Code
-description: Estándares para gestión de infraestructura con Terraform, incluyendo workflow, state, versionamiento, code review, drift detection, networking y costos.
+title: Infraestructura como Código
+description: Estándares para gestión de infraestructura con Terraform, incluyendo workflow, state, versionamiento, code review y detección de drift.
 ---
 
-# Infrastructure as Code (IaC)
+# Infraestructura como Código (IaC)
 
 ## Contexto
 
@@ -19,8 +19,6 @@ Este estándar define prácticas para gestión de infraestructura como código u
 - **IaC Versioning** → Versionamiento y tagging
 - **IaC Code Review** → Revisión de cambios de infraestructura
 - **Drift Detection** → Detección de cambios manuales
-- **Virtual Networks** → Diseño de VPCs y subnets
-- **Cloud Cost Optimization** → Optimización de costos AWS
 
 ---
 
@@ -39,22 +37,7 @@ Este estándar define prácticas para gestión de infraestructura como código u
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 8 prácticas relacionadas con Infrastructure as Code:
-
-### Índice de Conceptos
-
-1. **IaC Implementation**: Setup inicial y estructura de proyecto Terraform
-2. **IaC Workflow**: CI/CD pipeline para plan/apply automatizado
-3. **IaC State Management**: Backend remoto en S3 con locking
-4. **IaC Versioning**: Versionamiento de módulos y provider versions
-5. **IaC Code Review**: Proceso de review para cambios de infraestructura
-6. **Drift Detection**: Detección y remediación de drift
-7. **Virtual Networks**: Diseño de VPCs, subnets, routing
-8. **Cloud Cost Optimization**: Monitoreo y optimización de costos AWS
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
@@ -69,9 +52,6 @@ graph TB
     H --> I[Remediation]
     I --> C
 
-    J[Virtual Networks] --> B
-    K[Cost Optimization] --> B
-
     style A fill:#e1f5ff,color:#000000
     style C fill:#fff4e1,color:#000000
     style G fill:#e8f5e9,color:#000000
@@ -80,7 +60,7 @@ graph TB
 
 ---
 
-## 1. IaC Implementation
+## IaC Implementation
 
 ### ¿Qué es IaC Implementation?
 
@@ -553,7 +533,7 @@ customer_service_image = "ghcr.io/talma/customer-service:1.2.3"
 
 ---
 
-## 2. IaC Workflow
+## IaC Workflow
 
 ### ¿Qué es IaC Workflow?
 
@@ -773,7 +753,7 @@ jobs:
 
 ---
 
-## 3. IaC State Management
+## IaC State Management
 
 ### ¿Qué es IaC State Management?
 
@@ -933,7 +913,7 @@ aws dynamodb get-item \
 
 ---
 
-## 4. IaC Versioning
+## IaC Versioning
 
 ### ¿Qué es IaC Versioning?
 
@@ -1020,7 +1000,7 @@ terraform apply # Apply rollback
 
 ---
 
-## 5. IaC Code Review
+## IaC Code Review
 
 ### ¿Qué es IaC Code Review?
 
@@ -1156,7 +1136,7 @@ Fixes #XXX
 
 ---
 
-## 6. Drift Detection
+## Drift Detection
 
 ### ¿Qué es Drift Detection?
 
@@ -1319,346 +1299,6 @@ terraform apply -replace=aws_security_group.service
 
 ---
 
-## 7. Virtual Networks
-
-### ¿Qué es Virtual Networks Design?
-
-Diseño de VPCs, subnets, routing, NAT gateways yNetwork ACLs para aislar y securizar servicios.
-
-**Propósito:** Networking seguro y escalable para microservicios.
-
-###VPC Design
-
-```hcl
-# modules/vpc/main.tf
-
-resource "aws_vpc" "main" {
-  cidr_block           = var.vpc_cidr
-  enable_dns_hostnames = true
-  enable_dns_support   = true
-
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.environment}-vpc"
-    }
-  )
-}
-
-# Internet Gateway
-resource "aws_internet_gateway" "main" {
-  vpc_id = aws_vpc.main.id
-
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.environment}-igw"
-    }
-  )
-}
-
-# Public Subnets (for ALB)
-resource "aws_subnet" "public" {
-  count             = length(var.availability_zones)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.public_subnet_cidrs[count.index]
-  availability_zone = var.availability_zones[count.index]
-
-  map_public_ip_on_launch = true
-
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.environment}-public-${var.availability_zones[count.index]}"
-      Tier = "Public"
-    }
-  )
-}
-
-# Private Subnets (for ECS tasks, RDS)
-resource "aws_subnet" "private" {
-  count             = length(var.availability_zones)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidrs[count.index]
-  availability_zone = var.availability_zones[count.index]
-
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.environment}-private-${var.availability_zones[count.index]}"
-      Tier = "Private"
-    }
-  )
-}
-
-# NAT Gateways (one per AZ for HA)
-resource "aws_eip" "nat" {
-  count  = length(var.availability_zones)
-  domain = "vpc"
-
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.environment}-nat-eip-${var.availability_zones[count.index]}"
-    }
-  )
-}
-
-resource "aws_nat_gateway" "main" {
-  count         = length(var.availability_zones)
-  allocation_id = aws_eip.nat[count.index].id
-  subnet_id     = aws_subnet.public[count.index].id
-
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.environment}-nat-${var.availability_zones[count.index]}"
-    }
-  )
-
-  depends_on = [aws_internet_gateway.main]
-}
-
-# Route Tables
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.main.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.main.id
-  }
-
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.environment}-public-rt"
-    }
-  )
-}
-
-resource "aws_route_table_association" "public" {
-  count          = length(var.availability_zones)
-  subnet_id      = aws_subnet.public[count.index].id
-  route_table_id = aws_route_table.public.id
-}
-
-resource "aws_route_table" "private" {
-  count  = length(var.availability_zones)
-  vpc_id = aws_vpc.main.id
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.main[count.index].id
-  }
-
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.environment}-private-rt-${var.availability_zones[count.index]}"
-    }
-  )
-}
-
-resource "aws_route_table_association" "private" {
-  count          = length(var.availability_zones)
-  subnet_id      = aws_subnet.private[count.index].id
-  route_table_id = aws_route_table.private[count.index].id
-}
-
-# VPC Flow Logs
-resource "aws_flow_log" "main" {
-  iam_role_arn    = aws_iam_role.flow_log.arn
-  log_destination = aws_cloudwatch_log_group.flow_log.arn
-  traffic_type    = "ALL"
-  vpc_id          = aws_vpc.main.id
-
-  tags = var.common_tags
-}
-
-resource "aws_cloudwatch_log_group" "flow_log" {
-  name              = "/aws/vpc/${var.environment}"
-  retention_in_days = 30
-
-  tags = var.common_tags
-}
-```
-
-### Network Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Internet                               │
-└────────────────────────┬──────────────────────────────────────┘
-                         │
-                         │
-                ┌────────▼────────┐
-                │ Internet Gateway │
-                └────────┬──────────┘
-                         │
-        ┌────────────────┼────────────────┐
-        │                │                │
-   ┌────▼────┐      ┌────▼────┐     ┌────▼────┐
-   │ Public  │      │ Public  │     │ Public  │
-   │ Subnet  │      │ Subnet  │     │ Subnet  │
-   │  AZ-a   │      │  AZ-b   │     │  AZ-c   │
-   └────┬────┘      └────┬────┘     └────┬────┘
-        │                │                │
-   ┌────▼────┐      ┌────▼────┐     ┌────▼──── ┐
-   │   ALB   │◄─────┤   ALB   │◄────┤   ALB   │
-   └────┬────┘      └────┬────┘     └────┬────┘
-        │                │                │
-   ┌────▼────┐      ┌────▼────┐     ┌────▼────┐
-   │   NAT   │      │   NAT   │     │   NAT   │
-   │ Gateway │      │ Gateway │     │ Gateway │
-   └────┬────┘      └────┬────┘     └────┬────┘
-        │                │                │
-   ┌────▼────┐      ┌────▼────┐     ┌────▼────┐
-   │ Private │      │ Private │     │ Private │
-   │ Subnet  │      │ Subnet  │     │ Subnet  │
-   │  AZ-a   │      │  AZ-b   │     │  AZ-c   │
-   └────┬────┘      └────┬────┘     └────┬────┘
-        │                │                │
-        ├────────────────┼────────────────┤
-        │                │                │
-   ┌────▼────┐      ┌────▼────┐     ┌────▼────┐
-   │   ECS   │      │   ECS   │     │   ECS   │
-   │  Tasks  │      │  Tasks  │     │  Tasks  │
-   └─────────┘      └─────────┘     └─────────┘
-        │                │                │
-   ┌────▼────┐      ┌────▼────┐     ┌────▼────┐
-   │   RDS   │◄─────┤   RDS   │     │   RDS   │
-   │ Primary │      │ Replica │     │ Replica │
-   └─────────┘      └─────────┘     └─────────┘
-```
-
----
-
-## 8. Cloud Cost Optimization
-
-### ¿Qué es Cloud Cost Optimization?
-
-Monitoreo, análisis y optimización continua de costos AWS mediante tagging, rightsizing y automated policies.
-
-**Propósito:** Reducir costos sin comprometer availability o performance.
-
-**Beneficios:**
-✅ Visibilidad de costos por servicio
-✅ Rightsizing de recursos
-✅ Reserved Instances / Savings Plans
-✅ Automated cleanup de recursos
-
-### Cost Tagging Strategy
-
-```hcl
-# Mandatory tags for all resources
-locals {
-  common_tags = {
-    Environment = var.environment      # dev/staging/production
-    ManagedBy   = "Terraform"          # Always Terraform
-    Service     = var.service_name     # customer-service, order-service
-    CostCenter  = var.cost_center      # Engineering, Marketing, Operations
-    Owner       = var.owner_email      # team-email@talma.com
-    Project     = var.project_name     # CustomerPlatform
-  }
-}
-
-# Apply to all resources
-resource "aws_ecs_cluster" "main" {
-  # ...
-  tags = local.common_tags
-}
-```
-
-### Cost Monitoring
-
-```hcl
-# AWS Budgets
-resource "aws_budgets_budget" "monthly" {
-  name              = "${var.environment}-monthly-budget"
-  budget_type       = "COST"
-  limit_amount      = var.monthly_budget_limit
-  limit_unit        = "USD"
-  time_unit         = "MONTHLY"
-
-  cost_filters = {
-    TagKeyValue = "Environment$${var.environment}"
-  }
-
-  notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 80
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
-    subscriber_email_addresses = [var.alert_email]
-  }
-
-  notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 100
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "FORECASTED"
-    subscriber_email_addresses = [var.alert_email]
-  }
-}
-```
-
-### Cost Optimization Techniques
-
-**1. Rightsizing**
-
-```hcl
-# ❌ Over-provisioned
-resource "aws_ecs_task_definition" "service" {
-  cpu    = 2048  # 2 vCPU (excesivo para low traffic service)
-  memory = 4096  # 4 GB
-}
-
-# ✅ Right-sized
-resource "aws_ecs_task_definition" "service" {
-  cpu    = 512   # 0.5 vCPU
-  memory = 1024  # 1 GB
-  # Cost: ~$15/month vs $60/month
-}
-```
-
-** 2. Spot Instances (para workloads fault-tolerant)**
-
-```hcl
-# ECS Capacity Provider con Fargate Spot
-resource "aws_ecs_capacity_provider" "spot" {
-  name = "FARGATE_SPOT"
-
-  # ...
-}
-
-resource "aws_ecs_cluster_capacity_providers" "main" {
-  cluster_name = aws_ecs_cluster.main.name
-
-  capacity_providers = ["FARGATE_SPOT", "FARGATE"]
-
-  default_capacity_provider_strategy {
-    capacity_provider = "FARGATE_SPOT"
-    weight            = 70  # 70% en spot (más barato)
-    base              = 0
-  }
-
-  default_capacity_provider_strategy {
-    capacity_provider = "FARGATE"
-    weight            = 30  # 30% en on-demand (más confiable)
-    base              = 1   # Al menos 1 task on-demand
-  }
-}
-```
-
-**3. Automated Shutdown (Dev/Staging)**
-
-```hcl
-# Lambda para parar ECS tasks en horario nocturno (dev/staging)
-# Savings: ~50% en ambientes no productivos
-```
-
----
-
 ## Requisitos Técnicos
 
 ### MUST (Obligatorio)
@@ -1742,8 +1382,10 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 
 **Relacionados:**
 
-- [Containerization](./containerization.md)
-- [Configuration Management](./configuration-management.md)
+- [Contenerización](./containerization.md)
+- [Gestión de Configuración](./configuration-management.md)
+- [Redes Virtuales](./virtual-networks.md)
+- [Optimización de Costos Cloud](./cloud-cost-optimization.md)
 - [CI/CD Deployment](../operabilidad/cicd-deployment.md)
 
 ---

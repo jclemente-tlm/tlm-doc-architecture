@@ -1,11 +1,11 @@
 ---
 id: configuration-management
 sidebar_position: 3
-title: Configuration Management
+title: Gestión de Configuración
 description: Estándares para gestión de configuración, externalización, centralización, variables de entorno y paridad entre ambientes.
 ---
 
-# Configuration Management
+# Gestión de Configuración
 
 ## Contexto
 
@@ -34,18 +34,7 @@ Este estándar define prácticas para gestión de configuración de aplicaciones
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 4 prácticas relacionadas con gestión de configuración:
-
-### Índice de Conceptos
-
-1. **Externalize Configuration**: Separar configuración del código fuente
-2. **Centralized Configuration**: Single source of truth para configuración
-3. **Environment Variables**: Inyección de config a runtime
-4. **Environment Parity**: Dev, staging y prod lo más similares posible
-
-### Relación entre Conceptos
+## Relación entre Conceptos
 
 ```mermaid
 graph TB
@@ -84,7 +73,7 @@ graph TB
 
 ---
 
-## 1. Externalize Configuration
+## Externalize Configuration
 
 ### ¿Qué es Externalize Configuration?
 
@@ -277,7 +266,7 @@ app.Run();
 
 ---
 
-## 2. Centralized Configuration
+## Centralized Configuration
 
 ### ¿Qué es Centralized Configuration?
 
@@ -583,7 +572,7 @@ var connectionString = $"Host={dbCreds.Host};Port={dbCreds.Port};Database={dbCre
 
 ---
 
-## 3. Environment Variables
+## Environment Variables
 
 ### ¿Qué son Environment Variables?
 
@@ -775,7 +764,7 @@ secrets = [
 
 ---
 
-## 4. Environment Parity
+## Environment Parity
 
 ### ¿Qué es Environment Parity?
 
