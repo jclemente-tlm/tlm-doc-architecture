@@ -1,3 +1,9 @@
+---
+sidebar_position: 2
+title: Restricciones de Arquitectura
+description: Limitaciones tecnicas, organizativas y de compliance del Servicio de Identidad.
+---
+
 # 2. Restricciones de la arquitectura
 
 Esta sección documenta las limitaciones técnicas, organizativas, de proceso y de cumplimiento que condicionan el diseño y la evolución del Servicio de Identidad. Todas las restricciones aquí descritas son obligatorias y deben ser consideradas en cada decisión arquitectónica.
@@ -46,7 +52,7 @@ Esta sección documenta las limitaciones técnicas, organizativas, de proceso y 
 | `Prometheus`  | Métricas de aplicación   | Exportador Keycloak        |
 | `Grafana`     | Visualización            | Dashboards multi-tenant    |
 | `Loki`        | Logs centralizados       | Logging estructurado       |
-| `Jaeger`      | Trazas distribuidas      | OTLP (`OpenTelemetry`)     |
+| `Tempo`       | Trazas distribuidas      | OTLP (`OpenTelemetry`)     |
 | `CloudWatch`  | Monitoreo infraestructura| ECS, RDS, ALB              |
 
 ## 2.6 Referencias y normativas

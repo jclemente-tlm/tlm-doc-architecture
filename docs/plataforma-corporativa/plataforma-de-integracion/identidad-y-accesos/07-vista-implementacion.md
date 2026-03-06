@@ -1,3 +1,9 @@
+---
+sidebar_position: 7
+title: Vista de Implementacion
+description: Infraestructura AWS y configuracion de despliegue de Keycloak.
+---
+
 # 7. Vista de implementación
 
 ![Vista de implementación del Sistema de Identidad](/diagrams/servicios-corporativos/identity_system_deployment.png)

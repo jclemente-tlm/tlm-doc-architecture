@@ -1,3 +1,9 @@
+---
+sidebar_position: 3
+title: Contexto y Alcance
+description: Limites del sistema y sus interfaces externas.
+---
+
 # 3. Contexto y alcance
 
 ![Vista de Contexto](/diagrams/servicios-corporativos/identity_system.png)

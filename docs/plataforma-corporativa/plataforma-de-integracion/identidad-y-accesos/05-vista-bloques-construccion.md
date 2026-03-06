@@ -1,3 +1,9 @@
+---
+sidebar_position: 5
+title: Vista de Bloques de Construccion
+description: Componentes del Servicio de Identidad y sus responsabilidades.
+---
+
 # 5. Vista de bloques de construcción
 
 ![Sistema de Identidad - Vista de Componentes](/diagrams/servicios-corporativos/identity_system.png)
@@ -10,7 +16,7 @@
 |---------------------------|------------------------------------------------------|-----------------------------|-----------------------------|
 | Keycloak Core             | Proveedor de identidad multi-tenant (tenant/realm)   | Keycloak 23+ (Docker oficial), PostgreSQL | OAuth2/OIDC, SAML, Admin API |
 | PostgreSQL                | Base de datos de identidades y configuración         | PostgreSQL 15+              | JDBC                        |
-| Auditoría y Cumplimiento  | Logging estructurado, cumplimiento normativo         | Event Sourcing, ELK, Loki   | Event Bus, REST             |
+| Auditoría y Cumplimiento  | Logging estructurado, cumplimiento normativo         | Loki, Grafana   | Event Bus, REST             |
 | Gateway Federación        | Integración con IdPs externos                        | Conectores Keycloak         | SAML, OIDC, LDAP            |
 | Consola Administración    | Interfaz administrativa                              | Keycloak Admin Console      | Web UI, Admin API           |
 
@@ -29,8 +35,8 @@
 ## 5.4 Observabilidad y monitoreo
 
 - Métricas de autenticación, latencia y errores expuestas vía Prometheus y visualizadas en Grafana.
-- Logs estructurados centralizados en Loki y ELK Stack.
-- Trazas distribuidas recolectadas con OpenTelemetry y visualizadas en Jaeger.
+- Logs estructurados centralizados en Loki.
+- Trazas distribuidas recolectadas con OpenTelemetry y visualizadas en Tempo.
 
 ## 5.5 Persistencia
 

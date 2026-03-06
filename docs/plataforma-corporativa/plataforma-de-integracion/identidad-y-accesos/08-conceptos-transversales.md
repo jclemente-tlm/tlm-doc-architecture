@@ -1,3 +1,9 @@
+---
+sidebar_position: 8
+title: Conceptos Transversales
+description: Seguridad, multi-tenancy, observabilidad y resiliencia.
+---
+
 # 8. Conceptos transversales
 
 ## 8.1 Seguridad
@@ -28,7 +34,7 @@
 
 - Logging estructurado con contexto de `tenant` (`realm`), usuario y sesión.
 - Métricas técnicas y de negocio instrumentadas por `tenant` (`realm`) y expuestas vía `Prometheus`.
-- Trazado distribuido con `OpenTelemetry` y `Jaeger`, enriquecido con tags de `tenant` (`realm`) y usuario.
+- Trazado distribuido con `OpenTelemetry` y `Tempo`, enriquecido con tags de `tenant` (`realm`) y usuario.
 
 ## 8.4 Resiliencia y manejo de errores
 

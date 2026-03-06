@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+title: Introduccion y Objetivos
+description: Objetivos, usuarios y partes interesadas del Servicio de Identidad basado en Keycloak.
+---
+
 # 1. Introducción y objetivos
 
 El Servicio de Identidad proporciona autenticación, autorización y federación centralizada para servicios corporativos multipaís, con aislamiento multi-tenant (`tenant`/`realm` por país), integración con sistemas cloud y legacy, y cumplimiento normativo internacional. Facilita la gestión de usuarios, autenticación federada, control de acceso basado en roles y cumplimiento regulatorio de forma segura y escalable.

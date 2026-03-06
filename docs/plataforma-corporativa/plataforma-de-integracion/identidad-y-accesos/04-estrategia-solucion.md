@@ -1,14 +1,20 @@
+---
+sidebar_position: 4
+title: Estrategia de Solucion
+description: Decisiones tecnologicas y patrones aplicados en el Servicio de Identidad.
+---
+
 # 4. Estrategia de solución
 
 ## 4.1 Decisiones clave de arquitectura
 
-| Decisión                | Alternativas Evaluadas         | Seleccionada             |
-|-------------------------|-------------------------------|--------------------------|
-| Proveedor de Identidad  | Auth0, Okta, `Keycloak`       | `Keycloak`               |
+| Decisión                | Alternativas Evaluadas                           | Seleccionada            |
+| ----------------------- | ------------------------------------------------ | ----------------------- |
+| Proveedor de Identidad  | Auth0, Okta, `Keycloak`                          | `Keycloak`              |
 | Multi-tenancy           | Single tenant (`realm`), multi-tenant (`realms`) | Multi-tenant (`realms`) |
-| Federación de Identidad | Solo externo, híbrido         | Híbrido                  |
-| Base de Datos           | MySQL, `PostgreSQL`           | `PostgreSQL`             |
-| Despliegue              | VM, contenedores, serverless  | Contenedores             |
+| Federación de Identidad | Solo externo, híbrido                            | Híbrido                 |
+| Base de Datos           | MySQL, `PostgreSQL`                              | `PostgreSQL`            |
+| Despliegue              | VM, contenedores, serverless                     | Contenedores            |
 
 ## 4.2 Patrones y estrategias aplicadas
 
@@ -16,20 +22,20 @@
 - Federación: Integración con `LDAP` y `SAML`/`OIDC` para federar usuarios desde sistemas legados y Google Workspace.
 - API Gateway: Validación centralizada de tokens `JWT`, forwarding seguro, control de acceso y observabilidad.
 - Arquitectura limpia (Clean Architecture) y CQRS: Separación de comandos/consultas y dependencias, usando `.NET 8`, `FluentValidation`, `Mapster`.
-- Observabilidad: Métricas, logs y trazas expuestos vía `Prometheus`, `Grafana`, `Loki`, `Jaeger`.
+- Observabilidad: Métricas, logs y trazas expuestos vía `Prometheus`, `Grafana`, `Loki`, `Tempo`.
 - Infraestructura como código: `Terraform` para provisión y despliegue reproducible.
 - Contenedores y orquestación: `Docker` y `AWS ECS` para portabilidad y escalabilidad.
 - DSLs de arquitectura: Modelado de contexto y componentes con C4 Model DSL y Structurizr DSL para trazabilidad y visualización.
 
 ## 4.3 Mitigación de riesgos
 
-| Riesgo                   | Probabilidad | Impacto | Mitigación                                    |
-|--------------------------|--------------|---------|-----------------------------------------------|
-| Bloqueo de usuarios      | Media        | Alta    | Autenticación paralela, rollback documentado  |
-| Degradación de rendimiento| Baja        | Media   | Pruebas de carga, escalado progresivo         |
-| Fallos en federación     | Media        | Media   | Circuit breakers, fallback local              |
-| Pérdida de datos         | Baja         | Alta    | Backups, validación post-migración            |
-| Configuración inconsistente| Baja       | Alta    | Infraestructura como código, validaciones CI  |
+| Riesgo                      | Probabilidad | Impacto | Mitigación                                   |
+| --------------------------- | ------------ | ------- | -------------------------------------------- |
+| Bloqueo de usuarios         | Media        | Alta    | Autenticación paralela, rollback documentado |
+| Degradación de rendimiento  | Baja         | Media   | Pruebas de carga, escalado progresivo        |
+| Fallos en federación        | Media        | Media   | Circuit breakers, fallback local             |
+| Pérdida de datos            | Baja         | Alta    | Backups, validación post-migración           |
+| Configuración inconsistente | Baja         | Alta    | Infraestructura como código, validaciones CI |
 
 ## 4.4 Referencias
 

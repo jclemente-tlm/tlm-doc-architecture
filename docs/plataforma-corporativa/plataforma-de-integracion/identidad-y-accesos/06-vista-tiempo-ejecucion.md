@@ -1,27 +1,33 @@
+---
+sidebar_position: 6
+title: Vista de Tiempo de Ejecucion
+description: Flujos de autenticacion, federacion y validacion de tokens.
+---
+
 # 6. Vista de tiempo de ejecución
 
 ## 6.1 Escenarios principales
 
-| Escenario         | Flujo                                 | Componentes           |
-|-------------------|---------------------------------------|-----------------------|
-| Autenticación     | Usuario → `Keycloak` → `JWT`          | Keycloak Core         |
-| Validación Token  | Servicio → `Keycloak` → Validación    | JWT Validation        |
-| Federación        | IdP externo → `Keycloak` → Usuario    | Federation Connectors |
+| Escenario        | Flujo                              | Componentes           |
+| ---------------- | ---------------------------------- | --------------------- |
+| Autenticación    | Usuario → `Keycloak` → `JWT`       | Keycloak Core         |
+| Validación Token | Servicio → `Keycloak` → Validación | JWT Validation        |
+| Federación       | IdP externo → `Keycloak` → Usuario | Federation Connectors |
 
 ## 6.2 Patrones de interacción
 
-| Patrón        | Descripción                | Tecnología |
-|---------------|---------------------------|------------|
-| OAuth2/OIDC   | Flujo de autenticación    | Estándar   |
-| JWT           | Tokens de acceso          | RS256      |
-| SAML          | Federación legacy         | SAML 2.0   |
+| Patrón      | Descripción            | Tecnología |
+| ----------- | ---------------------- | ---------- |
+| OAuth2/OIDC | Flujo de autenticación | Estándar   |
+| JWT         | Tokens de acceso       | RS256      |
+| SAML        | Federación legacy      | SAML 2.0   |
 
 ## 6.3 Escenario: autenticación de usuario con MFA
 
 ### Participantes
 
 - User Browser
-- API Gateway (`YARP`)
+- Kong API Gateway
 - `Keycloak` (`tenant`/`realm`)
 - Identity Management API
 - Token Validation Service
@@ -80,24 +86,24 @@ sequenceDiagram
 
 ### Métricas de performance
 
-| Fase                        | Target     | Medición           | Monitoreo           |
-|-----------------------------|------------|--------------------|---------------------|
-| Redirección inicial         | `< 50ms`   | Gateway latency    | `Prometheus`        |
-| Render login form           | `< 200ms`  | Keycloak response  | Application metrics |
-| Validación credenciales     | `< 300ms`  | LDAP/DB query      | Custom metrics      |
-| Validación MFA              | `< 100ms`  | TOTP algorithm     | Auth metrics        |
-| Token generation            | `< 200ms`  | JWT creation       | Session metrics     |
-| Token validation            | `< 10ms`   | gRPC/cache         | Token metrics       |
-| Flujo completo              | `< 2s`     | End-to-end         | Synthetic monitoring|
+| Fase                    | Target    | Medición          | Monitoreo            |
+| ----------------------- | --------- | ----------------- | -------------------- |
+| Redirección inicial     | `< 50ms`  | Gateway latency   | `Prometheus`         |
+| Render login form       | `< 200ms` | Keycloak response | Application metrics  |
+| Validación credenciales | `< 300ms` | LDAP/DB query     | Custom metrics       |
+| Validación MFA          | `< 100ms` | TOTP algorithm    | Auth metrics         |
+| Token generation        | `< 200ms` | JWT creation      | Session metrics      |
+| Token validation        | `< 10ms`  | gRPC/cache        | Token metrics        |
+| Flujo completo          | `< 2s`    | End-to-end        | Synthetic monitoring |
 
 ### Manejo de errores y resiliencia
 
-| Escenario Error         | Respuesta      | Acción De Recuperación                |
-|------------------------|----------------|---------------------------------------|
-| LDAP Unavailable       | HTTP 503       | Fallback a usuarios locales           |
-| MFA Failure (3x)       | Lockout        | Email de desbloqueo + notificación    |
-| Token Service Down     | HTTP 503       | Circuit breaker + validación local    |
-| Audit Service Down     | Continuar      | Store local + replay posterior        |
+| Escenario Error    | Respuesta | Acción De Recuperación             |
+| ------------------ | --------- | ---------------------------------- |
+| LDAP Unavailable   | HTTP 503  | Fallback a usuarios locales        |
+| MFA Failure (3x)   | Lockout   | Email de desbloqueo + notificación |
+| Token Service Down | HTTP 503  | Circuit breaker + validación local |
+| Audit Service Down | Continuar | Store local + replay posterior     |
 
 ## 6.4 Escenario: federación con IdP SAML
 
@@ -145,7 +151,7 @@ sequenceDiagram
 ## 6.5 Métricas y monitoreo de escenarios
 
 - Todas las fases instrumentadas con `Prometheus`, `Grafana` y logs estructurados.
-- Trazas distribuidas para flujos críticos (`OpenTelemetry`, `Jaeger`).
+- Trazas distribuidas para flujos críticos (`OpenTelemetry`, `Tempo`).
 - Alertas automáticas ante degradación de performance o fallos de integración.
 
 ## 6.6 Referencias

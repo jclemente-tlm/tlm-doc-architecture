@@ -1,3 +1,9 @@
+---
+sidebar_position: 11
+title: Riesgos y Deuda Tecnica
+description: Riesgos tecnicos y operacionales del Servicio de Identidad.
+---
+
 # 11. Riesgos y deuda técnica
 
 ## 11.1 Riesgos identificados

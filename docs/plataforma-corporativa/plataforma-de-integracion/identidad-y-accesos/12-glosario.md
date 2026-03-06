@@ -1,3 +1,9 @@
+---
+sidebar_position: 12
+title: Glosario
+description: Terminos y acronimos del Servicio de Identidad.
+---
+
 # 12. Glosario
 
 ## 12.1 Términos principales
