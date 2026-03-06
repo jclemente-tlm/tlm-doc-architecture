@@ -731,7 +731,7 @@ public class CustomerCommandService
 Patrón complementario a las read replicas: los servicios mantienen snapshots locales de datos de otros dominios consumiendo eventos.
 
 :::note
-El patrón de publicar eventos y mantener snapshots locales está detallado con ejemplo completo en la sección **Eventual Consistency** de este mismo estándar y en [Event-Driven Architecture](../mensajeria/event-driven-architecture.md).
+El patrón de publicar eventos y mantener snapshots locales está detallado con ejemplo completo en la sección **Eventual Consistency** de este mismo estándar y en [Mensajería Asíncrona](../mensajeria/async-messaging.md).
 :::
 
 ---
@@ -1016,7 +1016,7 @@ public class Customer
 
 - [Arquitectura de Datos](./data-architecture.md)
 - [Estándares de Base de Datos](./database-standards.md)
-- [Event-Driven Architecture](../mensajeria/event-driven-architecture.md)
+- [Mensajería Asíncrona](../mensajeria/async-messaging.md)
 
 ---
 

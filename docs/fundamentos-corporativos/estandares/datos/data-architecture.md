@@ -919,7 +919,7 @@ public class OrderCustomerSyncHandler : IEventHandler<CustomerCreatedEvent>
 ```
 
 :::warning Riesgo: pérdida silenciosa de eventos
-El patrón anterior (guardar en DB → publicar evento) tiene un riesgo: si `PublishAsync` falla después de `SaveChangesAsync`, el dato se persiste pero el evento nunca se envía. Para garantizar **at-least-once delivery**, usar el **Transactional Outbox Pattern**: guardar el evento en la misma transacción junto con la entidad, y publicarlo desde un proceso en background. Ver [Event-Driven Architecture](../../mensajeria/event-driven-architecture.md) para la implementación.
+El patrón anterior (guardar en DB → publicar evento) tiene un riesgo: si `PublishAsync` falla después de `SaveChangesAsync`, el dato se persiste pero el evento nunca se envía. Para garantizar **at-least-once delivery**, usar el **Transactional Outbox Pattern**: guardar el evento en la misma transacción junto con la entidad, y publicarlo desde un proceso en background. Ver [Mensajería Asíncrona](../../mensajeria/async-messaging.md) para la implementación.
 :::
 
 ### Patrón 3: Data Replication (Analytics)
