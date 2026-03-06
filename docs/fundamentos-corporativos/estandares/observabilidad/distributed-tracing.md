@@ -185,75 +185,36 @@ var app = builder.Build();
 ### Custom Spans
 
 ```csharp
-using System.Diagnostics;
-
 public class OrderService
 {
-    private static readonly ActivitySource ActivitySource = new("CustomerService.Activities");
-    private readonly ILogger<OrderService> _logger;
+    private static readonly ActivitySource ActivitySource = new("Talma.OrderService");
 
     public async Task<Order> CreateOrderAsync(CreateOrderCommand command)
     {
-        // Crear custom activity (span)
         using var activity = ActivitySource.StartActivity("CreateOrder", ActivityKind.Internal);
-
-        // Agregar tags (attributes)
         activity?.SetTag("order.customer_id", command.CustomerId);
         activity?.SetTag("order.total_amount", command.TotalAmount);
-        activity?.SetTag("order.item_count", command.Items.Count);
 
         try
         {
-            // Validación (sub-span automático si usa DB)
-            var customer = await _customerRepository.GetByIdAsync(command.CustomerId);
-            if (customer == null)
-            {
-                activity?.SetStatus(ActivityStatusCode.Error, "Customer not found");
-                activity?.SetTag("error", true);
-                throw new NotFoundException($"Customer {command.CustomerId} not found");
-            }
+            var order = await _orderRepository.CreateAsync(command);
 
-            // Crear orden
-            var order = new Order
-            {
-                CustomerId = command.CustomerId,
-                Items = command.Items,
-                TotalAmount = command.TotalAmount,
-                Status = OrderStatus.Pending
-            };
-
-            await _orderRepository.CreateAsync(order);
-
-            // Procesar pago (custom span)
+            // Sub-span para operación específica
             using (var paymentActivity = ActivitySource.StartActivity("ProcessPayment", ActivityKind.Client))
             {
                 paymentActivity?.SetTag("payment.method", command.PaymentMethod);
-                paymentActivity?.SetTag("payment.amount", command.TotalAmount);
-
                 var payment = await _paymentService.ProcessAsync(order);
-
-                paymentActivity?.SetTag("payment.id", payment.Id);
                 paymentActivity?.SetTag("payment.status", payment.Status);
             }
 
-            // Success
             activity?.SetStatus(ActivityStatusCode.Ok);
             activity?.SetTag("order.id", order.Id);
-
-            _logger.LogInformation(
-                "Order created: {OrderId} for customer {CustomerId}",
-                order.Id,
-                command.CustomerId);
-
             return order;
         }
         catch (Exception ex)
         {
-            // Registrar error en span
             activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-            activity?.RecordException(ex);
-
-            _logger.LogError(ex, "Error creating order");
+            activity?.RecordException(ex);  // Adjunta stack trace al span
             throw;
         }
     }
@@ -302,77 +263,43 @@ public class PaymentServiceClient
 
 ### Context Propagation (Kafka)
 
+Kafka no propaga trace context automáticamente — requiere inyección/extracción manual en los headers del mensaje:
+
 ```csharp
-// Para Kafka, necesitamos propagar manualmente (OpenTelemetry no lo hace automático)
-
-public class KafkaEventProducer
+// Producer: Inyectar trace context en headers Kafka
+var message = new Message<string, string>
 {
-    private readonly IProducer<string, string> _producer;
+    Key = order.CustomerId.ToString(),
+    Value = JsonSerializer.Serialize(@event),
+    Headers = new Headers()
+};
 
-    public async Task PublishOrderCreatedAsync(Order order)
+Propagators.DefaultTextMapPropagator.Inject(
+    new PropagationContext(Activity.Current?.Context ?? default, Baggage.Current),
+    message.Headers,
+    (headers, key, value) => headers.Add(key, Encoding.UTF8.GetBytes(value)));
+
+await _producer.ProduceAsync("order.created", message);
+
+// Consumer: Extraer trace context y crear span hijo
+var parentContext = Propagators.DefaultTextMapPropagator.Extract(
+    default,
+    result.Message.Headers,
+    (headers, key) =>
     {
-        var @event = new OrderCreatedEvent
-        {
-            EventId = Guid.NewGuid(),
-            OrderId = order.Id,
-            CustomerId = order.CustomerId
-        };
+        var h = headers.FirstOrDefault(h => h.Key == key);
+        return h != null ? new[] { Encoding.UTF8.GetString(h.GetValueBytes()) } : Enumerable.Empty<string>();
+    });
 
-        var message = new Message<string, string>
-        {
-            Key = order.CustomerId.ToString(),
-            Value = JsonSerializer.Serialize(@event),
-            Headers = new Headers()
-        };
+Baggage.Current = parentContext.Baggage;
 
-        // Inyectar trace context en headers Kafka
-        var propagator = Propagators.DefaultTextMapPropagator;
-        propagator.Inject(new PropagationContext(Activity.Current?.Context ?? default, Baggage.Current),
-            message.Headers,
-            (headers, key, value) =>
-            {
-                headers.Add(key, Encoding.UTF8.GetBytes(value));
-            });
+using var activity = ActivitySource.StartActivity(
+    "ProcessOrderCreated",
+    ActivityKind.Consumer,
+    parentContext.ActivityContext);  // ← vincula con el span del producer
 
-        await _producer.ProduceAsync("order.created", message);
-    }
-}
-
-// Consumer: Extraer trace context
-public class OrderCreatedConsumer
-{
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            var result = _consumer.Consume(stoppingToken);
-
-            // Extraer trace context desde headers
-            var propagator = Propagators.DefaultTextMapPropagator;
-            var parentContext = propagator.Extract(default, result.Message.Headers,
-                (headers, key) =>
-                {
-                    var header = headers.FirstOrDefault(h => h.Key == key);
-                    return header != null ? new[] { Encoding.UTF8.GetString(header.GetValueBytes()) } : Enumerable.Empty<string>();
-                });
-
-            Baggage.Current = parentContext.Baggage;
-
-            // Crear span hijo
-            using var activity = ActivitySource.StartActivity(
-                "ProcessOrderCreated",
-                ActivityKind.Consumer,
-                parentContext.ActivityContext);
-
-            activity?.SetTag("messaging.system", "kafka");
-            activity?.SetTag("messaging.destination", "order.created");
-
-            await HandleEventAsync(result.Message.Value);
-
-            _consumer.Commit(result);
-        }
-    }
-}
+activity?.SetTag("messaging.system", "kafka");
+activity?.SetTag("messaging.destination", "order.created");
 ```
 
 ### Sampling Strategies
