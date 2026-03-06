@@ -1,6 +1,6 @@
 ---
 id: versioning
-sidebar_position: 6
+sidebar_position: 5
 title: Versionamiento Semántico
 description: Estándares para versionamiento semántico de servicios, paquetes y APIs usando SemVer MAJOR.MINOR.PATCH.
 ---

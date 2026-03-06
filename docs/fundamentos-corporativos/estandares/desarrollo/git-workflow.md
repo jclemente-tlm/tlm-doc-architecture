@@ -1,11 +1,11 @@
 ---
 id: git-workflow
 sidebar_position: 1
-title: Git Workflow y Estrategia de Branching
-description: Estándares para flujo de trabajo Git, estrategia de branching, merge strategies, protección de ramas y conventional commits.
+title: Git Workflow y Estrategia de Ramas
+description: Estándares para flujo de trabajo Git, estrategia de ramas, merge strategies, protección de ramas y conventional commits.
 ---
 
-# Git Workflow y Estrategia de Branching
+# Git Workflow y Estrategia de Ramas
 
 ## Contexto
 

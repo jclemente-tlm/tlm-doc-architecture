@@ -1,6 +1,6 @@
 ---
 id: repository-naming
-sidebar_position: 7
+sidebar_position: 6
 title: Nomenclatura de Repositorios
 description: Convenciones corporativas para nombrar repositorios en GitHub, incluyendo prefijo organizacional, categorías y reglas de estilo.
 tags: [desarrollo, github, repositorios, nomenclatura, convencion]
