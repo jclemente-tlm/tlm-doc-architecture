@@ -181,69 +181,11 @@ jobs:
           build-args: |
             BUILD_VERSION=${{ github.sha }}
             BUILD_DATE=${{ github.event.head_commit.timestamp }}
-
-  # Job 4: Deploy to Staging
-  deploy-staging:
-    runs-on: ubuntu-latest
-    needs: publish
-    if: github.ref == 'refs/heads/develop'
-    environment:
-      name: staging
-      url: https://staging.example.com
-    steps:
-      - name: Checkout IaC
-        uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.7.0
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Deploy to ECS
-        run: |
-          cd terraform/environments/staging
-          terraform init
-          terraform apply -auto-approve \
-            -var="image_tag=${{ needs.publish.outputs.image-tag }}" \
-            -var="image_digest=${{ needs.publish.outputs.image-digest }}"
-
-  # Job 5: Deploy to Production (manual approval)
-  deploy-production:
-    runs-on: ubuntu-latest
-    needs: publish
-    if: github.ref == 'refs/heads/main'
-    environment:
-      name: production
-      url: https://api.example.com
-    steps:
-      - name: Checkout IaC
-        uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: us-east-1
-
-      - name: Deploy to ECS with Blue-Green
-        run: |
-          cd terraform/environments/production
-          terraform init
-          terraform apply -auto-approve \
-            -var="image_tag=${{ needs.publish.outputs.image-tag }}" \
-            -var="deployment_strategy=blue-green"
 ```
+
+:::note Pasos de deploy
+Los jobs de `deploy-staging` y `deploy-production` (blue-green con Terraform + ECS) están documentados en [Deployment](./deployment.md#implementación-integrada).
+:::
 
 ---
 

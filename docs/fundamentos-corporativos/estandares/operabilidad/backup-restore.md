@@ -480,14 +480,13 @@ name: Monthly Backup Restore Test
 
 on:
   schedule:
-    - cron: "0 10 1 * *" # Primer día de cada mes a las 10 AM UTC
+    - cron: "0 10 1 * *" # Primer día de cada mes
   workflow_dispatch:
 
 jobs:
   restore-test:
     runs-on: ubuntu-latest
     environment: dr-test
-
     steps:
       - uses: actions/checkout@v4
 
@@ -498,105 +497,57 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Get latest backup from S3
+      - name: Get latest backup and verify checksum
         id: latest-backup
         run: |
-          LATEST_BACKUP=$(aws s3 ls s3://talma-backups-prod/postgres/orders_db/ \
+          LATEST=$(aws s3 ls s3://talma-backups-prod/postgres/orders_db/ \
             --recursive | sort | tail -n 1 | awk '{print $4}')
-
-          echo "backup_key=${LATEST_BACKUP}" >> $GITHUB_OUTPUT
-          echo "📦 Latest backup: ${LATEST_BACKUP}"
-
-      - name: Download and verify checksum
-        run: |
-          aws s3 cp "s3://talma-backups-prod/${{ steps.latest-backup.outputs.backup_key }}" \
-            ./backup.sql.gz
-
-          aws s3 cp "s3://talma-backups-prod/${{ steps.latest-backup.outputs.backup_key }}.sha256" \
-            ./backup.sql.gz.sha256
-
+          echo "backup_key=${LATEST}" >> $GITHUB_OUTPUT
+          aws s3 cp "s3://talma-backups-prod/${LATEST}" ./backup.sql.gz
+          aws s3 cp "s3://talma-backups-prod/${LATEST}.sha256" ./backup.sql.gz.sha256
           sha256sum -c backup.sql.gz.sha256 || exit 1
 
-      - name: Start test RDS instance
+      - name: Restore RDS from snapshot
         id: test-db
         run: |
           aws rds restore-db-instance-from-db-snapshot \
             --db-instance-identifier "restore-test-orders" \
             --db-snapshot-identifier "orders-db-prod-latest" \
-            --db-instance-class "db.t4g.medium" \
-            --publicly-accessible \
-            --no-multi-az
+            --db-instance-class "db.t4g.medium" --no-multi-az
+          aws rds wait db-instance-available --db-instance-identifier "restore-test-orders"
+          echo "db_endpoint=$(aws rds describe-db-instances \
+            --db-instance-identifier restore-test-orders \
+            --query 'DBInstances[0].Endpoint.Address' --output text)" >> $GITHUB_OUTPUT
 
-          echo "⏳ Waiting for test database to be available..."
-          aws rds wait db-instance-available \
-            --db-instance-identifier "restore-test-orders"
-
-          DB_ENDPOINT=$(aws rds describe-db-instances \
-            --db-instance-identifier "restore-test-orders" \
-            --query 'DBInstances[0].Endpoint.Address' \
-            --output text)
-
-          echo "db_endpoint=${DB_ENDPOINT}" >> $GITHUB_OUTPUT
-
-      - name: Verify data integrity
+      - name: Validate data integrity and RTO
         env:
-          DB_HOST: ${{ steps.test-db.outputs.db_endpoint }}
-          DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+          PGPASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
         run: |
-          sudo apt-get install -y postgresql-client-15
-
-          ORDER_COUNT=$(PGPASSWORD="${DB_PASSWORD}" psql \
-            -h "${DB_HOST}" -U postgres -d orders_db \
+          START=$(date +%s)
+          COUNT=$(psql -h ${{ steps.test-db.outputs.db_endpoint }} -U postgres -d orders_db \
             -t -c "SELECT COUNT(*) FROM orders;")
+          [ "$COUNT" -lt 1000 ] && echo "❌ Insufficient data" && exit 1
+          DURATION=$(($(date +%s) - START))
+          aws cloudwatch put-metric-data --namespace "Talma/DR" \
+            --metric-name RestoreTimeSeconds --value "${DURATION}" \
+            --dimensions Service=orders-db
+          echo "✅ ${COUNT} registros restaurados en ${DURATION}s"
 
-          echo "Orders count: ${ORDER_COUNT}"
-
-          if [ "$ORDER_COUNT" -lt 1000 ]; then
-            echo "❌ Data validation failed - insufficient data"
-            exit 1
-          fi
-
-          echo "✅ Data integrity verified: ${ORDER_COUNT} orders"
-
-      - name: Performance test
-        env:
-          DB_HOST: ${{ steps.test-db.outputs.db_endpoint }}
-          DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-        run: |
-          START_TIME=$(date +%s)
-
-          PGPASSWORD="${DB_PASSWORD}" psql \
-            -h "${DB_HOST}" -U postgres -d orders_db \
-            -c "SELECT o.*, c.name FROM orders o JOIN customers c ON o.customer_id = c.id WHERE o.created_at > NOW() - INTERVAL '30 days' LIMIT 1000;"
-
-          DURATION=$(($(date +%s) - START_TIME))
-          echo "Query duration: ${DURATION}s"
-
-          aws cloudwatch put-metric-data \
-            --namespace "Talma/DR" \
-            --metric-name "RestoreTimeSeconds" \
-            --value "${DURATION}" \
-            --dimensions Service="orders-db"
-
-      - name: Cleanup test instance
+      - name: Cleanup
         if: always()
         run: |
           aws rds delete-db-instance \
-            --db-instance-identifier "restore-test-orders" \
-            --skip-final-snapshot || true
+            --db-instance-identifier "restore-test-orders" --skip-final-snapshot || true
 
       - name: Report results
         if: always()
-        run: |
-          STATUS="${{ job.status == 'success' && '✅ PASSED' || '❌ FAILED' }}"
-
-          gh issue create \
-            --title "Restore Test Report - $(date +%Y-%m-%d)" \
-            --body "**Status**: ${STATUS}\n**Backup**: ${{ steps.latest-backup.outputs.backup_key }}" \
-            --label "restore-test" \
-            --assignee "${{ github.actor }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "Restore Test - $(date +%Y-%m-%d)" \
+            --body "Status: ${{ job.status }}  Backup: ${{ steps.latest-backup.outputs.backup_key }}" \
+            --label restore-test --assignee "${{ github.actor }}"
 ```
 
 ---

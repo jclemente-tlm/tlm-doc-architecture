@@ -530,261 +530,103 @@ jobs:
 
 ## Implementación Integrada
 
-### Pipeline Completo End-to-End
+### Deploy a Staging (automático)
 
 ```yaml
-# .github/workflows/complete-pipeline.yml
-name: Complete CI/CD Pipeline
+# .github/workflows/deploy.yml — job deploy-staging
+deploy-staging:
+  needs: publish # depende del job de build+push en ci-pipeline
+  if: github.ref == 'refs/heads/develop'
+  runs-on: ubuntu-latest
+  environment:
+    name: staging
+    url: https://staging-api.example.com
+  steps:
+    - uses: actions/checkout@v4
 
-on:
-  push:
-    branches: [main, develop]
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
-env:
-  DOTNET_VERSION: "8.0"
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-  AWS_REGION: us-east-1
+    - uses: hashicorp/setup-terraform@v3
 
-jobs:
-  # 1. CI: Build + Test + Security
-  ci:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    - name: Deploy con Terraform
+      working-directory: terraform/environments/staging
+      run: |
+        terraform init
+        terraform apply -auto-approve \
+          -var="image_tag=${{ needs.publish.outputs.image-tag }}"
 
-      - name: Calculate version
-        id: version
-        run: |
-          VERSION="1.0.${{ github.run_number }}"
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - name: Restore + Build + Test
-        run: |
-          dotnet restore
-          dotnet build --no-restore --configuration Release
-          dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
-
-      - name: Security Scan
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: "fs"
-          format: "sarif"
-          output: "trivy-results.sarif"
-
-  # 2. Build & Publish Docker Image
-  publish:
-    needs: ci
-    runs-on: ubuntu-latest
-    outputs:
-      image-tag: ${{ steps.meta.outputs.tags }}
-      image-digest: ${{ steps.build.outputs.digest }}
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Log in to Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=sha,prefix={{branch}}-
-
-      - name: Build and push
-        id: build
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          build-args: |
-            BUILD_VERSION=${{ needs.ci.outputs.version }}
-            GIT_SHA=${{ github.sha }}
-            BUILD_NUMBER=${{ github.run_number }}
-
-  # 3. Deploy to Staging (automatic)
-  deploy-staging:
-    needs: [ci, publish]
-    if: github.ref == 'refs/heads/develop'
-    runs-on: ubuntu-latest
-    environment:
-      name: staging
-      url: https://staging-api.example.com
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - uses: hashicorp/setup-terraform@v3
-
-      - name: Deploy with Terraform
-        working-directory: terraform/environments/staging
-        run: |
-          terraform init
-          terraform apply -auto-approve \
-            -var="image_tag=${{ needs.publish.outputs.image-tag }}" \
-            -var="version=${{ needs.ci.outputs.version }}"
-
-      - name: Wait for ECS Deployment
-        run: |
-          aws ecs wait services-stable \
-            --cluster staging-cluster \
-            --services order-service
-
-      - name: Smoke Test
-        run: |
-          curl -f https://staging-api.example.com/health || exit 1
-
-  # 4. Deploy to Production (manual approval + blue-green)
-  deploy-production:
-    needs: [ci, publish]
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: https://api.example.com
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create GitHub Deployment
-        uses: chrnorm/deployment-action@v2
-        id: deployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          environment: production
-          ref: ${{ github.sha }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - uses: hashicorp/setup-terraform@v3
-
-      - name: Deploy with Blue-Green Strategy
-        working-directory: terraform/environments/production
-        run: |
-          terraform init
-          terraform apply -auto-approve \
-            -var="image_tag=${{ needs.publish.outputs.image-tag }}" \
-            -var="version=${{ needs.ci.outputs.version }}" \
-            -var="deployment_strategy=blue-green"
-
-      - name: Annotate Deployment in Grafana
-        run: |
-          curl -X POST "https://grafana.example.com/api/annotations" \
-            -H "Authorization: Bearer ${{ secrets.GRAFANA_API_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "dashboardUID": "order-service",
-              "time": '"$(date +%s)000"',
-              "tags": ["deployment", "production"],
-              "text": "Deployed v${{ needs.ci.outputs.version }} (SHA: ${{ github.sha }})"
-            }'
-
-      - name: Update Deployment Status
-        if: always()
-        uses: chrnorm/deployment-status@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
-          state: ${{ job.status }}
-          environment-url: https://api.example.com
+    - name: Smoke Test
+      run: curl -f https://staging-api.example.com/health || exit 1
 ```
+
+### Deploy a Producción (blue-green + aprobación manual)
+
+```yaml
+# .github/workflows/deploy.yml — job deploy-production
+deploy-production:
+  needs: publish
+  if: github.ref == 'refs/heads/main'
+  runs-on: ubuntu-latest
+  environment:
+    name: production # requiere aprobación manual configurada en el entorno
+    url: https://api.example.com
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Create GitHub Deployment
+      uses: chrnorm/deployment-action@v2
+      id: deployment
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        environment: production
+        ref: ${{ github.sha }}
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+        aws-region: us-east-1
+
+    - uses: hashicorp/setup-terraform@v3
+
+    - name: Deploy Blue-Green con Terraform
+      working-directory: terraform/environments/production
+      run: |
+        terraform init
+        terraform apply -auto-approve \
+          -var="image_tag=${{ needs.publish.outputs.image-tag }}" \
+          -var="deployment_strategy=blue-green"
+
+    - name: Anotar deployment en Grafana
+      run: |
+        curl -X POST "https://grafana.example.com/api/annotations" \
+          -H "Authorization: Bearer ${{ secrets.GRAFANA_API_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{"tags":["deployment","production"],"text":"Deployed ${{ github.sha }}"}'
+
+    - name: Actualizar estado del deployment
+      if: always()
+      uses: chrnorm/deployment-status@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+        state: ${{ job.status }}
+        environment-url: https://api.example.com
+```
+
+:::note Build + empaquetado
+Los jobs `build`, `security` y `publish` (CI, Trivy scanning, Docker build + push a ghcr.io) están documentados en [CI/CD Pipelines y Build](./ci-pipeline.md).
+:::
 
 ---
 
 ## Monitoreo y Observabilidad
-
-### Métricas de Deployment
-
-```csharp
-// src/Shared/Telemetry/DeploymentMetrics.cs
-using System.Diagnostics.Metrics;
-
-public class DeploymentMetrics
-{
-    private readonly Counter<long> _deploymentsTotal;
-    private readonly Counter<long> _deploymentsFailedTotal;
-    private readonly Counter<long> _rollbacksTotal;
-    private readonly Histogram<double> _deploymentDuration;
-
-    public DeploymentMetrics(IMeterFactory meterFactory)
-    {
-        var meter = meterFactory.Create("Talma.Deployments");
-
-        _deploymentsTotal = meter.CreateCounter<long>(
-            "deployments.total",
-            description: "Total number of deployments");
-
-        _deploymentsFailedTotal = meter.CreateCounter<long>(
-            "deployments.failed.total",
-            description: "Total number of failed deployments");
-
-        _rollbacksTotal = meter.CreateCounter<long>(
-            "rollbacks.total",
-            description: "Total number of rollbacks");
-
-        _deploymentDuration = meter.CreateHistogram<double>(
-            "deployment.duration_seconds",
-            unit: "s",
-            description: "Deployment duration in seconds");
-    }
-
-    public void RecordDeployment(string environment, string version, bool success, double durationSeconds)
-    {
-        var tags = new TagList
-        {
-            { "environment", environment },
-            { "version", version },
-            { "status", success ? "success" : "failure" }
-        };
-
-        _deploymentsTotal.Add(1, tags);
-
-        if (!success)
-            _deploymentsFailedTotal.Add(1, tags);
-
-        _deploymentDuration.Record(durationSeconds, tags);
-    }
-
-    public void RecordRollback(string environment, string fromVersion, string toVersion)
-    {
-        _rollbacksTotal.Add(1, new TagList
-        {
-            { "environment", environment },
-            { "from_version", fromVersion },
-            { "to_version", toVersion }
-        });
-    }
-}
-```
 
 ### Dashboard Grafana — Métricas DORA
 
