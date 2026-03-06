@@ -612,4 +612,4 @@ jobs:
 - [Cosign Image Signing](https://docs.sigstore.dev/cosign/overview/) — firma de imágenes con Sigstore
 - [Deployment](./deployment.md) — estrategias de deployment y trazabilidad
 - [Structured Logging](../observabilidad/structured-logging.md) — logs estructurados en builds
-- [Infrastructure as Code](../infraestructura/infrastructure-as-code.md) — provisionamiento de infraestructura
+- [Infrastructure as Code — Implementación](../infraestructura/iac-implementation.md) — provisionamiento de infraestructura

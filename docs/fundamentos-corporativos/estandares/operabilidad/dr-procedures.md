@@ -375,22 +375,22 @@ v
         -U postgres -d orders_db -c "SELECT 1;"
 ````
 
+2 2. **Check RDS status**
 
-2
-2. **Check RDS status**
-
-   ```bash
+```bash
 3  aws rds describe-db-instances \
 
-     --db-instance-identifier orders-db-prod \
-     --region us-east-1 \
-     --query 'DBInstances[0].DBInstanceStatus'
-   ```
+  --db-instance-identifier orders-db-prod \
+  --region us-east-1 \
+  --query 'DBInstances[0].DBInstanceStatus'
+```
+
 1
+
 1. **Declare incident**
    - Post en #incidents: "P1: Database failure. DR-RUNBOOK-001 activated."
    - Asignar roles: Incident Commander, Technical Lead (DB), Scribe
-2
+     2
 2. **Assess recovery options**
 
    ```bash
@@ -697,5 +697,5 @@ resource "aws_cloudwatch_metric_alarm" "rto_exceeded" {
 - [Chaos Engineering Principles](https://principlesofchaos.org/) — principios de ingeniería del caos
 - [AWS Multi-Region Architecture](https://docs.aws.amazon.com/whitepapers/latest/aws-multi-region-fundamentals/welcome.html) — fundamentos de arquitectura multi-región
 - [Backup y Restore](./backup-restore.md) — automatización de backups, retención y restore testing
-- [Infrastructure as Code](../infraestructura/infrastructure-as-code.md) — provisionamiento de infraestructura DR
+- [Infrastructure as Code — Implementación](../infraestructura/iac-implementation.md) — provisionamiento de infraestructura DR
 - [Alertas con Grafana](../observabilidad/alerting.md) — alertas de DR

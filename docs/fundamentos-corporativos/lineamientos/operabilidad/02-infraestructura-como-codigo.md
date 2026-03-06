@@ -15,13 +15,13 @@ Gestión manual de infraestructura mediante consolas crea configuraciones no doc
 
 ## Estándares Obligatorios
 
-- [Implementar infraestructura como código](../../estandares/infraestructura/infrastructure-as-code.md#1-iac-implementation)
-- [Versionar código IaC en control de versiones](../../estandares/infraestructura/infrastructure-as-code.md#4-iac-versioning)
-- [Realizar code review de IaC](../../estandares/infraestructura/infrastructure-as-code.md#5-iac-code-review)
+- [Implementar infraestructura como código](../../estandares/infraestructura/iac-implementation.md)
+- [Versionar código IaC en control de versiones](../../estandares/infraestructura/iac-state-drift.md)
+- [Realizar code review de IaC](../../estandares/infraestructura/iac-workflow.md)
 - [Ejecutar scanning de seguridad en IaC](../../estandares/seguridad/security-scanning.md#3-iac-scanning-terraform)
-- [Gestionar state de IaC remotamente](../../estandares/infraestructura/infrastructure-as-code.md#3-iac-state-management)
-- [Aplicar workflow plan/apply en IaC](../../estandares/infraestructura/infrastructure-as-code.md#2-iac-workflow)
-- [Detectar y prevenir configuration drift](../../estandares/infraestructura/infrastructure-as-code.md#6-drift-detection)
+- [Gestionar state de IaC remotamente](../../estandares/infraestructura/iac-state-drift.md)
+- [Aplicar workflow plan/apply en IaC](../../estandares/infraestructura/iac-workflow.md)
+- [Detectar y prevenir configuration drift](../../estandares/infraestructura/iac-state-drift.md)
 
 ## Referencias Relacionadas
 

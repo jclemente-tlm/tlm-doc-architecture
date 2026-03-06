@@ -3,6 +3,7 @@ id: containerization
 sidebar_position: 1
 title: Contenerización
 description: Estándares para construcción, gestión y despliegue de contenedores Docker en AWS ECS Fargate.
+tags: [infraestructura, docker, ecs, fargate, contenedores, seguridad]
 ---
 
 # Contenerización
@@ -141,7 +142,7 @@ ENTRYPOINT ["dotnet", "CustomerService.Api.dll"]
 
 ### Principios Clave
 
-#### 1. **Multi-stage Builds**
+#### Multi-stage Builds
 
 **Propósito**: Reducir tamaño final eliminando herramientas de build.
 
@@ -171,7 +172,7 @@ ENTRYPOINT ["dotnet", "App.dll"]
 - Runtime image: ~110MB
 - **Reducción**: 78%
 
-#### 2. **Layer Caching**
+#### Layer Caching
 
 **Propósito**: Aprovechar cache de Docker para builds más rápidos.
 
@@ -196,7 +197,7 @@ RUN dotnet build
 - Cambios en código: Solo rebuild (restore usa cache)
 - Cambios en dependencies: Rebuild completo
 
-#### 3. **Non-root User**
+#### Non-root User
 
 **Propósito**: Seguridad - no ejecutar como root.
 
@@ -221,7 +222,7 @@ USER appuser
 ENTRYPOINT ["dotnet", "App.dll"]
 ```
 
-#### 4. **Minimal Base Images**
+#### Minimal Base Images
 
 **Propósito**: Reducir superficie de ataque.
 
@@ -237,7 +238,7 @@ FROM ubuntu:22.04
 RUN apt-get update && apt-get install -y dotnet-runtime-8.0
 ```
 
-#### 5. **Health Checks**
+#### Health Checks
 
 **Propósito**: ECS Fargate pueda determinar si contenedor está healthy.
 
@@ -266,7 +267,7 @@ app.MapHealthChecks("/health");
 
 ### Técnicas de Reducción de Tamaño
 
-#### 1. **Remove Unnecessary Files**
+### Remove Unnecessary Files
 
 ```dockerfile
 # ❌ MALO: Copiar todo
@@ -285,7 +286,7 @@ COPY . .
 **/*.log
 ```
 
-#### 2. **Combine RUN Commands**
+### Combine RUN Commands
 
 ```dockerfile
 # ❌ MALO: Múltiples layers
@@ -300,7 +301,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 ```
 
-#### 3. **Self-contained vs Framework-dependent**
+### Self-contained vs Framework-dependent
 
 ```dockerfile
 # Opción 1: Framework-dependent (más pequeño, requiere runtime)
@@ -331,7 +332,7 @@ RUN dotnet publish -c Release -o /app/publish \
 
 ## Seguridad de Contenedores
 
-### 1. Image Scanning con Trivy
+### Image Scanning con Trivy
 
 ```yaml
 # .github/workflows/build.yml
@@ -354,7 +355,7 @@ RUN dotnet publish -c Release -o /app/publish \
     sarif_file: "trivy-results.sarif"
 ```
 
-### 2. Security Best Practices
+### Security Best Practices
 
 ```dockerfile
 # ✅ 1. Use official base images
@@ -387,7 +388,7 @@ ENV DB_PASSWORD=supersecret
 # Configurar scan automático en registry
 ```
 
-### 3. Runtime Security
+### Runtime Security
 
 ```json
 // ECS Task Definition - Security Configuration
@@ -609,240 +610,13 @@ jobs:
 }
 ```
 
-### Service Configuration
+:::note Configuración del servicio ECS
+La Service Configuration (desiredCount, networkConfiguration, ALB) y el módulo Terraform de ECS se documentan en [IaC — Implementación con Terraform](./iac-implementation.md#módulo-ecs-service).
+:::
 
-```json
-{
-  "serviceName": "customer-service",
-  "cluster": "production-cluster",
-  "taskDefinition": "customer-service:42",
-  "desiredCount": 3,
-  "launchType": "FARGATE",
-  "platformVersion": "LATEST",
-  "networkConfiguration": {
-    "awsvpcConfiguration": {
-      "subnets": ["subnet-12345678", "subnet-87654321"],
-      "securityGroups": ["sg-customer-service"],
-      "assignPublicIp": "DISABLED"
-    }
-  },
-  "loadBalancers": [
-    {
-      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/customer-service",
-      "containerName": "customer-service",
-      "containerPort": 8080
-    }
-  ],
-  "deploymentConfiguration": {
-    "maximumPercent": 200,
-    "minimumHealthyPercent": 100,
-    "deploymentCircuitBreaker": {
-      "enable": true,
-      "rollback": true
-    }
-  },
-  "healthCheckGracePeriodSeconds": 60
-}
-```
-
-### Terraform para ECS
-
-```hcl
-# terraform/modules/ecs-service/main.tf
-
-resource "aws_ecs_task_definition" "service" {
-  family                   = var.service_name
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  cpu                      = var.cpu
-  memory                   = var.memory
-  execution_role_arn       = aws_iam_role.ecs_execution_role.arn
-  task_role_arn            = aws_iam_role.ecs_task_role.arn
-
-  container_definitions = jsonencode([
-    {
-      name      = var.service_name
-      image     = var.container_image
-      cpu       = var.cpu
-      memory    = var.memory
-      essential = true
-
-      portMappings = [
-        {
-          containerPort = var.container_port
-          protocol      = "tcp"
-        }
-      ]
-
-      environment = var.environment_variables
-
-      secrets = [
-        for secret in var.secrets : {
-          name      = secret.name
-          valueFrom = secret.value_from
-        }
-      ]
-
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          "awslogs-group"         = "/ecs/${var.service_name}"
-          "awslogs-region"        = var.aws_region
-          "awslogs-stream-prefix" = "ecs"
-          "awslogs-create-group"  = "true"
-        }
-      }
-
-      healthCheck = {
-        command     = ["CMD-SHELL", "curl -f http://localhost:${var.container_port}/health || exit 1"]
-        interval    = 30
-        timeout     = 5
-        retries     = 3
-        startPeriod = 60
-      }
-
-      user                     = "1000"
-      readonlyRootFilesystem   = false
-
-      linuxParameters = {
-        capabilities = {
-          drop = ["ALL"]
-        }
-      }
-    }
-  ])
-}
-
-resource "aws_ecs_service" "service" {
-  name            = var.service_name
-  cluster         = var.cluster_id
-  task_definition = aws_ecs_task_definition.service.arn
-  desired_count   = var.desired_count
-  launch_type     = "FARGATE"
-  platform_version = "LATEST"
-
-  network_configuration {
-    subnets          = var.private_subnet_ids
-    security_groups  = [aws_security_group.service.id]
-    assign_public_ip = false
-  }
-
-  load_balancer {
-    target_group_arn = var.target_group_arn
-    container_name   = var.service_name
-    container_port   = var.container_port
-  }
-
-  deployment_configuration {
-    maximum_percent         = 200
-    minimum_healthy_percent = 100
-
-    deployment_circuit_breaker {
-      enable   = true
-      rollback = true
-    }
-  }
-
-  health_check_grace_period_seconds = 60
-
-  tags = {
-    Environment = var.environment
-    Service     = var.service_name
-    ManagedBy   = "Terraform"
-  }
-}
-```
-
----
-
-## Local Development with Docker Compose
-
-```yaml
-# docker-compose.yml
-version: "3.8"
-
-services:
-  customer-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: runtime
-    ports:
-      - "8080:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__PostgreSQL=Host=postgres;Database=customerdb;Username=postgres;Password=postgres
-      - Redis__ConnectionString=redis:6379
-      - Kafka__BootstrapServers=kafka:9092
-    depends_on:
-      - postgres
-      - redis
-      - kafka
-    networks:
-      - customer-network
-
-  postgres:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_DB: customerdb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - customer-network
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    networks:
-      - customer-network
-
-  kafka:
-    image: apache/kafka:3.6.0
-    environment:
-      KAFKA_NODE_ID: 1
-      KAFKA_PROCESS_ROLES: broker,controller
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    ports:
-      - "9092:9092"
-    networks:
-      - customer-network
-
-volumes:
-  postgres-data:
-
-networks:
-  customer-network:
-    driver: bridge
-```
-
-**Usage**:
-
-```bash
-# Start all services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f customer-service
-
-# Rebuild after code changes
-docker-compose up -d --build customer-service
-
-# Stop all
-docker-compose down
-
-# Clean up volumes
-docker-compose down -v
-```
+:::note Entorno de desarrollo local
+La configuración de docker-compose para desarrollo local se documenta en [Paridad de Ambientes](./environment-parity.md), junto a las reglas de paridad de versiones entre dev y producción.
+:::
 
 ---
 
@@ -905,28 +679,12 @@ docker-compose down -v
 
 ## Referencias
 
-**Docker Best Practices:**
-
-- [Docker Dockerfile Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
-- [.NET Docker Images](https://hub.docker.com/_/microsoft-dotnet)
-
-**Security:**
-
-- [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker)
-- [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
-
-**AWS ECS:**
-
-- [ECS Best Practices](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/intro.html)
-- [Fargate Security](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/security-fargate.html)
-
-**Relacionados:**
-
-- [Infrastructure as Code](./infrastructure-as-code.md)
-- [Configuration Management](./configuration-management.md)
-- [CI/CD Pipelines y Build](../operabilidad/ci-pipeline.md)
-
----
-
-**Última actualización**: 19 de febrero de 2026
-**Responsable**: Platform Team / DevOps
+- [Docker Dockerfile Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) — guía oficial de optimización de Dockerfiles
+- [.NET Docker Images](https://hub.docker.com/_/microsoft-dotnet) — imágenes oficiales de Microsoft para .NET
+- [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker) — estándares de seguridad para contenedores
+- [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) — prácticas de seguridad en Docker
+- [ECS Best Practices](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/intro.html) — mejores prácticas de Amazon ECS
+- [Fargate Security](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/security-fargate.html) — seguridad en AWS Fargate
+- [Infrastructure as Code — Implementación](./iac-implementation.md) — provisioning de ECS clusters y task definitions
+- [Configuración Centralizada](./centralized-configuration.md) — inyección de configuración y secrets en contenedores
+- [CI/CD Pipelines y Build](../operabilidad/ci-pipeline.md) — pipeline de build y push de imágenes

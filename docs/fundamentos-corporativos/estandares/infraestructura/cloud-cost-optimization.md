@@ -1,8 +1,9 @@
 ---
 id: cloud-cost-optimization
-sidebar_position: 6
+sidebar_position: 10
 title: Optimización de Costos Cloud
 description: Estándares para monitoreo, tagging, rightsizing y optimización continua de costos en AWS mediante Terraform e Infracost.
+tags: [infraestructura, cloud, aws, costos, terraform]
 ---
 
 # Optimización de Costos Cloud
@@ -235,29 +236,13 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 
 ## Referencias
 
-**AWS Cost Management:**
-
-- [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/)
-- [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/)
-- [AWS Compute Optimizer](https://aws.amazon.com/compute-optimizer/)
-
-**Herramientas:**
-
-- [Infracost — Cost estimation for Terraform](https://www.infracost.io/docs/)
-- [AWS Fargate Spot](https://aws.amazon.com/blogs/aws/aws-fargate-spot-now-generally-available/)
-
-**Patrones:**
-
-- [Cloud FinOps Foundation](https://www.finops.org/introduction/what-is-finops/)
-- [AWS Well-Architected — Cost Optimization](https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html)
-
-**Relacionados:**
-
-- [Infraestructura como Código](./infrastructure-as-code.md)
-- [Redes Virtuales](./virtual-networks.md)
-- [Contenerización](./containerization.md)
-
----
-
-**Última actualización**: 5 de marzo de 2026
-**Responsable**: Platform Team / DevOps
+- [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) — gestión y visualización de costos AWS
+- [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/) — alertas de presupuesto mensual por ambiente
+- [AWS Compute Optimizer](https://aws.amazon.com/compute-optimizer/) — recomendaciones automáticas de rightsizing
+- [Infracost — Cost estimation for Terraform](https://www.infracost.io/docs/) — estimación de costos en PRs de infraestructura
+- [AWS Fargate Spot](https://aws.amazon.com/blogs/aws/aws-fargate-spot-now-generally-available/) — capacidad spot para reducción de costos en ECS
+- [Cloud FinOps Foundation](https://www.finops.org/introduction/what-is-finops/) — principios y metodología FinOps
+- [AWS Well-Architected — Cost Optimization](https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html) — pilar de optimización de costos
+- [Infraestructura como Código — Implementación](./iac-implementation.md) — provisioning y tagging de recursos con Terraform
+- [Redes Virtuales](./virtual-networks.md) — networking y recursos de red asociados a costos
+- [Contenerización](./containerization.md) — contenedores ECS y estrategias Fargate Spot

@@ -853,6 +853,6 @@ histogram_quantile(0.95, sum(rate(deployment_duration_seconds_bucket[7d])) by (l
 - [Blue-Green Deployments](https://martinfowler.com/bliki/BlueGreenDeployment.html) — patrón blue-green
 - [Canary Releases](https://martinfowler.com/bliki/CanaryRelease.html) — patrón canary
 - [CI/CD Pipelines y Build](./ci-pipeline.md) — pipeline de integración continua y empaquetado
-- [Infrastructure as Code](../infraestructura/infrastructure-as-code.md) — provisionamiento de infraestructura
+- [Infrastructure as Code — Implementación](../infraestructura/iac-implementation.md) — provisionamiento de infraestructura
 - [Distributed Tracing](../observabilidad/distributed-tracing.md) — trazabilidad de deployments
 - [Structured Logging](../observabilidad/structured-logging.md) — logs de deployments

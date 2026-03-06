@@ -1,6 +1,6 @@
 ---
 id: independent-deployment
-sidebar_position: 4
+sidebar_position: 8
 title: Despliegue Independiente
 description: Estándares para desplegar servicios de forma independiente sin acoplamiento de releases, usando contenedores, feature flags y estrategias sin downtime.
 tags: [infraestructura, deployment, docker, feature-flags, blue-green]
@@ -297,30 +297,14 @@ public class CustomerApiContractTests
 
 ## Referencias
 
-**Despliegue Continuo:**
-
-- [GitHub Actions: Environments & Deployments](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
-- [AWS ECS Rolling Update](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-ecs.html)
-- [AWS ECS Blue/Green Deployment](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-bluegreen.html)
-
-**Contract Testing:**
-
-- [Pact — Consumer Driven Contract Testing](https://docs.pact.io/)
-- [Microsoft API Versioning](https://github.com/dotnet/aspnet-api-versioning)
-
-**Patrones:**
-
-- [Expand-Contract Pattern (Parallel Change)](https://martinfowler.com/bliki/ParallelChange.html)
-- [Feature Toggles (Feature Flags)](https://martinfowler.com/articles/feature-toggles.html)
-- [Sam Newman — Independent Deployability](https://samnewman.io/blog/2021/08/12/why-i-no-longer-use-the-term-microservices/)
-
-**Relacionados:**
-
-- [Containerización](./containerization.md)
-- [Infrastructure as Code](./infrastructure-as-code.md)
-- [Configuration Management](./configuration-management.md)
-
----
-
-**Última actualización**: 5 de marzo de 2026
-**Responsable**: Platform Team / DevOps
+- [GitHub Actions: Environments & Deployments](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment) — ambientes y aprobaciones en CI/CD
+- [AWS ECS Rolling Update](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-ecs.html) — estrategia de despliegue rolling en ECS
+- [AWS ECS Blue/Green Deployment](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-bluegreen.html) — despliegue blue/green en ECS
+- [Pact — Consumer Driven Contract Testing](https://docs.pact.io/) — contract testing entre servicios
+- [Microsoft API Versioning](https://github.com/dotnet/aspnet-api-versioning) — versionado de APIs en ASP.NET Core
+- [Expand-Contract Pattern (Parallel Change)](https://martinfowler.com/bliki/ParallelChange.html) — patrón para migraciones backward compatible
+- [Feature Toggles (Feature Flags)](https://martinfowler.com/articles/feature-toggles.html) — habilitación gradual de funcionalidades
+- [Sam Newman — Independent Deployability](https://samnewman.io/blog/2021/08/12/why-i-no-longer-use-the-term-microservices/) — principio de desplieguabilidad independiente
+- [Containerización](./containerization.md) — empaquetado de servicios en contenedores
+- [Infrastructure as Code — Implementación](./iac-implementation.md) — provisioning de pipelines y recursos
+- [Externalización de Configuración](./externalize-configuration.md) — gestión de configuración por ambiente

@@ -1,8 +1,9 @@
 ---
 id: virtual-networks
-sidebar_position: 5
+sidebar_position: 9
 title: Redes Virtuales
 description: Estándares para diseño de VPCs, subnets, NAT gateways, route tables y VPC Flow Logs en AWS.
+tags: [infraestructura, redes, vpc, aws, terraform, networking]
 ---
 
 # Redes Virtuales
@@ -322,29 +323,13 @@ resource "aws_cloudwatch_log_group" "flow_log" {
 
 ## Referencias
 
-**AWS Networking:**
-
-- [AWS VPC Documentation](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html)
-- [AWS VPC Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html)
-- [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html)
-
-**Terraform:**
-
-- [AWS VPC Terraform Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
-- [AWS NAT Gateway Resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway)
-
-**Patrones:**
-
-- [AWS Multi-AZ Architecture](https://aws.amazon.com/architecture/high-availability/)
-- [AWS Well-Architected — Reliability](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html)
-
-**Relacionados:**
-
-- [Infraestructura como Código](./infrastructure-as-code.md)
-- [Contenerización](./containerization.md)
-- [Optimización de Costos Cloud](./cloud-cost-optimization.md)
-
----
-
-**Última actualización**: 5 de marzo de 2026
-**Responsable**: Platform Team / DevOps
+- [AWS VPC Documentation](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) — documentación oficial de Amazon VPC
+- [AWS VPC Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html) — mejores prácticas de seguridad de red
+- [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) — registro de tráfico de red para auditoría
+- [AWS VPC Terraform Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) — recurso VPC en Terraform
+- [AWS NAT Gateway Resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) — recurso NAT Gateway en Terraform
+- [AWS Multi-AZ Architecture](https://aws.amazon.com/architecture/high-availability/) — patrones de alta disponibilidad en múltiples AZ
+- [AWS Well-Architected — Reliability](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html) — pilar de confiabilidad
+- [Infraestructura como Código — Implementación](./iac-implementation.md) — provisioning de redes con Terraform
+- [Contenerización](./containerization.md) — despliegue ECS en subnets privadas
+- [Optimización de Costos Cloud](./cloud-cost-optimization.md) — tagging y control de costos de red
