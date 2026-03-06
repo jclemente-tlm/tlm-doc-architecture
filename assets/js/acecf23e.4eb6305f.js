@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunktlm_doc_architecture=globalThis.webpackChunktlm_doc_architecture||[]).push([[81903],{1912(t){t.exports=JSON.parse('{"blogBasePath":"/tlm-doc-architecture/blog","blogTitle":"Blog","authorsListPath":"/tlm-doc-architecture/blog/authors"}')}}]);
