@@ -279,6 +279,6 @@ catch (Exception ex)
 
 - [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
 - [Distributed Tracing](./distributed-tracing.md) — correlación de logs con trazas distribuidas
-- [Métricas con OpenTelemetry](./metrics-standards.md) — complementa este estándar con métricas numéricas
+- [Métricas con OpenTelemetry](./metrics.md) — complementa este estándar con métricas numéricas
 - [Serilog Documentation](https://serilog.net/) — documentación oficial
 - [Grafana Loki](https://grafana.com/docs/loki/latest/) — consulta de logs agregados

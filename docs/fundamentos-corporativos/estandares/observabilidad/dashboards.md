@@ -237,7 +237,7 @@ Usa `$environment` y `$instance` como variables en las queries PromQL/LogQL para
 ## Referencias
 
 - [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
-- [Métricas con OpenTelemetry](./metrics-standards.md) — fuente de datos PromQL para paneles
+- [Métricas con OpenTelemetry](./metrics.md) — fuente de datos PromQL para paneles
 - [Structured Logging](./structured-logging.md) — fuente de datos LogQL para paneles de logs
 - [Alertas](./alerting.md) — alertas asociadas a los paneles de este dashboard
 - [Grafana Documentation](https://grafana.com/docs/grafana/latest/) — referencia oficial

@@ -481,7 +481,7 @@ builder.Services.AddProblemDetails(); // Solo para compatibilidad con ASP.NET Co
 ## Monitoreo y Observabilidad
 
 :::note Métricas de APIs
-Para métricas de requests (latencia, status codes, throughput) ver [Métricas y Estándares](../observabilidad/metrics-standards.md).
+Para métricas de requests (latencia, status codes, throughput) ver [Métricas y Estándares](../observabilidad/metrics.md).
 :::
 
 ---

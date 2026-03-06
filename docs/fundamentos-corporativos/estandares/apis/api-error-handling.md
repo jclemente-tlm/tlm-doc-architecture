@@ -451,7 +451,7 @@ Para la configuración completa de Serilog con enrichment, sinks y niveles ver [
 ## Monitoreo y Observabilidad
 
 :::note Métricas de errores
-Para implementar métricas de errores (counters, histogramas por tipo de excepción) ver [Métricas y Estándares](../observabilidad/metrics-standards.md).
+Para implementar métricas de errores (counters, histogramas por tipo de excepción) ver [Métricas y Estándares](../observabilidad/metrics.md).
 :::
 
 ---

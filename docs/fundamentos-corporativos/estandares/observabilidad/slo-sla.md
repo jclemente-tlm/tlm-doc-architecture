@@ -396,7 +396,7 @@ This SLA does not cover:
 ## Referencias
 
 - [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
-- [Métricas con OpenTelemetry](./metrics-standards.md) — fuente de SLIs vía PromQL/Mimir
+- [Métricas con OpenTelemetry](./metrics.md) — fuente de SLIs vía PromQL/Mimir
 - [Alertas con Grafana](./alerting.md) — alertas basadas en error budget
 - [Dashboards en Grafana](./dashboards.md) — visualización de SLO compliance
 - [Distributed Tracing](./distributed-tracing.md) — trazabilidad que complementa los SLOs

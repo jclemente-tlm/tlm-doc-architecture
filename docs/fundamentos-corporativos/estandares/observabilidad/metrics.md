@@ -1,5 +1,5 @@
 ---
-id: metrics-standards
+id: metrics
 sidebar_position: 3
 title: Métricas con OpenTelemetry
 description: Estándar para instrumentación de métricas con OpenTelemetry y almacenamiento en Grafana Mimir.

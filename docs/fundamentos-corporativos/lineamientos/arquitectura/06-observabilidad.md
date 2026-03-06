@@ -14,7 +14,7 @@ En sistemas distribuidos, las fallas pueden propagarse silenciosamente afectando
 ## Estándares Obligatorios
 
 - [Implementar structured logging en JSON](../../estandares/observabilidad/structured-logging.md)
-- [Emitir métricas siguiendo RED/USE](../../estandares/observabilidad/metrics-standards.md)
+- [Emitir métricas siguiendo RED/USE](../../estandares/observabilidad/metrics.md)
 - [Implementar distributed tracing con W3C Trace Context](../../estandares/observabilidad/distributed-tracing.md#1-distributed-tracing)
 - [Usar correlation IDs entre servicios](../../estandares/observabilidad/distributed-tracing.md#2-correlation-ids)
 - [Definir SLIs, SLOs y SLAs](../../estandares/observabilidad/distributed-tracing.md#3-slo-sla)

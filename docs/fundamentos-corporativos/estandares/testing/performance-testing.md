@@ -599,7 +599,7 @@ groups:
 **Relacionados:**
 
 - [Testing Strategy](./testing-strategy.md)
-- [Métricas con OpenTelemetry](../observabilidad/metrics-standards.md)
+- [Métricas con OpenTelemetry](../observabilidad/metrics.md)
 - [Scalability Patterns](../arquitectura/scalability-performance.md)
 
 ---

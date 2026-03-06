@@ -229,10 +229,10 @@ Cada alerta crítica debe tener un runbook documentado. Ejemplo para alta tasa d
    - Filtrar por endpoint para identificar el afectado
 
 2. **Revisar logs de errores**:
+
    ```logql
    {service="customer-service"} |= "level=Error" | json
    ```
-````
 
 3. **Verificar servicios downstream**:
    - Dashboard Payment Service
@@ -252,7 +252,6 @@ Cada alerta crítica debe tener un runbook documentado. Ejemplo para alta tasa d
 
 - Sin resolución en 30 min → escalar al Tech Lead
 - Error rate > 20% → página oncall inmediatamente
-
 ````
 
 ---
@@ -283,7 +282,7 @@ inhibit_rules:
 rules:
   - uid: high-error-rate
     for: 5m   # La condición debe cumplirse 5 minutos seguidos antes de alertar
-````
+```
 
 :::warning
 Una alerta sin runbook es ruido. Si el equipo no sabe cómo responderla, no debe existir o debe ser reclasificada como `info`.
@@ -319,6 +318,6 @@ Una alerta sin runbook es ruido. Si el equipo no sabe cómo responderla, no debe
 ## Referencias
 
 - [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
-- [Métricas con OpenTelemetry](./metrics-standards.md) — fuente de métricas para las alert rules
+- [Métricas con OpenTelemetry](./metrics.md) — fuente de métricas para las alert rules
 - [Dashboards en Grafana](./dashboards.md) — visualización para diagnóstico desde las alertas
 - [Grafana Alerting](https://grafana.com/docs/grafana/latest/alerting/) — documentación oficial

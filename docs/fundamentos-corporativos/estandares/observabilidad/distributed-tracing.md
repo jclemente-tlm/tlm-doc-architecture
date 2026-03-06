@@ -17,10 +17,6 @@ Este estándar define prácticas para implementar tracing distribuido y propagac
 - **Distributed Tracing** → Rastreo de requests cross-service con spans
 - **Correlation IDs** → Identificadores únicos para correlacionar logs/traces
 
-:::note
-La definición de SLOs y SLAs se documenta en [SLO y SLA](./slo-sla.md).
-:::
-
 ---
 
 ## Stack Tecnológico
@@ -51,17 +47,9 @@ graph TB
     A -->|Correlation ID| G[Logs Loki]
     G -->|Link trace| F
 
-    C -->|Metrics| H[SLO Calculation]
-    H -->|Latency P95| I[SLO: Latency < 500ms]
-    H -->|Error rate| J[SLO: Errors < 1%]
-
-    I -->|Aggregate| K[SLA: 99.9% uptime]
-    J -->|Aggregate| K
-
     style C fill:#e1f5ff,color:#000000
     style F fill:#e8f5e9,color:#000000
-    style H fill:#fff4e1,color:#000000
-    style K fill:#ffebee,color:#000000
+    style G fill:#fff4e1,color:#000000
 ```
 
 **Principios clave:**
@@ -69,7 +57,7 @@ graph TB
 1. **End-to-end visibility**: Ver request completo a través de todos los servicios
 2. **Context propagation**: Pasar trace/correlation ID automáticamente
 3. **Causality tracking**: Entender qué causó qué
-4. **Objective measurement**: SLOs basados en métricas reales, no percepciones
+4. **Correlación logs-traces**: Cada log incluye el trace ID para navegación bidireccional
 
 ---
 
@@ -618,7 +606,7 @@ Log.Logger = new LoggerConfiguration()
 - [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
 - [SLO y SLA](./slo-sla.md) — objetivos de nivel de servicio basados en las métricas de traces
 - [Structured Logging](./structured-logging.md) — correlación de logs con trazas distribuidas
-- [Métricas con OpenTelemetry](./metrics-standards.md) — fuente de métricas complementaria
+- [Métricas con OpenTelemetry](./metrics.md) — fuente de métricas complementaria
 - [Alertas con Grafana](./alerting.md) — alertas sobre latencia y errores capturados con traces
 - [Resilience Patterns](../arquitectura/resilience-patterns.md) — patrones complementarios de resiliencia
 - [API Error Handling](../apis/api-error-handling.md) — manejo de errores correlacionado con trazas
