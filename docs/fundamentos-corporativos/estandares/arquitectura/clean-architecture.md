@@ -351,9 +351,9 @@ app.Run();
 
 ---
 
-## Framework Independence
+## Independencia del Framework
 
-### ¿Qué es Framework Independence?
+### ¿Qué es Independencia del Framework?
 
 Principio que establece que **el dominio debe estar libre de dependencias a frameworks específicos** (EF Core, ASP.NET, etc.), permitiendo que la lógica de negocio evolucione independientemente de decisiones tecnológicas.
 
@@ -739,8 +739,7 @@ Caso 3: Cambiar proveedor de notificaciones (SMTP → AWS SES)
 
 - **MUST NOT** referenciar Infrastructure desde Domain o Application
 - **MUST NOT** referenciar Presentation desde Application o Domain
-- **MUST NOT** colocar lógica de negocio en controllers o repositories
-- **MUST NOT** usar atributos de frameworks en entidades de Domain
+- **MUST NOT** colocar lógica de negocio en controllers o repositories, ni usar atributos de frameworks en entidades de Domain
 
 ---
 

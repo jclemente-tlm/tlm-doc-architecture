@@ -195,9 +195,9 @@ Control explícito de todas las dependencias externas del proyecto.
 
 ---
 
-## Operational Simplicity
+## Simplicidad Operacional
 
-### ¿Qué es Operational Simplicity?
+### ¿Qué es Simplicidad Operacional?
 
 Diseñar sistemas simples de operar y diagnosticar en producción.
 

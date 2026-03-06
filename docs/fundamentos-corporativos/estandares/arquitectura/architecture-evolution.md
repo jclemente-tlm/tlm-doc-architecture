@@ -79,9 +79,9 @@ public void Controllers_Should_Not_Have_Business_Logic()
 
 ---
 
-## Reversibility
+## Reversibilidad
 
-### ¿Qué es Reversibility?
+### ¿Qué es Reversibilidad?
 
 Capacidad de revertir decisiones arquitectónicas sin costo prohibitivo.
 
@@ -118,9 +118,9 @@ builder.Services.AddScoped<IEmailService, AwsSesEmailService>();
 
 ---
 
-## Technology Selection
+## Selección Tecnológica
 
-### ¿Qué es Technology Selection?
+### ¿Qué es Selección Tecnológica?
 
 Proceso sistemático para seleccionar tecnologías usando criterios objetivos.
 
@@ -138,7 +138,7 @@ Proceso sistemático para seleccionar tecnologías usando criterios objetivos.
 ✅ Evaluación objetiva
 ✅ Reducción de riesgo técnico
 
-### Template de Evaluación
+### Plantilla de Evaluación
 
 ```yaml
 # Technology Evaluation Template
