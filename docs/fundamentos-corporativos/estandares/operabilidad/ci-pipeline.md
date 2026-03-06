@@ -18,6 +18,10 @@ Este estándar consolida **3 conceptos** del flujo de integración continua: des
 - **Build Automation** → Compilación, empaquetado y generación de artefactos deterministas
 - **Artifact Management** → Almacenamiento, versionado y distribución de artefactos desplegables
 
+:::note Implementación gestionada por Plataforma
+Este estándar define los **requisitos que los pipelines de los servicios deben cumplir**. Los templates base de CI/CD, la gestión del registry de artefactos (GitHub Packages/ECR) y la infraestructura de pipelines son responsabilidad del equipo de **Plataforma**. Consultar en **#platform-support**.
+:::
+
 ---
 
 ## Stack Tecnológico

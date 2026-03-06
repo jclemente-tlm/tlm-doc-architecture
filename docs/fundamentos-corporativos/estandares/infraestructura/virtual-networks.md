@@ -19,6 +19,10 @@ Este estándar define las prácticas para diseño y configuración de redes virt
 - **Route Tables** → Routing entre subnets y hacia internet/NAT
 - **VPC Flow Logs** → Registro de tráfico de red para auditoría y troubleshooting
 
+:::note Implementación gestionada por Plataforma
+Este estándar define los **requisitos de red que los servicios deben cumplir** (aislamiento, segmentación, visibilidad). El diseño y configuración de VPCs, subnets y gateways en AWS son responsabilidad del equipo de **Plataforma**. Consultar en **#platform-support**.
+:::
+
 ---
 
 ## Stack Tecnológico

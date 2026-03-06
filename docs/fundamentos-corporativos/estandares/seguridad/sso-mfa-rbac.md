@@ -18,6 +18,10 @@ Este estándar consolida **3 conceptos relacionados** con autenticación central
 - **Multi-Factor Authentication (MFA)** → Autenticación con múltiples factores (TOTP)
 - **Role-Based Access Control (RBAC)** → Permisos basados en roles asignados a usuarios
 
+:::note Implementación gestionada por Seguridad e Identidad
+Este estándar define los **requisitos de autenticación y control de acceso que los servicios deben cumplir**. La configuración de Keycloak (SSO, MFA, roles RBAC) y las políticas de acceso son responsabilidad del equipo de **Seguridad**. Consultar en **#security** o **#identity-access**.
+:::
+
 ---
 
 ## Stack Tecnológico

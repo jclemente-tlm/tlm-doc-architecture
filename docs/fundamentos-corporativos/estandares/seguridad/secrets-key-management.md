@@ -17,6 +17,10 @@ Este estándar consolida **2 conceptos relacionados** con gestión segura de sec
 - **Secrets Management** → Gestión de passwords, API keys, certificates
 - **Key Management** → Gestión de claves de cifrado (encryption keys)
 
+:::note Implementación gestionada por Seguridad y Plataforma
+Este estándar define los **requisitos de gestión de secretos y claves que los servicios deben cumplir**. La configuración de AWS Secrets Manager, KMS y las políticas de rotación automática son responsabilidad del equipo de **Seguridad** en coordinación con **Plataforma**. Consultar en **#security** o **#platform-support**.
+:::
+
 ---
 
 ## Stack Tecnológico

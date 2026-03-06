@@ -32,6 +32,10 @@ Este estándar consolida **8 conceptos relacionados** con gestión avanzada de i
 - **Access Reviews** → Revisión periódica de permisos asignados
 - **Password Policies** → Políticas de contraseñas robustas
 
+:::note Implementación gestionada por Seguridad e Identidad
+Este estándar define los **requisitos avanzados de identidad y acceso que los servicios deben cumplir**. La configuración de Keycloak, AWS IAM, políticas JIT y revisiones periódicas de acceso son responsabilidad del equipo de **Seguridad**. Consultar en **#security** o **#identity-access**.
+:::
+
 ---
 
 ## Stack Tecnológico

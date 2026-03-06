@@ -19,6 +19,10 @@ Este estándar define las prácticas para mantener código de alta calidad, legi
 - **Static Analysis** — Análisis de calidad y complejidad
 - **Quality Gates** — Criterios de aceptación automatizados
 
+:::note Alcance de Arquitectura
+Este estándar define los **umbrales de calidad mínimos** que todo servicio debe cumplir. Los Tech Leads pueden complementar con convenciones adicionales, reglas de linting o procesos de code review propios del equipo, sin reemplazar estos requisitos. La configuración de SonarQube y quality gates en CI/CD es responsabilidad del equipo de **Plataforma**.
+:::
+
 ---
 
 ## Stack Tecnológico

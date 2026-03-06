@@ -19,6 +19,10 @@ Este estándar define el flujo de trabajo con Git para desarrollo colaborativo, 
 - **Branch Protection** — Protección de ramas críticas
 - **Conventional Commits** — Commits estructurados
 
+:::note Alcance de Arquitectura
+Este estándar define las **restricciones mínimas de trazabilidad y control** que todo equipo debe cumplir. Los Tech Leads y Engineering Managers pueden complementar con prácticas adicionales de equipo (checklists de PR, convenciones internas, procesos de release) sin reemplazar estas restricciones.
+:::
+
 ---
 
 ## Stack Tecnológico

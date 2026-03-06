@@ -20,6 +20,10 @@ Este estándar define las prácticas para monitoreo, análisis y optimización c
 - **Fargate Spot** → Reducción de costos usando capacidad spot para workloads tolerantes a fallos
 - **Automated Shutdown** → Apagado programado de ambientes no productivos
 
+:::note Responsabilidad compartida con Plataforma y FinOps
+Este estándar define los **requisitos de eficiencia de costos que los servicios deben cumplir** (tagging obligatorio, rightsizing, uso de Spot). El monitoreo centralizado de costos, los presupuestos AWS y las herramientas de análisis son gestionados por **Plataforma** en coordinación con **FinOps**. Consultar en **#platform-support**.
+:::
+
 ---
 
 ## Stack Tecnológico

@@ -18,6 +18,10 @@ Toda la infraestructura de Talma en AWS se gestiona como código con Terraform. 
 - **Módulos Reutilizables** → Patrones de módulos ECS, VPC, RDS
 - **Environment Configuration** → Configuración reproducible por ambiente
 
+:::note Implementación gestionada por Plataforma
+Este estándar define los **requisitos que los servicios deben cumplir**. El diseño, aprovisionamiento y operación de la infraestructura Terraform son responsabilidad del equipo de **Plataforma**. Consultar en **#platform-support**.
+:::
+
 ---
 
 ## Stack Tecnológico

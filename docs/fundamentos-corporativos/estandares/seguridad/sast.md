@@ -14,6 +14,10 @@ El análisis estático de seguridad detecta vulnerabilidades en el código antes
 
 **Cuándo aplicar:** Todo servicio con pipeline CI/CD. Obligatorio antes de merge a `main`.
 
+:::note Implementación gestionada por Seguridad
+Este estándar define los **requisitos de análisis estático que los servicios deben cumplir**. La configuración de herramientas SAST, políticas de alertas y umbrales de severidad son responsabilidad del equipo de **Seguridad**. Consultar en **#security**.
+:::
+
 ---
 
 ## Stack Tecnológico

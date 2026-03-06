@@ -18,6 +18,10 @@ El state de Terraform es la fuente de verdad del estado actual de la infraestruc
 - **IaC Versioning** → Pinning de modules y providers
 - **Drift Detection** → Detección y remediación de cambios manuales
 
+:::note Implementación gestionada por Plataforma
+Este estándar define los **requisitos de gestión de estado e integridad** que todo módulo IaC debe cumplir. La configuración del backend S3/DynamoDB y la automatización de detección de drift son responsabilidad del equipo de **Plataforma**. Consultar en **#platform-support**.
+:::
+
 ---
 
 ## Stack Tecnológico

@@ -19,6 +19,10 @@ Este estándar consolida **4 conceptos relacionados** con escaneo automatizado d
 - **IaC Scanning** → Escaneo de Terraform para misconfigurations
 - **SBOM (Software Bill of Materials)** → Inventario de componentes
 
+:::note Implementación gestionada por Seguridad
+Este estándar define los **requisitos de escaneo de vulnerabilidades que los servicios deben cumplir**. La configuración de herramientas de escaneo, políticas de alertas y gestión de CVEs son responsabilidad del equipo de **Seguridad**. Consultar en **#security**.
+:::
+
 ---
 
 ## Stack Tecnológico

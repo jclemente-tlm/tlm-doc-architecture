@@ -17,6 +17,10 @@ Los cambios de infraestructura siguen el mismo proceso de revisión que el códi
 - **IaC Workflow** → Pipeline CI/CD con plan en PR y apply en merge
 - **IaC Code Review** → Proceso de revisión, checklist y PR template
 
+:::note Implementación gestionada por Plataforma
+Este estándar define los **requisitos que los pipelines de IaC deben cumplir**. Los templates base de pipeline Terraform y la infraestructura de CI para IaC son responsabilidad del equipo de **Plataforma**. Consultar en **#platform-support**.
+:::
+
 ---
 
 ## Stack Tecnológico
