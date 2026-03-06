@@ -924,7 +924,7 @@ docker-compose down -v
 
 - [Infrastructure as Code](./infrastructure-as-code.md)
 - [Configuration Management](./configuration-management.md)
-- [CI/CD Deployment](../operabilidad/cicd-deployment.md)
+- [CI/CD Pipelines y Build](../operabilidad/ci-pipeline.md)
 
 ---
 

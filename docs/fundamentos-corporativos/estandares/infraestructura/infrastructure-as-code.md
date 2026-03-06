@@ -1386,7 +1386,7 @@ terraform apply -replace=aws_security_group.service
 - [Gestión de Configuración](./configuration-management.md)
 - [Redes Virtuales](./virtual-networks.md)
 - [Optimización de Costos Cloud](./cloud-cost-optimization.md)
-- [CI/CD Deployment](../operabilidad/cicd-deployment.md)
+- [Deployment](../operabilidad/deployment.md)
 
 ---
 

@@ -823,7 +823,7 @@ public class TestMetricsCollector
 - [Unit & Integration Testing](./unit-integration-testing.md)
 - [Contract & E2E Testing](./contract-e2e-testing.md)
 - [Performance Testing](./performance-testing.md)
-- [CI/CD Deployment](../operabilidad/cicd-deployment.md)
+- [CI/CD Pipelines y Build](../operabilidad/ci-pipeline.md)
 
 ---
 

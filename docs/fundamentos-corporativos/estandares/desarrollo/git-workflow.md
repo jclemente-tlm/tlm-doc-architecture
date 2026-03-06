@@ -824,7 +824,8 @@ jobs:
 
 **Relacionados:**
 
-- [CI/CD y Deployment](../operabilidad/cicd-deployment.md)
+- [CI/CD Pipelines y Build](../operabilidad/ci-pipeline.md)
+- [Deployment](../operabilidad/deployment.md)
 - [Code Quality](./code-quality.md)
 
 ---

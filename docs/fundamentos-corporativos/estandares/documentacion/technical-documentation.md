@@ -1882,7 +1882,7 @@ markdownlint '**/*.md'
 **Relacionados:**
 
 - [Architecture Documentation](./architecture-documentation.md)
-- [Disaster Recovery](../operabilidad/disaster-recovery.md)
+- [Procedimientos de DR](../operabilidad/dr-procedures.md)
 
 ---
 
