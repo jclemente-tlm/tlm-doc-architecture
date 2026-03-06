@@ -20,7 +20,7 @@ La arquitectura debe separar claramente las decisiones de negocio de los detalle
 - [Mantener dominio libre de frameworks](../../estandares/arquitectura/clean-architecture.md#4-framework-independence)
 - [Diseñar modelo de dominio rico](../../estandares/arquitectura/domain-modeling.md#1-domain-model)
 - [Testear dominio de forma aislada](../../estandares/testing/unit-testing.md)
-- [Documentar estructura de capas con C4](../../estandares/documentacion/architecture-documentation.md#2-c4-model)
+- [Documentar estructura de capas con C4](../../estandares/documentacion/c4-model.md)
 
 ## Referencias Relacionadas
 

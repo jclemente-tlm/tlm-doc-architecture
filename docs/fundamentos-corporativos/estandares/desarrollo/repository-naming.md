@@ -124,7 +124,7 @@ Si un repositorio cumple varios propósitos, elegir la categoría de su función
 ## Referencias
 
 - [Git Workflow](./git-workflow.md) — convenciones de branching y commits dentro del repositorio
-- [Documentación Técnica](../documentacion/technical-documentation.md) — estructura mínima de README y documentación de servicios
+- [README](../documentacion/readme-standards.md) — estructura mínima de README y documentación de servicios
 - [GitHub: Acerca de los repositorios](https://docs.github.com/es/repositories/creating-and-managing-repositories/about-repositories) — referencia oficial
 
 ---

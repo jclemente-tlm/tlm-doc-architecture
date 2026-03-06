@@ -13,8 +13,8 @@ Decisiones arquitectónicas no documentadas se pierden con rotación de personal
 
 ## Estándares Obligatorios
 
-- [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-documentation.md#3-architecture-decision-records-adrs)
-- [Usar plantilla estándar de ADR](../../estandares/documentacion/architecture-documentation.md#4-adr-template)
+- [Documentar decisiones con ADRs](../../estandares/gobierno/adr-management.md)
+- [Usar plantilla estándar de ADR](../../estandares/gobierno/adr-management.md)
 - [Revisar ADRs en architecture reviews](../../estandares/gobierno/architecture-review-process.md#architecture-review)
 - [Versionar ADRs con el código](../../estandares/gobierno/adr-management.md#adr-versioning)
 - [Mantener registro centralizado de ADRs](../../estandares/gobierno/adr-management.md#adr-registry)

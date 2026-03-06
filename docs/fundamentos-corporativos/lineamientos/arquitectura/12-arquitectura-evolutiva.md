@@ -14,7 +14,7 @@ La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, ac
 
 ## Estándares Obligatorios
 
-- [Documentar decisiones con ADRs](../../estandares/documentacion/architecture-documentation.md#3-architecture-decision-records-adrs)
+- [Documentar decisiones con ADRs](../../estandares/gobierno/adr-management.md)
 - [Implementar fitness functions](../../estandares/arquitectura/architecture-evolution.md#1-fitness-functions)
 - [Realizar architecture reviews periódicos](../../estandares/gobierno/architecture-review-process.md#architecture-review)
 - [Aplicar refactoring continuo](../../estandares/desarrollo/code-quality.md#3-refactoring-practices)
