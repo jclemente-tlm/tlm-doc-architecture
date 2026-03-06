@@ -2,47 +2,40 @@
 id: distributed-tracing
 sidebar_position: 2
 title: Distributed Tracing
-description: Estándares para tracing distribuido, correlation IDs y definición de SLOs/SLAs usando OpenTelemetry y Grafana Tempo.
+description: Estándar para tracing distribuido y propagación de correlation IDs con OpenTelemetry y Grafana Tempo.
+tags: [observabilidad, tracing, opentelemetry, tempo, correlation-id]
 ---
 
 # Distributed Tracing
 
 ## Contexto
 
-Este estándar define prácticas para implementar tracing distribuido, propagación de correlation IDs y definición de Service Level Objectives (SLOs) y Service Level Agreements (SLAs) usando OpenTelemetry y Grafana Tempo. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) permitiendo rastrear requests a través de múltiples servicios, diagnosticar cuellos de botella y medir confiabilidad objetivamente.
+Este estándar define prácticas para implementar tracing distribuido y propagación de correlation IDs usando OpenTelemetry y Grafana Tempo. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) permitiendo rastrear requests a través de múltiples servicios y correlacionar logs con trazas para diagnóstico eficiente.
 
 **Conceptos incluidos:**
 
 - **Distributed Tracing** → Rastreo de requests cross-service con spans
 - **Correlation IDs** → Identificadores únicos para correlacionar logs/traces
-- **SLO/SLA** → Objetivos y acuerdos de nivel de servicio medibles
+
+:::note
+La definición de SLOs y SLAs se documenta en [SLO y SLA](./slo-sla.md).
+:::
 
 ---
 
 ## Stack Tecnológico
 
-| Componente          | Tecnología         | Versión | Uso                                |
-| ------------------- | ------------------ | ------- | ---------------------------------- |
-| **Tracing Library** | OpenTelemetry      | 1.7+    | Instrumentación de traces          |
-| **Trace Storage**   | Grafana Tempo      | 2.3+    | Almacenamiento de traces           |
-| **Agent**           | Grafana Alloy      | 1.0+    | Recolección y forwarding de traces |
-| **Trace Protocol**  | OTLP               | 1.0+    | Protocolo de exportación           |
-| **Visualization**   | Grafana            | 10.2+   | Visualización de traces            |
-| **SLO Monitoring**  | Grafana SLO Plugin | -       | Tracking de SLOs                   |
+| Componente          | Tecnología    | Versión | Uso                                |
+| ------------------- | ------------- | ------- | ---------------------------------- |
+| **Tracing Library** | OpenTelemetry | 1.7+    | Instrumentación de traces          |
+| **Trace Storage**   | Grafana Tempo | 2.3+    | Almacenamiento de traces           |
+| **Agent**           | Grafana Alloy | 1.0+    | Recolección y forwarding de traces |
+| **Trace Protocol**  | OTLP          | 1.0+    | Protocolo de exportación           |
+| **Visualization**   | Grafana       | 10.2+   | Visualización de traces            |
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre 3 aspectos relacionados con observabilidad avanzada:
-
-### Índice de Conceptos
-
-1. **Distributed Tracing**: Rastreo completo de requests multi-servicio
-2. **Correlation IDs**: Identificadores para correlación logs-traces-metrics
-3. **SLO/SLA**: Medición objetiva de confiabilidad y acuerdos de servicio
-
-### Relación entre Conceptos
+## Relación entre Tracing y Correlation IDs
 
 ```mermaid
 graph TB
@@ -80,7 +73,7 @@ graph TB
 
 ---
 
-## 1. Distributed Tracing
+## Distributed Tracing
 
 ### ¿Qué es Distributed Tracing?
 
@@ -428,7 +421,7 @@ public class ErrorAwareSampler : Sampler
 
 ---
 
-## 2. Correlation IDs
+## Correlation IDs
 
 ### ¿Qué son Correlation IDs?
 
@@ -579,329 +572,6 @@ Log.Logger = new LoggerConfiguration()
 
 ---
 
-## 3. SLO/SLA
-
-### ¿Qué son SLO y SLA?
-
-- **SLO (Service Level Objective)**: Objetivo interno de confiabilidad que el equipo se compromete a alcanzar (ej. "P95 latency < 500ms")
-- **SLA (Service Level Agreement)**: Acuerdo contractual con clientes sobre nivel de servicio, con penalidades si no se cumple (ej. "99.9% uptime")
-
-**Propósito:** Medir objetivamente la confiabilidad del servicio, establecer expectativas claras, priorizar mejoras.
-
-**Componentes clave:**
-
-- **SLI (Service Level Indicator)**: Métrica que mide comportamiento (ej. latency, error rate, availability)
-- **SLO Target**: Umbral objetivo (ej. 99.9%)
-- **SLO Window**: Período de medición (ej. 30 días)
-- **Error budget**: Margen de error permitido (100% - SLO)
-
-**Beneficios:**
-✅ Objetividad en calidad de servicio
-✅ Priorización de trabajo (si SLO en riesgo → top priority)
-✅ Balance desarrollo features vs confiabilidad
-✅ Transparencia con stakeholders
-
-### SLI Categories
-
-| Categoría        | SLI                                    | Descripción                | Fuente              |
-| ---------------- | -------------------------------------- | -------------------------- | ------------------- |
-| **Availability** | `successful_requests / total_requests` | % de requests exitosos     | HTTP 2xx vs 5xx     |
-| **Latency**      | `P95(request_duration) < threshold`    | 95% requests bajo umbral   | request_duration_ms |
-| **Throughput**   | `requests_per_second`                  | Capacidad de procesamiento | request count       |
-| **Correctness**  | `successful_validations / total`       | % datos correctos          | validation errors   |
-
-### Ejemplo: Definir SLOs
-
-```yaml
-# SLOs para Customer Service
-
-slos:
-  # 1. Availability
-  - name: availability
-    description: Percentage of successful HTTP requests
-    sli:
-      ratio:
-        numerator: http_server_request_duration_seconds_count{status_code!~"5.."}
-        denominator: http_server_request_duration_seconds_count
-    target: 99.9 # 99.9% availability
-    window: 30d
-    error_budget: 0.1 # 0.1% = 43 minutos downtime por mes
-
-  # 2. Latency
-  - name: latency-p95
-    description: 95th percentile request latency
-    sli:
-      latency:
-        query: |
-          histogram_quantile(0.95,
-            rate(http_server_request_duration_seconds_bucket[5m])
-          )
-        threshold: 0.5 # 500ms
-    target: 99.0 # 99% de ventanas de 5min bajo 500ms
-    window: 30d
-
-  # 3. Error rate
-  - name: error-rate
-    description: Percentage of failed requests
-    sli:
-      ratio:
-        numerator: http_server_request_duration_seconds_count{status_code=~"5.."}
-        denominator: http_server_request_duration_seconds_count
-    target: 99.0 # <1% error rate
-    window: 30d
-```
-
-### Implementación con Grafana
-
-```hcl
-# terraform/modules/grafana/slo.tf
-
-resource "grafana_slo" "customer_service_availability" {
-  name        = "Customer Service - Availability"
-  description = "99.9% of HTTP requests should be successful"
-
-  query {
-    type = "freeform"
-
-    # Success ratio
-    freeform {
-      query = <<-EOT
-        sum(rate(http_server_request_duration_seconds_count{
-          service="customer-service",
-          status_code!~"5.."
-        }[5m]))
-        /
-        sum(rate(http_server_request_duration_seconds_count{
-          service="customer-service"
-        }[5m]))
-      EOT
-    }
-  }
-
-  objectives {
-    value  = 99.9
-    window = "30d"
-  }
-
-  destination_datasource {
-    uid = grafana_data_source.mimir.uid
-  }
-
-  label {
-    key   = "service"
-    value = "customer-service"
-  }
-
-  label {
-    key   = "team"
-    value = "platform"
-  }
-}
-
-resource "grafana_slo" "customer_service_latency" {
-  name        = "Customer Service - Latency P95"
-  description = "P95 latency should be below 500ms"
-
-  query {
-    type = "freeform"
-
-    freeform {
-      query = <<-EOT
-        histogram_quantile(0.95,
-          rate(http_server_request_duration_seconds_bucket{
-            service="customer-service"
-          }[5m])
-        ) < 0.5
-      EOT
-    }
-  }
-
-  objectives {
-    value  = 99.0
-    window = "30d"
-  }
-
-  destination_datasource {
-    uid = grafana_data_source.mimir.uid
-  }
-}
-```
-
-### SLO Dashboard
-
-```json
-{
-  "dashboard": {
-    "title": "Customer Service - SLOs",
-    "panels": [
-      {
-        "title": "Availability SLO",
-        "type": "stat",
-        "targets": [
-          {
-            "expr": "avg_over_time(slo:customer_service:availability:ratio[30d]) * 100",
-            "legendFormat": "Current"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "percent",
-            "thresholds": {
-              "steps": [
-                { "value": 0, "color": "red" },
-                { "value": 99.0, "color": "yellow" },
-                { "value": 99.9, "color": "green" }
-              ]
-            }
-          }
-        }
-      },
-      {
-        "title": "Error Budget Remaining",
-        "type": "gauge",
-        "targets": [
-          {
-            "expr": "(1 - (slo:customer_service:availability:error_budget_consumed / slo:customer_service:availability:error_budget_total)) * 100"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "percent",
-            "min": 0,
-            "max": 100,
-            "thresholds": {
-              "steps": [
-                { "value": 0, "color": "red" },
-                { "value": 20, "color": "yellow" },
-                { "value": 50, "color": "green" }
-              ]
-            }
-          }
-        }
-      },
-      {
-        "title": "SLO Compliance (30 days)",
-        "type": "timeseries",
-        "targets": [
-          {
-            "expr": "avg_over_time(slo:customer_service:availability:ratio[30d]) * 100",
-            "legendFormat": "Availability"
-          },
-          {
-            "expr": "99.9",
-            "legendFormat": "SLO Target"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-### Error Budget Policy
-
-```markdown
-# Error Budget Policy - Customer Service
-
-## SLO Targets
-
-- **Availability**: 99.9% (43 min downtime/mes)
-- **Latency P95**: < 500ms en 99% ventanas 5min
-- **Error Rate**: < 1%
-
-## Error Budget
-
-- **Total budget**: 0.1% (43 minutos downtime por mes)
-- **Calculation**: `(1 - SLO_target) * total_requests`
-
-## Actions by Error Budget Status
-
-### ✅ Budget > 50% (Healthy)
-
-- **Development**: Normal velocity, features + tech debt balance
-- **Deployments**: Normal cadence (daily)
-- **Risk tolerance**: Can take calculated risks
-
-### ⚠️ Budget 20-50% (Warning)
-
-- **Development**: Prioritize reliability over features (70/30)
-- **Deployments**: Reduce frequency (2-3x/week), increase review
-- **Risk tolerance**: Conservative, no risky changes
-
-### 🚨 Budget < 20% (Critical)
-
-- **Development**: STOP features, 100% focus on reliability
-- **Deployments**: Freeze (only critical fixes con approval)
-- **Risk tolerance**: Zero tolerance, rollback aggressive
-- **Escalation**: Tech Lead + Product Manager notified
-
-### ❌ Budget Exhausted (Breach)
-
-- **Action**: Full incident response, root cause analysis mandatory
-- **Deployment**: Complete freeze until SLO recovered
-- **Communication**: Stakeholders + customers notified
-- **Postmortem**: Required within 48h
-```
-
-### SLA Example (Customer-facing)
-
-```markdown
-# Service Level Agreement - Customer Service API
-
-**Effective Date**: 2026-01-01
-**Version**: 1.0
-
-## Service Description
-
-Customer Service API provides REST endpoints for customer and order management.
-
-## Service Levels
-
-### 1. Availability
-
-- **Commitment**: 99.9% uptime monthly (excluding planned maintenance)
-- **Measurement**: Successful HTTP responses (2xx, 3xx, 4xx) / Total requests
-- **Downtime allowance**: 43 minutes per month
-
-### 2. Performance
-
-- **Commitment**: 95th percentile response time < 500ms
-- **Measurement**: P95 of HTTP request duration
-- **Endpoints covered**: All `/api/*` endpoints
-
-### 3. Support Response Times
-
-- **Critical (P1)**: < 1 hour
-- **High (P2)**: < 4 hours
-- **Medium (P3)**: < 24 hours
-- **Low (P4)**: < 72 hours
-
-## Exclusions
-
-This SLA does not cover:
-
-- Client-side errors (4xx excluding 429 rate limit)
-- Third-party service failures beyond our control
-- Scheduled maintenance (with 7 days notice)
-- Force majeure events
-
-## Service Credits (if SLA breached)
-
-| Availability  | Service Credit |
-| ------------- | -------------- |
-| 99.0% - 99.9% | 10%            |
-| 95.0% - 99.0% | 25%            |
-| < 95.0%       | 50%            |
-
-## Requesting Credit
-
-- Must be requested within 30 days of incident
-- Provide correlation IDs demonstrating breach
-- Credits applied to next billing cycle
-```
-
----
-
 ## Requisitos Técnicos
 
 ### MUST (Obligatorio)
@@ -923,14 +593,6 @@ This SLA does not cover:
 - **MUST** incluir correlation ID en logs (via LogContext)
 - **MUST** retornar correlation ID en response headers
 
-**SLO/SLA:**
-
-- **MUST** definir al menos 2 SLOs: Availability y Latency
-- **MUST** medir SLOs desde métricas reales (OpenTelemetry)
-- **MUST** documentar SLOs en README del servicio
-- **MUST** crear dashboard Grafana mostrando SLO compliance
-- **MUST** establecer error budget policy
-
 ### SHOULD (Fuertemente recomendado)
 
 - **SHOULD** crear custom spans para operaciones críticas de negocio
@@ -938,52 +600,30 @@ This SLA does not cover:
 - **SHOULD** propagar context en Kafka (manual injection/extraction)
 - **SHOULD** configurar link entre Loki logs y Tempo traces (derived fields)
 - **SHOULD** usar parent-based sampler para mantener coherencia de traces
-- **SHOULD** definir SLO para error rate
-- **SHOULD** alertar cuando error budget < 20%
-- **SHOULD** incluir SLA en documentación customer-facing
 
 ### MAY (Opcional)
 
 - **MAY** implementar custom sampler (ej. 100% traces con errores)
 - **MAY** usar baggage para propagar metadata adicional
-- **MAY** crear SLOs adicionales (throughput, correctness)
-- **MAY** automatizar SLO reporting (weekly emails)
 
 ### MUST NOT (Prohibido)
 
 - **MUST NOT** deshabilitar tracing en producción (usar sampling)
-- **MUST NOT** logear trace IDs manualmente (Serilog.Enrich.WithSpan lo hace automático)
-- **MUST NOT** definir SLOs sin métricas reales (no "feelings")
-- **MUST NOT** ignorar error budget exhausted (requiere acción)
+- **MUST NOT** loguear trace IDs manualmente (Serilog.Enrich.WithSpan lo hace automático)
 
 ---
 
 ## Referencias
 
-**OpenTelemetry:**
-
-- [OpenTelemetry Tracing](https://opentelemetry.io/docs/specs/otel/trace/)
-- [.NET OpenTelemetry Tracing](https://github.com/open-telemetry/opentelemetry-dotnet)
-- [W3C Trace Context](https://www.w3.org/TR/trace-context/)
-
-**Grafana Tempo:**
-
-- [Grafana Tempo Documentation](https://grafana.com/docs/tempo/latest/)
-- [Trace to Logs](https://grafana.com/docs/grafana/latest/datasources/tempo/#trace-to-logs)
-
-**SLOs:**
-
-- [Google SRE Book - SLOs](https://sre.google/sre-book/service-level-objectives/)
-- [Grafana SLO Plugin](https://grafana.com/docs/grafana-cloud/alerting-and-irm/slo/)
-- [Implementing SLOs](https://sre.google/workbook/implementing-slos/)
-
-**Relacionados:**
-
-- [Structured Logging](./structured-logging.md) — correlación de logs con trazas
-- [Resilience Patterns](../arquitectura/resilience-patterns.md)
-- [API Error Handling](../apis/api-error-handling.md)
-
----
-
-**Última actualización**: 19 de febrero de 2026
-**Responsable**: Equipo de Arquitectura
+- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
+- [SLO y SLA](./slo-sla.md) — objetivos de nivel de servicio basados en las métricas de traces
+- [Structured Logging](./structured-logging.md) — correlación de logs con trazas distribuidas
+- [Métricas con OpenTelemetry](./metrics-standards.md) — fuente de métricas complementaria
+- [Alertas con Grafana](./alerting.md) — alertas sobre latencia y errores capturados con traces
+- [Resilience Patterns](../arquitectura/resilience-patterns.md) — patrones complementarios de resiliencia
+- [API Error Handling](../apis/api-error-handling.md) — manejo de errores correlacionado con trazas
+- [OpenTelemetry Tracing](https://opentelemetry.io/docs/specs/otel/trace/) — especificación oficial
+- [.NET OpenTelemetry Tracing](https://github.com/open-telemetry/opentelemetry-dotnet) — SDK para .NET
+- [W3C Trace Context](https://www.w3.org/TR/trace-context/) — estándar de propagación de contexto
+- [Grafana Tempo Documentation](https://grafana.com/docs/tempo/latest/) — almacenamiento de traces
+- [Trace to Logs](https://grafana.com/docs/grafana/latest/datasources/tempo/#trace-to-logs) — correlación traces-logs en Grafana

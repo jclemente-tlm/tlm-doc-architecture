@@ -206,7 +206,7 @@ app.UseMiddleware<ContextEnrichmentMiddleware>();
 
 ---
 
-## Best Practices
+## Patrones de Escritura de Logs
 
 ```csharp
 // ✅ BUENO: Template con parámetros nombrados
