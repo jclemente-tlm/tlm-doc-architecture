@@ -1,69 +1,45 @@
-# 9. Decisiones De Arquitectura
-
-## 9.1 Decisiones Principales
-
-| ADR        | Decisión                  | Estado    | Justificación                        |
-|------------|---------------------------|-----------|--------------------------------------|
-| `ADR-001`  | YARP como proxy           | Aceptado  | Integración `.NET` nativa            |
-| `ADR-002`  | Redis rate limiting       | Aceptado  | Escalabilidad y consistencia distribuida |
-| `ADR-003`  | JWT + OAuth2              | Aceptado  | Estándar industria, interoperabilidad|
-| `ADR-004`  | Multi-tenant realms       | Aceptado  | Aislamiento y flexibilidad           |
-| `ADR-005`  | Health checks multinivel  | Aceptado  | Observabilidad granular              |
-
-## 9.2 Alternativas Evaluadas
-
-| Componente        | Alternativas           | Selección | Razón                        |
-|-------------------|-----------------------|-----------|------------------------------|
-| Proxy             | NGINX, Envoy, YARP    | YARP      | `.NET` nativo, extensibilidad|
-| Rate Limiting     | In-memory, Redis, Database | Redis | Distribuido, baja latencia   |
-| Auth              | Custom, Auth0, Keycloak | Keycloak | Control total, integración OIDC |
-| Observabilidad    | Custom, Datadog, Grafana | Grafana Stack | Agnóstico, open source |
-
-## 9.3 Decisiones Clave (Formato ADR)
-
-### ADR-001: Proxy Basado En YARP
-
-- **Estado**: Aceptado
-- **Fecha**: 2024-01-10
-- **Decisores**: Equipo de Arquitectura
-- **Contexto**: Se requiere un reverse proxy extensible, nativo en `.NET`, con soporte para middlewares y configuración dinámica.
-- **Decisión**: Se selecciona YARP por su integración nativa, soporte de middlewares y flexibilidad.
-- **Consecuencias**: Integración rápida, reutilización de stack, pero menor madurez frente a NGINX.
-
-### ADR-002: Rate Limiting Distribuido Con Redis
-
-- **Estado**: Aceptado
-- **Fecha**: 2024-01-20
-- **Decisores**: Equipo de Arquitectura
-- **Contexto**: Se requiere rate limiting consistente entre instancias, baja latencia y tolerancia a fallos.
-- **Decisión**: Rate limiting distribuido con Redis (sliding window, fallback local).
-- **Consecuencias**: Consistencia, degradación controlada, mayor complejidad operativa y dependencia externa.
-
-### ADR-003: Circuit Breaker Adaptativo Por Servicio
-
-- **Estado**: Aceptado
-- **Fecha**: 2024-01-25
-- **Decisores**: Arquitectura, SRE
-- **Contexto**: Prevenir fallos en cascada y sobrecarga de servicios backend.
-- **Decisión**: Circuit breakers independientes y adaptativos por servicio, con métricas y backoff configurable.
-- **Consecuencias**: Prevención efectiva, métricas detalladas, tuning y debugging más complejos.
-
-### ADR-004: Validación JWT Local Con Cache Y Revocación Diferida
-
-- **Estado**: Aceptado
-- **Fecha**: 2024-02-01
-- **Decisores**: Seguridad, Arquitectura
-- **Contexto**: Validar JWT tokens con baja latencia y resiliencia ante caídas del servicio de identidad.
-- **Decisión**: Validación local con cache y verificación periódica con el servicio de identidad.
-- **Consecuencias**: Latencia baja, resiliencia, posible ventana de inconsistencia.
-
-### ADR-005: Health Checks Multinivel Y Endpoints Especializados
-
-- **Estado**: Aceptado
-- **Fecha**: 2024-02-05
-- **Decisores**: SRE, DevOps
-- **Contexto**: Necesidad de monitoreo granular y decisiones de routing por estado real del sistema.
-- **Decisión**: Endpoints `/health/live`, `/health/ready`, `/health/detailed` con chequeos por dependencia y recursos.
-- **Consecuencias**: Observabilidad granular, integración con Prometheus y Grafana, mayor complejidad de configuración.
-
 ---
+sidebar_position: 9
+title: Decisiones de Arquitectura
+description: Decisiones arquitectónicas relevantes del API Gateway con Kong OSS.
+---
+
+# 9. Decisiones de Arquitectura
+
+## Decisión Principal
+
+| ADR | Decisión | Estado | Referencia |
+|---|---|---|---|
+| ADR-010 | Kong OSS como API Gateway corporativo | Aceptado (Enero 2026) | [ADR-010](../../../adrs/adr-010-kong-api-gateway.md) |
+
+Ver el ADR completo para la comparativa de alternativas (YARP, AWS API Gateway, Traefik, NGINX Plus, Apigee).
+
+## Decisiones Locales al API Gateway
+
+### DEC-01: Configuración Declarativa con deck
+
+- **Estado**: Aceptado
+- **Contexto**: Kong puede gestionarse vía Admin API imperativamente o vía `deck` (declarativo/GitOps).
+- **Decisión**: Toda la configuración se gestiona con `deck` y archivos YAML en repositorio Git.
+- **Consecuencias**: Trazabilidad completa, entornos reproducibles, integración natural con CI/CD. El estado real de Kong siempre debe coincidir con el repositorio.
+
+### DEC-02: Rate Limiting con Redis (ElastiCache)
+
+- **Estado**: Aceptado
+- **Contexto**: Kong ofrece rate limiting local (por instancia) o distribuido (Redis). Con múltiples instancias ECS, el conteo local es inconsistente.
+- **Decisión**: Plugin `rate-limiting` con `policy: redis` apuntando a ElastiCache.
+- **Consecuencias**: Límites coherentes entre instancias. Dependencia de disponibilidad de Redis (mitigada con Redis Cluster).
+
+### DEC-03: Validación JWT Local en Kong
+
+- **Estado**: Aceptado
+- **Contexto**: La validación JWT puede hacerse en Kong (con JWKS cacheado) o delegarse al backend.
+- **Decisión**: Kong valida JWT con el plugin `jwt` usando las claves públicas de Keycloak. Los backends reciben requests ya autenticados con headers enriquecidos.
+- **Consecuencias**: Reducción de latencia (sin llamada a Keycloak por request). Ventana de inconsistencia al rotar claves (mitigada con TTL de cache corto).
+
+### DEC-04: Kong en Modo DB (PostgreSQL)
+
+- **Estado**: Aceptado
+- **Contexto**: Kong soporta modo DB-less (sin base de datos) o modo DB (PostgreSQL/Cassandra). El modo DB-less no soporta el Admin API dinámico.
+- **Decisión**: Kong en modo DB con PostgreSQL RDS para clustering nativo y Admin API habilitado.
+- **Consecuencias**: Capacidad de clustering entre instancias ECS y uso de `deck`. Dependencia de disponibilidad de RDS (mitigada con Multi-AZ).

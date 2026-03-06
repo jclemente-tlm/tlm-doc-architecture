@@ -1,24 +1,45 @@
+---
+sidebar_position: 1
+title: Introducción y Objetivos
+description: Objetivos, requisitos y partes interesadas del API Gateway corporativo basado en Kong OSS.
+---
+
 # 1. Introducción y Objetivos
 
-El API Gateway es el punto de entrada unificado y seguro para los servicios corporativos, implementado con [YARP](https://microsoft.github.io/reverse-proxy/) y desplegado en AWS ECS mediante [Terraform](https://www.terraform.io/). Opera en entornos multi-tenant (realms) y multi-país, garantizando seguridad, resiliencia, observabilidad y cumplimiento de los objetivos de negocio.
+El **API Gateway corporativo** es el punto de entrada unificado y seguro para todos los servicios corporativos.
+Está implementado con **Kong OSS**, desplegado en contenedores sobre AWS ECS Fargate (ADR-010).
 
-## 1.1 Propósito y Funcionalidades
+## Objetivos Principales
 
-| Funcionalidad    | Descripción                                                                 |
-|------------------|-----------------------------------------------------------------------------|
-| Enrutamiento     | Proxy reverso inteligente para servicios backend, soporte multi-tenant (realms) y multi-país |
-| Autenticación    | Validación de tokens JWT vía [OAuth2/OIDC](https://openid.net/connect/) y control de acceso granular con Keycloak |
-| Rate Limiting    | Control de velocidad distribuido por tenant (realm) y cliente usando [Redis](https://redis.io/) |
-| Load Balancing   | Distribución de carga entre instancias backend con ALB y YARP               |
-| Observabilidad   | Logging estructurado (Serilog/Loki), métricas ([Prometheus](https://prometheus.io/)), tracing ([Jaeger](https://www.jaegertracing.io/)), dashboards ([Grafana](https://grafana.com/)) |
-| Resiliencia      | Circuit breakers ([Polly](https://github.com/App-vNext/Polly)), retry policies y health checks multinivel        |
+| Objetivo | Descripción |
+|---|---|
+| Enrutamiento centralizado | Un único punto de entrada para microservicios: Identity, Notifications, Track & Trace, SITA |
+| Autenticación y autorización | Validación de JWT emitidos por Keycloak mediante el plugin `jwt` de Kong |
+| Rate limiting | Control de tráfico por tenant y endpoint mediante el plugin `rate-limiting` con Redis |
+| Observabilidad | Métricas vía plugin `prometheus`, trazas distribuidas vía plugin `zipkin` |
+| Multi-tenancy | Enrutamiento por país/cliente mediante Kong Workspaces y anotaciones de ruta |
+| Resiliencia | Circuit breaking pasivo por upstream, health checks activos y pasivos |
+| Agnosticidad tecnológica | Kong no impone stack tecnológico en los servicios backend |
 
-## 1.2 Objetivos de Calidad
+## Requisitos de Calidad
 
-| Atributo       | Objetivo                | Métrica                |
-|----------------|------------------------|------------------------|
-| Disponibilidad | Alta disponibilidad    | ≥ 99.9% uptime         |
-| Rendimiento    | Baja latencia          | < 100ms P95            |
-| Throughput     | Alto rendimiento       | > 5,000 RPS            |
-| Seguridad      | Zero trust, cumplimiento OWASP | Autenticación obligatoria, headers y políticas de seguridad |
-| Observabilidad | Trazabilidad y monitoreo en tiempo real | Dashboards, alertas y métricas en Grafana/Prometheus |
+| Atributo | Objetivo | Crítico |
+|---|---|---|
+| Latencia p95 | `< 10ms` overhead de gateway | `< 20ms` |
+| Throughput | `> 10,000 RPS` | `> 5,000 RPS` |
+| Disponibilidad | `99.9%` | `99.5%` |
+| Tiempo de despliegue | `< 5 minutos` (deck sync) | `< 15 minutos` |
+
+## Partes Interesadas
+
+| Rol | Interés |
+|---|---|
+| Equipo de Plataforma | Operación, despliegue y monitoreo de Kong |
+| Equipo de Arquitectura | Definición de estándares, plugins y topología |
+| Equipos de Desarrollo | Registro de servicios y rutas; consumo de APIs |
+| Equipo de Seguridad | Configuración de autenticación, TLS y políticas de acceso |
+
+## Decisión de Tecnología
+
+Kong OSS fue seleccionado en [ADR-010](../../../adrs/adr-010-kong-api-gateway.md) sobre alternativas como YARP, AWS API Gateway y Traefik.
+Los criterios principales fueron agnosticidad tecnológica, ecosistema de plugins maduro y escalabilidad enterprise.

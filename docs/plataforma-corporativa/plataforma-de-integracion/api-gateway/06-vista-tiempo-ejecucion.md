@@ -1,168 +1,117 @@
-# 6. Vista De Tiempo De Ejecución
+---
+sidebar_position: 6
+title: Vista de Tiempo de Ejecución
+description: Flujos de ejecución clave del API Gateway con Kong OSS.
+---
 
-## 6.1 Escenarios Principales
+# 6. Vista de Tiempo de Ejecución
 
-| Escenario                  | Flujo principal                                      | Componentes involucrados                |
-|----------------------------|-----------------------------------------------------|-----------------------------------------|
-| Proxy request              | Cliente → Gateway → Backend                         | `YARP`, `ALB`, `.NET 8`                |
-| Autenticación              | Validación JWT → Claims                             | `Auth Middleware`, `Keycloak`           |
-| Rate limiting              | Request → `Redis` → Allow/Deny                     | `Rate Limiter`, `Redis`                 |
-| Circuit breaker            | Proxy → `Polly` → Servicio/Fallback                 | `Polly`, `YARP`                        |
-| Observabilidad             | Request → Logging/Metrics/Tracing                   | `Serilog`, `Loki`, `Prometheus`, `Jaeger` |
-
-## 6.2 Flujos De Interacción Y Patrones
-
-- Autenticación y enrutamiento: validación de token `JWT` (cache en `Redis`), resolución de tenant, rate limiting y enrutamiento al backend, enriqueciendo headers con información relevante.
-- Health checks y circuit breaker: monitoreo activo, apertura/cierre de circuitos y failover automático.
-- Rate limiting distribuido: ventana deslizante de `1 minuto`, sincronización vía `Redis`, headers estándar en respuesta.
-- Failover y degradación: switchover automático, degradación controlada bajo sobrecarga, priorización de clientes premium.
-- Multi-tenancy: resolución de tenant vía claims `JWT`, `API Key`, subdominio o query param; routing inteligente por tier y país.
-- Observabilidad: trazabilidad distribuida (`Jaeger`), métricas en tiempo real (`Prometheus`), logs estructurados (`Loki`), dashboards y alertas (`Grafana`).
-
-## 6.3 Ejemplos De Ejecución (Diagramas De Secuencia)
-
-### 6.3.1 Flujo De Autenticación Y Enrutamiento
+## Flujo 1: Request Autenticado
 
 ```mermaid
 sequenceDiagram
-    participant Client as Cliente Web/Mobile
-    participant Gateway as API Gateway
-    participant Auth as Identity Service
-    participant Service as Target Service
-    participant Redis as Redis Cache
-    Client->>Gateway: Request con token JWT
-    Gateway->>Redis: Verificar token en cache
-    alt Token en cache
-        Redis->>Gateway: Token válido
-    else Token no en cache
-        Gateway->>Auth: Validar token
-        Auth->>Gateway: Resultado validación
-        Gateway->>Redis: Cachear token
+    participant C as Cliente
+    participant ALB as ALB (TLS Off)
+    participant K as Kong Proxy
+    participant KC as Keycloak (JWKS)
+    participant B as Backend Service
+
+    C->>ALB: HTTPS POST /api/v1/...  (Bearer JWT)
+    ALB->>K: HTTP (JWT forwarded)
+    K->>K: Plugin jwt: verifica firma JWT
+contra JWKS cacheado de Keycloak
+    alt JWT inválido o expirado
+        K-->>C: 401 Unauthorized
+    else JWT válido
+        K->>K: Plugin request-transformer:
+añade X-Consumer-ID, X-Tenant-ID
+        K->>B: HTTP + headers enriquecidos
+        B-->>K: Respuesta del backend
+        K->>K: Plugin response-transformer:
+elimina cabeceras internas
+        K-->>C: Respuesta final
     end
-    Gateway->>Gateway: Resolver tenant y aplicar rate limiting
-    Gateway->>Service: Forward con headers enriquecidos
-    Service->>Gateway: Response
-    Gateway->>Client: Response con headers de rate limit
 ```
 
-### 6.3.2 Health Check Y Circuit Breaker
+> Kong cachea las claves JWKS de Keycloak. La rotación de claves se propaga automáticamente al expirar el cache TTL.
+
+## Flujo 2: Rate Limiting
 
 ```mermaid
 sequenceDiagram
-    participant Monitor as Health Monitor
-    participant Gateway as API Gateway
-    participant Service1 as Service Instance 1
-    participant Service2 as Service Instance 2
-    participant Circuit as Circuit Breaker
-    loop Cada 30s
-        Monitor->>Service1: Health check
-        Monitor->>Service2: Health check
-        alt Healthy
-            Service1->>Monitor: 200 OK
-        else Unhealthy
-            Service2->>Monitor: 500/Error
-            Monitor->>Circuit: Open circuit
+    participant C as Cliente
+    participant K as Kong Proxy
+    participant R as Redis (ElastiCache)
+    participant B as Backend Service
+
+    C->>K: Request (con tenant header)
+    K->>R: INCR counter[tenant:route:window]
+    R-->>K: counter = N
+    alt N > límite configurado
+        K-->>C: 429 Too Many Requests
+RateLimit-Remaining: 0
+    else N <= límite
+        K->>B: Request normal
+        B-->>K: Respuesta
+        K-->>C: Respuesta (RateLimit-Remaining: N_restante)
+    end
+```
+
+## Flujo 3: Health Check de Upstream
+
+```mermaid
+sequenceDiagram
+    participant K as Kong Upstream Logic
+    participant T as Target (backend instance)
+
+    loop Cada 30s (health check activo)
+        K->>T: GET /health/live
+        alt HTTP 200
+            K->>K: Target marcado HEALTHY
+        else HTTP 5xx o timeout
+            K->>K: Target marcado UNHEALTHY (excluido del balanceo)
         end
     end
-    Gateway->>Circuit: Check state
-    Circuit->>Gateway: Circuit OPEN
-    Gateway->>Service1: Route only to healthy
+    Note over K: Health check pasivo: 3 fallos consecutivos → UNHEALTHY
 ```
 
-### 6.3.3 Rate Limiting Distribuido
+## Flujo 4: Circuit Breaker (Health Check Pasivo)
 
 ```mermaid
 sequenceDiagram
-    participant Client as Cliente
-    participant Gateway1 as Gateway 1
-    participant Gateway2 as Gateway 2
-    participant Redis as Redis
-    Client->>Gateway1: Request
-    Gateway1->>Redis: INCR rate_limit
-    Redis->>Gateway1: Counter
-    Gateway1->>Client: 200 OK
-    Client->>Gateway2: Request
-    Gateway2->>Redis: INCR rate_limit
-    Redis->>Gateway2: Counter
-    Gateway2->>Client: 200 OK
-    Note over Gateway1,Redis: Al superar límite
-    Gateway1->>Client: 429 Too Many Requests
+    participant C as Cliente
+    participant K as Kong Proxy
+    participant T1 as Target A (UNHEALTHY)
+    participant T2 as Target B (HEALTHY)
+
+    C->>K: Request
+    K->>K: Target A en estado UNHEALTHY
+    K->>T2: Enruta a Target B
+    T2-->>K: Respuesta OK
+    K-->>C: Respuesta (transparente para cliente)
 ```
 
-### 6.3.4 Failover Automático Y Degradación
+Kong no implementa circuit breaker como estado de máquina explícito; usa exclusión de targets por health checks pasivos.
+Para resiliencia adicional, el backend debe implementar patrones de resiliencia internos.
+
+## Flujo 5: Sync de Configuración (deck)
 
 ```mermaid
 sequenceDiagram
-    participant Client as Cliente
-    participant Gateway as API Gateway
-    participant Primary as Servicio Primario
-    participant Secondary as Servicio Secundario
-    participant Monitor as Health Monitor
-    Client->>Gateway: Request
-    Gateway->>Primary: Forward
-    Primary->>Gateway: Response
-    Gateway->>Client: Response
-    Note over Primary: Falla
-    Monitor->>Gateway: Mark primary unhealthy
-    Gateway->>Secondary: Forward
-    Secondary->>Gateway: Response
-    Gateway->>Client: Response
+    participant DEV as Developer / CI
+    participant GIT as Repositorio Git
+    participant CI as Pipeline CI/CD
+    participant DA as deck CLI
+    participant K as Kong Admin API
+
+    DEV->>GIT: PR con cambios en kong.yml
+    CI->>DA: deck validate kong.yml
+    DA-->>CI: OK / Error de validación
+    CI->>DA: deck diff --state kong.yml
+    DA->>K: Consulta estado actual
+    K-->>DA: Estado actual
+    DA-->>CI: Diff de cambios
+    CI->>DA: deck sync --state kong.yml (solo en merge/despliegue)
+    DA->>K: Aplica cambios mínimos
+    K-->>DA: OK
 ```
-
-### 6.3.5 Multi-Tenancy Y Routing Inteligente
-
-```mermaid
-sequenceDiagram
-    participant ClientA as Tenant Premium
-    participant ClientB as Tenant Standard
-    participant Gateway as API Gateway
-    participant PremiumService as Premium Instance
-    participant StandardService as Standard Instance
-    ClientA->>Gateway: Request (premium)
-    Gateway->>PremiumService: Route
-    PremiumService->>Gateway: Response
-    Gateway->>ClientA: Response
-    ClientB->>Gateway: Request (standard)
-    Gateway->>StandardService: Route
-    StandardService->>Gateway: Response
-    Gateway->>ClientB: Response
-```
-
-### 6.3.6 Observabilidad Y Monitoreo
-
-```mermaid
-sequenceDiagram
-    participant Gateway as API Gateway
-    participant Metrics as Metrics Collector
-    participant Prometheus as Prometheus
-    participant Grafana as Grafana
-    participant Loki as Loki
-    participant Jaeger as Jaeger
-    Gateway->>Metrics: Record metrics
-    Gateway->>Loki: Log request
-    Gateway->>Jaeger: Trace span
-    Metrics->>Prometheus: Scrape
-    Grafana->>Prometheus: Query
-    Grafana->>Loki: Query logs
-    Grafana->>Jaeger: Query traces
-```
-
-## 6.4 Objetivos De Rendimiento Y SLA
-
-| Operación                  | Target           | Timeout | SLA    |
-|----------------------------|------------------|---------|--------|
-| Token validation (cache)   | `< 10ms`         | `100ms` | `99.9%`  |
-| Token validation (fresh)   | `< 100ms`        | `500ms` | `99.5%`  |
-| Request routing            | `< 5ms`          | `50ms`  | `99.9%`  |
-| Health check               | `< 200ms`        | `5s`    | `95%`    |
-| Rate limit check           | `< 5ms`          | `100ms` | `99.9%`  |
-| Config reload              | `< 1s`           | `30s`   | `99%`    |
-| Circuit breaker            | `< 100ms`        | `500ms` | `99%`    |
-
-## 6.5 Manejo De Errores Y Resiliencia
-
-- Timeout downstream: `30s`, `3 reintentos` con backoff, circuit breaker tras `5 fallos`, responde `504` con `retry-after`.
-- Identity service caído: cache de tokens extendido `1h`, solo requests con tokens válidos, responde `503` para nuevas autenticaciones.
-- Degradación bajo carga: priorización de clientes premium, cola para estándar, `503` si no hay capacidad.
-
----

@@ -1,44 +1,65 @@
-# 5. Vista de bloques de construcción
+---
+sidebar_position: 5
+title: Vista de Bloques de Construcción
+description: Descomposición estática de componentes del API Gateway con Kong OSS.
+---
 
-![API Gateway - Vista de Componentes](/diagrams/servicios-corporativos/api_gateway_yarp.png)
+# 5. Vista de Bloques de Construcción
 
-*Figura 5.1: Vista de componentes principales del API Gateway.*
+## Nivel 1: Sistema en Contexto
 
-## 5.1 Componentes principales
+```mermaid
+graph TD
+    ALB[ALB
+Entrada HTTPS] --> KP[Kong Proxy
+Nivel 1: API Gateway]
+    KP --> SVC[Servicios Backend
+Identity, Notifications, TT, SITA]
+    KA[deck CLI
+Configuración] --> KP
+```
 
-| Componente                    | Responsabilidad                                               | Tecnología                        |
-|-------------------------------|--------------------------------------------------------------|-----------------------------------|
-| YARP Proxy                    | Proxy inverso, enrutamiento y balanceo de carga              | YARP, ASP.NET Core                |
-| Security Middleware           | Validación de tokens JWT y políticas de autorización         | ASP.NET Core Middleware, JWT      |
-| Tenant Resolution Middleware  | Resolución y validación de contexto de tenant                | ASP.NET Core Middleware           |
-| Rate Limiting Middleware      | Límites de velocidad por tenant y endpoint                   | ASP.NET Core Middleware, Redis    |
-| Resilience Middleware         | Circuit breakers y reintentos para resiliencia               | Polly                             |
-| Data Processing Middleware    | Validación de esquemas y transformación de payloads          | ASP.NET Core Middleware, JSON Schema |
-| Cache Middleware (opcional)   | Cache distribuido con invalidación inteligente               | Redis, ASP.NET Core Response Caching |
-| SecretsAndConfigs             | Acceso centralizado a configuraciones y secretos             | AWS Secrets Manager, AppConfig    |
-| Observabilidad                | Logging, métricas, health checks                            | Serilog, Prometheus, HealthChecks |
+## Nivel 2: Componentes Internos de Kong
 
-## 5.2 Flujo de procesamiento
+| Componente | Tecnología/Ref | Responsabilidad |
+|---|---|---|
+| **Kong Proxy** | `kong:3.x` (imagen oficial) | Recibe tráfico, aplica plugins, enruta a backends |
+| **Kong Admin API** | Expuesto en `:8001` (VPC interno) | Gestión de configuración vía `deck sync` |
+| **Plugin Engine** | Lua + PDK | Ejecuta plugins en orden de prioridad por fase de request/response |
+| **Cluster DB** | PostgreSQL (RDS) | Estado compartido entre instancias en modo DB |
+| **Upstreams** | Configurados en `kong.yml` | Balanceo de carga y health checks por servicio backend |
 
-| Paso | Acción                          | Componente         |
-|------|---------------------------------|--------------------|
-| `1`  | Recepción de solicitud          | `YARP Proxy`       |
-| `2`  | Validación de autenticación     | `Auth Middleware`  |
-| `3`  | Verificación de límites         | `Rate Limiter`     |
-| `4`  | Enrutamiento a servicio         | `Load Balancer`    |
-| `5`  | Circuit breaking y resiliencia  | `Polly`            |
-| `6`  | Logging y métricas              | `Serilog`, `Loki`, `Prometheus`, `Jaeger` |
-| `7`  | Respuesta al cliente            | `YARP Proxy`       |
+## Services, Routes y Upstreams
 
-> Todos los bloques y relaciones están alineados con el modelo C4 y los ADRs globales. Los componentes de observabilidad (`Grafana`, `Prometheus`, `Loki`, `Jaeger`) son parte integral del flujo y monitoreo.
+```mermaid
+graph LR
+    Route[Route
+/api/v1/identity/**] --> Service[Service
+identity-service]
+    Service --> Upstream[Upstream
+identity-upstream]
+    Upstream --> T1[Target
+identity-svc:8080]
+```
 
-## 5.3 Relación con otros sistemas
+| Entidad Kong | Descripción |
+|---|---|
+| **Service** | Representa un servicio backend (URL o Upstream) |
+| **Route** | Regla de enrutamiento: host, path, method → Service |
+| **Upstream** | Pool de targets con balanceo y health checks |
+| **Target** | Instancia concreta del backend (host:port) |
+| **Plugin** | Comportamiento aplicado a nivel global, Service o Route |
+| **Consumer** | Identidad de un cliente (tenant/aplicación) |
 
-- El `API Gateway` interactúa con microservicios corporativos, sistemas de identidad (`Keycloak`), servicios de notificación y plataformas de configuración y secretos, según lo definido en los diagramas Structurizr.
-- La integración y dependencias están documentadas en los modelos DSL y se reflejan en las vistas de componentes y despliegue.
+## Plugins Habilitados
 
-## 5.4 Consideraciones de despliegue
-
-- Todos los componentes se despliegan en `AWS ECS Fargate` usando `Terraform`.
-- Observabilidad y monitoreo centralizados con `Grafana`, `Prometheus`, `Loki` y `Jaeger`.
-- Configuración y secretos gestionados externamente, con recarga dinámica y validación de salud.
+| Plugin | Alcance | Función |
+|---|---|---|
+| `jwt` | Global / Route | Validación de JWT emitidos por Keycloak |
+| `rate-limiting` | Route / Consumer | Throttling por IP, consumer o header con backend Redis |
+| `cors` | Route | Cabeceras CORS para acceso desde navegadores |
+| `request-transformer` | Route | Inyección de headers (`X-Tenant-ID`, `X-Correlation-ID`) |
+| `response-transformer` | Route | Limpieza de cabeceras internas en respuestas al cliente |
+| `prometheus` | Global | Exposición de métricas en `/metrics` |
+| `zipkin` | Global | Propagación de contexto de traza distribuida |
+| `ip-restriction` | Route | Whitelist/blacklist de IPs para rutas administrativas |
