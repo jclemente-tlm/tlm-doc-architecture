@@ -248,7 +248,7 @@ Proceso de verificar que servicios, infraestructura y código cumplen con lineam
 
 **NC-2: Contract Testing Ausente**
 
-- **Standard**: [Testing - Contract Testing](../testing/contract-e2e-testing.md)
+- **Standard**: [Testing - Contract Testing](../testing/contract-testing.md)
 - **Current State**: Sin contract tests
 - **Expected State**: Pact tests para consumers de API
 - **Risk**: Breaking changes no detectados
@@ -625,7 +625,7 @@ sequenceDiagram
 
 ## Standard / Lineamiento
 
-**Standard**: [Testing - Contract Testing](../testing/contract-e2e-testing.md)
+**Standard**: [Testing - Contract Testing](../testing/contract-testing.md)
 **Requirement**: Implementar contract tests para servicios que exponen APIs consumidas por otros servicios
 
 ---

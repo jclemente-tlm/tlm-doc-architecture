@@ -18,7 +18,7 @@ La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, ac
 - [Implementar fitness functions](../../estandares/arquitectura/architecture-evolution.md#1-fitness-functions)
 - [Realizar architecture reviews periódicos](../../estandares/gobierno/architecture-governance.md#1-architecture-review)
 - [Aplicar refactoring continuo](../../estandares/desarrollo/code-quality.md#3-refactoring-practices)
-- [Mantener suite de testing comprehensivo](../../estandares/testing/testing-strategy.md#1-testing-pyramid)
+- [Mantener suite de testing comprehensivo](../../estandares/testing/testing-pyramid.md)
 - [Diseñar con bajo acoplamiento](../../estandares/arquitectura/architecture-principles.md#3-loose-coupling)
 - [Priorizar reversibilidad de decisiones](../../estandares/arquitectura/architecture-evolution.md#2-reversibility)
 

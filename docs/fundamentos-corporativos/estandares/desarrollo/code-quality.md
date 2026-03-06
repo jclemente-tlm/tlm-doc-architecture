@@ -977,7 +977,7 @@ chmod +x .git/hooks/pre-commit
 **Relacionados:**
 
 - [Git Workflow](./git-workflow.md)
-- [Testing Strategy](../testing/testing-strategy.md)
+- [Pirámide de Testing](../testing/testing-pyramid.md)
 
 ---
 

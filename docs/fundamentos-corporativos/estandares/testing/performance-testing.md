@@ -1,11 +1,12 @@
 ---
 id: performance-testing
-sidebar_position: 4
-title: Performance Testing
+sidebar_position: 8
+title: Pruebas de Performance
 description: Estándares para load testing, baseline performance y validación de SLAs
+tags: [testing, performance, load-testing, k6, grafana]
 ---
 
-# Performance Testing
+# Pruebas de Performance
 
 ## Contexto
 
@@ -596,13 +597,6 @@ groups:
 - [BenchmarkDotNet](https://benchmarkdotnet.org/)
 - [Performance Testing Guidance - Microsoft](https://learn.microsoft.com/en-us/azure/architecture/framework/scalability/performance-test)
 
-**Relacionados:**
-
-- [Testing Strategy](./testing-strategy.md)
+- [Pirámide de Testing](./testing-pyramid.md)
 - [Métricas con OpenTelemetry](../observabilidad/metrics.md)
 - [Scalability Patterns](../arquitectura/scalability-performance.md)
-
----
-
-**Última actualización**: 2026-02-19
-**Responsable**: Equipo de Arquitectura
