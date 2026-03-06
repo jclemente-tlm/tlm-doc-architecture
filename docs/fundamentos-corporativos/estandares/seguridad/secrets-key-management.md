@@ -1,8 +1,9 @@
 ---
 id: secrets-key-management
-sidebar_position: 6
+sidebar_position: 9
 title: Secrets & Key Management
 description: Estándares para gestión de secretos (passwords, API keys) y claves de cifrado
+tags: [seguridad, secrets, aws-secrets-manager, aws-kms, cifrado]
 ---
 
 # Secrets & Key Management
@@ -20,16 +21,16 @@ Este estándar consolida **2 conceptos relacionados** con gestión segura de sec
 
 ## Stack Tecnológico
 
-| Componente                | Tecnología          | Versión | Uso                                    |
-|---------------------------|---------------------|---------|----------------------------------------|
-| **Secrets Management**    | AWS Secrets Manager | Latest  | Almacenamiento de secretos             |
-| **Key Management**        | AWS KMS             | Latest  | Gestión de claves de cifrado           |
-| **Runtime**               | .NET                | 8.0+    | Aplicaciones                           |
-| **IaC**                   | Terraform           | 1.7+    | Provisión de secretos/keys             |
+| Componente             | Tecnología          | Versión | Uso                          |
+| ---------------------- | ------------------- | ------- | ---------------------------- |
+| **Secrets Management** | AWS Secrets Manager | Latest  | Almacenamiento de secretos   |
+| **Key Management**     | AWS KMS             | Latest  | Gestión de claves de cifrado |
+| **Runtime**            | .NET                | 8.0+    | Aplicaciones                 |
+| **IaC**                | Terraform           | 1.7+    | Provisión de secretos/keys   |
 
 ---
 
-## 1. Secrets Management
+## Gestión de Secretos
 
 ### ¿Qué es?
 
@@ -272,7 +273,7 @@ public class StripePaymentService
 
 ---
 
-## 2. Key Management
+## Gestión de Claves Criptográficas
 
 ### ¿Qué es?
 
@@ -505,7 +506,7 @@ public class EncryptedData
 
 ---
 
-## Requisitos
+## Requisitos Técnicos
 
 ### MUST (Obligatorio)
 
@@ -536,13 +537,5 @@ public class EncryptedData
 - [AWS Secrets Manager Best Practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html)
 - [AWS KMS Best Practices](https://docs.aws.amazon.com/kms/latest/developerguide/best-practices.html)
 - [Envelope Encryption](https://docs.aws.amazon.com/wellarchitected/latest/financial-services-industry-lens/use-envelope-encryption-with-customer-master-keys.html)
-
-**Relacionados:**
-
 - [Data Protection](./data-protection.md)
-- [Identity & Access Management](./identity-access-management.md)
-
----
-
-**Última actualización**: 2026-02-19
-**Responsable**: Equipo de Seguridad
+- [SSO, MFA y RBAC](./sso-mfa-rbac.md)

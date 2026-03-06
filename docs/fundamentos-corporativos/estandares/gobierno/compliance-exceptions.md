@@ -236,7 +236,7 @@ Proceso de verificar que servicios, infraestructura y código cumplen con lineam
 
 **NC-1: RBAC No Implementado**
 
-- **Standard**: [Security - Identity Access Management](../seguridad/identity-access-management.md)
+- **Standard**: [Security - SSO, MFA y RBAC](../seguridad/sso-mfa-rbac.md)
 - **Current State**: Solo autenticación (JWT), sin autorización granular
 - **Expected State**: RBAC con roles (Admin, Manager, Viewer)
 - **Risk**: Cualquier usuario autenticado puede ejecutar cualquier operación

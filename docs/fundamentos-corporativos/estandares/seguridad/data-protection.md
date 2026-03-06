@@ -1,8 +1,18 @@
 ---
 id: data-protection
-sidebar_position: 3
+sidebar_position: 7
 title: Data Protection
 description: Estándares consolidados para cifrado at-rest y in-transit, enmascaramiento, clasificación, minimización, prevención de pérdida de datos y seguridad general de datos
+tags:
+  [
+    seguridad,
+    cifrado,
+    data-masking,
+    clasificacion-datos,
+    aws-kms,
+    postgresql,
+    tls,
+  ]
 ---
 
 # Data Protection
@@ -37,39 +47,7 @@ Este estándar consolida **7 conceptos relacionados** con la protección de dato
 
 ---
 
-## Conceptos Fundamentales
-
-Este estándar cubre **7 pilares** de protección de datos:
-
-### Índice de Conceptos
-
-1. **Encryption at Rest**: Cifrado de datos almacenados
-2. **Encryption in Transit**: Cifrado de comunicaciones (TLS 1.3)
-3. **Data Masking**: Enmascaramiento de PII en logs/pantallas
-4. **Data Classification**: Esquema de clasificación de sensibilidad
-5. **Data Minimization**: Recopilar solo lo necesario (GDPR)
-6. **Data Loss Prevention**: Prevenir exfiltración
-7. **Data Security**: Controles integrales de seguridad
-
-### Capas de Protección
-
-```mermaid
-graph TB
-    A[Data at Rest] -->|AWS KMS| B[Encrypted Storage]
-    C[Data in Transit] -->|TLS 1.3| D[Encrypted Channel]
-    E[Data in Use] -->|Data Masking| F[Protected Display]
-
-    G[Classification] --> A
-    G --> C
-    G --> E
-
-    H[Data Minimization] --> A
-    I[DLP] --> C
-```
-
----
-
-## 1. Encryption at Rest
+## Cifrado en Reposo
 
 ### ¿Qué es Encryption at Rest?
 
@@ -330,7 +308,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "data" {
 
 ---
 
-## 2. Encryption in Transit
+## Cifrado en Tránsito
 
 ### ¿Qué es Encryption in Transit?
 
@@ -495,7 +473,7 @@ public class SecureHttpClientFactory
 
 ---
 
-## 3. Data Masking
+## Enmascaramiento de Datos
 
 ### ¿Qué es Data Masking?
 
@@ -665,7 +643,7 @@ public class CustomerDto
 
 ---
 
-## 4. Data Classification
+## Clasificación de Datos
 
 ### ¿Qué es Data Classification?
 
@@ -832,7 +810,7 @@ var customers = await connection.QueryAsync<Customer>("SELECT * FROM customers")
 
 ---
 
-## Requisitos Técnicos (Resumen por espacio)
+## Requisitos Técnicos
 
 ### MUST (Obligatorio)
 
@@ -885,19 +863,9 @@ var customers = await connection.QueryAsync<Customer>("SELECT * FROM customers")
 
 ## Referencias
 
-**Documentación oficial:**
-
 - [AWS KMS Best Practices](https://docs.aws.amazon.com/kms/latest/developerguide/best-practices.html)
 - [PostgreSQL Encryption](https://www.postgresql.org/docs/current/encryption-options.html)
 - [.NET Data Protection](https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/)
 - [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
-
-**Relacionados:**
-
 - [Secrets & Key Management](./secrets-key-management.md)
-- [Network Security](./network-security.md)
-
----
-
-**Última actualización**: 2026-02-19
-**Responsable**: Equipo de Arquitectura
+- [Segmentación y Controles de Red](./network-segmentation.md)

@@ -1,6 +1,6 @@
 ---
 id: sast
-sidebar_position: 10
+sidebar_position: 12
 title: SAST — Análisis Estático de Seguridad
 description: Estándar para integrar análisis estático de seguridad (SAST) en el pipeline CI/CD con CodeQL, Semgrep y dotnet-security-scan.
 tags: [seguridad, sast, static-analysis, codeql, semgrep, ci-cd]
@@ -18,11 +18,11 @@ El análisis estático de seguridad detecta vulnerabilidades en el código antes
 
 ## Stack Tecnológico
 
-| Componente  | Tecnología            | Uso                                    |
-| ----------- | --------------------- | -------------------------------------- |
-| **SAST**    | CodeQL / Semgrep      | Vulnerabilidades en código             |
-| **Deps**    | dotnet-security-scan  | Vulnerabilidades en paquetes NuGet     |
-| **CI/CD**   | GitHub Actions        | Integración en pipeline                |
+| Componente | Tecnología           | Uso                                |
+| ---------- | -------------------- | ---------------------------------- |
+| **SAST**   | CodeQL / Semgrep     | Vulnerabilidades en código         |
+| **Deps**   | dotnet-security-scan | Vulnerabilidades en paquetes NuGet |
+| **CI/CD**  | GitHub Actions       | Integración en pipeline            |
 
 ---
 
@@ -174,4 +174,3 @@ jobs:
 ```
 
 ---
-

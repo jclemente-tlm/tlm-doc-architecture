@@ -1,8 +1,17 @@
 ---
 id: security-governance
-sidebar_position: 7
+sidebar_position: 10
 title: Security Governance
 description: Estándares para security by design, architecture reviews, defense-in-depth, patch management, segregation of duties
+tags:
+  [
+    seguridad,
+    governance,
+    owasp,
+    defense-in-depth,
+    patch-management,
+    segregacion-funciones,
+  ]
 ---
 
 # Security Governance
@@ -39,7 +48,7 @@ Este estándar consolida **10 conceptos relacionados** con gobernanza, política
 
 ---
 
-## 1. Security by Design
+## Seguridad por Diseño
 
 ### ¿Qué es?
 
@@ -127,7 +136,7 @@ Incorporar seguridad en cada fase del SDLC, no como afterthought sino como requi
 
 ---
 
-## 2. Security Architecture Review
+## Revisión de Arquitectura de Seguridad
 
 ### ¿Qué es?
 
@@ -218,7 +227,7 @@ Servicio para procesar pagos con Stripe. Maneja tarjetas de crédito (PCI-DSS sc
 
 ---
 
-## 3. Application Security (OWASP Top 10)
+## Seguridad de Aplicaciones (OWASP Top 10)
 
 ### Prevención de OWASP Top 10
 
@@ -366,7 +375,7 @@ public async Task<ActionResult> Login(LoginRequest request)
 
 ---
 
-## 4. Defense in Depth
+## Defensa en Profundidad
 
 ### Capas de Seguridad
 
@@ -419,7 +428,7 @@ graph TB
 
 ---
 
-## 5. Patch Management
+## Gestión de Parches
 
 ### Proceso de Actualización
 
@@ -501,7 +510,7 @@ updates:
 
 ---
 
-## 6. Segregation of Duties
+## Segregación de Funciones
 
 ### Separación de Roles
 
@@ -608,7 +617,7 @@ jobs:
 
 ---
 
-## 7. Secure Defaults
+## Configuraciones Seguras por Defecto
 
 ### Configuraciones Seguras
 
@@ -689,9 +698,9 @@ builder.Services.AddRateLimiter(options =>
 
 ---
 
-## 8-10. Resumen (Continuous Audit, Auth Protocols, Compliance)
+## Auditoría Continua, Protocolos y Compliance
 
-### 8. Authentication Protocols
+### Protocolos de Autenticación
 
 **MUST:**
 
@@ -699,7 +708,7 @@ builder.Services.AddRateLimiter(options =>
 - No Basic Auth
 - JWT con RS256 (no HS256)
 
-### 9. Continuous Audit
+### Auditoría Continua
 
 **MUST:**
 
@@ -708,7 +717,7 @@ builder.Services.AddRateLimiter(options =>
 - Application audit logs
 - Alertas en Grafana
 
-### 10. Compliance Automation
+### Automatización de Compliance
 
 **MUST:**
 
@@ -718,7 +727,7 @@ builder.Services.AddRateLimiter(options =>
 
 ---
 
-## Requisitos
+## Requisitos Técnicos
 
 ### MUST
 
@@ -744,8 +753,3 @@ builder.Services.AddRateLimiter(options =>
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
 - [CIS Controls](https://www.cisecurity.org/controls)
-
----
-
-**Última actualización**: 2026-02-19
-**Responsable**: Equipo de Seguridad

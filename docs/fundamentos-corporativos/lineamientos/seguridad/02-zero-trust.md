@@ -13,11 +13,11 @@ Ningún componente, usuario o sistema es confiable por defecto; toda interacció
 
 ## Estándares Obligatorios
 
-- [Implementar autenticación mutua](../../estandares/seguridad/zero-trust-architecture.md#2-mutual-authentication)
-- [Aplicar Zero Trust networking](../../estandares/seguridad/zero-trust-architecture.md#1-zero-trust-networking)
-- [Evaluar cada petición explícitamente](../../estandares/seguridad/zero-trust-architecture.md#4-explicit-verification)
-- [Asumir brechas (assume breach)](../../estandares/seguridad/zero-trust-architecture.md#5-assume-breach)
-- [Implementar cifrado mutuo entre servicios](../../estandares/seguridad/zero-trust-architecture.md#3-mutual-tls-mtls)
+- [Implementar autenticación mutua](../../estandares/seguridad/zero-trust-networking.md)
+- [Aplicar Zero Trust networking](../../estandares/seguridad/zero-trust-networking.md)
+- [Evaluar cada petición explícitamente](../../estandares/seguridad/zero-trust-verification.md)
+- [Asumir brechas (assume breach)](../../estandares/seguridad/zero-trust-verification.md)
+- [Implementar cifrado mutuo entre servicios](../../estandares/seguridad/zero-trust-networking.md)
 - [Implementar auditoría continua](../../estandares/seguridad/security-governance.md)
 
 ## Referencias Relacionadas

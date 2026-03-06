@@ -1,8 +1,17 @@
 ---
 id: security-testing
-sidebar_position: 5
+sidebar_position: 8
 title: Security Testing
 description: Estándares para threat modeling, penetration testing, vulnerability tracking y SLAs
+tags:
+  [
+    seguridad,
+    testing,
+    threat-modeling,
+    penetration-testing,
+    vulnerabilidades,
+    cvss,
+  ]
 ---
 
 # Security Testing
@@ -32,7 +41,7 @@ Este estándar consolida **4 conceptos relacionados** con pruebas y evaluación 
 
 ---
 
-## 1. Threat Modeling
+## Threat Modeling
 
 ### ¿Qué es?
 
@@ -104,7 +113,7 @@ Análisis estructurado de amenazas potenciales durante la fase de diseño usando
 
 ---
 
-## 2. Penetration Testing
+## Pruebas de Intrusión
 
 ### ¿Qué es?
 
@@ -162,7 +171,7 @@ Pruebas de intrusión por profesionales certificados para identificar vulnerabil
 
 ---
 
-## 3. Vulnerability Tracking
+## Seguimiento de Vulnerabilidades
 
 ### ¿Qué es?
 
@@ -246,7 +255,7 @@ var orders = await _context.Orders
 
 ---
 
-## 4. Vulnerability SLA
+## SLA de Remediación
 
 ### Tiempos de Remediación
 
@@ -347,7 +356,7 @@ vulnerability_remediation_duration_days{severity="critical"}
 
 ---
 
-## Requisitos
+## Requisitos Técnicos
 
 ### MUST
 
@@ -375,13 +384,5 @@ vulnerability_remediation_duration_days{severity="critical"}
 - [OWASP Threat Modeling](https://owasp.org/www-community/Threat_Modeling)
 - [STRIDE Framework](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats)
 - [CVSS v3.1 Specification](https://www.first.org/cvss/v3.1/specification-document)
-
-**Relacionados:**
-
 - [Security Scanning](./security-scanning.md)
 - [Security Governance](./security-governance.md)
-
----
-
-**Última actualización**: 2026-02-19
-**Responsable**: Equipo de Seguridad

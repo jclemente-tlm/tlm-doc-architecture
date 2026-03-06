@@ -1,8 +1,9 @@
 ---
 id: security-scanning
-sidebar_position: 8
+sidebar_position: 11
 title: Security Scanning
 description: Estándares para escaneo de contenedores, dependencias, infraestructura como código y SBOM
+tags: [seguridad, scanning, trivy, checkov, owasp, sbom, contenedores]
 ---
 
 # Security Scanning
@@ -32,7 +33,7 @@ Este estándar consolida **4 conceptos relacionados** con escaneo automatizado d
 
 ---
 
-## 1. Container Scanning
+## Escaneo de Contenedores
 
 ### ¿Qué es?
 
@@ -141,7 +142,7 @@ CVE-2023-67890
 
 ---
 
-## 2. Dependency Scanning
+## Escaneo de Dependencias
 
 ### ¿Qué es?
 
@@ -267,7 +268,7 @@ updates:
 
 ---
 
-## 3. IaC Scanning (Terraform)
+## Escaneo de Infraestructura como Código
 
 ### ¿Qué es?
 
@@ -454,7 +455,7 @@ resource "aws_db_instance" "main" {
 
 ---
 
-## 4. SBOM (Software Bill of Materials)
+## SBOM (Software Bill of Materials)
 
 ### ¿Qué es?
 
@@ -583,7 +584,7 @@ grype sbom:./sbom-cyclonedx.json
 
 ---
 
-## Requisitos
+## Requisitos Técnicos
 
 ### MUST (Obligatorio)
 
@@ -636,13 +637,5 @@ security_scans_total{type="iac"}
 - [Checkov Documentation](https://www.checkov.io/1.Welcome/What%20is%20Checkov.html)
 - [Syft SBOM](https://github.com/anchore/syft)
 - [CycloneDX Specification](https://cyclonedx.org/)
-
-**Relacionados:**
-
 - [Security Testing](./security-testing.md)
 - [Security Governance](./security-governance.md)
-
----
-
-**Última actualización**: 2026-02-19
-**Responsable**: Equipo de Seguridad

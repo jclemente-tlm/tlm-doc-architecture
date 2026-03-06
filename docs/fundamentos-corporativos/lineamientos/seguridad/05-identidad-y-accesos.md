@@ -13,10 +13,10 @@ La gestión fragmentada de identidades genera credenciales dispersas, permisos e
 
 ## Estándares Obligatorios
 
-- [Implementar Single Sign-On corporativo](../../estandares/seguridad/identity-access-management.md#1-sso-implementation)
-- [Aplicar autenticación multi-factor obligatoria](../../estandares/seguridad/identity-access-management.md#2-multi-factor-authentication-mfa)
-- [Implementar federación de identidades](../../estandares/seguridad/identity-access-management.md#5-identity-federation)
-- [Gestionar identidades de servicios](../../estandares/seguridad/identity-access-management.md)
-- [Implementar protocolos estándar de autenticación/autorización](../../estandares/seguridad/identity-access-management.md)
-- [Gestionar ciclo de vida de identidades](../../estandares/seguridad/identity-access-management.md#6-identity-lifecycle)
-- [Implementar políticas de contraseñas](../../estandares/seguridad/identity-access-management.md)
+- [Implementar Single Sign-On corporativo](../../estandares/seguridad/sso-mfa-rbac.md)
+- [Aplicar autenticación multi-factor obligatoria](../../estandares/seguridad/sso-mfa-rbac.md)
+- [Implementar federación de identidades](../../estandares/seguridad/iam-advanced.md)
+- [Gestionar identidades de servicios](../../estandares/seguridad/iam-advanced.md)
+- [Implementar protocolos estándar de autenticación/autorización](../../estandares/seguridad/sso-mfa-rbac.md)
+- [Gestionar ciclo de vida de identidades](../../estandares/seguridad/iam-advanced.md)
+- [Implementar políticas de contraseñas](../../estandares/seguridad/iam-advanced.md)
