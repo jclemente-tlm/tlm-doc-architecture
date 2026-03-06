@@ -636,7 +636,7 @@ public class Customer
 | **PII**          | Sí           | Sí              | Sí        | 7 años     | Sí (GDPR)        |
 | **Restricted**   | Sí           | Sí              | Sí        | 10 años    | Sí               |
 
-### Data Quality Checks
+### Verificaciones de Calidad de Datos
 
 ```csharp
 public interface IDataQualityValidator
@@ -1109,9 +1109,7 @@ networks:
 
 ### MUST NOT (Prohibido)
 
-- **MUST NOT** compartir connection strings entre servicios
-- **MUST NOT** hacer joins cross-database
-- **MUST NOT** usar transacciones distribuidas (2PC) sin justificación clara
+- **MUST NOT** compartir connection strings, hacer joins cross-database ni usar transacciones distribuidas (2PC) entre servicios sin justificación clara
 - **MUST NOT** exponer datos sin control de acceso
 - **MUST NOT** almacenar PII sin encriptación
 

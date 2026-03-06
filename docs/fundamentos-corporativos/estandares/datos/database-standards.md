@@ -153,7 +153,7 @@ public partial class InitialCreate : Migration
 }
 ```
 
-### Convenciones de Naming
+### Convenciones de Nomenclatura
 
 ```csharp
 // DbContext con configuración de naming
@@ -207,7 +207,7 @@ public class CustomerDbContext : DbContext
 // - Unique: uq_{table}_{column(s)} (uq_customers_document)
 ```
 
-### Workflow de Migraciones
+### Flujo de Migraciones
 
 ```bash
 # 1. Crear migración desde cambios en modelo
@@ -598,7 +598,7 @@ migrationBuilder.Sql(@"
 ");
 ```
 
-### Query Optimization
+### Optimización de Queries
 
 ```csharp
 // ❌ MALO: N+1 query problem
@@ -945,7 +945,7 @@ Conjunto de reglas y controles para garantizar integridad, precisión y calidad 
 ✅ Prevención de bugs
 ✅ Mensajes de error claros
 
-### Validación en Database
+### Validación en Base de Datos
 
 ```csharp
 // Constraints en nivel de DB
@@ -1004,7 +1004,7 @@ public class CustomerDbContext : DbContext
 }
 ```
 
-### Validación en Application Layer
+### Validación en Capa de Aplicación
 
 ```csharp
 // FluentValidation para reglas de negocio
@@ -1087,7 +1087,7 @@ public class DocumentDtoValidator : AbstractValidator<DocumentDto>
 }
 ```
 
-### Domain Validation
+### Validación de Dominio
 
 ```csharp
 // Validación en entidades de dominio
@@ -1164,7 +1164,7 @@ public class Customer
 
 ## Implementación Integrada
 
-### Setup Completo de Database
+### Setup Completo de Base de Datos
 
 ```csharp
 // Program.cs - Configuración completa
@@ -1295,10 +1295,8 @@ app.Run();
 ### MUST NOT (Prohibido)
 
 - **MUST NOT** ejecutar migraciones manualmente en producción sin revisión
-- **MUST NOT** crear índices en todas las columnas (overhead writes)
-- **MUST NOT** hacer SELECT \* en queries (especificar columnas)
-- **MUST NOT** validar solo en cliente (siempre validar en servidor)
-- **MUST NOT** ignorar excepciones de concurrencia
+- **MUST NOT** crear índices en todas las columnas ni hacer SELECT \* sin especificar columnas explícitas
+- **MUST NOT** validar solo en cliente ni ignorar excepciones de concurrencia
 
 ---
 

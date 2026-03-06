@@ -451,7 +451,7 @@ public class CustomerService
 }
 ```
 
-### Optimistic Concurrency con Version
+### Optimistic Concurrency con Versión
 
 ```csharp
 // Prevenir lost updates con versioning
@@ -726,7 +726,7 @@ public class CustomerCommandService
 }
 ```
 
-### Event-Driven Replication
+### Replicación Event-Driven
 
 Patrón complementario a las read replicas: los servicios mantienen snapshots locales de datos de otros dominios consumiendo eventos.
 
@@ -986,10 +986,9 @@ public class Customer
 
 ### MUST NOT (Prohibido)
 
-- **MUST NOT** usar locks distribuidos para coordinación (anti-pattern)
+- **MUST NOT** usar locks distribuidos para coordinación entre servicios (anti-pattern de microservicios)
 - **MUST NOT** asumir strong consistency entre servicios
-- **MUST NOT** hacer cambios de esquema breaking sin expand-contract
-- **MUST NOT** ignorar conflictos de concurrencia
+- **MUST NOT** hacer cambios de esquema breaking sin expand-contract ni ignorar conflictos de concurrencia
 
 ---
 
