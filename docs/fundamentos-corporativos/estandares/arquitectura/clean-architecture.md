@@ -42,7 +42,7 @@ graph TB
     C --> D[Layered Architecture]
     D --> E[Clean Architecture]
 
-    style E fill:#90EE90
+    style E fill:#90EE90,color:#000000
 ```
 
 ---

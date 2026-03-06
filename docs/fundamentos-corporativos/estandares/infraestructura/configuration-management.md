@@ -69,10 +69,10 @@ graph TB
     K --> H
     L --> H
 
-    style C fill:#e1f5ff
-    style D fill:#fff4e1
-    style G fill:#e8f5e9
-    style I fill:#f3e5f5
+    style C fill:#e1f5ff,color:#000000
+    style D fill:#fff4e1,color:#000000
+    style G fill:#e8f5e9,color:#000000
+    style I fill:#f3e5f5,color:#000000
 ```
 
 **Principios clave:**

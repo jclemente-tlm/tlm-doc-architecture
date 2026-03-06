@@ -24,8 +24,8 @@ graph LR
     C --> D[AsyncAPI Spec]
     D --> E[Event Catalog]
 
-    style B fill:#fff4e1
-    style D fill:#e1f5ff
+    style B fill:#fff4e1,color:#000000
+    style D fill:#e1f5ff,color:#000000
 ```
 
 **Cuándo usar:**

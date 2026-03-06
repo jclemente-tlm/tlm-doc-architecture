@@ -57,9 +57,9 @@ graph TB
     H -->|Monitoreo| I[Alertas]
     H -->|Manual review| J[Reprocess o Discard]
 
-    style B fill:#e1f5ff
-    style G fill:#ffebee
-    style E fill:#e8f5e9
+    style B fill:#e1f5ff,color:#000000
+    style G fill:#ffebee,color:#000000
+    style E fill:#e8f5e9,color:#000000
 ```
 
 **Principios clave:**

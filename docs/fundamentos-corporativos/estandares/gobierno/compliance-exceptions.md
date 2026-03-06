@@ -75,10 +75,10 @@ graph TB
     O --> F
     O --> K
 
-    style A fill:#e1f5ff
-    style C fill:#e8f5e9
-    style F fill:#fff4e1
-    style O fill:#f3e5f5
+    style A fill:#e1f5ff,color:#000000
+    style C fill:#e8f5e9,color:#000000
+    style F fill:#fff4e1,color:#000000
+    style O fill:#f3e5f5,color:#000000
 ```
 
 **Flujo típico:**
@@ -1147,9 +1147,9 @@ graph TB
     J --> M[Standards Adherence]
     J --> N[Cost within Budget]
 
-    style B fill:#fff4e1
-    style E fill:#e1f5ff
-    style J fill:#ffe1e1
+    style B fill:#fff4e1,color:#000000
+    style E fill:#e1f5ff,color:#000000
+    style J fill:#ffe1e1,color:#000000
 ```
 
 ### Service Ownership Registry

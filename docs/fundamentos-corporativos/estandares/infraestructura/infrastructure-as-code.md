@@ -72,10 +72,10 @@ graph TB
     J[Virtual Networks] --> B
     K[Cost Optimization] --> B
 
-    style A fill:#e1f5ff
-    style C fill:#fff4e1
-    style G fill:#e8f5e9
-    style H fill:#ffe1e1
+    style A fill:#e1f5ff,color:#000000
+    style C fill:#fff4e1,color:#000000
+    style G fill:#e8f5e9,color:#000000
+    style H fill:#ffe1e1,color:#000000
 ```
 
 ---

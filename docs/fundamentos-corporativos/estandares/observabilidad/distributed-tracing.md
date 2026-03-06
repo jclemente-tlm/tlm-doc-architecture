@@ -65,10 +65,10 @@ graph TB
     I -->|Aggregate| K[SLA: 99.9% uptime]
     J -->|Aggregate| K
 
-    style C fill:#e1f5ff
-    style F fill:#e8f5e9
-    style H fill:#fff4e1
-    style K fill:#ffebee
+    style C fill:#e1f5ff,color:#000000
+    style F fill:#e8f5e9,color:#000000
+    style H fill:#fff4e1,color:#000000
+    style K fill:#ffebee,color:#000000
 ```
 
 **Principios clave:**

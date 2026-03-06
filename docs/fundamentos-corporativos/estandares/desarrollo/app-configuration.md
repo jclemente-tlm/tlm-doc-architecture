@@ -43,9 +43,9 @@ graph LR
     E[Key Vault] --> C
     D --> F[Mismo artifact por ambiente]
 
-    style C fill:#e1f5ff
-    style D fill:#e8f5e9
-    style E fill:#fce4ec
+    style C fill:#e1f5ff,color:#000000
+    style D fill:#e8f5e9,color:#000000
+    style E fill:#fce4ec,color:#000000
 ```
 
 ---

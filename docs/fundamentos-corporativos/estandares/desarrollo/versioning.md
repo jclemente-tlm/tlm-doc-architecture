@@ -39,9 +39,9 @@ graph LR
     B --> D[Releases predecibles]
     C --> D
 
-    style A fill:#e1f5ff
-    style B fill:#e8f5e9
-    style C fill:#fff3e0
+    style A fill:#e1f5ff,color:#000000
+    style B fill:#e8f5e9,color:#000000
+    style C fill:#fff3e0,color:#000000
 ```
 
 ---

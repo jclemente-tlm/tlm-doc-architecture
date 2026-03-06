@@ -66,9 +66,9 @@ graph TB
     H --> E
     H --> F
 
-    style A fill:#e1f5ff
-    style G fill:#fff4e1
-    style H fill:#e8f5e9
+    style A fill:#e1f5ff,color:#000000
+    style G fill:#fff4e1,color:#000000
+    style H fill:#e8f5e9,color:#000000
 ```
 
 ---

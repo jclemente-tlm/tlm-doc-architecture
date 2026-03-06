@@ -54,10 +54,10 @@ graph TB
     B --> G[Productive Team]
     F --> G
 
-    style A fill:#e1f5ff
-    style C fill:#fff4e1
-    style D fill:#e8f5e9
-    style E fill:#ffe1e1
+    style A fill:#e1f5ff,color:#000000
+    style C fill:#fff4e1,color:#000000
+    style D fill:#e8f5e9,color:#000000
+    style E fill:#ffe1e1,color:#000000
 ```
 
 ---

@@ -55,12 +55,12 @@ graph TB
     G --> K
     J --> K
 
-    style A fill:#e1f5ff
-    style C fill:#e8f5e9
-    style D fill:#fff3e0
-    style E fill:#fff4e1
-    style H fill:#f3e5f5
-    style I fill:#ffe1f3
+    style A fill:#e1f5ff,color:#000000
+    style C fill:#e8f5e9,color:#000000
+    style D fill:#fff3e0,color:#000000
+    style E fill:#fff4e1,color:#000000
+    style H fill:#f3e5f5,color:#000000
+    style I fill:#ffe1f3,color:#000000
 ```
 
 ---

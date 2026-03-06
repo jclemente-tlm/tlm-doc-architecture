@@ -42,8 +42,8 @@ graph TB
     B --> G[High Quality Code]
     D --> G
 
-    style A fill:#e1f5ff
-    style D fill:#fff4e1
+    style A fill:#e1f5ff,color:#000000
+    style D fill:#fff4e1,color:#000000
 ```
 
 ---

@@ -72,11 +72,11 @@ graph TB
     A --> J
     H --> J
 
-    style A fill:#e1f5ff
-    style B fill:#fff4e1
-    style E fill:#e8f5e9
-    style H fill:#ffe1e1
-    style I fill:#f3e5f5
+    style A fill:#e1f5ff,color:#000000
+    style B fill:#fff4e1,color:#000000
+    style E fill:#e8f5e9,color:#000000
+    style H fill:#ffe1e1,color:#000000
+    style I fill:#f3e5f5,color:#000000
 ```
 
 **Flujo de Gobierno:**
@@ -552,8 +552,8 @@ graph TD
     D -->|Sí| E
     D -->|No| F[Tech Lead Decision]
 
-    style E fill:#ffcccc
-    style F fill:#ccffcc
+    style E fill:#ffcccc,color:#000000
+    style F fill:#ccffcc,color:#000000
 ```
 
 ### Proceso de Reunión

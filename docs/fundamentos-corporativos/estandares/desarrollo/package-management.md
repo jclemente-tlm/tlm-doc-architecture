@@ -35,10 +35,10 @@ graph LR
     A --> D[Vulnerability Scanning]
     B --> E[Builds reproducibles]
 
-    style A fill:#e1f5ff
-    style B fill:#e8f5e9
-    style C fill:#fff3e0
-    style D fill:#fce4ec
+    style A fill:#e1f5ff,color:#000000
+    style B fill:#e8f5e9,color:#000000
+    style C fill:#fff3e0,color:#000000
+    style D fill:#fce4ec,color:#000000
 ```
 
 ---

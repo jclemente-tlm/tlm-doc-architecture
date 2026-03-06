@@ -55,9 +55,9 @@ graph TB
     G[Data Replication] --> C
     H[Expand-Contract] --> I[Zero Downtime]
 
-    style B fill:#e1f5ff
-    style C fill:#fff4e1
-    style H fill:#e8f5e9
+    style B fill:#e1f5ff,color:#000000
+    style C fill:#fff4e1,color:#000000
+    style H fill:#e8f5e9,color:#000000
 ```
 
 **Trade-offs:**
