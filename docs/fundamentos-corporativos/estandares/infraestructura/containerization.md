@@ -10,7 +10,7 @@ tags: [infraestructura, docker, ecs, fargate, contenedores, seguridad]
 
 ## Contexto
 
-Este estándar define las prácticas para contenerización de aplicaciones usando Docker, incluyendo construcción de imágenes, optimización, seguridad, registro y despliegue en AWS ECS Fargate. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md) y asegura contenedores eficientes, seguros y estandarizados.
+Este estándar define las prácticas para contenerización de aplicaciones usando Docker: construcción de imágenes, optimización, seguridad, registro y despliegue en AWS ECS Fargate. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md).
 
 **Conceptos incluidos:**
 
@@ -24,14 +24,14 @@ Este estándar define las prácticas para contenerización de aplicaciones usand
 
 ## Stack Tecnológico
 
-| Componente            | Tecnología                | Versión | Uso                         |
-| --------------------- | ------------------------- | ------- | --------------------------- |
-| **Container Runtime** | Docker                    | 24.0+   | Construcción y ejecución    |
-| **Base Images**       | mcr.microsoft.com/dotnet  | 8.0     | Imágenes oficiales de .NET  |
-| **Registry**          | GitHub Container Registry | -       | Almacenamiento de imágenes  |
-| **Orchestration**     | AWS ECS Fargate           | -       | Despliegue serverless       |
-| **Security Scanning** | Trivy                     | 0.50+   | Escaneo de vulnerabilidades |
-| **CI/CD**             | GitHub Actions            | -       | Automated build y push      |
+| Componente            | Tecnología                        | Versión    | Uso                                                                  |
+| --------------------- | --------------------------------- | ---------- | -------------------------------------------------------------------- |
+| **Container Runtime** | Docker                            | 24.0+      | Construcción y ejecución                                             |
+| **Base Images**       | mcr.microsoft.com/dotnet (alpine) | 8.0-alpine | Imágenes oficiales de .NET (Alpine preferido; slim como alternativa) |
+| **Registry**          | GitHub Container Registry         | -          | Almacenamiento de imágenes                                           |
+| **Orchestration**     | AWS ECS Fargate                   | -          | Despliegue serverless                                                |
+| **Security Scanning** | Trivy                             | 0.50+      | Escaneo de vulnerabilidades                                          |
+| **CI/CD**             | GitHub Actions                    | -          | Automated build y push                                               |
 
 ---
 
@@ -80,7 +80,7 @@ graph TB
 # ============================================
 # Stage 1: Build
 # ============================================
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /src
 
 # Copy solution and project files
@@ -111,11 +111,11 @@ RUN dotnet publish "CustomerService.Api.csproj" \
 # ============================================
 # Stage 3: Runtime
 # ============================================
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS runtime
 
 # Create non-root user
-RUN addgroup --gid 1000 appuser && \
-    adduser --uid 1000 --gid 1000 --disabled-password --gecos "" appuser
+RUN addgroup -g 1000 appuser && \
+    adduser -u 1000 -G appuser -D appuser
 
 WORKDIR /app
 
@@ -154,13 +154,13 @@ COPY . .
 RUN dotnet publish -c Release -o out
 ENTRYPOINT ["dotnet", "out/App.dll"]
 
-# ✅ BUENO: Multi-stage (imagen ~110MB)
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# ✅ BUENO: Multi-stage (imagen ~85MB con Alpine)
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /src
 COPY . .
 RUN dotnet publish -c Release -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 WORKDIR /app
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "App.dll"]
@@ -168,9 +168,9 @@ ENTRYPOINT ["dotnet", "App.dll"]
 
 **Resultado**:
 
-- SDK image: ~500MB
-- Runtime image: ~110MB
-- **Reducción**: 78%
+- SDK image (build): ~500 MB
+- Runtime Alpine image: ~85 MB
+- **Reducción**: ~83%
 
 #### Layer Caching
 
@@ -209,11 +209,11 @@ COPY . .
 ENTRYPOINT ["dotnet", "App.dll"]
 
 # ✅ BUENO: Usuario no privilegiado
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 
 # Crear usuario
-RUN addgroup --gid 1000 appuser && \
-    adduser --uid 1000 --gid 1000 --disabled-password appuser
+RUN addgroup -g 1000 appuser && \
+    adduser -u 1000 -G appuser -D appuser
 
 WORKDIR /app
 COPY --chown=appuser:appuser . .
@@ -227,11 +227,11 @@ ENTRYPOINT ["dotnet", "App.dll"]
 **Propósito**: Reducir superficie de ataque.
 
 ```dockerfile
-# ✅ BUENO: Usar Alpine para menor tamaño (si compatible)
+# ✅ PREFERIDO: Alpine (menor tamaño, menor superficie de ataque)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 
-# ✅ ALTERNATIVA: Debian slim (más compatible)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# ✅ ALTERNATIVA: Slim, solo si Alpine no es compatible (ej. dependencias nativas)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-slim
 
 # ❌ EVITAR: Imágenes completas innecesarias
 FROM ubuntu:22.04
@@ -265,8 +265,6 @@ app.MapHealthChecks("/health");
 
 ## Optimización de Imágenes
 
-### Técnicas de Reducción de Tamaño
-
 ### Remove Unnecessary Files
 
 ```dockerfile
@@ -290,15 +288,12 @@ COPY . .
 
 ```dockerfile
 # ❌ MALO: Múltiples layers
-RUN apt-get update
-RUN apt-get install -y curl
-RUN apt-get clean
+RUN apk update
+RUN apk add --no-cache curl
+RUN rm -rf /var/cache/apk/*
 
-# ✅ BUENO: Single layer
-RUN apt-get update && \
-    apt-get install -y curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# ✅ BUENO: Single layer (Alpine usa apk)
+RUN apk add --no-cache curl
 ```
 
 ### Self-contained vs Framework-dependent
@@ -319,14 +314,14 @@ RUN dotnet publish -c Release -o /app/publish \
 
 ### Comparación de Tamaños
 
-| Approach               | Image Size | Build Time | Security Surface    |
-| ---------------------- | ---------- | ---------- | ------------------- |
-| Single-stage (SDK)     | ~500 MB    | Fast       | Large (build tools) |
-| Multi-stage (Runtime)  | ~110 MB    | Medium     | Small               |
-| Alpine-based           | ~85 MB     | Medium     | Smallest            |
-| Self-contained Trimmed | ~45 MB     | Slow       | Small               |
+| Approach                          | Image Size | Build Time | Security Surface    |
+| --------------------------------- | ---------- | ---------- | ------------------- |
+| Single-stage (SDK)                | ~500 MB    | Fast       | Large (build tools) |
+| Multi-stage (Debian/slim runtime) | ~110 MB    | Medium     | Small               |
+| **Multi-stage (Alpine runtime)**  | **~85 MB** | Medium     | **Smallest**        |
+| Self-contained Trimmed            | ~45 MB     | Slow       | Small               |
 
-**Recomendación corporativa**: Multi-stage con Runtime (balance entre tamaño y compatibilidad).
+**Recomendación corporativa**: Multi-stage con Alpine (`aspnet:8.0-alpine`). Usar `-slim` solo si Alpine no es compatible con alguna dependencia nativa.
 
 ---
 
@@ -358,11 +353,11 @@ RUN dotnet publish -c Release -o /app/publish \
 ### Security Best Practices
 
 ```dockerfile
-# ✅ 1. Use official base images
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# ✅ 1. Use official base images (Alpine preferido; slim como alternativa)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 
-# ✅ 2. Run as non-root
-RUN adduser --uid 1000 --disabled-password appuser
+# ✅ 2. Run as non-root (sintaxis Alpine)
+RUN addgroup -g 1000 appuser && adduser -u 1000 -G appuser -D appuser
 USER appuser
 
 # ✅ 3. Read-only filesystem (donde sea posible)
@@ -655,7 +650,7 @@ La configuración de docker-compose para desarrollo local se documenta en [Parid
 ### SHOULD (Fuertemente recomendado)
 
 - **SHOULD** optimizar layers para aprovechar cache de Docker
-- **SHOULD** usar Alpine variants cuando sea compatible
+- **SHOULD** usar imagen Alpine como base de runtime (`aspnet:8.0-alpine`); recurrir a `-slim` solo si Alpine no es compatible
 - **SHOULD** implementar deployment circuit breaker en ECS
 - **SHOULD** configurar auto-scaling basado en CPU/Memory
 - **SHOULD** usar readonlyRootFilesystem donde sea posible
