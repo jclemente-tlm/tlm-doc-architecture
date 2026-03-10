@@ -610,7 +610,7 @@ git reset --hard HEAD~1
 ---
 
 :::note Seguridad en el pipeline
-Para análisis estático de seguridad (SAST) — CodeQL, Semgrep, dotnet-security-scan — ver [SAST](../seguridad/sast.md).
+Para análisis estático de seguridad (SAST) — CodeQL, Semgrep, dotnet-security-scan — ver [SAST](../seguridad/security-scanning.md).
 :::
 
 ## Static Analysis

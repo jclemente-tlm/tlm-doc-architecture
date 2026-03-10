@@ -306,5 +306,5 @@ public class CustomerApiContractTests
 - [Feature Toggles (Feature Flags)](https://martinfowler.com/articles/feature-toggles.html) — habilitación gradual de funcionalidades
 - [Sam Newman — Independent Deployability](https://samnewman.io/blog/2021/08/12/why-i-no-longer-use-the-term-microservices/) — principio de desplieguabilidad independiente
 - [Containerización](./containerization.md) — empaquetado de servicios en contenedores
-- [Infrastructure as Code — Implementación](./iac-implementation.md) — provisioning de pipelines y recursos
-- [Externalización de Configuración](./externalize-configuration.md) — gestión de configuración por ambiente
+- [Infrastructure as Code — Implementación](./iac-standards.md) — provisioning de pipelines y recursos
+- [Externalización de Configuración](./configuration-management.md) — gestión de configuración por ambiente

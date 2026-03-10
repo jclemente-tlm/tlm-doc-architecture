@@ -172,7 +172,7 @@ builder.Services.AddScoped<
 ---
 
 :::note
-Los command handlers publican domain events que inician flujos de mensajería distribuida. Ver [Patrones de Mensajería](./messaging-patterns.md) para Saga, Async Processing y Compensation.
+Los command handlers publican domain events que inician flujos de mensajería distribuida. Ver [Patrones de Mensajería](../mensajeria/messaging-patterns.md) para Saga, Async Processing y Compensation.
 :::
 
 ---
@@ -231,4 +231,4 @@ Después (con CQRS):
 
 - [Lineamiento Modelado de Dominio](../../lineamientos/arquitectura/09-modelado-de-dominio.md) — lineamiento que origina este estándar
 - [CQRS Pattern (Martin Fowler)](https://martinfowler.com/bliki/CQRS.html)
-- [Patrones de Mensajería](./messaging-patterns.md) — saga y async processing que complementan los domain events de CQRS
+- [Patrones de Mensajería](../mensajeria/messaging-patterns.md) — saga y async processing que complementan los domain events de CQRS

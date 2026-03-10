@@ -697,5 +697,5 @@ resource "aws_cloudwatch_metric_alarm" "rto_exceeded" {
 - [Chaos Engineering Principles](https://principlesofchaos.org/) — principios de ingeniería del caos
 - [AWS Multi-Region Architecture](https://docs.aws.amazon.com/whitepapers/latest/aws-multi-region-fundamentals/welcome.html) — fundamentos de arquitectura multi-región
 - [Backup y Restore](./backup-restore.md) — automatización de backups, retención y restore testing
-- [Infrastructure as Code — Implementación](../infraestructura/iac-implementation.md) — provisionamiento de infraestructura DR
+- [Infrastructure as Code — Implementación](../infraestructura/iac-standards.md) — provisionamiento de infraestructura DR
 - [Alertas con Grafana](../observabilidad/alerting.md) — alertas de DR

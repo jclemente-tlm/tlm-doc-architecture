@@ -15,13 +15,13 @@ Gestión manual de infraestructura mediante consolas crea configuraciones no doc
 
 ## Estándares Obligatorios
 
-- [Implementar infraestructura como código](../../estandares/infraestructura/iac-implementation.md)
-- [Versionar código IaC en control de versiones](../../estandares/infraestructura/iac-state-drift.md)
-- [Realizar code review de IaC](../../estandares/infraestructura/iac-workflow.md)
+- [Implementar infraestructura como código](../../estandares/infraestructura/iac-standards.md)
+- [Versionar código IaC en control de versiones](../../estandares/infraestructura/iac-state-management.md)
+- [Realizar code review de IaC](../../estandares/infraestructura/iac-standards.md)
 - [Ejecutar scanning de seguridad en IaC](../../estandares/seguridad/security-scanning.md#3-iac-scanning-terraform)
-- [Gestionar state de IaC remotamente](../../estandares/infraestructura/iac-state-drift.md)
-- [Aplicar workflow plan/apply en IaC](../../estandares/infraestructura/iac-workflow.md)
-- [Detectar y prevenir configuration drift](../../estandares/infraestructura/iac-state-drift.md)
+- [Gestionar state de IaC remotamente](../../estandares/infraestructura/iac-state-management.md)
+- [Aplicar workflow plan/apply en IaC](../../estandares/infraestructura/iac-standards.md)
+- [Detectar y prevenir configuration drift](../../estandares/infraestructura/iac-state-management.md)
 
 ## Referencias Relacionadas
 

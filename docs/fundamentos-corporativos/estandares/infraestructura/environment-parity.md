@@ -268,7 +268,7 @@ Resilience__RetryAttempts=3
 
 - [XII-Factor — X. Dev/prod parity](https://12factor.net/dev-prod-parity) — principio de paridad entre ambientes
 - [XII-Factor — III. Config](https://12factor.net/config) — externalización de configuración
-- [Externalización de Configuración](./externalize-configuration.md) — separación de config del código
-- [Configuración Centralizada](./centralized-configuration.md) — Parameter Store y Secrets Manager
+- [Externalización de Configuración](./configuration-management.md) — separación de config del código
+- [Configuración Centralizada](./configuration-management.md) — Parameter Store y Secrets Manager
 - [Containerización](./containerization.md) — misma imagen Docker en todos los ambientes
-- [Infrastructure as Code — Implementación](./iac-implementation.md) — reproducibilidad de ambientes con Terraform
+- [Infrastructure as Code — Implementación](./iac-standards.md) — reproducibilidad de ambientes con Terraform

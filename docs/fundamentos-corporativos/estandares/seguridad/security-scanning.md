@@ -10,7 +10,7 @@ tags: [seguridad, scanning, trivy, checkov, owasp, sbom, contenedores]
 
 ## Contexto
 
-Este estándar consolida **4 conceptos relacionados** con escaneo automatizado de vulnerabilidades en diferentes capas de la aplicación.
+Este estándar consolida **5 conceptos relacionados** con escaneo automatizado de vulnerabilidades en diferentes capas de la aplicación.
 
 **Conceptos incluidos:**
 
@@ -18,6 +18,7 @@ Este estándar consolida **4 conceptos relacionados** con escaneo automatizado d
 - **Dependency Scanning** → Escaneo de librerías .NET NuGet
 - **IaC Scanning** → Escaneo de Terraform para misconfigurations
 - **SBOM (Software Bill of Materials)** → Inventario de componentes
+- **SAST** → Análisis estático de código (SonarQube)
 
 :::note Implementación gestionada por Seguridad
 Este estándar define los **requisitos de escaneo de vulnerabilidades que los servicios deben cumplir**. La configuración de herramientas de escaneo, políticas de alertas y gestión de CVEs son responsabilidad del equipo de **Seguridad**. Consultar en **#security**.
@@ -27,13 +28,14 @@ Este estándar define los **requisitos de escaneo de vulnerabilidades que los se
 
 ## Stack Tecnológico
 
-| Componente              | Tecnología             | Versión | Uso                                 |
-| ----------------------- | ---------------------- | ------- | ----------------------------------- |
-| **Container Scanning**  | Trivy                  | Latest  | Vulnerabilidades en imágenes Docker |
-| **Dependency Scanning** | OWASP Dependency-Check | Latest  | Vulnerabilidades en NuGet packages  |
-| **IaC Scanning**        | Checkov                | Latest  | Misconfigurations en Terraform      |
-| **SBOM Generation**     | Syft                   | Latest  | Software Bill of Materials          |
-| **CI/CD**               | GitHub Actions         | Latest  | Automatización de scans             |
+| Componente              | Tecnología             | Versión | Uso                                   |
+| ----------------------- | ---------------------- | ------- | ------------------------------------- |
+| **Container Scanning**  | Trivy                  | Latest  | Vulnerabilidades en imágenes Docker   |
+| **Dependency Scanning** | OWASP Dependency-Check | Latest  | Vulnerabilidades en NuGet packages    |
+| **IaC Scanning**        | Checkov                | Latest  | Misconfigurations en Terraform        |
+| **SBOM Generation**     | Syft                   | Latest  | Software Bill of Materials            |
+| **SAST**                | SonarQube / CodeQL     | Latest  | Análisis estático de vulnerabilidades |
+| **CI/CD**               | GitHub Actions         | Latest  | Automatización de scans               |
 
 ---
 
@@ -588,6 +590,98 @@ grype sbom:./sbom-cyclonedx.json
 
 ---
 
+## SAST — Análisis Estático de Código
+
+### ¿Qué es?
+
+Análisis estático de código para identificar vulnerabilidades de seguridad sin ejecutar el código. Complementa el escaneo de contenedores y dependencias con detección **shift-left** durante el desarrollo.
+
+**Vulnerabilidades detectadas:**
+
+- **Injection flaws**: SQL injection, command injection
+- **Authentication issues**: Weak password validation
+- **Sensitive data exposure**: Hardcoded secrets, tokens en código
+- **Security misconfiguration**: Insecure defaults
+- **Known vulnerable dependencies**: CVEs en packages NuGet
+
+**Cuándo aplicar:** Todo servicio con pipeline CI/CD. Obligatorio antes de merge a `main`.
+
+### SonarQube: Configuración
+
+```ini
+# sonar-project.properties
+sonar.projectKey=customer-service
+sonar.projectName=Customer Service
+sonar.projectVersion=1.0
+
+sonar.sources=src
+sonar.tests=tests
+sonar.exclusions=**/Migrations/**,**/wwwroot/**,**/obj/**,**/bin/**
+sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml
+sonar.coverage.exclusions=**/Tests/**,**/Migrations/**
+sonar.language=cs
+sonar.qualitygate.wait=true
+sonar.qualitygate.timeout=300
+```
+
+### SonarQube: GitHub Actions
+
+```yaml
+# .github/workflows/sonarqube.yml
+name: SonarQube Analysis
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarqube:
+    name: SonarQube Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Install SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Begin SonarQube analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet sonarscanner begin \
+            /k:"customer-service" \
+            /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" \
+            /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test with coverage
+        run: |
+          dotnet test --no-build --verbosity normal \
+            /p:CollectCoverage=true \
+            /p:CoverletOutputFormat=opencover
+
+      - name: End SonarQube analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+```
+
+---
+
 ## Requisitos Técnicos
 
 ### MUST (Obligatorio)
@@ -598,6 +692,8 @@ grype sbom:./sbom-cyclonedx.json
 - **MUST** actualizar dependencias con CVE High/Critical en 30 días
 - **MUST** escanear Terraform con Checkov antes de aplicar
 - **MUST** generar SBOM para cada release
+- **MUST** ejecutar SAST (SonarQube/CodeQL) en CI/CD antes de merge a `main`
+- **MUST** bloquear merge si Quality Gate de SonarQube falla
 
 ### SHOULD (Fuertemente recomendado)
 
@@ -641,5 +737,5 @@ security_scans_total{type="iac"}
 - [Checkov Documentation](https://www.checkov.io/1.Welcome/What%20is%20Checkov.html)
 - [Syft SBOM](https://github.com/anchore/syft)
 - [CycloneDX Specification](https://cyclonedx.org/)
-- [Security Testing](./security-testing.md)
+- [Security Testing](../testing/security-testing.md)
 - [Security Governance](./security-governance.md)

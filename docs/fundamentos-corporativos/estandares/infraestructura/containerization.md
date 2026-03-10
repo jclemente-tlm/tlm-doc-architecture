@@ -606,7 +606,7 @@ jobs:
 ```
 
 :::note Configuración del servicio ECS
-La Service Configuration (desiredCount, networkConfiguration, ALB) y el módulo Terraform de ECS se documentan en [IaC — Implementación con Terraform](./iac-implementation.md#módulo-ecs-service).
+La Service Configuration (desiredCount, networkConfiguration, ALB) y el módulo Terraform de ECS se documentan en [IaC — Implementación con Terraform](./iac-standards.md#módulo-ecs-service).
 :::
 
 :::note Entorno de desarrollo local
@@ -680,6 +680,6 @@ La configuración de docker-compose para desarrollo local se documenta en [Parid
 - [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) — prácticas de seguridad en Docker
 - [ECS Best Practices](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/intro.html) — mejores prácticas de Amazon ECS
 - [Fargate Security](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/security-fargate.html) — seguridad en AWS Fargate
-- [Infrastructure as Code — Implementación](./iac-implementation.md) — provisioning de ECS clusters y task definitions
-- [Configuración Centralizada](./centralized-configuration.md) — inyección de configuración y secrets en contenedores
+- [Infrastructure as Code — Implementación](./iac-standards.md) — provisioning de ECS clusters y task definitions
+- [Configuración Centralizada](./configuration-management.md) — inyección de configuración y secrets en contenedores
 - [CI/CD Pipelines y Build](../operabilidad/ci-pipeline.md) — pipeline de build y push de imágenes

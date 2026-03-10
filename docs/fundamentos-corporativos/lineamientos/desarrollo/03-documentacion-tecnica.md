@@ -19,7 +19,7 @@ Código sin documentación clara genera dependencia de autores originales, dific
 - [Documentar decisiones con ADRs](../../estandares/gobierno/adr-management.md)
 - [Documentar arquitectura con arc42](../../estandares/documentacion/arc42.md)
 - [Modelar con C4 Model](../../estandares/documentacion/c4-model.md)
-- [Mantener runbooks operacionales](../../estandares/documentacion/runbooks.md)
+- [Mantener runbooks operacionales](../../estandares/operabilidad/runbooks.md)
 - [Crear guías de onboarding](../../estandares/documentacion/onboarding-guide.md)
 - [Documentar guías de contribución](../../estandares/documentacion/contributing-guide.md)
 

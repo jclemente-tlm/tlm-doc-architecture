@@ -459,7 +459,7 @@ Si tienes alguna pregunta, no dudes en preguntar en #customer-service.
 
 - [README](./readme-standards.md)
 - [Contributing Guide](./contributing-guide.md)
-- [Runbooks](./runbooks.md)
+- [Runbooks](../operabilidad/runbooks.md)
 
 ---
 

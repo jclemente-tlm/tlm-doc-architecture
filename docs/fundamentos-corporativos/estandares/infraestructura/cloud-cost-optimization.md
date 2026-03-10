@@ -247,6 +247,6 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 - [AWS Fargate Spot](https://aws.amazon.com/blogs/aws/aws-fargate-spot-now-generally-available/) — capacidad spot para reducción de costos en ECS
 - [Cloud FinOps Foundation](https://www.finops.org/introduction/what-is-finops/) — principios y metodología FinOps
 - [AWS Well-Architected — Cost Optimization](https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html) — pilar de optimización de costos
-- [Infraestructura como Código — Implementación](./iac-implementation.md) — provisioning y tagging de recursos con Terraform
+- [Infraestructura como Código — Implementación](./iac-standards.md) — provisioning y tagging de recursos con Terraform
 - [Redes Virtuales](./virtual-networks.md) — networking y recursos de red asociados a costos
 - [Contenerización](./containerization.md) — contenedores ECS y estrategias Fargate Spot

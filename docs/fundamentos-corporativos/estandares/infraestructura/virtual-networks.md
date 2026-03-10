@@ -334,6 +334,6 @@ resource "aws_cloudwatch_log_group" "flow_log" {
 - [AWS NAT Gateway Resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) — recurso NAT Gateway en Terraform
 - [AWS Multi-AZ Architecture](https://aws.amazon.com/architecture/high-availability/) — patrones de alta disponibilidad en múltiples AZ
 - [AWS Well-Architected — Reliability](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html) — pilar de confiabilidad
-- [Infraestructura como Código — Implementación](./iac-implementation.md) — provisioning de redes con Terraform
+- [Infraestructura como Código — Implementación](./iac-standards.md) — provisioning de redes con Terraform
 - [Contenerización](./containerization.md) — despliegue ECS en subnets privadas
 - [Optimización de Costos Cloud](./cloud-cost-optimization.md) — tagging y control de costos de red

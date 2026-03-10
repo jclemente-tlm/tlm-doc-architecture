@@ -1,6 +1,6 @@
 ---
 id: runbooks
-sidebar_position: 6
+sidebar_position: 5
 title: Runbooks
 description: Estándar para crear runbooks operacionales con procedimientos de diagnóstico, mitigación y escalación para incidentes en producción.
 ---

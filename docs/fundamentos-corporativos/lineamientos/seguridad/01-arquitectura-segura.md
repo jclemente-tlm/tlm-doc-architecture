@@ -14,7 +14,7 @@ Las vulnerabilidades incorporadas durante el diseño arquitectónico generan exp
 ## Estándares Obligatorios
 
 - [Aplicar Security by Design](../../estandares/seguridad/security-governance.md#1-security-by-design)
-- [Realizar threat modeling](../../estandares/seguridad/security-testing.md#1-threat-modeling)
+- [Realizar threat modeling](../../estandares/testing/security-testing.md#1-threat-modeling)
 - [Definir trust boundaries explícitos](../../estandares/seguridad/zero-trust-verification.md)
 - [Reducir superficie de ataque](../../estandares/seguridad/network-segmentation.md)
 - [Realizar security architecture review](../../estandares/seguridad/security-governance.md#2-security-architecture-review)

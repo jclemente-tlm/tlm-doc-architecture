@@ -1,9 +1,9 @@
 ---
 id: messaging-patterns
-sidebar_position: 5
+sidebar_position: 9
 title: Patrones de Mensajería
 description: Saga, procesamiento asíncrono y compensación para arquitecturas distribuidas con Kafka.
-tags: [arquitectura, kafka, saga, event-driven, mensajeria, compensacion]
+tags: [mensajeria, kafka, saga, event-driven, compensacion]
 ---
 
 # Patrones de Mensajería

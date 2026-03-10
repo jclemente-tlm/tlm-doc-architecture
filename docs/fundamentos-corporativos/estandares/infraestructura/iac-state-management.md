@@ -1,12 +1,12 @@
 ---
-id: iac-state-drift
-sidebar_position: 4
-title: IaC — State, Versioning y Drift Detection
+id: iac-state-management
+sidebar_position: 3
+title: IaC — Gestión de State y Drift
 description: Estándares para gestión del Terraform state en S3, versionamiento de módulos y providers, y detección automatizada de drift en infraestructura AWS.
 tags: [infraestructura, terraform, iac, state, drift, versionamiento]
 ---
 
-# IaC — State, Versioning y Drift Detection
+# IaC — Gestión de State y Drift
 
 ## Contexto
 
@@ -347,5 +347,4 @@ terraform apply  # Terraform revierte al estado definido en código
 - [Terraform State Management](https://developer.hashicorp.com/terraform/language/state) — conceptos de state en Terraform
 - [Terraform Version Constraints](https://developer.hashicorp.com/terraform/language/expressions/version-constraints) — sintaxis de pinning de versiones
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) — mejores prácticas de infraestructura
-- [IaC — Implementación con Terraform](./iac-implementation.md) — estructura de proyecto y módulos
-- [IaC — Workflow y Code Review](./iac-workflow.md) — pipeline CI/CD y revisión de cambios
+- [IaC — Estándares Terraform](./iac-standards.md) — estructura de proyecto, módulos, workflow CI/CD y revisión de cambios
