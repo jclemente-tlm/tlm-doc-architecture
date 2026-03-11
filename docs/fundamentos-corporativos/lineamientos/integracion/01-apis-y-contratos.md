@@ -1,6 +1,6 @@
 ---
 id: apis-y-contratos
-sidebar_position: 7
+sidebar_position: 1
 title: APIs y Contratos de Integración
 description: Principios para diseñar APIs REST coherentes, contratos explícitos y evolución controlada
 ---
@@ -23,5 +23,5 @@ APIs inconsistentes, contratos mal definidos o documentación desactualizada gen
 
 ## Referencias Relacionadas
 
-- [Comunicación Asíncrona y Eventos](./08-comunicacion-asincrona-y-eventos.md)
+- [Comunicación Asíncrona y Eventos](./02-comunicacion-asincrona-y-eventos.md)
 - [Arquitectura de Microservicios](../../estilos-arquitectonicos/microservicios.md)

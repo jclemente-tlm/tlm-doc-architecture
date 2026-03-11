@@ -1,6 +1,6 @@
 ---
 id: autonomia-de-servicios
-sidebar_position: 10
+sidebar_position: 7
 title: Autonomía de Servicios
 description: Servicios capaces de evolucionar, desplegarse y operar de forma independiente
 ---
@@ -24,4 +24,4 @@ Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar
 
 - [Propiedad de Datos](../../lineamientos/datos/03-propiedad-de-datos.md)
 - [Descomposición y Límites](02-descomposicion-y-limites.md)
-- [Modelado de Dominio](09-modelado-de-dominio.md)
+- [Modelado de Dominio](06-modelado-de-dominio.md)

@@ -1,6 +1,6 @@
 ---
 id: comunicacion-asincrona-y-eventos
-sidebar_position: 8
+sidebar_position: 2
 title: Comunicación Asíncrona y Eventos
 description: Lineamientos para mensajería asíncrona y arquitectura orientada a eventos
 ---

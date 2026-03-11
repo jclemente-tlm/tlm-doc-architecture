@@ -1,6 +1,6 @@
 ---
 id: modelado-de-dominio
-sidebar_position: 9
+sidebar_position: 6
 title: Modelado de Dominio
 description: Arquitectura estructurada en torno al dominio del negocio
 ---
@@ -10,6 +10,8 @@ description: Arquitectura estructurada en torno al dominio del negocio
 La arquitectura debe estructurarse en torno al dominio del negocio, reflejando sus conceptos, reglas y límites. Cuando se define principalmente desde lo técnico, el sistema pierde significado para el negocio, se vuelve difícil de mantener y costoso de cambiar. Orientar la arquitectura al dominio modela explícitamente reglas, procesos y conceptos del negocio, reduciendo malentendidos entre equipos y facilitando evolución sostenible. El dominio es la fuente principal de decisiones arquitectónicas, no una consecuencia de ellas.
 
 **Este lineamiento aplica a:** sistemas con lógica de negocio relevante o compleja, soluciones que evolucionan con el negocio, arquitecturas con múltiples equipos o dominios, plataformas donde el conocimiento del negocio es crítico.
+
+**No aplica a:** cómo dividir el sistema en servicios o módulos — ver [Descomposición y Límites](./02-descomposicion-y-limites.md).
 
 ## Estándares Obligatorios
 
@@ -23,5 +25,5 @@ La arquitectura debe estructurarse en torno al dominio del negocio, reflejando s
 ## Referencias Relacionadas
 
 - [Descomposición y Límites](02-descomposicion-y-limites.md)
-- [Autonomía de Servicios](10-autonomia-de-servicios.md)
-- [APIs y Contratos](07-apis-y-contratos.md)
+- [Autonomía de Servicios](07-autonomia-de-servicios.md)
+- [APIs y Contratos](../integracion/01-apis-y-contratos.md)

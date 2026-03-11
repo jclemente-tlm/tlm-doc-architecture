@@ -2,7 +2,7 @@
 
 Los lineamientos traducen los principios arquitectónicos en guías prácticas y prescriptivas para el diseño, desarrollo y operación de sistemas en Talma.
 
-## � Estructura
+## Estructura
 
 ### [Arquitectura](./arquitectura/)
 
@@ -13,14 +13,19 @@ Lineamientos fundamentales para el diseño de sistemas:
 3. Cloud Native
 4. Resiliencia y Disponibilidad
 5. Escalabilidad y Rendimiento
-6. Observabilidad
-7. APIs y Contratos
-8. Comunicación Asíncrona y Eventos
-9. Modelado de Dominio
-10. Autonomía de Servicios
-11. Arquitectura Limpia
-12. Arquitectura Evolutiva
-13. Simplicidad Intencional
+6. Modelado de Dominio
+7. Autonomía de Servicios
+8. Arquitectura Limpia
+9. Arquitectura Evolutiva
+10. Simplicidad Intencional
+11. Multi-tenancy
+
+### [Integración](./integracion/)
+
+Lineamientos para diseño de APIs y comunicación entre servicios:
+
+1. APIs y Contratos de Integración
+2. Comunicación Asíncrona y Eventos
 
 ### [Datos](./datos/)
 
@@ -29,6 +34,7 @@ Lineamientos para gestión de datos en arquitecturas distribuidas:
 1. Datos por Dominio
 2. Consistencia y Sincronización
 3. Propiedad de Datos
+4. Caching
 
 ### [Desarrollo](./desarrollo/)
 
@@ -46,15 +52,18 @@ Lineamientos para gobierno de arquitectura:
 1. Decisiones Arquitectónicas
 2. Revisiones Arquitectónicas
 3. Cumplimiento y Excepciones
+4. Indicadores y Fitness Functions
 
 ### [Operabilidad](./operabilidad/)
 
 Lineamientos para operación de sistemas:
 
-1. CI/CD Pipelines
+1. CI/CD y Automatización de Despliegues
 2. Infraestructura como Código
 3. Configuración de Entornos
 4. Disaster Recovery
+5. Observabilidad
+6. Contenedores y Despliegue
 
 ### [Seguridad](./seguridad/)
 
@@ -69,19 +78,19 @@ Lineamientos de seguridad:
 7. Protección de Datos
 8. Gestión de Vulnerabilidades
 
-## 🔗 Relación con otros nivelesPrincipios (POR QUÉ)
+## Relación con otros niveles
 
+\`\`\`
+Principios       (POR QUÉ)
     ↓
-
-Lineamientos (CÓMO abstracto) ← Estás aquí
-↓
-Estándares (QUÉ técnico)
-↓
+Lineamientos     (CÓMO abstracto)  ← Estás aquí
+    ↓
+Estándares       (QUÉ técnico)
+    ↓
 Código de Producción
+\`\`\`
 
-```
-
-## 📖 Referencias
+## Referencias
 
 - [Principios](../principios)
 - [Estándares](../estandares)
@@ -89,6 +98,5 @@ Código de Producción
 
 ---
 
-**Última actualización**: 2026-02-19
+**Última actualización**: 2026-02-19  
 **Responsable**: Equipo de Arquitectura
-```

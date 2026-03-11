@@ -1,0 +1,10 @@
+{
+    "label": "Integración",
+    "position": 7,
+    "link": {
+        "type": "generated-index",
+        "title": "Integración",
+        "slug": "/fundamentos/lineamientos/integracion",
+        "description": "Lineamientos para diseño de APIs, contratos y comunicación entre servicios."
+    }
+}

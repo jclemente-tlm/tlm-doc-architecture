@@ -1,6 +1,6 @@
 ---
 id: arquitectura-limpia
-sidebar_position: 11
+sidebar_position: 8
 title: Arquitectura Limpia
 description: Patrón arquitectónico que separa las decisiones de negocio de los detalles técnicos, manteniendo el dominio independiente de frameworks e infraestructura.
 tags: [lineamiento, arquitectura, clean-architecture, mantenibilidad]
@@ -11,6 +11,8 @@ tags: [lineamiento, arquitectura, clean-architecture, mantenibilidad]
 La arquitectura debe separar claramente las decisiones de negocio de los detalles técnicos, permitiendo que el dominio evolucione independientemente de frameworks, infraestructura o tecnologías. Cuando las decisiones técnicas dominan la estructura, los cambios tecnológicos impactan directamente la lógica de negocio, incrementando costos y rigidez. La Arquitectura Limpia establece que el negocio es el eje central del diseño, y los detalles técnicos se adaptan a él, no al revés, preservando claridad del dominio y facilitando evolución a largo plazo.
 
 **Este lineamiento aplica a:** sistemas con lógica de negocio relevante, soluciones con expectativa de evolución en el tiempo, arquitecturas donde se desea reducir dependencia tecnológica.
+
+**No aplica a:** criterios de selección de complejidad o justificación de decisiones tecnológicas — ver [Simplicidad Intencional](./10-simplicidad-intencional.md).
 
 ## Estándares Obligatorios
 
@@ -25,5 +27,5 @@ La arquitectura debe separar claramente las decisiones de negocio de los detalle
 ## Referencias Relacionadas
 
 - [Mantenibilidad y Extensibilidad](../../principios/04-mantenibilidad-y-extensibilidad.md)
-- [Modelado de Dominio](09-modelado-de-dominio.md)
+- [Modelado de Dominio](06-modelado-de-dominio.md)
 - [Descomposición y Límites](02-descomposicion-y-limites.md)

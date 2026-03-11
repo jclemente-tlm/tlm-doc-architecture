@@ -11,6 +11,8 @@ Dividir sistemas en componentes con límites claros facilita el mantenimiento, l
 
 **Este lineamiento aplica a:** monolitos modulares, arquitecturas de microservicios, arquitecturas orientadas a eventos y sistemas legacy en evolución.
 
+**No aplica a:** diseño interno del modelo de dominio (agregados, entidades, value objects) — ver [Modelado de Dominio](./06-modelado-de-dominio.md).
+
 ## Estándares Obligatorios
 
 - [Identificar bounded contexts por capacidad de negocio](../../estandares/arquitectura/domain-modeling.md#4-bounded-contexts)
@@ -21,4 +23,4 @@ Dividir sistemas en componentes con límites claros facilita el mantenimiento, l
 
 ## Referencias Relacionadas
 
-- [Establecer contratos explícitos en los límites](./07-apis-y-contratos.md)
+- [Establecer contratos explícitos en los límites](../integracion/01-apis-y-contratos.md)
