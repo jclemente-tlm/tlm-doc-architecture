@@ -17,13 +17,13 @@ graph TD
 
 ## Nivel 2: Componentes Internos de Kong
 
-| Componente         | Tecnología/Ref                    | Responsabilidad                                                    |
-| ------------------ | --------------------------------- | ------------------------------------------------------------------ |
-| **Kong Proxy**     | `kong:3.x` (imagen oficial)       | Recibe tráfico, aplica plugins, enruta a backends                  |
-| **Kong Admin API** | Expuesto en `:8001` (VPC interno) | Gestión de configuración vía `deck sync`                           |
-| **Plugin Engine**  | Lua + PDK                         | Ejecuta plugins en orden de prioridad por fase de request/response |
-| **Cluster DB**     | PostgreSQL (RDS)                  | Estado compartido entre instancias en modo DB                      |
-| **Upstreams**      | Configurados en `kong.yml`        | Balanceo de carga y health checks por servicio backend             |
+| Componente         | Tecnología/Ref                     | Responsabilidad                                                    |
+| ------------------ | ---------------------------------- | ------------------------------------------------------------------ |
+| **Kong Proxy**     | `kong:3.6-ubuntu` (imagen oficial) | Recibe tráfico, aplica plugins, enruta a backends                  |
+| **Kong Admin API** | Expuesto en `:8001` (VPC interno)  | Gestión de configuración vía `deck sync`                           |
+| **Plugin Engine**  | Lua + PDK                          | Ejecuta plugins en orden de prioridad por fase de request/response |
+| **Cluster DB**     | PostgreSQL (RDS)                   | Estado compartido entre instancias en modo DB                      |
+| **Upstreams**      | Configurados en `kong.yml`         | Balanceo de carga y health checks por servicio backend             |
 
 ## Services, Routes y Upstreams
 

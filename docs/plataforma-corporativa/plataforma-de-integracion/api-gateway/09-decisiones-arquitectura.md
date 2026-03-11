@@ -8,8 +8,8 @@ description: Decisiones arquitectónicas relevantes del API Gateway con Kong OSS
 
 ## Decisión Principal
 
-| ADR | Decisión | Estado | Referencia |
-|---|---|---|---|
+| ADR     | Decisión                              | Estado                | Referencia                                           |
+| ------- | ------------------------------------- | --------------------- | ---------------------------------------------------- |
 | ADR-010 | Kong OSS como API Gateway corporativo | Aceptado (Enero 2026) | [ADR-010](../../../adrs/adr-010-kong-api-gateway.md) |
 
 Ver el ADR completo para la comparativa de alternativas (YARP, AWS API Gateway, Traefik, NGINX Plus, Apigee).
@@ -25,7 +25,7 @@ Ver el ADR completo para la comparativa de alternativas (YARP, AWS API Gateway, 
 
 ### DEC-02: Rate Limiting con Redis (ElastiCache)
 
-- **Estado**: Aceptado
+- **Estado**: Aceptado _(pendiente de implementación — ver DT-06)_
 - **Contexto**: Kong ofrece rate limiting local (por instancia) o distribuido (Redis). Con múltiples instancias ECS, el conteo local es inconsistente.
 - **Decisión**: Plugin `rate-limiting` con `policy: redis` apuntando a ElastiCache.
 - **Consecuencias**: Límites coherentes entre instancias. Dependencia de disponibilidad de Redis (mitigada con Redis Cluster).

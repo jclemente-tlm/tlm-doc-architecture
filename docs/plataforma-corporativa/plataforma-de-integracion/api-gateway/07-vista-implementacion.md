@@ -16,9 +16,9 @@ público]
         subgraph VPC Privada
             subgraph ECS Fargate
                 K1[Kong Instance 1
-kong:3.x]
+kong:3.6-ubuntu]
                 K2[Kong Instance 2
-kong:3.x]
+kong:3.6-ubuntu]
             end
             PG[(PostgreSQL
 RDS - kong DB)]

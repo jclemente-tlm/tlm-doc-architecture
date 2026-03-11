@@ -33,6 +33,8 @@ sequenceDiagram
 
 ## Flujo 2: Rate Limiting
 
+> Redis (ElastiCache) está pendiente de implementación (DT-06). Actualmente el plugin usa `policy: local` (contador por instancia). El flujo siguiente describe el comportamiento objetivo con Redis.
+
 ```mermaid
 sequenceDiagram
     participant C as Cliente
