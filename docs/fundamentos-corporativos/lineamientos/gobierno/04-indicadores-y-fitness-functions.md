@@ -15,8 +15,8 @@ Las decisiones arquitectónicas sin validación continua se degradan silenciosam
 
 ## Estándares Obligatorios
 
-- [Definir fitness functions para cada atributo de calidad crítico](../../estandares/arquitectura/architecture-evolution.md#1-fitness-functions)
-- [Automatizar validación de fitness functions en pipelines CI/CD](../../estandares/arquitectura/architecture-evolution.md#1-fitness-functions)
+- [Definir fitness functions para cada atributo de calidad crítico](../../estandares/gobierno/fitness-functions.md)
+- [Automatizar validación de fitness functions en pipelines CI/CD](../../estandares/gobierno/fitness-functions.md#integración-con-cicd)
 - [Vincular cada fitness function a un ADR o decisión de arquitectura](../../estandares/gobierno/adr-management.md)
 - [Revisar resultados de fitness functions en architecture reviews periódicos](../../estandares/gobierno/architecture-review-process.md#architecture-review)
 - [Alertar y bloquear merge cuando una fitness function supera umbral crítico](../../estandares/gobierno/compliance-validation.md)

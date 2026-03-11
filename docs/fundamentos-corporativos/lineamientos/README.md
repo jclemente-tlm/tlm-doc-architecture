@@ -53,6 +53,7 @@ Lineamientos para gobierno de arquitectura:
 2. Revisiones Arquitectónicas
 3. Cumplimiento y Excepciones
 4. Indicadores y Fitness Functions
+5. Gobierno de Costos
 
 ### [Operabilidad](./operabilidad/)
 
@@ -81,12 +82,12 @@ Lineamientos de seguridad:
 ## Relación con otros niveles
 
 \`\`\`
-Principios       (POR QUÉ)
-    ↓
-Lineamientos     (CÓMO abstracto)  ← Estás aquí
-    ↓
-Estándares       (QUÉ técnico)
-    ↓
+Principios (POR QUÉ)
+↓
+Lineamientos (CÓMO abstracto) ← Estás aquí
+↓
+Estándares (QUÉ técnico)
+↓
 Código de Producción
 \`\`\`
 
@@ -98,5 +99,5 @@ Código de Producción
 
 ---
 
-**Última actualización**: 2026-02-19  
+**Última actualización**: 2026-02-19
 **Responsable**: Equipo de Arquitectura

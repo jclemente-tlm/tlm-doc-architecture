@@ -13,6 +13,7 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 
 ## Estándares Obligatorios
 
+- [Aplicar estándares cloud-native (stateless, health checks, disposability, container-first)](../../estandares/arquitectura/cloud-native.md)
 - [Seguir metodología 12-Factor App](../../estandares/arquitectura/architecture-evolution.md#4-twelve-factor-app)
 - [Contenerizar aplicaciones](../../estandares/infraestructura/containerization.md)
 - [Externalizar configuración en variables de entorno](../../estandares/infraestructura/configuration-management.md)

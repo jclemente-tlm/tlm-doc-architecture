@@ -15,8 +15,8 @@ En contextos multipaís o multi-cliente, la ausencia de aislamiento explícito g
 
 ## Estándares Obligatorios
 
-- [Seleccionar modelo de aislamiento explícito por servicio (realm / schema / instancia)](../../estandares/arquitectura/architecture-principles.md)
-- [Propagar contexto de tenant en todas las capas (header, claim JWT, parámetro)](../../estandares/arquitectura/architecture-principles.md)
+- [Seleccionar modelo de aislamiento explícito por servicio (realm / schema / instancia)](../../estandares/arquitectura/multi-tenancy.md#modelos-de-aislamiento)
+- [Propagar contexto de tenant en todas las capas (header, claim JWT, parámetro)](../../estandares/arquitectura/multi-tenancy.md#tenant-context-propagation)
 - [Prohibir acceso entre tenants sin autorización explícita](../../estandares/seguridad/iam-advanced.md)
 - [Versionar configuración por tenant en repositorio (IaC)](../../estandares/infraestructura/iac-standards.md)
 - [Validar claims de tenant en el API Gateway antes de enrutar](../../estandares/seguridad/sso-mfa-rbac.md)

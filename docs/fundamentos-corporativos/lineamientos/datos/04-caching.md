@@ -15,9 +15,9 @@ Sin una estrategia de caché deliberada, los servicios someten innecesariamente 
 
 ## Estándares Obligatorios
 
-- [Definir TTL explícito para cada entrada cacheada; prohibir caché sin expiración](../../estandares/datos/data-architecture.md)
-- [Usar caché distribuido (Redis ElastiCache) para datos compartidos entre instancias](../../estandares/datos/data-architecture.md)
-- [Implementar estrategia de invalidación explícita al mutar datos](../../estandares/datos/data-consistency.md)
+- [Definir TTL explícito para cada entrada cacheada; prohibir caché sin expiración](../../estandares/datos/caching.md#ttl-management)
+- [Usar caché distribuido (Redis ElastiCache) para datos compartidos entre instancias](../../estandares/datos/caching.md#distributed-cache-redis-elasticache)
+- [Implementar estrategia de invalidación explícita al mutar datos](../../estandares/datos/caching.md#cache-invalidation)
 - [No cachear datos sensibles (tokens de acceso completos, contraseñas, PII) sin cifrado](../../estandares/seguridad/data-protection.md)
 - [Monitorear hit rate, miss rate y latencia de caché](../../estandares/observabilidad/metrics.md)
 - [Declarar dependencia de caché como pendiente si no está implementado (DT)](../../estandares/gobierno/adr-management.md)

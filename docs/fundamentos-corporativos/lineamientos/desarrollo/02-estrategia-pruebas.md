@@ -17,6 +17,7 @@ La ausencia de testing automatizado genera código frágil, regresiones frecuent
 
 ## Estándares Obligatorios
 
+- [Seguir pirámide de testing (unitarias → integración → e2e)](../../estandares/testing/testing-pyramid.md)
 - [Implementar pruebas unitarias](../../estandares/testing/unit-testing.md)
 - [Implementar pruebas de integración](../../estandares/testing/integration-testing.md)
 - [Implementar contract testing](../../estandares/testing/contract-testing.md)
@@ -24,6 +25,7 @@ La ausencia de testing automatizado genera código frágil, regresiones frecuent
 - [Definir cobertura mínima de código](../../estandares/testing/test-coverage.md)
 - [Automatizar ejecución de pruebas en CI/CD](../../estandares/testing/test-automation.md)
 - [Realizar performance testing](../../estandares/testing/performance-testing.md)
+- [Realizar security testing en pipelines CI/CD](../../estandares/testing/security-testing.md)
 
 ## Referencias Relacionadas
 
