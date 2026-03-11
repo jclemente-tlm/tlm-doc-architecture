@@ -28,6 +28,8 @@ ElastiCache)]
     end
     INF[Ingeniería / CI-CD
 deck sync] --> K1
+    KG[Konga
+Admin UI] --> K1
     ALB --> K1
     ALB --> K2
     K1 --> PG
@@ -40,30 +42,27 @@ deck sync] --> K1
 
 ```dockerfile
 FROM kong:3.6-ubuntu
-
-# Kong usa la imagen oficial; no se requiere código custom
-# Los plugins se config vía deck YAML o variables de entorno
-
 USER kong
 EXPOSE 8000 8443 8001 8444
 ```
 
-> Se usa la imagen oficial `kong:3.x`. No hay código de aplicación custom; toda la lógica se configura mediante plugins declarativos.
+> Imagen oficial LTS. Kong no publica variante Alpine. No hay código custom; toda la lógica se configura mediante plugins declarativos vía `deck`.
 
 ## Configuración de Entorno (ECS Task)
 
-| Variable de Entorno | Valor / Fuente | Descripción |
-|---|---|---|
-| `KONG_DATABASE` | `postgres` | Modo DB para clustering |
-| `KONG_PG_HOST` | Secrets Manager | Host de PostgreSQL RDS |
-| `KONG_PG_USER` | Secrets Manager | Usuario de BD |
-| `KONG_PG_PASSWORD` | Secrets Manager | Contraseña de BD |
-| `KONG_PROXY_LISTEN` | `0.0.0.0:8000` | Puerto de proxy HTTP |
-| `KONG_PROXY_LISTEN_SSL` | `off` | TLS termina en ALB |
-| `KONG_ADMIN_LISTEN` | `127.0.0.1:8001` | Admin API solo interno |
-| `KONG_NGINX_WORKER_PROCESSES` | `auto` | Workers según vCPU |
-| `KONG_LOG_LEVEL` | `info` | Nivel de log |
-| `KONG_PLUGINS` | `bundled` | Todos los plugins incluidos |
+| Variable de Entorno             | Valor / Fuente   | Descripción                                    |
+| ------------------------------- | ---------------- | ---------------------------------------------- |
+| `KONG_DATABASE`                 | `postgres`       | Modo DB para clustering                        |
+| `KONG_PG_HOST`                  | Secrets Manager  | Host de PostgreSQL RDS                         |
+| `KONG_PG_USER`                  | Secrets Manager  | Usuario de BD                                  |
+| `KONG_PG_PASSWORD`              | Secrets Manager  | Contraseña de BD                               |
+| `KONG_PROXY_LISTEN`             | `0.0.0.0:8000`   | Puerto de proxy HTTP                           |
+| `KONG_PROXY_LISTEN_SSL`         | `off`            | TLS termina en ALB                             |
+| `KONG_ADMIN_LISTEN`             | `127.0.0.1:8001` | Admin API solo interno                         |
+| `KONG_NGINX_WORKER_PROCESSES`   | `auto`           | Workers según vCPU                             |
+| `KONG_LOG_LEVEL`                | `info`           | Nivel de log (stdout → Fluent Bit → Loki)      |
+| `KONG_PLUGINS`                  | `bundled`        | Todos los plugins incluidos                    |
+| `KONG_TRACING_INSTRUMENTATIONS` | `all`            | Activa trazas OpenTelemetry nativas (Kong 3.x) |
 
 ## Configuración Declarativa (deck YAML)
 
@@ -91,7 +90,7 @@ _transform: true
 
 services:
   - name: identity-service
-    url: http://identity-svc:8080
+    url: http://identity-upstream # apunta al Upstream
     plugins:
       - name: jwt
         config:
@@ -104,7 +103,7 @@ services:
         strip_path: false
 
   - name: notifications-service
-    url: http://notifications-svc:8080
+    url: http://notifications-upstream
     routes:
       - name: notifications-route
         paths:
@@ -126,42 +125,14 @@ upstreams:
         weight: 100
 ```
 
-## Terraform (ECS Fargate)
+## ECS Fargate — Parámetros Clave
 
-```hcl
-resource "aws_ecs_task_definition" "kong" {
-  family                   = "kong-api-gateway"
-  requires_compatibilities = ["FARGATE"]
-  network_mode             = "awsvpc"
-  cpu                      = "1024"
-  memory                   = "2048"
-  execution_role_arn       = aws_iam_role.ecs_execution.arn
+| Parámetro       | Valor                             | Nota                                               |
+| --------------- | --------------------------------- | -------------------------------------------------- |
+| CPU / Memoria   | `1024` / `2048`                   | Ajustable según carga                              |
+| Imagen          | `kong:3.6-ubuntu`                 | Imagen oficial LTS (no existe variante Alpine)     |
+| Puerto expuesto | `8000` (proxy)                    | Admin `:8001` solo accesible desde VPC             |
+| Log driver      | `awsfirelens` (Fluent Bit → Loki) | Logs estructurados al stack de observabilidad      |
+| Secrets         | AWS Secrets Manager               | `KONG_PG_HOST`, `KONG_PG_USER`, `KONG_PG_PASSWORD` |
 
-  container_definitions = jsonencode([{
-    name      = "kong"
-    image     = "kong:3.6-ubuntu"
-    essential = true
-    portMappings = [
-      { containerPort = 8000, protocol = "tcp" }
-    ]
-    secrets = [
-      { name = "KONG_PG_HOST",     valueFrom = aws_secretsmanager_secret.kong_pg_host.arn },
-      { name = "KONG_PG_USER",     valueFrom = aws_secretsmanager_secret.kong_pg_user.arn },
-      { name = "KONG_PG_PASSWORD", valueFrom = aws_secretsmanager_secret.kong_pg_password.arn }
-    ]
-    environment = [
-      { name = "KONG_DATABASE",           value = "postgres" },
-      { name = "KONG_PROXY_LISTEN",       value = "0.0.0.0:8000" },
-      { name = "KONG_ADMIN_LISTEN",       value = "127.0.0.1:8001" },
-      { name = "KONG_NGINX_WORKER_PROCESSES", value = "auto" }
-    ]
-    logConfiguration = {
-      logDriver = "awslogs"
-      options = {
-        "awslogs-group"  = "/ecs/kong-api-gateway"
-        "awslogs-region" = "us-east-1"
-      }
-    }
-  }])
-}
-```
+> La definición completa de la task definition Terraform está en el repositorio de infraestructura (`infra/terraform/kong/`).

@@ -20,10 +20,8 @@ graph LR
     end
 
     subgraph Kong API Gateway
-        KP[Kong Proxy
-0.0.0.0:8000]
-        KA[Kong Admin API
-127.0.0.1:8001]
+        KP[Kong Proxy\n:8000]
+        KA[Kong Admin API\n:8001]
     end
 
     subgraph Servicios Backend
@@ -33,16 +31,9 @@ graph LR
         SI[SITA Service]
     end
 
-    subgraph Infraestructura
-        KC[Keycloak
-Identity Provider]
-        RD[Redis
-Rate Limit Counters]
-        PG[PostgreSQL
-Kong DB]
-        PR[Prometheus
-Métricas]
-    end
+    KC[Keycloak]
+    OBS[Observabilidad\nMimir · Loki · Tempo]
+    KG[Konga\nAdmin UI]
 
     WEB -->|HTTPS| KP
     MOB -->|HTTPS| KP
@@ -52,29 +43,32 @@ Métricas]
     KP -->|HTTP interno| TT
     KP -->|HTTP interno| SI
     KP -->|JWKS| KC
-    KP -->|Contadores| RD
-    KA -->|Config| PG
-    KP -->|Métricas| PR
+    KA -->|deck sync| KP
+    KG -->|Admin API :8001| KA
+    KP -->|métricas / logs / trazas| OBS
 ```
 
 ## Contexto de Negocio
 
-| Actor externo | Interfaz | Descripción |
-|---|---|---|
-| Aplicaciones web/móvil | HTTPS :443 → ALB → Kong :8000 | Consumo de APIs corporativas |
-| Sistemas externos / socios | HTTPS :443 → ALB → Kong :8000 | Integraciones B2B autenticadas |
-| Equipo de Plataforma | Kong Admin API :8001 (VPC interno) | Gestión de configuración vía `deck` |
+| Actor externo              | Interfaz                                        | Descripción                                                                              |
+| -------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Aplicaciones web/móvil     | HTTPS :443 → ALB → Kong :8000                   | Consumo de APIs corporativas                                                             |
+| Sistemas externos / socios | HTTPS :443 → ALB → Kong :8000                   | Integraciones B2B autenticadas                                                           |
+| Equipo de Plataforma       | Konga (UI) + Kong Admin API :8001 (VPC interno) | Gestión visual de configuración vía Konga; cambios promovidos a `deck` para trazabilidad |
 
 ## Contexto Técnico
 
-| Interfaz | Protocolo | Dirección | Descripción |
-|---|---|---|---|
-| ALB → Kong Proxy | HTTP/2 | Entrada | Tráfico de clientes tras terminación TLS en ALB |
-| Kong → Servicios backend | HTTP/1.1 o HTTP/2 | Salida | Enrutamiento a microservicios por `Upstream` |
-| Kong → Keycloak JWKS | HTTPS | Salida | Validación de claves públicas para verificación JWT |
-| Kong → Redis | TCP :6379 | Salida | Contadores de rate limiting distribuidos |
-| Kong → PostgreSQL | TCP :5432 | Salida | Estado de configuración y clustering Kong |
-| Kong → Prometheus | HTTP `/metrics` | Salida (scraping) | Exposición de métricas del plugin `prometheus` |
+| Interfaz                 | Protocolo                      | Dirección         | Descripción                                                                    |
+| ------------------------ | ------------------------------ | ----------------- | ------------------------------------------------------------------------------ |
+| ALB → Kong Proxy         | HTTP/2                         | Entrada           | Tráfico de clientes tras terminación TLS en ALB                                |
+| Kong → Servicios backend | HTTP/1.1 o HTTP/2              | Salida            | Enrutamiento a microservicios por `Upstream`                                   |
+| Kong → Keycloak JWKS     | HTTPS                          | Salida            | Validación de claves públicas para verificación JWT                            |
+| Kong → Redis             | TCP :6379                      | Salida            | Contadores de rate limiting distribuidos                                       |
+| Kong → PostgreSQL        | TCP :5432                      | Salida            | Estado de configuración y clustering Kong                                      |
+| Konga → Kong Admin API   | HTTP :8001                     | Entrada (VPC)     | Interfaz visual de administración; acceso restringido a VPC                    |
+| Kong → Prometheus        | HTTP `/metrics`                | Salida (scraping) | Exposición de métricas del plugin `prometheus` (Mimir como backend)            |
+| Kong → Loki              | stdout → Fluent Bit / FireLens | Salida            | Logs estructurados de Kong recolectados y enviados a Loki                      |
+| Kong → Tempo             | HTTP `:9411/api/v2/spans`      | Salida            | Trazas distribuidas del plugin `zipkin` al endpoint Zipkin-compatible de Tempo |
 
 ## Fuera de Alcance
 

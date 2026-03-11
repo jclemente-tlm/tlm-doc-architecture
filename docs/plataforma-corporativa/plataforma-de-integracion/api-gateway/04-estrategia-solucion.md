@@ -8,16 +8,16 @@ description: Decisiones tecnológicas y de diseño clave del API Gateway con Kon
 
 ## Decisiones Tecnológicas
 
-| Dimensión | Decisión | Justificación |
-|---|---|---|
-| API Gateway | **Kong OSS** | Agnosticidad, plugins maduros, escalabilidad enterprise (ADR-010) |
-| Configuración | **deck YAML** (declarativo) | GitOps, trazabilidad, reproducibilidad en todos los entornos |
-| Autenticación | **Plugin `jwt`** + Keycloak JWKS URI | Validación local de JWT; Keycloak como fuente de verdad |
-| Rate limiting | **Plugin `rate-limiting`** + Redis | Ventana deslizante distribuida entre instancias |
-| Observabilidad | **Plugin `prometheus`** + plugin `zipkin` | Stack Prometheus/Grafana corporativo (Grafana, Mimir, Tempo) |
-| Resiliencia | **Upstream health checks** (activos + pasivos) | Detección automática de backends degradados |
-| Multi-tenancy | **Kong Workspaces** + headers de tenant | Aislamiento de configuración por país/cliente |
-| Despliegue | **AWS ECS Fargate** + Terraform | Infraestructura como código, sin gestión de servidores |
+| Dimensión      | Decisión                                                                       | Justificación                                                     |
+| -------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| API Gateway    | **Kong OSS**                                                                   | Agnosticidad, plugins maduros, escalabilidad enterprise (ADR-010) |
+| Configuración  | **deck YAML** (declarativo)                                                    | GitOps, trazabilidad, reproducibilidad en todos los entornos      |
+| Autenticación  | **Plugin `jwt`** + Keycloak JWKS URI                                           | Validación local de JWT; Keycloak como fuente de verdad           |
+| Rate limiting  | **Plugin `rate-limiting`** + Redis _(pendiente de implementación — ver DT-06)_ | Ventana deslizante distribuida entre instancias                   |
+| Observabilidad | **Plugin `prometheus`** → Mimir/Grafana; plugin `zipkin` → Tempo; logs → Loki  | Stack corporativo de observabilidad                               |
+| Resiliencia    | **Upstream health checks** (activos + pasivos)                                 | Detección automática de backends degradados                       |
+| Multi-tenancy  | **Kong Workspaces** + headers de tenant                                        | Aislamiento de configuración por país/cliente                     |
+| Despliegue     | **AWS ECS Fargate** + Terraform                                                | Infraestructura como código, sin gestión de servidores            |
 
 ## Modelo de Configuración Declarativa
 
@@ -31,16 +31,3 @@ kong.yml           # Configuración declarativa (Services, Routes, Plugins, Upst
 ```
 
 Esta estrategia garantiza que el estado real de Kong siempre coincide con el repositorio.
-
-## Flujo de Autenticación
-
-```
-Cliente → Kong (Plugin jwt) → Verifica firma JWT contra JWKS de Keycloak
-                            → Extrae claims (tenant, roles)
-                            → Enruta al backend con headers enriquecidos (X-Consumer-ID, X-Tenant-ID)
-```
-
-## Enrutamiento Multi-tenant
-
-Cada país/cliente tiene su propio `Workspace` en Kong y sus propias `Routes` con host o prefijo de path diferenciado.
-Los backends reciben el header `X-Tenant-ID` inyectado por el plugin `request-transformer`.
