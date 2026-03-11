@@ -4,25 +4,25 @@ title: Conceptos Transversales
 description: Seguridad, multi-tenancy, observabilidad y resiliencia.
 ---
 
-# 8. Conceptos transversales
+# 8. Conceptos Transversales
 
-## 8.1 Seguridad
+## Seguridad
 
-| Aspecto       | Implementación         | Tecnología   |
-|---------------|-----------------------|--------------|
-| Autenticación | `OAuth2`/`OIDC`       | `Keycloak`   |
-| Tokens        | `JWT RS256`           | Estándar     |
-| Federación    | `SAML`/`LDAP`         | Conectores   |
-| MFA           | Obligatorio admin     | `Keycloak`   |
+| Aspecto       | Implementación    | Tecnología |
+| ------------- | ----------------- | ---------- |
+| Autenticación | `OAuth2`/`OIDC`   | `Keycloak` |
+| Tokens        | `JWT RS256`       | Estándar   |
+| Federación    | `SAML`/`LDAP`     | Conectores |
+| MFA           | Obligatorio admin | `Keycloak` |
 
 - Defensa en profundidad: WAF, subredes privadas, NACLs, headers seguros, autenticación y autorización centralizadas, rate limiting, audit logging.
 - Gestión avanzada de secretos: rotación, control de acceso, auditoría en AWS Secrets Manager.
 - Validación `JWT` y autorización basada en claims y `tenant` (`realm`).
 
-## 8.2 Multi-tenancy y aislamiento
+## Multi-tenancy y Aislamiento
 
-| Aspecto       | Implementación               | Propósito         |
-|---------------|-----------------------------|-------------------|
+| Aspecto       | Implementación                 | Propósito         |
+| ------------- | ------------------------------ | ----------------- |
 | Realms        | Un `tenant` (`realm`) por país | Aislamiento total |
 | Usuarios      | Por `tenant` (`realm`)         | Separación        |
 | Configuración | Por jurisdicción               | Compliance        |
@@ -30,33 +30,46 @@ description: Seguridad, multi-tenancy, observabilidad y resiliencia.
 - Aislamiento multinivel: datos, configuración y autenticación independientes por `tenant` (`realm`).
 - Configuración dinámica y cacheada por `tenant` (`realm`).
 
-## 8.3 Observabilidad y telemetría
+## Observabilidad
 
-- Logging estructurado con contexto de `tenant` (`realm`), usuario y sesión.
-- Métricas técnicas y de negocio instrumentadas por `tenant` (`realm`) y expuestas vía `Prometheus`.
-- Trazado distribuido con `OpenTelemetry` y `Tempo`, enriquecido con tags de `tenant` (`realm`) y usuario.
+- Logging estructurado con contexto de `realm`, usuario y sesión enviado a **Loki** vía Fluent Bit/FireLens.
+- Métricas por `realm` expuestas vía Prometheus y almacenadas en **Mimir** (Grafana).
+- Trazas distribuidas con `OpenTelemetry` enviadas a **Tempo**.
 
-## 8.4 Resiliencia y manejo de errores
+## Resiliencia
 
 - Circuit breaker y retry en integración con `Keycloak` y servicios externos.
 - Bulkhead y timeout para aislar recursos críticos.
 - Manejo de errores centralizado y auditado.
 
-## 8.5 Compliance y gobierno
+## Compliance
 
 - Audit trail completo de accesos, cambios y exportaciones de datos.
 - Políticas de retención y anonimización automatizadas.
 - Cumplimiento: GDPR, SOX, ISO 27001, controles de acceso y consentimiento.
 
-## 8.6 Performance y caching
+## Flujos de Integración (M2M)
 
-- Estrategia de caching multinivel: memoria local, `Redis`, cache HTTP.
-- Optimización de queries y uso de índices por `tenant` (`realm`).
-- Métricas de latencia y throughput monitorizadas y alertadas.
+Flujo `client_credentials` para servicios backend sin interacción de usuario:
 
-## 8.7 Referencias
+```http
+POST /realms/{tenant}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
 
-- [Keycloak Security Docs](https://www.keycloak.org/docs/latest/server_admin/#security)
-- [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html)
-- [Arc42 Crosscutting Concepts](https://docs.arc42.org/section-8/)
-- [C4 Model for Software Architecture](https://c4model.com/)
+grant_type=client_credentials&client_id=app-client&client_secret=secreto
+```
+
+```json
+{
+  "access_token": "...",
+  "expires_in": 900,
+  "token_type": "Bearer",
+  "scope": "profile email tenant:peru"
+}
+```
+
+## Performance y Caching
+
+- Validación JWT local en Kong con JWKS cacheados, sin llamadas a Keycloak por request.
+- Sesión y JWKS cacheados en memoria por `realm`.
+- Caching con Redis _(pendiente de implementación)_.

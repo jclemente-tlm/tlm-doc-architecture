@@ -1,15 +1,14 @@
 ---
 sidebar_position: 7
-title: Vista de Implementacion
-description: Infraestructura AWS y configuracion de despliegue de Keycloak.
+title: Vista de Implementación
+description: Infraestructura AWS y configuración de despliegue de Keycloak.
 ---
 
-# 7. Vista de implementación
+# 7. Vista de Implementación
 
 ![Vista de implementación del Sistema de Identidad](/diagrams/servicios-corporativos/identity_system_deployment.png)
-_Figura 7.1: Implementación de Componentes de principales del sistema_
 
-## 7.1 Estructura del proyecto
+## Estructura del Proyecto
 
 | Componente    | Ubicación           | Tecnología              |
 | ------------- | ------------------- | ----------------------- |
@@ -17,16 +16,7 @@ _Figura 7.1: Implementación de Componentes de principales del sistema_
 | `PostgreSQL`  | AWS RDS/Aurora      | PostgreSQL 15+          |
 | Configuración | AWS Secrets Manager | JSON                    |
 
-## 7.2 Dependencias principales
-
-| Dependencia  | Versión | Propósito         |
-| ------------ | ------- | ----------------- |
-| `Keycloak`   | 23+     | Identity Provider |
-| `PostgreSQL` | 15+     | Base de datos     |
-| `Docker`     | 20+     | Contenerización   |
-| AWS ECS      | -       | Orquestación      |
-
-## 7.3 Infraestructura AWS
+## Infraestructura AWS
 
 - VPC segmentada por ambientes (`dev`, `staging`, `prod`)
 - Subredes públicas, privadas y de base de datos
@@ -35,14 +25,14 @@ _Figura 7.1: Implementación de Componentes de principales del sistema_
 - Seguridad: Security Groups y Network ACLs
 - Secrets y configuración gestionados en AWS Secrets Manager
 
-## 7.4 Despliegue y configuración de servicios
+## Despliegue y Configuración
 
 - `Keycloak`: Contenedor único (`Docker`) desplegado en ECS Fargate, autoescalado horizontal, health checks, métricas y logs habilitados
 - `Keycloak` únicamente se comunica con `PostgreSQL` (`RDS Aurora`), sin integración directa con otros servicios
 - Configuración de `ALB` para HTTPS, redirección HTTP→HTTPS, certificados ACM
 - Auto Scaling basado en CPU y métricas de servicio
 
-## 7.5 Ambientes y buenas prácticas
+## Ambientes
 
 | Ambiente   | Propósito              | Configuración clave               |
 | ---------- | ---------------------- | --------------------------------- |
@@ -54,30 +44,10 @@ _Figura 7.1: Implementación de Componentes de principales del sistema_
 - Acceso restringido por VPN y listas blancas de IP
 - Certificados TLS gestionados por ACM
 
-## 7.6 Backup y disaster recovery
+## Backup y Disaster Recovery
 
 - Backups automáticos diarios de base de datos (`30 días prod`, `7 días staging`)
 - Snapshots manuales antes de despliegues mayores
 - Export diario de configuración de tenants (`realms`) a S3 versionado
-- Backups de estado de infraestructura (`Terraform`, `CloudFormation`)
+- Estado de infraestructura versionado en `Terraform` (repositorio Git)
 - Plan de recuperación: `RTO < 4h`, `RPO < 15min`, cross-region para base de datos
-
-## 7.7 Seguridad y cumplimiento
-
-- `Keycloak` contenerizado en ECS Fargate, autoescalado horizontal
-- Comunicación exclusiva `Keycloak` ↔ `PostgreSQL`, sin exposición pública
-- Seguridad de red: Security Groups, NACLs, subredes privadas
-- Secretos y credenciales en AWS Secrets Manager, nunca embebidos en imágenes/código
-- TLS 1.3 extremo a extremo, HSTS, certificados ACM EV en producción
-- Auditoría centralizada, logs estructurados y retención según normativa
-- Cumplimiento: GDPR, SOX, ISO 27001, controles automatizados y revisiones periódicas
-- Acceso administrativo restringido por VPN y listas blancas de IP
-- Backups cifrados y pruebas periódicas de restauración
-
-## 7.8 Referencias
-
-- [Keycloak Server Administration Guide](https://www.keycloak.org/docs/latest/server_admin/)
-- [AWS ECS Documentation](https://docs.aws.amazon.com/ecs/)
-- [AWS RDS Aurora Documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/)
-- [Arc42 Implementation View](https://docs.arc42.org/section-7/)
-- [C4 Model for Software Architecture](https://c4model.com/)

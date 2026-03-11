@@ -1,106 +1,74 @@
 ---
 sidebar_position: 3
 title: Contexto y Alcance
-description: Limites del sistema y sus interfaces externas.
+description: Límites del sistema de identidad y sus interfaces externas.
 ---
 
-# 3. Contexto y alcance
+# 3. Contexto y Alcance
 
-![Vista de Contexto](/diagrams/servicios-corporativos/identity_system.png)
+## Contexto del Sistema
 
-*Figura 3.1: Vista de contexto del Servicio de Identidad*
+Keycloak actúa como IdP central para todos los servicios corporativos multipaís.
+No contiene lógica de negocio; gestiona identidades, sesiones y tokens para los servicios que lo consumen.
 
-## 3.1 Contexto de negocio
-
-El Servicio de Identidad centraliza autenticación, autorización y federación para servicios corporativos multipaís, priorizando seguridad, SSO, cumplimiento normativo y eficiencia operativa. La solución es multi-tenant: cada país opera en un `tenant` (`realm`) independiente, garantizando aislamiento y escalabilidad.
-
-| Stakeholder      | Rol                  | Responsabilidad                 | Expectativa                 |
-|------------------|----------------------|---------------------------------|-----------------------------|
-| CISO             | Seguridad            | Políticas, cumplimiento         | Sistema seguro y auditable  |
-| RRHH             | Recursos Humanos     | Gestión de usuarios, onboarding | Proceso eficiente y trazable|
-| TI               | Operaciones TI       | Mantenimiento, soporte          | Administración estable y simple |
-| Compliance       | Auditoría, regulaciones | Trazabilidad, reportes      | Cumplimiento normativo      |
-| Usuarios Finales | Usuarios             | Acceso a aplicaciones           | Experiencia fluida y segura |
-
-## 3.2 Contexto técnico
+## Contexto Técnico
 
 ```mermaid
-graph TD
+graph LR
     subgraph IdPs Externos
         A1[Google Workspace]
         A2[Microsoft AD]
         A3[LDAP Corporativo]
-        A4[PKI Gobierno]
     end
-    subgraph Tenants (realms)
-        T1[Perú]
-        T2[Ecuador]
-        T3[Colombia]
-        T4[México]
+
+    subgraph Tenants
+        T1[pe]
+        T2[ec]
+        T3[co]
+        T4[mx]
     end
-    A1 -->|SAML/OIDC| B(Servicio de Identidad - Keycloak)
-    A2 -->|SAML/OIDC| B
-    A3 -->|LDAP| B
-    A4 -->|SAML| B
-    B -->|OAuth2/OIDC, JWT| C(API Gateway)
-    C -->|Solicitudes autenticadas| D(Ecosistema de Servicios Corporativos)
-    D1[Notificaciones]
-    D2[Track&Trace]
-    D3[Mensajería SITA]
-    D4[Aplicaciones Web]
-    D --> D1
-    D --> D2
-    D --> D3
-    D --> D4
-    B --> T1
-    B --> T2
-    B --> T3
-    B --> T4
+
+    KC[Keycloak]
+    GW[Kong API Gateway]
+    SVC[Servicios Corporativos]
+    OBS[Observabilidad\nMimir · Loki · Tempo]
+
+    A1 -->|SAML/OIDC| KC
+    A2 -->|LDAP| KC
+    A3 -->|LDAP| KC
+    KC --> T1
+    KC --> T2
+    KC --> T3
+    KC --> T4
+    KC -->|JWKS| GW
+    GW -->|requests autenticados| SVC
+    KC -->|métricas / logs / trazas| OBS
 ```
 
-## 3.3 Fronteras y alcance
+## Dentro del Alcance
 
-### Dentro del alcance
+| Componente        | Responsabilidad                                                            |
+| ----------------- | -------------------------------------------------------------------------- |
+| Keycloak          | IdP central multi-tenant; autenticación, autorización, gestión de usuarios |
+| Realms por país   | Aislamiento de datos y configuración por tenant (`pe`, `ec`, `co`, `mx`)   |
+| Federación        | Integración con LDAP, SAML, OIDC externos                                  |
+| Gestión de tokens | Ciclo de vida de JWT: generación, validación, renovación                   |
+| Auditoría         | Registro de eventos de seguridad                                           |
 
-| Componente                  | Descripción                | Responsabilidad                  |
-|-----------------------------|----------------------------|----------------------------------|
-| `Keycloak`                  | IdP central multi-tenant   | Autenticación, autorización, gestión de usuarios |
-| Gestión de Tenants (`realms`)| Aislamiento por país      | Multi-tenant, configuración      |
-| Federación de Usuarios      | Integración IdP externos   | `LDAP`, `SAML`, `OIDC`           |
-| Gestión de Tokens           | Ciclo de vida `JWT`        | Generación, validación, renovación|
-| Consola de Administración   | Interfaz de gestión        | Administración usuarios/roles    |
-| APIs Programáticas          | APIs REST                  | Gestión programática de usuarios |
-| Auditoría y Logging         | Eventos de seguridad       | Rastro de auditoría completo     |
+## Fuera de Alcance
 
-### Fuera del alcance
+- IdPs externos (Google, Microsoft AD, LDAP corporativo) — gestionados por terceros o TI.
+- Lógica de negocio de los servicios que consumen tokens.
+- Validación de tokens por request — responsabilidad de Kong (ADR-010).
 
-| Componente                  | Razón de Exclusión         | Responsable                      |
-|-----------------------------|----------------------------|----------------------------------|
-| IdPs Externos               | Sistemas de terceros       | Google, Microsoft, TI            |
-| Aplicaciones Cliente        | Consumidores de servicios  | Equipos de servicios             |
-| Infraestructura de Red      | Capa de infraestructura    | Equipo de infraestructura        |
-| Gestión de Certificados     | Infraestructura PKI        | Equipo de seguridad              |
-| Plataforma de Monitoreo     | Observabilidad             | Equipo DevOps                    |
+## Interfaces Externas
 
-## 3.4 Interfaces externas
-
-| Actor                        | Tipo    | Descripción                        | Interacciones                                 |
-|------------------------------|---------|------------------------------------|-----------------------------------------------|
-| Administrador Global         | Humano  | Admin global                       | Configuración de tenants (`realms`), políticas|
-| Administrador de Tenant (`realm`)| Humano  | Admin por país/tenant (`realm`)    | Gestión de usuarios, roles específicos        |
-| Usuario Final                | Humano  | Usuario final                      | Login, gestión de perfil, reset pass          |
-| API Gateway                  | Sistema | Proxy de servicios                 | Validación de token, contexto usuario         |
-| Servicios Corporativos       | Sistema | Servicios de negocio               | Autenticación, autorización                   |
-| IdP Externo                  | Sistema | Proveedores de identidad externos  | Federación de usuarios, SSO                   |
-| Sistema HRIS                 | Sistema | Recursos humanos                   | Provisioning de usuarios, roles               |
-| Sistema de Monitoreo         | Sistema | Observabilidad                     | Métricas, logs, health checks                 |
-
-## Referencias
-
-- [Arc42 Context Template](https://docs.arc42.org/section-3/)
-- [C4 Model for Software Architecture](https://c4model.com/)
-- [Keycloak Server Administration Guide](https://www.keycloak.org/docs/latest/server_admin/)
-- [Keycloak Securing Applications Guide](https://www.keycloak.org/docs/latest/securing_apps/)
-- [OAuth 2.0 Authorization Framework (RFC 6749)](https://tools.ietf.org/html/rfc6749)
-- [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html)
-- [SAML 2.0 Core Specification](https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf)
+| Actor                             | Tipo    | Descripción                                      |
+| --------------------------------- | ------- | ------------------------------------------------ |
+| Administrador Global              | Humano  | Configuración de tenants (`realms`), políticas   |
+| Administrador de Tenant (`realm`) | Humano  | Gestión de usuarios y roles específicos por país |
+| Usuario Final                     | Humano  | Login, gestión de perfil, reset de contraseña    |
+| API Gateway (Kong)                | Sistema | Validación de token JWT, contexto de usuario     |
+| Servicios Corporativos            | Sistema | Autenticación y autorización                     |
+| IdP Externo                       | Sistema | Federación de usuarios (SAML, OIDC, LDAP)        |
+| Sistema de Monitoreo              | Sistema | Métricas, logs, health checks                    |
