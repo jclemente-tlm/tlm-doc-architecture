@@ -10,7 +10,7 @@ tags: [gobierno, architecture-board, audits, retrospectivas]
 
 ## Contexto
 
-Este estándar define el gobierno operativo de la arquitectura: cómo toma decisiones el Architecture Board, cómo se verifican los servicios mediante auditorías y cómo se mejora continuamente el proceso. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md).
+Este estándar define el gobierno operativo de la arquitectura: cómo toma decisiones el Architecture Board, cómo se verifican los servicios mediante auditorías y cómo se mejora continuamente el proceso. Complementa los lineamientos [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) y [Revisiones Arquitectónicas](../../lineamientos/gobierno/02-revisiones-arquitectonicas.md).
 
 **Conceptos incluidos:**
 

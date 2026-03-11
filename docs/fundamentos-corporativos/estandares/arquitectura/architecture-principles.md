@@ -10,7 +10,7 @@ tags: [arquitectura, kiss, yagni, solid, simplicidad, principios]
 
 ## Contexto
 
-Este estándar consolida los principios fundamentales que guían las decisiones arquitectónicas hacia simplicidad y mantenibilidad. Complementa el lineamiento [Simplicidad Intencional](../../lineamientos/arquitectura/13-simplicidad-intencional.md).
+Este estándar consolida los principios fundamentales que guían las decisiones arquitectónicas hacia simplicidad y mantenibilidad. Complementa el lineamiento [Simplicidad Intencional](../../lineamientos/arquitectura/10-simplicidad-intencional.md).
 
 **Conceptos incluidos:**
 

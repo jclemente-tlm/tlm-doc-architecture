@@ -10,7 +10,7 @@ tags: [infraestructura, deployment, docker, feature-flags, blue-green]
 
 ## Contexto
 
-Cada servicio debe poder desplegarse sin coordinación con otros equipos. Complementa el lineamiento [Autonomía de Servicios](../../lineamientos/arquitectura/10-autonomia-de-servicios.md).
+Cada servicio debe poder desplegarse sin coordinación con otros equipos. Complementa el lineamiento [Autonomía de Servicios](../../lineamientos/arquitectura/07-autonomia-de-servicios.md).
 
 **Cuándo aplicar:** Todo servicio en arquitectura de microservicios o que comparta pipeline con otros equipos.
 

@@ -2,8 +2,8 @@
 id: architecture-evolution
 sidebar_position: 8
 title: Evolución de Arquitectura
-description: Patrones para evolución arquitectónica incluyendo fitness functions, reversibilidad, selección tecnológica y twelve-factor app.
-tags: [arquitectura, evolucion, fitness-functions, twelve-factor, tecnologias]
+description: Patrones para evolución arquitectónica incluyendo reversibilidad y selección tecnológica.
+tags: [arquitectura, evolucion, tecnologias]
 ---
 
 # Evolución de Arquitectura
@@ -14,68 +14,17 @@ Este estándar consolida prácticas para evolucionar arquitecturas de forma cont
 
 **Conceptos incluidos:**
 
-- **Fitness Functions** → Tests automatizados de características arquitectónicas
 - **Reversibility** → Decisiones reversibles vs irreversibles
 - **Technology Selection** → Criterios para selección de tecnologías
-- **Twelve-Factor App** → Metodología para apps cloud-native
 
 ---
 
 ## Stack Tecnológico
 
-| Componente             | Tecnología       | Versión | Uso                                 |
-| ---------------------- | ---------------- | ------- | ----------------------------------- |
-| **Architecture Tests** | ArchUnitNET      | 0.10+   | Tests de arquitectura automatizados |
-| **ADR**                | Markdown + Git   | -       | Architecture Decision Records       |
-| **Evaluación tech**    | Technology Radar | -       | Trackeo de tecnologías              |
-
----
-
-## Fitness Functions
-
-### ¿Qué son Fitness Functions?
-
-Tests automatizados que validan que la arquitectura mantiene características deseadas.
-
-**Propósito:** Prevenir erosión arquitectónica, validar constraints.
-
-**Beneficios:**
-✅ Arquitectura protegida automáticamente
-✅ Refactoring seguro
-✅ Onboarding más fácil
-
-### Ejemplo
-
-```csharp
-// Architecture Tests con ArchUnitNET
-[Fact]
-public void Domain_Should_Not_Depend_On_Infrastructure()
-{
-    var architecture = new ArchLoader()
-        .LoadAssemblies(typeof(Order).Assembly,  typeof(OrderRepository).Assembly)
-        .Build();
-
-    var rule = ArchRuleDefinition
-        .Types()
-        .That().ResideInNamespace("Domain")
-        .Should().NotDependOnAny("Infrastructure");
-
-    rule.Check(architecture);
-}
-
-[Fact]
-public void Controllers_Should_Not_Have_Business_Logic()
-{
-    var architecture = new ArchLoader().LoadAssemblies(typeof(OrdersController).Assembly).Build();
-
-    var rule = ArchRuleDefinition
-        .Classes()
-        .That().HaveNameEndingWith("Controller")
-        .Should().HaveMaximumMethodLength(50); // Controllers delgados
-
-    rule.Check(architecture);
-}
-```
+| Componente          | Tecnología       | Versión | Uso                           |
+| ------------------- | ---------------- | ------- | ----------------------------- |
+| **ADR**             | Markdown + Git   | -       | Architecture Decision Records |
+| **Evaluación tech** | Technology Radar | -       | Trackeo de tecnologías        |
 
 ---
 
@@ -182,97 +131,19 @@ review_date: 2026-08-18
 
 ---
 
-## Twelve-Factor App
-
-### ¿Qué es Twelve-Factor App?
-
-Metodología de 12 principios para construir apps cloud-native.
-
-**Factores clave:**
-
-1. **Codebase**: Un repo por app
-2. **Dependencies**: Declarar explícitamente
-3. **Config**: En environment variables
-4. **Backing Services**: Recursos adjuntos vía URL
-5. **Build/Release/Run**: Separación estricta
-6. **Processes**: Stateless
-7. **Port Binding**: Auto-contenido
-8. **Concurrency**: Escalar horizontalmente
-9. **Disposability**: Fast startup/shutdown
-10. **Dev/Prod Parity**: Minimizar diferencias
-11. **Logs**: Streams de eventos
-12. **Admin Processes**: One-off tasks
-
-:::note
-El Factor 6 (Processes: Stateless) se implementa mediante el patrón Stateless Design. Ver [Escalabilidad y Performance → Stateless Design](./scalability-performance.md).
-:::
-
-**Beneficios:**
-✅ Portabilidad cloud
-✅ Escalamiento horizontal
-✅ Deployment continuo
-
-### Ejemplo
-
-```csharp
-// Program.cs siguiendo twelve-factor
-var builder = WebApplication.CreateBuilder(args);
-
-// Factor 2: Dependencies explícitas (NuGet packages)
-builder.Services.AddControllers();
-builder.Services.AddHealthChecks();
-
-// Factor 3: Config en environment variables
-var dbConnection = builder.Configuration["DATABASE_URL"]
-    ?? throw new InvalidOperationException("DATABASE_URL required");
-
-// Factor 4: Backing services como recursos
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(dbConnection));
-
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration = builder.Configuration["REDIS_URL"];
-});
-
-// Factor 11: Logs como streams
-builder.Logging.AddJsonConsole();
-
-var app = builder.Build();
-
-// Factor 7: Port binding
-app.Urls.Add($"http://+:{Environment.GetEnvironmentVariable("PORT") ?? "8080"}");
-
-// Factor 6: Stateless processes
-// Factor 9: Graceful shutdown
-var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
-lifetime.ApplicationStopping.Register(() =>
-{
-    Console.WriteLine("Application stopping - draining requests");
-});
-
-app.Run();
-```
-
----
-
 ## Matriz de Decisión
 
-| Escenario         | Fitness Functions | Reversibility | Tech Selection | Twelve-Factor |
-| ----------------- | ----------------- | ------------- | -------------- | ------------- |
-| **Nueva app**     | ✅✅              | ✅✅✅        | ✅✅✅         | ✅✅✅        |
-| **Refactoring**   | ✅✅✅            | ✅✅          | ✅             | ✅            |
-| **Microservicio** | ✅✅              | ✅✅          | ✅✅           | ✅✅✅        |
+| Escenario         | Reversibility | Tech Selection |
+| ----------------- | ------------- | -------------- |
+| **Nueva app**     | ✅✅✅        | ✅✅✅         |
+| **Refactoring**   | ✅✅          | ✅             |
+| **Microservicio** | ✅✅          | ✅✅           |
 
 ---
 
 ## Requisitos Técnicos
 
 ### MUST (Obligatorio)
-
-**Fitness Functions:**
-
-- **MUST** implementar architecture tests en CI/CD
 
 **Reversibility:**
 
@@ -282,12 +153,6 @@ app.Run();
 
 - **MUST** documentar evaluación para tecnologías nuevas
 - **MUST** usar ADR para decisiones arquitectónicas
-
-**Twelve-Factor:**
-
-- **MUST** externalizar configuración
-- **MUST** diseñar stateless processes
-- **MUST** declarar dependencias explícitamente
 
 ### SHOULD (Fuertemente recomendado)
 
@@ -299,7 +164,6 @@ app.Run();
 
 - **MUST NOT** hardcodear configuración
 - **MUST NOT** adoptar tecnologías sin evaluación
-- **MUST NOT** ignorar fitness function failures
 
 ---
 
@@ -308,5 +172,4 @@ app.Run();
 - [Lineamiento Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento que origina este estándar
 - [Building Evolutionary Architectures (ThoughtWorks)](https://evolutionaryarchitecture.com/)
 - [The Twelve-Factor App](https://12factor.net/)
-- [ArchUnit](https://www.archunit.org/)
 - [Architecture Decision Records](https://adr.github.io/)
