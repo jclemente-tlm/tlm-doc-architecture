@@ -138,7 +138,7 @@ components:
             subject:
               type: "Customer"
               id: "f7c8e3a1-2b4d-4e6f-9a8b-1c2d3e4f5a6b"
-              tenantId: "tenant-001"
+              tenantId: "tlm-pe"
             data:
               customerId: "f7c8e3a1-2b4d-4e6f-9a8b-1c2d3e4f5a6b"
               name: "Acme Corporation"

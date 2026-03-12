@@ -14,7 +14,7 @@ Este estándar define cómo implementar arquitecturas multi-tenant de forma segu
 
 **Conceptos incluidos:**
 
-- **Modelos de aislamiento** → Realm / Schema / Database / Instance
+- **Modelos de aislamiento** → Tenant / Schema / Database / Instance
 - **Tenant Context Propagation** → Cómo fluye la identidad del tenant
 - **Per-Tenant Configuration** → Configuración versionada por país/cliente
 - **Tenant Validation en API Gateway** → Validación antes de enrutar
@@ -24,13 +24,13 @@ Este estándar define cómo implementar arquitecturas multi-tenant de forma segu
 
 ## Stack Tecnológico en Talma
 
-| Componente        | Tecnología         | Modelo de aislamiento                   |
-| ----------------- | ------------------ | --------------------------------------- |
-| **Autenticación** | Keycloak 23+       | Realm por país (`pe`, `ec`, `co`, `mx`) |
-| **API Gateway**   | Kong OSS 3.6       | Workspace por tenant (route-level)      |
-| **Base de datos** | PostgreSQL 15+     | Schema por tenant o DB por tenant       |
-| **IaC**           | Terraform          | Módulo por tenant, workspace por env    |
-| **Auditoría**     | Structured logging | Campo `tenant_id` indexado en Loki      |
+| Componente        | Tecnología         | Modelo de aislamiento                                  |
+| ----------------- | ------------------ | ------------------------------------------------------ |
+| **Autenticación** | Keycloak 23+       | Realm (tenant): `tlm-pe`, `tlm-ec`, `tlm-co`, `tlm-mx` |
+| **API Gateway**   | Kong OSS 3.6       | Workspace por tenant (route-level)                     |
+| **Base de datos** | PostgreSQL 15+     | Schema por tenant o DB por tenant                      |
+| **IaC**           | Terraform          | Módulo por tenant, workspace por env                   |
+| **Auditoría**     | Structured logging | Campo `tenant_id` indexado en Loki                     |
 
 ---
 
@@ -58,12 +58,12 @@ graph TB
 
 Cada servicio debe declarar explícitamente su modelo de aislamiento de datos:
 
-| Modelo               | Aislamiento                                           | Cuándo usarlo                            |
-| -------------------- | ----------------------------------------------------- | ---------------------------------------- |
-| **Realm** (Keycloak) | Alto — tokens y usuarios aislados por realm           | Servicio de identidad y autenticación    |
-| **Database**         | Máximo — DB separada por tenant                       | Datos altamente regulados o gran volumen |
-| **Schema**           | Alto — misma instancia, esquemas separados            | Mayoría de servicios en Talma            |
-| **Row-level**        | Bajo — datos en mismas tablas con columna `tenant_id` | Solo para datos de baja sensibilidad     |
+| Modelo        | Aislamiento                                           | Cuándo usarlo                            |
+| ------------- | ----------------------------------------------------- | ---------------------------------------- |
+| **Tenant**    | Alto — tokens y usuarios aislados por tenant          | Servicio de identidad y autenticación    |
+| **Database**  | Máximo — DB separada por tenant                       | Datos altamente regulados o gran volumen |
+| **Schema**    | Alto — misma instancia, esquemas separados            | Mayoría de servicios en Talma            |
+| **Row-level** | Bajo — datos en mismas tablas con columna `tenant_id` | Solo para datos de baja sensibilidad     |
 
 **Regla:** El modelo `row-level` sin RLS (Row Level Security) está prohibido en tablas con datos personales o financieros.
 
@@ -77,12 +77,12 @@ Cada servicio debe declarar explícitamente su modelo de aislamiento de datos:
 
 El tenant se propaga en todas las capas mediante:
 
-| Nivel             | Mecanismo                                    | Valor                          |
-| ----------------- | -------------------------------------------- | ------------------------------ |
-| **HTTP externo**  | JWT claim `tenant_id`                        | `"pe"`, `"ec"`, `"co"`, `"mx"` |
-| **HTTP interno**  | Header `X-Tenant-Id`                         | Mismo valor extraído del JWT   |
-| **Base de datos** | `SET app.current_tenant = 'pe'` (PostgreSQL) | Variable de sesión para RLS    |
-| **Logs**          | Campo `tenant_id` en JSON estructurado       | Indexado en Loki               |
+| Nivel             | Mecanismo                                        | Valor                                          |
+| ----------------- | ------------------------------------------------ | ---------------------------------------------- |
+| **HTTP externo**  | JWT claim `tenant_id`                            | `"tlm-pe"`, `"tlm-ec"`, `"tlm-co"`, `"tlm-mx"` |
+| **HTTP interno**  | Header `X-Tenant-Id`                             | Mismo valor extraído del JWT                   |
+| **Base de datos** | `SET app.current_tenant = 'tlm-pe'` (PostgreSQL) | Variable de sesión para RLS                    |
+| **Logs**          | Campo `tenant_id` en JSON estructurado           | Indexado en Loki                               |
 
 ```csharp
 // Middleware que extrae tenant_id del JWT y lo pone en HttpContext
@@ -120,10 +120,10 @@ Cada tenant tiene su propia configuración declarada en Terraform:
 # modules/tenant/main.tf
 module "tenant_pe" {
   source      = "./modules/tenant"
-  tenant_id   = "pe"
+  tenant_id   = "tlm-pe"
   region      = "us-east-1"
-  db_schema   = "pe_schema"
-  keycloak_realm = "pe"
+  db_schema   = "tlm_pe_schema"
+  keycloak_realm = "tlm-pe"
   feature_flags = {
     nueva_ui = true
     beta_api = false
@@ -163,8 +163,8 @@ end
 ```yaml
 routes:
   - name: orders-pe
-    paths: ["/pe/api/orders"]
-    tags: ["tenant:pe"]
+    paths: ["/tlm-pe/api/orders"]
+    tags: ["tenant:tlm-pe"]
     plugins:
       - name: tenant-validator
 ```
@@ -190,7 +190,7 @@ _logger.LogInformation(
   "timestamp": "2026-03-11T10:00:00Z",
   "level": "Information",
   "message": "Order 123 created",
-  "tenant_id": "pe",
+  "tenant_id": "tlm-pe",
   "user_id": "usr_abc",
   "order_id": "123",
   "service": "orders-api"
@@ -200,7 +200,7 @@ _logger.LogInformation(
 **Consulta de auditoría en Loki:**
 
 ```logql
-{service="orders-api"} | json | tenant_id="pe" | line_format "{{.timestamp}} {{.message}}"
+{service="orders-api"} | json | tenant_id="tlm-pe" | line_format "{{.timestamp}} {{.message}}"
 ```
 
 **Reglas:**

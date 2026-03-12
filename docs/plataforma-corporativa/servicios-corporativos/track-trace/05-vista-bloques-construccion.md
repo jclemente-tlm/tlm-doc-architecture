@@ -81,8 +81,8 @@ Esta sección describe la estructura modular del sistema **Track & Trace**, pres
 
 | id                                   | tenant_id  | country_code | allowed_event_types           | event_retention_days | max_payload_size | allowed_sources         | preferences                        | is_active | created_at           | updated_at           |
 |---------------------------------------|------------|--------------|------------------------------|---------------------|------------------|------------------------|-------------------------------------|-----------|----------------------|----------------------|
-| `7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d` | `tenant-pe`  | `PE`           | `["tracking","sita"]`        | `365`               | `1048576`        | `["appPeru","sitaGW"]`  | `{"idioma":"es"}`                  | `true`    | `2025-08-13T07:00:00Z` | `2025-08-13T07:00:00Z` |
-| `8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e` | `tenant-ec`  | `EC`           | `["tracking"]`               | `180`               | `524288`         | `["appEcuador"]`        | `{"idioma":"en"}`                  | `true`    | `2025-08-13T07:30:00Z` | `2025-08-13T07:30:00Z` |
+| `7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d` | `tlm-pe`  | `PE`           | `["tracking","sita"]`        | `365`               | `1048576`        | `["appPeru","sitaGW"]`  | `{"idioma":"es"}`                  | `true`    | `2025-08-13T07:00:00Z` | `2025-08-13T07:00:00Z` |
+| `8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e` | `tlm-ec`  | `EC`           | `["tracking"]`               | `180`               | `524288`         | `["appEcuador"]`        | `{"idioma":"en"}`                  | `true`    | `2025-08-13T07:30:00Z` | `2025-08-13T07:30:00Z` |
 
 ### Tabla: event_store
 

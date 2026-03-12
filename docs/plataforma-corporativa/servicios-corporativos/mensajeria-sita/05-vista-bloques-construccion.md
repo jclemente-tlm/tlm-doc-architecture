@@ -134,7 +134,7 @@ erDiagram
 
 | id                                   | tenant_id  | partner_id | event_id   | template_id | file_id   | status   | created_at           | sent_at              | error |
 |---------------------------------------|------------|------------|------------|-------------|-----------|----------|----------------------|----------------------|-------|
-| `1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f` | `tenant-pe`| `partner-01`| `evt-001`  | `tpl-001`   | `file-001`| sent     | `2025-09-24T10:01:00Z` | `2025-09-24T10:02:00Z` | NULL  |
+| `1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f` | `tlm-pe`| `partner-01`| `evt-001`  | `tpl-001`   | `file-001`| sent     | `2025-09-24T10:01:00Z` | `2025-09-24T10:02:00Z` | NULL  |
 
 ---
 
@@ -172,7 +172,7 @@ erDiagram
 
 | id                                   | tenant_id  | key           | value         | updated_at           |
 |---------------------------------------|------------|---------------|--------------|----------------------|
-| `ts-001`                             | `tenant-pe`| `timezone`    | `America/Lima`| `2025-09-24T08:00:00Z`|
+| `ts-001`                             | `tlm-pe`| `timezone`    | `America/Lima`| `2025-09-24T08:00:00Z`|
 
 ---
 
@@ -193,7 +193,7 @@ erDiagram
 
 | id                                   | tenant_id  | partner_id | send_method | endpoint                | credentials         | active | updated_at           |
 |---------------------------------------|------------|------------|------------|------------------------|---------------------|--------|----------------------|
-| `pc-001`                             | `tenant-pe`| `partner-01`| `sftp`     | `sftp://host`          | `{...}`             | true   | `2025-09-24T08:30:00Z`|
+| `pc-001`                             | `tlm-pe`| `partner-01`| `sftp`     | `sftp://host`          | `{...}`             | true   | `2025-09-24T08:30:00Z`|
 
 ---
 
@@ -212,6 +212,6 @@ erDiagram
 
 | id                                   | message_id | tenant_id  | storage_path         | file_name      | created_at           |
 |---------------------------------------|------------|------------|---------------------|---------------|----------------------|
-| `file-001`                           | `1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f`| `tenant-pe` | `/sita/2025/09/24/` | `FBL_001.txt` | `2025-09-24T10:02:00Z`|
+| `file-001`                           | `1e2d3c4b-5a6f-7e8d-9c0b-1a2b3c4d5e6f`| `tlm-pe` | `/sita/2025/09/24/` | `FBL_001.txt` | `2025-09-24T10:02:00Z`|
 
 ---
