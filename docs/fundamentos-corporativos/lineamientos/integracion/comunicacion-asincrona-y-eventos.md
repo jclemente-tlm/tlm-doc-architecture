@@ -20,3 +20,10 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 - [Configurar garantías de entrega](../../estandares/mensajeria/message-delivery-guarantees.md)
 - [Implementar Dead Letter Queue](../../estandares/mensajeria/dead-letter-queue.md)
 - [Mantener catálogo de eventos](../../estandares/mensajeria/event-catalog.md)
+
+## Referencias Relacionadas
+
+- [APIs y Contratos de Integración](./apis-y-contratos.md)
+- [Consistencia y Sincronización](../datos/consistencia-y-sincronizacion.md)
+- [Escalabilidad y Rendimiento](../arquitectura/escalabilidad-y-rendimiento.md)
+- [Resiliencia y Disponibilidad](../arquitectura/resiliencia-y-disponibilidad.md)

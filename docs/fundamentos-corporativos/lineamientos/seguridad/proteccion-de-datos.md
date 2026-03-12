@@ -20,3 +20,10 @@ La exposición de datos sensibles genera incidentes de seguridad, incumplimiento
 - [Aplicar enmascaramiento y tokenización](../../estandares/seguridad/data-protection.md#3-data-masking)
 - [Implementar prevención de pérdida de datos](../../estandares/seguridad/data-protection.md)
 - [Aplicar minimización de datos](../../estandares/seguridad/data-protection.md)
+
+## Referencias Relacionadas
+
+- [Identidad y Accesos](./identidad-y-accesos.md)
+- [Arquitectura Segura](./arquitectura-segura.md)
+- [Multi-tenancy](../arquitectura/multi-tenancy.md)
+- [Gestión de Vulnerabilidades](./gestion-vulnerabilidades.md)

@@ -19,3 +19,10 @@ Las arquitecturas de red plana permiten que compromisos localizados se propaguen
 - [Usar redes virtuales aisladas](../../estandares/infraestructura/virtual-networks.md)
 - [Configurar grupos de seguridad y listas de control](../../estandares/seguridad/network-segmentation.md)
 - [Implementar políticas de red en orquestación](../../estandares/seguridad/network-segmentation.md)
+
+## Referencias Relacionadas
+
+- [Arquitectura Segura](./arquitectura-segura.md)
+- [Zero Trust](./zero-trust.md)
+- [Defensa en Profundidad](./defensa-en-profundidad.md)
+- [Infraestructura como Código](../operabilidad/infraestructura-como-codigo.md) (networking, VPCs)

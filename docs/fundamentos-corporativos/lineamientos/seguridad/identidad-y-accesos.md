@@ -20,3 +20,10 @@ La gestión fragmentada de identidades genera credenciales dispersas, permisos e
 - [Implementar protocolos estándar de autenticación/autorización](../../estandares/seguridad/sso-mfa-rbac.md)
 - [Gestionar ciclo de vida de identidades](../../estandares/seguridad/iam-advanced.md)
 - [Implementar políticas de contraseñas](../../estandares/seguridad/iam-advanced.md)
+
+## Referencias Relacionadas
+
+- [Zero Trust](./zero-trust.md)
+- [Mínimo Privilegio](./minimo-privilegio.md)
+- [Arquitectura Segura](./arquitectura-segura.md)
+- [Protección de Datos](./proteccion-de-datos.md)

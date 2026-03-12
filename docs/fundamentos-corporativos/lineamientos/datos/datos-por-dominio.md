@@ -19,3 +19,10 @@ Bases de datos compartidas y esquemas implícitos generan acoplamiento oculto, d
 - [Versionar esquemas de BD con migraciones](../../estandares/datos/database-standards.md#1-database-migrations)
 - [Validar datos contra esquemas](../../estandares/datos/database-standards.md#4-data-validation)
 - [Aplicar estrategia expand-contract](../../estandares/datos/data-consistency.md#4-expand-contract-pattern)
+
+## Referencias Relacionadas
+
+- [Propiedad de Datos](./propiedad-de-datos.md)
+- [Consistencia y Sincronización](./consistencia-y-sincronizacion.md)
+- [Autonomía de Servicios](../arquitectura/autonomia-de-servicios.md)
+- [APIs y Contratos de Integración](../integracion/apis-y-contratos.md)

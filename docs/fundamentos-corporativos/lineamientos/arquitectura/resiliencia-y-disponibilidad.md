@@ -20,3 +20,10 @@ Sistemas distribuidos enfrentan fallos inevitables: dependencias caídas, latenc
 - [Implementar bulkhead para aislamiento de recursos](../../estandares/arquitectura/resilience-patterns.md#4-bulkhead)
 - [Aplicar rate limiting para protección de sobrecarga](../../estandares/arquitectura/resilience-patterns.md#5-rate-limiting)
 - [Configurar health checks para detección de fallos](../../estandares/arquitectura/scalability-performance.md#5-health-checks)
+
+## Referencias Relacionadas
+
+- [Escalabilidad y Rendimiento](./escalabilidad-y-rendimiento.md)
+- [Observabilidad](../operabilidad/observabilidad.md)
+- [Cloud Native](./cloud-native.md)
+- [Disaster Recovery](../operabilidad/disaster-recovery.md)

@@ -7,9 +7,9 @@ description: Estrategias de caché para reducir latencia, proteger backends y me
 
 # Caching
 
-Sin una estrategia de caché deliberada, los servicios someten innecesariamente backends y bases de datos a cargas repetitivas, incrementan latencia y generan indisponibilidades en cascada ante picos de tráfico. Una estrategia de caché bien diseñada reduce latencia, protege backends críticos y mejora disponibilidad, pero requiere definir explícitamente qué cachear, por cuánto tiempo y cómo invalidar, para evitar datos desactualizados que compromentan consistencia o seguridad.
+Sin una estrategia de caché deliberada, los servicios someten innecesariamente backends y bases de datos a cargas repetitivas, incrementan latencia y generan indisponibilidades en cascada ante picos de tráfico. Una estrategia de caché bien diseñada reduce latencia, protege backends críticos y mejora disponibilidad, pero requiere definir explícitamente qué cachear, por cuánto tiempo y cómo invalidar, para evitar datos desactualizados que comprometan consistencia o seguridad.
 
-**Este lineamiento aplica a:** aPIs con datos de lectura frecuente, validación de tokens JWT (JWKS), sesiones de usuario, configuración de tenants, respuestas de servicios externos y cualquier dato con alta frecuencia de lectura y baja frecuencia de cambio.
+**Este lineamiento aplica a:** APIs con datos de lectura frecuente, validación de tokens JWT (JWKS), sesiones de usuario, configuración de tenants, respuestas de servicios externos y cualquier dato con alta frecuencia de lectura y baja frecuencia de cambio.
 
 ## Prácticas Obligatorias
 

@@ -21,4 +21,7 @@ Dividir sistemas en componentes con límites claros facilita el mantenimiento, l
 
 ## Referencias Relacionadas
 
-- [Establecer contratos explícitos en los límites](../integracion/apis-y-contratos.md)
+- [APIs y Contratos de Integración](../integracion/apis-y-contratos.md)
+- [Modelado de Dominio](./modelado-de-dominio.md)
+- [Autonomía de Servicios](./autonomia-de-servicios.md)
+- [Arquitectura Limpia](./arquitectura-limpia.md)

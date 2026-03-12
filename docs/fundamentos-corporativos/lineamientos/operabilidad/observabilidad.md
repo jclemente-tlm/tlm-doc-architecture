@@ -17,6 +17,13 @@ Los servicios distribuidos deben instrumentar trazas, métricas y logs como requ
 - [Emitir métricas siguiendo RED/USE](../../estandares/observabilidad/metrics.md)
 - [Implementar distributed tracing con W3C Trace Context](../../estandares/observabilidad/distributed-tracing.md#1-distributed-tracing)
 - [Usar correlation IDs entre servicios](../../estandares/observabilidad/distributed-tracing.md#2-correlation-ids)
-- [Definir SLIs, SLOs y SLAs](../../estandares/observabilidad/distributed-tracing.md#3-slo-sla)
+- [Definir SLIs, SLOs y SLAs](../../estandares/observabilidad/slo-sla.md)
 - [Configurar alertas basadas en SLOs](../../estandares/observabilidad/alerting.md)
 - [Implementar dashboards operacionales](../../estandares/observabilidad/dashboards.md)
+
+## Referencias Relacionadas
+
+- [Resiliencia y Disponibilidad](../arquitectura/resiliencia-y-disponibilidad.md)
+- [Escalabilidad y Rendimiento](../arquitectura/escalabilidad-y-rendimiento.md)
+- [CI/CD y Automatización](./cicd-pipelines.md)
+- [Disaster Recovery](./disaster-recovery.md)

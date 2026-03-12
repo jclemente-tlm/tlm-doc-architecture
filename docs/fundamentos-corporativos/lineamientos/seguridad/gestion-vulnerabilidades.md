@@ -20,3 +20,10 @@ Los sistemas deben mantener una gestión proactiva y continua de vulnerabilidade
 - [Implementar patch management](../../estandares/seguridad/security-governance.md#5-patch-management)
 - [Realizar pentesting periódico](../../estandares/testing/security-testing.md#2-penetration-testing)
 - [Mantener registro de vulnerabilidades](../../estandares/testing/security-testing.md#3-vulnerability-tracking)
+
+## Referencias Relacionadas
+
+- [Arquitectura Segura](./arquitectura-segura.md)
+- [CI/CD y Automatización](../operabilidad/cicd-pipelines.md) (security scanning en pipelines)
+- [Protección de Datos](./proteccion-de-datos.md)
+- [Infraestructura como Código](../operabilidad/infraestructura-como-codigo.md)

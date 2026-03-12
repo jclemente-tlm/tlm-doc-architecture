@@ -19,3 +19,10 @@ Sistemas distribuidos requieren trade-offs entre consistencia, disponibilidad y 
 - [Gestionar replicación de datos](../../estandares/datos/data-consistency.md#3-data-replication)
 - [Aplicar CQRS cuando corresponda](../../estandares/arquitectura/cqrs.md#cqrs-pattern)
 - [Implementar compensaciones para rollback](../../estandares/mensajeria/messaging-patterns.md#compensation-pattern)
+
+## Referencias Relacionadas
+
+- [Datos por Dominio](./datos-por-dominio.md)
+- [Propiedad de Datos](./propiedad-de-datos.md)
+- [Comunicación Asíncrona y Eventos](../integracion/comunicacion-asincrona-y-eventos.md)
+- [Resiliencia y Disponibilidad](../arquitectura/resiliencia-y-disponibilidad.md)

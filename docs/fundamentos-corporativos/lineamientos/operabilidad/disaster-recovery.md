@@ -24,5 +24,5 @@ Ausencia de plan de recuperación ante desastres expone organización a pérdida
 ## Referencias Relacionadas
 
 - [Resiliencia y Disponibilidad](../arquitectura/resiliencia-y-disponibilidad.md) (patrones de resiliencia)
-- [Observabilidad](../arquitectura/observabilidad.md) (detección temprana de problemas)
+- [Observabilidad](./observabilidad.md) (detección temprana de problemas)
 - [CI/CD Pipelines](./cicd-pipelines.md) (automatización de deployments y rollbacks)

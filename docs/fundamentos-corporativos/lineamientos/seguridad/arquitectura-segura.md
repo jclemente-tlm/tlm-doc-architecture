@@ -19,3 +19,10 @@ Las vulnerabilidades incorporadas durante el diseño arquitectónico generan exp
 - [Reducir superficie de ataque](../../estandares/seguridad/network-segmentation.md)
 - [Realizar security architecture review](../../estandares/seguridad/security-governance.md#2-security-architecture-review)
 - [Aplicar secure defaults](../../estandares/seguridad/security-governance.md#7-secure-defaults)
+
+## Referencias Relacionadas
+
+- [Zero Trust](./zero-trust.md)
+- [Defensa en Profundidad](./defensa-en-profundidad.md)
+- [Mínimo Privilegio](./minimo-privilegio.md)
+- [Gestión de Vulnerabilidades](./gestion-vulnerabilidades.md)

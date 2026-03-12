@@ -9,7 +9,7 @@ description: Estrategia de testing automatizado multinivel para garantizar calid
 
 La ausencia de testing automatizado genera código frágil, regresiones frecuentes y acumulación de deuda técnica que ralentiza entregas y compromete estabilidad de producción. Dependencia exclusiva de testing manual limita cobertura, velocidad de validación y capacidad de refactoring seguro. Implementar estrategia de pruebas multinivel (unitarias, integración, contrato) con continuous testing en CI/CD detecta defectos tempranamente, permite entregas frecuentes con confianza y mantiene calidad sostenible del software.
 
-> **Nota:** Para monitoreo, alertas y observabilidad ver [Observabilidad](../arquitectura/observabilidad.md).
+> **Nota:** Para monitoreo, alertas y observabilidad ver [Observabilidad](../operabilidad/observabilidad.md).
 
 **Este lineamiento aplica a:** pruebas automatizadas (unitarias, integración, e2e), testing de contratos entre servicios, cobertura de código, continuous testing en CI/CD, frameworks de testing (xUnit, Moq).
 
@@ -28,4 +28,4 @@ La ausencia de testing automatizado genera código frágil, regresiones frecuent
 ## Referencias Relacionadas
 
 - [Calidad de Código](./calidad-codigo.md) (estándares de código y revisiones)
-- [Observabilidad](../arquitectura/observabilidad.md) (monitoreo y alertas en producción)
+- [Observabilidad](../operabilidad/observabilidad.md) (monitoreo y alertas en producción)

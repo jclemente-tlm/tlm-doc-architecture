@@ -19,3 +19,9 @@ Decisiones arquitectónicas no documentadas se pierden con rotación de personal
 - [Versionar ADRs con el código](../../estandares/gobierno/adr-management.md#adr-versioning)
 - [Mantener registro centralizado de ADRs](../../estandares/gobierno/adr-management.md#adr-registry)
 - [Actualizar o deprecar ADRs obsoletos](../../estandares/gobierno/adr-management.md#adr-lifecycle)
+
+## Referencias Relacionadas
+
+- [Revisiones Arquitectónicas](./revisiones-arquitectonicas.md)
+- [Cumplimiento y Excepciones](./cumplimiento-y-excepciones.md)
+- [Documentación Técnica](../desarrollo/documentacion-tecnica.md)

@@ -19,3 +19,10 @@ La divergencia entre entornos de desarrollo, QA y producción genera el síndrom
 - [Garantizar paridad entre entornos](../../estandares/infraestructura/environment-parity.md)
 - [Gestionar variables por entorno](../../estandares/infraestructura/configuration-management.md)
 - [Nunca hardcodear configuración](../../estandares/desarrollo/app-configuration.md)
+
+## Referencias Relacionadas
+
+- [Infraestructura como Código](./infraestructura-como-codigo.md)
+- [CI/CD y Automatización](./cicd-pipelines.md)
+- [Contenedores y Despliegue](./contenedores-y-despliegue.md)
+- [Cloud Native](../arquitectura/cloud-native.md)
