@@ -27,7 +27,7 @@ Este estándar define los **patrones para pruebas End-to-End**: validación de u
 
 ## Pruebas End-to-End
 
-### ¿Qué es E2E Testing?
+### ¿Qué son las Pruebas End-to-End?
 
 Tests que validan user journeys completos desde perspectiva del usuario, incluyendo UI, APIs, databases y servicios externos. Simula interacción real del usuario.
 

@@ -1,12 +1,12 @@
 ---
 id: test-automation
 sidebar_position: 2
-title: Automatización de Tests
-description: Estándares para ejecución automática en CI/CD, quality gates y ejecución paralela de tests
+title: Automatización de Pruebas
+description: Estándares para ejecución automática en CI/CD, quality gates y ejecución paralela de pruebas
 tags: [testing, automatizacion, ci-cd, github-actions, sonarqube]
 ---
 
-# Automatización de Tests
+# Automatización de Pruebas
 
 ## Contexto
 
@@ -26,9 +26,9 @@ Este estándar define la **automatización de tests en CI/CD**: ejecución autom
 
 ---
 
-## Automatización de Tests
+## Automatización de Pruebas
 
-### ¿Qué es Test Automation?
+### ¿Qué es la Automatización de Pruebas?
 
 Ejecución automática de tests en CI/CD con gates de calidad que bloquean merges/deployments si tests fallan o coverage baja.
 

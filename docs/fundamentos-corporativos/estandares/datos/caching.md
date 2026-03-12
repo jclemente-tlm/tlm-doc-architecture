@@ -1,12 +1,12 @@
 ---
 id: caching
 sidebar_position: 4
-title: Caching
+title: Caché
 description: Estándares para implementar estrategias de caché — TTL, invalidación, caché distribuida con Redis ElastiCache, seguridad y monitoreo de efectividad.
 tags: [datos, caching, redis, ttl, invalidacion, rendimiento]
 ---
 
-# Caching
+# Caché
 
 ## Contexto
 
@@ -94,7 +94,7 @@ public class TenantConfigService
 
 ---
 
-## TTL Management
+## Gestión de TTL
 
 ### TTL por tipo de dato
 
@@ -121,7 +121,7 @@ private static readonly TimeSpan TenantConfigTtl = TimeSpan.FromMinutes(10);
 
 ---
 
-## Distributed Cache (Redis ElastiCache)
+## Caché Distribuida (Redis ElastiCache)
 
 ### Cuándo usar Redis vs IMemoryCache
 
@@ -158,7 +158,7 @@ Ejemplos:
 
 ---
 
-## Cache Invalidation
+## Invalidación de Caché
 
 ### Estrategias de invalidación
 
@@ -185,7 +185,7 @@ public async Task UpdateTenantConfigAsync(string tenantId, TenantConfig config)
 
 ---
 
-## Cache Security
+## Seguridad del Caché
 
 ### Datos prohibidos sin protección adicional
 
@@ -221,7 +221,7 @@ Exponer las siguientes métricas via Prometheus:
 
 ---
 
-## Checklist Caching
+## Lista de Verificación del Caché
 
 | Aspecto       | Verificación                                                           |
 | ------------- | ---------------------------------------------------------------------- |

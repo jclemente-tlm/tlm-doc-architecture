@@ -28,7 +28,7 @@ Este estándar define la **pirámide de testing**: proporciones óptimas entre t
 
 ## Pirámide de Testing
 
-### ¿Qué es la Testing Pyramid?
+### ¿Qué es la Pirámide de Testing?
 
 Estrategia que define proporciones óptimas entre tipos de tests para balance entre velocidad, costo y confianza.
 

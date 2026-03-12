@@ -30,9 +30,9 @@ Este estándar define **performance testing** para validar que servicios cumplen
 
 ---
 
-## Performance Testing
+## Pruebas de Performance
 
-### ¿Qué es Performance Testing?
+### ¿Qué son las Pruebas de Performance?
 
 Tests que validan comportamiento del sistema bajo carga simulada. Mide latency, throughput, resource utilization para garantizar cumplimiento de SLAs.
 

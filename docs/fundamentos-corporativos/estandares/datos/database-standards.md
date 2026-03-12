@@ -65,7 +65,7 @@ graph TB
 
 ---
 
-## Database Migrations
+## Migraciones de Base de Datos
 
 ### ¿Qué son las Migraciones de Base de Datos?
 
@@ -324,7 +324,7 @@ public class GoodMigration : Migration
 
 ---
 
-## SQL Naming Conventions
+## Convenciones de Nomenclatura SQL
 
 ### Propósito
 
@@ -507,7 +507,7 @@ var errorCode  = parameters[6].Value as string;
 
 ---
 
-## Database Optimization
+## Optimización de Base de Datos
 
 ### ¿Qué es la Optimización de Base de Datos?
 
@@ -922,7 +922,7 @@ builder.Services.AddHealthChecks()
 
 ---
 
-## Data Validation
+## Validación de Datos
 
 ### ¿Qué es la Validación de Datos?
 

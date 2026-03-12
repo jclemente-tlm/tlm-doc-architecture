@@ -13,8 +13,8 @@ Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar
 
 ## Prácticas Obligatorias
 
-- [Implementar database per service](../../estandares/datos/data-architecture.md#1-database-per-service)
-- [Prohibir bases de datos compartidas](../../estandares/datos/data-architecture.md#2-no-shared-database)
+- [Implementar database per service](../../estandares/datos/data-architecture.md#database-per-service)
+- [Prohibir bases de datos compartidas](../../estandares/datos/data-architecture.md#no-shared-database)
 - [Habilitar despliegue independiente](../../estandares/infraestructura/independent-deployment.md)
 - [Usar comunicación asíncrona para desacoplamiento](../../estandares/mensajeria/async-messaging.md)
 - [Establecer contratos explícitos en los límites](../../estandares/apis/api-contracts.md)

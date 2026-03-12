@@ -114,9 +114,9 @@ public class ProductService
 
 ---
 
-## Loose Coupling
+## Bajo Acoplamiento
 
-### ¿Qué es Loose Coupling?
+### ¿Qué es el Bajo Acoplamiento?
 
 Minimizar dependencias directas entre componentes usando abstracciones.
 
@@ -163,9 +163,9 @@ public class OrderProcessor
 
 ---
 
-## Dependency Management
+## Gestión de Dependencias
 
-### ¿Qué es Dependency Management?
+### ¿Qué es la Gestión de Dependencias?
 
 Control explícito de todas las dependencias externas del proyecto.
 

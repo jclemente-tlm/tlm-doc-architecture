@@ -1,12 +1,12 @@
 ---
 id: contract-testing
 sidebar_position: 6
-title: Contract Testing
+title: Pruebas de Contrato
 description: Estándares para consumer-driven contract testing con PactNet y Pact Broker
 tags: [testing, contract-testing, pact, pactnet, consumer-driven]
 ---
 
-# Contract Testing
+# Pruebas de Contrato
 
 ## Contexto
 
@@ -25,9 +25,9 @@ Este estándar define los **patrones para contract testing**: validación de que
 
 ---
 
-## Contract Testing
+## Pruebas de Contrato
 
-### ¿Qué es Contract Testing?
+### ¿Qué son las Pruebas de Contrato?
 
 Consumer-Driven Contract Testing valida que el API provider cumple el contrato esperado por consumers, sin necesidad de integration testing end-to-end. El consumer define las expectations (pact) y el provider las verifica.
 

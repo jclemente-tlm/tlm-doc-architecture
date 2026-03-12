@@ -27,7 +27,7 @@ Este estándar define los **patrones y herramientas para pruebas unitarias**: te
 
 ## Pruebas Unitarias
 
-### ¿Qué es Unit Testing?
+### ¿Qué son las Pruebas Unitarias?
 
 Tests que verifican comportamiento de una unidad de código (método, clase) de forma aislada, mockeando todas las dependencias externas.
 

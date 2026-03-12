@@ -51,7 +51,7 @@ graph TB
 
 ---
 
-## Consistency Models
+## Modelos de Consistencia
 
 ### ¿Qué son los Modelos de Consistencia?
 
@@ -351,7 +351,7 @@ public class CustomerService
 
 ---
 
-## Conflict Resolution
+## Resolución de Conflictos
 
 ### ¿Qué es la Resolución de Conflictos?
 
@@ -599,7 +599,7 @@ public class InventoryService
 
 ---
 
-## Data Replication
+## Replicación de Datos
 
 ### ¿Qué es la Replicación de Datos?
 

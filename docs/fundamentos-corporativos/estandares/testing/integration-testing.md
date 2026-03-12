@@ -29,7 +29,7 @@ Este estándar define los **patrones para pruebas de integración**: tests que v
 
 ## Pruebas de Integración
 
-### ¿Qué es Integration Testing?
+### ¿Qué son las Pruebas de Integración?
 
 Tests que verifican integración real entre componentes usando infraestructura real (DB, message brokers) vía Testcontainers.
 

@@ -13,12 +13,12 @@ Bases de datos compartidas y esquemas implícitos generan acoplamiento oculto, d
 
 ## Prácticas Obligatorias
 
-- [Implementar database per service](../../estandares/datos/data-architecture.md#1-database-per-service)
-- [Prohibir bases de datos compartidas](../../estandares/datos/data-architecture.md#2-no-shared-database)
-- [Exponer datos solo mediante APIs o eventos](../../estandares/datos/data-architecture.md#6-data-exposure)
+- [Implementar database per service](../../estandares/datos/data-architecture.md#database-per-service)
+- [Prohibir bases de datos compartidas](../../estandares/datos/data-architecture.md#no-shared-database)
+- [Exponer datos solo mediante APIs o eventos](../../estandares/datos/data-architecture.md#exposición-de-datos)
 - [Versionar esquemas de BD con migraciones](../../estandares/datos/database-standards.md#1-database-migrations)
 - [Validar datos contra esquemas](../../estandares/datos/database-standards.md#4-data-validation)
-- [Aplicar estrategia expand-contract](../../estandares/datos/data-consistency.md#4-expand-contract-pattern)
+- [Aplicar estrategia expand-contract](../../estandares/datos/data-consistency.md#expand-contract-pattern)
 
 ## Referencias Relacionadas
 

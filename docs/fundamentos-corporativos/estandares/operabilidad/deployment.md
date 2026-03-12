@@ -1,12 +1,12 @@
 ---
 id: deployment
 sidebar_position: 2
-title: Deployment
+title: Despliegue
 description: Estándares consolidados para estrategias de deployment, trazabilidad, rollback automatizado e implementación integrada
 tags: [operabilidad, deployment, blue-green, canary, rollback, trazabilidad]
 ---
 
-# Deployment
+# Despliegue
 
 ## Contexto
 
@@ -33,7 +33,7 @@ Este estándar consolida **3 conceptos** del flujo de despliegue a producción. 
 
 ---
 
-## Flujo de Deployment
+## Flujo de Despliegue
 
 ```mermaid
 graph LR
@@ -55,9 +55,9 @@ graph LR
 
 ---
 
-## Deployment Strategies
+## Estrategias de Despliegue
 
-### ¿Qué son las Deployment Strategies?
+### ¿Qué son las Estrategias de Despliegue?
 
 Patrones para desplegar nuevas versiones minimizando downtime y riesgo mediante técnicas como blue-green, canary o rolling updates.
 
@@ -237,9 +237,9 @@ Hooks:
 
 ---
 
-## Deployment Traceability
+## Trazabilidad de Despliegue
 
-### ¿Qué es Deployment Traceability?
+### ¿Qué es la Trazabilidad de Despliegue?
 
 Capacidad de rastrear exactamente qué código, configuración y artefactos se desplegaron en cada ambiente, vinculando deployments con commits, PRs, issues y responsables.
 
@@ -281,7 +281,7 @@ COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "OrderService.Api.dll"]
 ```
 
-### Endpoint de Deployment Info
+### Endpoint de Información de Despliegue
 
 ```csharp
 // src/OrderService.Api/Models/DeploymentInfo.cs
@@ -360,9 +360,9 @@ app.MapGet("/api/info", (IConfiguration config) =>
 
 ---
 
-## Rollback Automation
+## Automatización de Rollback
 
-### ¿Qué es Rollback Automation?
+### ¿Qué es la Automatización de Rollback?
 
 Capacidad de revertir rápida y automáticamente a una versión anterior estable ante fallos detectados en el deployment.
 

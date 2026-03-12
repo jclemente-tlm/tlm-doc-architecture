@@ -52,9 +52,9 @@ graph TB
 
 ---
 
-## Code Conventions
+## Convenciones de Código
 
-### ¿Qué son las Code Conventions?
+### ¿Qué son las Convenciones de Código?
 
 Conjunto de reglas de estilo y estructura de código para mantener consistencia entre desarrolladores y proyectos.
 
@@ -282,9 +282,9 @@ public class CreateCustomerUseCase
 
 ---
 
-## Code Review
+## Revisión de Código
 
-### ¿Qué es Code Review?
+### ¿Qué es la Revisión de Código?
 
 Proceso sistemático de inspección de código por pares antes de integrar cambios, asegurando calidad, correctitud y alineación con estándares.
 

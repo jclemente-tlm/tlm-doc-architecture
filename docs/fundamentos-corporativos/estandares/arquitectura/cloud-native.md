@@ -52,9 +52,9 @@ graph TB
 
 ---
 
-## Stateless Design
+## Diseño sin Estado
 
-### ¿Qué es Stateless Design?
+### ¿Qué es el Diseño sin Estado?
 
 Un servicio es stateless cuando no retiene estado entre peticiones: cualquier instancia puede atender cualquier request con el mismo resultado. El estado (sesiones, caché compartida) se externaliza a Redis, base de datos o el cliente.
 
@@ -84,9 +84,9 @@ public class OrderService
 
 ---
 
-## Configuration Externalization
+## Externalización de Configuración
 
-### ¿Qué es Configuration Externalization?
+### ¿Qué es la Externalización de Configuración?
 
 Toda configuración que varía entre entornos (dev/qa/prod) debe provenir del entorno, nunca estar embebida en el artefacto de despliegue.
 
@@ -115,7 +115,7 @@ Toda configuración que varía entre entornos (dev/qa/prod) debe provenir del en
 
 ---
 
-## Disposability (Desechabilidad)
+## Desechabilidad
 
 ### Arranque rápido y Graceful Shutdown
 
@@ -213,7 +213,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
 
 ---
 
-## Cost Awareness
+## Gestión del Costo en Cloud
 
 ### Diseño consciente del costo
 
@@ -240,7 +240,7 @@ tags = {
 
 ---
 
-## Checklist Cloud-Native
+## Lista de Verificación Cloud-Native
 
 | Aspecto           | Verificación                                               |
 | ----------------- | ---------------------------------------------------------- |

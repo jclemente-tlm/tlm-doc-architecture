@@ -27,7 +27,7 @@ Este estándar define los **objetivos y configuración de cobertura de código**
 
 ## Cobertura de Código
 
-### ¿Qué es Test Coverage?
+### ¿Qué es la Cobertura de Código?
 
 Métrica que mide porcentaje de código ejecutado por tests. Incluye line coverage, branch coverage y method coverage.
 

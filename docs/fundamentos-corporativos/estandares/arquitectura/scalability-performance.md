@@ -34,9 +34,9 @@ Este estándar consolida patrones para sistemas escalables y performantes. Compl
 
 ---
 
-## Stateless Design
+## Diseño sin Estado
 
-### ¿Qué es Stateless Design?
+### ¿Qué es el Diseño sin Estado?
 
 Diseñar servicios donde cada request es independiente, sin estado almacenado localmente.
 
@@ -78,9 +78,9 @@ El principio de procesos sin estado es también el Factor 6 de [Twelve-Factor Ap
 
 ---
 
-## Caching Strategies
+## Estrategias de Caché
 
-### ¿Qué son Caching Strategies?
+### ¿Qué son las Estrategias de Caché?
 
 Estrategias de almacenamiento temporal para reducir latencia y carga.
 
@@ -133,9 +133,9 @@ public class ProductService
 
 ---
 
-## Horizontal Scaling
+## Escalado Horizontal
 
-### ¿Qué es Horizontal Scaling?
+### ¿Qué es el Escalado Horizontal?
 
 Incrementar capacidad agregando más instancias vs aumentar recursos de una instancia.
 
@@ -167,9 +167,9 @@ service:
 
 ---
 
-## Load Balancing
+## Balanceo de Carga
 
-### ¿Qué es Load Balancing?
+### ¿Qué es el Balanceo de Carga?
 
 Distribución de tráfico entre múltiples instancias usando AWS ALB como capa L7.
 

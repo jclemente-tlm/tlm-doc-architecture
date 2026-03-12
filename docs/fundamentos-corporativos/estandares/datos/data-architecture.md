@@ -430,9 +430,9 @@ builder.Services.ConfigureHttpClientDefaults(http =>
 
 ---
 
-## Data Ownership
+## Propiedad de Datos
 
-### ¿Qué es Data Ownership?
+### ¿Qué es la Propiedad de Datos?
 
 Definición clara de qué equipo/servicio es el propietario (owner) y autoridad sobre un dominio de datos específico.
 
@@ -453,10 +453,10 @@ Definición clara de qué equipo/servicio es el propietario (owner) y autoridad 
 ✅ Evolución coordinada
 ✅ Soporte y troubleshooting eficiente
 
-### Matriz de Ownership
+### Matriz de Propiedad
 
 ```markdown
-## Data Ownership Matrix
+## Matriz de Propiedad de Datos
 
 | Dominio de Datos | Owner (Equipo) | Owner (Servicio)  | Tipo de Datos         | Exposición        |
 | ---------------- | -------------- | ----------------- | --------------------- | ----------------- |
@@ -550,9 +550,9 @@ public class PIIAttribute : Attribute
 
 ---
 
-## Data Governance
+## Gobierno de Datos
 
-### ¿Qué es Data Governance?
+### ¿Qué es el Gobierno de Datos?
 
 Conjunto de políticas, procesos y estándares para gestionar datos como activos corporativos.
 
@@ -700,9 +700,9 @@ public class CustomerDataQualityValidator : IDataQualityValidator
 
 ---
 
-## Data Catalog
+## Catálogo de Datos
 
-### ¿Qué es un Data Catalog?
+### ¿Qué es un Catálogo de Datos?
 
 Inventario centralizado de todos los assets de datos en la organización con sus metadatos, ownership y lineage.
 
@@ -760,9 +760,9 @@ datasets:
 
 ---
 
-## Data Exposure
+## Exposición de Datos
 
-### ¿Qué es Data Exposure?
+### ¿Qué es la Exposición de Datos?
 
 Estrategias y patrones para exponer datos de un servicio a otros servicios de forma controlada y segura.
 

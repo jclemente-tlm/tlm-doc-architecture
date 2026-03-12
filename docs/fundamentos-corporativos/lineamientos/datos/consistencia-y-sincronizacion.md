@@ -13,10 +13,10 @@ Sistemas distribuidos requieren trade-offs entre consistencia, disponibilidad y 
 
 ## Prácticas Obligatorias
 
-- [Definir modelo de consistencia por caso de uso](../../estandares/datos/data-consistency.md#1-consistency-models)
+- [Definir modelo de consistencia por caso de uso](../../estandares/datos/data-consistency.md#modelos-de-consistencia)
 - [Implementar saga pattern para transacciones distribuidas](../../estandares/mensajeria/messaging-patterns.md#saga-pattern)
-- [Implementar estrategias de resolución de conflictos](../../estandares/datos/data-consistency.md#2-conflict-resolution)
-- [Gestionar replicación de datos](../../estandares/datos/data-consistency.md#3-data-replication)
+- [Implementar estrategias de resolución de conflictos](../../estandares/datos/data-consistency.md#resolución-de-conflictos)
+- [Gestionar replicación de datos](../../estandares/datos/data-consistency.md#replicación-de-datos)
 - [Aplicar CQRS cuando corresponda](../../estandares/arquitectura/cqrs.md#cqrs-pattern)
 - [Implementar compensaciones para rollback](../../estandares/mensajeria/messaging-patterns.md#compensation-pattern)
 
