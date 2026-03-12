@@ -11,7 +11,7 @@ Cada dominio de negocio es responsable exclusivo de sus propios datos: definici�
 
 **Este lineamiento aplica a:** arquitecturas de microservicios, monolitos modulares con límites de dominio, sistemas distribuidos, plataformas multi-dominio.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Definir ownership explícito de datos](../../estandares/datos/data-architecture.md#3-data-ownership)
 - [Documentar ownership en catálogo de datos](../../estandares/datos/data-architecture.md#5-data-catalog)

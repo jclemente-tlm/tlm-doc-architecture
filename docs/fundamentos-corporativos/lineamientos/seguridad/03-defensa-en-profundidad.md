@@ -11,7 +11,7 @@ La arquitectura debe incorporar múltiples capas de protección independientes, 
 
 **Este lineamiento aplica a:** componentes y servicios, acceso a datos y recursos críticos, integraciones internas y externas, flujos de información dentro de la arquitectura.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar seguridad en múltiples capas](../../estandares/seguridad/security-governance.md#4-defense-in-depth)
 - [Aplicar seguridad perimetral](../../estandares/seguridad/environment-isolation.md)

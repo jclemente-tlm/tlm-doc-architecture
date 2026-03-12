@@ -11,7 +11,7 @@ Comunicación asíncrona desacopla sistemas en tiempo y espacio, permitiendo res
 
 **Este lineamiento aplica a:** mensajería entre servicios, arquitectura orientada a eventos, event sourcing, CQRS e integraciones asíncronas.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Usar mensajería asíncrona](../../estandares/mensajeria/async-messaging.md)
 - [Documentar contratos de eventos](../../estandares/mensajeria/event-contracts.md)

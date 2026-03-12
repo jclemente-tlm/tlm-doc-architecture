@@ -12,9 +12,7 @@ La arquitectura debe separar claramente las decisiones de negocio de los detalle
 
 **Este lineamiento aplica a:** sistemas con lógica de negocio relevante, soluciones con expectativa de evolución en el tiempo, arquitecturas donde se desea reducir dependencia tecnológica.
 
-**No aplica a:** criterios de selección de complejidad o justificación de decisiones tecnológicas — ver [Simplicidad Intencional](./10-simplicidad-intencional.md).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Aplicar arquitectura hexagonal (Ports & Adapters)](../../estandares/arquitectura/clean-architecture.md#1-hexagonal-architecture-ports-adapters)
 - [Implementar dependency inversion principle](../../estandares/arquitectura/clean-architecture.md#2-dependency-inversion-principle-dip)

@@ -11,9 +11,7 @@ El gasto en infraestructura cloud sin supervisión activa genera sorpresas presu
 
 **Este lineamiento aplica a:** todos los recursos AWS gestionados por Terraform (ECS, RDS, ElastiCache, VPC, S3, CloudWatch, Secrets Manager, Load Balancers), entornos de producción, staging y QA.
 
-**No aplica a:** entornos de desarrollo personal o sandboxes, gestión de presupuestos de negocio o proyectos (es responsabilidad de Finance).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Etiquetar todos los recursos AWS con Service, Environment, Team y CostCenter](../../estandares/infraestructura/cloud-cost-optimization.md)
 - [Configurar alertas de presupuesto en AWS Budgets por servicio y entorno](../../estandares/infraestructura/cloud-cost-optimization.md)

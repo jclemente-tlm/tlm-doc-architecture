@@ -12,7 +12,7 @@ La arquitectura debe diseñarse para adaptarse al cambio de forma controlada, ac
 
 **Este lineamiento aplica a:** sistemas de larga vida, plataformas en crecimiento, arquitecturas con múltiples equipos, entornos tecnológicos cambiantes.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Documentar decisiones con ADRs](../../estandares/gobierno/adr-management.md)
 - [Implementar fitness functions](../../estandares/arquitectura/architecture-evolution.md#1-fitness-functions)

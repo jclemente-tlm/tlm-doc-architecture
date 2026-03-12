@@ -11,7 +11,7 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 
 **Este lineamiento aplica a:** aplicaciones en cloud público/privado/híbrido, servicios contenerizados, plataformas multi-tenant y migraciones a cloud.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Aplicar estándares cloud-native (stateless, health checks, disposability, container-first)](../../estandares/arquitectura/cloud-native.md)
 - [Seguir metodología 12-Factor App](../../estandares/arquitectura/architecture-evolution.md#4-twelve-factor-app)

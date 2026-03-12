@@ -9,11 +9,9 @@ description: Aprovisionamiento declarativo, versionado y reproducible de infraes
 
 Gestión manual de infraestructura mediante consolas crea configuraciones no documentadas, deriva entre entornos (configuration drift) y ausencia de trazabilidad que dificulta auditorías y troubleshooting. Cambios no versionados previenen rollback ante errores y generan inconsistencias entre development, staging y producción. Conocimiento tribal sobre configuración de infraestructura crea dependencias de personas y riesgos operacionales. Definir infraestructura como código declarativo (Terraform), versionarlo en Git, aplicar code review y automatizar aprovisionamiento garantiza reproducibilidad exacta, elimina deriva de configuración, permite rollback inmediato y habilita disaster recovery predecible mediante recreación completa de entornos desde código.
 
-**Este lineamiento aplica a:** Definición de infraestructura cloud (compute, networking, storage), políticas y permisos IAM, configuración de servicios gestionados, módulos y abstracciones reutilizables, state management, plan/apply workflows.
+**Este lineamiento aplica a:** definición de infraestructura cloud (compute, networking, storage), políticas y permisos IAM, configuración de servicios gestionados, módulos y abstracciones reutilizables, state management, plan/apply workflows.
 
-**No aplica a:** Configuración de aplicaciones en runtime (ver Configuración de Entornos), despliegue de código de aplicaciones (ver CI/CD), migraciones de bases de datos (ver lineamientos de Datos).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar infraestructura como código](../../estandares/infraestructura/iac-standards.md)
 - [Versionar código IaC en control de versiones](../../estandares/infraestructura/iac-state-management.md)

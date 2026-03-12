@@ -9,11 +9,9 @@ description: README, ADRs, arc42, C4 y documentación técnica de servicios
 
 Código sin documentación clara genera dependencia de autores originales, dificulta onboarding y eleva costos de mantenimiento. Decisiones arquitectónicas no documentadas se pierden con rotación de personal, provocando repetición de errores y debates recurrentes. Ausencia de documentación de interfaces (APIs, eventos, contratos) causa integración errónea y debugging prolongado. Documentar decisiones mediante ADRs, arquitectura con arc42 y C4, interfaces con especificaciones OpenAPI y mantener READMEs actualizados garantiza transferencia de conocimiento efectiva, reduce dependencia de individuos, acelera onboarding y permite evolución informada del sistema.
 
-**Este lineamiento aplica a:** Documentación de repositorios (README), decisiones arquitectónicas (ADRs), arquitectura de sistemas (arc42, C4, Structurizr DSL), especificaciones de APIs (OpenAPI), contratos de eventos y mensajería, guías de onboarding y contribución.
+**Este lineamiento aplica a:** documentación de repositorios (README), decisiones arquitectónicas (ADRs), arquitectura de sistemas (arc42, C4, Structurizr DSL), especificaciones de APIs (OpenAPI), contratos de eventos y mensajería, guías de onboarding y contribución.
 
-**No aplica a:** Documentación de código fuente (comentarios inline), manuales de usuario final, documentación de procesos de negocio.
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Mantener README actualizado en repositorios](../../estandares/documentacion/readme-standards.md)
 - [Documentar decisiones con ADRs](../../estandares/gobierno/adr-management.md)

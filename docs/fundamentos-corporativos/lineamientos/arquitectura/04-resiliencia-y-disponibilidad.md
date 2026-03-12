@@ -11,7 +11,7 @@ Sistemas distribuidos enfrentan fallos inevitables: dependencias caídas, latenc
 
 **Este lineamiento aplica a:** servicios críticos, APIs públicas/privadas, sistemas distribuidos e integraciones con terceros.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar circuit breakers para dependencias externas](../../estandares/arquitectura/resilience-patterns.md#1-circuit-breaker)
 - [Aplicar timeouts apropiados en llamadas remotas](../../estandares/arquitectura/resilience-patterns.md#3-timeout)

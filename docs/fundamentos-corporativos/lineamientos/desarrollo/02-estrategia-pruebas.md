@@ -11,11 +11,9 @@ La ausencia de testing automatizado genera código frágil, regresiones frecuent
 
 > **Nota:** Para monitoreo, alertas y observabilidad ver [Observabilidad](../arquitectura/06-observabilidad.md).
 
-**Este lineamiento aplica a:** Pruebas automatizadas (unitarias, integración, e2e), testing de contratos entre servicios, cobertura de código, continuous testing en CI/CD, frameworks de testing (xUnit, Moq).
+**Este lineamiento aplica a:** pruebas automatizadas (unitarias, integración, e2e), testing de contratos entre servicios, cobertura de código, continuous testing en CI/CD, frameworks de testing (xUnit, Moq).
 
-**No aplica a:** Monitoreo y alertas en producción, gestión de incidentes operativos, estándares de calidad de código (ver [Calidad de Código](./01-calidad-codigo.md)).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Seguir pirámide de testing (unitarias → integración → e2e)](../../estandares/testing/testing-pyramid.md)
 - [Implementar pruebas unitarias](../../estandares/testing/unit-testing.md)

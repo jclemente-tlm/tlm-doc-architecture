@@ -11,9 +11,7 @@ Imágenes construidas de forma inconsistente, con secretos embebidos o sin estra
 
 **Este lineamiento aplica a:** servicios desplegados en contenedores Docker sobre AWS ECS Fargate, imágenes de aplicaciones .NET, Kong, Keycloak y cualquier workload contenedorizado en la plataforma corporativa.
 
-**No aplica a:** aprovisionamiento de infraestructura AWS (VPC, RDS, ALB) — ver [Infraestructura como Código](./02-infraestructura-como-codigo.md).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Usar imágenes base oficiales LTS (Alpine o Slim cuando disponible)](../../estandares/infraestructura/containerization.md)
 - [Aplicar multi-stage builds para minimizar tamaño de imagen](../../estandares/infraestructura/containerization.md)

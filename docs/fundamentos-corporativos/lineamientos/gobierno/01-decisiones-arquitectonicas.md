@@ -11,7 +11,7 @@ Decisiones arquitectónicas no documentadas se pierden con rotación de personal
 
 **Este lineamiento aplica a:** decisiones arquitectónicas significativas, selección de tecnologías core, cambios en estilos y definición de estándares.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Documentar decisiones con ADRs](../../estandares/gobierno/adr-management.md)
 - [Usar plantilla estándar de ADR](../../estandares/gobierno/adr-management.md)

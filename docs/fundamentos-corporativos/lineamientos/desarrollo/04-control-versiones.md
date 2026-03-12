@@ -9,11 +9,9 @@ description: Git workflows, estrategias de branching, commits semánticos y vers
 
 Uso inconsistente de control de versiones genera historial confuso, conflictos frecuentes y dificultad para rastrear origen de bugs. Ausencia de estrategia de branching clara provoca despliegues accidentales, bloqueos entre equipos y complicaciones en manejo de releases. Commits sin convención dificultan generación de changelogs automáticos y comprensión de cambios históricos. Versionado inconsistente de artefactos impide correlación entre código, imagen Docker y deployment en ambiente. Establecer Git workflow consistente (trunk-based o GitFlow según contexto), commits semánticos, versionado automático mediante CI/CD y protección de ramas principales garantiza historial limpio, colaboración fluida, releases predecibles y trazabilidad end-to-end.
 
-**Este lineamiento aplica a:** Git workflows y estrategias de branching, formato de commits (Conventional Commits), estrategias de merge (merge commits vs squash vs rebase), versionado de artefactos (SemVer), tagging y releases, protección de ramas principales.
+**Este lineamiento aplica a:** git workflows y estrategias de branching, formato de commits (Conventional Commits), estrategias de merge (merge commits vs squash vs rebase), versionado de artefactos (SemVer), tagging y releases, protección de ramas principales.
 
-**No aplica a:** Control de versiones de bases de datos (migraciones), versionado de APIs (ver estándares de APIs), versionado de infraestructura (IaC).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Definir Git workflow corporativo](../../estandares/desarrollo/git-workflow.md#1-git-workflow)
 - [Aplicar estrategia de branching](../../estandares/desarrollo/git-workflow.md#2-branching-strategy)

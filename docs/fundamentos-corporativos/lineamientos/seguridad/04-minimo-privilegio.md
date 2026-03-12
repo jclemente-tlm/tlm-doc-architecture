@@ -12,7 +12,7 @@ Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegi
 
 **Este lineamiento aplica a:** usuarios finales y operadores, servicios y componentes, integraciones internas y externas, acceso a datos, APIs, eventos y recursos de infraestructura.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar RBAC (Role-Based Access Control)](../../estandares/seguridad/sso-mfa-rbac.md)
 - [Aplicar ABAC cuando corresponda](../../estandares/seguridad/iam-advanced.md)

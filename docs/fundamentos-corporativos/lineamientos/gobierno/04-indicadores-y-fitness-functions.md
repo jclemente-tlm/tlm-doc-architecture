@@ -11,9 +11,7 @@ Las decisiones arquitectónicas sin validación continua se degradan silenciosam
 
 **Este lineamiento aplica a:** atributos de calidad definidos en ADRs, SLOs de servicios en producción, restricciones de acoplamiento entre módulos/servicios, métricas de deuda técnica y umbrales de complejidad ciclomática.
 
-**No aplica a:** métricas de negocio o KPIs de producto — ver [Observabilidad](../operabilidad/05-observabilidad.md) para SLIs/SLOs operacionales.
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Definir fitness functions para cada atributo de calidad crítico](../../estandares/gobierno/fitness-functions.md)
 - [Automatizar validación de fitness functions en pipelines CI/CD](../../estandares/gobierno/fitness-functions.md#integración-con-cicd)

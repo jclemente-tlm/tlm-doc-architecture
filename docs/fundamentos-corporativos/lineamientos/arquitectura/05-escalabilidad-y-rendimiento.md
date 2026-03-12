@@ -12,7 +12,7 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 
 **Este lineamiento aplica a:** sistemas cloud-native, APIs públicas, aplicaciones con crecimiento proyectado, servicios de alto volumen transaccional, plataformas con SLAs de rendimiento estrictos.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/scalability-performance.md#1-stateless-design)
 - [Implementar auto-scaling basado en métricas](../../estandares/arquitectura/scalability-performance.md#3-horizontal-scaling)

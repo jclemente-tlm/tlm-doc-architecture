@@ -11,7 +11,7 @@ La selección del estilo arquitectónico es una decisión estructural que impact
 
 **Este lineamiento aplica a:** nuevas aplicaciones, evolución de sistemas existentes, integraciones entre sistemas y plataformas compartidas.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Documentar decisión de estilo en ADR](../../estandares/documentacion/arc42.md)
 - [Validar selección mediante architecture review](../../estandares/gobierno/architecture-review-process.md#architecture-review)

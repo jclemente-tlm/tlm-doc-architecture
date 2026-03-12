@@ -7,11 +7,11 @@ description: Identificación, priorización y remediación de vulnerabilidades d
 
 # Gestión de Vulnerabilidades
 
-El 60% de brechas de seguridad explotan vulnerabilidades conocidas sin parchear según Verizon DBIR. Dependencias desactualizadas, componentes con CVEs críticos y ausencia de scanning automatizado exponen sistemas a ataques prevenibles. Gestión proactiva con scanning continuo, patch management automatizado y actualización de dependencias reduce superficie de ataque y mejora postura de seguridad significativamente.
+Los sistemas deben mantener una gestión proactiva y continua de vulnerabilidades en todas sus capas: dependencias, imágenes de contenedores, sistemas operativos e infraestructura cloud. Dependencias desactualizadas, componentes con CVEs críticos y ausencia de scanning automatizado exponen sistemas a ataques que explotan vulnerabilidades conocidas — muchas con parche disponible. Implementar scanning continuo, patch management automatizado y SLAs de remediación por severidad reduce la superficie de ataque, cierra ventanas de exposición y mantiene una postura de seguridad verificable y auditable.
 
 **Este lineamiento aplica a:** código fuente, dependencias de aplicaciones, imágenes de contenedores, sistemas operativos, infraestructura cloud y APIs de terceros.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Escanear imágenes de contenedores](../../estandares/seguridad/security-scanning.md#1-container-scanning)
 - [Gestionar dependencias con Package Manager](../../estandares/desarrollo/package-management.md)

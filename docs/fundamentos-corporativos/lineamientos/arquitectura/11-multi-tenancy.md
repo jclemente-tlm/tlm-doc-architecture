@@ -7,20 +7,18 @@ description: Estrategias de aislamiento y configuración independiente para arqu
 
 # Multi-tenancy
 
-En contextos multipaís o multi-cliente, la ausencia de aislamiento explícito genera filtraciones de datos entre tenants, configuraciones que se contaminan y dificultad para cumplir regulaciones locales. Definir una estrategia de multi-tenancy deliberada — elegir el modelo correcto (realm, schema, base de datos, instancia) y aplicarlo consistentemente — garantiza aislamiento de datos, cumplimiento normativo por jurisdicción y capacidad de evolucionar cada tenant de forma independiente.
+Los servicios que operan en múltiples países o para múltiples clientes deben declarar explícitamente su modelo de aislamiento de tenant y aplicarlo de forma consistente en todas las capas. Sin esta definición, los sistemas exponen datos entre tenants, las regulaciones locales no pueden cumplirse por jurisdicción y los cambios en un tenant impactan a otros sin control. Adoptar una estrategia deliberada — seleccionar el modelo correcto (realm, schema, base de datos, instancia), propagar el contexto y auditar por tenant — garantiza aislamiento de datos, cumplimiento normativo independiente por país y capacidad de evolucionar cada tenant de forma autónoma.
 
 **Este lineamiento aplica a:** servicios con múltiples clientes o países (Perú, Ecuador, Colombia, México), plataformas de autenticación (Keycloak realms), API Gateways con workspaces por tenant (Kong), bases de datos con esquemas separados y configuración de servicios por jurisdicción.
 
-**No aplica a:** servicios con un único cliente o entorno; la estrategia de aislamiento de red (ver [Segmentación y Aislamiento](../../lineamientos/seguridad/06-segmentacion-y-aislamiento.md)).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Seleccionar modelo de aislamiento explícito por servicio (realm / schema / instancia)](../../estandares/arquitectura/multi-tenancy.md#modelos-de-aislamiento)
 - [Propagar contexto de tenant en todas las capas (header, claim JWT, parámetro)](../../estandares/arquitectura/multi-tenancy.md#tenant-context-propagation)
-- [Prohibir acceso entre tenants sin autorización explícita](../../estandares/seguridad/iam-advanced.md)
-- [Versionar configuración por tenant en repositorio (IaC)](../../estandares/infraestructura/iac-standards.md)
-- [Validar claims de tenant en el API Gateway antes de enrutar](../../estandares/seguridad/sso-mfa-rbac.md)
-- [Implementar auditoría con tenant como campo indexado](../../estandares/seguridad/security-governance.md)
+- [Prohibir row-level sin RLS en datos personales o financieros](../../estandares/arquitectura/multi-tenancy.md#modelos-de-aislamiento)
+- [Versionar configuración por tenant en IaC (terraform.tfvars por tenant)](../../estandares/arquitectura/multi-tenancy.md#per-tenant-configuration)
+- [Validar claims de tenant en el API Gateway antes de enrutar](../../estandares/arquitectura/multi-tenancy.md#validación-en-api-gateway)
+- [Implementar auditoría con tenant_id como campo indexado](../../estandares/arquitectura/multi-tenancy.md#auditoría-por-tenant)
 
 ## Referencias Relacionadas
 

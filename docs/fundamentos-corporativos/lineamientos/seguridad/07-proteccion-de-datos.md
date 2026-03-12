@@ -9,9 +9,9 @@ description: Protección de datos sensibles a lo largo de su ciclo de vida
 
 La exposición de datos sensibles genera incidentes de seguridad, incumplimientos regulatorios y pérdida de confianza que afectan continuidad del negocio. Datos sin clasificar, transmitidos sin cifrar, almacenados en claro o filtrados en logs representan vectores de fuga críticos. Implementar clasificación de datos, cifrado end-to-end, gestión segura de claves, enmascaramiento y políticas de minimización protege información sensible en todo su ciclo de vida, desde creación hasta eliminación, garantizando cumplimiento normativo y resiliencia ante amenazas.
 
-**Este lineamiento aplica a:** Datos personales (PII), datos financieros y de pago, datos de salud (PHI), secretos y credenciales, y datos confidenciales de negocio.
+**Este lineamiento aplica a:** datos personales (PII), datos financieros y de pago, datos de salud (PHI), secretos y credenciales, y datos confidenciales de negocio.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Clasificar datos por sensibilidad](../../estandares/seguridad/data-protection.md#4-data-classification)
 - [Cifrar datos en tránsito](../../estandares/seguridad/data-protection.md#2-encryption-in-transit)

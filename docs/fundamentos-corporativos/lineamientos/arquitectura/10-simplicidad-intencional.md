@@ -12,9 +12,7 @@ La arquitectura debe priorizar soluciones simples y comprensibles, incorporando 
 
 **Este lineamiento aplica a:** selección de estilos arquitectónicos, nivel de distribución del sistema, cantidad de componentes y dependencias, modelos de integración, mecanismos de resiliencia y escalabilidad.
 
-**No aplica a:** estructura interna de capas o separación de responsabilidades dentro de un servicio — ver [Arquitectura Limpia](./08-arquitectura-limpia.md).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Justificar complejidad con análisis cost-benefit](../../estandares/arquitectura/architecture-principles.md#6-complexity-analysis)
 - [Aplicar principio YAGNI (You Aren't Gonna Need It)](../../estandares/arquitectura/architecture-principles.md#2-yagni-you-arent-gonna-need-it)

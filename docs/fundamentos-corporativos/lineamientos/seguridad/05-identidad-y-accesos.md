@@ -9,9 +9,9 @@ description: Gestión de identidades, autenticación y autorización
 
 La gestión fragmentada de identidades genera credenciales dispersas, permisos excesivos y ausencia de trazabilidad que facilitan accesos no autorizados y dificultan auditorías de seguridad. Esta fragmentación multiplica vectores de ataque y debilita controles de cumplimiento. Centralizar identidades mediante federación SSO, aplicar mínimo privilegio y autenticación multifactor, junto con gestión segura de identidades de servicios, establece controles consistentes, reduce superficie de ataque y permite auditoría completa de accesos en toda la plataforma.
 
-**Este lineamiento aplica a:** Aplicaciones web y móviles, APIs internas y externas, servicios backend, acceso a infraestructura y plataforma, e integraciones entre sistemas.
+**Este lineamiento aplica a:** aplicaciones web y móviles, APIs internas y externas, servicios backend, acceso a infraestructura y plataforma, e integraciones entre sistemas.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar Single Sign-On corporativo](../../estandares/seguridad/sso-mfa-rbac.md)
 - [Aplicar autenticación multi-factor obligatoria](../../estandares/seguridad/sso-mfa-rbac.md)

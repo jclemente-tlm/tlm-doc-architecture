@@ -9,9 +9,9 @@ description: Principios para diseñar APIs REST coherentes, contratos explícito
 
 APIs inconsistentes, contratos mal definidos o documentación desactualizada generan fricción en consumidores, incompatibilidades entre equipos y errores en producción. Especificaciones explícitas (OpenAPI, AsyncAPI) actúan como fuente de verdad que permite validación automática, facilita adopción y reduce malentendidos. Seguir convenciones RESTful, versionado semántico y contratos retrocompatibles garantiza evolución sin romper clientes existentes, reduce coupling temporal y permite despliegues independientes con confianza.
 
-**Este lineamiento aplica a:** APIs REST públicas e internas, APIs de microservicios, mensajes asíncronos, servicios GraphQL, integraciones con terceros y Backends for Frontend (BFF).
+**Este lineamiento aplica a:** aPIs REST públicas e internas, APIs de microservicios, mensajes asíncronos, servicios GraphQL, integraciones con terceros y Backends for Frontend (BFF).
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Seguir convenciones RESTful en diseño de APIs](../../estandares/apis/api-rest-standards.md)
 - [Implementar versionado explícito de APIs](../../estandares/apis/api-versioning.md)

@@ -11,9 +11,7 @@ La arquitectura debe estructurarse en torno al dominio del negocio, reflejando s
 
 **Este lineamiento aplica a:** sistemas con lógica de negocio relevante o compleja, soluciones que evolucionan con el negocio, arquitecturas con múltiples equipos o dominios, plataformas donde el conocimiento del negocio es crítico.
 
-**No aplica a:** cómo dividir el sistema en servicios o módulos — ver [Descomposición y Límites](./02-descomposicion-y-limites.md).
-
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Identificar bounded contexts por capacidades de negocio](../../estandares/arquitectura/domain-modeling.md#4-bounded-contexts)
 - [Establecer lenguaje ubicuo por contexto](../../estandares/arquitectura/domain-modeling.md#6-ubiquitous-language)

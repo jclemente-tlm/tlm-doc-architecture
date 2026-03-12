@@ -11,7 +11,7 @@ Sistemas distribuidos requieren trade-offs entre consistencia, disponibilidad y 
 
 **Este lineamiento aplica a:** sistemas distribuidos, datos replicados, eventos asíncronos, integraciones y cachés.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Definir modelo de consistencia por caso de uso](../../estandares/datos/data-consistency.md#1-consistency-models)
 - [Implementar saga pattern para transacciones distribuidas](../../estandares/mensajeria/messaging-patterns.md#saga-pattern)

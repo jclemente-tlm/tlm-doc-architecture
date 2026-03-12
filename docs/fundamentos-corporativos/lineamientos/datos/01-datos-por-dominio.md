@@ -11,7 +11,7 @@ Bases de datos compartidas y esquemas implícitos generan acoplamiento oculto, d
 
 **Este lineamiento aplica a:** microservicios, módulos en monolitos modulares, esquemas de bases de datos, eventos de dominio, modelos persistidos, mensajes asíncronos e integraciones entre aplicaciones.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar database per service](../../estandares/datos/data-architecture.md#1-database-per-service)
 - [Prohibir bases de datos compartidas](../../estandares/datos/data-architecture.md#2-no-shared-database)

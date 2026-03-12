@@ -11,7 +11,7 @@ Ningún componente, usuario o sistema es confiable por defecto; toda interacció
 
 **Este lineamiento aplica a:** interacciones entre componentes y servicios, acceso de usuarios y sistemas a recursos, integraciones internas y externas, arquitecturas distribuidas y multi-tenant.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar autenticación mutua](../../estandares/seguridad/zero-trust-networking.md)
 - [Aplicar Zero Trust networking](../../estandares/seguridad/zero-trust-networking.md)

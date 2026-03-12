@@ -11,7 +11,7 @@ Los servicios deben ser autónomos, capaces de evolucionar, desplegarse y operar
 
 **Este lineamiento aplica a:** servicios en microservicios, bounded contexts, componentes modulares con ciclos de vida independientes, equipos autónomos con responsabilidad end-to-end.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar database per service](../../estandares/datos/data-architecture.md#1-database-per-service)
 - [Prohibir bases de datos compartidas](../../estandares/datos/data-architecture.md#2-no-shared-database)

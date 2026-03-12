@@ -7,11 +7,11 @@ description: Observabilidad como requisito arquitectónico desde el diseño
 
 # Observabilidad
 
-En sistemas distribuidos, las fallas pueden propagarse silenciosamente afectando la experiencia del usuario sin síntomas evidentes. La observabilidad integrada desde el diseño reduce el MTTR hasta 10x comparado con implementaciones reactivas, facilitando la identificación de cuellos de botella, degradación de performance y la correlación de eventos a través de múltiples servicios.
+Los servicios distribuidos deben instrumentar trazas, métricas y logs como requisito arquitectónico desde el diseño, no como adición posterior. Sin observabilidad integrada, los fallos se propagan silenciosamente entre servicios, el debugging en producción requiere acceso directo a instancias y el MTTR se extiende innecesariamente. Instrumentar structured logging, métricas RED/USE y distributed tracing desde el inicio permite detectar degradaciones antes de que impacten usuarios, correlacionar eventos a través de múltiples servicios y reducir el tiempo de respuesta ante incidentes.
 
 **Este lineamiento aplica a:** servicios backend, APIs REST, microservicios, workers, procesos batch y funciones serverless.
 
-## Estándares Obligatorios
+## Prácticas Obligatorias
 
 - [Implementar structured logging en JSON](../../estandares/observabilidad/structured-logging.md)
 - [Emitir métricas siguiendo RED/USE](../../estandares/observabilidad/metrics.md)
