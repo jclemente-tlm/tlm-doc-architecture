@@ -16,8 +16,7 @@ La gestión fragmentada de identidades genera credenciales dispersas, permisos e
 - [Implementar Single Sign-On corporativo](../../estandares/seguridad/sso-mfa-rbac.md)
 - [Aplicar autenticación multi-factor obligatoria](../../estandares/seguridad/sso-mfa-rbac.md)
 - [Implementar federación de identidades](../../estandares/seguridad/iam-advanced.md)
-- [Gestionar identidades de servicios](../../estandares/seguridad/iam-advanced.md)
-- [Implementar protocolos estándar de autenticación/autorización](../../estandares/seguridad/sso-mfa-rbac.md)
+- [Gestionar identidades de servicios (service accounts, workload identity)](../../estandares/seguridad/iam-advanced.md)
 - [Gestionar ciclo de vida de identidades](../../estandares/seguridad/iam-advanced.md)
 - [Implementar políticas de contraseñas](../../estandares/seguridad/iam-advanced.md)
 

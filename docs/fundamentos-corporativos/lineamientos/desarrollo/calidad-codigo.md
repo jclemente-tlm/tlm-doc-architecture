@@ -14,7 +14,7 @@ Código sin estándares consistentes, análisis estático ni revisiones genera d
 ## Prácticas Obligatorias
 
 - [Seguir convenciones de código del stack tecnológico](../../estandares/desarrollo/code-quality.md#1-code-conventions)
-- [Aplicar buenas prácticas de bases de datos](../../estandares/datos/database-standards.md)
+- [Refactorizar aplicando principios SOLID y eliminando deuda técnica](../../estandares/desarrollo/code-quality.md#3-refactoring-practices)
 - [Implementar análisis estático con linters](../../estandares/desarrollo/code-quality.md#5-static-analysis)
 - [Realizar SAST en pipelines CI/CD](../../estandares/desarrollo/code-quality.md#4-sast-static-application-security-testing)
 - [Ejecutar code review obligatorio](../../estandares/desarrollo/code-quality.md#2-code-review)

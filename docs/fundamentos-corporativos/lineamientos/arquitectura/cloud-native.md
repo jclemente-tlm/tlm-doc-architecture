@@ -19,7 +19,6 @@ Sistemas diseñados para cloud aprovechan elasticidad, resiliencia y dinamismo m
 - [Externalizar configuración en variables de entorno](../../estandares/infraestructura/configuration-management.md)
 - [Diseñar servicios stateless](../../estandares/arquitectura/scalability-performance.md#1-stateless-design)
 - [Aplicar graceful shutdown](../../estandares/arquitectura/resilience-patterns.md#7-graceful-shutdown)
-- [Optimizar costos en cloud](../../estandares/infraestructura/cloud-cost-optimization.md)
 
 ## Referencias Relacionadas
 

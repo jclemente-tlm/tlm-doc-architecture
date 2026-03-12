@@ -13,12 +13,11 @@ Ningún componente, usuario o sistema es confiable por defecto; toda interacció
 
 ## Prácticas Obligatorias
 
-- [Implementar autenticación mutua](../../estandares/seguridad/zero-trust-networking.md)
-- [Aplicar Zero Trust networking](../../estandares/seguridad/zero-trust-networking.md)
-- [Evaluar cada petición explícitamente](../../estandares/seguridad/zero-trust-verification.md)
-- [Asumir brechas (assume breach)](../../estandares/seguridad/zero-trust-verification.md)
-- [Implementar cifrado mutuo entre servicios](../../estandares/seguridad/zero-trust-networking.md)
-- [Implementar auditoría continua](../../estandares/seguridad/security-governance.md)
+- [Aplicar Zero Trust networking y microsegmentación de red](../../estandares/seguridad/zero-trust-networking.md#zero-trust-networking)
+- [Implementar mTLS entre servicios (autenticación y cifrado mutuos)](../../estandares/seguridad/zero-trust-networking.md#mutual-tls-mtls)
+- [Evaluar cada petición explícitamente sin asumir confianza implícita](../../estandares/seguridad/zero-trust-verification.md)
+- [Asumir brechas (assume breach) y diseñar para contención](../../estandares/seguridad/zero-trust-verification.md)
+- [Implementar auditoría continua de accesos e interacciones](../../estandares/seguridad/security-governance.md)
 
 ## Referencias Relacionadas
 

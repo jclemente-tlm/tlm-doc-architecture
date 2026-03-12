@@ -20,7 +20,7 @@ Imágenes construidas de forma inconsistente, con secretos embebidos o sin estra
 - [Habilitar health checks en contenedores](../../estandares/operabilidad/deployment.md)
 - [Aplicar estrategia de despliegue rolling o blue/green](../../estandares/operabilidad/deployment.md)
 - [Habilitar despliegue independiente por servicio](../../estandares/infraestructura/independent-deployment.md)
-- [Gestionar secrets vía AWS Secrets Manager, no en variables de entorno planas](../../estandares/infraestructura/containerization.md)
+- [Gestionar secrets en runtime vía AWS Secrets Manager](../../estandares/seguridad/secrets-key-management.md#1-secrets-management)
 
 ## Referencias Relacionadas
 

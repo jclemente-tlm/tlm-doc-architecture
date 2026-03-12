@@ -13,12 +13,11 @@ La arquitectura debe incorporar múltiples capas de protección independientes, 
 
 ## Prácticas Obligatorias
 
-- [Implementar seguridad en múltiples capas](../../estandares/seguridad/security-governance.md#4-defense-in-depth)
-- [Aplicar seguridad perimetral](../../estandares/seguridad/environment-isolation.md)
-- [Implementar seguridad de red](../../estandares/seguridad/network-segmentation.md)
-- [Aplicar seguridad de aplicación](../../estandares/seguridad/security-governance.md)
-- [Implementar seguridad de datos](../../estandares/seguridad/data-protection.md)
-- [Configurar WAF y protección DDoS](../../estandares/seguridad/network-segmentation.md)
+- [Implementar seguridad en múltiples capas independientes](../../estandares/seguridad/security-governance.md#4-defense-in-depth)
+- [Aislar entornos e infraestructura por niveles de confianza](../../estandares/seguridad/environment-isolation.md)
+- [Aplicar segmentación de red, WAF y protección DDoS](../../estandares/seguridad/network-segmentation.md)
+- [Aplicar controles de seguridad en capa de aplicación](../../estandares/seguridad/security-governance.md)
+- [Implementar seguridad de datos en reposo y en tránsito](../../estandares/seguridad/data-protection.md)
 
 ## Referencias Relacionadas
 
