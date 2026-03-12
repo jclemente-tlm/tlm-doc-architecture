@@ -14,12 +14,12 @@ Los sistemas deben manejar crecimiento de carga sin degradación significativa d
 
 ## Prácticas Obligatorias
 
-- [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/scalability-performance.md#1-stateless-design)
-- [Implementar auto-scaling basado en métricas](../../estandares/arquitectura/scalability-performance.md#3-horizontal-scaling)
-- [Aplicar estrategias de caché distribuido](../../estandares/arquitectura/scalability-performance.md#2-caching-strategies)
+- [Diseñar servicios stateless para escalado horizontal](../../estandares/arquitectura/cloud-native.md#diseño-sin-estado)
+- [Implementar auto-scaling basado en métricas](../../estandares/arquitectura/horizontal-scaling.md#escalado-horizontal)
+- [Aplicar estrategias de caché distribuido](../../estandares/datos/caching.md)
 - [Implementar procesamiento asíncrono](../../estandares/mensajeria/messaging-patterns.md#async-processing)
 - [Optimizar consultas y esquemas de base de datos](../../estandares/datos/database-standards.md#2-database-optimization)
-- [Implementar load balancing](../../estandares/arquitectura/scalability-performance.md#4-load-balancing)
+- [Implementar load balancing](../../estandares/arquitectura/horizontal-scaling.md#balanceo-de-carga)
 - [Configurar connection pooling](../../estandares/datos/database-standards.md#3-connection-pooling)
 
 ## Referencias Relacionadas

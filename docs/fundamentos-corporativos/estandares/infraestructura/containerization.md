@@ -248,18 +248,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8080/health || exit 1
 ```
 
-**Implementación en aplicación**:
-
-```csharp
-// Program.cs
-builder.Services.AddHealthChecks()
-    .AddCheck("self", () => HealthCheckResult.Healthy())
-    .AddNpgSql(connectionString, name: "postgres")
-    .AddRedis(redisConnection, name: "redis")
-    .AddKafka(kafkaConfig, name: "kafka");
-
-app.MapHealthChecks("/health");
-```
+La implementación .NET de liveness, readiness y startup probes está en [Health Checks](../arquitectura/health-checks.md).
 
 ---
 

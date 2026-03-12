@@ -19,7 +19,7 @@ Sistemas distribuidos enfrentan fallos inevitables: dependencias caídas, latenc
 - [Diseñar degradación graceful ante fallos](../../estandares/arquitectura/resilience-patterns.md#6-graceful-degradation)
 - [Implementar bulkhead para aislamiento de recursos](../../estandares/arquitectura/resilience-patterns.md#4-bulkhead)
 - [Aplicar rate limiting para protección de sobrecarga](../../estandares/arquitectura/resilience-patterns.md#5-rate-limiting)
-- [Configurar health checks para detección de fallos](../../estandares/arquitectura/scalability-performance.md#5-health-checks)
+- [Configurar health checks para detección de fallos](../../estandares/arquitectura/health-checks.md)
 
 ## Referencias Relacionadas
 

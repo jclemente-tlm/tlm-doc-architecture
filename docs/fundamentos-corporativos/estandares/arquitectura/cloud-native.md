@@ -170,49 +170,6 @@ ENTRYPOINT ["dotnet", "Service.dll"]
 
 ---
 
-## Health Checks
-
-### Endpoints obligatorios
-
-Cada servicio expone dos endpoints para el orquestador:
-
-| Endpoint            | Propósito                        | Cuándo devuelve 200                     |
-| ------------------- | -------------------------------- | --------------------------------------- |
-| `GET /health/live`  | Liveness — ¿está vivo?           | Siempre (excepto deadlock total)        |
-| `GET /health/ready` | Readiness — ¿listo para tráfico? | DB accesible + dependencias críticas OK |
-
-```csharp
-// Program.cs
-builder.Services.AddHealthChecks()
-    .AddNpgsql(connStr, name: "postgres", tags: ["ready"])
-    .AddRedis(redisConnStr, name: "redis", tags: ["ready"]);
-
-app.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = _ => false });
-app.MapHealthChecks("/health/ready", new HealthCheckOptions
-{
-    Predicate = check => check.Tags.Contains("ready")
-});
-```
-
-**Configuración en ECS Task Definition:**
-
-```json
-{
-  "healthCheck": {
-    "command": [
-      "CMD-SHELL",
-      "curl -f http://localhost:8080/health/live || exit 1"
-    ],
-    "interval": 30,
-    "timeout": 5,
-    "retries": 3,
-    "startPeriod": 15
-  }
-}
-```
-
----
-
 ## Gestión del Costo en Cloud
 
 ### Diseño consciente del costo
@@ -261,4 +218,4 @@ tags = {
 - [Configuration Management](./configuration-management.md)
 - [Gestión de Secretos](../seguridad/secrets-key-management.md)
 - [Security Scanning](../seguridad/security-scanning.md)
-- [Escalabilidad y Rendimiento](./scalability-performance.md)
+- [Escalado Horizontal](./horizontal-scaling.md)

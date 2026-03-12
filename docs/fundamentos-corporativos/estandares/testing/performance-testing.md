@@ -599,4 +599,4 @@ groups:
 
 - [Pirámide de Testing](./testing-pyramid.md)
 - [Métricas con OpenTelemetry](../observabilidad/metrics.md)
-- [Scalability Patterns](../arquitectura/scalability-performance.md)
+- [Escalado Horizontal](../arquitectura/horizontal-scaling.md)
