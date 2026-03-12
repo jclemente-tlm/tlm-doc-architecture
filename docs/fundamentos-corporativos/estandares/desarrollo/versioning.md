@@ -9,7 +9,7 @@ description: Estándares para versionamiento semántico de servicios, paquetes y
 
 ## Contexto
 
-Este estándar define las prácticas para versionar servicios, paquetes internos y APIs de forma predecible usando SemVer. Complementa el lineamiento [Autonomía de Servicios](../../lineamientos/arquitectura/10-autonomia-de-servicios.md).
+Este estándar define las prácticas para versionar servicios, paquetes internos y APIs de forma predecible usando SemVer. Complementa el lineamiento [Autonomía de Servicios](../../lineamientos/arquitectura/autonomia-de-servicios.md).
 
 **Conceptos incluidos:**
 

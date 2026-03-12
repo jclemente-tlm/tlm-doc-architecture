@@ -10,7 +10,7 @@ tags: [infraestructura, terraform, iac, state, drift, versionamiento]
 
 ## Contexto
 
-El state de Terraform es la fuente de verdad del estado actual de la infraestructura. Este estándar define cómo gestionar el state de forma segura, versionar módulos y providers, y detectar cambios manuales (drift) que rompan la consistencia entre IaC y la infraestructura real. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md).
+El state de Terraform es la fuente de verdad del estado actual de la infraestructura. Este estándar define cómo gestionar el state de forma segura, versionar módulos y providers, y detectar cambios manuales (drift) que rompan la consistencia entre IaC y la infraestructura real. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/infraestructura-como-codigo.md).
 
 **Conceptos incluidos:**
 

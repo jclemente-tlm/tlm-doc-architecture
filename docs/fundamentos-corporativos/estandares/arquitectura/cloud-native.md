@@ -10,7 +10,7 @@ tags: [arquitectura, cloud-native, 12-factor, contenedores, stateless]
 
 ## Contexto
 
-Este estándar consolida las prácticas fundamentales para construir sistemas que aprovechen plena­mente la elasticidad, resiliencia y dinamismo de entornos cloud. Complementa el lineamiento [Cloud Native](../../lineamientos/arquitectura/03-cloud-native.md).
+Este estándar consolida las prácticas fundamentales para construir sistemas que aprovechen plena­mente la elasticidad, resiliencia y dinamismo de entornos cloud. Complementa el lineamiento [Cloud Native](../../lineamientos/arquitectura/cloud-native.md).
 
 **Conceptos incluidos:**
 
@@ -256,7 +256,7 @@ tags = {
 
 ## Referencias
 
-- [Lineamiento Cloud Native](../../lineamientos/arquitectura/03-cloud-native.md)
+- [Lineamiento Cloud Native](../../lineamientos/arquitectura/cloud-native.md)
 - [Containerización](./containerization.md)
 - [Configuration Management](./configuration-management.md)
 - [Gestión de Secretos](../seguridad/secrets-key-management.md)

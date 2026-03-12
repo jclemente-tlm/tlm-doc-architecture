@@ -10,7 +10,7 @@ tags: [mensajeria, kafka, async-messaging, confluent, producer, consumer]
 
 ## Contexto
 
-Este estándar define prácticas para implementar comunicación asíncrona entre servicios usando Apache Kafka como message broker. Cubre configuración de producers y consumers en .NET, estrategias de partition keys e implementación de flujos integrados. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
+Este estándar define prácticas para implementar comunicación asíncrona entre servicios usando Apache Kafka como message broker. Cubre configuración de producers y consumers en .NET, estrategias de partition keys e implementación de flujos integrados. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md).
 
 ---
 
@@ -583,7 +583,7 @@ _logger.LogInformation(
 - [Confluent.Kafka .NET Client](https://docs.confluent.io/kafka-clients/dotnet/current/overview.html)
 - [Martin Fowler - Event-Driven Architecture](https://martinfowler.com/articles/201701-event-driven.html)
 - [AWS - What is Event-Driven Architecture](https://aws.amazon.com/event-driven-architecture/)
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
 - [Event Design](./event-design.md)
 - [Idempotency](./idempotency.md)
 - [Message Delivery Guarantees](./message-delivery-guarantees.md)

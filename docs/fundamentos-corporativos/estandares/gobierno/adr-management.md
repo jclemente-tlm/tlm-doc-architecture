@@ -10,7 +10,7 @@ tags: [gobierno, adr, architecture-decisions, governance]
 
 ## Contexto
 
-Este estándar define cómo registrar, gestionar y versionar las decisiones arquitectónicas de la organización. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md).
+Este estándar define cómo registrar, gestionar y versionar las decisiones arquitectónicas de la organización. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/decisiones-arquitectonicas.md).
 
 **Conceptos incluidos:**
 
@@ -42,7 +42,7 @@ Registro centralizado que mantiene el **índice completo** de todos los Architec
 ```
 docs/adrs/
 ├── README.md               # ADR Registry — índice principal
-├── adr-001-multi-tenancy.md
+├── adr-0multi-tenancy.md
 ├── adr-002-aws-ecs-fargate.md
 ├── ...
 └── adr-NNN-titulo.md
@@ -66,7 +66,7 @@ El `README.md` del directorio `docs/adrs/` mantiene tres índices:
 
 | ADR                                       | Título                                  | Estado    | Fecha      | Equipo       |
 | ----------------------------------------- | --------------------------------------- | --------- | ---------- | ------------ |
-| [ADR-001](adr-001-multi-tenancy.md)       | Estrategia Multi-Tenancy                | Aceptado  | 2024-03-15 | Platform     |
+| [ADR-001](adr-0multi-tenancy.md)       | Estrategia Multi-Tenancy                | Aceptado  | 2024-03-15 | Platform     |
 | [ADR-002](adr-002-aws-ecs-fargate.md)     | AWS ECS Fargate para Contenedores       | Aceptado  | 2024-03-20 | DevOps       |
 | [ADR-003](adr-003-postgresql-database.md) | PostgreSQL como Base de Datos Principal | Aceptado  | 2024-04-10 | Architecture |
 | [ADR-004](adr-004-github-actions.md)      | GitHub Actions para CI/CD               | Aceptado  | 2024-04-15 | DevOps       |
@@ -122,7 +122,7 @@ El `README.md` del directorio `docs/adrs/` mantiene tres índices:
 
 ## Aceptados (Activos)
 
-- [ADR-001](adr-001-multi-tenancy.md), [ADR-002](adr-002-aws-ecs-fargate.md), ...
+- [ADR-001](adr-0multi-tenancy.md), [ADR-002](adr-002-aws-ecs-fargate.md), ...
 
 ## Rechazados
 
@@ -416,4 +416,4 @@ informed: "[Stakeholders informados]"
 - [adr-tools](https://github.com/npryce/adr-tools) — CLI para gestión de ADRs
 - [Architecture Review y Checklist](./architecture-review-process.md) — proceso de revisión
 - [Architecture Board y Auditorías](./architecture-board-audits.md) — gobierno operativo
-- [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento base
+- [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/decisiones-arquitectonicas.md) — lineamiento base

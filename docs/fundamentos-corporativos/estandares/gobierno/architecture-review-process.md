@@ -10,7 +10,7 @@ tags: [gobierno, architecture-review, checklist, governance]
 
 ## Contexto
 
-Este estándar define cómo revisar decisiones arquitectónicas de forma sistemática antes de su implementación, garantizando alineación con principios y lineamientos corporativos. Complementa el lineamiento [Revisiones Arquitectónicas](../../lineamientos/gobierno/02-revisiones-arquitectonicas.md).
+Este estándar define cómo revisar decisiones arquitectónicas de forma sistemática antes de su implementación, garantizando alineación con principios y lineamientos corporativos. Complementa el lineamiento [Revisiones Arquitectónicas](../../lineamientos/gobierno/revisiones-arquitectonicas.md).
 
 **Conceptos incluidos:**
 
@@ -411,7 +411,7 @@ docs/gobierno/
 
 ## Referencias
 
-- [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento que origina este estándar
+- [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/decisiones-arquitectonicas.md) — lineamiento que origina este estándar
 - [Architecture Board y Auditorías](./architecture-board-audits.md) — comité, auditorías y retrospectivas
 - [Gestión de ADRs](./adr-management.md) — registro, lifecycle y versionado de ADRs
 - [Compliance y Excepciones](./compliance-validation.md) — validación de compliance corporativo

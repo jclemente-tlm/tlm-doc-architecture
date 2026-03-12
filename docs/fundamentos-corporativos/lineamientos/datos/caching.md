@@ -22,7 +22,7 @@ Sin una estrategia de caché deliberada, los servicios someten innecesariamente 
 
 ## Referencias Relacionadas
 
-- [Consistencia y Sincronización](./02-consistencia-y-sincronizacion.md)
-- [Resiliencia y Disponibilidad](../arquitectura/04-resiliencia-y-disponibilidad.md)
-- [Escalabilidad y Rendimiento](../arquitectura/05-escalabilidad-y-rendimiento.md)
-- [Observabilidad](../operabilidad/05-observabilidad.md)
+- [Consistencia y Sincronización](./consistencia-y-sincronizacion.md)
+- [Resiliencia y Disponibilidad](../arquitectura/resiliencia-y-disponibilidad.md)
+- [Escalabilidad y Rendimiento](../arquitectura/escalabilidad-y-rendimiento.md)
+- [Observabilidad](../operabilidad/observabilidad.md)

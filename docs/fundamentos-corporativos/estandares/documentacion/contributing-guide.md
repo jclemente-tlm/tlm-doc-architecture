@@ -9,7 +9,7 @@ description: Estándar para crear guías de contribución (CONTRIBUTING.md) con 
 
 ## Contexto
 
-Este estándar define cómo crear CONTRIBUTING.md para repositorios, estableciendo un proceso claro para contribuciones internas y externas consistentes. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/03-documentacion-tecnica.md).
+Este estándar define cómo crear CONTRIBUTING.md para repositorios, estableciendo un proceso claro para contribuciones internas y externas consistentes. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/documentacion-tecnica.md).
 
 ---
 

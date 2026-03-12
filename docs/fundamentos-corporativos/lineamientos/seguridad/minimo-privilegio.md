@@ -24,5 +24,5 @@ Todo usuario, componente o sistema debe operar con el nivel mínimo de privilegi
 ## Referencias Relacionadas
 
 - [Seguridad desde el Diseño](../../principios/02-seguridad-desde-el-diseno.md)
-- [Zero Trust](02-zero-trust.md)
-- [Defensa en Profundidad](03-defensa-en-profundidad.md)
+- [Zero Trust](zero-trust.md)
+- [Defensa en Profundidad](defensa-en-profundidad.md)

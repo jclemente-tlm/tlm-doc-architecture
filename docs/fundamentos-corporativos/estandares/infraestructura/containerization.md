@@ -10,7 +10,7 @@ tags: [infraestructura, docker, ecs, fargate, contenedores, seguridad]
 
 ## Contexto
 
-Este estándar define las prácticas para contenerización de aplicaciones usando Docker: construcción de imágenes, optimización, seguridad, registro y despliegue en AWS ECS Fargate. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md).
+Este estándar define las prácticas para contenerización de aplicaciones usando Docker: construcción de imágenes, optimización, seguridad, registro y despliegue en AWS ECS Fargate. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/infraestructura-como-codigo.md).
 
 **Conceptos incluidos:**
 

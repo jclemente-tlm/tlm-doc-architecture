@@ -10,7 +10,7 @@ tags: [infraestructura, configuracion, ambientes, docker, 12factor]
 
 ## Contexto
 
-Minimizar las diferencias entre los ambientes de desarrollo, staging y producción para eliminar bugs que solo aparecen en producción. Aplica el principio [XII-Factor Dev/Prod Parity](https://12factor.net/dev-prod-parity) y complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md).
+Minimizar las diferencias entre los ambientes de desarrollo, staging y producción para eliminar bugs que solo aparecen en producción. Aplica el principio [XII-Factor Dev/Prod Parity](https://12factor.net/dev-prod-parity) y complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/infraestructura-como-codigo.md).
 
 **Conceptos incluidos:**
 

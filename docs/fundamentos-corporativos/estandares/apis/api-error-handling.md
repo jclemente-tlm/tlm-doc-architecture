@@ -10,7 +10,7 @@ tags: [apis, error-handling, rest, response-wrapper]
 
 ## Contexto
 
-Este estándar define cómo manejar, reportar y registrar errores de manera consistente en todas las APIs. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/07-apis-y-contratos.md).
+Este estándar define cómo manejar, reportar y registrar errores de manera consistente en todas las APIs. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/apis-y-contratos.md).
 
 **Propósito:** Respuestas de error predecibles, diagnóstico rápido, experiencia de usuario clara.
 

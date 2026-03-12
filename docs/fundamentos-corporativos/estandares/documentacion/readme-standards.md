@@ -9,7 +9,7 @@ description: Estándar para crear documentación README en repositorios, con tem
 
 ## Contexto
 
-Este estándar define cómo crear README.md en repositorios, asegurando que todo servicio tenga documentación accesible y actualizada desde el primer contacto. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/03-documentacion-tecnica.md).
+Este estándar define cómo crear README.md en repositorios, asegurando que todo servicio tenga documentación accesible y actualizada desde el primer contacto. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/documentacion-tecnica.md).
 
 ---
 

@@ -10,7 +10,7 @@ tags: [desarrollo, configuracion, dotnet, options-pattern, keyvault]
 
 ## Contexto
 
-Gestionar configuración fuera del código fuente garantiza que el mismo artefacto funcione en cualquier entorno. Complementa el lineamiento [Configuración de Entornos](../../lineamientos/operabilidad/03-configuracion-entornos.md).
+Gestionar configuración fuera del código fuente garantiza que el mismo artefacto funcione en cualquier entorno. Complementa el lineamiento [Configuración de Entornos](../../lineamientos/operabilidad/configuracion-entornos.md).
 
 **Cuándo aplicar:** Todo proyecto .NET con valores que varían por entorno (connection strings, URLs, secrets, feature flags).
 
@@ -345,7 +345,7 @@ AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 
 ## Referencias
 
-- [Lineamiento Configuración de Entornos](../../lineamientos/operabilidad/03-configuracion-entornos.md) — lineamiento que origina este estándar
+- [Lineamiento Configuración de Entornos](../../lineamientos/operabilidad/configuracion-entornos.md) — lineamiento que origina este estándar
 - [ASP.NET Core Configuration](https://learn.microsoft.com/aspnet/core/fundamentals/configuration/) — documentación oficial
 - [Options pattern](https://learn.microsoft.com/dotnet/core/extensions/options) — patrón `IOptions<T>`
 - [Azure Key Vault](https://learn.microsoft.com/azure/key-vault/) — gestión de secretos

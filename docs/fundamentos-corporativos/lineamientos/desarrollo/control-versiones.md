@@ -22,6 +22,6 @@ Uso inconsistente de control de versiones genera historial confuso, conflictos f
 
 ## Referencias Relacionadas
 
-- [Calidad de Código](./01-calidad-codigo.md) (code review obligatorio)
-- [CI/CD y Automatización](../operabilidad/01-cicd-pipelines.md) (pipelines CI/CD)
-- [Documentación Técnica](./03-documentacion-tecnica.md) (changelogs, release notes)
+- [Calidad de Código](./calidad-codigo.md) (code review obligatorio)
+- [CI/CD y Automatización](../operabilidad/cicd-pipelines.md) (pipelines CI/CD)
+- [Documentación Técnica](./documentacion-tecnica.md) (changelogs, release notes)

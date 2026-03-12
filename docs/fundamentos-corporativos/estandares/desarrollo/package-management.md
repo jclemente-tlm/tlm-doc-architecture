@@ -9,7 +9,7 @@ description: Estándares para gestión centralizada de dependencias NuGet, lock 
 
 ## Contexto
 
-Este estándar define las prácticas para la gestión centralizada de dependencias NuGet. Complementa el lineamiento [Autonomía de Servicios](../../lineamientos/arquitectura/10-autonomia-de-servicios.md).
+Este estándar define las prácticas para la gestión centralizada de dependencias NuGet. Complementa el lineamiento [Autonomía de Servicios](../../lineamientos/arquitectura/autonomia-de-servicios.md).
 
 **Conceptos incluidos:**
 

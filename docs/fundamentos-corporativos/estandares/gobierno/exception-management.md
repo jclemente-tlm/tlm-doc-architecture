@@ -395,4 +395,4 @@ Proceso periódico de revisión de excepciones activas para verificar si se debe
 - [Compliance y Validación](./compliance-validation.md) — validación automatizada
 - [Ownership de Servicios](./service-ownership.md) — accountability del service owner
 - [Architecture Board y Auditorías](./architecture-board-audits.md) — quien aprueba excepciones
-- [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento base
+- [Lineamiento de Decisiones Arquitectónicas](../../lineamientos/gobierno/decisiones-arquitectonicas.md) — lineamiento base

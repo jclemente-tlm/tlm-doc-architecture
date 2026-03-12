@@ -32,9 +32,9 @@ Este principio busca permitir la evolución independiente de componentes minimiz
 
 **Lineamientos relacionados:**
 
-- [Modelado de Dominio](../lineamientos/arquitectura/09-modelado-de-dominio.md)
-- [Autonomía de Servicios](../lineamientos/arquitectura/10-autonomia-de-servicios.md)
-- [Arquitectura Limpia](../lineamientos/arquitectura/11-arquitectura-limpia.md)
+- [Modelado de Dominio](../lineamientos/arquitectura/modelado-de-dominio.md)
+- [Autonomía de Servicios](../lineamientos/arquitectura/autonomia-de-servicios.md)
+- [Arquitectura Limpia](../lineamientos/arquitectura/arquitectura-limpia.md)
 
 **ADRs relacionados:**
 

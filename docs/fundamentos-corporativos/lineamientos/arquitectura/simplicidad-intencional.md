@@ -24,5 +24,5 @@ La arquitectura debe priorizar soluciones simples y comprensibles, incorporando 
 ## Referencias Relacionadas
 
 - [Mantenibilidad y Extensibilidad](../../principios/04-mantenibilidad-y-extensibilidad.md)
-- [Arquitectura Evolutiva](09-arquitectura-evolutiva.md)
-- [Descomposición y Límites](02-descomposicion-y-limites.md)
+- [Arquitectura Evolutiva](arquitectura-evolutiva.md)
+- [Descomposición y Límites](descomposicion-y-limites.md)

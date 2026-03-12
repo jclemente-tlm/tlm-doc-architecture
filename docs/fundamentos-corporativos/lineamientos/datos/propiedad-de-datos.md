@@ -19,6 +19,6 @@ Cada dominio de negocio es responsable exclusivo de sus propios datos: definici�
 
 ## Referencias Relacionadas
 
-- [Datos por Dominio](01-datos-por-dominio.md)
-- [Autonomía de Servicios](../arquitectura/10-autonomia-de-servicios.md)
-- [Modelado de Dominio](../arquitectura/09-modelado-de-dominio.md)
+- [Datos por Dominio](datos-por-dominio.md)
+- [Autonomía de Servicios](../arquitectura/autonomia-de-servicios.md)
+- [Modelado de Dominio](../arquitectura/modelado-de-dominio.md)

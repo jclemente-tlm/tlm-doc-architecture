@@ -22,7 +22,7 @@ Los servicios que operan en múltiples países o para múltiples clientes deben 
 
 ## Referencias Relacionadas
 
-- [Identidad y Accesos](../seguridad/05-identidad-y-accesos.md)
-- [Segmentación y Aislamiento](../seguridad/06-segmentacion-y-aislamiento.md)
-- [Autonomía de Servicios](./07-autonomia-de-servicios.md)
-- [Datos por Dominio](../datos/01-datos-por-dominio.md)
+- [Identidad y Accesos](../seguridad/identidad-y-accesos.md)
+- [Segmentación y Aislamiento](../seguridad/segmentacion-y-aislamiento.md)
+- [Autonomía de Servicios](./autonomia-de-servicios.md)
+- [Datos por Dominio](../datos/datos-por-dominio.md)

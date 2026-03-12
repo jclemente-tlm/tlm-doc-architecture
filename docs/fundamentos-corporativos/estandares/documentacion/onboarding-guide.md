@@ -9,7 +9,7 @@ description: Estándar para crear guías de onboarding que acorten el tiempo de 
 
 ## Contexto
 
-Este estándar define cómo crear guías de onboarding para que nuevos desarrolladores se pongan productivos rápidamente. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/03-documentacion-tecnica.md).
+Este estándar define cómo crear guías de onboarding para que nuevos desarrolladores se pongan productivos rápidamente. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/documentacion-tecnica.md).
 
 ---
 

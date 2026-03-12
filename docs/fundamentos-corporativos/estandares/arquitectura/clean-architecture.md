@@ -10,7 +10,7 @@ tags: [arquitectura, clean-architecture, hexagonal, dip, capas]
 
 ## Contexto
 
-Este estándar consolida los principios fundamentales de Clean Architecture aplicados a servicios .NET. Complementa el lineamiento [Arquitectura Limpia](../../lineamientos/arquitectura/11-arquitectura-limpia.md) asegurando que la lógica de negocio permanezca independiente de frameworks e infraestructura.
+Este estándar consolida los principios fundamentales de Clean Architecture aplicados a servicios .NET. Complementa el lineamiento [Arquitectura Limpia](../../lineamientos/arquitectura/arquitectura-limpia.md) asegurando que la lógica de negocio permanezca independiente de frameworks e infraestructura.
 
 **Conceptos incluidos:**
 

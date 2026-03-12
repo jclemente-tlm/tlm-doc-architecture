@@ -10,7 +10,7 @@ tags: [arquitectura, escalabilidad, performance, redis, stateless]
 
 ## Contexto
 
-Este estándar consolida patrones para sistemas escalables y performantes. Complementa el lineamiento [Escalabilidad y Rendimiento](../../lineamientos/arquitectura/05-escalabilidad-y-rendimiento.md).
+Este estándar consolida patrones para sistemas escalables y performantes. Complementa el lineamiento [Escalabilidad y Rendimiento](../../lineamientos/arquitectura/escalabilidad-y-rendimiento.md).
 
 **Conceptos incluidos:**
 

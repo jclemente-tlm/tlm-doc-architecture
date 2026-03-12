@@ -9,7 +9,7 @@ description: Estándar para crear runbooks operacionales con procedimientos de d
 
 ## Contexto
 
-Este estándar define cómo crear runbooks operacionales que permitan responder rápida y consistentemente a incidentes en producción. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/03-documentacion-tecnica.md).
+Este estándar define cómo crear runbooks operacionales que permitan responder rápida y consistentemente a incidentes en producción. Complementa el lineamiento [Documentación Técnica](../../lineamientos/desarrollo/documentacion-tecnica.md).
 
 ---
 

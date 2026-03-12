@@ -23,7 +23,7 @@ Despliegues manuales generan inconsistencias entre entornos, errores humanos y c
 
 ## Referencias Relacionadas
 
-- [Control de Versiones](../desarrollo/04-control-versiones.md) (versionado y tagging)
-- [Infraestructura como Código](./02-infraestructura-como-codigo.md) (aprovisionamiento automatizado)
-- [Estrategia de Pruebas](../desarrollo/02-estrategia-pruebas.md) (tipos de testing)
-- [Calidad de Código](../desarrollo/01-calidad-codigo.md) (análisis estático)
+- [Control de Versiones](../desarrollo/control-versiones.md) (versionado y tagging)
+- [Infraestructura como Código](./infraestructura-como-codigo.md) (aprovisionamiento automatizado)
+- [Estrategia de Pruebas](../desarrollo/estrategia-pruebas.md) (tipos de testing)
+- [Calidad de Código](../desarrollo/calidad-codigo.md) (análisis estático)

@@ -10,7 +10,7 @@ tags: [arquitectura, multi-tenancy, aislamiento, tenant, keycloak, kong]
 
 ## Contexto
 
-Este estándar define cómo implementar arquitecturas multi-tenant de forma segura y mantenible en el contexto de Talma, que opera en cuatro países (pe, ec, co, mx). Complementa el lineamiento [Multi-tenancy](../../lineamientos/arquitectura/11-multi-tenancy.md).
+Este estándar define cómo implementar arquitecturas multi-tenant de forma segura y mantenible en el contexto de Talma, que opera en cuatro países (pe, ec, co, mx). Complementa el lineamiento [Multi-tenancy](../../lineamientos/arquitectura/multi-tenancy.md).
 
 **Conceptos incluidos:**
 
@@ -227,9 +227,9 @@ _logger.LogInformation(
 
 ## Referencias
 
-- [Lineamiento Multi-tenancy](../../lineamientos/arquitectura/11-multi-tenancy.md)
+- [Lineamiento Multi-tenancy](../../lineamientos/arquitectura/multi-tenancy.md)
 - [IAM Avanzado](../seguridad/iam-advanced.md)
 - [SSO, MFA y RBAC](../seguridad/sso-mfa-rbac.md)
 - [IaC Standards](../infraestructura/iac-standards.md)
 - [Security Governance](../seguridad/security-governance.md)
-- [Segmentación y Aislamiento](../../lineamientos/seguridad/06-segmentacion-y-aislamiento.md)
+- [Segmentación y Aislamiento](../../lineamientos/seguridad/segmentacion-y-aislamiento.md)

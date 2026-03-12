@@ -10,7 +10,7 @@ tags: [infraestructura, redes, vpc, aws, terraform, networking]
 
 ## Contexto
 
-Este estándar define las prácticas para diseño y configuración de redes virtuales en AWS, incluyendo VPCs, subnets públicas y privadas, NAT gateways, route tables y VPC Flow Logs. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md) y asegura networking seguro, aislado y de alta disponibilidad para microservicios.
+Este estándar define las prácticas para diseño y configuración de redes virtuales en AWS, incluyendo VPCs, subnets públicas y privadas, NAT gateways, route tables y VPC Flow Logs. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/infraestructura-como-codigo.md) y asegura networking seguro, aislado y de alta disponibilidad para microservicios.
 
 **Conceptos incluidos:**
 

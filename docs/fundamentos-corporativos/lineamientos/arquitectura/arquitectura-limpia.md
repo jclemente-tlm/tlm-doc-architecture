@@ -25,5 +25,5 @@ La arquitectura debe separar claramente las decisiones de negocio de los detalle
 ## Referencias Relacionadas
 
 - [Mantenibilidad y Extensibilidad](../../principios/04-mantenibilidad-y-extensibilidad.md)
-- [Modelado de Dominio](06-modelado-de-dominio.md)
-- [Descomposición y Límites](02-descomposicion-y-limites.md)
+- [Modelado de Dominio](modelado-de-dominio.md)
+- [Descomposición y Límites](descomposicion-y-limites.md)

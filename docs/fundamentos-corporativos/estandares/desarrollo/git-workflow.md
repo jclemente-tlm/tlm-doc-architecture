@@ -9,7 +9,7 @@ description: Estándares para flujo de trabajo Git, estrategia de ramas, merge s
 
 ## Contexto
 
-Este estándar define el flujo de trabajo con Git para desarrollo colaborativo, asegurando trazabilidad, calidad y despliegues controlados. Complementa el lineamiento [Control de Versiones](../../lineamientos/desarrollo/04-control-versiones.md).
+Este estándar define el flujo de trabajo con Git para desarrollo colaborativo, asegurando trazabilidad, calidad y despliegues controlados. Complementa el lineamiento [Control de Versiones](../../lineamientos/desarrollo/control-versiones.md).
 
 **Conceptos incluidos:**
 

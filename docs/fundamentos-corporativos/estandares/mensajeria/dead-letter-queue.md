@@ -10,7 +10,7 @@ tags: [mensajeria, kafka, dlq, dead-letter-queue, retry]
 
 ## Contexto
 
-Este estándar define cómo implementar Dead Letter Queue (DLQ) para manejar mensajes Kafka que fallan consistentemente después de múltiples reintentos. Cubre retry policy, estructura de mensajes DLQ, monitoreo y estrategias de reprocesamiento. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
+Este estándar define cómo implementar Dead Letter Queue (DLQ) para manejar mensajes Kafka que fallan consistentemente después de múltiples reintentos. Cubre retry policy, estructura de mensajes DLQ, monitoreo y estrategias de reprocesamiento. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md).
 
 ---
 
@@ -401,6 +401,6 @@ var dlqSize = meter.CreateObservableGauge<long>(
 - [AWS - Dead Letter Queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html)
 - [Polly Documentation](https://github.com/App-vNext/Polly)
 - [Microsoft - Transient fault handling](https://docs.microsoft.com/en-us/azure/architecture/best-practices/transient-faults)
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
 - [Message Delivery Guarantees](./message-delivery-guarantees.md)
 - [Idempotencia en Eventos](./idempotency.md)

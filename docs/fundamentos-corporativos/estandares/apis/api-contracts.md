@@ -10,7 +10,7 @@ tags: [apis, rest, openapi, swagger, fluent-validation, dtos]
 
 ## Contexto
 
-Este estándar define cómo especificar formalmente endpoints, requests y responses usando OpenAPI (Swagger) con DTOs y validación. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/07-apis-y-contratos.md).
+Este estándar define cómo especificar formalmente endpoints, requests y responses usando OpenAPI (Swagger) con DTOs y validación. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/apis-y-contratos.md).
 
 **Cuándo aplicar:** Toda API expuesta externamente o a otros equipos. Obligatorio para APIs públicas.
 

@@ -10,7 +10,7 @@ tags: [observabilidad, logging, serilog, loki]
 
 ## Contexto
 
-Este estándar define la práctica de logging estructurado en formato JSON con contexto rico para análisis y correlación. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) asegurando que los logs sean machine-readable, fáciles de buscar y correlacionables entre servicios.
+Este estándar define la práctica de logging estructurado en formato JSON con contexto rico para análisis y correlación. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/observabilidad.md) asegurando que los logs sean machine-readable, fáciles de buscar y correlacionables entre servicios.
 
 ---
 
@@ -277,7 +277,7 @@ catch (Exception ex)
 
 ## Referencias
 
-- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
+- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/observabilidad.md) — lineamiento que origina este estándar
 - [Distributed Tracing](./distributed-tracing.md) — correlación de logs con trazas distribuidas
 - [Métricas con OpenTelemetry](./metrics.md) — complementa este estándar con métricas numéricas
 - [Serilog Documentation](https://serilog.net/) — documentación oficial

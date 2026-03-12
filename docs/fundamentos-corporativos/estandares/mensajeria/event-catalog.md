@@ -10,7 +10,7 @@ tags: [mensajeria, kafka, event-catalog, discoverability, documentacion]
 
 ## Contexto
 
-Este estándar define cómo documentar y gestionar el catálogo centralizado de eventos en arquitecturas Kafka. Cubre la estructura de entrada del catálogo, generación automatizada y la API de descubrimiento de eventos. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
+Este estándar define cómo documentar y gestionar el catálogo centralizado de eventos en arquitecturas Kafka. Cubre la estructura de entrada del catálogo, generación automatizada y la API de descubrimiento de eventos. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md).
 
 ---
 
@@ -264,6 +264,6 @@ public class EventCatalogController : ControllerBase
 - [Kafka Documentation](https://kafka.apache.org/documentation/)
 - [AsyncAPI Studio](https://studio.asyncapi.com/) — Herramienta para catálogo de eventos
 - [Backstage](https://backstage.io/) — Portal de developer para catálogo de servicios y eventos
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
 - [Event Design](./event-design.md)
 - [AsyncAPI Specification](./asyncapi-specification.md)

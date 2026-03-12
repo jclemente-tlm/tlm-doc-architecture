@@ -10,7 +10,7 @@ tags: [mensajeria, kafka, contratos-eventos, json-schema, versionado]
 
 ## Contexto
 
-Este estándar define cómo estructurar, publicar, consumir y versionar contratos de eventos de dominio para comunicación asíncrona en Kafka. Cubre el envelope estándar, publicación con metadata completa, consumo tipado y estrategias de upcasting. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
+Este estándar define cómo estructurar, publicar, consumir y versionar contratos de eventos de dominio para comunicación asíncrona en Kafka. Cubre el envelope estándar, publicación con metadata completa, consumo tipado y estrategias de upcasting. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md).
 
 ---
 
@@ -413,7 +413,7 @@ public class EventUpcaster
 - [CloudEvents 1.0](https://cloudevents.io/) — Envelope estándar de eventos
 - [Apache Kafka](https://kafka.apache.org/documentation/) — Event streaming
 - [NJsonSchema](https://github.com/RicoSuter/NJsonSchema) — Validación runtime de JSON Schema
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
 - [Event Design](./event-design.md)
 - [AsyncAPI Specification](./asyncapi-specification.md)
 - [Idempotency](./idempotency.md)

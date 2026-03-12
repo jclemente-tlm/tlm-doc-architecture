@@ -10,7 +10,7 @@ tags: [datos, database, sql, migrations, performance, ef-core, postgresql]
 
 ## Contexto
 
-Este estándar define las prácticas operacionales fundamentales para trabajar con bases de datos relacionales, cubriendo migraciones, performance, configuración y calidad de datos. Complementa el lineamiento [Datos por Dominio](../../lineamientos/datos/01-datos-por-dominio.md).
+Este estándar define las prácticas operacionales fundamentales para trabajar con bases de datos relacionales, cubriendo migraciones, performance, configuración y calidad de datos. Complementa el lineamiento [Datos por Dominio](../../lineamientos/datos/datos-por-dominio.md).
 
 **Cuándo aplicar:** Todo servicio con PostgreSQL o SQL Server que use EF Core, stored procedures o queries directas.
 
@@ -1316,8 +1316,8 @@ app.Run();
 
 **Relacionados:**
 
-- [Lineamiento Datos por Dominio](../../lineamientos/datos/01-datos-por-dominio.md) — lineamiento que origina este estándar
-- [Lineamiento Consistencia y Sincronización](../../lineamientos/datos/02-consistencia-y-sincronizacion.md) — complementa SQL standards
+- [Lineamiento Datos por Dominio](../../lineamientos/datos/datos-por-dominio.md) — lineamiento que origina este estándar
+- [Lineamiento Consistencia y Sincronización](../../lineamientos/datos/consistencia-y-sincronizacion.md) — complementa SQL standards
 - [Arquitectura de Datos](./data-architecture.md)
 - [Consistencia de Datos](./data-consistency.md)
 

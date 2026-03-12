@@ -22,7 +22,7 @@ El gasto en infraestructura cloud sin supervisión activa genera sorpresas presu
 
 ## Referencias Relacionadas
 
-- [Cloud Native](../arquitectura/03-cloud-native.md) (diseño stateless y eficiencia operativa)
-- [Infraestructura como Código](../operabilidad/02-infraestructura-como-codigo.md) (todos los recursos vía Terraform)
-- [Decisiones Arquitectónicas](./01-decisiones-arquitectonicas.md) (registrar cost-tradeoffs)
+- [Cloud Native](../arquitectura/cloud-native.md) (diseño stateless y eficiencia operativa)
+- [Infraestructura como Código](../operabilidad/infraestructura-como-codigo.md) (todos los recursos vía Terraform)
+- [Decisiones Arquitectónicas](./decisiones-arquitectonicas.md) (registrar cost-tradeoffs)
 - [Estándar Cloud Cost Optimization](../../estandares/infraestructura/cloud-cost-optimization.md)

@@ -22,5 +22,5 @@ Implementar sin revisión arquitectónica genera deuda técnica, decisiones inco
 
 ## Referencias Relacionadas
 
-- [Decisiones Arquitectónicas](./01-decisiones-arquitectonicas.md) (ADRs)
-- [Cumplimiento y Excepciones](./03-cumplimiento-y-excepciones.md) (validación de estándares)
+- [Decisiones Arquitectónicas](./decisiones-arquitectonicas.md) (ADRs)
+- [Cumplimiento y Excepciones](./cumplimiento-y-excepciones.md) (validación de estándares)

@@ -23,5 +23,5 @@ Código sin documentación clara genera dependencia de autores originales, dific
 
 ## Referencias Relacionadas
 
-- [Estilo y Enfoque Arquitectónico](../../lineamientos/arquitectura/01-estilo-y-enfoque-arquitectonico.md)
+- [Estilo y Enfoque Arquitectónico](../../lineamientos/arquitectura/estilo-y-enfoque-arquitectonico.md)
 - [ADRs del proyecto](../../../adrs/README.md)

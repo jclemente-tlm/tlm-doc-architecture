@@ -10,7 +10,7 @@ tags: [apis, rest, http, uri, status-codes, response-wrapper, filtering]
 
 ## Contexto
 
-Este estándar define los principios REST y convenciones HTTP base para toda API de la organización. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/07-apis-y-contratos.md).
+Este estándar define los principios REST y convenciones HTTP base para toda API de la organización. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/apis-y-contratos.md).
 
 **Cuándo aplicar:** Siempre. Es la base obligatoria de toda API REST, independientemente del dominio.
 

@@ -10,7 +10,7 @@ tags: [observabilidad, slo, sla, grafana, mimir]
 
 ## Contexto
 
-Este estándar define cómo establecer, medir y gestionar Service Level Objectives (SLOs) y Service Level Agreements (SLAs) usando métricas de OpenTelemetry y Grafana. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) asegurando que la confiabilidad del servicio se mida con datos objetivos y se gestione con un error budget explícito.
+Este estándar define cómo establecer, medir y gestionar Service Level Objectives (SLOs) y Service Level Agreements (SLAs) usando métricas de OpenTelemetry y Grafana. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/observabilidad.md) asegurando que la confiabilidad del servicio se mida con datos objetivos y se gestione con un error budget explícito.
 
 **Conceptos incluidos:**
 
@@ -395,7 +395,7 @@ This SLA does not cover:
 
 ## Referencias
 
-- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
+- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/observabilidad.md) — lineamiento que origina este estándar
 - [Métricas con OpenTelemetry](./metrics.md) — fuente de SLIs vía PromQL/Mimir
 - [Alertas con Grafana](./alerting.md) — alertas basadas en error budget
 - [Dashboards en Grafana](./dashboards.md) — visualización de SLO compliance

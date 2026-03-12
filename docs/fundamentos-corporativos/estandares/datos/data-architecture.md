@@ -9,7 +9,7 @@ description: Estándares para arquitectura de datos en microservicios incluyendo
 
 ## Contexto
 
-Este estándar consolida las prácticas fundamentales para diseñar una arquitectura de datos descentralizada en microservicios, asegurando autonomía, ownership claro y governanza efectiva. Complementa el lineamiento [Datos por Dominio](../../lineamientos/datos/01-datos-por-dominio.md).
+Este estándar consolida las prácticas fundamentales para diseñar una arquitectura de datos descentralizada en microservicios, asegurando autonomía, ownership claro y governanza efectiva. Complementa el lineamiento [Datos por Dominio](../../lineamientos/datos/datos-por-dominio.md).
 
 **Conceptos incluidos:**
 
@@ -1133,7 +1133,7 @@ networks:
 
 - [Consistencia de Datos](./data-consistency.md)
 - [Estándares de Base de Datos](./database-standards.md)
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md)
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md)
 - [Contratos de Eventos](../../mensajeria/event-contracts.md)
 
 ---

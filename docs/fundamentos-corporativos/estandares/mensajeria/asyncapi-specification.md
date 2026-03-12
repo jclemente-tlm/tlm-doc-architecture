@@ -10,7 +10,7 @@ tags: [mensajeria, asyncapi, documentacion, event-catalog, kafka]
 
 ## Contexto
 
-Este estándar define cómo documentar arquitecturas event-driven usando AsyncAPI 3.0, incluyendo la especificación de canales, operaciones, mensajes y schemas. Permite generación de código, validación de contratos y mantenimiento de un catálogo de eventos centralizado. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
+Este estándar define cómo documentar arquitecturas event-driven usando AsyncAPI 3.0, incluyendo la especificación de canales, operaciones, mensajes y schemas. Permite generación de código, validación de contratos y mantenimiento de un catálogo de eventos centralizado. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md).
 
 ---
 
@@ -524,6 +524,6 @@ El catálogo de eventos de cada dominio vive en la documentación del servicio p
 - [NJsonSchema](https://github.com/RicoSuter/NJsonSchema) — Validación runtime de JSON Schema
 - [AsyncAPI Code Generation](https://www.asyncapi.com/tools/generator) — Generación de código desde AsyncAPI
 - [AsyncAPI Studio](https://studio.asyncapi.com/) — Herramienta visual para AsyncAPI
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
 - [Event Contracts](./event-contracts.md)
 - [Event Catalog](./event-catalog.md)

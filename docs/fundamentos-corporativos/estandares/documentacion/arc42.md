@@ -9,7 +9,7 @@ description: Estándar para documentar arquitectura de software usando el templa
 
 ## Contexto
 
-Este estándar define cómo documentar arquitecturas de software usando arc42, un template estructurado y agnóstico de tecnología. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md).
+Este estándar define cómo documentar arquitecturas de software usando arc42, un template estructurado y agnóstico de tecnología. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/decisiones-arquitectonicas.md).
 
 ---
 

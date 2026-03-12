@@ -34,9 +34,9 @@ Este principio busca mantener la operación continua del sistema ante fallos med
 
 **Lineamientos relacionados:**
 
-- [Escalabilidad y Rendimiento](../lineamientos/arquitectura/05-escalabilidad-y-rendimiento.md)
-- [Observabilidad](../lineamientos/arquitectura/06-observabilidad.md)
-- [Disaster Recovery](../lineamientos/operabilidad/04-disaster-recovery.md)
+- [Escalabilidad y Rendimiento](../lineamientos/arquitectura/escalabilidad-y-rendimiento.md)
+- [Observabilidad](../lineamientos/arquitectura/observabilidad.md)
+- [Disaster Recovery](../lineamientos/operabilidad/disaster-recovery.md)
 
 **ADRs relacionados:**
 

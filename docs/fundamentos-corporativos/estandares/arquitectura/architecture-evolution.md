@@ -10,7 +10,7 @@ tags: [arquitectura, evolucion, tecnologias]
 
 ## Contexto
 
-Este estándar consolida prácticas para evolucionar arquitecturas de forma controlada. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md).
+Este estándar consolida prácticas para evolucionar arquitecturas de forma controlada. Complementa el lineamiento [Decisiones Arquitectónicas](../../lineamientos/gobierno/decisiones-arquitectonicas.md).
 
 **Conceptos incluidos:**
 
@@ -169,7 +169,7 @@ review_date: 2026-08-18
 
 ## Referencias
 
-- [Lineamiento Decisiones Arquitectónicas](../../lineamientos/gobierno/01-decisiones-arquitectonicas.md) — lineamiento que origina este estándar
+- [Lineamiento Decisiones Arquitectónicas](../../lineamientos/gobierno/decisiones-arquitectonicas.md) — lineamiento que origina este estándar
 - [Building Evolutionary Architectures (ThoughtWorks)](https://evolutionaryarchitecture.com/)
 - [The Twelve-Factor App](https://12factor.net/)
 - [Architecture Decision Records](https://adr.github.io/)

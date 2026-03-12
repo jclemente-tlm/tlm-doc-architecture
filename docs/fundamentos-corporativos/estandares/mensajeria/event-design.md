@@ -10,7 +10,7 @@ tags: [mensajeria, kafka, event-design, naming, versionado]
 
 ## Contexto
 
-Este estándar define estructura, naming conventions, versionado y contratos de eventos para asegurar consistencia, evolucionabilidad y comprensión cross-service en sistemas Kafka. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
+Este estándar define estructura, naming conventions, versionado y contratos de eventos para asegurar consistencia, evolucionabilidad y comprensión cross-service en sistemas Kafka. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md).
 
 ---
 
@@ -288,7 +288,7 @@ public class OrderCreatedHandler
 - [Kafka Documentation](https://kafka.apache.org/documentation/)
 - [JSON Schema](https://json-schema.org/)
 - [Martin Fowler - Event-Driven Architecture](https://martinfowler.com/articles/201701-event-driven.html)
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
 - [Async Messaging](./async-messaging.md)
 - [Event Catalog](./event-catalog.md)
 - [Event Contracts](./event-contracts.md)

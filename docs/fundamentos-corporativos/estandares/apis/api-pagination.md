@@ -10,7 +10,7 @@ tags: [apis, rest, paginacion, cursor, offset]
 
 ## Contexto
 
-Este estándar define cómo paginar colecciones grandes para mejorar performance y experiencia de usuario. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/07-apis-y-contratos.md).
+Este estándar define cómo paginar colecciones grandes para mejorar performance y experiencia de usuario. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/apis-y-contratos.md).
 
 **Cuándo aplicar:** Todo endpoint que retorne una colección de recursos.
 

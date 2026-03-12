@@ -10,7 +10,7 @@ tags: [mensajeria, kafka, garantias-entrega, at-least-once, idempotencia]
 
 ## Contexto
 
-Este estándar define los niveles de garantía de entrega para mensajes Kafka y cuándo aplicar cada uno. Cubre at-most-once, at-least-once y exactly-once semantics, con configuración recomendada para .NET. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
+Este estándar define los niveles de garantía de entrega para mensajes Kafka y cuándo aplicar cada uno. Cubre at-most-once, at-least-once y exactly-once semantics, con configuración recomendada para .NET. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md).
 
 ---
 
@@ -333,6 +333,6 @@ var messagesDuplicate = meter.CreateCounter<long>(
 - [Kafka Documentation - Delivery Semantics](https://kafka.apache.org/documentation/#semantics)
 - [Confluent - Exactly-Once Semantics](https://www.confluent.io/blog/exactly-once-semantics-are-possible-heres-how-apache-kafka-does-it/)
 - [Martin Kleppmann - Designing Data-Intensive Applications (Chapter 11)](https://dataintensive.net/)
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
 - [Idempotencia en Eventos](./idempotency.md)
 - [Dead Letter Queue](./dead-letter-queue.md)

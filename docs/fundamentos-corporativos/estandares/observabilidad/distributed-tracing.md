@@ -10,7 +10,7 @@ tags: [observabilidad, tracing, opentelemetry, tempo, correlation-id]
 
 ## Contexto
 
-Este estándar define prácticas para implementar tracing distribuido y propagación de correlation IDs usando OpenTelemetry y Grafana Tempo. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) permitiendo rastrear requests a través de múltiples servicios y correlacionar logs con trazas para diagnóstico eficiente.
+Este estándar define prácticas para implementar tracing distribuido y propagación de correlation IDs usando OpenTelemetry y Grafana Tempo. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/observabilidad.md) permitiendo rastrear requests a través de múltiples servicios y correlacionar logs con trazas para diagnóstico eficiente.
 
 **Conceptos incluidos:**
 
@@ -530,7 +530,7 @@ Log.Logger = new LoggerConfiguration()
 
 ## Referencias
 
-- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
+- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/observabilidad.md) — lineamiento que origina este estándar
 - [SLO y SLA](./slo-sla.md) — objetivos de nivel de servicio basados en las métricas de traces
 - [Structured Logging](./structured-logging.md) — correlación de logs con trazas distribuidas
 - [Métricas con OpenTelemetry](./metrics.md) — fuente de métricas complementaria

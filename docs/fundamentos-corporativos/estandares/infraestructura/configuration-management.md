@@ -11,7 +11,7 @@ tags:
 
 ## Contexto
 
-Toda configuración environment-specific (connection strings, feature flags, timeouts, API keys) debe vivir fuera del código fuente. Este estándar define cómo externalizar la configuración siguiendo el principio [XII-Factor Config](https://12factor.net/config) e inyectarla en runtime usando variables de entorno, AWS Parameter Store y Secrets Manager. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md).
+Toda configuración environment-specific (connection strings, feature flags, timeouts, API keys) debe vivir fuera del código fuente. Este estándar define cómo externalizar la configuración siguiendo el principio [XII-Factor Config](https://12factor.net/config) e inyectarla en runtime usando variables de entorno, AWS Parameter Store y Secrets Manager. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/infraestructura-como-codigo.md).
 
 **Conceptos incluidos:**
 

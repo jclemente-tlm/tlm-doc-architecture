@@ -23,5 +23,5 @@ APIs inconsistentes, contratos mal definidos o documentación desactualizada gen
 
 ## Referencias Relacionadas
 
-- [Comunicación Asíncrona y Eventos](./02-comunicacion-asincrona-y-eventos.md)
+- [Comunicación Asíncrona y Eventos](./comunicacion-asincrona-y-eventos.md)
 - [Arquitectura de Microservicios](../../estilos-arquitectonicos/microservicios.md)

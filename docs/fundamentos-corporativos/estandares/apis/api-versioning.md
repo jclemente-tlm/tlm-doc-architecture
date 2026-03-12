@@ -19,7 +19,7 @@ tags:
 
 ## Contexto
 
-Este estándar define cómo versionar APIs REST para que múltiples versiones coexistan y los clientes migren gradualmente. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/07-apis-y-contratos.md).
+Este estándar define cómo versionar APIs REST para que múltiples versiones coexistan y los clientes migren gradualmente. Complementa el lineamiento [APIs y Contratos](../../lineamientos/arquitectura/apis-y-contratos.md).
 
 **Cuándo aplicar:** Toda API ya desplegada en producción que va a recibir cambios. Obligatorio para APIs expuestas a otros equipos o externos.
 

@@ -10,7 +10,7 @@ tags: [mensajeria, kafka, idempotencia, exactly-once, duplicados]
 
 ## Contexto
 
-Este estándar define cómo implementar idempotencia en event handlers Kafka para garantizar que mensajes duplicados (por retries o redelivery) no generen efectos secundarios duplicados. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md).
+Este estándar define cómo implementar idempotencia en event handlers Kafka para garantizar que mensajes duplicados (por retries o redelivery) no generen efectos secundarios duplicados. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md).
 
 ---
 
@@ -294,6 +294,6 @@ _logger.LogWarning(
 - [Stripe - Idempotent Requests](https://stripe.com/docs/api/idempotent_requests)
 - [Microsoft - Idempotent message processing](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/saga/saga)
 - [Kafka Documentation - Delivery Semantics](https://kafka.apache.org/documentation/#semantics)
-- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
+- [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — Lineamiento relacionado
 - [Async Messaging](./async-messaging.md)
 - [Message Delivery Guarantees](./message-delivery-guarantees.md)

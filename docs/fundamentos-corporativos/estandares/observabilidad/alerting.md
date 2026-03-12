@@ -10,7 +10,7 @@ tags: [observabilidad, alertas, grafana, pagerduty]
 
 ## Contexto
 
-Este estándar define cómo configurar alertas proactivas que detecten problemas antes de que impacten a los usuarios. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) asegurando que el equipo sea notificado en forma oportuna y con contexto suficiente para actuar.
+Este estándar define cómo configurar alertas proactivas que detecten problemas antes de que impacten a los usuarios. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/observabilidad.md) asegurando que el equipo sea notificado en forma oportuna y con contexto suficiente para actuar.
 
 ---
 
@@ -317,7 +317,7 @@ Una alerta sin runbook es ruido. Si el equipo no sabe cómo responderla, no debe
 
 ## Referencias
 
-- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
+- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/observabilidad.md) — lineamiento que origina este estándar
 - [Métricas con OpenTelemetry](./metrics.md) — fuente de métricas para las alert rules
 - [Dashboards en Grafana](./dashboards.md) — visualización para diagnóstico desde las alertas
 - [Grafana Alerting](https://grafana.com/docs/grafana/latest/alerting/) — documentación oficial

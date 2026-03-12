@@ -21,4 +21,4 @@ Dividir sistemas en componentes con límites claros facilita el mantenimiento, l
 
 ## Referencias Relacionadas
 
-- [Establecer contratos explícitos en los límites](../integracion/01-apis-y-contratos.md)
+- [Establecer contratos explícitos en los límites](../integracion/apis-y-contratos.md)

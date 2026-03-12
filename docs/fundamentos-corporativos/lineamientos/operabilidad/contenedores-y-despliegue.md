@@ -24,7 +24,7 @@ Imágenes construidas de forma inconsistente, con secretos embebidos o sin estra
 
 ## Referencias Relacionadas
 
-- [CI/CD y Automatización](./01-cicd-pipelines.md)
-- [Infraestructura como Código](./02-infraestructura-como-codigo.md)
-- [Observabilidad](./05-observabilidad.md)
-- [Configuración de Entornos](./03-configuracion-entornos.md)
+- [CI/CD y Automatización](./cicd-pipelines.md)
+- [Infraestructura como Código](./infraestructura-como-codigo.md)
+- [Observabilidad](./observabilidad.md)
+- [Configuración de Entornos](./configuracion-entornos.md)

@@ -22,7 +22,7 @@ Las decisiones arquitectónicas sin validación continua se degradan silenciosam
 
 ## Referencias Relacionadas
 
-- [Decisiones Arquitectónicas](./01-decisiones-arquitectonicas.md)
-- [Revisiones Arquitectónicas](./02-revisiones-arquitectonicas.md)
-- [Cumplimiento y Excepciones](./03-cumplimiento-y-excepciones.md)
-- [Arquitectura Evolutiva](../arquitectura/09-arquitectura-evolutiva.md)
+- [Decisiones Arquitectónicas](./decisiones-arquitectonicas.md)
+- [Revisiones Arquitectónicas](./revisiones-arquitectonicas.md)
+- [Cumplimiento y Excepciones](./cumplimiento-y-excepciones.md)
+- [Arquitectura Evolutiva](../arquitectura/arquitectura-evolutiva.md)

@@ -10,7 +10,7 @@ tags: [infraestructura, terraform, iac, aws, github-actions, code-review]
 
 ## Contexto
 
-Toda la infraestructura de Talma en AWS se gestiona como código con Terraform. Este estándar define la estructura modular, los módulos reutilizables, el pipeline CI/CD y el proceso de revisión de cambios. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md).
+Toda la infraestructura de Talma en AWS se gestiona como código con Terraform. Este estándar define la estructura modular, los módulos reutilizables, el pipeline CI/CD y el proceso de revisión de cambios. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/infraestructura-como-codigo.md).
 
 **Conceptos incluidos:**
 

@@ -272,5 +272,5 @@ Cuando un Tech Lead cambia de rol o de servicio:
 - [Gestión de Excepciones](./exception-management.md) — proceso cuando no hay compliance
 - [Architecture Board y Auditorías](./architecture-board-audits.md) — auditorías al servicio
 - [Architecture Review y Checklist](./architecture-review-process.md) — reviews que el owner gestiona
-- [Lineamiento Autonomía de Servicios](../../lineamientos/arquitectura/10-autonomia-de-servicios.md) — lineamiento relacionado
+- [Lineamiento Autonomía de Servicios](../../lineamientos/arquitectura/autonomia-de-servicios.md) — lineamiento relacionado
 - [Team Topologies](https://teamtopologies.com/) — referencia para ownership model

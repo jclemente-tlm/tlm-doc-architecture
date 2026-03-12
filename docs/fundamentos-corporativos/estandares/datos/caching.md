@@ -10,7 +10,7 @@ tags: [datos, caching, redis, ttl, invalidacion, rendimiento]
 
 ## Contexto
 
-Este estándar define cómo implementar caché de forma correcta y segura en servicios Talma. Complementa el lineamiento [Caching](../../lineamientos/datos/04-caching.md).
+Este estándar define cómo implementar caché de forma correcta y segura en servicios Talma. Complementa el lineamiento [Caching](../../lineamientos/datos/caching.md).
 
 **Conceptos incluidos:**
 
@@ -236,8 +236,8 @@ Exponer las siguientes métricas via Prometheus:
 
 ## Referencias
 
-- [Lineamiento Caching](../../lineamientos/datos/04-caching.md)
-- [Consistencia y Sincronización](../../lineamientos/datos/02-consistencia-y-sincronizacion.md)
+- [Lineamiento Caching](../../lineamientos/datos/caching.md)
+- [Consistencia y Sincronización](../../lineamientos/datos/consistencia-y-sincronizacion.md)
 - [Data Architecture](./data-architecture.md)
 - [Data Consistency](./data-consistency.md)
 - [Data Protection](../seguridad/data-protection.md)

@@ -10,7 +10,7 @@ tags: [infraestructura, cloud, aws, costos, terraform]
 
 ## Contexto
 
-Este estándar define las prácticas para monitoreo, análisis y optimización continua de costos en AWS, incluyendo estrategia de tagging, presupuestos con alertas, rightsizing de recursos, uso de Fargate Spot y shutdown automatizado de ambientes no productivos. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/02-infraestructura-como-codigo.md) y asegura visibilidad y control de costos sin comprometer disponibilidad ni rendimiento.
+Este estándar define las prácticas para monitoreo, análisis y optimización continua de costos en AWS, incluyendo estrategia de tagging, presupuestos con alertas, rightsizing de recursos, uso de Fargate Spot y shutdown automatizado de ambientes no productivos. Complementa el lineamiento [Infraestructura como Código](../../lineamientos/operabilidad/infraestructura-como-codigo.md) y asegura visibilidad y control de costos sin comprometer disponibilidad ni rendimiento.
 
 **Conceptos incluidos:**
 

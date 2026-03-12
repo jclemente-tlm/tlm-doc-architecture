@@ -34,10 +34,10 @@ Este principio busca minimizar el costo de cambio y maximizar la capacidad de ad
 
 **Lineamientos relacionados:**
 
-- [Arquitectura Limpia](../lineamientos/arquitectura/11-arquitectura-limpia.md)
-- [Arquitectura Evolutiva](../lineamientos/arquitectura/12-arquitectura-evolutiva.md)
-- [Simplicidad Intencional](../lineamientos/arquitectura/13-simplicidad-intencional.md)
-- [Modelado de Dominio](../lineamientos/arquitectura/09-modelado-de-dominio.md)
+- [Arquitectura Limpia](../lineamientos/arquitectura/arquitectura-limpia.md)
+- [Arquitectura Evolutiva](../lineamientos/arquitectura/arquitectura-evolutiva.md)
+- [Simplicidad Intencional](../lineamientos/arquitectura/simplicidad-intencional.md)
+- [Modelado de Dominio](../lineamientos/arquitectura/modelado-de-dominio.md)
 
 **ADRs relacionados:**
 

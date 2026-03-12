@@ -10,7 +10,7 @@ tags: [mensajeria, kafka, saga, event-driven, compensacion]
 
 ## Contexto
 
-Este estándar consolida patrones de mensajería para sistemas distribuidos. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md). Ver [CQRS](./cqrs.md) para la separación de comandos y consultas en la capa de aplicación.
+Este estándar consolida patrones de mensajería para sistemas distribuidos. Complementa el lineamiento [Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md). Ver [CQRS](./cqrs.md) para la separación de comandos y consultas en la capa de aplicación.
 
 **Conceptos incluidos:**
 
@@ -468,7 +468,7 @@ Después (con Saga + Compensation):
 
 ## Referencias
 
-- [Lineamiento Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/08-comunicacion-asincrona-y-eventos.md) — lineamiento que origina este estándar
+- [Lineamiento Comunicación Asíncrona y Eventos](../../lineamientos/arquitectura/comunicacion-asincrona-y-eventos.md) — lineamiento que origina este estándar
 - [Saga Pattern (Chris Richardson)](https://microservices.io/patterns/data/saga.html)
 - [Kafka Documentation](https://kafka.apache.org/documentation/)
 - [CQRS](./cqrs.md) — separación de commands y queries que produce los eventos de dominio

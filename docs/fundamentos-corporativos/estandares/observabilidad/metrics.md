@@ -10,7 +10,7 @@ tags: [observabilidad, métricas, opentelemetry, mimir]
 
 ## Contexto
 
-Este estándar define cómo instrumentar aplicaciones .NET con métricas OpenTelemetry para monitorear performance, salud y comportamiento de negocio en tiempo real. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) asegurando visibilidad cuantitativa del sistema para alertas proactivas y capacity planning.
+Este estándar define cómo instrumentar aplicaciones .NET con métricas OpenTelemetry para monitorear performance, salud y comportamiento de negocio en tiempo real. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/observabilidad.md) asegurando visibilidad cuantitativa del sistema para alertas proactivas y capacity planning.
 
 ---
 
@@ -255,7 +255,7 @@ public class OrderController : ControllerBase
 
 ## Referencias
 
-- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
+- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/observabilidad.md) — lineamiento que origina este estándar
 - [Structured Logging](./structured-logging.md) — complementa este estándar con logs contextuales
 - [Dashboards en Grafana](./dashboards.md) — visualización de las métricas aquí definidas
 - [Alertas](./alerting.md) — alertas basadas en las métricas aquí definidas

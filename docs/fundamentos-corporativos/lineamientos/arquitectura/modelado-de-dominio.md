@@ -22,6 +22,6 @@ La arquitectura debe estructurarse en torno al dominio del negocio, reflejando s
 
 ## Referencias Relacionadas
 
-- [Descomposición y Límites](02-descomposicion-y-limites.md)
-- [Autonomía de Servicios](07-autonomia-de-servicios.md)
-- [APIs y Contratos](../integracion/01-apis-y-contratos.md)
+- [Descomposición y Límites](descomposicion-y-limites.md)
+- [Autonomía de Servicios](autonomia-de-servicios.md)
+- [APIs y Contratos](../integracion/apis-y-contratos.md)

@@ -18,9 +18,9 @@ Un sistema puede estructurarse como una aplicación única (monolito) internamen
 
 Este estilo arquitectónico implementa los siguientes principios corporativos:
 
-- ✅ [Arquitectura Limpia](../lineamientos/arquitectura/11-arquitectura-limpia.md)
-- ✅ [Modelado de Dominio](../lineamientos/arquitectura/09-modelado-de-dominio.md)
-- ✅ [Simplicidad Intencional](../lineamientos/arquitectura/13-simplicidad-intencional.md)
+- ✅ [Arquitectura Limpia](../lineamientos/arquitectura/arquitectura-limpia.md)
+- ✅ [Modelado de Dominio](../lineamientos/arquitectura/modelado-de-dominio.md)
+- ✅ [Simplicidad Intencional](../lineamientos/arquitectura/simplicidad-intencional.md)
 - ✅ [Modularidad y Bajo Acoplamiento](../principios/01-modularidad-y-bajo-acoplamiento.md) (a nivel de módulos)
 
 ## Propósito
@@ -199,8 +199,8 @@ Este estilo se materializa en ADRs relacionados con:
 
 ## Referencias
 
-- [Arquitectura Limpia](../lineamientos/arquitectura/11-arquitectura-limpia.md)
-- [Modelado de Dominio](../lineamientos/arquitectura/09-modelado-de-dominio.md)
-- [Simplicidad Intencional](../lineamientos/arquitectura/13-simplicidad-intencional.md)
+- [Arquitectura Limpia](../lineamientos/arquitectura/arquitectura-limpia.md)
+- [Modelado de Dominio](../lineamientos/arquitectura/modelado-de-dominio.md)
+- [Simplicidad Intencional](../lineamientos/arquitectura/simplicidad-intencional.md)
 - [Arquitectura de Microservicios](./microservicios.md) (para evolución futura)
-- [Lineamiento: Descomposición y Límites](../lineamientos/arquitectura/02-descomposicion-y-limites.md)
+- [Lineamiento: Descomposición y Límites](../lineamientos/arquitectura/descomposicion-y-limites.md)

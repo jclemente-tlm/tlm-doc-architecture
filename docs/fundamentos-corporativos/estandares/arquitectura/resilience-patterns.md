@@ -10,7 +10,7 @@ tags: [arquitectura, resiliencia, polly, circuit-breaker, retry]
 
 ## Contexto
 
-Este estándar consolida los patrones fundamentales para construir sistemas resilientes que manejan fallos gracefully. Complementa el lineamiento [Resiliencia y Disponibilidad](../../lineamientos/arquitectura/04-resiliencia-y-disponibilidad.md).
+Este estándar consolida los patrones fundamentales para construir sistemas resilientes que manejan fallos gracefully. Complementa el lineamiento [Resiliencia y Disponibilidad](../../lineamientos/arquitectura/resiliencia-y-disponibilidad.md).
 
 **Conceptos incluidos:**
 

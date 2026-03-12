@@ -18,9 +18,9 @@ Un sistema puede descomponerse en servicios autónomos, alineados a capacidades 
 
 Este estilo arquitectónico implementa los siguientes principios corporativos:
 
-- ✅ [Autonomía de Servicios](../../fundamentos-corporativos/lineamientos/arquitectura/10-autonomia-de-servicios.md)
-- ✅ [Arquitectura Evolutiva](../../fundamentos-corporativos/lineamientos/arquitectura/12-arquitectura-evolutiva.md)
-- ✅ [Diseño Orientado al Dominio](../../fundamentos-corporativos/lineamientos/arquitectura/09-modelado-de-dominio.md)
+- ✅ [Autonomía de Servicios](../../fundamentos-corporativos/lineamientos/arquitectura/autonomia-de-servicios.md)
+- ✅ [Arquitectura Evolutiva](../../fundamentos-corporativos/lineamientos/arquitectura/arquitectura-evolutiva.md)
+- ✅ [Diseño Orientado al Dominio](../../fundamentos-corporativos/lineamientos/arquitectura/modelado-de-dominio.md)
 
 ## Propósito
 

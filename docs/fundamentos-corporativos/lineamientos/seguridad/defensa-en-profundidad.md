@@ -22,6 +22,6 @@ La arquitectura debe incorporar múltiples capas de protección independientes, 
 
 ## Referencias Relacionadas
 
-- [Arquitectura Segura](01-arquitectura-segura.md)
-- [Zero Trust](02-zero-trust.md)
-- [Segmentación y Aislamiento](06-segmentacion-y-aislamiento.md)
+- [Arquitectura Segura](arquitectura-segura.md)
+- [Zero Trust](zero-trust.md)
+- [Segmentación y Aislamiento](segmentacion-y-aislamiento.md)

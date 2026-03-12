@@ -10,7 +10,7 @@ tags: [gobierno, fitness-functions, arquitectura-evolutiva, ci-cd, calidad]
 
 ## Contexto
 
-Este estándar define cómo implementar mecanismos de validación automatizada que detecten erosión arquitectónica antes de que llegue a producción. Complementa el lineamiento [Indicadores y Fitness Functions](../../lineamientos/gobierno/04-indicadores-y-fitness-functions.md).
+Este estándar define cómo implementar mecanismos de validación automatizada que detecten erosión arquitectónica antes de que llegue a producción. Complementa el lineamiento [Indicadores y Fitness Functions](../../lineamientos/gobierno/indicadores-y-fitness-functions.md).
 
 **Conceptos incluidos:**
 
@@ -279,7 +279,7 @@ public void Domain_Must_Not_Depend_On_Infrastructure() { ... }
 
 ## Referencias
 
-- [Lineamiento Indicadores y Fitness Functions](../../lineamientos/gobierno/04-indicadores-y-fitness-functions.md)
+- [Lineamiento Indicadores y Fitness Functions](../../lineamientos/gobierno/indicadores-y-fitness-functions.md)
 - [Architecture Evolution](../arquitectura/architecture-evolution.md)
 - [ADR Management](./adr-management.md)
 - [Architecture Review Process](./architecture-review-process.md)

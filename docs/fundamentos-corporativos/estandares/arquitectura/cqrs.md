@@ -10,7 +10,7 @@ tags: [arquitectura, cqrs, commands, queries, handlers]
 
 ## Contexto
 
-Este estándar define la implementación de Command Query Responsibility Segregation (CQRS) en servicios Talma. Complementa los lineamientos [Modelado de Dominio](../../lineamientos/arquitectura/09-modelado-de-dominio.md) y [Consistencia y Sincronización](../../lineamientos/datos/02-consistencia-y-sincronizacion.md).
+Este estándar define la implementación de Command Query Responsibility Segregation (CQRS) en servicios Talma. Complementa los lineamientos [Modelado de Dominio](../../lineamientos/arquitectura/modelado-de-dominio.md) y [Consistencia y Sincronización](../../lineamientos/datos/consistencia-y-sincronizacion.md).
 
 **Conceptos incluidos:**
 
@@ -229,6 +229,6 @@ Después (con CQRS):
 
 ## Referencias
 
-- [Lineamiento Modelado de Dominio](../../lineamientos/arquitectura/09-modelado-de-dominio.md) — lineamiento que origina este estándar
+- [Lineamiento Modelado de Dominio](../../lineamientos/arquitectura/modelado-de-dominio.md) — lineamiento que origina este estándar
 - [CQRS Pattern (Martin Fowler)](https://martinfowler.com/bliki/CQRS.html)
 - [Patrones de Mensajería](../mensajeria/messaging-patterns.md) — saga y async processing que complementan los domain events de CQRS

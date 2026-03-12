@@ -10,7 +10,7 @@ tags: [observabilidad, dashboards, grafana, promql, logql]
 
 ## Contexto
 
-Este estándar define cómo estructurar, escribir queries y gestionar dashboards de Grafana para visualizar métricas y logs de los servicios. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) asegurando visibilidad centralizada del comportamiento de las aplicaciones en producción.
+Este estándar define cómo estructurar, escribir queries y gestionar dashboards de Grafana para visualizar métricas y logs de los servicios. Complementa el lineamiento [Observabilidad](../../lineamientos/arquitectura/observabilidad.md) asegurando visibilidad centralizada del comportamiento de las aplicaciones en producción.
 
 ---
 
@@ -236,7 +236,7 @@ Usa `$environment` y `$instance` como variables en las queries PromQL/LogQL para
 
 ## Referencias
 
-- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/06-observabilidad.md) — lineamiento que origina este estándar
+- [Lineamiento de Observabilidad](../../lineamientos/arquitectura/observabilidad.md) — lineamiento que origina este estándar
 - [Métricas con OpenTelemetry](./metrics.md) — fuente de datos PromQL para paneles
 - [Structured Logging](./structured-logging.md) — fuente de datos LogQL para paneles de logs
 - [Alertas](./alerting.md) — alertas asociadas a los paneles de este dashboard
