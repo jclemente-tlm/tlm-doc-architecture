@@ -51,9 +51,9 @@ Alternativas evaluadas:
 | **Autenticación**                       | ✅ GitHub tokens (PAT, OIDC)                      | ✅ IAM roles                                    | ✅ Azure AD                               | ⚠️ Docker login                     | ⚠️ Usuarios locales                  |
 | **Versionado/Tags**                     | ✅ Semántico + SHA + tags                         | ✅ Tags + lifecycles                            | ✅ Tags + policies                        | ✅ Tags manual                      | ✅ Tags + retention                  |
 | **Profundidad de escaneo**              | ✅ Trivy scanner (OS + app packages)              | ✅ ECR Enhanced Scanning (Clair, Snyk)          | ✅ Defender for Containers (Trivy)        | ⚠️ Docker Scout (limitado free)     | ✅ Trivy, Clair integrado            |
-| **Actualizaciones de vulnerabilidades** | ✅ Daily database updates (Trivy)                 | ✅ Continuous scanning                          | ✅ Continuous scanning + remediation      | ⚠️ Manual refresh                   | ✅ Daily CVE updates                 |
-| **Políticas de retención**              | ✅ Package retention (num, age)                   | ✅ Lifecycle policies (count, age)              | ✅ Retention policies                     | ⚠️ Manual cleanup                   | ✅ Tag retention rules               |
-| **Garbage Collection**                  | ⚠️ Manual package deletion                        | ✅ Lifecycle rules auto-cleanup                 | ✅ Auto-purge untagged                    | ⚠️ Manual cleanup                   | ✅ GC policies (auto + manual)       |
+| **Actualizaciones de vulnerabilidades** | ✅ Actualizaciones diarias de BD (Trivy)            | ✅ Escaneo continuo                             | ✅ Escaneo continuo + remediación             | ⚠️ Actualización manual                  | ✅ Actualizaciones diarias de CVE         |
+| **Políticas de retención**              | ✅ Retención de paquetes (núm, antigüedad)           | ✅ Políticas de ciclo de vida (cantidad, antigüedad) | ✅ Políticas de retención                     | ⚠️ Limpieza manual                   | ✅ Reglas de retención de tags            |
+| **Garbage Collection**                  | ⚠️ Eliminación manual de paquetes                   | ✅ Reglas de ciclo de vida, limpieza automática   | ✅ Limpieza automática de no etiquetados       | ⚠️ Limpieza manual                   | ✅ Políticas GC (automática + manual)     |
 | **Imágenes multi-arquitectura**         | ✅ AMD64, ARM64, ARM32 (manifests)                | ✅ Multi-architecture manifest                  | ✅ Multi-architecture support             | ✅ Multi-platform builds            | ✅ Multi-arch manifest lists         |
 | **Costos**                              | ✅ Gratis (repos públicos) + $0.25/GB/mes privado | ⚠️ $0.10/GB/mes storage + egress (~$10-30/mes)  | ⚠️ $5/mes Basic + $0.167/GB (~$10-25/mes) | ❌ $5-7/mes por repo                | ✅ $0 licencia + ~$100-200/mes infra |
 
@@ -98,7 +98,7 @@ Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo 
 ### Negativas (Riesgos y Mitigaciones)
 
 - **Dependencia de GitHub:** mitigado con capacidad de migrar imágenes a ECR si necesario
-- **Costos de storage privado:** mitigado con políticas de retención y cleanup automático
+- **Costos de storage privado:** mitigado con políticas de retención y limpieza automática
 - **Límites de bandwidth repos privados:** mitigado con uso de repos públicos cuando sea posible
 
 ---

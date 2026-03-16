@@ -48,7 +48,7 @@ Alternativas evaluadas:
 | **Escalabilidad**                    | ✅ Hasta `1M+` series, `100K` métricas/min     | ✅ Hasta multi-TB logs/día                    | ✅ Hasta `100K+` hosts, `1M` métricas/min     | ✅ Hasta PB-scale logs, `500K` events/seg | ✅ Hasta `1M+` metrics/min              |
 | **Correlación logs-métricas-trazas** | ✅ Trace ID linking automático                 | ⚠️ Manual/APM adicional                       | ✅ Trace ID propagation                       | ✅ Correlación automática                 | ✅ X-Ray integration                    |
 | **Alertas**                          | ✅ Grafana Alerting integrado                  | ✅ Watcher/Alerting                           | ✅ Alertas avanzadas                          | ✅ Alertas ML/AI                          | ✅ CloudWatch Alarms                    |
-| **Políticas de retención**           | ✅ Ilimitado (configurable)                    | ✅ Configurable por índice                    | ⚠️ 15 meses máximo                            | ⚠️ 90 días default                        | ✅ Configurable                         |
+| **Políticas de retención**           | ✅ Ilimitado (configurable)                    | ✅ Configurable por índice                    | ⚠️ 15 meses máximo                            | ⚠️ 90 días por defecto                       | ✅ Configurable                         |
 | **Límites de cardinalidad**          | ✅ Loki low cardinality, Mimir millones series | ⚠️ Alto costo con alta cardinalidad           | ⚠️ Límites estrictos (custom metrics caro)    | ⚠️ Límites en custom attributes           | ⚠️ Límites estrictos (custom metrics)   |
 | **Estrategias de muestreo**          | ✅ Tempo tail-based sampling                   | ⚠️ Manual APM agents                          | ✅ Intelligent sampling                       | ✅ Adaptive sampling                      | ⚠️ Head-based sampling (X-Ray)          |
 | **Canales de notificación**          | ✅ Email, Slack, PagerDuty, Webhook, MS Teams  | ✅ Email, Slack, PagerDuty, Webhook           | ✅ `50+` integrations                         | ✅ `30+` integrations                     | ✅ SNS, Lambda, Systems Manager         |
@@ -86,9 +86,9 @@ Se selecciona el **Grafana Stack OSS** con:
 
 ### Alternativas descartadas
 
-- **ELK Stack:** mayor complejidad operativa, Elasticsearch resource-intensive (memoria, CPU, storage), costos de licenciamiento X-Pack/Platinum features, tuning complejo para scale, correlación logs-métricas-trazas requiere Elastic APM adicional
+- **ELK Stack:** mayor complejidad operativa, Elasticsearch intensivo en recursos (memoria, CPU, storage), costos de licenciamiento X-Pack/Platinum features, tuning complejo para scale, correlación logs-métricas-trazas requiere Elastic APM adicional
 - **Datadog:** costos prohibitivos a escala (`$15-31`/host/mes = `$180K-372K`/año para 100 hosts), lock-in SaaS, vendor risk, menor control sobre datos sensibles
-- **Splunk Observability Cloud:** costos enterprise prohibitivos (`$150`/GB ingestión = `$450K`/año para `10GB`/día), complejidad licenciamiento, más orientado a analytics/SIEM que observabilidad moderna, pricing por volumen dificulta predicción
+- **Splunk Observability Cloud:** costos enterprise prohibitivos (`$150`/GB ingestión = `$450K`/año para `10GB`/día), complejidad licenciamiento, más orientado a analytics/SIEM que observabilidad moderna, precio por volumen dificulta predicción
 - **CloudWatch + X-Ray:** lock-in AWS, visualización básica limitada, costos variables crecientes con escala, no portable multi-cloud, CloudWatch Insights consultas costosas
 - **Prometheus standalone:** Mimir ofrece mejor escalabilidad horizontal, HA nativa, retención long-term S3/GCS, menor complejidad operativa vs Thanos
 

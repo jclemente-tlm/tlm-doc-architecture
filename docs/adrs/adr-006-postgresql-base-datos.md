@@ -94,7 +94,7 @@ Se selecciona **PostgreSQL** como base de datos relacional estándar para todos 
 
 - Transacciones ACID y consistencia fuerte para datos críticos
 - Multi-tenancy avanzado con schemas, RLS y particionamiento
-- Extensibilidad: JSONB, PostGIS, TimescaleDB, custom extensions
+- Extensibilidad: JSONB, PostGIS, TimescaleDB, extensiones personalizadas
 - Portabilidad total entre clouds y on-premises
 - Replicación y alta disponibilidad nativas
 - Comunidad activa y ecosistema maduro

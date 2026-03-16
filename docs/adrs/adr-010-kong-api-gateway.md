@@ -45,16 +45,16 @@ Alternativas evaluadas:
 | **Modelo de gestión**             | ⚠️ Self-hosted                            | ✅ Gestionado (AWS)                      | ✅ Gestionado (Azure)           | ⚠️ Self-hosted              | ⚠️ Self-hosted                 | ⚠️ Self-hosted                |
 | **Complejidad operativa**         | ⚠️ Alta (1 FTE, 10-20h/sem)               | ✅ Baja (0.25 FTE, `<5h/sem)`            | ⚠️ Media (0.5 FTE, 5-10h/sem)   | ⚠️ Alta (1 FTE, 10-20h/sem) | ⚠️ Alta (1 FTE, 10-20h/sem)    | ⚠️ Media (0.5 FTE, 5-10h/sem) |
 | **Seguridad**                     | ✅ Completa                               | ✅ IAM/Cognito                           | ✅ Azure AD/RBAC                | ✅ OAuth2/JWT               | ✅ Completa                    | ✅ Completa                   |
-| **Multi-tenancy**                 | ✅ Workspaces nativos                     | ⚠️ Por recursos/stages                   | ✅ Products/groups              | ⚠️ Manual routing           | ⚠️ Por paths                   | ⚠️ Manual                     |
+| **Multi-tenancy**                 | ✅ Workspaces nativos                     | ⚠️ Por recursos/stages                   | ✅ Products/groups              | ⚠️ Enrutamiento manual         | ⚠️ Por paths                   | ⚠️ Manual                     |
 | **Latencia**                      | ✅ p95 `<10ms`                            | ✅ p95 `<100ms`                          | ✅ p95 `<50ms`                  | ✅ p95 `<5ms`               | ✅ p95 `<10ms`                 | ✅ p95 `<5ms`                 |
 | **Rendimiento**                   | ✅ 10K+ req/seg                           | ⚠️ 5K-10K req/seg                        | ✅ 10K+ req/seg                 | ✅ 50K+ req/seg (.NET perf) | ✅ 10K+ req/seg                | ✅ 20K+ req/seg               |
 | **Escalabilidad**                 | ✅ Hasta 100K+ req/seg (Netflix)          | ✅ Millones req/seg máx (AWS serverless) | ✅ Hasta 50K+ req/seg (Azure)   | ⚠️ Hasta 20K req/seg máx    | ✅ Hasta 30K+ req/seg (Lyft)   | ✅ Hasta 40K+ req/seg (Tyk)   |
 | **Ecosistema Plugins**            | ✅ Extenso                                | ⚠️ AWS integrations                      | ✅ Policies extensas            | ⚠️ Limitado                 | ⚠️ Medio                       | ⚠️ Medio                      |
-| **Rate Limiting**                 | ✅ Local, cluster, Redis (sliding window) | ✅ Request/burst quotas (AWS)            | ✅ Rate, quota policies         | ⚠️ Custom implementation    | ✅ Token bucket, sliding       | ✅ Request rate limiting      |
-| **Capacidades de transformación** | ✅ Request/response transform plugins     | ⚠️ VTL templates (limitado)              | ✅ Policies set-header, rewrite | ✅ Custom middleware        | ⚠️ Middleware (limitado)       | ✅ Lua scripting, njs         |
-| **Circuit Breaker**               | ✅ Proxy-cache, circuit-breaker plugins   | ⚠️ Manual Lambda implementation          | ✅ Circuit breaker policy       | ⚠️ Custom implementation    | ⚠️ Retry plugin (limitado)     | ⚠️ Manual config              |
+| **Rate Limiting**                 | ✅ Local, cluster, Redis (sliding window) | ✅ Request/burst quotas (AWS)            | ✅ Rate, quota policies         | ⚠️ Implementación personalizada | ✅ Token bucket, sliding       | ✅ Request rate limiting      |
+| **Capacidades de transformación** | ✅ Request/response transform plugins     | ⚠️ VTL templates (limitado)              | ✅ Policies set-header, rewrite | ✅ Middleware personalizado    | ⚠️ Middleware (limitado)       | ✅ Lua scripting, njs         |
+| **Circuit Breaker**               | ✅ Proxy-cache, circuit-breaker plugins   | ⚠️ Implementación manual Lambda             | ✅ Circuit breaker policy       | ⚠️ Implementación personalizada | ⚠️ Retry plugin (limitado)     | ⚠️ Configuración manual            |
 | **Soporte de protocolos**         | ✅ HTTP/1.1, HTTP/2, gRPC, WebSocket      | ✅ HTTP/1.1, HTTP/2, WebSocket           | ✅ HTTP/1.1, HTTP/2, SOAP       | ✅ HTTP/1.1, HTTP/2, gRPC   | ✅ HTTP/1.1, HTTP/2, gRPC, TCP | ✅ HTTP/1.1, HTTP/2, gRPC     |
-| **Caché**                         | ✅ Proxy-cache (Redis, memory)            | ⚠️ External API Gateway cache            | ✅ External/internal cache      | ⚠️ Custom ASP.NET cache     | ⚠️ No cache nativo             | ✅ FastCGI, proxy cache       |
+| **Caché**                         | ✅ Proxy-cache (Redis, memory)            | ⚠️ External API Gateway cache            | ✅ External/internal cache      | ⚠️ Caché ASP.NET personalizada | ⚠️ No cache nativo             | ✅ FastCGI, proxy cache       |
 | **Costos**                        | ✅ $0 licencia + ~$100-200/mes infra      | ⚠️ $3.50/millón requests (~$100-500/mes) | ⚠️ $2.5K-15K/mes (según tier)   | ✅ $0 licencia              | ✅ $0 licencia                 | ⚠️ $2.5K/instancia/año        |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
@@ -90,9 +90,9 @@ Se selecciona **Kong (OSS)** como solución estándar de API Gateway para todos 
 ### Positivas
 
 - Agnosticidad tecnológica total - portable entre clouds y stacks
-- Ecosistema de plugins maduro reduce desarrollo custom
+- Ecosistema de plugins maduro reduce desarrollo personalizado
 - Escalabilidad enterprise probada en producción
-- Seguridad enterprise-grade con múltiples métodos de autenticación
+- Seguridad nivel empresarial con múltiples métodos de autenticación
 - Comunidad activa y documentación extensa
 - Opción de soporte enterprise si es necesario
 

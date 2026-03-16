@@ -40,7 +40,7 @@ Alternativas evaluadas:
 | **Adopción**                | ✅ Muy alta (líder OSS, Red Hat cases)              | ✅ Muy alta (15K+ empresas)                     | ✅ Alta (AWS adoption)                          | ✅ Muy alta (Microsoft enterprise)          |
 | **Modelo de gestión**       | ⚠️ Self-hosted                                      | ✅ Gestionado (SaaS)                            | ✅ Gestionado (AWS)                             | ✅ Gestionado (Azure)                       |
 | **Complejidad operativa**   | ⚠️ Alta (1 FTE, 10-20h/sem)                         | ✅ Baja (0.25 FTE, `<5h/sem)`                   | ✅ Baja (0.25 FTE, `<5h/sem)`                   | ⚠️ Media (0.5 FTE, 5-10h/sem)               |
-| **Seguridad**               | ✅ Enterprise grade                                 | ✅ Enterprise grade                             | ✅ Enterprise grade                             | ✅ Enterprise grade                         |
+| **Seguridad**               | ✅ Nivel empresarial                             | ✅ Nivel empresarial                         | ✅ Nivel empresarial                             | ✅ Nivel empresarial                     |
 | **Integración .NET**        | ✅ `Keycloak.AuthServices.*` (.NET 6+)                | ✅ `Auth0.AspNetCore.Authentication` (.NET 6+)      | ✅ `AWSSDK.CognitoIdentityProvider` (.NET 6+)      | ✅ `Azure.Identity` + `MSAL` (.NET 6+)           |
 | **Multi-tenancy**           | ✅ Nativo y flexible                                | ✅ Excelente soporte                            | ⚠️ Básico                                       | ✅ Muy bueno                                |
 | **Escalabilidad**           | ✅ Hasta 100K+ usuarios concurrentes (Red Hat)      | ✅ Millones usuarios máx (SaaS global)          | ✅ Hasta 100M+ usuarios (Amazon scale)          | ✅ Millones usuarios máx (Microsoft)        |
@@ -67,7 +67,7 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 
 ### Justificación
 
-- **Personalización total:** flujos de autenticación, UI corporativa, extensiones custom (vs limitaciones SaaS)
+- **Personalización total:** flujos de autenticación, UI corporativa, extensiones personalizadas (vs limitaciones SaaS)
 - **Multi-tenancy robusto:** aislamiento por país vía realms nativos, superior a alternativas
 - **Costos predecibles:** $0 licencia + ~$150-300/mes infra vs Auth0 ($23-240/mes + por usuario)
 - **Control total de datos:** identidades sensibles permanecen en infraestructura propia

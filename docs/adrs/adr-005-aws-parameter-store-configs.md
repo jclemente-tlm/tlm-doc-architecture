@@ -52,8 +52,8 @@ Alternativas evaluadas:
 | **Escalabilidad**             | ✅ Hasta 10K params, 10K+ reads/min (AWS)       | ✅ Hasta 10K+ configs (Azure scale)                  | ✅ Hasta 1M+ keys/values (Consul cases) | ✅ Millones keys máx (K8s etcd scale)  |
 | **Versionado**                | ✅ Automática                                   | ✅ Automática                                        | ✅ Muy flexible                         | ✅ Revisions                           |
 | **Feature Flags**             | ⚠️ Básico                                       | ✅ Nativo                                            | ✅ Flexible                             | ⚠️ Manual                              |
-| **Auditoría**                 | ✅ CloudTrail integrado                         | ✅ Azure Monitor                                     | ✅ Completa logs/ACL                    | ⚠️ Manual config                       |
-| **Recarga en caliente**       | ⚠️ Polling necesario (sin push)                 | ✅ Configuration refresh nativo                      | ✅ Watch API para cambios real-time     | ✅ Watch API nativo                    |
+| **Auditoría**                 | ✅ CloudTrail integrado                         | ✅ Azure Monitor                                     | ✅ Completa logs/ACL                    | ⚠️ Configuración manual                |
+| **Recarga en caliente**       | ⚠️ Polling necesario (sin push)                 | ✅ Actualización de configuración nativa             | ✅ Watch API para cambios real-time     | ✅ Watch API nativo                    |
 | **Validación de esquemas**    | ❌ No soportado                                 | ✅ JSON Schema validation                            | ⚠️ Via policies (manual)                | ⚠️ Via admission controllers           |
 | **Notificaciones de cambios** | ✅ EventBridge para cambios                     | ✅ Event Grid notifications                          | ⚠️ Watch API (manual)                   | ⚠️ Watch API (manual)                  |
 | **Opciones de cifrado**       | ✅ KMS keys (AWS managed, customer managed)     | ✅ Customer-managed keys, Azure Key Vault            | ✅ Encryption in transit + at rest      | ✅ Encryption at rest nativo           |
@@ -78,7 +78,7 @@ Se selecciona **AWS Parameter Store** como solución principal para la gestión 
 
 ### Alternativas descartadas
 
-- **etcd:** distributed key-value store robusto pero orientado a Kubernetes ecosystem, complejidad operativa alta (clustering, quorum, backups), menor integración .NET vs Parameter Store, overhead para uso simple config
+- **etcd:** Almacén clave-valor distribuido robusto pero orientado al ecosistema Kubernetes, complejidad operativa alta (clustering, quorum, backups), menor integración .NET vs Parameter Store, overhead para uso simple de configuración
 - **Azure App Configuration:** lock-in Azure, infraestructura AWS ya establecida, menor portabilidad
 - **HashiCorp Consul:** mayor complejidad operativa y mantenimiento, requiere expertise, costos infraestructura
 

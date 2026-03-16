@@ -44,7 +44,7 @@ Alternativas evaluadas:
 | **Adopción**                 | ✅ Muy alta (líder IaC, 1K+ providers)           | ⚠️ Media (ecosistema creciente)             | ✅ Muy alta (estándar DevOps)        | ✅ Alta (AWS standard)        | ⚠️ Media (Azure adoption)      |
 | **Modelo de gestión**        | ⚠️ Herramienta CLI                               | ⚠️ Herramienta CLI                          | ⚠️ Herramienta CLI                   | ✅ Gestionado (AWS)           | ✅ Gestionado (Azure)          |
 | **Complejidad operativa**    | ⚠️ Media (0.5 FTE, 5-10h/sem)                    | ⚠️ Alta (1 FTE, 10-20h/sem)                 | ⚠️ Alta (1 FTE, 10-20h/sem)          | ✅ Baja (0.25 FTE, `<5h/sem)` | ✅ Baja (0.25 FTE, `<5h/sem)`  |
-| **Seguridad**                | ✅ Enterprise grade                              | ✅ Enterprise grade                         | ✅ SSH/Enterprise                    | ✅ AWS IAM                    | ✅ Azure RBAC                  |
+| **Seguridad**                | ✅ Nivel empresarial                             | ✅ Nivel empresarial                        | ✅ SSH/Enterprise                    | ✅ AWS IAM                    | ✅ Azure RBAC                  |
 | **Gestión de estado**        | ✅ Robusto y seguro                              | ✅ Estado backend                           | ❌ No state file                     | ✅ S3 backend                 | ✅ Azure backend               |
 | **Multi-entorno**            | ✅ Workspaces nativos                            | ✅ Stacks nativos                           | ⚠️ Inventarios                       | ✅ Parameters                 | ✅ Parameters                  |
 | **Versionado (módulos)**     | ✅ Registry + semvering                          | ✅ Registry + versioning                    | ✅ Git tags + Galaxy                 | ✅ CloudFormation registry    | ✅ Template Specs versioning   |
@@ -52,7 +52,7 @@ Alternativas evaluadas:
 | **Bloqueo de estado**        | ✅ DynamoDB, S3, Terraform Cloud                 | ✅ Pulumi Service (automático)              | ❌ No state file                     | ✅ S3 backend locking         | ✅ Azure Storage locking       |
 | **Detección de deriva**      | ✅ terraform plan detecta drift                  | ✅ pulumi refresh + preview                 | ⚠️ Manual (ansible-playbook --check) | ✅ drift detection nativo     | ✅ what-if operations          |
 | **Capacidad de importación** | ✅ terraform import completo                     | ✅ pulumi import para recursos              | ⚠️ Limitado (facts gathering)        | ✅ cloudformation import      | ✅ ARM template import         |
-| **Policy as Code**           | ✅ Sentinel, OPA, Checkov integration            | ✅ Policy packs (TypeScript/Python)         | ⚠️ Custom validation modules         | ⚠️ CloudFormation Guard       | ⚠️ Azure Policy integration    |
+| **Policy as Code**           | ✅ Sentinel, OPA, Checkov integration            | ✅ Policy packs (TypeScript/Python)         | ⚠️ Módulos de validación personalizados     | ⚠️ CloudFormation Guard       | ⚠️ Azure Policy integration    |
 | **Soporte de pruebas**       | ✅ Terratest, Kitchen-Terraform, Terraform test  | ✅ Unit tests (TypeScript/Python)           | ✅ Molecule, Kitchen-Ansible         | ⚠️ TaskCat, cfn-lint          | ⚠️ ARM-TTK, Pester             |
 | **Costos**                   | ✅ Gratis OSS + $20/usuario/mes (Cloud opcional) | ⚠️ $1/crédito + planes desde $20/mes (SaaS) | ✅ $0 licencia                       | ✅ Incluido en AWS            | ✅ Incluido en Azure           |
 
@@ -75,8 +75,8 @@ Se selecciona **Terraform** como solución estándar de infraestructura como có
 
 ### Alternativas descartadas
 
-- **Ansible:** excelente para configuration management pero enfoque imperativo/procedural, estado no declarativo (no state file), menor idempotencia vs Terraform, mejor para config servers que infraestructura
-- **Pulumi:** menor adopción enterprise vs Terraform (3K vs 40K stars GitHub), ecosistema módulos menos maduro, learning curve programación vs HCL declarativo
+- **Ansible:** excelente para gestión de configuración pero enfoque imperativo/procedural, estado no declarativo (no state file), menor idempotencia vs Terraform, mejor para config servers que infraestructura
+- **Pulumi:** menor adopción enterprise vs Terraform (3K vs 40K stars GitHub), ecosistema módulos menos maduro, curva de aprendizaje de programación vs HCL declarativo
 - **CloudFormation, Bicep:** lock-in cloud específico, menor portabilidad multi-cloud, requiere reescritura completa para migraciones
 
 ---
@@ -89,7 +89,7 @@ Se selecciona **Terraform** como solución estándar de infraestructura como có
 - Infraestructura versionada con rollback completo
 - Automatización CI/CD con detección de drift
 - Ecosistema maduro con 1K+ providers
-- State management robusto y seguro
+- Gestión de estado robusta y segura
 
 ### Negativas (Riesgos y Mitigaciones)
 
