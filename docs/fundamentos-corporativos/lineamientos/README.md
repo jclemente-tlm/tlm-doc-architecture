@@ -1,4 +1,8 @@
-# Lineamientos de Arquitectura
+---
+title: "Introducción"
+sidebar_position: 0
+description: "Guías prácticas y prescriptivas que traducen los principios arquitectónicos para el diseño, desarrollo y operación de sistemas."
+---
 
 Los lineamientos traducen los principios arquitectónicos en guías prácticas y prescriptivas para el diseño, desarrollo y operación de sistemas en Talma.
 
@@ -60,9 +64,9 @@ Lineamientos para gobierno de arquitectura:
 Lineamientos para operación de sistemas:
 
 1. CI/CD y Automatización de Despliegues
-2. Infraestructura como Código
-3. Configuración de Entornos
-4. Disaster Recovery
+2. Infraestructura como Código (IaC)
+3. Configuración y Consistencia de Entornos
+4. Disaster Recovery y Continuidad
 5. Observabilidad
 6. Contenedores y Despliegue
 
@@ -99,5 +103,5 @@ Código de Producción
 
 ---
 
-**Última actualización**: 2026-02-19
+**Última actualización**: Marzo 2026
 **Responsable**: Equipo de Arquitectura

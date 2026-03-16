@@ -1,9 +1,10 @@
 ---
-title: "Registros de Decisiones Arquitectónicas (ADRs)"
+title: "Introducción"
 sidebar_position: 0
+description: "Registro centralizado de decisiones arquitectónicas (ADRs) del proyecto de servicios corporativos."
 ---
 
-Este directorio contiene los Registros de Decisiones Arquitectónicas (Architecture Decision Records - ADRs) para el proyecto de servicios corporativos.
+Esta sección contiene los Registros de Decisiones Arquitectónicas (Architecture Decision Records - ADRs) para el proyecto de servicios corporativos.
 
 ## ¿Qué es un ADR?
 
@@ -35,25 +36,19 @@ Cada ADR sigue la estructura:
 | [ADR-007](/docs/adrs/adr-007-s3-almacenamiento-objetos)             | S3 Almacenamiento Objetos    | Aceptada | Agosto 2025      | Arquitectura                | AWS S3 para almacenamiento masivo de objetos, documentos y backups.                           |
 | [ADR-008](/docs/adrs/adr-008-kafka-mensajeria-asincrona)            | Kafka Mensajería Asíncrona   | Aceptada | Agosto 2025      | Arquitectura                | Apache Kafka para mensajería asíncrona y event streaming.                                     |
 | [ADR-009](/docs/adrs/adr-009-debezium-cdc)                          | Debezium CDC                 | Aceptada | Febrero 2026     | Arquitectura                | Change Data Capture con Debezium para captura de cambios en bases de datos y event streaming. |
-| [ADR-010](/docs/adrs/adr-010-kong-api-gateway)                      | Kong API Gateway             | Aceptada | Enero 2026       | Arquitectura                | API Gateway open source con Kong para enrutamiento, seguridad y políticas centralizadas.      |
+| [ADR-010](/docs/adrs/adr-010-kong-api-gateway)                      | Kong API Gateway             | Aceptada | Agosto 2025      | Arquitectura                | API Gateway open source con Kong para enrutamiento, seguridad y políticas centralizadas.      |
 | [ADR-011](/docs/adrs/adr-011-terraform-iac)                         | Terraform IaC                | Aceptada | Agosto 2025      | Arquitectura + DevOps       | Infraestructura como código multi-cloud con Terraform para portabilidad.                      |
 | [ADR-012](/docs/adrs/adr-012-github-actions-cicd)                   | GitHub Actions CI/CD         | Aceptada | Agosto 2025      | Arquitectura + DevOps       | Automatización de integración y despliegue continuo con GitHub Actions.                       |
-| [ADR-013](/docs/adrs/adr-013-github-container-registry)             | GitHub Container Registry    | Aceptada | Enero 2026       | Arquitectura + DevOps       | GitHub Container Registry (ghcr.io) para imágenes Docker corporativas.                        |
-| [ADR-014](/docs/adrs/adr-014-grafana-stack-observabilidad)          | Grafana Stack Observabilidad | Aceptada | Enero 2026       | Arquitectura + SRE          | Stack OSS completo: Loki, Mimir, Tempo, Grafana y Alloy para observabilidad.                  |
+| [ADR-013](/docs/adrs/adr-013-github-container-registry)             | GitHub Container Registry    | Aceptada | Agosto 2025      | Arquitectura + DevOps       | GitHub Container Registry (ghcr.io) para imágenes Docker corporativas.                        |
+| [ADR-014](/docs/adrs/adr-014-grafana-stack-observabilidad)          | Grafana Stack Observabilidad | Aceptada | Agosto 2025      | Arquitectura + SRE          | Stack OSS completo: Loki, Mimir, Tempo, Grafana y Alloy para observabilidad.                  |
 
 ### ADRs ESPECÍFICOS DE SERVICIO
 
-| ADR     | Título                    | Servicio | Estado   | Fecha   | Descripción       |
-| ------- | ------------------------- | -------- | -------- | ------- | ----------------- |
-| ADR-XXX | Ejemplo de ADR específico | Servicio | Aceptada | AAAA-MM | Descripción breve |
+> No existen ADRs específicos de servicio actualmente. Se registrarán aquí cuando un servicio requiera una decisión arquitectónica que no aplique globalmente.
 
-### ✅ ADRs CONSOLIDADOS/ELIMINADOS
+### ADRs CONSOLIDADOS/ELIMINADOS
 
-| ADR     | Título                  | Estado       | Acción Completada                                      |
-| ------- | ----------------------- | ------------ | ------------------------------------------------------ |
-| ADR-XXX | Ejemplo ADR consolidado | ❌ Eliminada | Razón de eliminación y referencia a documentación alt. |
-
-> Esta tabla registrará ADRs que sean consolidados, supersedidos o eliminados en el futuro por no requerir decisión arquitectónica formal.
+> No existen ADRs consolidados o eliminados actualmente. Se registrarán aquí ADRs que sean supersedidos, consolidados o eliminados en el futuro.
 
 ## Principios de Decisión
 
@@ -81,4 +76,4 @@ Cada ADR sigue la estructura:
 - **ADRs Aceptados**: 14
 - **ADRs en Propuesta**: 0
 - **Cobertura de decisiones críticas**: 100%
-- **Última actualización**: Febrero 2026
+- **Última actualización**: Marzo 2026

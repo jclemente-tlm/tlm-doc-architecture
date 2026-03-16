@@ -1,9 +1,8 @@
 ---
-sidebar_position: 1
-title: Estilos Arquitectónicos
+title: "Introducción"
+sidebar_position: 0
+description: "Patrones y estilos arquitectónicos que materializan los principios corporativos en contextos específicos."
 ---
-
-# Estilos Arquitectónicos
 
 ## ¿Qué son los Estilos Arquitectónicos?
 
@@ -28,13 +27,12 @@ Cada estilo arquitectónico **materializa** uno o más principios corporativos:
 
 ```mermaid
 graph TD
-    P1[Desacoplamiento y Autonomía] --> E1[Microservicios]
+    P1[Modularidad y Bajo Acoplamiento] --> E1[Microservicios]
     P1 --> E2[Eventos]
-    P2[Resiliencia] --> E1
-    P2 --> E3[Cloud Native]
-    P3[Simplicidad] --> E4[Monolito Modular]
-    P4[DDD] --> E1
-    P4 --> E4
+    P3[Resiliencia y Tolerancia a Fallos] --> E1
+    P3 --> E3[Cloud Native]
+    P4[Mantenibilidad y Extensibilidad] --> E4[Monolito Modular]
+    P4 --> E1
 ```
 
 ---
@@ -52,9 +50,8 @@ graph TD
 
 **Principios que materializa:**
 
-- Desacoplamiento y Autonomía
-- Ownership de Datos por Dominio
-- Arquitectura Evolutiva
+- Modularidad y Bajo Acoplamiento
+- Mantenibilidad y Extensibilidad
 - Resiliencia y Tolerancia a Fallos
 
 ---
@@ -70,9 +67,9 @@ graph TD
 
 **Principios que materializa:**
 
-- Desacoplamiento y Autonomía
+- Modularidad y Bajo Acoplamiento
 - Resiliencia y Tolerancia a Fallos
-- Arquitectura Evolutiva
+- Mantenibilidad y Extensibilidad
 
 ---
 
@@ -88,9 +85,8 @@ graph TD
 **Principios que materializa:**
 
 - Resiliencia y Tolerancia a Fallos
-- Automatización como Principio
-- Observabilidad desde el Diseño
-- Consistencia entre Entornos
+- Seguridad desde el Diseño
+- Modularidad y Bajo Acoplamiento
 
 ---
 
@@ -105,9 +101,8 @@ graph TD
 
 **Principios que materializa:**
 
-- Arquitectura Limpia
-- Diseño Orientado al Dominio
-- Simplicidad Intencional
+- Mantenibilidad y Extensibilidad
+- Modularidad y Bajo Acoplamiento
 
 ---
 
@@ -153,8 +148,6 @@ Monolito → Monolito Modular → Microservicios
 - **Extract Service:** Mover módulos a servicios
 
 ---
-
-## Referencias
 
 ## Referencias
 

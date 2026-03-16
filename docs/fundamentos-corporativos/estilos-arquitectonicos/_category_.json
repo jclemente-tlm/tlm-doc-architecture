@@ -1,8 +1,4 @@
 {
     "label": "Estilos Arquitectónicos",
-    "position": 5,
-    "link": {
-        "type": "generated-index",
-        "description": "Patrones y estilos arquitectónicos que materializan los principios corporativos en contextos específicos."
-    }
+    "position": 5
 }

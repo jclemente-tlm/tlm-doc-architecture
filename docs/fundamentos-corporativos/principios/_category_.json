@@ -3,7 +3,7 @@
     "position": 1,
     "link": {
         "type": "generated-index",
-        "title": "Principios de Arquitectura",
+        "title": "Introducción",
         "slug": "/fundamentos/principios",
         "description": "Principios fundamentales que guían todas las decisiones de arquitectura, diseño y desarrollo en Talma."
     }
