@@ -36,7 +36,7 @@ Alternativas evaluadas:
 | ------------------------------ | --------------------------------------------------- | ----------------------------------------------- | --------------------------------------------- | ------------------------------------------- | --------------------------------------------- |
 | **Agnosticidad**               | ✅ OSS, multi-cloud                                 | ❌ Lock-in GCP                                  | ❌ Lock-in AWS                                | ✅ OSS, multi-cloud                         | ❌ Lock-in Azure                              |
 | **Madurez**                    | ✅ Muy alta (2011, streaming std)                   | ✅ Alta (2016, GCP serverless)                  | ✅ Muy alta (SNS 2010 + SQS 2006)             | ✅ Muy alta (2007, AMQP std)                | ✅ Alta (2012, Azure enterprise)              |
-| **Adopción**                   | ✅ Muy alta (32K⭐, líder mercado)                  | ✅ Alta (GCP native adoption)                   | ✅ Muy alta (AWS standard)                    | ✅ Muy alta (14K⭐, RabbitMQ)               | ✅ Alta (Azure ecosystem)                     |
+| **Adopción**                   | ✅ Muy alta (líder streaming, comunidad masiva)     | ✅ Alta (GCP native adoption)                   | ✅ Muy alta (AWS standard)                    | ✅ Muy alta (líder AMQP, comunidad activa)  | ✅ Alta (Azure ecosystem)                     |
 | **Modelo de gestión**          | ⚠️ Self-hosted                                      | ✅ Gestionado (GCP)                             | ✅ Gestionado (AWS)                           | ⚠️ Self-hosted                              | ✅ Gestionado (Azure)                         |
 | **Complejidad operativa**      | ⚠️ Alta (1 FTE, 10-20h/sem)                         | ✅ Baja (0.25 FTE, `<5h/sem)`                   | ✅ Baja (0.25 FTE, `<5h/sem)`                 | ⚠️ Alta (1 FTE, 10-20h/sem)                 | ⚠️ Media (0.5 FTE, 5-10h/sem)                 |
 | **Integración .NET**           | ✅ `Confluent.Kafka` (.NET 6+, async)                 | ✅ `Google.Cloud.PubSub` (.NET 6+)                | ✅ `AWSSDK.SQS` + `SNS` (.NET 6+)                 | ✅ `RabbitMQ.Client` (.NET 6+)                 | ✅ `Azure.Messaging.ServiceBus` (.NET 6+)       |
@@ -72,7 +72,7 @@ Se selecciona **Apache Kafka** como solución estándar de mensajería asíncron
 
 ### Alternativas descartadas
 
-- **Google Cloud Pub/Sub:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing activo), **SDK .NET adicional** (Google.Cloud.PubSub) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), costos por mensaje (US$40/TB vs US$0.10/GB Kafka), no soporta replay nativo, requiere Dataflow para streaming
+- **Google Cloud Pub/Sub:** lock-in GCP, sin infraestructura GCP existente, costos por mensaje elevados (US$40/TB ingress + US$120/TB egress), no soporta replay nativo, requiere Dataflow para streaming, at-least-once default
 - **AWS SNS+SQS:** lock-in AWS, no soporta replay de eventos ni event sourcing robusto, no diseñado para streaming, limitado a patrones pub/sub y queue básicos
 - **RabbitMQ:** escalabilidad limitada (< 50K msg/seg), no diseñado para streaming de eventos ni event sourcing, modelo broker tradicional vs log distribuido
 - **Azure Service Bus:** lock-in Azure, infraestructura AWS ya establecida, menor portabilidad, no soporta streaming nativo

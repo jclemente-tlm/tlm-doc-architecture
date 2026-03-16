@@ -30,34 +30,33 @@ Alternativas evaluadas:
 
 - **AWS Parameter Store** (Gestionado AWS, integración nativa)
 - **Azure App Configuration** (Gestionado Azure, integración nativa)
-- **Google Parameter Manager** (Gestionado GCP, integración nativa)
 - **HashiCorp Consul** (Open source/Enterprise, agnóstico)
 - **etcd** (Distributed key-value, Kubernetes ecosystem, CNCF)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                      | AWS Parameter Store                             | Azure App Configuration                              | Google Parameter Manager                  | HashiCorp Consul                        | etcd                                   |
-| ----------------------------- | ----------------------------------------------- | ---------------------------------------------------- | ----------------------------------------- | --------------------------------------- | -------------------------------------- |
-| **Agnosticidad**              | ❌ Lock-in AWS                                  | ❌ Lock-in Azure                                     | ❌ Lock-in GCP                            | ✅ Agnóstico                            | ✅ OSS, agnóstico                      |
-| **Madurez**                   | ✅ Alta (2015, AWS native)                      | ⚠️ Media (2020, reciente)                            | ⚠️ Media (2024, GA reciente)               | ✅ Muy alta (2014, estable)             | ✅ Muy alta (2013, CNCF core)          |
-| **Adopción**                  | ✅ Alta (AWS standard)                          | ⚠️ Media (Azure ecosystem)                           | ⚠️ Baja (GCP, nuevo servicio)              | ✅ Muy alta (28K⭐, HashiCorp)          | ✅ Muy alta (47K⭐, CNCF)              |
-| **Modelo de gestión**         | ✅ Gestionado (AWS)                             | ✅ Gestionado (Azure)                                | ✅ Gestionado (GCP)                       | ⚠️ Self-hosted                          | ⚠️ Self-hosted                         |
-| **Complejidad operativa**     | ✅ Baja (0.25 FTE, `<5h/sem)`                   | ✅ Baja (0.25 FTE, `<5h/sem)`                        | ⚠️ Media (0.5 FTE, 5-10h/sem)             | ⚠️ Alta (1 FTE, 10-20h/sem)             | ⚠️ Alta (1 FTE, 10-20h/sem)            |
-| **Seguridad**                 | ✅ Enterprise                                   | ✅ Enterprise                                        | ✅ Enterprise                             | ✅ Máxima                               | ✅ TLS, RBAC                           |
-| **Integración .NET**          | ✅ `AWSSDK.SimpleSystemsManagement` (.NET 6+)      | ✅ `Azure.Data.AppConfiguration` (.NET 6+)             | ⚠️ `Google.Cloud.ParameterManager.V1` (.NET 6+) | ✅ `Consul` (.NET Standard 2.0+)        | ⚠️ `dotnet-etcd` (.NET Standard 2.0+, limitado) |
-| **Multi-tenancy**             | ⚠️ Por parámetros                               | ✅ Labels                                            | ⚠️ Por proyectos                          | ✅ Namespaces                           | ⚠️ Prefixes                            |
-| **Latencia**                  | ✅ p95 `<10ms `                                 | ✅ p95 `<50ms `                                      | ⚠️ p95 100ms+ variable                    | ✅ p95 `<5ms `local                     | ✅ p95 `<5ms `local                    |
-| **Rendimiento**               | ✅ 1K+ ops/seg                                  | ⚠️ 100 ops/seg                                       | ⚠️ 100 ops/seg                            | ✅ 10K+ ops/seg local                   | ✅ 10K+ ops/seg local                  |
-| **Escalabilidad**             | ✅ Hasta 10K params, 10K+ reads/min (AWS)       | ✅ Hasta 10K+ configs (Azure scale)                  | ⚠️ Límites por proyecto GCP                | ✅ Hasta 1M+ keys/values (Consul cases) | ✅ Millones keys máx (K8s etcd scale)  |
-| **Versionado**                | ✅ Automática                                   | ✅ Automática                                        | ✅ Automática                             | ✅ Muy flexible                         | ✅ Revisions                           |
-| **Feature Flags**             | ⚠️ Básico                                       | ✅ Nativo                                            | ⚠️ Básico                                 | ✅ Flexible                             | ⚠️ Manual                              |
-| **Auditoría**                 | ✅ CloudTrail integrado                         | ✅ Azure Monitor                                     | ✅ Cloud Audit Logs                       | ✅ Completa logs/ACL                    | ⚠️ Manual config                       |
-| **Recarga en caliente**       | ⚠️ Polling necesario (sin push)                 | ✅ Configuration refresh nativo                      | ⚠️ Polling necesario                      | ✅ Watch API para cambios real-time     | ✅ Watch API nativo                    |
-| **Validación de esquemas**    | ❌ No soportado                                 | ✅ JSON Schema validation                            | ❌ No soportado                           | ⚠️ Via policies (manual)                | ⚠️ Via admission controllers           |
-| **Notificaciones de cambios** | ✅ EventBridge para cambios                     | ✅ Event Grid notifications                          | ✅ Pub/Sub integration                    | ⚠️ Watch API (manual)                   | ⚠️ Watch API (manual)                  |
-| **Opciones de cifrado**       | ✅ KMS keys (AWS managed, customer managed)     | ✅ Customer-managed keys, Azure Key Vault            | ✅ Customer-managed encryption keys       | ✅ Encryption in transit + at rest      | ✅ Encryption at rest nativo           |
-| **Límites de jerarquía**      | ✅ 15 niveles profundidad                       | ✅ Sin límite de profundidad                         | ⚠️ Limitado por ruta (256 chars)          | ✅ Flexible folder/namespace structure  | ✅ Namespace hierarchy ilimitado       |
-| **Costos**                    | ✅ $0.05/10K params (~$5-15/mes)                | ✅ Gratis (10K requests/día) + $0.05/10K             | ✅ Incluido en GCP                        | ⚠️ $0 licencia + ~$100-300/mes infra    | ✅ $0 licencia + ~$100-200/mes infra   |
+| Criterio                      | AWS Parameter Store                             | Azure App Configuration                              | HashiCorp Consul                        | etcd                                   |
+| ----------------------------- | ----------------------------------------------- | ---------------------------------------------------- | --------------------------------------- | -------------------------------------- |
+| **Agnosticidad**              | ❌ Lock-in AWS                                  | ❌ Lock-in Azure                                     | ✅ Agnóstico                            | ✅ OSS, agnóstico                      |
+| **Madurez**                   | ✅ Alta (2015, AWS native)                      | ⚠️ Media (2020, reciente)                            | ✅ Muy alta (2014, estable)             | ✅ Muy alta (2013, CNCF core)          |
+| **Adopción**                  | ✅ Alta (AWS standard)                          | ⚠️ Media (Azure ecosystem)                           | ✅ Muy alta (líder service mesh/KV)         | ✅ Muy alta (core CNCF, Kubernetes)    |
+| **Modelo de gestión**         | ✅ Gestionado (AWS)                             | ✅ Gestionado (Azure)                                | ⚠️ Self-hosted                          | ⚠️ Self-hosted                         |
+| **Complejidad operativa**     | ✅ Baja (0.25 FTE, `<5h/sem)`                   | ✅ Baja (0.25 FTE, `<5h/sem)`                        | ⚠️ Alta (1 FTE, 10-20h/sem)             | ⚠️ Alta (1 FTE, 10-20h/sem)            |
+| **Seguridad**                 | ✅ Enterprise                                   | ✅ Enterprise                                        | ✅ Máxima                               | ✅ TLS, RBAC                           |
+| **Integración .NET**          | ✅ `AWSSDK.SimpleSystemsManagement` (.NET 6+)      | ✅ `Azure.Data.AppConfiguration` (.NET 6+)             | ✅ `Consul` (.NET Standard 2.0+)        | ⚠️ `dotnet-etcd` (.NET Standard 2.0+, limitado) |
+| **Multi-tenancy**             | ⚠️ Por parámetros                               | ✅ Labels                                            | ✅ Namespaces                           | ⚠️ Prefixes                            |
+| **Latencia**                  | ✅ p95 `<10ms `                                 | ✅ p95 `<50ms `                                      | ✅ p95 `<5ms `local                     | ✅ p95 `<5ms `local                    |
+| **Rendimiento**               | ✅ 1K+ ops/seg                                  | ⚠️ 100 ops/seg                                       | ✅ 10K+ ops/seg local                   | ✅ 10K+ ops/seg local                  |
+| **Escalabilidad**             | ✅ Hasta 10K params, 10K+ reads/min (AWS)       | ✅ Hasta 10K+ configs (Azure scale)                  | ✅ Hasta 1M+ keys/values (Consul cases) | ✅ Millones keys máx (K8s etcd scale)  |
+| **Versionado**                | ✅ Automática                                   | ✅ Automática                                        | ✅ Muy flexible                         | ✅ Revisions                           |
+| **Feature Flags**             | ⚠️ Básico                                       | ✅ Nativo                                            | ✅ Flexible                             | ⚠️ Manual                              |
+| **Auditoría**                 | ✅ CloudTrail integrado                         | ✅ Azure Monitor                                     | ✅ Completa logs/ACL                    | ⚠️ Manual config                       |
+| **Recarga en caliente**       | ⚠️ Polling necesario (sin push)                 | ✅ Configuration refresh nativo                      | ✅ Watch API para cambios real-time     | ✅ Watch API nativo                    |
+| **Validación de esquemas**    | ❌ No soportado                                 | ✅ JSON Schema validation                            | ⚠️ Via policies (manual)                | ⚠️ Via admission controllers           |
+| **Notificaciones de cambios** | ✅ EventBridge para cambios                     | ✅ Event Grid notifications                          | ⚠️ Watch API (manual)                   | ⚠️ Watch API (manual)                  |
+| **Opciones de cifrado**       | ✅ KMS keys (AWS managed, customer managed)     | ✅ Customer-managed keys, Azure Key Vault            | ✅ Encryption in transit + at rest      | ✅ Encryption at rest nativo           |
+| **Límites de jerarquía**      | ✅ 15 niveles profundidad                       | ✅ Sin límite de profundidad                         | ✅ Flexible folder/namespace structure  | ✅ Namespace hierarchy ilimitado       |
+| **Costos**                    | ✅ $0.05/10K params (~$5-15/mes)                | ✅ Gratis (10K requests/día) + $0.05/10K             | ⚠️ $0 licencia + ~$100-300/mes infra    | ✅ $0 licencia + ~$100-200/mes infra   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -77,7 +76,6 @@ Se selecciona **AWS Parameter Store** como solución principal para la gestión 
 
 - **etcd:** distributed key-value store robusto pero orientado a Kubernetes ecosystem, complejidad operativa alta (clustering, quorum, backups), menor integración .NET vs Parameter Store, overhead para uso simple config
 - **Azure App Configuration:** lock-in Azure, infraestructura AWS ya establecida, menor portabilidad
-- **Google Parameter Manager:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **SDK .NET adicional** (`Google.Cloud.ParameterManager.V1`) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), adopción incipiente, menor madurez vs otros
 - **HashiCorp Consul:** mayor complejidad operativa y mantenimiento, requiere expertise, costos infraestructura
 
 ---
@@ -101,5 +99,4 @@ Se selecciona **AWS Parameter Store** como solución principal para la gestión 
 
 - [AWS Parameter Store](https://aws.amazon.com/systems-manager/features/#Parameter_Store)
 - [Azure App Configuration](https://azure.microsoft.com/en-us/services/app-configuration/)
-- [Google Parameter Manager](https://cloud.google.com/secret-manager/parameter-manager/docs)
 - [Consul](https://www.consul.io/)
