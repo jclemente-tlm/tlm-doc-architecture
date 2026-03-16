@@ -68,7 +68,7 @@ Se selecciona **Debezium** como solución estándar de Change Data Capture (CDC)
 ### Justificación
 
 - **Agnosticidad total:** no depende de cloud provider específico, soporta múltiples bases de datos (PostgreSQL, MySQL, MongoDB, SQL Server, Oracle)
-- **Integración nativa con Kafka:** desplegado como Kafka Connect, aprovecha infraestructura existente (ADR-012)
+- **Integración nativa con Kafka:** desplegado como Kafka Connect, aprovecha infraestructura existente (ADR-008)
 - **Log-based CDC real-time:** latencia `<100ms `capturando cambios directamente de transaction logs sin impacto en base de datos
 - **Open source Apache 2.0:** sin costos de licencia, comunidad activa, soporte Red Hat enterprise disponible
 - **Schema evolution:** soporte completo para Avro, JSON, Protobuf con Schema Registry

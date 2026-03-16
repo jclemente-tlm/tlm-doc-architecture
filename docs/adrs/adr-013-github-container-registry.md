@@ -55,7 +55,7 @@ Alternativas evaluadas:
 | **Políticas de retención**              | ✅ Retención de paquetes (núm, antigüedad)           | ✅ Políticas de ciclo de vida (cantidad, antigüedad) | ✅ Políticas de retención                     | ⚠️ Limpieza manual                   | ✅ Reglas de retención de tags            |
 | **Garbage Collection**                  | ⚠️ Eliminación manual de paquetes                   | ✅ Reglas de ciclo de vida, limpieza automática   | ✅ Limpieza automática de no etiquetados       | ⚠️ Limpieza manual                   | ✅ Políticas GC (automática + manual)     |
 | **Imágenes multi-arquitectura**         | ✅ AMD64, ARM64, ARM32 (manifests)                | ✅ Multi-architecture manifest                  | ✅ Multi-architecture support             | ✅ Multi-platform builds            | ✅ Multi-arch manifest lists         |
-| **Costos**                              | ✅ Gratis (repos públicos) + $0.25/GB/mes privado | ⚠️ $0.10/GB/mes storage + egress (~$10-30/mes)  | ⚠️ $5/mes Basic + $0.167/GB (~$10-25/mes) | ❌ $5-7/mes por repo                | ✅ $0 licencia + ~$100-200/mes infra |
+| **Costos**                              | ✅ Gratis (repos públicos) + $0.25/GB/mes privado | ⚠️ $0.10/GB/mes storage + egress (~$10-30/mes)  | ⚠️ $5/mes Basic + $0.167/GB (~$10-25/mes) | ⚠️ $5-9/mes por usuario                | ✅ $0 licencia + ~$100-200/mes infra |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -67,7 +67,7 @@ Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo 
 
 ### Justificación
 
-- **Integración perfecta con GitHub Actions** (ADR-009) - autenticación automática via GITHUB_TOKEN
+- **Integración perfecta con GitHub Actions** (ADR-012) - autenticación automática via GITHUB_TOKEN
 - **Costo cero** para repositorios públicos, bajo para privados
 - **Seguridad integrada** con GitHub Advanced Security y dependabot
 - **Namespace por organización** - `ghcr.io/{organizacion}/{servicio}:{version}`
@@ -80,7 +80,7 @@ Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo 
 
 - **Amazon ECR:** lock-in AWS, requiere autenticación ECR adicional, costos US$0.10/GB storage, mayor complejidad multi-region
 - **Azure ACR:** lock-in Azure, costos base US$5/mes + storage, menor integración ecosistema GitHub
-- **Docker Hub:** rate limits agresivos (100 pulls/6h anónimo, 200 autenticado), costos altos privados (US$7/mes/repo), seguridad básica
+- **Docker Hub:** rate limits agresivos (100 pulls/6h anónimo, 200 autenticado), costos por usuario (US$5-9/mes), seguridad básica
 - **Harbor:** operación self-hosted compleja (HA, backup, updates), costos infraestructura ocultos, overhead vs solución gestionada
 
 ---

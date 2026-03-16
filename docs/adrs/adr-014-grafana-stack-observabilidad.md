@@ -82,7 +82,7 @@ Se selecciona el **Grafana Stack OSS** con:
 - **Tempo:** Rastreo distribuido con bajo overhead
 - **Loki:** Indexación eficiente de logs sin indexar contenido completo
 - Retención flexible por tipo de telemetría
-- Compatibilidad con Serilog (ADR-016)
+- Compatibilidad con Serilog
 
 ### Alternativas descartadas
 

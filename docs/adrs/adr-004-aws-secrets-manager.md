@@ -37,7 +37,7 @@ Alternativas evaluadas:
 | Criterio                       | AWS Secrets Manager                               | Azure Key Vault                                 | GitHub Secrets                     | HashiCorp Vault                             |
 | ------------------------------ | ------------------------------------------------- | ----------------------------------------------- | ---------------------------------- | ------------------------------------------- |
 | **Agnosticidad**               | ❌ Lock-in AWS                                    | ❌ Lock-in Azure                                | ❌ Lock-in GitHub                  | ✅ Totalmente agnóstico                     |
-| **Madurez**                    | ✅ Muy alta (2018, AWS enterprise)                | ✅ Muy alta (2016, Azure enterprise)            | ⚠️ Básica (CI/CD limitado)         | ✅ Muy alta (2015, estable)                 |
+| **Madurez**                    | ✅ Muy alta (2018, AWS enterprise)                | ✅ Muy alta (2015, Azure enterprise)            | ⚠️ Básica (CI/CD limitado)         | ✅ Muy alta (2015, estable)                 |
 | **Adopción**                   | ✅ Muy alta (AWS standard)                        | ✅ Muy alta (Azure standard)                    | ⚠️ Limitada (GitHub Actions only)  | ✅ Muy alta (30K+ empresas)                 |
 | **Modelo de gestión**          | ✅ Gestionado (AWS)                               | ✅ Gestionado (Azure)                           | ✅ Gestionado (GitHub)             | ⚠️ Self-hosted                              |
 | **Complejidad operativa**      | ✅ Baja (0.25 FTE, `<5h/sem)`                     | ✅ Baja (0.25 FTE, `<5h/sem)`                   | ✅ Baja (0.25 FTE, `<5h/sem)`      | ⚠️ Alta (1 FTE, 10-20h/sem)                 |
