@@ -30,25 +30,25 @@ Alternativas evaluadas:
 
 - **AWS Parameter Store** (Gestionado AWS, integración nativa)
 - **Azure App Configuration** (Gestionado Azure, integración nativa)
-- **Google Runtime Config** (Gestionado GCP, integración nativa)
+- **Google Parameter Manager** (Gestionado GCP, integración nativa)
 - **HashiCorp Consul** (Open source/Enterprise, agnóstico)
 - **etcd** (Distributed key-value, Kubernetes ecosystem, CNCF)
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                      | AWS Parameter Store                             | Azure App Configuration                              | Google Runtime Config                     | HashiCorp Consul                        | etcd                                   |
+| Criterio                      | AWS Parameter Store                             | Azure App Configuration                              | Google Parameter Manager                  | HashiCorp Consul                        | etcd                                   |
 | ----------------------------- | ----------------------------------------------- | ---------------------------------------------------- | ----------------------------------------- | --------------------------------------- | -------------------------------------- |
 | **Agnosticidad**              | ❌ Lock-in AWS                                  | ❌ Lock-in Azure                                     | ❌ Lock-in GCP                            | ✅ Agnóstico                            | ✅ OSS, agnóstico                      |
-| **Madurez**                   | ✅ Alta (2015, AWS native)                      | ⚠️ Media (2020, reciente)                            | ❌ Baja (deprecado 2023)                  | ✅ Muy alta (2014, estable)             | ✅ Muy alta (2013, CNCF core)          |
-| **Adopción**                  | ✅ Alta (AWS standard)                          | ⚠️ Media (Azure ecosystem)                           | ❌ Deprecado                              | ✅ Muy alta (28K⭐, HashiCorp)          | ✅ Muy alta (47K⭐, CNCF)              |
+| **Madurez**                   | ✅ Alta (2015, AWS native)                      | ⚠️ Media (2020, reciente)                            | ⚠️ Media (2024, GA reciente)               | ✅ Muy alta (2014, estable)             | ✅ Muy alta (2013, CNCF core)          |
+| **Adopción**                  | ✅ Alta (AWS standard)                          | ⚠️ Media (Azure ecosystem)                           | ⚠️ Baja (GCP, nuevo servicio)              | ✅ Muy alta (28K⭐, HashiCorp)          | ✅ Muy alta (47K⭐, CNCF)              |
 | **Modelo de gestión**         | ✅ Gestionado (AWS)                             | ✅ Gestionado (Azure)                                | ✅ Gestionado (GCP)                       | ⚠️ Self-hosted                          | ⚠️ Self-hosted                         |
 | **Complejidad operativa**     | ✅ Baja (0.25 FTE, `<5h/sem)`                   | ✅ Baja (0.25 FTE, `<5h/sem)`                        | ⚠️ Media (0.5 FTE, 5-10h/sem)             | ⚠️ Alta (1 FTE, 10-20h/sem)             | ⚠️ Alta (1 FTE, 10-20h/sem)            |
 | **Seguridad**                 | ✅ Enterprise                                   | ✅ Enterprise                                        | ✅ Enterprise                             | ✅ Máxima                               | ✅ TLS, RBAC                           |
-| **Integración .NET**          | ✅ AWSSDK.SimpleSystemsManagement (10M+ DL/mes) | ✅ Azure.Data.AppConfiguration (2M+ DL/mes, .NET 6+) | ⚠️ Google.Cloud.RuntimeConfig (deprecado) | ✅ Consul (500K+ DL/mes, .NET Standard) | ⚠️ dotnet-etcd (50K+ DL/mes, limitado) |
+| **Integración .NET**          | ✅ `AWSSDK.SimpleSystemsManagement` (.NET 6+)      | ✅ `Azure.Data.AppConfiguration` (.NET 6+)             | ⚠️ `Google.Cloud.ParameterManager.V1` (.NET 6+) | ✅ `Consul` (.NET Standard 2.0+)        | ⚠️ `dotnet-etcd` (.NET Standard 2.0+, limitado) |
 | **Multi-tenancy**             | ⚠️ Por parámetros                               | ✅ Labels                                            | ⚠️ Por proyectos                          | ✅ Namespaces                           | ⚠️ Prefixes                            |
 | **Latencia**                  | ✅ p95 `<10ms `                                 | ✅ p95 `<50ms `                                      | ⚠️ p95 100ms+ variable                    | ✅ p95 `<5ms `local                     | ✅ p95 `<5ms `local                    |
 | **Rendimiento**               | ✅ 1K+ ops/seg                                  | ⚠️ 100 ops/seg                                       | ⚠️ 100 ops/seg                            | ✅ 10K+ ops/seg local                   | ✅ 10K+ ops/seg local                  |
-| **Escalabilidad**             | ✅ Hasta 10K params, 10K+ reads/min (AWS)       | ✅ Hasta 10K+ configs (Azure scale)                  | ⚠️ Deprecado (no aplica)                  | ✅ Hasta 1M+ keys/values (Consul cases) | ✅ Millones keys máx (K8s etcd scale)  |
+| **Escalabilidad**             | ✅ Hasta 10K params, 10K+ reads/min (AWS)       | ✅ Hasta 10K+ configs (Azure scale)                  | ⚠️ Límites por proyecto GCP                | ✅ Hasta 1M+ keys/values (Consul cases) | ✅ Millones keys máx (K8s etcd scale)  |
 | **Versionado**                | ✅ Automática                                   | ✅ Automática                                        | ✅ Automática                             | ✅ Muy flexible                         | ✅ Revisions                           |
 | **Feature Flags**             | ⚠️ Básico                                       | ✅ Nativo                                            | ⚠️ Básico                                 | ✅ Flexible                             | ⚠️ Manual                              |
 | **Auditoría**                 | ✅ CloudTrail integrado                         | ✅ Azure Monitor                                     | ✅ Cloud Audit Logs                       | ✅ Completa logs/ACL                    | ⚠️ Manual config                       |
@@ -77,7 +77,7 @@ Se selecciona **AWS Parameter Store** como solución principal para la gestión 
 
 - **etcd:** distributed key-value store robusto pero orientado a Kubernetes ecosystem, complejidad operativa alta (clustering, quorum, backups), menor integración .NET vs Parameter Store, overhead para uso simple config
 - **Azure App Configuration:** lock-in Azure, infraestructura AWS ya establecida, menor portabilidad
-- **Google Runtime Config:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **SDK .NET adicional** (Google.Cloud.RuntimeConfig) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), SDK .NET limitado, menor madurez vs otros
+- **Google Parameter Manager:** lock-in GCP, **vendor adicional sin infraestructura GCP existente** (requiere cuenta/proyecto/billing GCP activo), **SDK .NET adicional** (`Google.Cloud.ParameterManager.V1`) a mantener, **complejidad multi-vendor** (AWS + Azure + GCP) sin beneficio diferencial, **overhead operativo** (tercera consola cloud, tercera facturación, tercer soporte), adopción incipiente, menor madurez vs otros
 - **HashiCorp Consul:** mayor complejidad operativa y mantenimiento, requiere expertise, costos infraestructura
 
 ---
@@ -101,5 +101,5 @@ Se selecciona **AWS Parameter Store** como solución principal para la gestión 
 
 - [AWS Parameter Store](https://aws.amazon.com/systems-manager/features/#Parameter_Store)
 - [Azure App Configuration](https://azure.microsoft.com/en-us/services/app-configuration/)
-- [Google Runtime Config](https://cloud.google.com/deployment-manager/runtime-configurator)
+- [Google Parameter Manager](https://cloud.google.com/secret-manager/parameter-manager/docs)
 - [Consul](https://www.consul.io/)
