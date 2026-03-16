@@ -58,7 +58,7 @@ Alternativas evaluadas:
 | **Notificaciones de eventos**    | ✅ S3 Events (Lambda, SQS, SNS, EventBridge)         | ❌ No soportado                              | ✅ Event Grid integration                      | ⚠️ Webhook notifications (básico)      |
 | **Bloqueo de objetos**           | ✅ S3 Object Lock (WORM, legal hold, retention)      | ❌ No soportado                              | ✅ Immutable storage with legal hold           | ✅ Object locking (WORM mode)          |
 | **Certificaciones**              | ✅ SOC2, HIPAA, PCI-DSS, ISO                         | ⚠️ SOC2                                      | ✅ Completo                                    | ❌ Self-managed                        |
-| **Costos**                       | ⚠️ $0.023/GB storage + $0.09/GB egress (~$25-50/mes) | ✅ $0.005/GB + $0.01/GB egress (~$6/mes 1TB) | ⚠️ $0.018/GB + $0.087/GB egress (~$20-45/mes)  | ✅ $0 licencia + ~$200-400/mes infra   |
+| **Costos**                       | ⚠️ $0.023/GB storage + $0.09/GB egress (~$25-50/mes) | ✅ $5/mes base (250GB + 1TB transfer incl.)  | ⚠️ $0.018/GB + $0.087/GB egress (~$20-45/mes)  | ✅ $0 licencia + ~$200-400/mes infra   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

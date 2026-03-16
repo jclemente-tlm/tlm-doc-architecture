@@ -57,7 +57,7 @@ Alternativas evaluadas:
 | **Connection Pooling**      | ⚠️ Externo (PgBouncer, pgpool-II)               | ⚠️ Externo (ProxySQL, MaxScale)              | ✅ Nativo connection pooling           | ✅ Resident connection pooling           | ✅ RDS Proxy (connection pooling)    |
 | **Particionamiento**        | ✅ Declarative partitioning (range, list, hash) | ✅ Range, list, hash, key partitioning       | ✅ Range, list, hash (desde SQL 2016)  | ✅ Range, list, hash, composite          | ✅ Partitioning nativo (PostgreSQL)  |
 | **Búsqueda texto completo** | ✅ Nativo (tsvector, tsquery, GIN index)        | ❌ No nativo (LIKE, external engines)        | ✅ Full-Text Search nativo             | ✅ Oracle Text (advanced)                | ✅ Full-text search (PostgreSQL)     |
-| **Costos**                  | ✅ $0 licencia + ~$100-300/mes infra            | ✅ $0 licencia + ~$100-300/mes infra         | ❌ $967-14.5K/mes licencia             | ❌ $47.5K/processor/año + 22% soporte    | ⚠️ $0.017-0.68/h (~$12-500/mes)      |
+| **Costos**                  | ✅ $0 licencia + ~$100-300/mes infra            | ✅ $0 licencia + ~$100-300/mes infra         | ❌ $967-14.5K/mes licencia             | ❌ $47.5K/processor (perpetua) + 22% soporte anual | ⚠️ $0.06-0.68/h (~$44-500/mes)         |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -83,7 +83,7 @@ Se selecciona **PostgreSQL** como base de datos relacional estándar para todos 
 
 - **MySQL/MariaDB:** menor soporte para extensiones avanzadas, multi-tenant más limitado (no RLS nativo), JSONB menos optimizado
 - **SQL Server:** costos de licenciamiento prohibitivos (US$14K+ Standard, US$55K+ Enterprise), lock-in Microsoft, menor flexibilidad multi-cloud
-- **Oracle:** costos muy altos (US$47.5K/processor + soporte 22%), lock-in vendor, complejidad operativa excesiva, menor portabilidad
+- **Oracle:** costos muy altos (US$47.5K/processor perpetua + 22% soporte anual), lock-in vendor, complejidad operativa excesiva, menor portabilidad
 - **Aurora:** lock-in AWS, menor portabilidad multi-cloud, costos crecientes vs PostgreSQL self-hosted
 
 ---

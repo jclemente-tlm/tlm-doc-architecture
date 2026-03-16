@@ -58,7 +58,7 @@ Alternativas evaluadas:
 | **Notificaciones de cambios** | ✅ EventBridge para cambios                     | ✅ Event Grid notifications                          | ⚠️ Watch API (manual)                   | ⚠️ Watch API (manual)                  |
 | **Opciones de cifrado**       | ✅ KMS keys (AWS managed, customer managed)     | ✅ Customer-managed keys, Azure Key Vault            | ✅ Encryption in transit + at rest      | ✅ Encryption at rest nativo           |
 | **Límites de jerarquía**      | ✅ 15 niveles profundidad                       | ✅ Sin límite de profundidad                         | ✅ Flexible folder/namespace structure  | ✅ Namespace hierarchy ilimitado       |
-| **Costos**                    | ✅ $0.05/10K params (~$5-15/mes)                | ✅ Gratis (1K requests/día) + $0.05/10K             | ⚠️ $0 licencia + ~$100-300/mes infra    | ✅ $0 licencia + ~$100-200/mes infra   |
+| **Costos**                    | ✅ Gratis (standard) / $0.05/param avanzado     | ⚠️ Gratis (1K req/día) / ~$36/mes standard          | ⚠️ $0 licencia + ~$100-300/mes infra    | ✅ $0 licencia + ~$100-200/mes infra   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

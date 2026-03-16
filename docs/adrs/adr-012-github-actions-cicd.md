@@ -52,7 +52,7 @@ Alternativas evaluadas:
 | **Retención de artefactos**    | ✅ 90 días (configurable)                     | ⚠️ Manual S3/storage                     | ✅ 30 días por defecto (configurable)        | ✅ S3 artifacts (configurable)         | ✅ 30 días (CircleCI)              |
 | **Límites de concurrencia**    | ✅ 20 jobs (free), 60 jobs (Teams), 180 (Ent) | ⚠️ Ilimitado (depende infra)             | ✅ 10 pipelines (Basic), ilimitado (Ent)     | ✅ 20 builds concurrentes (free)       | ✅ 1-80 concurrent (según plan)    |
 | **Flujos reutilizables**       | ✅ Reusable workflows nativo                  | ⚠️ Shared libraries (Groovy scripts)     | ✅ YAML templates                            | ⚠️ Shared buildspec (limitado)         | ✅ Orbs (reusable config)          |
-| **Costos**                     | ✅ Gratis (2K min/mes) + $0.008/min exceso    | ⚠️ $0 licencia + ~$200-500/mes infra     | ✅ Gratis (1.8K min/mes) + $40/usuario/mes   | ⚠️ $1/pipeline/mes + variables         | ⚠️ $15-60/usuario/mes (según plan) |
+| **Costos**                     | ✅ Gratis (2K min/mes) + $0.008/min exceso    | ⚠️ $0 licencia + ~$200-500/mes infra     | ✅ Gratis (1.8K min/mes) + $40/parallel job extra | ⚠️ $1/pipeline/mes + variables         | ⚠️ $15-60/usuario/mes (según plan) |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

@@ -53,7 +53,7 @@ Alternativas evaluadas:
 | **Estrategias de muestreo**          | ✅ Tempo tail-based sampling                   | ⚠️ Manual APM agents                          | ✅ Intelligent sampling                       | ✅ Adaptive sampling                      | ⚠️ Head-based sampling (X-Ray)          |
 | **Canales de notificación**          | ✅ Email, Slack, PagerDuty, Webhook, MS Teams  | ✅ Email, Slack, PagerDuty, Webhook           | ✅ `50+` integrations                         | ✅ `30+` integrations                     | ✅ SNS, Lambda, Systems Manager         |
 | **Federación de fuentes de datos**   | ✅ Multiple datasources, mixed queries         | ✅ Cross-cluster search                       | ⚠️ Limitado (por cuenta/plan)                 | ⚠️ Limitado (por cuenta)                  | ⚠️ Cross-account queries (setup)        |
-| **Costos**                           | ✅ `$0` licencia + ~`$200-500`/mes infra       | ✅ `$0` licencia + ~`$300-600`/mes infra      | ❌ `$15-31`/host/mes (~`$18K-37K`/año)        | ❌ `$150`/GB ingestión (~`$450K`/año)     | ⚠️ `$1-3`/GB ingestión (~`$12-36K`/año) |
+| **Costos**                           | ✅ `$0` licencia + ~`$200-500`/mes infra       | ✅ `$0` licencia + ~`$300-600`/mes infra      | ❌ `$15-31`/host/mes (~`$18K-37K`/año)        | ❌ `$150`/GB ingestión (~`$450K`/año)     | ⚠️ ~`$0.50`/GB logs (~`$5-20K`/año)     |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

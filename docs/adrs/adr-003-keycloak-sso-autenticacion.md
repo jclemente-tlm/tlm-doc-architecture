@@ -69,7 +69,7 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 
 - **Personalización total:** flujos de autenticación, UI corporativa, extensiones personalizadas (vs limitaciones SaaS)
 - **Multi-tenancy robusto:** aislamiento por país vía realms nativos, superior a alternativas
-- **Costos predecibles:** $0 licencia + ~$150-300/mes infra vs Auth0 ($23-240/mes + por usuario)
+- **Costos predecibles:** $0 licencia + ~$150-300/mes infra vs Auth0 ($35-240/mes + por usuario)
 - **Control total de datos:** identidades sensibles permanecen en infraestructura propia
 - **Portabilidad completa:** OSS agnóstico, desplegable en cualquier cloud/on-premises
 - **Protocolos estándar completos:** SAML, OIDC, LDAP, OAuth2 sin restricciones
@@ -77,7 +77,7 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 
 ### Alternativas descartadas
 
-- **Auth0:** costos altos (US$23-240/mes base + usuarios), lock-in SaaS, personalización limitada
+- **Auth0:** costos altos (US$35-240/mes base + usuarios), lock-in SaaS, personalización limitada
 - **AWS Cognito:** limitaciones en protocolos (sin SAML completo), lock-in AWS, multi-tenancy básico
 - **Azure AD B2C:** lock-in Azure, infraestructura AWS ya establecida, integración menos fluida
 

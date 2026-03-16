@@ -55,7 +55,7 @@ Alternativas evaluadas:
 | **Ecosistema de conectores**   | ✅ 200+ Kafka Connect connectors                    | ⚠️ Conectores Pub/Sub manuales                  | ⚠️ AWS EventBridge (limitado)                 | ⚠️ Plugins personalizados                     | ✅ 100+ Azure connectors                      |
 | **Exactly-Once Semantics**     | ✅ Idempotent producers + transactions              | ⚠️ At-least-once por defecto                    | ⚠️ At-least-once (SQS FIFO exactly-once)      | ⚠️ At-least-once                            | ⚠️ At-least-once por defecto                    |
 | **Rebalanceo de consumidores** | ✅ Incremental cooperative rebalancing              | ⚠️ No consumer groups (push model)              | ⚠️ SQS FIFO limitado                            | ⚠️ Gestión manual de consumer groups            | ⚠️ Consumer groups básicos                      |
-| **Costos**                     | ⚠️ $0 licencia + ~$300-800/mes infra                | ❌ $40/TB ingress + $120/TB egress (~$500+/mes) | ✅ $0.50/millón msg + $0.09/GB (~$50-150/mes) | ✅ $0 licencia + ~$150-300/mes infra        | ⚠️ $0.05/millón ops + storage (~$100-300/mes) |
+| **Costos**                     | ⚠️ $0 licencia + ~$300-800/mes infra                | ❌ $40/TB ingress + $120/TB egress (~$500+/mes) | ✅ $0.50/millón msg + $0.09/GB (~$50-150/mes) | ✅ $0 licencia + ~$150-300/mes infra        | ⚠️ $10/mes base + $0.80/M ops (~$100-300/mes)  |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 

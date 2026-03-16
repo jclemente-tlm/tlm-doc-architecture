@@ -51,7 +51,7 @@ Alternativas evaluadas:
 | **Opciones de almacenamiento** | ✅ EBS, EFS, FSx, S3                        | ✅ PV, EBS, EFS, NFS, S3                            | ✅ Azure Disks, Files, Blob             | ⚠️ Azure Files (limitado)           | ⚠️ Bind mounts, volumes (básico)     |
 | **Modos de red**               | ✅ awsvpc (ENI por task), bridge            | ✅ CNI plugins, Calico, Cilium                      | ✅ Azure CNI, kubenet                   | ⚠️ Virtual networks (básico)        | ⚠️ Bridge, host, overlay             |
 | **Soporte Spot**               | ✅ Fargate Spot (70% descuento)              | ✅ Spot instances + node pools                      | ✅ Spot VMs (hasta 90% descuento)        | ❌ No soportado                     | ⚠️ Configuración manual de spot instances       |
-| **Costos**                     | ⚠️ $0.04/vCPU/h + $0.004/GB/h (~$30-50/mes) | ⚠️ $73/mes control + ~$50-100/mes nodos (~$150/mes) | ⚠️ $0 control + ~$50-100/mes nodos      | ⚠️ $0.0005/vCore/seg (~$30-50/mes)  | ✅ $0 licencia + ~$100-200/mes infra |
+| **Costos**                     | ⚠️ $0.04/vCPU/h + $0.004/GB/h (~$30-50/mes) | ⚠️ $73/mes control + ~$50-100/mes nodos (~$150/mes) | ⚠️ $0 control + ~$50-100/mes nodos      | ⚠️ ~$0.000013/vCore/seg (~$30-50/mes) | ✅ $0 licencia + ~$100-200/mes infra |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
