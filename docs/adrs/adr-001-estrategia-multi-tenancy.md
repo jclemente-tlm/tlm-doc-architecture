@@ -22,58 +22,41 @@ Los servicios corporativos deben soportar operaciones en múltiples países (Per
 
 Las alternativas de multi-tenancy evaluadas fueron:
 
-- **Database per Tenant** (Aislamiento completo)
-- **Schema per Tenant** (Aislamiento intermedio)
-- **Row-Level Security** (Aislamiento lógico)
-- **Compartmented Architecture** (Sidecar pattern, isolation via services)
-- **Hybrid Approach** (Combinación según criticidad): Consiste en aplicar diferentes patrones de multi-tenancy según el tipo de servicio o dato. Por ejemplo, servicios críticos o regulados (como Identidad o Finanzas) se implementan como single-tenant (una base de datos dedicada por país o cliente), mientras que servicios operacionales o de soporte (como Track & Trace o Notificación) pueden usar modelos multi-tenant (por ejemplo, un esquema por país en una misma base de datos). Así, se logra un balance entre cumplimiento, seguridad, costos y eficiencia operativa.
+- **Single-Tenant (Por País):** cada país tiene su propia instancia completa del servicio y base de datos dedicada.
+- **Multi-Tenant (Shared DB con Tenant ID):** una instancia de servicio y una base de datos compartida, con identificación de tenant en cada operación.
+- **Database per Tenant (Modelo Intermedio):** instancia compartida del servicio, pero una base de datos dedicada por país.
+- **Híbrido:** los países operan de manera compartida por defecto, pero casos específicos pueden aislarse como Single-Tenant según necesidad.
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                  | Single-Tenant      | Multi-Tenant DB        | Schema/Tenant       | Compartmented          | Híbrido             |
-| ------------------------- | ------------------ | ---------------------- | ------------------- | ---------------------- | ------------------- |
-| **Aislamiento**           | ✅ Total           | ⚠️ A nivel app         | ⚠️ Por esquema      | ✅ Vía sidecars        | ✅ Flexible         |
-| **Escalabilidad**         | ❌ Muy limitada    | ✅ Excelente           | ✅ Muy buena        | ✅ Horizontal          | ✅ Buena            |
-| **Seguridad**             | ✅ Máxima          | ⚠️ Requiere cuidado    | ⚠️ RLS/Políticas    | ✅ Muy alta            | ✅ Flexible         |
-| **Cumplimiento**          | ✅ Máximo          | ⚠️ Requiere diseño     | ⚠️ RLS robusto      | ✅ Por tenant          | ✅ Por nivel        |
-| **Portabilidad**          | ✅ Total           | ✅ OSS portable        | ✅ OSS portable     | ⚠️ Config compleja     | ✅ Multi-cloud      |
-| **Modelo arquitectura**   | Arquitectura       | Arquitectura           | Arquitectura        | Arquitectura           | Arquitectura        |
-| **Complejidad operativa** | ❌ Alta (múltiple) | ✅ Baja (centralizada) | ⚠️ Media (moderada) | ⚠️ Media (infra extra) | ⚠️ Media (flexible) |
-| **Costos**                | ❌ Muy altos       | ✅ Eficiente           | ✅ Eficiente        | ⚠️ Infraestructura     | ⚠️ Moderados        |
-| **Flexibilidad**          | ✅ Máxima          | ❌ Muy limitada        | ⚠️ Limitada         | ✅ Alta                | ✅ Alta             |
+| Criterio                     | Single-Tenant (Por País)                        | Multi-Tenant (Shared DB)                     | Database per Tenant                            | Híbrido                                      |
+| ---------------------------- | ----------------------------------------------- | -------------------------------------------- | ---------------------------------------------- | -------------------------------------------- |
+| **Aislamiento de datos**     | ✅ Total (instancia + BD dedicada por país)     | ⚠️ Lógico (Tenant ID por operación)          | ✅ Alto (BD separada por país)                 | ✅ Flexible (según necesidad)                |
+| **Cumplimiento regulatorio** | ✅ Máximo (separación física)                   | ⚠️ Requiere políticas estrictas de acceso    | ✅ Alto (BD por país facilita regulación)      | ✅ Adaptable (aislado donde se requiere)     |
+| **Escalabilidad**            | ❌ Limitada (N instancias × N países)           | ✅ Alta (un servicio, una BD)                | ✅ Buena (servicio compartido, BDs separadas)  | ✅ Buena (escala según patrón aplicado)      |
+| **Seguridad**                | ✅ Máxima (aislamiento físico)                  | ⚠️ Requiere diseño cuidadoso                | ✅ Alta (datos físicamente separados)          | ✅ Adaptable (aislamiento donde se requiere) |
+| **Portabilidad**             | ✅ Total (instancia independiente)              | ✅ Total (una instancia portable)            | ✅ Buena (servicio portable, BDs separables)   | ✅ Multi-cloud (stack OSS)                   |
+| **Complejidad operativa**    | ❌ Alta (múltiples instancias y BDs)            | ✅ Baja (una instancia, una BD)              | ⚠️ Media (una instancia, múltiples BDs)       | ⚠️ Media (múltiples patrones coexisten)      |
+| **Costos**                   | ❌ Muy altos (infraestructura duplicada)        | ✅ Mínimos (infraestructura compartida)      | ⚠️ Moderados (servicio compartido, N BDs)     | ⚠️ Moderados (balance compartido/aislado)    |
+| **Flexibilidad**             | ⚠️ Rígida (todo aislado, sin excepciones)       | ❌ Limitada (mismo modelo para todos)        | ⚠️ Media (un patrón uniforme)                 | ✅ Alta (mejor patrón para cada caso)        |
+| **Gestión centralizada**     | ❌ Difícil (visibilidad fragmentada)            | ✅ Simple (un punto de gestión)              | ⚠️ Media (servicio centralizado, datos dispersos) | ✅ Buena (visibilidad global con excepciones) |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
 ## ⚖️ DECISIÓN
 
-**Seleccionamos Hybrid Approach** con la siguiente estrategia:
+**Seleccionamos el modelo Híbrido** con la siguiente estrategia:
 
-### Modelo Híbrido por Criticidad
+### Estrategia Híbrida
 
-#### Nivel 1: Database per Tenant (Datos Críticos)
+- **Por defecto:** los países operan de forma compartida (Multi-Tenant con Tenant ID o Database per Tenant según el servicio), optimizando costos e infraestructura.
+- **Excepción controlada:** si un país o caso de negocio lo requiere por regulación, seguridad o volumen, se aísla como Single-Tenant con instancia y base de datos dedicada.
 
-- Servicio Identidad: Usuarios, roles, permisos
-- Datos Financieros: Transacciones, facturación
-- Datos Personales: PII, información sensible
+### Alternativas descartadas
 
-#### Nivel 2: Schema per Tenant (Datos Operacionales)
-
-- Servicio Notificación: Templates, configuraciones
-- Track & Trace: Estados, eventos de negocio
-- Configuraciones: Parámetros por país
-
-#### Nivel 3: Row-Level Security (Datos Compartidos)
-
-- Logs y auditoría
-- Métricas y monitoreo
-- Datos de referencia comunes
-
-### Ventajas del Modelo Híbrido
-
-- **Cumplimiento regulatorio**: Aislamiento completo para datos sensibles
-- **Optimización de costos**: Recursos compartidos para datos no críticos
-- **Escalabilidad flexible**: Escalar independientemente por criticidad
-- **Operación simplificada**: Menos bases de datos que DB per Tenant completo
+- **Single-Tenant (Por País):** costos e infraestructura se multiplican por cada país sin justificación general; solo se aplica como excepción cuando existe un requerimiento regulatorio o de negocio específico.
+- **Multi-Tenant (Shared DB con Tenant ID):** aislamiento insuficiente para datos regulados; riesgo de data leakage si el filtro por Tenant ID falla; dificulta cumplimiento regulatorio por país.
+- **Database per Tenant:** viable como modelo único, pero no ofrece la flexibilidad de aislar completamente un país cuando se requiere.
 
 ---
 
@@ -81,18 +64,17 @@ Las alternativas de multi-tenancy evaluadas fueron:
 
 ### Positivas
 
-- **Cumplimiento regulatorio** garantizado para datos críticos
-- **Optimización de costos** con recursos compartidos apropiados
-- **Escalabilidad granular** por tenant y por criticidad
-- **Flexibilidad operacional** para diferentes necesidades
-- **Portabilidad mantenida** entre clouds y on-premises
-- **Auditoría simplificada** con separación clara
+- **Cumplimiento regulatorio** garantizado: se aísla como Single-Tenant solo donde la regulación lo exige
+- **Optimización de costos** con operación compartida por defecto
+- **Escalabilidad flexible** según el patrón aplicado a cada servicio o país
+- **Flexibilidad operacional** para responder a requerimientos específicos sin rediseñar todo
+- **Portabilidad mantenida** entre clouds y on-premises con stack OSS
 
 ### Negativas (Riesgos y Mitigaciones)
 
-- **Complejidad arquitectónica:** mitigado con documentación de patrones y capacitación
-- **Gestión de múltiples patrones:** mitigado con guías de arquitectura y ADRs detallados
-- **Testing complejo:** mitigado con estrategia de testing automatizada por nivel
+- **Coexistencia de patrones:** mitigado con documentación clara de criterios para decidir cuándo aislar
+- **Complejidad en testing:** mitigado con estrategia de testing que cubra ambos modos (compartido y aislado)
+- **Criterio de aislamiento:** mitigado con proceso formal (gobernanza) para aprobar excepciones Single-Tenant
 
 ---
 
