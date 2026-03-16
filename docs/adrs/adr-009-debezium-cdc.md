@@ -31,6 +31,8 @@ Alternativas evaluadas:
 - **AWS Database Migration Service (DMS)** (Gestionado AWS, CDC + migración)
 - **Azure Data Factory** (Gestionado Azure, ETL + CDC)
 
+---
+
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 | Criterio                      | Debezium                                                          | Oracle GoldenGate                             | IBM InfoSphere                       | AWS DMS                             | Azure Data Factory                  |

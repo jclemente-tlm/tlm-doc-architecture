@@ -20,12 +20,14 @@ Los servicios corporativos deben soportar operaciones en múltiples países (Per
 - **Costos optimizados** compartiendo infraestructura común
 - **Portabilidad** entre clouds manteniendo la separación
 
-Las alternativas de multi-tenancy evaluadas fueron:
+Alternativas evaluadas:
 
 - **Single-Tenant (Por País):** cada país tiene su propia instancia completa del servicio y base de datos dedicada.
 - **Multi-Tenant (Shared DB con Tenant ID):** una instancia de servicio y una base de datos compartida, con identificación de tenant en cada operación.
 - **Database per Tenant (Modelo Intermedio):** instancia compartida del servicio, pero una base de datos dedicada por país.
 - **Híbrido:** los países operan de manera compartida por defecto, pero casos específicos pueden aislarse como Single-Tenant según necesidad.
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -43,7 +45,9 @@ Las alternativas de multi-tenancy evaluadas fueron:
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
-## ⚖️ DECISIÓN
+---
+
+## ✔️ DECISIÓN
 
 **Seleccionamos el modelo Híbrido** con la siguiente estrategia:
 

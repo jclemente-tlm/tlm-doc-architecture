@@ -5,7 +5,7 @@ sidebar_position: 10
 
 ## ✅ ESTADO
 
-Aceptada – Enero 2026
+Aceptada – Agosto 2025
 
 ---
 
@@ -13,7 +13,7 @@ Aceptada – Enero 2026
 
 Los servicios corporativos requieren una solución robusta de API Gateway para:
 
-- **Enrutamiento inteligente** a microservicios backend (Identity, Notifications, Track & Trace, SITA)
+- **Enrutamiento inteligente** a microservicios backend
 - **Autenticación y autorización centralizada** (`OAuth2`, `JWT`)
 - **Rate limiting y throttling** por tenant y endpoint
 - **Balanceo de carga y health checks automáticos**
@@ -26,12 +26,14 @@ La intención estratégica es **maximizar agnosticidad tecnológica**, adoptar e
 
 Alternativas evaluadas:
 
-- **Kong** (Open source/Enterprise, agnóstico, líder de mercado)
+- **Kong** (Open source/enterprise, agnóstico, líder de mercado)
 - **AWS API Gateway** (Gestionado AWS, serverless)
 - **Azure API Management** (Gestionado Azure, enterprise)
 - **YARP (Yet Another Reverse Proxy)** (Microsoft, open source, .NET nativo)
 - **Traefik** (Open source, cloud-native)
 - **NGINX Plus** (Comercial, agnóstico)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 

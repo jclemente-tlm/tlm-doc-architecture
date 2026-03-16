@@ -32,6 +32,8 @@ Alternativas evaluadas:
 - **Oracle Database** (Propietario, enterprise, alto costo)
 - **Amazon Aurora** (Gestionado AWS, compatible MySQL/PostgreSQL)
 
+---
+
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 | Criterio                    | PostgreSQL                                      | MySQL                                        | Microsoft SQL Server                   | Oracle                                   | AWS Aurora                           |

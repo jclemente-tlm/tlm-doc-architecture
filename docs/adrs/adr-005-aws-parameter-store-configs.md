@@ -30,8 +30,10 @@ Alternativas evaluadas:
 
 - **AWS Parameter Store** (Gestionado AWS, integración nativa)
 - **Azure App Configuration** (Gestionado Azure, integración nativa)
-- **HashiCorp Consul** (Open source/Enterprise, agnóstico)
+- **HashiCorp Consul** (Open source/enterprise, agnóstico)
 - **etcd** (Distributed key-value, Kubernetes ecosystem, CNCF)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -59,6 +61,8 @@ Alternativas evaluadas:
 | **Costos**                    | ✅ $0.05/10K params (~$5-15/mes)                | ✅ Gratis (10K requests/día) + $0.05/10K             | ⚠️ $0 licencia + ~$100-300/mes infra    | ✅ $0 licencia + ~$100-200/mes infra   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
+
+---
 
 ## ✔️ DECISIÓN
 

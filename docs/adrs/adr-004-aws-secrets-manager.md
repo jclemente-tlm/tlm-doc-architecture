@@ -13,7 +13,7 @@ Aceptada – Agosto 2025
 
 Los servicios corporativos requieren una solución robusta de gestión de secretos para:
 
-- **Credenciales de servicios externos** (APIs de notificación, SITA, proveedores)
+- **Credenciales de servicios externos** (APIs de terceros, proveedores)
 - **Tokens y claves de autenticación** entre microservicios
 - **Certificados y claves criptográficas** para comunicación segura
 - **Cadenas de conexión** a bases de datos y servicios
@@ -22,13 +22,15 @@ Los servicios corporativos requieren una solución robusta de gestión de secret
 
 La intención estratégica es **evaluar agnosticidad vs facilidad operacional** considerando que la gestión de secretos es crítica para la seguridad.
 
-Las alternativas evaluadas fueron:
+Alternativas evaluadas:
 
 - **AWS Secrets Manager** (Gestionado AWS, integración nativa)
 - **Azure Key Vault** (Gestionado Azure, integración nativa)
 - **Google Secret Manager** (Gestionado GCP, integración nativa)
 - **GitHub Secrets** (Gestionado GitHub, CI/CD integrado)
-- **HashiCorp Vault** (Open source/Enterprise, agnóstico)
+- **HashiCorp Vault** (Open source/enterprise, agnóstico)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -56,9 +58,11 @@ Las alternativas evaluadas fueron:
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
+---
+
 ## ✔️ DECISIÓN
 
-Se selecciona **AWS Secrets Manager** como solución para la gestión de secretos en todos los entornos del servicio de notificaciones.
+Se selecciona **AWS Secrets Manager** como solución para la gestión de secretos en todos los servicios corporativos.
 
 ### Justificación
 

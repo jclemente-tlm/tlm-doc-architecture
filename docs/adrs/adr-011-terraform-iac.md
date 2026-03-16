@@ -27,11 +27,13 @@ La intención estratégica es **evaluar agnosticidad vs facilidad operacional** 
 
 Alternativas evaluadas:
 
-- **Terraform** (Gestionado por HashiCorp, HCL, multi-cloud)
+- **Terraform** (Open source, HCL, multi-cloud)
 - **Pulumi** (Multi-lenguaje, programático)
 - **Ansible** (Config management, YAML, agentless)
-- **AWS CloudFormation** (AWS nativo)
-- **Azure Bicep** (Azure nativo, moderno)
+- **AWS CloudFormation** (Nativo AWS)
+- **Azure Bicep** (Nativo Azure, moderno)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -55,6 +57,8 @@ Alternativas evaluadas:
 | **Costos**                   | ✅ Gratis OSS + $20/usuario/mes (Cloud opcional) | ⚠️ $1/crédito + planes desde $20/mes (SaaS) | ✅ $0 licencia                       | ✅ Incluido en AWS            | ✅ Incluido en Azure           |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
+
+---
 
 ## ✔️ DECISIÓN
 

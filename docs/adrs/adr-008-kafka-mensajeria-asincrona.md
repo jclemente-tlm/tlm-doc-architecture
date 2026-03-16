@@ -24,11 +24,13 @@ Los servicios corporativos requieren una solución de mensajería asíncrona que
 
 Alternativas evaluadas:
 
-- **Apache Kafka** (open source, alta escalabilidad, agnóstico, streaming)
-- **Google Cloud Pub/Sub** (gestionado GCP, serverless, global)
-- **AWS SNS + SQS** (gestionado, integración nativa AWS, lock-in)
-- **RabbitMQ** (open source, flexible, limitada escalabilidad)
-- **Azure Service Bus** (gestionado, lock-in Azure)
+- **Apache Kafka** (Open source, alta escalabilidad, agnóstico, streaming)
+- **Google Cloud Pub/Sub** (Gestionado GCP, serverless, global)
+- **AWS SNS + SQS** (Gestionado AWS, integración nativa, lock-in)
+- **RabbitMQ** (Open source, flexible, escalabilidad limitada)
+- **Azure Service Bus** (Gestionado Azure, lock-in)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -56,6 +58,8 @@ Alternativas evaluadas:
 | **Costos**                     | ⚠️ $0 licencia + ~$300-800/mes infra                | ❌ $40/TB ingress + $120/TB egress (~$500+/mes) | ✅ $0.50/millón msg + $0.09/GB (~$50-150/mes) | ✅ $0 licencia + ~$150-300/mes infra        | ⚠️ $0.05/millón ops + storage (~$100-300/mes) |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
+
+---
 
 ## ✔️ DECISIÓN
 

@@ -26,10 +26,12 @@ Los servicios corporativos requieren una solución de almacenamiento de objetos 
 
 Alternativas evaluadas:
 
-- **AWS S3** (estándar de mercado, alta durabilidad, ecosistema enorme)
-- **Azure Blob Storage** (fuerte en entornos Microsoft, buena integración)
+- **AWS S3** (Estándar de mercado, alta durabilidad, ecosistema amplio)
+- **Azure Blob Storage** (Gestionado Azure, integración Microsoft)
 - **Digital Ocean Spaces** (S3-compatible, pricing simple, CDN integrado)
-- **MinIO** (auto-hosteado, open source, 100% S3 compatible, portable a cualquier infraestructura)
+- **MinIO** (Self-hosted, open source, S3 compatible)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -59,6 +61,8 @@ Alternativas evaluadas:
 | **Costos**                       | ⚠️ $0.023/GB storage + $0.09/GB egress (~$25-50/mes) | ✅ $0.005/GB + $0.01/GB egress (~$6/mes 1TB) | ⚠️ $0.018/GB + $0.087/GB egress (~$20-45/mes)  | ✅ $0 licencia + ~$200-400/mes infra   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
+
+---
 
 ## ✔️ DECISIÓN
 

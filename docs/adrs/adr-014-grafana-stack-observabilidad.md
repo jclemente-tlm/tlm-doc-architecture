@@ -26,9 +26,11 @@ Alternativas evaluadas:
 
 - **Grafana Stack OSS** (Loki + Mimir + Tempo + Grafana + Alloy)
 - **ELK Stack** (Elasticsearch + Logstash + Kibana)
-- **Datadog** (SaaS observabilidad completo)
-- **Splunk Observability Cloud** (Enterprise observabilidad)
-- **AWS CloudWatch + X-Ray** (nativo AWS)
+- **Datadog** (SaaS, observabilidad completa)
+- **Splunk Observability Cloud** (Enterprise, observabilidad)
+- **AWS CloudWatch + X-Ray** (Nativo AWS)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -54,6 +56,8 @@ Alternativas evaluadas:
 | **Costos**                           | ✅ `$0` licencia + ~`$200-500`/mes infra       | ✅ `$0` licencia + ~`$300-600`/mes infra      | ❌ `$15-31`/host/mes (~`$18K-37K`/año)        | ❌ `$150`/GB ingestión (~`$450K`/año)     | ⚠️ `$1-3`/GB ingestión (~`$12-36K`/año) |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
+
+---
 
 ## ✔️ DECISIÓN
 

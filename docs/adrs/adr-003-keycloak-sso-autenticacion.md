@@ -22,12 +22,14 @@ Los servicios corporativos requieren una solución robusta de gestión de identi
 
 La intención estratégica es mantener agnosticidad y evitar lock-in con proveedores cloud específicos.
 
-Las alternativas evaluadas fueron:
+Alternativas evaluadas:
 
-- **Keycloak** (open source, agnóstico)
+- **Keycloak** (Open source, agnóstico)
 - **Auth0** (SaaS, gestionado)
-- **AWS Cognito** (gestionado AWS)
-- **Azure AD B2C** (gestionado Azure)
+- **AWS Cognito** (Gestionado AWS)
+- **Azure AD B2C** (Gestionado Azure)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -56,6 +58,8 @@ Las alternativas evaluadas fueron:
 | **Costos**                  | ✅ $0 licencia + ~$150-300/mes infra                | ❌ $35-240/mes + por usuario                    | ✅ Gratis (50K MAU/mes) + $0.0055/MAU           | ✅ Gratis (50K MAU/mes) + $0.015/MAU        |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
+
+---
 
 ## ✔️ DECISIÓN
 

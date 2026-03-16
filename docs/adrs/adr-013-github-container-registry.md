@@ -5,7 +5,7 @@ sidebar_position: 13
 
 ## ✅ ESTADO
 
-Aceptada – Enero 2026
+Aceptada – Agosto 2025
 
 ---
 
@@ -26,11 +26,13 @@ La estrategia prioriza **integración con CI/CD existente, seguridad y costos** 
 
 Alternativas evaluadas:
 
-- **GitHub Container Registry (ghcr.io)** (integrado GitHub, gratis para públicos, autenticación GitHub)
-- **Amazon ECR** (nativo AWS, integración IAM, pago por uso)
-- **Azure Container Registry** (nativo Azure, lock-in Microsoft)
-- **Docker Hub** (público, rate limits, costos altos privados)
-- **Harbor** (self-hosted OSS, operación manual)
+- **GitHub Container Registry (ghcr.io)** (Integrado GitHub, gratis para públicos, autenticación GitHub)
+- **Amazon ECR** (Nativo AWS, integración IAM, pago por uso)
+- **Azure Container Registry** (Nativo Azure, lock-in Microsoft)
+- **Docker Hub** (Público, rate limits, costos altos privados)
+- **Harbor** (Self-hosted OSS, operación manual)
+
+---
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
@@ -57,6 +59,8 @@ Alternativas evaluadas:
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
+---
+
 ## ✔️ DECISIÓN
 
 Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo de contenedores.
@@ -66,7 +70,7 @@ Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo 
 - **Integración perfecta con GitHub Actions** (ADR-009) - autenticación automática via GITHUB_TOKEN
 - **Costo cero** para repositorios públicos, bajo para privados
 - **Seguridad integrada** con GitHub Advanced Security y dependabot
-- **Namespace por organización** - `ghcr.io/talma-corp/{servicio}:{version}`
+- **Namespace por organización** - `ghcr.io/{organizacion}/{servicio}:{version}`
 - **Multi-arquitectura** - soporte AMD64 y ARM64 nativo
 - **Agnóstico de cloud** - funciona con ECS, EKS, GKE, AKS
 - **Sin vendor lock-in** - compatible con Docker registry API v2

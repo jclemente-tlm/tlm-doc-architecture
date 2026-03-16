@@ -32,6 +32,8 @@ Alternativas evaluadas:
 - **AWS CodePipeline** (SaaS AWS, integración nativa)
 - **CircleCI** (SaaS, Docker-first)
 
+---
+
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 | Criterio                       | GitHub Actions                                | Jenkins                                  | Azure DevOps                                 | AWS CodePipeline                       | CircleCI                           |

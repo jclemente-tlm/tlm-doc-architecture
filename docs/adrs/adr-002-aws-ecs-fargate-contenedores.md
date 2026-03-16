@@ -30,6 +30,8 @@ Alternativas evaluadas:
 - **Azure Container Instances** (Serverless containers, gestionado Azure)
 - **Docker Swarm** (Self-hosted, agnóstico)
 
+---
+
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
 | Criterio                       | AWS ECS Fargate                             | AWS EKS                                             | Azure Kubernetes Service                | Azure Container Instances           | Docker Swarm                         |
