@@ -102,9 +102,3 @@ Se selecciona **Keycloak** como solución para la gestión de identidades y aute
 - [Multi-tenancy with Keycloak Realms](https://www.keycloak.org/docs/latest/server_admin/#_realms)
 - [Keycloak Performance Tuning](https://www.keycloak.org/docs/latest/server_installation/#_clustering)
 - [OAuth2 and OIDC Best Practices](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics)
-
----
-
-**Decisión tomada por:** Equipo de Arquitectura + CISO
-**Fecha:** Agosto 2025
-**Próxima revisión:** Agosto 2026

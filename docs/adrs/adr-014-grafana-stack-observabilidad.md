@@ -5,7 +5,7 @@ sidebar_position: 14
 
 ## ✅ ESTADO
 
-Aceptada – Enero 2026
+Aceptada – Agosto 2025
 
 ---
 
@@ -125,9 +125,3 @@ Se selecciona el **Grafana Stack OSS** con:
 - [AWS CloudWatch](https://aws.amazon.com/cloudwatch/)
 - [OpenTelemetry .NET](https://opentelemetry.io/docs/instrumentation/net/)
 - [Serilog](https://serilog.net/)
-
----
-
-**Decisión tomada por:** Equipo de Arquitectura + SRE
-**Fecha:** Enero 2026
-**Próxima revisión:** Enero 2027

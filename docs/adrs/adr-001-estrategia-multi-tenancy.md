@@ -29,17 +29,17 @@ Las alternativas de multi-tenancy evaluadas fueron:
 
 ## 🔍 COMPARATIVA DE ALTERNATIVAS
 
-| Criterio                     | Single-Tenant (Por País)                        | Multi-Tenant (Shared DB)                     | Database per Tenant                            | Híbrido                                      |
-| ---------------------------- | ----------------------------------------------- | -------------------------------------------- | ---------------------------------------------- | -------------------------------------------- |
-| **Aislamiento de datos**     | ✅ Total (instancia + BD dedicada por país)     | ⚠️ Lógico (Tenant ID por operación)          | ✅ Alto (BD separada por país)                 | ✅ Flexible (según necesidad)                |
-| **Cumplimiento regulatorio** | ✅ Máximo (separación física)                   | ⚠️ Requiere políticas estrictas de acceso    | ✅ Alto (BD por país facilita regulación)      | ✅ Adaptable (aislado donde se requiere)     |
-| **Escalabilidad**            | ❌ Limitada (N instancias × N países)           | ✅ Alta (un servicio, una BD)                | ✅ Buena (servicio compartido, BDs separadas)  | ✅ Buena (escala según patrón aplicado)      |
-| **Seguridad**                | ✅ Máxima (aislamiento físico)                  | ⚠️ Requiere diseño cuidadoso                | ✅ Alta (datos físicamente separados)          | ✅ Adaptable (aislamiento donde se requiere) |
-| **Portabilidad**             | ✅ Total (instancia independiente)              | ✅ Total (una instancia portable)            | ✅ Buena (servicio portable, BDs separables)   | ✅ Multi-cloud (stack OSS)                   |
-| **Complejidad operativa**    | ❌ Alta (múltiples instancias y BDs)            | ✅ Baja (una instancia, una BD)              | ⚠️ Media (una instancia, múltiples BDs)       | ⚠️ Media (múltiples patrones coexisten)      |
-| **Costos**                   | ❌ Muy altos (infraestructura duplicada)        | ✅ Mínimos (infraestructura compartida)      | ⚠️ Moderados (servicio compartido, N BDs)     | ⚠️ Moderados (balance compartido/aislado)    |
-| **Flexibilidad**             | ⚠️ Rígida (todo aislado, sin excepciones)       | ❌ Limitada (mismo modelo para todos)        | ⚠️ Media (un patrón uniforme)                 | ✅ Alta (mejor patrón para cada caso)        |
-| **Gestión centralizada**     | ❌ Difícil (visibilidad fragmentada)            | ✅ Simple (un punto de gestión)              | ⚠️ Media (servicio centralizado, datos dispersos) | ✅ Buena (visibilidad global con excepciones) |
+| Criterio                     | Single-Tenant (Por País)                        | Multi-Tenant (Shared DB)                     | Database per Tenant                              | Híbrido                                        |
+| ---------------------------- | ----------------------------------------------- | -------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
+| **Aislamiento de datos**     | ✅ Alto (instancia + BD dedicada por país)      | ⚠️ Bajo (Tenant ID por operación)            | ✅ Alto (BD separada por país)                   | ✅ Alto (según necesidad)                      |
+| **Cumplimiento regulatorio** | ✅ Alto (separación física)                     | ⚠️ Bajo (requiere políticas estrictas)       | ✅ Alto (BD por país facilita regulación)        | ✅ Alto (aislado donde se requiere)            |
+| **Escalabilidad**            | ❌ Baja (N instancias × N países)              | ✅ Alta (un servicio, una BD)                | ✅ Alta (servicio compartido, BDs separadas)     | ✅ Alta (escala según patrón aplicado)         |
+| **Seguridad**                | ✅ Alta (aislamiento físico)                    | ⚠️ Media (requiere diseño cuidadoso)        | ✅ Alta (datos físicamente separados)            | ✅ Alta (aislamiento donde se requiere)        |
+| **Portabilidad**             | ✅ Alta (instancia independiente)               | ✅ Alta (una instancia portable)             | ✅ Alta (servicio portable, BDs separables)      | ✅ Alta (stack OSS, multi-cloud)               |
+| **Complejidad operativa**    | ❌ Alta (múltiples instancias y BDs)            | ✅ Baja (una instancia, una BD)              | ⚠️ Media (una instancia, múltiples BDs)         | ⚠️ Media (múltiples patrones coexisten)        |
+| **Costos**                   | ❌ Altos (infraestructura duplicada)            | ✅ Bajos (infraestructura compartida)        | ⚠️ Medios (servicio compartido, N BDs)           | ⚠️ Medios (balance compartido/aislado)         |
+| **Flexibilidad**             | ⚠️ Baja (todo aislado, sin excepciones)         | ❌ Baja (mismo modelo para todos)            | ⚠️ Media (un patrón uniforme)                   | ✅ Alta (mejor patrón para cada caso)          |
+| **Gestión centralizada**     | ❌ Baja (visibilidad fragmentada)               | ✅ Alta (un punto de gestión)                | ⚠️ Media (servicio centralizado, datos dispersos) | ✅ Alta (visibilidad global con excepciones)   |
 
 **Leyenda:** ✅ Cumple completamente | ⚠️ Cumple parcialmente | ❌ No cumple
 
@@ -84,9 +84,3 @@ Las alternativas de multi-tenancy evaluadas fueron:
 - [PostgreSQL Row Level Security](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
 - [Multi-Tenancy Patterns](https://martinfowler.com/articles/multi-tenant/)
 - [GDPR and Multi-Tenancy](https://gdpr.eu/data-protection-impact-assessment-template/)
-
----
-
-**Decisión tomada por:** Equipo de Arquitectura + Legal + Compliance
-**Fecha:** Agosto 2025
-**Próxima revisión:** Agosto 2026

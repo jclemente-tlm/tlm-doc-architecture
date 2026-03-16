@@ -107,9 +107,3 @@ Se selecciona **GitHub Container Registry (ghcr.io)** como registry corporativo 
 - [Docker Registry API v2](https://docs.docker.com/registry/spec/api/)
 - [ADR-002: AWS ECS Fargate Contenedores](./adr-002-aws-ecs-fargate-contenedores.md)
 - [ADR-012: GitHub Actions CI/CD](./adr-012-github-actions-cicd.md)
-
----
-
-**Decisión tomada por:** Equipo de Arquitectura + DevOps
-**Fecha:** Enero 2026
-**Próxima revisión:** Enero 2027

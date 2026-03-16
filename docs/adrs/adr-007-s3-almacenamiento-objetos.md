@@ -106,9 +106,3 @@ Se selecciona **AWS S3** como solución estándar de almacenamiento de objetos p
 - [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
 - [Wasabi](https://wasabi.com/)
 - [Digital Ocean Spaces](https://www.digitalocean.com/products/spaces)
-
----
-
-**Decisión tomada por:** Equipo de Arquitectura
-**Fecha:** Agosto 2025
-**Próxima revisión:** Agosto 2026

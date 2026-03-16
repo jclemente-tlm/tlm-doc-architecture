@@ -104,9 +104,3 @@ Se selecciona **Apache Kafka** como solución estándar de mensajería asíncron
 - [Confluent.Kafka .NET Client](https://docs.confluent.io/kafka-clients/dotnet/current/overview.html)
 - [Event Sourcing with Kafka](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
 - [Kafka Documentation](https://kafka.apache.org/documentation/)
-
----
-
-**Decisión tomada por:** Equipo de Arquitectura
-**Fecha:** Agosto 2025
-**Próxima revisión:** Agosto 2026
