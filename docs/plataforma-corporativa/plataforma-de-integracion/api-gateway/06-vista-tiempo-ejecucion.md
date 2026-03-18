@@ -12,7 +12,7 @@ description: Flujos de ejecución clave del API Gateway con Kong OSS.
 sequenceDiagram
     participant C as Cliente
     participant ALB as ALB
-    participant K as Kong Proxy
+    participant K as API Gateway (Kong)
     participant B as Backend Service
 
     C->>ALB: HTTPS (Bearer JWT)
@@ -21,10 +21,9 @@ sequenceDiagram
     alt JWT inválido o expirado
         K-->>C: 401 Unauthorized
     else JWT válido
-        K->>K: Plugin request-transformer: añade X-Consumer-ID, X-Tenant-ID
-        K->>B: HTTP + headers enriquecidos
-        B-->>K: Respuesta del backend
-        K->>K: Plugin response-transformer: elimina cabeceras internas
+        K->>K: Plugin request-transformer: Authorization → X-Forwarded-Authorization
+        K->>B: HTTP + X-Forwarded-Authorization: Bearer <token>
+        B-->>K: Respuesta
         K-->>C: Respuesta final
     end
 ```
@@ -38,7 +37,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     participant C as Cliente
-    participant K as Kong Proxy
+    participant K as API Gateway (Kong)
     participant R as Redis (ElastiCache)
     participant B as Backend Service
 
@@ -58,7 +57,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant K as Kong Upstream
+    participant K as API Gateway (Kong)
     participant T1 as Target A
     participant T2 as Target B
 

@@ -6,7 +6,7 @@ description: Decisiones arquitectónicas del Servicio de Identidad.
 
 # 9. Decisiones de Arquitectura
 
-## Decision Principal
+## Decisión Principal
 
 | ADR     | Decision                                   | Estado                 | Referencia                                                     |
 | ------- | ------------------------------------------ | ---------------------- | -------------------------------------------------------------- |
