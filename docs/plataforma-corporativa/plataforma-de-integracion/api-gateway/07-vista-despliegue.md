@@ -1,10 +1,10 @@
 ---
 sidebar_position: 7
-title: Vista de Implementación
+title: Vista de Despliegue
 description: Infraestructura técnica, contenedores y configuración declarativa del API Gateway Kong OSS.
 ---
 
-# 7. Vista de Implementación
+# 7. Vista de Despliegue
 
 ## Topología de Despliegue
 
