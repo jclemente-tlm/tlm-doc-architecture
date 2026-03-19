@@ -60,20 +60,32 @@ graph LR
 | Gestión de tokens | Ciclo de vida de JWT: generación, validación, renovación (`accessToken: 300s`) |
 | Auditoría         | Registro de eventos de seguridad _(pendiente de habilitación)_               |
 
+## Contexto de Negocio
+
+| Actor externo                     | Interfaz                          | Descripción                                      |
+| --------------------------------- | --------------------------------- | ------------------------------------------------ |
+| Administrador Global              | Consola Admin / Admin API         | Configuración de tenants (`realms`), políticas   |
+| Administrador de Tenant (`realm`) | Consola Admin                     | Gestión de usuarios y roles específicos por país |
+| Usuario Final                     | Login UI / Account Console        | Login, gestión de perfil, reset de contraseña    |
+| API Gateway (Kong)                | JWKS                              | Validación de token JWT, contexto de usuario     |
+| Servicios Corporativos            | OAuth2/OIDC                       | Autenticación y autorización                     |
+| IdP Externo _(planificado)_       | SAML / OIDC / LDAP                | Federación de usuarios                           |
+| Sistema de Monitoreo              | Métricas HTTP `:9000`             | Métricas, logs, health checks                    |
+
+## Contexto Técnico
+
+| Interfaz                     | Protocolo     | Dirección | Descripción                                      |
+| ---------------------------- | ------------- | --------- | ------------------------------------------------ |
+| `/auth/realms/{realm}/protocol/openid-connect/*` | OIDC (HTTPS)  | Entrada   | Autenticación, tokens, userinfo                  |
+| `/auth/realms/{realm}/protocol/saml`             | SAML (HTTPS)  | Entrada   | Federación SAML _(planificado)_                  |
+| `/auth/admin/realms/{realm}`                     | REST (HTTPS)  | Entrada   | Admin API para gestión programática              |
+| `/auth/realms/{realm}/.well-known/openid-configuration` | HTTPS  | Entrada   | Discovery de endpoints OIDC                      |
+| JWKS (`/auth/realms/{realm}/protocol/openid-connect/certs`) | HTTPS | Salida | Claves públicas para validación JWT en Kong      |
+| JDBC (puerto `5432`)         | PostgreSQL    | Salida    | Persistencia de identidades y configuración      |
+| Métricas (`:9000`)           | HTTP          | Salida    | Prometheus scrape de métricas y health           |
+
 ## Fuera de Alcance
 
 - IdPs externos (Google, Microsoft AD, LDAP corporativo) — gestionados por terceros o TI.
 - Lógica de negocio de los servicios que consumen tokens.
 - Validación de tokens por request — responsabilidad de Kong (ADR-010).
-
-## Interfaces Externas
-
-| Actor                             | Tipo    | Descripción                                      |
-| --------------------------------- | ------- | ------------------------------------------------ |
-| Administrador Global              | Humano  | Configuración de tenants (`realms`), políticas   |
-| Administrador de Tenant (`realm`) | Humano  | Gestión de usuarios y roles específicos por país |
-| Usuario Final                     | Humano  | Login, gestión de perfil, reset de contraseña    |
-| API Gateway (Kong)                | Sistema | Validación de token JWT, contexto de usuario     |
-| Servicios Corporativos            | Sistema | Autenticación y autorización                     |
-| IdP Externo                       | Sistema | Federación de usuarios (SAML, OIDC, LDAP)        |
-| Sistema de Monitoreo              | Sistema | Métricas, logs, health checks                    |

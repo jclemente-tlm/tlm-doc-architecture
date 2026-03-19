@@ -8,13 +8,13 @@ description: Decisiones tecnológicas y patrones aplicados en el Servicio de Ide
 
 ## Decisiones Tecnológicas
 
-| Decisión                | Alternativas Evaluadas                           | Seleccionada            |
-| ----------------------- | ------------------------------------------------ | ----------------------- |
-| Proveedor de Identidad  | Auth0, Okta, `Keycloak`                          | `Keycloak 26.4.4`      |
-| Multi-tenancy           | Single tenant (`realm`), multi-tenant (`realms`) | Multi-tenant (`realms`) |
-| Federación de Identidad | Solo externo, híbrido                            | Híbrido _(planificada)_ |
-| Base de Datos           | MySQL, `PostgreSQL`                              | `PostgreSQL 16+`        |
-| Despliegue              | VM, contenedores, serverless                     | Contenedor en `EC2`     |
+| Dimensión               | Decisión                | Justificación                                                  |
+| ----------------------- | ----------------------- | -------------------------------------------------------------- |
+| Proveedor de Identidad  | `Keycloak 26.4.4`      | Open source, multi-tenant nativo, protocolo OIDC/SAML completo (ADR-003) |
+| Multi-tenancy           | Multi-tenant (`realms`) | Regulaciones y datos independientes por país exigen aislamiento real      |
+| Federación de Identidad | Híbrido _(planificada)_ | Países con AD activo (LDAP) y otros con Google Workspace (OIDC)          |
+| Base de Datos           | `PostgreSQL 16+`        | Compatibilidad con RDS, alta disponibilidad, soporte corporativo         |
+| Despliegue              | Contenedor en `EC2`     | Consistencia con modelo de infraestructura actual; Docker Compose         |
 
 ## Patrones Aplicados
 

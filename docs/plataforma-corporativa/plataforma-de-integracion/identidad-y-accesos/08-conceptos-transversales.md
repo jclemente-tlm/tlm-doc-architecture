@@ -53,8 +53,8 @@ description: Seguridad, multi-tenancy, observabilidad y resiliencia.
 
 ## Compliance
 
-- Audit trail completo de accesos, cambios y exportaciones de datos.
-- Políticas de retención y anonimización automatizadas.
+- Audit trail de accesos, cambios y exportaciones de datos _(pendiente: eventos deshabilitados, ver DT-06)_.
+- Políticas de retención y anonimización _(pendientes de automatización)_.
 - Cumplimiento: GDPR, SOX, ISO 27001, controles de acceso y consentimiento.
 
 ## Flujos de Integración (M2M)

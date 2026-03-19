@@ -7,7 +7,7 @@ description: Objetivos, requisitos y partes interesadas del Servicio de Identida
 # 1. Introducción y Objetivos
 
 El **Servicio de Identidad** centraliza autenticación, autorización y federación para todos los servicios corporativos multipaís.
-Está implementado con **Keycloak 26.4.4**, desplegado como contenedor Docker sobre instancias EC2 con PostgreSQL RDS, gestionado por ambiente (ADR-003).
+Está implementado con **Keycloak**, desplegado como contenedor Docker sobre instancias EC2 con PostgreSQL RDS, gestionado por ambiente (ADR-003).
 El código fuente de infraestructura se gestiona en el repositorio `tlm-infra-keycloak`.
 
 ## Funcionalidades Clave
@@ -19,7 +19,7 @@ El código fuente de infraestructura se gestiona en el repositorio `tlm-infra-ke
 | Federación     | Integración con IdPs externos (`SAML`, `OIDC`, `LDAP`) _(planificada)_                    |
 | RBAC           | Control de acceso basado en roles                                                         |
 | MFA            | Autenticación multi-factor para roles críticos                                            |
-| Auditoría      | Registro estructurado de eventos de seguridad                                             |
+| Auditoría      | Registro estructurado de eventos de seguridad _(pendiente de habilitación)_                |
 | Observabilidad | Métricas y health checks habilitados (puerto `9000`); integración con stack corporativo    |
 | Tema           | Tema personalizado `talma-theme` con branding corporativo e i18n (`es`/`en`)              |
 | API Gateway    | Validación de tokens JWT por Kong mediante JWKS de cada realm                             |

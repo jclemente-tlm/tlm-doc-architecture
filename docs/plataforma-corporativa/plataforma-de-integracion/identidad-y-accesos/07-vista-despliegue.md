@@ -6,7 +6,35 @@ description: Infraestructura y configuración de despliegue de Keycloak.
 
 # 7. Vista de Despliegue
 
-![Vista de implementación del Sistema de Identidad](/diagrams/servicios-corporativos/identity_system_deployment.png)
+```mermaid
+graph TB
+    subgraph AWS - nonprod
+        ALB_NP[ALB nonprod]
+        subgraph EC2 nonprod
+            KC_NP[Keycloak Container\n:8080 / :9000]
+        end
+        RDS_NP[(PostgreSQL RDS\nnonprod)]
+    end
+
+    subgraph AWS - prod
+        ALB_P[ALB prod]
+        subgraph EC2 prod
+            KC_P[Keycloak Container\n:8080 / :9000]
+        end
+        RDS_P[(PostgreSQL RDS\nprod)]
+    end
+
+    INTERNET[Internet] -->|HTTPS :443| ALB_NP
+    INTERNET -->|HTTPS :443| ALB_P
+    ALB_NP -->|HTTP :8080| KC_NP
+    ALB_P -->|HTTP :8080| KC_P
+    KC_NP -->|JDBC :5432| RDS_NP
+    KC_P -->|JDBC :5432| RDS_P
+    PROM[Prometheus] -->|scrape :9000| KC_NP
+    PROM -->|scrape :9000| KC_P
+```
+
+> Diagrama C4 detallado disponible en la imagen generada desde Structurizr: ![Vista de implementación](/diagrams/servicios-corporativos/identity_system_deployment.png)
 
 ## Repositorio de Infraestructura
 
@@ -115,7 +143,7 @@ export KEYCLOAK_ADMIN_PASSWORD=<password>
 
 ## Backup y Disaster Recovery
 
-- Backups automáticos diarios de base de datos (`30 días prod`, `7 días staging`)
+- Backups automáticos diarios de base de datos (`30 días prod`, `7 días nonprod`)
 - Snapshots manuales antes de despliegues mayores
 - Export de configuración de tenants (`realms`) como JSON en repositorio Git
 - Plan de recuperación: `RTO < 4h`, `RPO < 15min`
