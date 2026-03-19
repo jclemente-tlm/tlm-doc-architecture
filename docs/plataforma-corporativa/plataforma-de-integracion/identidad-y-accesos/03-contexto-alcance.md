@@ -15,45 +15,50 @@ No contiene lógica de negocio; gestiona identidades, sesiones y tokens para los
 
 ```mermaid
 graph LR
-    subgraph IdPs Externos
+    subgraph IdPs Externos - planificado
         A1[Google Workspace]
         A2[Microsoft AD]
         A3[LDAP Corporativo]
     end
 
-    subgraph Tenants
-        T1[pe]
-        T2[ec]
-        T3[co]
-        T4[mx]
+    subgraph Tenants / Realms
+        T0[tlm-corp]
+        T1[tlm-pe]
+        T2[tlm-mx]
+        T3[tlm-ec - pendiente]
+        T4[tlm-co - pendiente]
     end
 
-    KC[Keycloak]
+    KC[Keycloak 26.4.4]
     GW[Kong API Gateway]
     SVC[Servicios Corporativos]
-    OBS[Observabilidad\nMimir · Loki · Tempo]
+    OBS[Observabilidad\nMétricas :9000]
 
-    A1 -->|SAML/OIDC| KC
-    A2 -->|LDAP| KC
-    A3 -->|LDAP| KC
+    A1 -.->|SAML/OIDC| KC
+    A2 -.->|LDAP| KC
+    A3 -.->|LDAP| KC
+    KC --> T0
     KC --> T1
     KC --> T2
-    KC --> T3
-    KC --> T4
+    KC -.-> T3
+    KC -.-> T4
     KC -->|JWKS| GW
     GW -->|requests autenticados| SVC
-    KC -->|métricas / logs / trazas| OBS
+    KC -->|métricas / health| OBS
 ```
+
+> Las líneas punteadas hacia IdPs externos indican integración planificada, aún no configurada.
 
 ## Dentro del Alcance
 
-| Componente        | Responsabilidad                                                            |
-| ----------------- | -------------------------------------------------------------------------- |
-| Keycloak          | IdP central multi-tenant; autenticación, autorización, gestión de usuarios |
-| Realms por país   | Aislamiento de datos y configuración por tenant (`pe`, `ec`, `co`, `mx`)   |
-| Federación        | Integración con LDAP, SAML, OIDC externos                                  |
-| Gestión de tokens | Ciclo de vida de JWT: generación, validación, renovación                   |
-| Auditoría         | Registro de eventos de seguridad                                           |
+| Componente        | Responsabilidad                                                              |
+| ----------------- | ---------------------------------------------------------------------------- |
+| Keycloak          | IdP central multi-tenant; autenticación, autorización, gestión de usuarios   |
+| Realm corporativo | `tlm-corp`: realm global para servicios internos (Grafana, herramientas)     |
+| Realms por país   | `tlm-pe`, `tlm-mx`: configurados. `tlm-ec`, `tlm-co`: pendientes de creación |
+| Tema corporativo  | `talma-theme`: branding personalizado para login, account y admin            |
+| Gestión de tokens | Ciclo de vida de JWT: generación, validación, renovación (`accessToken: 300s`) |
+| Auditoría         | Registro de eventos de seguridad _(pendiente de habilitación)_               |
 
 ## Fuera de Alcance
 

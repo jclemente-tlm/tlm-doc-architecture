@@ -23,7 +23,7 @@ description: Atributos y escenarios de calidad del Servicio de Identidad.
 | Aspecto    | Objetivo                      | Estrategia   |
 | ---------- | ----------------------------- | ------------ |
 | Usuarios   | `100k` por `tenant` (`realm`) | Autoescalado |
-| Tenants    | `4 países` (pe, ec, co, mx)   | Multi-tenant |
+| Tenants    | `5 definidos` (3 configurados, 2 pendientes) | Multi-tenant |
 | Sessions   | `10k` concurrentes            | `PostgreSQL` |
 | Federación | Múltiples IdP                 | Híbrida      |
 

@@ -19,18 +19,18 @@ sequenceDiagram
     User->>Browser: Accede a aplicación
     Browser->>GW: GET /app/dashboard
     GW->>Browser: HTTP 401
-    Browser->>ALB: GET /realms/{tenant}/protocol/openid-connect/auth
+    Browser->>ALB: GET /auth/realms/{tenant}/protocol/openid-connect/auth
     ALB->>KC: Reenviar solicitud
     KC->>Browser: Formulario de login
     User->>Browser: Ingresa credenciales
-    Browser->>ALB: POST login-actions/authenticate
+    Browser->>ALB: POST /auth/realms/{tenant}/login-actions/authenticate
     ALB->>KC: Reenviar solicitud
     KC->>Browser: Solicitar código TOTP
     User->>Browser: Ingresa código
-    Browser->>ALB: POST login-actions/required-action
+    Browser->>ALB: POST /auth/realms/{tenant}/login-actions/required-action
     ALB->>KC: Reenviar solicitud
     KC->>Browser: HTTP 302 + authorization_code
-    Browser->>ALB: POST /realms/{tenant}/protocol/openid-connect/token
+    Browser->>ALB: POST /auth/realms/{tenant}/protocol/openid-connect/token
     ALB->>KC: Reenviar solicitud
     KC->>Browser: JWT tokens
     Browser->>GW: GET /app/dashboard + Bearer token
@@ -49,7 +49,9 @@ sequenceDiagram
 | MFA fallido (3 veces) | Lockout   | Email de desbloqueo                     |
 | Audit Service caído   | Continuar | Almacenamiento local y replay posterior |
 
-## Escenario: Federación SAML
+## Escenario: Federación SAML _(planificada)_
+
+> Este flujo aplica cuando se configure federación con IdPs externos. Actualmente no hay Identity Providers configurados en los realms.
 
 ```mermaid
 sequenceDiagram
@@ -60,7 +62,7 @@ sequenceDiagram
     participant IdP as IdP Externo
 
     User->>Browser: Click "Login with IdP"
-    Browser->>ALB: GET /realms/{tenant}/broker/idp-saml/login
+    Browser->>ALB: GET /auth/realms/{tenant}/broker/idp-saml/login
     ALB->>KC: Reenviar solicitud
     KC->>Browser: Redirect a IdP con SAML AuthnRequest
     Browser->>IdP: POST SAML AuthnRequest
@@ -71,7 +73,7 @@ sequenceDiagram
     ALB->>KC: Reenviar solicitud
     KC->>KC: Validar assertion, mapear usuario, crear sesión
     KC->>Browser: HTTP 302 + authorization_code
-    Browser->>ALB: POST /realms/{tenant}/protocol/openid-connect/token
+    Browser->>ALB: POST /auth/realms/{tenant}/protocol/openid-connect/token
     ALB->>KC: Reenviar solicitud
     KC->>Browser: JWT tokens
 ```
@@ -86,7 +88,7 @@ sequenceDiagram
     participant ALB as ALB
     participant KC as Keycloak
 
-    SvcA->>ALB: POST /realms/{tenant}/protocol/openid-connect/token<br/>grant_type=client_credentials<br/>client_id & client_secret
+    SvcA->>ALB: POST /auth/realms/{tenant}/protocol/openid-connect/token<br/>grant_type=client_credentials<br/>client_id & client_secret
     ALB->>KC: Reenviar solicitud
     KC->>KC: Validar credenciales y scopes
     KC->>SvcA: Access Token (JWT) + expires_in
@@ -101,14 +103,14 @@ sequenceDiagram
 ### Ejemplo de solicitud HTTP
 
 ```http
-POST /realms/talma-pe/protocol/openid-connect/token
+POST /auth/realms/tlm-pe/protocol/openid-connect/token
 Host: keycloak.talma.internal
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=client_credentials
-&client_id=svc-integracion-logistica
+&client_id=gestal-pe-dev
 &client_secret=<SECRET>
-&scope=logistics:read logistics:write
+&scope=openid
 ```
 
 **Respuesta:**
@@ -118,7 +120,7 @@ grant_type=client_credentials
   "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
   "expires_in": 300,
   "token_type": "Bearer",
-  "scope": "logistics:read logistics:write"
+  "scope": "openid"
 }
 ```
 

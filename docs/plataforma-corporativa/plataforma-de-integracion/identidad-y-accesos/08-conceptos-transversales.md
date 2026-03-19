@@ -8,12 +8,13 @@ description: Seguridad, multi-tenancy, observabilidad y resiliencia.
 
 ## Seguridad
 
-| Aspecto       | Implementación    | Tecnología |
-| ------------- | ----------------- | ---------- |
-| Autenticación | `OAuth2`/`OIDC`   | `Keycloak` |
-| Tokens        | `JWT RS256`       | Estándar   |
-| Federación    | `SAML`/`LDAP`     | Conectores |
-| MFA           | Obligatorio admin | `Keycloak` |
+| Aspecto       | Implementación              | Tecnología |
+| ------------- | --------------------------- | ---------- |
+| Autenticación | `OAuth2`/`OIDC`             | `Keycloak` |
+| Tokens        | `JWT RS256`                 | Estándar   |
+| Federación    | `SAML`/`LDAP` _(planificada)_ | Conectores |
+| MFA           | TOTP (6 dígitos, 30s)       | `Keycloak` |
+| Brute force   | Habilitado (30 intentos)    | `Keycloak` |
 
 - Defensa en profundidad: WAF, subredes privadas, NACLs, headers seguros, autenticación y autorización centralizadas, rate limiting, audit logging.
 - Gestión avanzada de secretos: rotación, control de acceso, auditoría en AWS Secrets Manager.
@@ -21,20 +22,28 @@ description: Seguridad, multi-tenancy, observabilidad y resiliencia.
 
 ## Multi-tenancy y Aislamiento
 
-| Aspecto       | Implementación                 | Propósito         |
-| ------------- | ------------------------------ | ----------------- |
-| Realms        | Un `tenant` (`realm`) por país | Aislamiento total |
-| Usuarios      | Por `tenant` (`realm`)         | Separación        |
-| Configuración | Por jurisdicción               | Compliance        |
+| Aspecto       | Implementación                                                 | Propósito                |
+| ------------- | -------------------------------------------------------------- | ----------------------- |
+| Realm corp    | `tlm-corp`: servicios corporativos globales (Grafana, etc.)                       | Gestión centralizada     |
+| Realms país   | `tlm-pe`, `tlm-mx` (configurados); `tlm-ec`, `tlm-co` (pendientes)               | Aislamiento total       |
+| Usuarios      | Por `tenant` (`realm`)                                         | Separación              |
+| Configuración | Por jurisdicción                                                | Compliance              |
 
 - Aislamiento multinivel: datos, configuración y autenticación independientes por `tenant` (`realm`).
 - Configuración dinámica y cacheada por `tenant` (`realm`).
 
+## Tema e Internacionalización
+
+- Tema personalizado `talma-theme` aplicado a los realms `tlm-pe` y `tlm-mx`.
+- Personalización de login, account y admin con branding Talma.
+- Soporte i18n: español (`es`) como idioma por defecto, inglés (`en`) como alternativo.
+- Mensajes traducidos en `keycloak/themes/talma-theme/login/messages/`.
+
 ## Observabilidad
 
-- Logging estructurado con contexto de `realm`, usuario y sesión enviado a **Loki** vía Fluent Bit/FireLens.
-- Métricas por `realm` expuestas vía Prometheus y almacenadas en **Mimir** (Grafana).
-- Trazas distribuidas con `OpenTelemetry` enviadas a **Tempo**.
+- Métricas y health checks habilitados en puerto `9000` (`KC_METRICS_ENABLED`, `KC_HEALTH_ENABLED`).
+- Logging con nivel configurable por ambiente (`KC_LOG_LEVEL`); listener `jboss-logging` activo.
+- Integración con stack corporativo (Grafana, Mimir, Loki, Tempo) _(pendiente de configuración completa)_.
 
 ## Resiliencia
 
@@ -53,23 +62,26 @@ description: Seguridad, multi-tenancy, observabilidad y resiliencia.
 Flujo `client_credentials` para servicios backend sin interacción de usuario:
 
 ```http
-POST /realms/{tenant}/protocol/openid-connect/token
+POST /auth/realms/{tenant}/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=client_credentials&client_id=app-client&client_secret=secreto
+grant_type=client_credentials&client_id=gestal-pe-dev&client_secret=secreto
 ```
 
 ```json
 {
   "access_token": "...",
-  "expires_in": 900,
+  "expires_in": 300,
   "token_type": "Bearer",
-  "scope": "profile email tenant:peru"
+  "scope": "openid"
 }
 ```
 
 ## Performance y Caching
 
+- Access token lifespan: `300s` (5 min).
+- SSO session idle timeout: `1800s` (30 min).
+- SSO session max lifespan: `36000s` (10 hr).
 - Validación JWT local en Kong con JWKS cacheados, sin llamadas a Keycloak por request.
 - Sesión y JWKS cacheados en memoria por `realm`.
 - Caching con Redis _(pendiente de implementación)_.
