@@ -45,9 +45,9 @@ Ver el ADR completo para la comparativa de alternativas (Auth0, AWS Cognito, Azu
 - **Implementación actual**: No hay Identity Providers configurados en ninguno de los realms. Todos los usuarios se gestionan localmente por realm.
 - **Consecuencias**: Flexibilidad por país. Cada realm puede tener configuración de federación diferente una vez implementada.
 
-### DEC-05: Validación JWT local en Kong (sin introspection por request)
+### DEC-05: Validación JWT con Clave Pública RSA Embebida en Kong
 
 - **Estado**: Aceptado
-- **Contexto**: La validación de tokens puede hacerse en el gateway consultando a Keycloak (token introspection endpoint) o localmente con las claves JWKS públicas.
-- **Decisión**: Kong (ADR-010) valida JWT localmente usando el endpoint JWKS de cada realm (`/auth/realms/{tenant}/protocol/openid-connect/certs`). Keycloak no recibe llamadas por cada request.
-- **Consecuencias**: Latencia de validación < 10ms (local vs ~50ms introspection remota). Ventana de inconsistencia al revocar tokens; mitigada con `exp` claim corto (5 min / 300s) y TTL corto de cache JWKS.
+- **Contexto**: La validación de tokens puede hacerse en el gateway por introspección remota, consultando el endpoint JWKS dinámicamente, o con la clave pública RSA embebida de forma estática.
+- **Decisión**: Kong (ADR-010) valida JWT con la clave pública RSA de cada tenant embebida estáticamente en la configuración del gateway (`_consumers.yaml`). Keycloak no recibe llamadas por request.
+- **Consecuencias**: Validación completamente offline (< 10ms). Al rotar claves en Keycloak, se debe actualizar `_consumers.yaml` en el repositorio del gateway y sincronizar (`make sync-{env}`) antes de que los tokens nuevos sean válidos.

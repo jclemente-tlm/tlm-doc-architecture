@@ -8,13 +8,13 @@ description: Seguridad, multi-tenancy, observabilidad y resiliencia.
 
 ## Seguridad
 
-| Aspecto       | Implementación              | Tecnología |
-| ------------- | --------------------------- | ---------- |
-| Autenticación | `OAuth2`/`OIDC`             | `Keycloak` |
-| Tokens        | `JWT RS256`                 | Estándar   |
+| Aspecto       | Implementación                | Tecnología |
+| ------------- | ----------------------------- | ---------- |
+| Autenticación | `OAuth2`/`OIDC`               | `Keycloak` |
+| Tokens        | `JWT RS256`                   | Estándar   |
 | Federación    | `SAML`/`LDAP` _(planificada)_ | Conectores |
-| MFA           | TOTP (6 dígitos, 30s)       | `Keycloak` |
-| Brute force   | Habilitado (30 intentos)    | `Keycloak` |
+| MFA           | TOTP (6 dígitos, 30s)         | `Keycloak` |
+| Brute force   | Habilitado (30 intentos)      | `Keycloak` |
 
 - Defensa en profundidad: WAF, subredes privadas, NACLs, headers seguros, autenticación y autorización centralizadas, rate limiting, audit logging.
 - Gestión avanzada de secretos: rotación, control de acceso, auditoría en AWS Secrets Manager.
@@ -22,12 +22,12 @@ description: Seguridad, multi-tenancy, observabilidad y resiliencia.
 
 ## Multi-tenancy y Aislamiento
 
-| Aspecto       | Implementación                                                 | Propósito                |
-| ------------- | -------------------------------------------------------------- | ----------------------- |
-| Realm corp    | `tlm-corp`: servicios corporativos globales (Grafana, etc.)                       | Gestión centralizada     |
-| Realms país   | `tlm-pe`, `tlm-mx` (configurados); `tlm-ec`, `tlm-co` (pendientes)               | Aislamiento total       |
-| Usuarios      | Por `tenant` (`realm`)                                         | Separación              |
-| Configuración | Por jurisdicción                                                | Compliance              |
+| Aspecto       | Implementación                                                     | Propósito            |
+| ------------- | ------------------------------------------------------------------ | -------------------- |
+| Realm corp    | `tlm-corp`: servicios corporativos globales (Grafana, etc.)        | Gestión centralizada |
+| Realms país   | `tlm-pe`, `tlm-mx` (configurados); `tlm-ec`, `tlm-co` (pendientes) | Aislamiento total    |
+| Usuarios      | Por `tenant` (`realm`)                                             | Separación           |
+| Configuración | Por jurisdicción                                                   | Compliance           |
 
 - Aislamiento multinivel: datos, configuración y autenticación independientes por `tenant` (`realm`).
 - Configuración dinámica y cacheada por `tenant` (`realm`).
@@ -82,6 +82,6 @@ grant_type=client_credentials&client_id=gestal-pe-dev&client_secret=secreto
 - Access token lifespan: `300s` (5 min).
 - SSO session idle timeout: `1800s` (30 min).
 - SSO session max lifespan: `36000s` (10 hr).
-- Validación JWT local en Kong con JWKS cacheados, sin llamadas a Keycloak por request.
-- Sesión y JWKS cacheados en memoria por `realm`.
+- Validación JWT en Kong con clave pública RSA embebida en la configuración del gateway (`_consumers.yaml`), sin llamadas a Keycloak por request. La rotación de claves requiere actualizar el gateway y sincronizar.
+- Sesión cacheada en memoria por tenant (realm).
 - Caching con Redis _(pendiente de implementación)_.
