@@ -20,6 +20,7 @@ APIs inconsistentes, contratos mal definidos o documentación desactualizada gen
 - [Aplicar paginación en colecciones](../../estandares/apis/api-pagination.md)
 - [Mantener retrocompatibilidad en evolución](../../estandares/apis/api-versioning.md#compatibilidad-hacia-atrás)
 - [Implementar contract testing automatizado](../../estandares/testing/contract-testing.md)
+- [Publicar APIs de servicios a través del API Gateway corporativo](../../estandares/apis/api-gateway-usage.md)
 
 ## Referencias Relacionadas
 
