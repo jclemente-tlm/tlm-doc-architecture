@@ -6,133 +6,112 @@ description: Infraestructura técnica, contenedores y configuración declarativa
 
 # 7. Vista de Despliegue
 
-## Topología de Despliegue
+## Topología por Entorno
 
 ```mermaid
 graph TD
-    subgraph AWS us-east-1
-        ALB[ALB
-público]
-        subgraph VPC Privada
-            subgraph ECS Fargate
-                K1[Kong Instance 1
-kong:3.6-ubuntu]
-                K2[Kong Instance 2
-kong:3.6-ubuntu]
-            end
-            PG[(PostgreSQL
-RDS - kong DB)]
-            RD[(Redis
-ElastiCache)]
-        end
+    subgraph Local
+        DC[docker-compose\nlocal.yml]
+        K_L[Kong :8000/:8001]
+        PG_L[(PostgreSQL :5432\ncontenedor local)]
+        MY_L[(MySQL :3307\ncontenedor local)]
+        NG_L[nginx :3366]
+        KG_L[Konga :1337]
+        DC --> K_L
+        K_L --> PG_L
+        KG_L --> MY_L
+        NG_L --> KG_L
     end
-    INF[Ingeniería / CI-CD
-deck sync] --> K1
-    KG[Konga
-Admin UI] --> K1
-    ALB --> K1
-    ALB --> K2
-    K1 --> PG
-    K2 --> PG
-    K1 --> RD
-    K2 --> RD
+
+    subgraph Non-Prod AWS
+        ALB_NP[ALB\napi-qa / api-dev]
+        K_NP[Kong :8000/:8001]
+        PG_NP[(RDS PostgreSQL\nnon-prod)]
+        MY_NP[(MySQL :3307\ncontenedor)]
+        NG_NP[nginx :3366]
+        KG_NP[Konga :1337]
+        ALB_NP --> K_NP
+        K_NP --> PG_NP
+        KG_NP --> MY_NP
+        NG_NP --> KG_NP
+    end
+
+    subgraph Prod AWS
+        ALB_P[ALB\napi.talma.com.pe]
+        K_P[Kong :8000/:8001]
+        PG_P[(RDS PostgreSQL\nprod)]
+        MY_P[(MySQL :3307\ncontenedor)]
+        NG_P[nginx :3366]
+        KG_P[Konga :1337]
+        ALB_P --> K_P
+        K_P --> PG_P
+        KG_P --> MY_P
+        NG_P --> KG_P
+    end
 ```
 
-## Dockerfile (Kong)
+## Docker Compose — Servicios
 
-```dockerfile
-FROM kong:3.6-ubuntu
-USER kong
-EXPOSE 8000 8443 8001 8444
-```
+| Servicio              | Imagen                 | Compose file               | Nota                                             |
+| --------------------- | ---------------------- | -------------------------- | ------------------------------------------------ |
+| `kong-migrations`     | `kong:3.9.1`           | Base                       | Ejecuta migrations; `restart: "no"`              |
+| `kong`                | `kong:3.9.1`           | Base                       | Proxy `:8000`, Admin `:8001`                     |
+| `kong-deck-bootstrap` | `kong/deck:latest`     | Base                       | Ejecuta `deck sync` al arrancar; `restart: "no"` |
+| `konga`               | `pantsel/konga:0.14.9` | Base                       | Admin UI `:1337`                                 |
+| `konga-proxy`         | `nginx:1.29.3`         | Base                       | Reverse proxy para Konga en `:3366/konga/`       |
+| `konga-db`            | `mysql:5.7`            | Base                       | BD de Konga (`/opt/konga/mysql`)                 |
+| `kong-db`             | `postgres:15-alpine`   | `docker-compose.local.yml` | Solo local; nonprod/prod usa RDS                 |
 
-> Imagen oficial LTS. Kong no publica variante Alpine. No hay código custom; toda la lógica se configura mediante plugins declarativos vía `deck`.
+## Variables de Entorno (Kong)
 
-## Configuración de Entorno (ECS Task)
+| Variable                | Local                        | Non-Prod / Prod              | Descripción                         |
+| ----------------------- | ---------------------------- | ---------------------------- | ----------------------------------- |
+| `KONG_DATABASE`         | `postgres`                   | `postgres`                   | Modo DB                             |
+| `KONG_PG_HOST`          | `kong-db` (contenedor)       | RDS host (`.env`)            | Host de PostgreSQL                  |
+| `KONG_PG_USER`          | `kong`                       | Desde `.env`                 | Usuario de BD                       |
+| `KONG_PG_PASSWORD`      | `kong_local_password`        | Desde `.env`                 | Contraseña de BD                    |
+| `KONG_PG_SSL`           | `off`                        | `on`                         | SSL requerido en AWS                |
+| `KONG_PG_SSL_VERIFY`    | `off`                        | `off`                        | Sin verificación de certificado RDS |
+| `KONG_ADMIN_LISTEN`     | `0.0.0.0:${KONG_ADMIN_PORT}` | `0.0.0.0:${KONG_ADMIN_PORT}` | Admin API accesible en red interna  |
+| `KONG_PROXY_ACCESS_LOG` | `/dev/stdout`                | `/dev/stdout`                | Logs hacia stdout → recolector      |
+| `KONG_ADMIN_ACCESS_LOG` | `/dev/stdout`                | `/dev/stdout`                | Logs de Admin API hacia stdout      |
 
-| Variable de Entorno             | Valor / Fuente   | Descripción                                    |
-| ------------------------------- | ---------------- | ---------------------------------------------- |
-| `KONG_DATABASE`                 | `postgres`       | Modo DB para clustering                        |
-| `KONG_PG_HOST`                  | Secrets Manager  | Host de PostgreSQL RDS                         |
-| `KONG_PG_USER`                  | Secrets Manager  | Usuario de BD                                  |
-| `KONG_PG_PASSWORD`              | Secrets Manager  | Contraseña de BD                               |
-| `KONG_PROXY_LISTEN`             | `0.0.0.0:8000`   | Puerto de proxy HTTP                           |
-| `KONG_PROXY_LISTEN_SSL`         | `off`            | TLS termina en ALB                             |
-| `KONG_ADMIN_LISTEN`             | `127.0.0.1:8001` | Admin API solo interno                         |
-| `KONG_NGINX_WORKER_PROCESSES`   | `auto`           | Workers según vCPU                             |
-| `KONG_LOG_LEVEL`                | `info`           | Nivel de log (stdout → Fluent Bit → Loki)      |
-| `KONG_PLUGINS`                  | `bundled`        | Todos los plugins incluidos                    |
-| `KONG_TRACING_INSTRUMENTATIONS` | `all`            | Activa trazas OpenTelemetry nativas (Kong 3.x) |
-
-## Configuración Declarativa (deck YAML)
-
-Estructura del repositorio de configuración:
+## Estructura de Configuración decK
 
 ```
-infra/kong/
-├── kong.yml           # Config principal (deck)
-├── plugins/
-│   ├── jwt.yml
-│   ├── rate-limiting.yml
-│   └── prometheus.yml
-└── workspaces/
-    ├── pe.yml         # Perú
-    ├── ec.yml         # Ecuador
-    ├── co.yml         # Colombia
-    └── mx.yml         # México
+config/kong/
+├── local/
+│   ├── _plugins.yaml       # correlation-id, prometheus (globales)
+│   ├── _consumers.yaml     # tlm-mx-realm, tlm-pe-realm (JWT RS256 + ACL)
+│   ├── sisbon.yaml         # Servicios sisbon-dev + sisbon-qa
+│   └── gestal.yaml         # ext-talenthub-ats-dev + ext-talenthub-ats-qa
+├── nonprod/
+│   └── (misma estructura)
+└── prod/
+    ├── _plugins.yaml
+    ├── _consumers.yaml
+    ├── sisbon.yaml         # Solo sisbon-prod
+    └── gestal.yaml         # Solo ext-talenthub-ats-prod
 ```
 
-Ejemplo de `kong.yml` (fragmento):
+## Comandos de Operación (Makefile)
 
-```yaml
-_format_version: "3.0"
-_transform: true
+| Comando              | Acción                                                |
+| -------------------- | ----------------------------------------------------- |
+| `make start-local`   | Levanta stack completo con `docker-compose.local.yml` |
+| `make sync-local`    | Ejecuta `deck sync` con `config/kong/local/`          |
+| `make sync-nonprod`  | Ejecuta `deck sync` con `config/kong/nonprod/`        |
+| `make sync-prod`     | Ejecuta `deck sync` con `config/kong/prod/`           |
+| `make start-nonprod` | Levanta con `docker-compose.nonprod.yml`              |
+| `make start-prod`    | Levanta con `docker-compose.prod.yml`                 |
 
-services:
-  - name: identity-service
-    url: http://identity-upstream # apunta al Upstream
-    plugins:
-      - name: jwt
-        config:
-          secret_is_base64: false
-          key_claim_name: iss
-    routes:
-      - name: identity-route
-        paths:
-          - /api/v1/identity
-        strip_path: false
+## Volúmenes Persistentes
 
-  - name: notifications-service
-    url: http://notifications-upstream
-    routes:
-      - name: notifications-route
-        paths:
-          - /api/v1/notifications
+| Componente | Path en host        | Contenido               |
+| ---------- | ------------------- | ----------------------- |
+| Kong       | `/opt/kong/logs`    | Logs de error de Kong   |
+| Kong       | `/opt/kong/pids`    | PID files de Kong       |
+| Kong       | `/opt/kong/sockets` | Unix sockets de Kong    |
+| Konga-DB   | `/opt/konga/mysql`  | Datos de MySQL de Konga |
 
-upstreams:
-  - name: identity-upstream
-    healthchecks:
-      active:
-        http_path: /health/live
-        healthy:
-          interval: 30
-          successes: 2
-        unhealthy:
-          interval: 10
-          http_failures: 3
-    targets:
-      - target: identity-svc:8080
-        weight: 100
-```
-
-## ECS Fargate — Parámetros Clave
-
-| Parámetro       | Valor                             | Nota                                               |
-| --------------- | --------------------------------- | -------------------------------------------------- |
-| CPU / Memoria   | `1024` / `2048`                   | Ajustable según carga                              |
-| Imagen          | `kong:3.6-ubuntu`                 | Imagen oficial LTS (no existe variante Alpine)     |
-| Puerto expuesto | `8000` (proxy)                    | Admin `:8001` solo accesible desde VPC             |
-| Log driver      | `awsfirelens` (Fluent Bit → Loki) | Logs estructurados al stack de observabilidad      |
-| Secrets         | AWS Secrets Manager               | `KONG_PG_HOST`, `KONG_PG_USER`, `KONG_PG_PASSWORD` |
-
-> La definición completa de la task definition Terraform está en el repositorio de infraestructura (`infra/terraform/kong/`).
+> Los directorios de Kong deben pertenecer al `uid 1000` (usuario `kong`): `sudo chown -R 1000:1000 /opt/kong`

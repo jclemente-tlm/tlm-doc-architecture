@@ -6,20 +6,37 @@ description: Objetivos, requisitos y partes interesadas del API Gateway corporat
 
 # 1. Introducción y Objetivos
 
-El **API Gateway corporativo** es el punto de entrada unificado y seguro para todos los servicios corporativos.
-Está implementado con **Kong OSS**, desplegado en contenedores sobre AWS ECS Fargate (ADR-010).
+El **API Gateway corporativo** es el punto de entrada unificado y seguro para todos los sistemas de negocio y servicios de Talma.
+Está implementado con **Kong Gateway**, desplegado como contenedores Docker gestionados mediante `docker-compose` con configuración declarativa vía `decK` ([ADR-010](../../../adrs/adr-010-kong-api-gateway.md)).
 
 ## Objetivos Principales
 
-| Objetivo                     | Descripción                                                                                            |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Enrutamiento centralizado    | Un único punto de entrada para microservicios: Identity, Notifications, Track & Trace, SITA            |
-| Autenticación y autorización | Validación de JWT emitidos por Keycloak mediante el plugin `jwt` de Kong                               |
-| Rate limiting                | Control de tráfico por tenant y endpoint mediante el plugin `rate-limiting` con Redis                  |
-| Observabilidad               | Métricas, logs y trazas distribuidas integradas con el stack corporativo (Grafana, Mimir, Loki, Tempo) |
-| Multi-tenancy                | Enrutamiento por país/cliente mediante Kong Workspaces y anotaciones de ruta                           |
-| Resiliencia                  | Circuit breaking pasivo por upstream, health checks activos y pasivos                                  |
-| Agnosticidad tecnológica     | Kong no impone stack tecnológico en los servicios backend                                              |
+| Objetivo                        | Descripción                                                                                               |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Enrutamiento centralizado       | Un único punto de entrada para sistemas de negocio: Sisbon, Gestal, TalentHub ATS y futuros sistemas      |
+| Autenticación y autorización    | Validación de JWT (RS256) emitidos por Keycloak; autorización coarse-grained vía plugin `acl` por sistema |
+| Rate limiting                   | Control de tráfico por consumer (tenant) mediante el plugin `rate-limiting`                               |
+| Observabilidad                  | Métricas con plugin `prometheus` → Grafana/Mimir; correlación de requests con `correlation-id`            |
+| Multi-tenancy                   | Un tenant (realm) por scope (`tlm-{scope}`); un Kong Consumer por tenant con ACL groups por sistema       |
+| Agnosticidad tecnológica        | Kong no impone stack tecnológico en los servicios backend                                                 |
+| Separación de responsabilidades | Autenticación en el gateway; autorización de negocio en el backend                                        |
+
+## Sistemas Integrados
+
+| Sistema             | Tipo    | Backend                                          | Tenants            |
+| ------------------- | ------- | ------------------------------------------------ | ------------------ |
+| **Sisbon**          | Interno | `nlb-services-ecs-*.elb.us-east-1.amazonaws.com` | `tlm-mx`, `tlm-pe` |
+| **Gestal / ATS**    | Externo | `api-uat.talenthub.pe` / `api.talenthub.pe`      | `tlm-pe`           |
+| **BRS** _(roadmap)_ | Interno | Por definir                                      | Por definir        |
+
+## Ambientes
+
+| Ambiente | Dominio público        | Patrón de ruta       |
+| -------- | ---------------------- | -------------------- |
+| PROD     | `api.talma.com.pe`     | `/api/{sistema}`     |
+| QA       | `api-qa.talma.com.pe`  | `/api-qa/{sistema}`  |
+| DEV      | `api-dev.talma.com.pe` | `/api-dev/{sistema}` |
+| Local    | `localhost:8000`       | `/api-dev/{sistema}` |
 
 ## Requisitos de Calidad
 
@@ -41,4 +58,4 @@ Está implementado con **Kong OSS**, desplegado en contenedores sobre AWS ECS Fa
 
 ## Decisión de Tecnología
 
-Kong OSS fue seleccionado en [ADR-010](../../../adrs/adr-010-kong-api-gateway.md).
+Kong OSS fue seleccionado en [ADR-010](../../../adrs/adr-010-kong-api-gateway.md). Las decisiones específicas del repositorio se detallan en la sección [9. Decisiones de Arquitectura](./09-decisiones-arquitectura.md).

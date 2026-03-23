@@ -6,77 +6,81 @@ description: Patrones y configuraciones aplicadas transversalmente en el API Gat
 
 # 8. Conceptos Transversales
 
-## Autenticación y Autorización (Plugin `jwt`)
+## Autenticación y Autorización
 
-Kong valida los JWT emitidos por Keycloak sin reenviar el token al backend.
+### Autenticación (Plugin `jwt`)
 
-- Validación local contra claves JWKS cacheadas de Keycloak (sin llamada a Keycloak por request).
-- Configuración clave: `claims_to_verify: [exp, nbf]`, `key_claim_name: iss`, header `Authorization`.
+Kong valida los JWT RS256 emitidos por Keycloak usando la **clave pública RSA embebida** en `_consumers.yaml`. No hay llamada a Keycloak en tiempo de ejecución.
+
+- `key_claim_name: iss` — el claim `iss` del JWT (issuer URL del realm) identifica al consumer.
+- `claims_to_verify: [exp]` — se verifica expiración del token.
+- `run_on_preflight: false` — las peticiones OPTIONS de CORS no requieren JWT.
 - Sin JWT válido → `401 Unauthorized` antes de llegar al backend.
 
-Headers inyectados al backend tras validación exitosa:
+Headers propagados al backend tras validación exitosa:
 
-| Header                    | Contenido               |
-| ------------------------- | ----------------------- |
-| `X-Consumer-ID`           | ID del consumer de Kong |
-| `X-Consumer-Username`     | Username / tenant ID    |
-| `X-Credential-Identifier` | Claim `sub` del JWT     |
+| Header                      | Contenido                                            |
+| --------------------------- | ---------------------------------------------------- |
+| `X-Consumer-ID`             | ID interno del consumer de Kong                      |
+| `X-Consumer-Username`       | Nombre del consumer (`tlm-mx-realm`, etc.)           |
+| `X-Credential-Identifier`   | Claim `iss` del JWT (issuer URL del realm)           |
+| `X-Forwarded-Authorization` | Header `Authorization` original reenviado al backend |
 
-## Rate Limiting (Plugin `rate-limiting`)
+### Autorización Coarse-Grained (Plugin `acl`)
 
-- `policy: redis` — contadores distribuidos en ElastiCache; coherentes entre instancias Kong. **_(Redis pendiente de implementación — DT-06; actualmente usando `policy: local`)_**
-- `limit_by: consumer` — límite por tenant; configurable por IP, header o servicio.
-- Límites de referencia: `1000 req/min`, `50000 req/hora` por consumer (ajustable por ruta).
+Cada sistema define el grupo ACL que puede acceder a él. Los consumers tienen grupos asignados en `_consumers.yaml`.
 
-Respuesta al cliente cuando se supera el límite (`429`):
+```yaml
+# En _consumers.yaml
+- username: tlm-pe-realm
+  acls:
+    - group: sisbon-users
+    - group: talenthub-users
 
-| Header                | Descripción                           |
-| --------------------- | ------------------------------------- |
-| `RateLimit-Limit`     | Límite configurado                    |
-| `RateLimit-Remaining` | Requests restantes en la ventana      |
-| `RateLimit-Reset`     | Segundos hasta el reset de la ventana |
+# En sisbon.yaml (plugins del service)
+- name: acl
+  config:
+    allow: [sisbon-users]
+    hide_groups_header: true
+```
 
-## CORS (Plugin `cors`)
+> La autorización fine-grained (roles específicos dentro del sistema) es responsabilidad del backend; Kong solo hace el primer filtro por sistema.
 
-Permite acceso desde aplicaciones web en dominios `*.talma.com` y `*.talmaaereo.com`.
-Métodos permitidos: `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`. Credenciales habilitadas (`credentials: true`).
+## Multi-tenancy (Consumers por Tenant)
 
-> La config completa de orígenes y headers se gestiona en `kong.yml` del repositorio de infraestructura.
+Cada tenant (realm) tiene su propio Consumer en Kong con clave pública RSA independiente. El discriminador es el claim `iss` del JWT:
+
+| Claim `iss` (issuer)            | Kong Consumer  | ACL Groups                        |
+| ------------------------------- | -------------- | --------------------------------- |
+| `http://.../auth/realms/tlm-mx` | `tlm-mx-realm` | `sisbon-users`                    |
+| `http://.../auth/realms/tlm-pe` | `tlm-pe-realm` | `sisbon-users`, `talenthub-users` |
+
+Para agregar un nuevo tenant: crear realm en Keycloak + agregar consumer en `_consumers.yaml` de los 3 entornos + `make sync-local → nonprod → prod`.
 
 ## Observabilidad
 
-### Métricas → Mimir/Grafana (Plugin `prometheus`)
+### Métricas → Grafana/Mimir (Plugin `prometheus`)
 
-Plugin habilitado globalmente. Expone métricas en `kong-host:8001/metrics`; scrapeadas por Prometheus con Mimir como backend a largo plazo. Dashboards en Grafana con alertas sobre latencia p95 y tasa de errores 5xx.
+Plugin habilitado globalmente con:
 
-Métricas clave: `kong_latency_bucket`, `kong_http_requests_total`, `kong_upstream_target_health`.
+- `status_code_metrics: true` — número de requests por código de respuesta.
+- `latency_metrics: true` — p50/p95/p99 de latencia Kong y upstream.
+- `upstream_health_metrics: true` — estado de salud de upstreams.
+- `bandwidth_metrics: true` — bytes transferidos.
 
-### Trazas → Tempo (Plugin `zipkin`)
+Endpoint de métricas: `kong-host:8001/metrics` (scrapeado por Prometheus/Mimir).
 
-Kong envía trazas al endpoint Zipkin-compatible de Tempo (`tempo-svc:9411`).
+### Correlación de Requests (Plugin `correlation-id`)
 
-- `sample_ratio: 0.1` en producción (10%); `1.0` solo en staging/desarrollo.
-- `header_type: b3` para propagación de contexto.
+Plugin habilitado globalmente:
 
-### Logs → Loki
+- Genera un UUID por request en el header `X-Correlation-ID`.
+- `echo_downstream: true` — el header se devuelve en la respuesta al cliente.
+- Permite correlacionar logs de Kong con logs del backend usando el mismo ID.
 
-Kong emite logs en JSON por `stdout`. En ECS Fargate, Fluent Bit (FireLens sidecar) los reenvía a Loki.
-Labels indexados: `job=kong`, `env`, `status`, `route`.
+## Integración con Servicios Externos (Plugin `request-transformer`)
 
-## Multi-tenancy (Kong Workspaces)
-
-Cada país/cliente tiene su propio **Workspace** en Kong. La configuración entre workspaces está aislada.
-
-```
-Kong Workspaces:
-├── default          # Configuración global compartida
-├── pe               # Perú
-├── ec               # Ecuador
-├── co               # Colombia
-└── mx               # México
-```
-
-El plugin `request-transformer` inyecta el header `X-Tenant-ID` en cada ruta:
+Para TalentHub ATS, el plugin adapta el request del ecosistema Talma al API externo:
 
 ```yaml
 plugins:
@@ -84,19 +88,37 @@ plugins:
     config:
       add:
         headers:
-          - "X-Tenant-ID: pe"
-          - "X-Correlation-ID: $(request_id)"
+          - x-api-key:<valor-desde-secrets>
+      remove:
+        headers:
+          - Authorization # Elimina el JWT corporativo
+      replace:
+        uri: /uat//lmbExGen?operacion=TALMA_CREAR_POSICION_V1&bcode=<valor>
 ```
 
-## Headers de Seguridad (Plugin `response-transformer`)
+> La `x-api-key` de TalentHub **no debe estar en texto plano en el YAML**. Ver DT-01.
 
-Añadidos en todas las respuestas al cliente:
+## Rate Limiting (Plugin `rate-limiting`)
 
-| Header                      | Valor                                 |
-| --------------------------- | ------------------------------------- |
-| `Strict-Transport-Security` | `max-age=31536000; includeSubDomains` |
-| `X-Content-Type-Options`    | `nosniff`                             |
-| `X-Frame-Options`           | `DENY`                                |
-| `Referrer-Policy`           | `strict-origin-when-cross-origin`     |
+Throttling por consumer (tenant) con `policy: local`:
 
-Headers internos eliminados de la respuesta: `X-Kong-Upstream-Status`, `Server`.
+| Entorno  | Sistema | Límite/min | Límite/hora |
+| -------- | ------- | ---------- | ----------- |
+| DEV / QA | Sisbon  | 200        | 2,000       |
+| DEV / QA | ATS     | 50         | 500         |
+| PROD     | Sisbon  | 1,000      | 10,000      |
+| PROD     | ATS     | 50         | 500         |
+
+Headers de respuesta al cliente cuando se supera el límite (`429`):
+
+| Header                | Descripción                           |
+| --------------------- | ------------------------------------- |
+| `RateLimit-Limit`     | Límite configurado                    |
+| `RateLimit-Remaining` | Requests restantes en la ventana      |
+| `RateLimit-Reset`     | Segundos hasta el reset de la ventana |
+
+> `policy: local` significa que los contadores son por instancia Kong. Con múltiples instancias, el límite efectivo es `N * límite_configurado`. Redis como backend distribuido está pendiente (DT-06).
+
+## Protección de Payload (Plugin `request-size-limiting`)
+
+Configurado uniformemente en `1 MB` para todos los servicios. Si el payload supera el límite, Kong devuelve `413 Request Entity Too Large` sin llegar al backend.
