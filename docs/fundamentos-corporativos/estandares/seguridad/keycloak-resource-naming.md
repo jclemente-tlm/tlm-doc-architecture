@@ -62,11 +62,23 @@ tlm-{scope}
 
 ## Naming de Clients
 
-Existen cuatro patrones según el rol del client:
+Existen tres roles de client en Keycloak, con configuraciones distintas:
 
-### 1. Validador de API — `{servicio}-api`
+| Rol | Tipo Keycloak | Flujo | Quién lo usa | Patrón |
+| --- | ------------- | ----- | ------------ | ------ |
+| **Recurso API** | `bearer-only` | Ninguno | Kong (valida tokens M2M entrantes) | `{sistema}-api` |
+| **Consumidor M2M** | `confidential` | `client_credentials` | Servicio (obtiene tokens para llamar otras APIs) | `{sistema}-{scope}` |
+| **Herramienta SSO** | `confidential` | `authorization_code` | Usuario humano (login vía SSO) | `{herramienta}` |
 
-Client **bearer-only** — solo valida tokens, no autentica usuarios ni solicita credenciales. Lo registra el equipo de Identidad como referencia del servicio ante Kong.
+Un backend puede tener simultáneamente un client **Recurso API** y un client **Consumidor M2M**: el primero define la audiencia para tokens que recibe, el segundo le permite obtener tokens para llamar a otras APIs.
+
+> `sisbon-api` y `gestal-pe` en el mismo realm no son lo mismo: `-api` es el resource server (su `clientId` va en el claim `aud` y aloja los client roles); sin `-api` es el caller M2M (obtiene tokens). El servicio .NET verifica `resource_access["gestal-api"].roles`; el consumer que llama a esa API necesita tener esos client roles asignados.
+
+### 1. Recurso API — `{sistema}-api`
+
+Client **bearer-only**. Representa el servicio **como recurso** (no como llamante). Su `clientId` es el valor esperado en el claim `aud` del JWT. Cuando Kong valida un token entrante, verifica que `aud` contenga este valor. No obtiene tokens ni autentica llamantes.
+
+Los roles de acceso (`read`, `write`, `admin`) se definen como **client roles** bajo este client. Keycloak los incluye en `resource_access.{clientId}.roles` del JWT cuando el consumer tiene esos roles asignados. Esto los aisla completamente de los roles de otros sistemas en el mismo realm.
 
 | Tipo de servicio          | Realm donde se registra | Ejemplo                  |
 | ------------------------- | ----------------------- | ------------------------ |
@@ -75,13 +87,13 @@ Client **bearer-only** — solo valida tokens, no autentica usuarios ni solicita
 
 **Configuración Keycloak:** Access Type `bearer-only`, Standard Flow `OFF`, Service Accounts `OFF`.
 
-### 2. Consumidor — `{servicio}-{scope}[-{env}]`
+### 2. Consumidor — `{sistema}-{scope}[-{env}]`
 
-Client **confidential** — solicita tokens para consumir APIs internas. Reside en el realm del scope del consumidor.
+Client **confidential**. Representa el servicio **como llamante**: obtiene tokens via `client_credentials` para autenticarse ante otras APIs internas. Reside en el realm del scope del consumidor.
 
 | Parte        | Descripción                                           |
 | ------------ | ----------------------------------------------------- |
-| `{servicio}` | Nombre del sistema, minúsculas, sin guiones internos. |
+| `{sistema}` | Nombre del sistema, minúsculas, sin guiones internos. |
 | `{scope}`    | Código de scope del realm donde vive el client.       |
 | `{env}`      | `dev` o `qa`. **Se omite en producción.**             |
 
@@ -96,32 +108,34 @@ Client **confidential** — solicita tokens para consumir APIs internas. Reside 
 | `gestal-pe-qa`  | `tlm-pe` | QA         |
 | `gestal-pe`     | `tlm-pe` | Producción |
 
-**Evolución opcional — multi-tipo:** Si el servicio necesita clients diferenciados por tipo de consumidor (web, móvil, batch), el patrón se extiende a `{servicio}-{tipo}-{scope}[-{env}]`:
+**Evolución opcional — multi-tipo:** Si el servicio necesita clients diferenciados por tipo de consumidor (web, móvil, batch), el patrón se extiende a `{sistema}-{tipo}-{scope}[-{env}]`:
 
 ```
-gestal-app-pe-prod       → Backend/web
-gestal-mobile-pe-prod    → App móvil
-gestal-batch-pe-prod     → Proceso batch
+# Producción (sin sufijo de ambiente)
+gestal-app-pe            → Backend/web
+gestal-mobile-pe         → App móvil
+gestal-batch-pe          → Proceso batch
+
+# No productivo (con sufijo)
+gestal-app-pe-dev        → Backend/web — desarrollo
+gestal-mobile-pe-qa      → App móvil — QA
+gestal-batch-pe-dev      → Proceso batch — desarrollo
 ```
 
 Aplicar solo cuando haya 2 o más tipos con permisos o rate limits distintos.
 
 **Configuración Keycloak:** Access Type `confidential`, Service Accounts `YES`, Standard Flow `OFF`.
 
-### 3. Integración externa — `{servicio}-ext-{partner}`
+### 3. Herramienta SSO — `{herramienta}`
 
-Client para autenticar la llamada de Talma hacia un sistema externo de terceros.
-
-**Ejemplo:** `gestal-ext-ats` en `tlm-pe` — client que obtiene credenciales para conectarse al ATS externo.
-
-### 4. Herramienta de plataforma
-
-Para herramientas de observabilidad registradas en `tlm-corp`, se usa el nombre de la herramienta sin scope ni env.
+Client **confidential** con **Standard Flow activo**. Representa una herramienta de plataforma que autentica usuarios humanos vía SSO (Authorization Code). Registrado en `tlm-corp`, sin scope ni env en el nombre.
 
 **Ejemplo:** `grafana`
 
+**Configuración Keycloak:** Access Type `confidential`, Standard Flow `ON`, Service Accounts `OFF`.
+
 :::warning Coherencia Gateway ↔ Keycloak
-El `clientId` en Keycloak debe coincidir exactamente con el identificador definido en `_consumers.yaml` del repositorio `tlm-infra-kong`. Una discrepancia impide la validación de tokens en el API Gateway.
+El `clientId` en Keycloak debe coincidir exactamente con el identificador definido en `_consumers.yaml` del repositorio `tlm-infra-api-gateway`. Una discrepancia impide la validación de tokens en el API Gateway.
 :::
 
 ---
@@ -151,45 +165,56 @@ Realm: tlm-pe
 ├─ gestal-api          → Validador bearer-only
 ├─ gestal-pe-dev
 ├─ gestal-pe-qa
-├─ gestal-pe           → Producción
-└─ gestal-ext-ats      → Integración con ATS externo
+└─ gestal-pe           → Producción
 ```
+
+:::note Integraciones con sistemas externos
+Las credenciales de proveedores externos (API keys, client secrets de terceros) **no se almacenan en Keycloak**. Keycloak genera sus propios secrets y no permite ingresar credenciales externas. Las credenciales de terceros deben almacenarse en AWS Secrets Manager y ser consumidas directamente por el servicio. Ver [Gestión de Secretos y Claves Criptográficas](./secrets-key-management.md).
+:::
 
 ---
 
-## Naming de Roles de Realm
+## Naming de Roles de Acceso
 
-### Patrón
+Los roles de acceso son **client roles** definidos bajo el client `{sistema}-api` de cada servicio. Al estar scoped al client, no requieren prefijo de sistema — el namespace ya es el `clientId`.
 
-```
-{servicio}:{acción}
-```
+### Valores estándar
 
-**Ejemplos:** `sisbon:read`, `sisbon:write`, `sisbon:admin`, `gestal:read`, `gestal:admin`
-
-### Niveles de acción
-
-| Acción  | Descripción                                          |
+| Rol     | Descripción                                          |
 | ------- | ---------------------------------------------------- |
 | `read`  | Consulta de datos, sin modificaciones.               |
 | `write` | Creación y actualización de datos.                   |
 | `admin` | Acceso completo, incluyendo configuración y borrado. |
 
-### Dónde se definen los roles
+**Ejemplos:** rol `read` bajo `sisbon-api`, rol `admin` bajo `gestal-api`.
 
-| Tipo de servicio          | Realm donde se crean los roles |
-| ------------------------- | ------------------------------ |
-| Corporativo (multi-scope) | `tlm-corp`                     |
-| Local (scope único)       | `tlm-{scope}` del servicio     |
+### Dónde se definen
+
+| Tipo de servicio          | Client donde se crean los roles |
+| ------------------------- | ------------------------------- |
+| Corporativo (multi-scope) | `{sistema}-api` en `tlm-corp`   |
+| Local (scope único)       | `{sistema}-api` en `tlm-{scope}`|
+
+### Cómo aparecen en el JWT
+
+```json
+"resource_access": {
+  "gestal-api": {
+    "roles": ["read", "write"]
+  }
+}
+```
+
+El servicio verifica `resource_access["{sistema}-api"].roles`. Para que el rol aparezca en el token, hay que asignarlo al service account del consumer: en Keycloak, ir al consumer client → **Service Account Roles** → seleccionar `{sistema}-api` en el dropdown de Client Roles → asignar el rol.
 
 ---
 
 ## Naming de Client Scopes (custom)
 
-Scopes personalizados siguen el mismo patrón que los roles:
+Scopes personalizados de recursos específicos siguen el patrón de los client roles: nombre simple sin prefijo de sistema, porque el namespace ya es el `clientId` del resource server.
 
 ```
-{servicio}:{recurso}
+{recurso}
 ```
 
 Scopes transversales de plataforma (sin prefijo de servicio):
@@ -203,20 +228,13 @@ Scopes transversales de plataforma (sin prefijo de servicio):
 
 ## Naming de Servicios Externos en Kong
 
-Los servicios de terceros **expuestos vía Kong** (Kong actúa como proxy hacia un proveedor externo) usan un patrón distinto al de los clients de Keycloak:
+Los servicios de terceros **expuestos vía Kong** (Kong actúa como proxy hacia un proveedor externo) usan el siguiente patrón en la configuración de Kong. Este naming vive en `_services.yaml` y no tiene contraparte en Keycloak — las credenciales del proveedor se almacenan en AWS Secrets Manager, no en Keycloak.
 
 ```
-ext-{partner}-{servicio}-{env}
+ext-{partner}-{sistema}-{env}
 ```
 
 **Ejemplo:** `ext-talenthub-ats-dev` — Kong routea `/api-dev/gestal/ats` hacia la API de TalentHub.
-
-Este naming vive en la configuración de Kong (`_services.yaml`), no en Keycloak.
-
-| Entidad         | Patrón                           | Dónde vive     | Propósito                                                    |
-| --------------- | -------------------------------- | -------------- | ------------------------------------------------------------ |
-| Client Keycloak | `{servicio}-ext-{partner}`       | Keycloak realm | Identidad que **obtiene** tokens para llamar al externo      |
-| Service Kong    | `ext-{partner}-{servicio}-{env}` | Kong config    | Proxy que **expone** el servicio externo a clientes internos |
 
 ---
 
@@ -225,17 +243,17 @@ Este naming vive en la configuración de Kong (`_services.yaml`), no en Keycloak
 ### Servicio corporativo nuevo
 
 - [ ] Crear realm `tlm-{scope}` si no existe
-- [ ] Crear `{servicio}-api` en `tlm-corp` (bearer-only)
-- [ ] Por cada scope: crear `{servicio}-{scope}-dev`, `{servicio}-{scope}-qa`, `{servicio}-{scope}`
-- [ ] Definir roles `{servicio}:read/write/admin` en `tlm-corp`
+- [ ] Crear `{sistema}-api` en `tlm-corp` (bearer-only)
+- [ ] Definir client roles `read`, `write`, `admin` bajo `{sistema}-api`
+- [ ] Por cada scope: crear `{sistema}-{scope}-dev`, `{sistema}-{scope}-qa`, `{sistema}-{scope}`
 - [ ] Registrar consumer en `_consumers.yaml` (Kong)
 
 ### Servicio local nuevo
 
-- [ ] Crear `{servicio}-api` en `tlm-{scope}` (bearer-only)
-- [ ] Crear `{servicio}-{scope}-dev`, `{servicio}-{scope}-qa`, `{servicio}-{scope}`
-- [ ] Si hay integración externa: crear `{servicio}-ext-{partner}` en Keycloak y `ext-{partner}-{servicio}-{env}` en Kong
-- [ ] Definir roles `{servicio}:read/write/admin` en `tlm-{scope}`
+- [ ] Crear `{sistema}-api` en `tlm-{scope}` (bearer-only)
+- [ ] Definir client roles `read`, `write`, `admin` bajo `{sistema}-api`
+- [ ] Crear `{sistema}-{scope}-dev`, `{sistema}-{scope}-qa`, `{sistema}-{scope}`
+- [ ] Si hay integración con sistema externo: registrar las credenciales del proveedor en AWS Secrets Manager y definir el service en Kong (`ext-{partner}-{sistema}-{env}`)
 - [ ] Registrar consumer en `_consumers.yaml` (Kong)
 
 ---
@@ -245,14 +263,13 @@ Este naming vive en la configuración de Kong (`_services.yaml`), no en Keycloak
 | Entidad                   | Patrón                              | Ejemplo prod             | Ejemplo no-prod         |
 | ------------------------- | ----------------------------------- | ------------------------ | ----------------------- |
 | Realm                     | `tlm-{scope}`                       | `tlm-mx`                 | —                       |
-| Validador API (corp)      | `{servicio}-api` en `tlm-corp`      | `sisbon-api`             | —                       |
-| Validador API (local)     | `{servicio}-api` en `tlm-{scope}`   | `gestal-api`             | —                       |
-| Consumidor                | `{servicio}-{scope}[-{env}]`        | `gestal-pe`              | `gestal-pe-qa`          |
-| Consumidor multi-tipo     | `{servicio}-{tipo}-{scope}[-{env}]` | `gestal-mobile-pe`       | `gestal-mobile-pe-dev`  |
-| Client externo (Keycloak) | `{servicio}-ext-{partner}`          | `gestal-ext-ats`         | —                       |
-| Servicio externo (Kong)   | `ext-{partner}-{servicio}-{env}`    | `ext-talenthub-ats-prod` | `ext-talenthub-ats-dev` |
-| Herramienta plataforma    | `{herramienta}`                     | `grafana`                | —                       |
-| Rol                       | `{servicio}:{acción}`               | `sisbon:admin`           | —                       |
+| Validador API (corp)      | `{sistema}-api` en `tlm-corp`      | `sisbon-api`             | —                       |
+| Validador API (local)     | `{sistema}-api` en `tlm-{scope}`   | `gestal-api`             | —                       |
+| Consumidor                | `{sistema}-{scope}[-{env}]`        | `gestal-pe`              | `gestal-pe-qa`          |
+| Consumidor multi-tipo     | `{sistema}-{tipo}-{scope}[-{env}]` | `gestal-mobile-pe`       | `gestal-mobile-pe-dev`  |
+| Servicio externo (Kong)   | `ext-{partner}-{sistema}-{env}`    | `ext-talenthub-ats-prod` | `ext-talenthub-ats-dev` |
+| Herramienta SSO           | `{herramienta}` — `confidential`, Standard Flow ON | `grafana`               | —                       |
+| Client role               | `{acción}` bajo `{sistema}-api`    | `read`, `write`, `admin` | —                       |
 
 ---
 
@@ -266,13 +283,13 @@ Este naming vive en la configuración de Kong (`_services.yaml`), no en Keycloak
 - **MUST** usar guiones como único separador de palabras en nombres de realms y clients.
 - **MUST** incluir sufijo de ambiente (`dev` o `qa`) en todos los clients no productivos.
 - **MUST** omitir el sufijo de ambiente en clients de producción.
-- **MUST** usar `:` como separador en nombres de roles (`{servicio}:{acción}`).
+- **MUST** definir los roles de acceso (`read`, `write`, `admin`) como client roles bajo `{sistema}-api`, no como realm roles.
 - **MUST** registrar el `clientId` en Keycloak con el mismo valor que en `_consumers.yaml` de Kong.
 
 ### SHOULD (Fuertemente recomendado)
 
 - **SHOULD** seguir la progresión `read → write → admin` en los niveles de rol sin saltarse niveles.
-- **SHOULD** usar el patrón multi-tipo (`{servicio}-{tipo}-{scope}`) solo cuando existan 2 o más tipos de consumidores con permisos o rate limits distintos.
+- **SHOULD** usar el patrón multi-tipo (`{sistema}-{tipo}-{scope}`) solo cuando existan 2 o más tipos de consumidores con permisos o rate limits distintos.
 
 ### MUST NOT (Prohibido)
 
