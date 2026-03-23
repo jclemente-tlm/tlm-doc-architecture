@@ -2,22 +2,24 @@
 id: api-authentication
 sidebar_position: 13
 title: Autenticación de APIs — JWT y API Keys
-description: Estándar de selección entre JWT y API Keys para autenticación de APIs en Talma. Define cuándo usar cada mecanismo y las prohibiciones aplicables.
-tags: [seguridad, jwt, api-key, autenticación, oauth2, keycloak, kong]
+description: Estándar de autenticación de APIs en Talma. JWT es el mecanismo por defecto; API Key es la excepción para consumidores externos sin identidad en Keycloak.
+tags: [seguridad, jwt, api-key, autenticación, oauth2, keycloak]
 ---
 
 # Autenticación de APIs — JWT y API Keys
 
 ## Contexto
 
-Este estándar define cuándo usar JWT y cuándo usar API Keys para autenticar llamadas a las APIs de Talma. Complementa el [lineamiento de Identidad y Accesos](../../lineamientos/seguridad/identidad-y-accesos.md) estableciendo los criterios de selección de mecanismo según el tipo de consumidor.
+Este estándar define el mecanismo de autenticación para las APIs de Talma. Complementa el [lineamiento de Identidad y Accesos](../../lineamientos/seguridad/identidad-y-accesos.md) estableciendo los criterios de selección según el tipo de consumidor.
 
 **Decisiones arquitectónicas:** [ADR-003: Keycloak SSO Autenticación](../../../adrs/adr-003-keycloak-sso-autenticacion.md) · [ADR-010: Kong API Gateway](../../../adrs/adr-010-kong-api-gateway.md)
 
-JWT y API Keys son **complementarios**, no alternativos. Cada uno resuelve un problema diferente:
+**JWT es el mecanismo por defecto.** Todo consumidor — usuario, servicio interno o sistema externo — debe autenticarse con JWT salvo que exista una razón explícita y documentada que lo impida. El API Key es la excepción, no una alternativa a elección libre.
 
-- **JWT** → transporta identidad verificada + permisos. El receptor sabe _quién_ hace la llamada.
-- **API Key** → valida acceso de un cliente conocido. No transporta identidad de usuario.
+La distinción fundamental es una sola: **¿la identidad del llamante importa para el servicio receptor?**
+
+- **JWT** → la identidad está firmada y verificada. Habilita RBAC, trazabilidad por usuario/tenant y propagación de contexto entre servicios. Es obligatorio cuando la identidad importa — y en la práctica la identidad casi siempre importa.
+- **API Key** → solo acredita que el llamante tiene acceso permitido. No transporta identidad. Válido únicamente cuando el consumidor no puede participar en el flujo OAuth2 y la identidad es genuinamente irrelevante.
 
 ---
 
@@ -33,43 +35,56 @@ JWT y API Keys son **complementarios**, no alternativos. Cada uno resuelve un pr
 
 ## Modelo de Decisión — JWT vs API Key
 
-### Usa JWT cuando
+## JWT — Mecanismo por defecto
 
-El consumidor tiene una **identidad conocida en Keycloak**: es un usuario humano, un servicio interno de Talma, o un sistema externo al que Talma le ha provisionado un client.
+JWT es obligatorio para cualquier consumidor que pueda obtener un token de Keycloak. No es una opción entre varias: es el estándar de la plataforma.
 
-| Escenario                           | Flujo OAuth2       | Ejemplo                                |
+Usar JWT cuando el consumidor es un servicio interno **no es opcional**. Aunque el servicio destino no aplique RBAC en ese endpoint, el JWT garantiza trazabilidad de origen, contexto de tenant y la posibilidad de agregar controles sin cambiar el mecanismo de autenticación en el futuro.
+
+JWT es necesario cuando:
+
+- El servicio aplica RBAC (los permisos dependen de los claims del token).
+- Se requiere trazabilidad de operaciones por usuario o por servicio origen.
+- La llamada opera en contexto de un tenant específico (`X-Tenant` o claim del JWT).
+- El consumidor es un servicio interno de Talma (la identidad del servicio origen siempre importa).
+
+| Escenario | Flujo OAuth2 | Ejemplo |
 | ----------------------------------- | ------------------ | -------------------------------------- |
-| Usuario autenticado → API           | Authorization Code | App web/móvil con sesión SSO           |
-| Servicio Talma → API Talma (M2M)    | Client Credentials | `sisbon-mx` llama a API de SISBON      |
+| Usuario autenticado → API | Authorization Code | App web/móvil con sesión SSO |
+| Servicio Talma → API Talma (M2M) | Client Credentials | `sisbon-mx` llama a API de SISBON |
 | Sistema externo con client Keycloak | Client Credentials | `gestal-ext-ats` llama a API de Gestal |
 
-**Ciclo de vida del token:**
+El consumidor obtiene un access token de Keycloak y lo envía en cada request: `Authorization: Bearer <jwt>`. El receptor valida la firma y lee los claims sin llamar a Keycloak.
 
-1. El consumidor autentica contra Keycloak y obtiene un access token (JWT, vigencia 300s).
-2. Envía el token en cada request: `Authorization: Bearer <jwt>`.
-3. Kong valida la firma con la clave pública RSA del realm correspondiente.
-4. Si el token expira, el consumidor solicita uno nuevo.
+## API Key — Excepción para consumidores sin identidad OAuth2
 
-### Usa API Key cuando
+El API Key solo es válido cuando el consumidor **no puede** participar en el flujo OAuth2 y la identidad es genuinamente irrelevante para el servicio receptor. No es una alternativa más simple a JWT ni una opción para evitar la configuración de un client en Keycloak.
 
-El consumidor es un **sistema externo de terceros** que no tiene ni tendrá un client en Keycloak, o cuando se necesita acceso programático simple sin contexto de identidad de usuario.
+:::warning Antes de usar API Key, verifica que aplica
+Si el consumidor puede obtener un client en Keycloak, **debe** usar JWT. Usar API Key para evitar la complejidad de configurar OAuth2 no es una justificación válida.
+:::
 
-| Escenario                                     | Ejemplo                                               |
+API Key es válida únicamente cuando:
+
+- El consumidor es un sistema externo de terceros sin client provisionado en Keycloak.
+- Es un acceso de solo lectura donde lo único que importa es el nivel de acceso, no quién accede.
+- Son scripts, pipelines de CI/CD o herramientas internas que no operan en contexto de un usuario o servicio con identidad relevante.
+- El proveedor externo envía webhooks donde no hay flujo interactivo de autenticación posible.
+
+| Escenario | Ejemplo |
 | --------------------------------------------- | ----------------------------------------------------- |
-| Partner externo integrado por Kong            | TalentHub ATS llamando a endpoints expuestos por Kong |
-| Webhook entrante de proveedor externo         | Notificación de pago de Stripe hacia endpoint Talma   |
-| Acceso a sandbox / entorno desarrollo externo | Partner probando integración antes de producción      |
+| Partner externo integrado por el gateway | TalentHub ATS llamando a endpoints expuestos |
+| Webhook entrante de proveedor externo | Notificación de pago de Stripe hacia endpoint Talma |
+| Acceso a sandbox / entorno desarrollo externo | Partner probando integración antes de producción |
+| Script o pipeline sin contexto de usuario | Job de sincronización con sistema legado externo |
 
-**Ciclo de vida del API Key:**
-
-1. El equipo de Identidad genera la API Key y la entrega al socio de forma segura (AWS Secrets Manager).
-2. El socio la envía en cada request vía header: `X-Api-Key: <key>`.
-3. Kong valida la key contra su registro de consumidores.
-4. La rotación se gestiona coordinadamente con el socio externo.
+El API Key se envía en cada request vía header: `X-Api-Key: <key>`. No tiene expiración automática — la rotación es responsabilidad del equipo de plataforma en coordinación con el consumidor.
 
 ---
 
 ## Mecanismos Prohibidos
+
+Los siguientes mecanismos **no deben usarse** en ninguna circunstancia. Son vulnerabilidades conocidas o incompatibles con el modelo de seguridad de la plataforma.
 
 | Mecanismo                                                        | Razón                                                               |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------- |
@@ -80,7 +95,7 @@ El consumidor es un **sistema externo de terceros** que no tiene ni tendrá un c
 | **JWT firmado con secret simétrico (HS256) en integración Kong** | Kong usa clave RSA (RS256) por realm; HS256 no aplica en este stack |
 
 :::warning API Keys no reemplazan JWT en servicios internos
-Usar API Keys entre servicios Talma (en lugar de JWT) elimina el contexto de identidad del token, impide la trazabilidad por usuario/tenant y viola el principio de mínimo privilegio. Todo servicio interno **MUST** usar JWT con `client_credentials`.
+Usar API Keys entre servicios Talma (en lugar de JWT) elimina el contexto de identidad del token, impide la trazabilidad por usuario/tenant y viola el principio de mínimo privilegio. Todo servicio interno debe usar JWT con `client_credentials`.
 :::
 
 ---
@@ -136,7 +151,7 @@ X-Api-Key: <api-key-del-partner>
 - **MUST** enviar tokens JWT en el header `Authorization: Bearer <token>`.
 - **MUST** enviar API Keys en el header `X-Api-Key`, nunca en query strings.
 - **MUST** usar tokens con claim `exp` (expiración definida).
-- **MUST** configurar la validación de JWT en Kong con la clave pública RSA del realm.
+- **MUST** validar la firma del JWT con la clave pública RSA del realm en el punto de entrada (gateway o servicio).
 
 ### SHOULD (Fuertemente recomendado)
 
