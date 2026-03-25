@@ -62,14 +62,15 @@ tlm-{scope}
 
 ## Naming de Clients
 
-Existen tres roles de client en Keycloak, con configuraciones distintas:
+Existen cinco tipos de client definidos en este estándar, cada uno con configuración y patrón de nombre distintos:
 
-| Rol                     | Tipo Keycloak  | Flujo                | Quién lo usa                                      | Patrón                    |
-| ----------------------- | -------------- | -------------------- | ------------------------------------------------- | ------------------------- |
-| **Recurso API**         | `bearer-only`  | Ninguno              | API Gateway (valida tokens M2M entrantes)         | `{sistema}-api`           |
-| **Recurso API Externo** | `bearer-only`  | Ninguno              | Integración con proveedor externo vía API Gateway | `{sistema}-{recurso}-api` |
-| **Consumidor M2M**      | `confidential` | `client_credentials` | Servicio (obtiene tokens para llamar otras APIs)  | `{sistema}-{scope}`       |
-| **Herramienta SSO**     | `confidential` | `authorization_code` | Usuario humano (login vía SSO)                    | `{herramienta}`           |
+| Tipo                          | Tipo Keycloak  | Flujo                | Quién lo usa                                                                 | Patrón                             |
+| ----------------------------- | -------------- | -------------------- | ---------------------------------------------------------------------------- | ---------------------------------- |
+| **Recurso API**               | `bearer-only`  | Ninguno              | API Gateway (valida tokens M2M entrantes)                                    | `{sistema}-api`                    |
+| **Recurso API Externo**       | `bearer-only`  | Ninguno              | Integración con proveedor externo vía API Gateway                            | `{sistema}-{recurso}-api`          |
+| **Consumidor M2M**            | `confidential` | `client_credentials` | Servicio llamante (obtiene tokens para llamar otras APIs)                    | `{sistema}-{scope}[-{env}]`        |
+| **Consumidor M2M multi-tipo** | `confidential` | `client_credentials` | Servicio llamante con múltiples tipos de acceso o componentes independientes | `{sistema}-{tipo}-{scope}[-{env}]` |
+| **Herramienta SSO**           | `confidential` | `authorization_code` | Usuario humano (login vía SSO)                                               | `{herramienta}`                    |
 
 Un backend puede tener simultáneamente un client **Recurso API** y un client **Consumidor M2M**: el primero define la audiencia para tokens que recibe, el segundo le permite obtener tokens para llamar a otras APIs.
 
@@ -102,7 +103,7 @@ Client **bearer-only**. Representa una integración con un proveedor externo abs
 
 **Configuración Keycloak:** Access Type `bearer-only`, Standard Flow `OFF`, Service Accounts `OFF`.
 
-### 3. Consumidor — `{sistema}-{scope}[-{env}]`
+### 3. Consumidor M2M — `{sistema}-{scope}[-{env}]`
 
 Client **confidential**. Representa el servicio **como llamante**: obtiene tokens via `client_credentials` para autenticarse ante otras APIs internas. Reside en el realm del scope del consumidor: un servicio regional va en `tlm-{scope}` (país), un servicio corporativo va en `tlm-corp`.
 
@@ -123,25 +124,44 @@ Client **confidential**. Representa el servicio **como llamante**: obtiene token
 | `gestal-pe-qa`  | `tlm-pe` | QA         |
 | `gestal-pe`     | `tlm-pe` | Producción |
 
-**Evolución opcional — multi-tipo:** Si el servicio necesita clients diferenciados por tipo de consumidor (web, móvil, batch), el patrón se extiende a `{sistema}-{tipo}-{scope}[-{env}]`:
+**Configuración Keycloak:** Access Type `confidential`, Service Accounts `YES`, Standard Flow `OFF`.
+
+**Un solo consumidor, múltiples destinos:** El patrón base es un client por sistema con tantos **Audience Protocol Mappers** como APIs destino necesite llamar. El Audience Mapper inyecta un string en el claim `aud` del token — no referencia un realm, por lo que funciona tanto para resource servers locales (`gestal-api` en `tlm-pe`) como corporativos (`sisbon-api` en `tlm-corp`). Crear un client separado por destino solo se justifica cuando se requiera rotación o revocación de credenciales independiente por integración.
+
+### 4. Consumidor M2M multi-tipo — `{sistema}-{tipo}-{scope}[-{env}]`
+
+Client **confidential**. Extensión del patrón base de consumidor cuando el sistema requiere clients diferenciados dentro del mismo scope.
+
+El valor de `{tipo}` puede expresar dos motivaciones:
+
+- **Canal de acceso** (`app`, `mobile`, `batch`): diferentes tipos de consumidor con permisos o rate limits distintos.
+- **Componente del sistema** (`procservice`, `procworker`, `scheduler`…): múltiples procesos con secretos independientes, por ejemplo para rotación o revocación aislada por componente.
+
+| Parte       | Descripción                                                                      |
+| ----------- | -------------------------------------------------------------------------------- |
+| `{sistema}` | Nombre del sistema que consume, minúsculas, sin guiones internos.                |
+| `{tipo}`    | Canal de acceso o identificador de componente. Minúsculas, sin guiones internos. |
+| `{scope}`   | Código de scope del realm donde vive el client.                                  |
+| `{env}`     | `dev` o `qa`. **Se omite en producción.**                                        |
+
+**Ejemplos:**
 
 ```
-# Producción (sin sufijo de ambiente)
+# Por canal de acceso
 gestal-app-pe            → Backend/web
 gestal-mobile-pe         → App móvil
-gestal-batch-pe          → Proceso batch
-
-# No productivo (con sufijo)
-gestal-app-pe-dev        → Backend/web — desarrollo
-gestal-mobile-pe-qa      → App móvil — QA
 gestal-batch-pe-dev      → Proceso batch — desarrollo
+
+# Por componente del sistema
+siata-procservice-pe     → Servicio de procesamiento
+siata-procworker-pe-dev  → Worker de procesamiento — desarrollo
 ```
 
-Aplicar solo cuando haya 2 o más tipos con permisos o rate limits distintos.
+Aplicar solo cuando haya 2 o más tipos o componentes con necesidades de credenciales, permisos o rate limits distintos.
 
 **Configuración Keycloak:** Access Type `confidential`, Service Accounts `YES`, Standard Flow `OFF`.
 
-### 4. Herramienta SSO — `{herramienta}`
+### 5. Herramienta SSO — `{herramienta}`
 
 Client **confidential** con **Standard Flow activo**. Representa una herramienta de plataforma que autentica usuarios humanos vía SSO (Authorization Code). Registrado en `tlm-corp`, sin scope ni env en el nombre.
 
@@ -166,12 +186,12 @@ El `clientId` en Keycloak debe coincidir exactamente con el identificador defini
 | `{sistema}-{scope}-qa`  | `tlm-{scope}` | `confidential` | QA         | `sisbon-mx-qa`  |
 | `{sistema}-{scope}`     | `tlm-{scope}` | `confidential` | Producción | `sisbon-mx`     |
 
-Repetir las filas de consumers por cada scope donde opere el servicio (`tlm-mx`, `tlm-pe`, etc.).
+Repetir las filas de consumidores por cada scope donde opere el servicio (`tlm-mx`, `tlm-pe`, etc.).
 
-:::info Por qué los consumers van en el realm regional, no en tlm-corp
-Cada consumer queda ligado al realm que firma sus tokens. El JWT emitido por `{sistema}-{scope}` tendrá `iss: .../realms/tlm-{scope}`, y el API Gateway valida la firma usando la clave RSA de ese realm. Si el consumer estuviera en `tlm-corp`, el token lo firmaría `tlm-corp`, rompiendo el aislamiento de tenant por país.
+:::info Por qué los consumidores van en el realm regional, no en tlm-corp
+Cada consumidor queda ligado al realm que firma sus tokens. El JWT emitido por `{sistema}-{scope}` tendrá `iss: .../realms/tlm-{scope}`, y el API Gateway valida la firma usando la clave RSA de ese realm. Si el consumidor estuviera en `tlm-corp`, el token lo firmaría `tlm-corp`, rompiendo el aislamiento de tenant por país.
 
-Esto implica que el consumer **no puede referenciar automáticamente** a `{sistema}-api` de `tlm-corp` como audience. La solución es agregar un **Audience Protocol Mapper** en cada consumer con el valor literal del resource server:
+Esto implica que el consumidor **no puede referenciar automáticamente** a `{sistema}-api` de `tlm-corp` como audience. La solución es agregar un **Audience Protocol Mapper** en cada consumidor con el valor literal del resource server:
 
 ```
 Client: {sistema}-{scope} (tlm-{scope})
@@ -180,7 +200,7 @@ Client: {sistema}-{scope} (tlm-{scope})
    Add to access token: ON
 ```
 
-Repetir para cada consumer de todos los scopes (dev, qa y producción). Esto fuerza que el claim `aud` del JWT incluya `{sistema}-api`, que es lo que el API Gateway verifica.
+Repetir para cada consumidor de todos los scopes (dev, qa y producción). Esto fuerza que el claim `aud` del JWT incluya `{sistema}-api`, que es lo que el API Gateway verifica.
 :::
 
 ### Servicio local (scope único)
@@ -195,7 +215,7 @@ Un servicio local puede exponer su propio API y además consumir servicios exter
 | `{sistema}-{scope}-qa`    | `tlm-{scope}` | `confidential` | QA         | `gestal-pe-qa`   |
 | `{sistema}-{scope}`       | `tlm-{scope}` | `confidential` | Producción | `gestal-pe`      |
 
-Se crea un client confidential **por ambiente** para aislar credenciales. Todos usan flujo `client_credentials`; el claim `aud` que autoriza el acceso al recurso lo inyecta el Audience Protocol Mapper del consumer.
+Se crea un client confidential **por ambiente** para aislar credenciales. Todos usan flujo `client_credentials`; el claim `aud` que autoriza el acceso al recurso lo inyecta el Audience Protocol Mapper del consumidor.
 
 :::note Integraciones con sistemas externos
 Las credenciales de proveedores externos (API keys, client secrets de terceros) **no se almacenan en Keycloak**. Keycloak genera sus propios secrets y no permite ingresar credenciales externas. Las credenciales de terceros deben almacenarse en AWS Secrets Manager y ser consumidas directamente por el servicio. Ver [Gestión de Secretos y Claves Criptográficas](./secrets-key-management.md).
@@ -237,13 +257,13 @@ El servicio verifica `resource_access["{sistema}-api"].roles`. Asignación: **Us
 
 ### Client Scopes para autorización M2M
 
-Usar cuando distintos consumers M2M necesiten niveles de acceso diferentes sobre el mismo recurso. Los scopes viajan en el claim `scope` del JWT y son funcionales cross-realm.
+Usar cuando distintos consumidores M2M necesiten niveles de acceso diferentes sobre el mismo recurso. Los scopes viajan en el claim `scope` del JWT y son funcionales cross-realm.
 
 Patrón: `{sistema}:{acción}` — ej. `sisbon:read`, `sisbon:write`, `sisbon:admin`.
 
-Configuración: crear el Client Scope en el realm del consumer → asignarlo como **Default Scope** al consumer client. El servicio receptor verifica el claim `scope` en lugar de `resource_access`.
+Configuración: crear el Client Scope en el realm del consumidor → asignarlo como **Default Scope** al consumidor client. El servicio receptor verifica el claim `scope` en lugar de `resource_access`.
 
-> Si todos los consumers tienen acceso equivalente, el claim `aud` es suficiente — no crear scopes.
+> Si todos los consumidores tienen acceso equivalente, el claim `aud` es suficiente — no crear scopes.
 
 ### Client Scopes transversales de plataforma
 
@@ -275,31 +295,31 @@ ext-{partner}-{sistema}-{env}
 - [ ] Crear realm `tlm-{scope}` si no existe
 - [ ] Crear `{sistema}-api` en `tlm-corp` (bearer-only)
 - [ ] Por cada scope: crear `{sistema}-{scope}-dev`, `{sistema}-{scope}-qa`, `{sistema}-{scope}`
-- [ ] En cada consumer: agregar Audience Mapper con `Included Custom Audience: {sistema}-api`
-- [ ] Registrar consumer en `_consumers.yaml` (API Gateway)
+- [ ] En cada consumidor: agregar Audience Mapper con `Included Custom Audience: {sistema}-api`
+- [ ] Registrar consumidor en `_consumers.yaml` (API Gateway)
 
 ### Servicio local nuevo
 
 - [ ] Crear `{sistema}-api` en `tlm-{scope}` (bearer-only)
 - [ ] Crear `{sistema}-{scope}-dev`, `{sistema}-{scope}-qa`, `{sistema}-{scope}`
 - [ ] Si hay integración con sistema externo: registrar las credenciales del proveedor en AWS Secrets Manager y definir el service en el API Gateway (`ext-{partner}-{sistema}-{env}`)
-- [ ] Registrar consumer en `_consumers.yaml` (API Gateway)
+- [ ] Registrar consumidor en `_consumers.yaml` (API Gateway)
 
 ---
 
 ## Resumen de Patrones
 
-| Entidad                         | Patrón                                             | Ejemplo prod             | Ejemplo no-prod            |
-| ------------------------------- | -------------------------------------------------- | ------------------------ | -------------------------- |
-| Realm                           | `tlm-{scope}`                                      | `tlm-mx`                 | `tlm-mx` ¹                 |
-| Validador API (corp)            | `{sistema}-api` en `tlm-corp`                      | `sisbon-api`             | `sisbon-api` ¹             |
-| Validador API (local)           | `{sistema}-api` en `tlm-{scope}`                   | `gestal-api`             | `gestal-api` ¹             |
-| Validador API (integración ext) | `{sistema}-{recurso}-api` en `tlm-{scope}`         | `gestal-ats-api`         | `gestal-ats-api` ¹         |
-| Consumidor                      | `{sistema}-{scope}[-{env}]`                        | `gestal-pe`              | `gestal-pe-qa`             |
-| Consumidor multi-tipo           | `{sistema}-{tipo}-{scope}[-{env}]`                 | `gestal-mobile-pe`       | `gestal-mobile-pe-dev`     |
-| Servicio externo (API Gateway)  | `ext-{partner}-{sistema}-{env}`                    | `ext-talenthub-ats-prod` | `ext-talenthub-ats-dev`    |
-| Herramienta SSO                 | `{herramienta}` — `confidential`, Standard Flow ON | `grafana`                | `grafana` ¹                |
-| Client role (solo SSO)          | `{acción}` bajo `{sistema}-api`                    | `read`, `write`, `admin` | `read`, `write`, `admin` ¹ |
+| Entidad                        | Patrón                                                                                                                              | Ejemplo prod             | Ejemplo no-prod            |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------- |
+| Realm                          | `tlm-{scope}`                                                                                                                       | `tlm-mx`                 | `tlm-mx` ¹                 |
+| Recurso API (corp)             | `{sistema}-api` en `tlm-corp`                                                                                                       | `sisbon-api`             | `sisbon-api` ¹             |
+| Recurso API (local)            | `{sistema}-api` en `tlm-{scope}`                                                                                                    | `gestal-api`             | `gestal-api` ¹             |
+| Recurso API Externo            | `{sistema}-{recurso}-api` en `tlm-{scope}`                                                                                          | `gestal-ats-api`         | `gestal-ats-api` ¹         |
+| Consumidor M2M                 | `{sistema}-{scope}[-{env}]`                                                                                                         | `gestal-pe`              | `gestal-pe-qa`             |
+| Consumidor M2M multi-tipo      | `{sistema}-{tipo}-{scope}[-{env}]` — `{tipo}` puede ser canal (`app`, `mobile`, `batch`) o componente (`procservice`, `procworker`) | `gestal-mobile-pe`       | `gestal-mobile-pe-dev`     |
+| Servicio externo (API Gateway) | `ext-{partner}-{sistema}-{env}`                                                                                                     | `ext-talenthub-ats-prod` | `ext-talenthub-ats-dev`    |
+| Herramienta SSO                | `{herramienta}`                                                                                                                     | `grafana`                | `grafana` ¹                |
+| Client role (solo SSO)         | `{acción}` bajo `{sistema}-api`                                                                                                     | `read`, `write`, `admin` | `read`, `write`, `admin` ¹ |
 
 > ¹ El nombre no varía por ambiente — el mismo identificador se usa en dev, qa y producción.
 
@@ -313,6 +333,8 @@ ext-{partner}-{sistema}-{env}
 - **MUST** usar `corp` para el realm de servicios y herramientas corporativas (cross-scope).
 - **MUST** escribir todos los identificadores en minúsculas (realms, clients, roles, scopes).
 - **MUST** usar guiones como único separador de palabras en nombres de realms y clients.
+- **MUST** escribir cada segmento variable (`{sistema}`, `{tipo}`, `{recurso}`) sin guiones internos; el guion es exclusivo del separador entre segmentos (ej. `extractimpo-api`, no `extract-impo-api`).
+- **MUST** usar el sufijo `-api` en todos los clients `bearer-only`.
 - **MUST** incluir sufijo de ambiente (`dev` o `qa`) en todos los clients no productivos.
 - **MUST** omitir el sufijo de ambiente en clients de producción.
 - **MUST** registrar el `clientId` en Keycloak con el mismo valor que en `_consumers.yaml` del API Gateway.
@@ -322,8 +344,8 @@ ext-{partner}-{sistema}-{env}
 - **SHOULD** crear client roles (`read`, `write`, `admin`) bajo `{sistema}-api` solo cuando haya usuarios con niveles de acceso diferenciados (flujo SSO).
 - **SHOULD** si se definen roles, usar siempre client roles bajo `{sistema}-api`, nunca realm roles.
 - **SHOULD** seguir la progresión `read → write → admin` en los niveles de rol sin saltarse niveles.
-- **SHOULD** usar Client Scopes `{sistema}:{acción}` para granularidad M2M cuando distintos consumers necesiten permisos diferenciados.
-- **SHOULD** usar el patrón multi-tipo (`{sistema}-{tipo}-{scope}`) solo cuando existan 2 o más tipos de consumidores con permisos o rate limits distintos.
+- **SHOULD** usar Client Scopes `{sistema}:{acción}` para granularidad M2M cuando distintos consumidores necesiten permisos diferenciados.
+- **SHOULD** usar el patrón multi-tipo (`{sistema}-{tipo}-{scope}`) solo cuando existan 2 o más tipos de consumidores con permisos o rate limits distintos, o 2 o más componentes del sistema con necesidad de secretos independientes.
 
 ### MUST NOT (Prohibido)
 
@@ -332,6 +354,8 @@ ext-{partner}-{sistema}-{env}
 - **MUST NOT** usar variaciones de scope que no estén en la tabla de valores admitidos.
 - **MUST NOT** crear realms fuera del patrón `tlm-{scope}` sin ADR aprobado.
 - **MUST NOT** definir roles de negocio de servicios locales en `tlm-corp`.
+- **MUST NOT** crear un client separado por cada API destino; usar Audience Protocol Mappers para registrar múltiples valores en el claim `aud`.
+- **MUST NOT** incluir scope ni sufijo de ambiente en el nombre de herramientas SSO (`{herramienta}`).
 
 ---
 
