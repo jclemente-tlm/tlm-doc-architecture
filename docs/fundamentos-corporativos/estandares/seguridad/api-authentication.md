@@ -48,10 +48,10 @@ JWT es necesario cuando:
 - La llamada opera en contexto de un tenant específico (`X-Tenant` o claim del JWT).
 - El consumidor es un servicio interno de Talma (la identidad del servicio origen siempre importa).
 
-| Escenario | Flujo OAuth2 | Ejemplo |
+| Escenario                           | Flujo OAuth2       | Ejemplo                                |
 | ----------------------------------- | ------------------ | -------------------------------------- |
-| Usuario autenticado → API | Authorization Code | App web/móvil con sesión SSO |
-| Servicio Talma → API Talma (M2M) | Client Credentials | `sisbon-mx` llama a API de SISBON |
+| Usuario autenticado → API           | Authorization Code | App web/móvil con sesión SSO           |
+| Servicio Talma → API Talma (M2M)    | Client Credentials | `sisbon-mx` llama a API de SISBON      |
 | Sistema externo con client Keycloak | Client Credentials | `gestal-ext-ats` llama a API de Gestal |
 
 El consumidor obtiene un access token de Keycloak y lo envía en cada request: `Authorization: Bearer <jwt>`. El receptor valida la firma y lee los claims sin llamar a Keycloak.
@@ -71,12 +71,12 @@ API Key es válida únicamente cuando:
 - Son scripts, pipelines de CI/CD o herramientas internas que no operan en contexto de un usuario o servicio con identidad relevante.
 - El proveedor externo envía webhooks donde no hay flujo interactivo de autenticación posible.
 
-| Escenario | Ejemplo |
-| --------------------------------------------- | ----------------------------------------------------- |
-| Partner externo integrado por el gateway | TalentHub ATS llamando a endpoints expuestos |
-| Webhook entrante de proveedor externo | Notificación de pago de Stripe hacia endpoint Talma |
-| Acceso a sandbox / entorno desarrollo externo | Partner probando integración antes de producción |
-| Script o pipeline sin contexto de usuario | Job de sincronización con sistema legado externo |
+| Escenario                                     | Ejemplo                                             |
+| --------------------------------------------- | --------------------------------------------------- |
+| Partner externo integrado por el gateway      | TalentHub ATS llamando a endpoints expuestos        |
+| Webhook entrante de proveedor externo         | Notificación de pago de Stripe hacia endpoint Talma |
+| Acceso a sandbox / entorno desarrollo externo | Partner probando integración antes de producción    |
+| Script o pipeline sin contexto de usuario     | Job de sincronización con sistema legado externo    |
 
 El API Key se envía en cada request vía header: `X-Api-Key: <key>`. No tiene expiración automática — la rotación es responsabilidad del equipo de plataforma en coordinación con el consumidor.
 
@@ -174,7 +174,7 @@ X-Api-Key: <api-key-del-partner>
 - [Lineamiento de Identidad y Accesos](../../lineamientos/seguridad/identidad-y-accesos.md) — lineamiento que origina este estándar.
 - [ADR-003: Keycloak SSO Autenticación](../../../adrs/adr-003-keycloak-sso-autenticacion.md) — adopción de Keycloak y OAuth2/OIDC como estándar de autenticación.
 - [ADR-010: Kong API Gateway](../../../adrs/adr-010-kong-api-gateway.md) — Kong como punto de validación de autenticación.
-- [Nomenclatura de Recursos en Keycloak](./keycloak-resource-naming.md) — naming de clients y roles.
+- [Nomenclatura de Recursos IAM](./iam-naming.md) — naming de realms, clients, roles y scopes.
 - [SSO, MFA y RBAC](./sso-mfa-rbac.md) — configuración de autenticación en servicios .NET.
 - [Gestión de Secretos y Claves Criptográficas](./secrets-key-management.md) — almacenamiento de client secrets y API keys.
 - [OAuth 2.0 RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749) — especificación del protocolo.
