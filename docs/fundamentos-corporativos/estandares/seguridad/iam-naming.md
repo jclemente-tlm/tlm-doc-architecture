@@ -62,7 +62,7 @@ tlm-{scope}
 
 ## Naming de Clients
 
-Existen cinco tipos de client definidos en este estándar, cada uno con configuración y patrón de nombre distintos:
+Existen seis tipos de client definidos en este estándar, cada uno con configuración y patrón de nombre distintos:
 
 | Tipo                          | Tipo Keycloak  | Flujo                | Quién lo usa                                                                 | Patrón                             |
 | ----------------------------- | -------------- | -------------------- | ---------------------------------------------------------------------------- | ---------------------------------- |
@@ -70,6 +70,7 @@ Existen cinco tipos de client definidos en este estándar, cada uno con configur
 | **Recurso API Externo**       | `bearer-only`  | Ninguno              | Integración con proveedor externo vía API Gateway                            | `{sistema}-{recurso}-api`          |
 | **Consumidor M2M**            | `confidential` | `client_credentials` | Servicio llamante (obtiene tokens para llamar otras APIs)                    | `{sistema}-{scope}[-{env}]`        |
 | **Consumidor M2M multi-tipo** | `confidential` | `client_credentials` | Servicio llamante con múltiples tipos de acceso o componentes independientes | `{sistema}-{tipo}-{scope}[-{env}]` |
+| **Consumidor M2M B2B**        | `confidential` | `client_credentials` | Partner externo que consume una API de Talma (integración inbound)           | `ext-{partner}-{scope}[-{env}]`    |
 | **Herramienta SSO**           | `confidential` | `authorization_code` | Usuario humano (login vía SSO)                                               | `{herramienta}`                    |
 
 Un backend puede tener simultáneamente un client **Recurso API** y un client **Consumidor M2M**: el primero define la audiencia para tokens que recibe, el segundo le permite obtener tokens para llamar a otras APIs.
@@ -169,6 +170,31 @@ Client **confidential** con **Standard Flow activo**. Representa una herramienta
 
 **Configuración Keycloak:** Access Type `confidential`, Standard Flow `ON`, Service Accounts `OFF`.
 
+### 6. Consumidor M2M B2B — `ext-{partner}-{scope}[-{env}]`
+
+Client **confidential**. Representa un partner externo (empresa tercera o sistema de integración B2B) que obtiene tokens via `client_credentials` para llamar APIs de Talma. El prefijo `ext-` lo diferencia de los consumidores internos y permite identificarlo en logs y en el API Gateway sin ambigüedad.
+
+El client vive en el realm del scope de la integración — no en `tlm-corp`, aunque el recurso destino sea corporativo. Esto mantiene el aislamiento de firma por tenant y la trazabilidad por país.
+
+| Parte       | Descripción                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------- |
+| `ext-`      | Prefijo fijo. Identifica al llamante como partner externo, no un servicio interno de Talma. |
+| `{partner}` | Nombre del partner o sistema externo, minúsculas, sin guiones internos (ej. `nomina360`).   |
+| `{scope}`   | Código de scope del realm donde vive el client (país de la integración).                    |
+| `{env}`     | `dev` o `qa`. **Se omite en producción.**                                                   |
+
+**Ejemplo — `nomina360` integrado con Ecuador consumiendo `marcaciones-api`:**
+
+| Client                 | Realm    | Ambiente   |
+| ---------------------- | -------- | ---------- |
+| `ext-nomina360-ec-dev` | `tlm-ec` | Desarrollo |
+| `ext-nomina360-ec-qa`  | `tlm-ec` | QA         |
+| `ext-nomina360-ec`     | `tlm-ec` | Producción |
+
+En cada uno agregar un Audience Protocol Mapper con `Included Custom Audience: marcaciones-api`. Como `marcaciones-api` reside en `tlm-corp`, aplica el mismo mecanismo cross-realm que para consumidores internos: el claim `aud` del JWT firmado por `tlm-ec` incluirá `marcaciones-api`, que es lo que el API Gateway verifica.
+
+**Configuración Keycloak:** Access Type `confidential`, Service Accounts `YES`, Standard Flow `OFF`.
+
 :::warning Coherencia Gateway ↔ Keycloak
 El `clientId` en Keycloak debe coincidir exactamente con el identificador definido en `_consumers.yaml` del repositorio `tlm-infra-api-gateway`. Una discrepancia impide la validación de tokens en el API Gateway.
 :::
@@ -220,6 +246,23 @@ Se crea un client confidential **por ambiente** para aislar credenciales. Todos 
 :::note Integraciones con sistemas externos
 Las credenciales de proveedores externos (API keys, client secrets de terceros) **no se almacenan en Keycloak**. Keycloak genera sus propios secrets y no permite ingresar credenciales externas. Las credenciales de terceros deben almacenarse en AWS Secrets Manager y ser consumidas directamente por el servicio. Ver [Gestión de Secretos y Claves Criptográficas](./secrets-key-management.md).
 :::
+
+### Integración B2B (partner externo consume API de Talma)
+
+Partner externo con acceso restringido a un scope específico. El resource server puede residir en `tlm-corp` (API corporativa) o en un realm regional, pero los clients del partner siempre van en el realm del scope de la integración.
+
+**Ejemplo: `nomina360` integrado con Ecuador consume `marcaciones-api` (corporativa)**
+
+| Client                 | Realm      | Tipo           | Ambiente   |
+| ---------------------- | ---------- | -------------- | ---------- |
+| `marcaciones-api`      | `tlm-corp` | `bearer-only`  | Todos      |
+| `ext-nomina360-ec-dev` | `tlm-ec`   | `confidential` | Desarrollo |
+| `ext-nomina360-ec-qa`  | `tlm-ec`   | `confidential` | QA         |
+| `ext-nomina360-ec`     | `tlm-ec`   | `confidential` | Producción |
+
+Como `marcaciones-api` está en `tlm-corp` y los consumers en `tlm-ec`, se requiere Audience Protocol Mapper en cada client del partner con `Included Custom Audience: marcaciones-api`. Si el partner solo opera en un scope, no se replica la estructura a otros realms.
+
+El secret de Keycloak de cada client se entrega al equipo del partner por canal seguro (nunca por correo ni repositorio). El secret puede rotarse de forma independiente por ambiente sin afectar a otros partners.
 
 ---
 
@@ -305,6 +348,15 @@ ext-{partner}-{sistema}-{env}
 - [ ] Si hay integración con sistema externo: registrar las credenciales del proveedor en AWS Secrets Manager y definir el service en el API Gateway (`ext-{partner}-{sistema}-{env}`)
 - [ ] Registrar consumidor en `_consumers.yaml` (API Gateway)
 
+### Partner externo nuevo (B2B inbound)
+
+- [ ] Verificar que `{sistema}-api` existe en el realm correspondiente (bearer-only)
+- [ ] Crear `ext-{partner}-{scope}-dev`, `ext-{partner}-{scope}-qa`, `ext-{partner}-{scope}` en `tlm-{scope}`
+- [ ] En cada client del partner: agregar Audience Protocol Mapper con `Included Custom Audience: {sistema}-api`
+- [ ] Entregar client secret al equipo del partner por canal seguro (nunca por email ni repositorio)
+- [ ] Registrar el consumidor en `_consumers.yaml` (API Gateway) si el acceso es vía Gateway
+- [ ] Documentar el scope de la integración (qué APIs puede llamar y desde qué scope)
+
 ---
 
 ## Resumen de Patrones
@@ -317,6 +369,7 @@ ext-{partner}-{sistema}-{env}
 | Recurso API Externo            | `{sistema}-{recurso}-api` en `tlm-{scope}`                                                                                          | `gestal-ats-api`         | `gestal-ats-api` ¹         |
 | Consumidor M2M                 | `{sistema}-{scope}[-{env}]`                                                                                                         | `gestal-pe`              | `gestal-pe-qa`             |
 | Consumidor M2M multi-tipo      | `{sistema}-{tipo}-{scope}[-{env}]` — `{tipo}` puede ser canal (`app`, `mobile`, `batch`) o componente (`procservice`, `procworker`) | `gestal-mobile-pe`       | `gestal-mobile-pe-dev`     |
+| Consumidor M2M B2B             | `ext-{partner}-{scope}[-{env}]` en `tlm-{scope}`                                                                                    | `ext-nomina360-ec`       | `ext-nomina360-ec-qa`      |
 | Servicio externo (API Gateway) | `ext-{partner}-{sistema}-{env}`                                                                                                     | `ext-talenthub-ats-prod` | `ext-talenthub-ats-dev`    |
 | Herramienta SSO                | `{herramienta}`                                                                                                                     | `grafana`                | `grafana` ¹                |
 | Client role (solo SSO)         | `{acción}` bajo `{sistema}-api`                                                                                                     | `read`, `write`, `admin` | `read`, `write`, `admin` ¹ |
@@ -356,6 +409,8 @@ ext-{partner}-{sistema}-{env}
 - **MUST NOT** definir roles de negocio de servicios locales en `tlm-corp`.
 - **MUST NOT** crear un client separado por cada API destino; usar Audience Protocol Mappers para registrar múltiples valores en el claim `aud`.
 - **MUST NOT** incluir scope ni sufijo de ambiente en el nombre de herramientas SSO (`{herramienta}`).
+- **MUST NOT** crear un client B2B (`ext-{partner}`) para integraciones outbound (cuando Talma llama al partner); en ese caso las credenciales del partner se almacenan en AWS Secrets Manager.
+- **MUST NOT** compartir secrets de clients B2B con otros partners ni entre ambientes; cada client tiene su propio secret rotable de forma independiente.
 
 ---
 
