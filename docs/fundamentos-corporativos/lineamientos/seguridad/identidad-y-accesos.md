@@ -19,6 +19,8 @@ La gestión fragmentada de identidades genera credenciales dispersas, permisos e
 - [Gestionar identidades de servicios (service accounts, workload identity)](../../estandares/seguridad/iam-advanced.md)
 - [Gestionar ciclo de vida de identidades](../../estandares/seguridad/iam-advanced.md)
 - [Implementar políticas de contraseñas](../../estandares/seguridad/iam-advanced.md)
+- [Nombrar recursos de Keycloak con nomenclatura estándar](../../estandares/seguridad/iam-naming.md)
+- [Autenticar APIs con JWT para servicios internos](../../estandares/seguridad/api-authentication.md)
 
 ## Referencias Relacionadas
 

@@ -22,8 +22,8 @@ description: Atributos y escenarios de calidad del Servicio de Identidad.
 
 | Aspecto    | Objetivo                      | Estrategia   |
 | ---------- | ----------------------------- | ------------ |
-| Usuarios   | `100k` por `tenant` (`realm`) | Autoescalado |
-| Tenants    | `4 países` (pe, ec, co, mx)   | Multi-tenant |
+| Usuarios   | `100k` por `tenant` (`realm`) | Escalado vertical EC2 |
+| Tenants    | `5 definidos` (3 configurados, 2 pendientes) | Multi-tenant |
 | Sessions   | `10k` concurrentes            | `PostgreSQL` |
 | Federación | Múltiples IdP                 | Híbrida      |
 
@@ -44,3 +44,15 @@ description: Atributos y escenarios de calidad del Servicio de Identidad.
 
 - SLAs definidos y medidos para operaciones críticas.
 - Alertas automáticas ante degradación de performance.
+
+## Escenarios de Calidad
+
+| ID   | Estímulo                                                  | Respuesta Esperada                                              |
+| ---- | --------------------------------------------------------- | --------------------------------------------------------------- |
+| Q-01 | 5,000 usuarios inician sesión simultáneamente             | Latencia p95 < 800ms; sin errores HTTP 5xx                      |
+| Q-02 | Token JWT presentado en Kong para validación              | Validación local < 50ms (JWKS cacheado)                         |
+| Q-03 | Instancia EC2 de Keycloak se reinicia inesperadamente     | Docker Compose reinicia contenedor; disponibilidad > 99.5%      |
+| Q-04 | Atacante intenta fuerza bruta contra cuenta de usuario     | Bloqueo tras 30 intentos fallidos; alerta generada              |
+| Q-05 | Administrador solicita acceso a consola de Keycloak       | MFA (TOTP) requerido; acceso auditado                           |
+| Q-06 | Se requiere agregar un nuevo tenant (país)                | Crear realm JSON + `--import-realm`; operativo en < 1 día       |
+| Q-07 | Base de datos RDS falla en producción                     | Failover automático RDS; RPO < 15min, RTO < 4h                  |

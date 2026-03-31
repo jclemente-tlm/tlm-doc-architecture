@@ -7,19 +7,21 @@ description: Objetivos, requisitos y partes interesadas del Servicio de Identida
 # 1. Introducción y Objetivos
 
 El **Servicio de Identidad** centraliza autenticación, autorización y federación para todos los servicios corporativos multipaís.
-Está implementado con **Keycloak**, desplegado en contenedores sobre AWS ECS Fargate (ADR-003).
+Está implementado con **Keycloak**, desplegado como contenedor Docker sobre instancias EC2 con PostgreSQL RDS, gestionado por ambiente (ADR-003).
+El código fuente de infraestructura se gestiona en el repositorio `tlm-infra-keycloak`.
 
 ## Funcionalidades Clave
 
 | Funcionalidad  | Descripción                                                                               |
 | -------------- | ----------------------------------------------------------------------------------------- |
 | SSO            | Acceso unificado a aplicaciones mediante `OAuth2`/`OIDC` y `JWT`                          |
-| Multi-tenancy  | Aislamiento por país mediante un `realm` de Keycloak por tenant                           |
-| Federación     | Integración con IdPs externos (`SAML`, `OIDC`, `LDAP`)                                    |
+| Multi-tenancy  | 5 tenants definidos (`tlm-corp`, `tlm-pe`, `tlm-mx`, `tlm-ec`, `tlm-co`); 3 configurados |
+| Federación     | Integración con IdPs externos (`SAML`, `OIDC`, `LDAP`) _(planificada)_                    |
 | RBAC           | Control de acceso basado en roles                                                         |
 | MFA            | Autenticación multi-factor para roles críticos                                            |
-| Auditoría      | Registro estructurado de eventos de seguridad                                             |
-| Observabilidad | Métricas, logs y trazas integradas con el stack corporativo (Grafana, Mimir, Loki, Tempo) |
+| Auditoría      | Registro estructurado de eventos de seguridad _(pendiente de habilitación)_                |
+| Observabilidad | Métricas y health checks habilitados (puerto `9000`); integración con stack corporativo    |
+| Tema           | Tema personalizado `talma-theme` con branding corporativo e i18n (`es`/`en`)              |
 | API Gateway    | Validación de tokens JWT por Kong mediante JWKS de cada realm                             |
 
 ## Requisitos de Calidad
